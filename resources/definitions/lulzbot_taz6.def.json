@@ -1,0 +1,49 @@
+{
+    "id": "LulzBot_TAZ6",
+    "name": "LulzBot TAZ6",
+    "version": 2,
+    "inherits": "lulzbot_base",
+    "metadata":
+    {
+        "type": "machine",
+        "platform": "lulzbot_mockup.stl",
+        "platform_offset": [-75, -11, 75],
+        "preferred_material": "pla",
+        "preferred_quality": "normal",
+        "file_formats": "text/x-gcode",
+        "machine_extruder_trains":
+        {
+            "0": "fdmextruder"
+        }
+    },
+
+    "overrides": {
+        "machine_heated_bed": {
+            "default_value": true
+        },
+        "machine_width": {
+            "default_value": 280
+        },
+        "machine_depth": {
+            "default_value": 280
+        },
+        "machine_height": {
+            "default_value": 250
+        },
+        "machine_center_is_zero": {
+            "default_value": false
+        },
+        "machine_nozzle_size": {
+            "default_value": 0.5
+        },
+        "machine_gcode_flavor": {
+            "default_value": "RepRap (Marlin/Sprinter)"
+        },
+        "machine_start_gcode": {
+            "default_value": "\tG26                          ; clear potential 'probe fail' condition\n\tG21                          ; set units to Millimetres\n\tM107                         ; disable fans\n\tG90                          ; absolute positioning\n\tM82                          ; set extruder to absolute mode\n\tG92 E0                       ; set extruder position to 0\n\tM140 S{material_bed_temperature}; get bed heating up\n\tG28 XY                       ; home X and Y\n\tG1 X-19 Y258 F1000           ; move to safe homing position\n\tM109 R185                    ; soften filament for z homing\n\tG28 Z                        ; home Z\n\tM104 S185                    ; wipe temp\n\tG1 E-30 F100                 ; suck up XXmm of filament\n\tG1 X-15 Y100 F3000           ; move above wiper pad\n\tG1 Z1                        ; push nozzle into wiper\n\tG1 X-17 Y95 F1000            ; slow wipe\n\tG1 X-17 Y90 F1000            ; slow wipe\n\tG1 X-17 Y85 F1000            ; slow wipe\n\tG1 X-15 Y90 F1000            ; slow wipe\n\tG1 X-17 Y80 F1000            ; slow wipe\n\tG1 X-15 Y95 F1000            ; slow wipe\n\tG1 X-17 Y75 F2000            ; fast wipe\n\tG1 X-15 Y65 F2000            ; fast wipe\n\tG1 X-17 Y70 F2000            ; fast wipe\n\tG1 X-15 Y60 F2000            ; fast wipe\n\tG1 X-17 Y55 F2000            ; fast wipe\n\tG1 X-15 Y50 F2000            ; fast wipe\n\tG1 X-17 Y40 F2000            ; fast wipe\n\tG1 X-15 Y45 F2000            ; fast wipe\n\tG1 X-17 Y35 F2000            ; fast wipe\n\tG1 X-15 Y40 F2000            ; fast wipe\n\tG1 X-17 Y70 F2000            ; fast wipe\n\tG1 X-15 Y30 Z2 F2000         ; fast wipe\n\tG1 X-17 Y35 F2000            ; fast wipe\n\tG1 X-15 Y25 F2000            ; fast wipe\n\tG1 X-17 Y30 F2000            ; fast wipe\n\tG1 X-15 Y25 Z1.5 F1000       ; slow wipe\n\tG1 X-17 Y23 F1000            ; slow wipe\n\tG1 Z10                       ; raise extruder\n\tM109 R185                    ; heat to probe temp\n\tG1 X-9 Y-9                   ; move above probe\n\tM204 S100                    ; set accel for probing\n\tG29                          ; probe sequence (for auto-leveling)\n\tM204 S500                    ; set accel back to normal\n\tG1 X0 Y0 Z15 F5000           ; get out the way\n\tM400                         ; clear buffer\n\tG4 S1                        ; pause\n\tM117 Heating...              ; LCD status message\n\tM140 S{material_bed_temperature}; get bed heating up\n\tM109 R{material_print_temperature}    ; set extruder temp and wait\n\tM190 R{material_bed_temperature}; get bed temping up during first layer\n\tG1 Z2 E0 F75                 ; extrude filament back into nozzle\n\tM117 TAZ Printing...         ; LCD status message"
+        },
+        "machine_end_gcode": {
+            "default_value": "\tM400                           ; wait for moves to finish\n\tM104 S0                        ; hotend off\n\tM107                           ; fans off\n\tG91                            ; relative positioning\n\tG1 E-1 F300                    ; retract the filament a bit before lifting the nozzle, to release some of the pressure\n\tG1 Z+20 E-5 X-20 Y-20 F3000    ; move Z up a bit and retract filament even more\n\tM117 Cooling please wait       ; progress indicator message\n\tG90                            ; absolute positioning\n\tG1 Y0 F3000                    ; move to cooling position\n\tM190 R50                       ; set bed to cool off\n\tG1 Y280 F3000                  ; present finished print\n\tM84                            ; steppers off\n\tG90                            ; absolute positioning\n\tM117 Print complete            ; progress indicator message"
+        }
+    }
+}

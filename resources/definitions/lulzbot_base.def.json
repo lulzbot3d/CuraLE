@@ -1,0 +1,13 @@
+{
+    "id": "lulzbot_base",
+    "version": 2,
+    "name": "LulzBot",
+    "inherits": "fdmprinter",
+    "metadata": {
+        "author": "Aleph Objects, Inc.",
+        "category": "Aleph Objects, Inc.",
+        "manufacturer": "Aleph Objects, Inc.",
+        "visible": false,
+        "file_formats": "text/x-gcode;application/x-stl-ascii;application/x-stl-binary;application/x-wavefront-obj;application/x3g"
+    }
+}
