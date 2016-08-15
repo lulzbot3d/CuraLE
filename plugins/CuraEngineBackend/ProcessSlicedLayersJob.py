@@ -15,6 +15,7 @@ from UM.Math.Vector import Vector
 
 from cura import LayerDataBuilder
 from cura import LayerDataDecorator
+from cura import LayerPolygon
 
 import numpy
 from time import time
@@ -55,10 +56,9 @@ class ProcessSlicedLayersJob(Job):
 
         ## Remove old layer data (if any)
         for node in DepthFirstIterator(self._scene.getRoot()):
-            if type(node) is SceneNode and node.getMeshData():
-                if node.callDecoration("getLayerData"):
-                    self._scene.getRoot().removeChild(node)
-            Job.yieldThread()
+            if node.callDecoration("getLayerData"):
+                node.getParent().removeChild(node)
+                break
             if self._abort_requested:
                 if self._progress:
                     self._progress.hide()
@@ -73,7 +73,7 @@ class ProcessSlicedLayersJob(Job):
         # instead simply offset all other layers so the lowest layer is always 0.
         min_layer_number = 0
         for layer in self._layers:
-            if(layer.id < min_layer_number):
+            if layer.id < min_layer_number:
                 min_layer_number = layer.id
 
         current_layer = 0
@@ -82,26 +82,45 @@ class ProcessSlicedLayersJob(Job):
             abs_layer_number = layer.id + abs(min_layer_number)
 
             layer_data.addLayer(abs_layer_number)
+            this_layer = layer_data.getLayer(abs_layer_number)
             layer_data.setLayerHeight(abs_layer_number, layer.height)
             layer_data.setLayerThickness(abs_layer_number, layer.thickness)
 
-            for p in range(layer.repeatedMessageCount("polygons")):
-                polygon = layer.getRepeatedMessage("polygons", p)
+            for p in range(layer.repeatedMessageCount("path_segment")):
+                polygon = layer.getRepeatedMessage("path_segment", p)
 
-                points = numpy.fromstring(polygon.points, dtype="i8")  # Convert bytearray to numpy array
-                points = points.reshape((-1,2))  # We get a linear list of pairs that make up the points, so make numpy interpret them correctly.
+                extruder = polygon.extruder
 
+                line_types = numpy.fromstring(polygon.line_type, dtype="u1")  # Convert bytearray to numpy array
+                line_types = line_types.reshape((-1,1))
+
+                points = numpy.fromstring(polygon.points, dtype="f4")  # Convert bytearray to numpy array
+                if polygon.point_type == 0: # Point2D
+                    points = points.reshape((-1,2))  # We get a linear list of pairs that make up the points, so make numpy interpret them correctly.
+                else:  # Point3D
+                    points = points.reshape((-1,3))
+
+                line_widths = numpy.fromstring(polygon.line_width, dtype="f4")  # Convert bytearray to numpy array
+                line_widths = line_widths.reshape((-1,1))  # We get a linear list of pairs that make up the points, so make numpy interpret them correctly.
+                
                 # Create a new 3D-array, copy the 2D points over and insert the right height.
                 # This uses manual array creation + copy rather than numpy.insert since this is
                 # faster.
                 new_points = numpy.empty((len(points), 3), numpy.float32)
-                new_points[:,0] = points[:,0]
-                new_points[:,1] = layer.height
-                new_points[:,2] = -points[:,1]
+                if polygon.point_type == 0:  # Point2D
+                    new_points[:, 0] = points[:, 0]
+                    new_points[:, 1] = layer.height / 1000 # layer height value is in backend representation
+                    new_points[:, 2] = -points[:, 1]
+                else: # Point3D
+                    new_points[:, 0] = points[:, 0]
+                    new_points[:, 1] = points[:, 2]
+                    new_points[:, 2] = -points[:, 1]
 
-                new_points /= 1000
+                this_poly = LayerPolygon.LayerPolygon(layer_data, extruder, line_types, new_points, line_widths)
+                this_poly.buildCache()
+                
+                this_layer.polygons.append(this_poly)
 
-                layer_data.addPolygon(abs_layer_number, polygon.type, new_points, polygon.line_width)
                 Job.yieldThread()
             Job.yieldThread()
             current_layer += 1
@@ -164,4 +183,3 @@ class ProcessSlicedLayersJob(Job):
             else:
                 if self._progress:
                     self._progress.hide()
-
