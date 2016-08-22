@@ -11,10 +11,12 @@
         "preferred_material": "pla",
         "preferred_quality": "normal",
         "file_formats": "text/x-gcode",
+        "has_materials": true,
         "machine_extruder_trains":
         {
             "0": "fdmextruder"
-        }
+        },
+        "visible": true
     },
 
     "overrides": {

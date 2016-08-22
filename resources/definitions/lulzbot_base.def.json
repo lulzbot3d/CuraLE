@@ -5,9 +5,16 @@
     "inherits": "fdmprinter",
     "metadata": {
         "author": "Aleph Objects, Inc.",
-        "category": "Aleph Objects, Inc.",
+        "category": "LulzBot",
         "manufacturer": "Aleph Objects, Inc.",
         "visible": false,
         "file_formats": "text/x-gcode;application/x-stl-ascii;application/x-stl-binary;application/x-wavefront-obj;application/x3g"
+    },
+    
+    "overrides": {
+        "material_diameter": {
+            "default_value": 2.75
+        }
     }
+    
 }

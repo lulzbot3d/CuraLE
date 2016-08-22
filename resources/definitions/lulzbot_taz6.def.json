@@ -1,6 +1,6 @@
 {
     "id": "LulzBot_TAZ6",
-    "name": "LulzBot TAZ6",
+    "name": "LulzBot TAZ 6",
     "version": 2,
     "inherits": "lulzbot_base",
     "metadata":
@@ -14,7 +14,8 @@
         "machine_extruder_trains":
         {
             "0": "fdmextruder"
-        }
+        },
+        "visible": true
     },
 
     "overrides": {
