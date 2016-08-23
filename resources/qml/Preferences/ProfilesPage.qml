@@ -201,7 +201,7 @@ UM.ManagementPage
             {
                 title: catalog.i18nc("@title:tab", "Global Settings");
                 quality: base.currentItem != null ? base.currentItem.id : "";
-                material: Cura.MachineManager.allActiveMaterialIds.global
+                material: Cura.MachineManager.allActiveMaterialIds.global ? Cura.MachineManager.allActiveMaterialIds.global : ""
             }
 
             Repeater
@@ -212,7 +212,7 @@ UM.ManagementPage
                 {
                     title: model.name;
                     extruderId: model.id;
-                    quality: base.currentItem != null ? base.currentItem.id : null;
+                    quality: base.currentItem != null ? base.currentItem.id : "";
                     material: Cura.MachineManager.allActiveMaterialIds[model.id]
                 }
             }
