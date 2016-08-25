@@ -91,7 +91,7 @@ UM.ManagementPage
         {
             text: catalog.i18nc("@action:button", "Remove");
             iconName: "list-remove";
-            enabled: base.currentItem != null ? !base.currentItem.readOnly : false;
+            enabled: base.currentItem != null ? !base.currentItem.readOnly && !Cura.ContainerManager.isContainerUsed(base.currentItem.id) : false;
             onClicked: confirmDialog.open();
         },
         Button
@@ -123,9 +123,9 @@ UM.ManagementPage
     signal showProfileNameDialog()
     onShowProfileNameDialog: { renameDialog.removeWhenRejected = true; renameDialog.open(); renameDialog.selectText(); }
 
-    signal selectContainer(string id)
+    signal selectContainer(string name)
     onSelectContainer: {
-        objectList.currentIndex = objectList.model.find("id", id);
+        objectList.currentIndex = objectList.model.find("name", name);
     }
 
     Item {
@@ -176,7 +176,7 @@ UM.ManagementPage
             Label {
                 id: defaultsMessage
                 visible: false
-                text: catalog.i18nc("@action:label", "This profile has no settings and uses the defaults specified by the printer.")
+                text: catalog.i18nc("@action:label", "This profile uses the defaults specified by the printer, so it has no settings in the list below.")
                 wrapMode: Text.WordWrap
                 width: parent.width
             }
@@ -235,6 +235,7 @@ UM.ManagementPage
                 {
                     Cura.MachineManager.setActiveQuality(base.model.getItem(0).name)
                 }
+                objectList.currentIndex = -1 //Reset selection.
             }
         }
         UM.RenameDialog
@@ -242,7 +243,11 @@ UM.ManagementPage
             id: renameDialog;
             object: base.currentItem != null ? base.currentItem.name : ""
             property bool removeWhenRejected: false
-            onAccepted: Cura.ContainerManager.renameQualityChanges(base.currentItem.name, newName)
+            onAccepted:
+            {
+                Cura.ContainerManager.renameQualityChanges(base.currentItem.name, newName)
+                objectList.currentIndex = -1 //Reset selection.
+            }
             onRejected: {
                 if(removeWhenRejected) {
                     Cura.ContainerManager.removeQualityChanges(base.currentItem.name)

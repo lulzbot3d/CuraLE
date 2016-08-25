@@ -104,7 +104,7 @@ UM.ManagementPage
         {
             text: catalog.i18nc("@action:button", "Remove");
             iconName: "list-remove";
-            enabled: base.currentItem != null && !base.currentItem.readOnly
+            enabled: base.currentItem != null && !base.currentItem.readOnly && !Cura.ContainerManager.isContainerUsed(base.currentItem.id)
             onClicked: confirmDialog.open()
         },
         Button
@@ -282,7 +282,6 @@ UM.ManagementPage
         {
             return
         }
-
         materialProperties.name = currentItem.name;
 
         if(currentItem.metadata != undefined && currentItem.metadata != null)
@@ -305,6 +304,7 @@ UM.ManagementPage
                 materialProperties.density = 0.0;
                 materialProperties.diameter = 0.0;
             }
+
         }
     }
 }

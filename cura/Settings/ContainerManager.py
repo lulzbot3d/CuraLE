@@ -181,7 +181,7 @@ class ContainerManager(QObject):
     def setContainerMetaDataEntry(self, container_id, entry_name, entry_value):
         containers = UM.Settings.ContainerRegistry.getInstance().findContainers(None, id = container_id)
         if not containers:
-            UM.Logger.log("w", "Could set metadata of container %s because it was not found.", container_id)
+            UM.Logger.log("w", "Could not set metadata of container %s because it was not found.", container_id)
             return False
 
         container = containers[0]
@@ -210,6 +210,24 @@ class ContainerManager(QObject):
 
         return True
 
+    ##  Set the name of the specified container.
+    @pyqtSlot(str, str, result = bool)
+    def setContainerName(self, container_id, new_name):
+        containers = UM.Settings.ContainerRegistry.getInstance().findContainers(None, id = container_id)
+        if not containers:
+            UM.Logger.log("w", "Could not set name of container %s because it was not found.", container_id)
+            return False
+
+        container = containers[0]
+
+        if container.isReadOnly():
+            UM.Logger.log("w", "Cannot set name of read-only container %s.", container_id)
+            return False
+
+        container.setName(new_name)
+
+        return True
+
     ##  Find instance containers matching certain criteria.
     #
     #   This effectively forwards to ContainerRegistry::findInstanceContainers.
@@ -224,6 +242,15 @@ class ContainerManager(QObject):
             result.append(entry.getId())
 
         return result
+
+    @pyqtSlot(str, result = bool)
+    def isContainerUsed(self, container_id):
+        UM.Logger.log("d", "Checking if container %s is currently used in the active stacks", container_id)
+        for stack in cura.Settings.ExtruderManager.getInstance().getActiveGlobalAndExtruderStacks():
+            if container_id in [child.getId() for child in stack.getContainers()]:
+                UM.Logger.log("d", "The container is in use by %s", stack.getId())
+                return True
+        return False
 
     ##  Get a list of string that can be used as name filters for a Qt File Dialog
     #
@@ -438,13 +465,20 @@ class ContainerManager(QObject):
     #   \return \type{bool} True if successful, False if not.
     @pyqtSlot(str, result = bool)
     def removeQualityChanges(self, quality_name):
+        UM.Logger.log("d", "Attempting to remove the quality change containers with name %s", quality_name)
+        containers_found = False
+
         if not quality_name:
-            return False
+            return containers_found  # Without a name we will never find a container to remove.
 
         for container in self._getFilteredContainers(name = quality_name, type = "quality_changes"):
+            containers_found = True
             UM.Settings.ContainerRegistry.getInstance().removeContainer(container.getId())
 
-        return True
+        if not containers_found:
+            UM.Logger.log("d", "Unable to remove quality containers, as we did not find any by the name of %s", quality_name)
+
+        return containers_found
 
     ##  Rename a set of quality changes containers.
     #
@@ -458,10 +492,12 @@ class ContainerManager(QObject):
     #   \return True if successful, False if not.
     @pyqtSlot(str, str, result = bool)
     def renameQualityChanges(self, quality_name, new_name):
+        UM.Logger.log("d", "User requested QualityChanges container rename of %s to %s", quality_name, new_name)
         if not quality_name or not new_name:
             return False
 
         if quality_name == new_name:
+            UM.Logger.log("w", "Unable to rename %s to %s, because they are the same.", quality_name, new_name)
             return True
 
         global_stack = UM.Application.getInstance().getGlobalContainerStack()
@@ -494,9 +530,10 @@ class ContainerManager(QObject):
         global_stack = UM.Application.getInstance().getGlobalContainerStack()
         if not global_stack or not quality_name:
             return ""
-
+        UM.Logger.log("d", "Attempting to duplicate the quality %s", quality_name)
         containers = UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(name = quality_name)
         if not containers:
+            UM.Logger.log("d", "Unable to duplicate the quality %s, because it doesn't exist.", quality_name)
             return ""
 
         new_name = UM.Settings.ContainerRegistry.getInstance().uniqueName(quality_name)

@@ -194,8 +194,7 @@ class CuraEngineBackend(Backend):
         self.slicingCancelled.emit()
         self.processingProgress.emit(0)
         Logger.log("d", "Attempting to kill the engine process")
-        if self._enabled:
-            self._createSocket()  # Ensure that we have a fresh socket.
+
         if Application.getInstance().getCommandLineOption("external-backend", False):
             return
 
@@ -208,6 +207,9 @@ class CuraEngineBackend(Backend):
 
             except Exception as e:  # terminating a process that is already terminating causes an exception, silently ignore this.
                 Logger.log("d", "Exception occurred while trying to kill the engine %s", str(e))
+        else:
+            # Process is none, but something did went wrong here. Try and re-create the socket
+            self._createSocket()
 
     ##  Event handler to call when the job to initiate the slicing process is
     #   completed.
@@ -242,9 +244,12 @@ class CuraEngineBackend(Backend):
             else:
                 self.backendStateChange.emit(BackendState.NotStarted)
             return
-
         # Preparation completed, send it to the backend.
         self._socket.sendMessage(job.getSliceMessage())
+
+        # Notify the user that it's now up to the backend to do it's job
+        self.backendStateChange.emit(BackendState.Processing)
+
         Logger.log("d", "Sending slice message took %s seconds", time() - self._slice_start_time )
 
     ##  Listener for when the scene has changed.
@@ -385,8 +390,7 @@ class CuraEngineBackend(Backend):
     #   \param tool The tool that the user was using.
     def _onToolOperationStopped(self, tool):
         self._enabled = True  # Tool stop, start listening for changes again.
-        self._terminate()
-
+        
     ##  Called when the user changes the active view mode.
     def _onActiveViewChanged(self):
         if Application.getInstance().getController().getActiveView():
@@ -406,9 +410,11 @@ class CuraEngineBackend(Backend):
     #
     #   We should reset our state and start listening for new connections.
     def _onBackendQuit(self):
-        if not self._restart and self._process:
-            Logger.log("d", "Backend quit with return code %s. Resetting process and socket.", self._process.wait())
-            self._process = None
+        if not self._restart:
+            if self._process:
+                Logger.log("d", "Backend quit with return code %s. Resetting process and socket.", self._process.wait())
+                self._process = None
+            self._createSocket()
 
     ##  Called when the global container stack changes
     def _onGlobalStackChanged(self):

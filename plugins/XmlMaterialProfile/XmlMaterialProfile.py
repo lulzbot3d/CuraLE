@@ -56,14 +56,31 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
 
         super().setMetaDataEntry(key, value)
 
-        if key == "material" or key == "color_name":
-            self.setName(self._profile_name(self.getMetaDataEntry("material"), self.getMetaDataEntry("color_name")))
         basefile = self.getMetaDataEntry("base_file", self._id)  #if basefile is none, this is a basefile.
         # Update all containers that share GUID and basefile
         for container in UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(GUID = self.getMetaDataEntry("GUID"), base_file = basefile):
             container.setMetaData(copy.deepcopy(self._metadata))
-            if key == "material" or key == "color_name":
-                container.setName(self.getName())
+
+    ##  Overridden from InstanceContainer, similar to setMetaDataEntry.
+    #   without this function the setName would only set the name of the specific nozzle / material / machine combination container
+    #   The function is a bit tricky. It will not set the name of all containers if it has the correct name itself.
+    def setName(self, new_name):
+        if self.isReadOnly():
+            return
+
+        # Not only is this faster, it also prevents a major loop that causes a stack overflow.
+        if self.getName() == new_name:
+            return
+
+        super().setName(new_name)
+
+        basefile = self.getMetaDataEntry("base_file", self._id)  # if basefile is none, this is a basefile.
+        # Update the basefile as well, this is actually what we're trying to do
+        # Update all containers that share GUID and basefile
+        containers = UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(id=basefile) + UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(
+                GUID=self.getMetaDataEntry("GUID"), base_file=basefile)
+        for container in containers:
+            container.setName(new_name)
 
     ##  Overridden from InstanceContainer
     def setProperty(self, key, property_name, property_value, container = None):
@@ -116,6 +133,10 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
         builder.start("color")
         builder.data(metadata.pop("color_name", ""))
         builder.end("color")
+
+        builder.start("label")
+        builder.data(self._name)
+        builder.end("label")
 
         builder.end("name")
         ## End Name Block
@@ -235,8 +256,12 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
                 brand = entry.find("./um:brand", self.__namespaces)
                 material = entry.find("./um:material", self.__namespaces)
                 color = entry.find("./um:color", self.__namespaces)
+                label = entry.find("./um:label", self.__namespaces)
 
-                self.setName(self._profile_name(material.text, color.text))
+                if label is not None:
+                    self.setName(label.text)
+                else:
+                    self.setName(self._profile_name(material.text, color.text))
 
                 self.addMetaDataEntry("brand", brand.text)
                 self.addMetaDataEntry("material", material.text)
@@ -378,6 +403,9 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
                     UM.Settings.ContainerRegistry.getInstance().addContainer(new_hotend_material)
 
         if not global_compatibility:
+            # Change the type of this container so it is not shown as an option in menus.
+            # This uses InstanceContainer.setMetaDataEntry because otherwise all containers that
+            # share this basefile are also updated.
             super().setMetaDataEntry("type", "incompatible_material")
 
     def _addSettingElement(self, builder, instance):
