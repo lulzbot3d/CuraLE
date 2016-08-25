@@ -638,7 +638,7 @@ UM.MainWindow
         title: catalog.i18nc("@title:window","Open file")
         modality: UM.Application.platform == "linux" ? Qt.NonModal : Qt.WindowModal;
         //TODO: Support multiple file selection, workaround bug in KDE file dialog
-        //selectMultiple: true
+        selectMultiple: true
         nameFilters: UM.MeshFileHandler.supportedReadFileTypes;
         folder: CuraApplication.getDefaultPath("dialog_load_path")
         onAccepted:
@@ -649,9 +649,12 @@ UM.MainWindow
             folder = f;
 
             CuraApplication.setDefaultPath("dialog_load_path", folder);
-            UM.MeshFileHandler.readLocalFile(fileUrl)
-            var meshName = backgroundItem.getMeshName(fileUrl.toString())
-            backgroundItem.hasMesh(decodeURIComponent(meshName))
+            for(var i = 0; i < fileUrls.length; i++)
+            {
+                UM.MeshFileHandler.readLocalFile(fileUrls[i])
+                var meshName = backgroundItem.getMeshName(fileUrls[i].toString())
+                backgroundItem.hasMesh(decodeURIComponent(meshName))
+            }
         }
     }
 
