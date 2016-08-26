@@ -290,7 +290,7 @@ UM.MainWindow
 		    var count = UM.Selection.getCount
 		    if(count == 1)
 		    {
-			selectionName.text = "Current selection: " + UM.Selection.getSelectionName
+			selectionName.text = "Selected object: " + UM.Selection.getSelectionName
 		    }
 		    else if(count > 1)
 		    {
