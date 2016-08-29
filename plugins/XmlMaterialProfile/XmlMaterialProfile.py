@@ -8,6 +8,7 @@ import xml.etree.ElementTree as ET
 import uuid
 
 from UM.Logger import Logger
+from UM.Util import parseBool
 
 import UM.Dictionary
 
@@ -22,7 +23,7 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
     def duplicate(self, new_id, new_name = None):
         base_file = self.getMetaDataEntry("base_file", None)
 
-        if base_file:
+        if base_file != self.id:
             containers = UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(id = base_file)
             if containers:
                 new_basefile = containers[0].duplicate(self.getMetaDataEntry("brand") + "_" + new_id, new_name)
@@ -35,18 +36,24 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
                     variant_containers = UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(id = variant)
                     if variant_containers:
                         new_id += "_" + variant_containers[0].getName().replace(" ", "_")
+            has_base_file = True
+        else:
+            has_base_file = False
 
         new_id = UM.Settings.ContainerRegistry.getInstance().createUniqueName("material", self._id, new_id, "")
         result = super().duplicate(new_id, new_name)
-        if result.getMetaDataEntry("base_file", None):
+        if has_base_file:
             result.setMetaDataEntry("base_file", base_file)
+        else:
+            result.setMetaDataEntry("base_file", result.id)
         return result
 
     ##  Overridden from InstanceContainer
     def setReadOnly(self, read_only):
         super().setReadOnly(read_only)
 
-        for container in UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(GUID = self.getMetaDataEntry("GUID")):
+        basefile = self.getMetaDataEntry("base_file", self._id)  #if basefile is none, this is a basefile.
+        for container in UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(base_file = basefile):
             container._read_only = read_only
 
     ##  Overridden from InstanceContainer
@@ -58,7 +65,7 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
 
         basefile = self.getMetaDataEntry("base_file", self._id)  #if basefile is none, this is a basefile.
         # Update all containers that share GUID and basefile
-        for container in UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(GUID = self.getMetaDataEntry("GUID"), base_file = basefile):
+        for container in UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(base_file = basefile):
             container.setMetaData(copy.deepcopy(self._metadata))
 
     ##  Overridden from InstanceContainer, similar to setMetaDataEntry.
@@ -77,8 +84,7 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
         basefile = self.getMetaDataEntry("base_file", self._id)  # if basefile is none, this is a basefile.
         # Update the basefile as well, this is actually what we're trying to do
         # Update all containers that share GUID and basefile
-        containers = UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(id=basefile) + UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(
-                GUID=self.getMetaDataEntry("GUID"), base_file=basefile)
+        containers = UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(base_file = basefile)
         for container in containers:
             container.setName(new_name)
 
@@ -89,7 +95,8 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
 
         super().setProperty(key, property_name, property_value)
 
-        for container in UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(GUID = self.getMetaDataEntry("GUID")):
+        basefile = self.getMetaDataEntry("base_file", self._id)  #if basefile is none, this is a basefile.
+        for container in UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(base_file = basefile):
             container._dirty = True
 
     ##  Overridden from InstanceContainer
@@ -244,6 +251,7 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
         data = ET.fromstring(serialized)
 
         self.addMetaDataEntry("type", "material")
+        self.addMetaDataEntry("base_file", self.id)
 
         # TODO: Add material verfication
         self.addMetaDataEntry("status", "unknown")
@@ -300,7 +308,7 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
                 global_setting_values[self.__material_property_setting_map[key]] = entry.text
             elif key in self.__unmapped_settings:
                 if key == "hardware compatible":
-                    global_compatibility = entry.text.lower() not in ["no", "false", "0"]
+                    global_compatibility = parseBool(entry.text)
             else:
                 Logger.log("d", "Unsupported material setting %s", key)
 
@@ -317,7 +325,7 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
                     machine_setting_values[self.__material_property_setting_map[key]] = entry.text
                 elif key in self.__unmapped_settings:
                     if key == "hardware compatible":
-                        machine_compatibility = entry.text.lower() not in ["no", "false", "0"]
+                        machine_compatibility = parseBool(entry.text)
                 else:
                     Logger.log("d", "Unsupported material setting %s", key)
 
@@ -340,7 +348,6 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
                     new_material.setName(self.getName())
                     new_material.setMetaData(copy.deepcopy(self.getMetaData()))
                     new_material.setDefinition(definition)
-                    new_material.addMetaDataEntry("base_file", self.id)
 
                     for key, value in global_setting_values.items():
                         new_material.setProperty(key, "value", value, definition)
@@ -376,7 +383,7 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
                             hotend_setting_values[self.__material_property_setting_map[key]] = entry.text
                         elif key in self.__unmapped_settings:
                             if key == "hardware compatible":
-                                hotend_compatibility = entry.text.lower() not in ["no", "false", "0"]
+                                hotend_compatibility = parseBool(entry.text)
                         else:
                             Logger.log("d", "Unsupported material setting %s", key)
 
@@ -387,7 +394,6 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
                     new_hotend_material.setName(self.getName())
                     new_hotend_material.setMetaData(copy.deepcopy(self.getMetaData()))
                     new_hotend_material.setDefinition(definition)
-                    new_hotend_material.addMetaDataEntry("base_file", self.id)
                     new_hotend_material.addMetaDataEntry("variant", variant_containers[0].id)
 
                     for key, value in global_setting_values.items():
