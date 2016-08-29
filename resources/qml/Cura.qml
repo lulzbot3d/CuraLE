@@ -272,6 +272,38 @@ UM.MainWindow
                 }
             }
 
+	    Label
+            {
+		id: selectionName
+                anchors
+		{
+		    bottom: jobSpecs.top;
+                    right: sidebar.left;
+                    bottomMargin: UM.Theme.getSize("default_margin").height;
+                    rightMargin: UM.Theme.getSize("default_margin").width;
+		}
+		text: ""
+		font: UM.Theme.getFont("small")
+                color: UM.Theme.getColor("text_subtext")
+		function changed()
+		{
+		    var count = UM.Selection.getCount
+		    if(count == 1)
+		    {
+			selectionName.text = "Selected object: " + UM.Selection.getSelectionName
+		    }
+		    else if(count > 1)
+		    {
+			selectionName.text = "Multiple objects selected"
+		    }
+		    else
+		    {
+			selectionName.text = ""
+		    }
+		}
+		Component.onCompleted: {UM.Selection.selectionChanged.connect(changed)}
+            }
+
             Loader
             {
                 id: view_panel
