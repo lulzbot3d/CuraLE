@@ -92,7 +92,7 @@ Menu
     {
         id: materialsModel
         filter: materialFilter()
-        onDataChanged: populateMenuModels()
+        onModelReset: populateMenuModels()
     }
 
     ExclusiveGroup { id: group }
@@ -101,17 +101,9 @@ Menu
 
     MenuItem { action: Cura.Actions.manageMaterials }
 
-    function materialFilter(brand, material)
+    function materialFilter()
     {
         var result = { "type": "material" };
-        if(brand)
-        {
-            result.brand = brand;
-        }
-        if(material)
-        {
-            result.material = material;
-        }
         if(Cura.MachineManager.filterMaterialsByMachine)
         {
             result.definition = Cura.MachineManager.activeDefinitionId;
@@ -145,7 +137,7 @@ Menu
                 var materialId = items[i].id;
                 genericMaterialsModel.append({
                     id:materialId,
-                    name:materialName
+                    name:items[i].name
                 });
             }
             else
@@ -160,8 +152,8 @@ Menu
                     materialsByBrand[brandName][materialName] = [];
                 }
                 materialsByBrand[brandName][materialName].push({
-                    name: items[i].name,
-                    id: items[i].id
+                    id: items[i].id,
+                    name: items[i].name
                 });
             }
         }

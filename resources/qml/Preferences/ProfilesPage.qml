@@ -71,13 +71,13 @@ UM.ManagementPage
         },
         Button
         {
-            text: base.currentItem && (base.currentItem.id == Cura.MachineManager.activeQualityId) ? catalog.i18nc("@label", "Create") : catalog.i18nc("@label", "Duplicate")
+            text: base.currentItem && (base.currentItem.id == Cura.MachineManager.activeQualityId) && Cura.MachineManager.hasUserSettings ? catalog.i18nc("@label", "Create") : catalog.i18nc("@label", "Duplicate")
             iconName: "list-add";
 
             onClicked:
             {
                 var selectedContainer;
-                if (base.currentItem.id == Cura.MachineManager.activeQualityId) {
+                if (base.currentItem.id == Cura.MachineManager.activeQualityId && Cura.MachineManager.hasUserSettings) {
                     selectedContainer = Cura.ContainerManager.createQualityChanges();
                 } else {
                     selectedContainer = Cura.ContainerManager.duplicateQualityOrQualityChanges(base.currentItem.name);
@@ -101,7 +101,12 @@ UM.ManagementPage
             text: catalog.i18nc("@action:button", "Rename");
             iconName: "edit-rename";
             enabled: base.currentItem != null ? !base.currentItem.readOnly : false;
-            onClicked: { renameDialog.removeWhenRejected = false; renameDialog.open(); renameDialog.selectText(); }
+            onClicked:
+            {
+                renameDialog.removeWhenRejected = false;
+                renameDialog.open();
+                renameDialog.selectText();
+            }
         },
         Button
         {
@@ -121,10 +126,16 @@ UM.ManagementPage
     scrollviewCaption: catalog.i18nc("@label %1 is printer name","Printer: %1").arg(Cura.MachineManager.activeMachineName)
 
     signal showProfileNameDialog()
-    onShowProfileNameDialog: { renameDialog.removeWhenRejected = true; renameDialog.open(); renameDialog.selectText(); }
+    onShowProfileNameDialog:
+    {
+        renameDialog.removeWhenRejected = true;
+        renameDialog.open();
+        renameDialog.selectText();
+    }
 
     signal selectContainer(string name)
-    onSelectContainer: {
+    onSelectContainer:
+    {
         objectList.currentIndex = objectList.model.find("name", name);
     }
 
@@ -248,8 +259,10 @@ UM.ManagementPage
                 Cura.ContainerManager.renameQualityChanges(base.currentItem.name, newName)
                 objectList.currentIndex = -1 //Reset selection.
             }
-            onRejected: {
-                if(removeWhenRejected) {
+            onRejected:
+            {
+                if(removeWhenRejected)
+                {
                     Cura.ContainerManager.removeQualityChanges(base.currentItem.name)
                 }
             }

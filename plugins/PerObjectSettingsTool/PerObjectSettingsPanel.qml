@@ -44,13 +44,11 @@ Item {
 
                 model: Cura.ExtrudersModel
                 {
-                    id: extruders_model
-                    onRowsInserted: extruderSelector.visible = extruders_model.rowCount() > 1
-                    onModelReset:   extruderSelector.visible = extruders_model.rowCount() > 1
-                    onModelChanged: extruderSelector.color = extruders_model.getItem(extruderSelector.currentIndex).color
+                    id: extrudersModel
+                    onModelChanged: extruderSelector.color = extrudersModel.getItem(extruderSelector.currentIndex).color
                 }
-                property string color: extruders_model.getItem(extruderSelector.currentIndex).color
-                visible: extruders_model.rowCount() > 1
+                property string color: extrudersModel.getItem(extruderSelector.currentIndex).color
+                visible: machineExtruderCount.properties.value > 1
                 textRole: "name"
                 width: UM.Theme.getSize("setting_control").width
                 height: UM.Theme.getSize("section").height
@@ -130,19 +128,19 @@ Item {
 
                 onActivated:
                 {
-                    UM.ActiveTool.setProperty("SelectedActiveExtruder", extruders_model.getItem(index).id);
-                    extruderSelector.color = extruders_model.getItem(index).color;
+                    UM.ActiveTool.setProperty("SelectedActiveExtruder", extrudersModel.getItem(index).id);
+                    extruderSelector.color = extrudersModel.getItem(index).color;
                 }
                 onModelChanged: updateCurrentIndex();
 
                 function updateCurrentIndex()
                 {
-                    for(var i = 0; i < extruders_model.rowCount(); ++i)
+                    for(var i = 0; i < extrudersModel.rowCount(); ++i)
                     {
-                        if(extruders_model.getItem(i).id == UM.ActiveTool.properties.getValue("SelectedActiveExtruder"))
+                        if(extrudersModel.getItem(i).id == UM.ActiveTool.properties.getValue("SelectedActiveExtruder"))
                         {
                             extruderSelector.currentIndex = i;
-                            extruderSelector.color = extruders_model.getItem(i).color;
+                            extruderSelector.color = extrudersModel.getItem(i).color;
                             return;
                         }
                     }
@@ -428,6 +426,16 @@ Item {
                 }
             }
         ]
+    }
+
+    UM.SettingPropertyProvider
+    {
+        id: machineExtruderCount
+
+        containerStackId: Cura.MachineManager.activeMachineId
+        key: "machine_extruder_count"
+        watchedProperties: [ "value" ]
+        storeIndex: 0
     }
 
     SystemPalette { id: palette; }

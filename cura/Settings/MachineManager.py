@@ -19,6 +19,7 @@ from UM.i18n import i18nCatalog
 catalog = i18nCatalog("cura")
 
 import time
+import os
 
 class MachineManager(QObject):
     def __init__(self, parent = None):
@@ -502,7 +503,7 @@ class MachineManager(QObject):
         containers = UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(id = material_id)
         if not containers or not self._active_container_stack:
             return
-
+        Logger.log("d", "Attempting to change the active material to %s", material_id)
         old_variant = self._active_container_stack.findContainer({"type": "variant"})
         old_material = self._active_container_stack.findContainer({"type": "material"})
         old_quality = self._active_container_stack.findContainer({"type": "quality"})
@@ -512,7 +513,7 @@ class MachineManager(QObject):
             return
         if old_quality_changes.getId() == "empty_quality_changes": #Don't want the empty one.
             old_quality_changes = None
-
+        self.blurSettings.emit()
         old_material.nameChanged.disconnect(self._onMaterialNameChanged)
 
         material_index = self._active_container_stack.getContainerIndex(old_material)
@@ -535,9 +536,11 @@ class MachineManager(QObject):
         containers = UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(id = variant_id)
         if not containers or not self._active_container_stack:
             return
+        Logger.log("d", "Attempting to change the active variant to %s", variant_id)
         old_variant = self._active_container_stack.findContainer({"type": "variant"})
         old_material = self._active_container_stack.findContainer({"type": "material"})
         if old_variant:
+            self.blurSettings.emit()
             variant_index = self._active_container_stack.getContainerIndex(old_variant)
             self._active_container_stack.replaceContainer(variant_index, containers[0])
 
@@ -554,6 +557,9 @@ class MachineManager(QObject):
         if not containers or not self._global_container_stack:
             return
 
+        Logger.log("d", "Attempting to change the active quality to %s", quality_id)
+
+        self.blurSettings.emit()
         quality_container = None
         quality_changes_container = self._empty_quality_changes_container
 
@@ -828,7 +834,22 @@ class MachineManager(QObject):
             return containers[0]
 
         if "material" in search_criteria:
-            # If a quality for this specific material cannot be found, try finding qualities for a generic version of the material
+            # First check if we can solve our material not found problem by checking if we can find quality containers
+            # that are assigned to the parents of this material profile.
+            try:
+                inherited_files = material_container.getInheritedFiles()
+                if inherited_files:
+                    for inherited_file in inherited_files:
+                        # Extract the ID from the path we used to load the file.
+                        search_criteria["material"] = os.path.basename(inherited_file).split(".")[0]
+                        containers = container_registry.findInstanceContainers(**search_criteria)
+                        if containers:
+                            return containers[0]
+            except AttributeError:  # Material_container does not support inheritance.
+                pass
+
+            # We still weren't able to find a quality for this specific material.
+            # Try to find qualities for a generic version of the material.
             material_search_criteria = { "type": "material", "material": material_container.getMetaDataEntry("material"), "color_name": "Generic" }
             if definition.getMetaDataEntry("has_machine_quality"):
                 if material_container:
