@@ -22,3 +22,7 @@ translate([0, y, plate_thickness]){
 translate([x, y, plate_thickness]){
 	cylinder(h = washer_thickness, r1 = radius, r2 = radius, center = false);
 }
+
+translate([20, y, 0]){
+	import("wiper_mount_v1.1.stl");
+}
