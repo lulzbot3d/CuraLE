@@ -1070,6 +1070,58 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 },
+                "material_temperature_soften":
+                {
+                    "label": "Soften Temperature",
+                    "description": "",
+                    "unit": "°C",
+                    "type": "float",
+                    "default_value": 210,
+                    "minimum_value": "-273.15",
+                    "maximum_value_warning": "260",
+                    "enabled": "False",
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true
+                },
+                "material_temperature_probe":
+                {
+                    "label": "Probe Temperature",
+                    "description": "",
+                    "unit": "°C",
+                    "type": "float",
+                    "default_value": 210,
+                    "minimum_value": "-273.15",
+                    "maximum_value_warning": "260",
+                    "enabled": "False",
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true
+                },
+                "material_temperature_wipe":
+                {
+                    "label": "Wipe Temperature",
+                    "description": "",
+                    "unit": "°C",
+                    "type": "float",
+                    "default_value": 210,
+                    "minimum_value": "-273.15",
+                    "maximum_value_warning": "260",
+                    "enabled": "False",
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true
+                },
+                "material_temperature_part_removal":
+                {
+                    "label": "Part Removal Temperature",
+                    "description": "",
+                    "unit": "°C",
+                    "type": "float",
+                    "default_value": 210,
+                    "minimum_value": "-273.15",
+                    "maximum_value_warning": "260",
+                    "enabled": "False",
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true
+                },
                 "material_flow_temp_graph":
                 {
                     "label": "Flow Temperature Graph",
