@@ -9,6 +9,7 @@
         "manufacturer": "Aleph Objects, Inc.",
         "visible": false,
         "has_materials": true,
+        "first_start_actions": ["MachineSettingsAction"],
         "file_formats": "text/x-gcode;application/x-stl-ascii;application/x-stl-binary;application/x-wavefront-obj;application/x3g"
     },
     
