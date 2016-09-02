@@ -555,10 +555,10 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
         "print cooling": "cool_fan_speed",
         "retraction amount": "retraction_amount",
         "retraction speed": "retraction_speed",
-        "soften temperature": "material_temperature_soften",
-        "probe temperature": "material_temperature_probe",
-        "wipe temperature": "material_temperature_wipe",
-        "part removal temperature": "material_temperature_part_removal"
+        "soften temperature": "material_soften_temperature",
+        "probe temperature": "material_probe_temperature",
+        "wipe temperature": "material_wipe_temperature",
+        "part removal temperature": "material_part_removal_temperature"
     }
     __unmapped_settings = [
         "hardware compatible"

@@ -30,7 +30,7 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 },
-                "material_temperature_soften":
+                "material_soften_temperature":
                 {
                     "label": "Soften Temperature",
                     "description": "The temperature used before z-axis homing.",
@@ -41,7 +41,7 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 },
-                "material_temperature_probe":
+                "material_probe_temperature":
                 {
                     "label": "Probe Temperature",
                     "description": "The temperature used before probing.",
@@ -52,7 +52,7 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 },
-                "material_temperature_wipe":
+                "material_wipe_temperature":
                 {
                     "label": "Wipe Temperature",
                     "description": "The temperature used before nozzle wiping.",
@@ -65,7 +65,7 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 },
-                "material_temperature_part_removal":
+                "material_part_removal_temperature":
                 {
                     "label": "Part Removal Temperature",
                     "description": "The ideal bed temperature to remove the model after printing.",
@@ -86,16 +86,16 @@
         "material_diameter": {
             "default_value": 2.75
         },
-        "material_temperature_soften": {
+        "material_soften_temperature": {
             "enabled": "True"
         },
-        "material_temperature_probe": {
+        "material_probe_temperature": {
             "enabled": "True"
         },
-        "material_temperature_wipe": {
+        "material_wipe_temperature": {
             "enabled": "True"
         },
-        "material_temperature_part_removal": {
+        "material_part_removal_temperature": {
             "enabled": "True"
         }
     }

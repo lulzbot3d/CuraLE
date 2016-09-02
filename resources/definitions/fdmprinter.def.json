@@ -1070,7 +1070,7 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 },
-                "material_temperature_soften":
+                "material_soften_temperature":
                 {
                     "label": "Soften Temperature",
                     "description": "",
@@ -1083,7 +1083,7 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 },
-                "material_temperature_probe":
+                "material_probe_temperature":
                 {
                     "label": "Probe Temperature",
                     "description": "",
@@ -1096,7 +1096,7 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 },
-                "material_temperature_wipe":
+                "material_wipe_temperature":
                 {
                     "label": "Wipe Temperature",
                     "description": "",
@@ -1109,7 +1109,7 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 },
-                "material_temperature_part_removal":
+                "material_part_removal_temperature":
                 {
                     "label": "Part Removal Temperature",
                     "description": "",
