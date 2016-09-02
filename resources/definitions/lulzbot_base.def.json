@@ -13,6 +13,75 @@
         "file_formats": "text/x-gcode;application/x-stl-ascii;application/x-stl-binary;application/x-wavefront-obj;application/x3g"
     },
     
+    "settings": {
+        "material": {
+            "children": {
+                "material_print_temperature":
+                {
+                    "label": "Printing Temperature",
+                    "description": "The temperature used for printing. Set at 0 to pre-heat the printer manually.",
+                    "unit": "°C",
+                    "type": "float",
+                    "default_value": 210,
+                    "minimum_value": "0",
+                    "maximum_value": "300",
+                    "maximum_value_warning": "295",
+                    "enabled": true,
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true
+                },
+                "material_temperature_soften":
+                {
+                    "label": "Soften Temperature",
+                    "description": "The temperature used before z-axis homing.",
+                    "unit": "°C",
+                    "type": "float",
+                    "default_value": 170,
+                    "enabled": true,
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true
+                },
+                "material_temperature_probe":
+                {
+                    "label": "Probe Temperature",
+                    "description": "The temperature used before probing.",
+                    "unit": "°C",
+                    "type": "float",
+                    "default_value": 160,
+                    "enabled": true,
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true
+                },
+                "material_temperature_wipe":
+                {
+                    "label": "Wipe Temperature",
+                    "description": "The temperature used before nozzle wiping.",
+                    "unit": "°C",
+                    "type": "float",
+                    "default_value": 160,
+                    "minimum_value": "0",
+                    "maximum_value_warning": "300",
+                    "enabled": true,
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true
+                },
+                "material_temperature_part_removal":
+                {
+                    "label": "Part Removal Temperature",
+                    "description": "The ideal bed temperature to remove the model after printing.",
+                    "unit": "°C",
+                    "type": "float",
+                    "default_value": 50,
+                    "minimum_value": "0",
+                    "maximum_value": "110",
+                    "enabled": true,
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": false
+                }
+            }
+        } 
+    },
+    
     "overrides": {
         "material_diameter": {
             "default_value": 2.75
@@ -30,5 +99,7 @@
             "enabled": "True"
         }
     }
+    
+    
     
 }
