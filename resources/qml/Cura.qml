@@ -274,34 +274,34 @@ UM.MainWindow
 
 	    Label
             {
-		id: selectionName
+		        id: selectionName
                 anchors
-		{
-		    bottom: jobSpecs.top;
+		        {
+		            bottom: jobSpecs.top;
                     right: sidebar.left;
                     bottomMargin: UM.Theme.getSize("default_margin").height;
                     rightMargin: UM.Theme.getSize("default_margin").width;
-		}
-		text: ""
-		font: UM.Theme.getFont("small")
+		        }
+		        text: ""
+		        font: UM.Theme.getFont("small")
                 color: UM.Theme.getColor("text_subtext")
-		function changed()
-		{
-		    var count = UM.Selection.getCount
-		    if(count == 1)
-		    {
-			selectionName.text = "Selected object: " + UM.Selection.getSelectionName
-		    }
-		    else if(count > 1)
-		    {
-			selectionName.text = "Multiple objects selected"
-		    }
-		    else
-		    {
-			selectionName.text = ""
-		    }
-		}
-		Component.onCompleted: {UM.Selection.selectionChanged.connect(changed)}
+                function changed()
+                {
+                    var count = UM.Scene.numObjectsSelected
+                    if(count == 1 && !UM.Scene.isGroupSelected)
+                    {
+                        selectionName.text = "Selected object: " + UM.Selection.getSelectionName
+                    }
+                    else if(count > 1 ||(count == 1 && UM.Scene.isGroupSelected))
+                    {
+                        selectionName.text = "Multiple objects selected"
+                    }
+                    else
+                    {
+                        selectionName.text = ""
+                    }
+                }
+                Component.onCompleted: {UM.Selection.selectionChanged.connect(changed)}
             }
 
             Loader
