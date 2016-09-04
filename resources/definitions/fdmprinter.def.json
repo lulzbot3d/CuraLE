@@ -1109,19 +1109,6 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 },
-                "material_part_removal_temperature":
-                {
-                    "label": "Part Removal Temperature",
-                    "description": "",
-                    "unit": "°C",
-                    "type": "float",
-                    "default_value": 210,
-                    "minimum_value": "-273.15",
-                    "maximum_value_warning": "260",
-                    "enabled": "False",
-                    "settable_per_mesh": false,
-                    "settable_per_extruder": true
-                },
                 "material_flow_temp_graph":
                 {
                     "label": "Flow Temperature Graph",
@@ -1160,6 +1147,19 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": false,
                     "settable_per_meshgroup": false
+                },
+                "material_part_removal_temperature":
+                {
+                    "label": "Part Removal Temperature",
+                    "description": "",
+                    "unit": "°C",
+                    "type": "float",
+                    "default_value": 210,
+                    "minimum_value": "-273.15",
+                    "maximum_value_warning": "260",
+                    "enabled": "False",
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true
                 },
                 "material_diameter": {
                     "label": "Diameter",

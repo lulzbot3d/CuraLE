@@ -217,11 +217,11 @@ class CuraApplication(QtApplication):
                 infill_sparse_density
             material
                 material_print_temperature
-                material_soften_temperature
-                material_probe_temperature
-                material_wipe_temperature
+                    material_soften_temperature
+                    material_probe_temperature
+                    material_wipe_temperature
                 material_bed_temperature
-                material_part_removal_temperature
+                    material_part_removal_temperature
                 material_diameter
                 material_flow
                 retraction_enable
