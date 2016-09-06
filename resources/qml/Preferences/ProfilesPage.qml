@@ -141,11 +141,12 @@ UM.ManagementPage
 
     scrollviewCaption: catalog.i18nc("@label %1 is printer name","Printer: %1").arg(Cura.MachineManager.activeMachineName)
 
-    signal showProfileNameDialog()
-    onShowProfileNameDialog:
+    signal createProfile()
+    onCreateProfile:
     {
-        renameDialog.open();
-        renameDialog.selectText();
+        newNameDialog.object = base.currentItem != null ? base.currentItem.name : "";
+        newNameDialog.open();
+        newNameDialog.selectText();
     }
 
     signal selectContainer(string name)
@@ -160,7 +161,7 @@ UM.ManagementPage
 
         Label {
             id: profileName
-            text: base.currentItem ? base.currentItem.name r: ""
+            text: base.currentItem ? base.currentItem.name: ""
             font: UM.Theme.getFont("large")
             width: parent.width
             elide: Text.ElideRight
@@ -267,6 +268,7 @@ UM.ManagementPage
 
         UM.RenameDialog
         {
+            title: catalog.i18nc("@title:window", "Rename Profile")
             id: renameDialog;
             object: base.currentItem != null ? base.currentItem.name : ""
             onAccepted:
@@ -279,6 +281,7 @@ UM.ManagementPage
         // Dialog to request a name when creating a new profile
         UM.RenameDialog
         {
+            title: catalog.i18nc("@title:window", "Create Profile")
             id: newNameDialog;
             object: "<new name>";
             onAccepted:
@@ -292,6 +295,7 @@ UM.ManagementPage
         // Dialog to request a name when duplicating a new profile
         UM.RenameDialog
         {
+            title: catalog.i18nc("@title:window", "Duplicate Profile")
             id: newDuplicateNameDialog;
             object: "<new name>";
             onAccepted:

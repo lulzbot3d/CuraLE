@@ -4,6 +4,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
+import QtQuick.Dialogs 1.1
 import QtQuick.Layouts 1.1
 
 import UM 1.1 as UM
@@ -214,6 +215,18 @@ Rectangle
             }
         label: Item { }
         }
+    }
+
+    MessageDialog
+    {
+        id: confirmationDialog
+
+        title: catalog.i18nc("@window:title", "Abort print")
+        icon: StandardIcon.Warning
+        text: catalog.i18nc("@label", "Are you sure you want to abort the print?")
+        standardButtons: StandardButton.Yes | StandardButton.No
+        Component.onCompleted: visible = false
+        onYes: Cura.MachineManager.printerOutputDevices[0].setJobState("abort")
     }
 
     Button
