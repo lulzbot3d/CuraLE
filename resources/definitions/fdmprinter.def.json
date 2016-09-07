@@ -1071,44 +1071,53 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 },
-                "material_soften_temperature":
-                {
-                    "label": "Soften Temperature",
+                "material_print_temperature_cat":{
+                    "label": "Printing Temperatures",
+                    "icon": "category_material",
                     "description": "",
-                    "unit": "°C",
-                    "type": "float",
-                    "default_value": 210,
-                    "minimum_value": "-273.15",
-                    "maximum_value_warning": "260",
+                    "type": "category",
                     "enabled": "False",
-                    "settable_per_mesh": false,
-                    "settable_per_extruder": true
-                },
-                "material_probe_temperature":
-                {
-                    "label": "Probe Temperature",
-                    "description": "",
-                    "unit": "°C",
-                    "type": "float",
-                    "default_value": 210,
-                    "minimum_value": "-273.15",
-                    "maximum_value_warning": "260",
-                    "enabled": "False",
-                    "settable_per_mesh": false,
-                    "settable_per_extruder": true
-                },
-                "material_wipe_temperature":
-                {
-                    "label": "Wipe Temperature",
-                    "description": "",
-                    "unit": "°C",
-                    "type": "float",
-                    "default_value": 210,
-                    "minimum_value": "-273.15",
-                    "maximum_value_warning": "260",
-                    "enabled": "False",
-                    "settable_per_mesh": false,
-                    "settable_per_extruder": true
+                    "children":{
+                        "material_soften_temperature":
+                        {
+                            "label": "Soften Temperature",
+                            "description": "",
+                            "unit": "°C",
+                            "type": "float",
+                            "default_value": 210,
+                            "minimum_value": "-273.15",
+                            "maximum_value_warning": "260",
+                            "enabled": "False",
+                            "settable_per_mesh": false,
+                            "settable_per_extruder": true
+                        },
+                        "material_probe_temperature":
+                        {
+                            "label": "Probe Temperature",
+                            "description": "",
+                            "unit": "°C",
+                            "type": "float",
+                            "default_value": 210,
+                            "minimum_value": "-273.15",
+                            "maximum_value_warning": "260",
+                            "enabled": "False",
+                            "settable_per_mesh": false,
+                            "settable_per_extruder": true
+                        },
+                        "material_wipe_temperature":
+                        {
+                            "label": "Wipe Temperature",
+                            "description": "",
+                            "unit": "°C",
+                            "type": "float",
+                            "default_value": 210,
+                            "minimum_value": "-273.15",
+                            "maximum_value_warning": "260",
+                            "enabled": "False",
+                            "settable_per_mesh": false,
+                            "settable_per_extruder": true
+                        }
+                    }
                 },
                 "material_flow_temp_graph":
                 {
@@ -1135,7 +1144,8 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 },
-                "material_bed_temperature": {
+                "material_bed_temperature":
+                {
                     "label": "Build Plate Temperature",
                     "description": "The temperature used for the heated build plate. Set at 0 to pre-heat the printer manually.",
                     "unit": "°C",
@@ -1149,18 +1159,27 @@
                     "settable_per_extruder": false,
                     "settable_per_meshgroup": false
                 },
-                "material_part_removal_temperature":
-                {
-                    "label": "Part Removal Temperature",
+                "material_bed_temperature_cat": {
+                    "label": "Build Plate Settings",
+                    "icon": "category_material",
                     "description": "",
-                    "unit": "°C",
-                    "type": "float",
-                    "default_value": 210,
-                    "minimum_value": "-273.15",
-                    "maximum_value_warning": "260",
+                    "type": "category",
                     "enabled": "False",
-                    "settable_per_mesh": false,
-                    "settable_per_extruder": true
+                    "children": {
+                        "material_part_removal_temperature":
+                        {
+                            "label": "Part Removal Temperature",
+                            "description": "",
+                            "unit": "°C",
+                            "type": "float",
+                            "default_value": 210,
+                            "minimum_value": "-273.15",
+                            "maximum_value_warning": "260",
+                            "enabled": "False",
+                            "settable_per_mesh": false,
+                            "settable_per_extruder": true
+                        }
+                    }
                 },
                 "material_diameter": {
                     "label": "Diameter",
