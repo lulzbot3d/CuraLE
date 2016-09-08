@@ -102,9 +102,18 @@
                     }
                 }
             }
-        } 
+        },
+        "resolution":
+        {
+            "children":
+            {
+                "layer_height_0":
+                {
+                    "maximum_value_warning": "0.5"
+                }
+            }
+        }
     },
-    
     "overrides": {
         "material_diameter":
         {
