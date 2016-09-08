@@ -3,7 +3,8 @@
     "version": 2,
     "name": "LulzBot",
     "inherits": "fdmprinter",
-    "metadata": {
+    "metadata":
+    {
         "author": "Aleph Objects, Inc.",
         "category": "LulzBot",
         "manufacturer": "Aleph Objects, Inc.",
@@ -13,9 +14,12 @@
         "file_formats": "text/x-gcode;application/x-stl-ascii;application/x-stl-binary;application/x-wavefront-obj;application/x3g"
     },
     
-    "settings": {
-        "material": {
-            "children": {
+    "settings":
+    {
+        "material":
+        {
+            "children":
+            {
                 "material_print_temperature":
                 {
                     "label": "Printing Temperature",
@@ -30,7 +34,8 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 },
-                "material_print_temperature_cat": {
+                "material_print_temperature_cat":
+                {
                     "children":
                     {
                         "material_soften_temperature":
@@ -70,7 +75,8 @@
                         }
                     }
                 },
-                "material_bed_temperature_cat": {
+                "material_bed_temperature_cat":
+                {
                     "children":
                     {
                         "material_part_removal_temperature":
@@ -93,19 +99,24 @@
     },
     
     "overrides": {
-        "material_diameter": {
+        "material_diameter":
+        {
             "default_value": 2.75
         },
-        "material_soften_temperature": {
+        "material_soften_temperature":
+        {
             "enabled": "True"
         },
-        "material_probe_temperature": {
+        "material_probe_temperature":
+        {
             "enabled": "True"
         },
-        "material_wipe_temperature": {
+        "material_wipe_temperature":
+        {
             "enabled": "True"
         },
-        "material_part_removal_temperature": {
+        "material_part_removal_temperature":
+        {
             "enabled": "True"
         }
     }
