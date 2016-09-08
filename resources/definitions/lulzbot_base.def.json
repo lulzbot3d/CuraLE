@@ -9,7 +9,7 @@
         "category": "LulzBot",
         "manufacturer": "Aleph Objects, Inc.",
         "visible": false,
-        "has_materials": true,
+        "has_materials": false,
         "first_start_actions": ["MachineSettingsAction"],
         "file_formats": "text/x-gcode;application/x-stl-ascii;application/x-stl-binary;application/x-wavefront-obj;application/x3g"
     },
@@ -26,10 +26,10 @@
                     "description": "The temperature used for printing. Set at 0 to pre-heat the printer manually.",
                     "unit": "°C",
                     "type": "float",
-                    "default_value": 210,
                     "minimum_value": "0",
-                    "maximum_value": "300",
+                    "default_value": 210,
                     "maximum_value_warning": "295",
+                    "maximum_value": "300",
                     "enabled": true,
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
@@ -41,10 +41,13 @@
                         "material_soften_temperature":
                         {
                             "label": "Soften Temperature",
-                            "description": "The temperature used before z-axis homing.",
+                            "description": "The nozzle temperature used before z-axis homing.",
                             "unit": "°C",
                             "type": "float",
+                            "minimum_value": "0",
                             "default_value": 170,
+                            "maximum_value_warning": "295",
+                            "maximum_value": "300",
                             "enabled": true,
                             "settable_per_mesh": false,
                             "settable_per_extruder": true
@@ -52,10 +55,13 @@
                         "material_probe_temperature":
                         {
                             "label": "Probe Temperature",
-                            "description": "The temperature used before probing.",
+                            "description": "The nozzle temperature used before probing.",
                             "unit": "°C",
                             "type": "float",
+                            "minimum_value": "0",
                             "default_value": 160,
+                            "maximum_value_warning": "295",
+                            "maximum_value": "300",
                             "enabled": true,
                             "settable_per_mesh": false,
                             "settable_per_extruder": true
@@ -63,15 +69,16 @@
                         "material_wipe_temperature":
                         {
                             "label": "Wipe Temperature",
-                            "description": "The temperature used before nozzle wiping.",
+                            "description": "The nozzle temperature used before nozzle wiping.",
                             "unit": "°C",
                             "type": "float",
-                            "default_value": 160,
                             "minimum_value": "0",
-                            "maximum_value_warning": "300",
+                            "default_value": 160,
+                            "maximum_value_warning": "195",
+                            "maximum_value": "200",
                             "enabled": true,
                             "settable_per_mesh": false,
-                            "settable_per_extruder": true
+                            "settable_per_extruder": false
                         }
                     }
                 },
@@ -85,10 +92,10 @@
                             "description": "The ideal bed temperature to remove the model after printing.",
                             "unit": "°C",
                             "type": "float",
-                            "default_value": 50,
                             "minimum_value": "0",
+                            "default_value": 50,
                             "maximum_value": "110",
-                            "enabled": true,
+                            "enabled": "machine_heated_bed",
                             "settable_per_mesh": false,
                             "settable_per_extruder": false
                         }
