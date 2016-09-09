@@ -3,24 +3,26 @@
     "version": 2,
     "name": "LulzBot",
     "inherits": "fdmprinter",
-    "metadata":
+    "metadata": 
     {
         "author": "Aleph Objects, Inc.",
         "category": "LulzBot",
         "manufacturer": "Aleph Objects, Inc.",
         "visible": false,
         "has_materials": false,
-        "first_start_actions": ["MachineSettingsAction"],
+        "first_start_actions": 
+        [
+            "MachineSettingsAction"
+        ],
         "file_formats": "text/x-gcode;application/x-stl-ascii;application/x-stl-binary;application/x-wavefront-obj;application/x3g"
     },
-    
-    "settings":
+    "settings": 
     {
-        "material":
+        "material": 
         {
-            "children":
+            "children": 
             {
-                "material_print_temperature":
+                "material_print_temperature": 
                 {
                     "label": "Printing Temperature",
                     "description": "The temperature used for printing. Set at 0 to pre-heat the printer manually.",
@@ -33,9 +35,9 @@
                     "enabled": true,
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
-                    "children":
+                    "children": 
                     {
-                        "material_soften_temperature":
+                        "material_soften_temperature": 
                         {
                             "label": "Soften Temperature",
                             "description": "The nozzle temperature used before z-axis homing.",
@@ -49,7 +51,7 @@
                             "settable_per_mesh": false,
                             "settable_per_extruder": true
                         },
-                        "material_wipe_temperature":
+                        "material_wipe_temperature": 
                         {
                             "label": "Wipe Temperature",
                             "description": "The nozzle temperature used before nozzle wiping.",
@@ -63,7 +65,7 @@
                             "settable_per_mesh": false,
                             "settable_per_extruder": false
                         },
-                        "material_probe_temperature":
+                        "material_probe_temperature": 
                         {
                             "label": "Probe Temperature",
                             "description": "The nozzle temperature used before probing.",
@@ -79,11 +81,11 @@
                         }
                     }
                 },
-                "material_bed_temperature":
+                "material_bed_temperature": 
                 {
-                    "children":
+                    "children": 
                     {
-                        "material_part_removal_temperature":
+                        "material_part_removal_temperature": 
                         {
                             "label": "Part Removal Temperature",
                             "description": "The ideal bed temperature to remove the model after printing.",
@@ -100,40 +102,38 @@
                 }
             }
         },
-        "resolution":
+        "resolution": 
         {
-            "children":
+            "children": 
             {
-                "layer_height_0":
+                "layer_height_0": 
                 {
                     "maximum_value_warning": "0.5"
                 }
             }
         }
     },
-    "overrides": {
-        "material_diameter":
+    "overrides": 
+    {
+        "material_diameter": 
         {
             "default_value": 2.75
         },
-        "material_soften_temperature":
+        "material_soften_temperature": 
         {
             "enabled": "True"
         },
-        "material_probe_temperature":
+        "material_probe_temperature": 
         {
             "enabled": "True"
         },
-        "material_wipe_temperature":
+        "material_wipe_temperature": 
         {
             "enabled": "True"
         },
-        "material_part_removal_temperature":
+        "material_part_removal_temperature": 
         {
             "enabled": "True"
         }
     }
-    
-    
-    
 }
