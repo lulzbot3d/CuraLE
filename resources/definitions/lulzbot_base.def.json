@@ -52,20 +52,6 @@
                             "settable_per_mesh": false,
                             "settable_per_extruder": true
                         },
-                        "material_probe_temperature":
-                        {
-                            "label": "Probe Temperature",
-                            "description": "The nozzle temperature used before probing.",
-                            "unit": "°C",
-                            "type": "float",
-                            "minimum_value": "0",
-                            "default_value": 160,
-                            "maximum_value_warning": "295",
-                            "maximum_value": "300",
-                            "enabled": true,
-                            "settable_per_mesh": false,
-                            "settable_per_extruder": true
-                        },
                         "material_wipe_temperature":
                         {
                             "label": "Wipe Temperature",
@@ -79,6 +65,20 @@
                             "enabled": true,
                             "settable_per_mesh": false,
                             "settable_per_extruder": false
+                        },
+                        "material_probe_temperature":
+                        {
+                            "label": "Probe Temperature",
+                            "description": "The nozzle temperature used before probing.",
+                            "unit": "°C",
+                            "type": "float",
+                            "minimum_value": "0",
+                            "default_value": 160,
+                            "maximum_value_warning": "295",
+                            "maximum_value": "300",
+                            "enabled": true,
+                            "settable_per_mesh": false,
+                            "settable_per_extruder": true
                         }
                     }
                 },
