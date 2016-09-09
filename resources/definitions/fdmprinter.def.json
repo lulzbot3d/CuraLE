@@ -1070,14 +1070,7 @@
                     "maximum_value_warning": "260",
                     "enabled": "not (material_flow_dependent_temperature)",
                     "settable_per_mesh": false,
-                    "settable_per_extruder": true
-                },
-                "material_print_temperature_cat":{
-                    "label": "Printing Temperatures",
-                    "icon": "category_material",
-                    "description": "",
-                    "type": "category",
-                    "enabled": "False",
+                    "settable_per_extruder": true,
                     "children":{
                         "material_soften_temperature":
                         {
@@ -1159,14 +1152,7 @@
                     "enabled": "machine_heated_bed",
                     "settable_per_mesh": false,
                     "settable_per_extruder": false,
-                    "settable_per_meshgroup": false
-                },
-                "material_bed_temperature_cat": {
-                    "label": "Build Plate Settings",
-                    "icon": "category_material",
-                    "description": "",
-                    "type": "category",
-                    "enabled": "False",
+                    "settable_per_meshgroup": false,
                     "children": {
                         "material_part_removal_temperature":
                         {

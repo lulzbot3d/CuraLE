@@ -32,10 +32,7 @@
                     "maximum_value": "300",
                     "enabled": true,
                     "settable_per_mesh": false,
-                    "settable_per_extruder": true
-                },
-                "material_print_temperature_cat":
-                {
+                    "settable_per_extruder": true,
                     "children":
                     {
                         "material_soften_temperature":
@@ -82,7 +79,7 @@
                         }
                     }
                 },
-                "material_bed_temperature_cat":
+                "material_bed_temperature":
                 {
                     "children":
                     {
