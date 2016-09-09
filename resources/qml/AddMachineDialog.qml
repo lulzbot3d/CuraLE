@@ -17,7 +17,7 @@ UM.Dialog
     id: base
     title: catalog.i18nc("@title:window", "Add Printer")
     property bool firstRun: false
-    property string preferredCategory: "Ultimaker"
+    property string preferredCategory: "LulzBot"
     property string activeCategory: preferredCategory
 
     onVisibilityChanged:
