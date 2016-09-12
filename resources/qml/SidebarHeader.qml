@@ -59,6 +59,30 @@ Column
             width: parent.width * 0.55 + UM.Theme.getSize("default_margin").width
 
             menu: PrinterMenu { }
+
+            UM.SimpleButton
+            {
+                id: customisedSettingsp
+
+                visible: Cura.MachineManager.isMachineChanged(Cura.MachineManager.activeMachineId);
+                height: parent.height * 0.6
+                width: parent.height * 0.6
+
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                anchors.rightMargin: UM.Theme.getSize("setting_preferences_button_margin").width - UM.Theme.getSize("default_margin").width
+
+                color: hovered ? UM.Theme.getColor("setting_control_button_hover") : UM.Theme.getColor("setting_control_button");
+                iconSource: UM.Theme.getIcon("star");
+
+                onClicked: Cura.Actions.configureMachines.trigger()
+                onEntered:
+                {
+                    var content = catalog.i18nc("@tooltip","Printer settings was modified.\n\nClick to open the machine manager.")
+                    base.showTooltip(machineSelectionRow, Qt.point(0, machineSelectionRow.height / 2),  content)
+                }
+                onExited: base.hideTooltip()
+            }
         }
     }
 
