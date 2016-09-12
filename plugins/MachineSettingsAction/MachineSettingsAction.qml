@@ -281,6 +281,8 @@ Cura.MachineAction
                 }
             }
 
+
+
             Row
             {
                 spacing: UM.Theme.getSize("default_margin").width
@@ -301,6 +303,10 @@ Cura.MachineAction
                         width: parent.width
                         height: parent.height - y
                         text: machineStartGcodeProvider.properties.value
+                        font:
+                        {
+                            family: "monospace";
+                        }
                         onActiveFocusChanged:
                         {
                             if(!activeFocus)
@@ -323,6 +329,10 @@ Cura.MachineAction
                         width: parent.width
                         height: parent.height - y
                         text: machineEndGcodeProvider.properties.value
+                        font:
+                        {
+                            family: "monospace";
+                        }
                         onActiveFocusChanged:
                         {
                             if(!activeFocus)
