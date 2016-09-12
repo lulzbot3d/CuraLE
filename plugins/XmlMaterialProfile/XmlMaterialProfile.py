@@ -22,35 +22,6 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
         super().__init__(container_id, *args, **kwargs)
         self._inherited_files = []
 
-    ##  Overridden from InstanceContainer
-    def duplicate(self, new_id, new_name = None):
-        base_file = self.getMetaDataEntry("base_file", None)
-
-        if base_file != self.id:
-            containers = UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(id = base_file)
-            if containers:
-                new_basefile = containers[0].duplicate(self.getMetaDataEntry("brand") + "_" + new_id, new_name)
-                base_file = new_basefile.id
-                UM.Settings.ContainerRegistry.getInstance().addContainer(new_basefile)
-
-                new_id = self.getMetaDataEntry("brand") + "_" + new_id + "_" + self.getDefinition().getId()
-                variant = self.getMetaDataEntry("variant")
-                if variant:
-                    variant_containers = UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(id = variant)
-                    if variant_containers:
-                        new_id += "_" + variant_containers[0].getName().replace(" ", "_")
-            has_base_file = True
-        else:
-            has_base_file = False
-
-        new_id = UM.Settings.ContainerRegistry.getInstance().createUniqueName("material", self._id, new_id, "")
-        result = super().duplicate(new_id, new_name)
-        if has_base_file:
-            result.setMetaDataEntry("base_file", base_file)
-        else:
-            result.setMetaDataEntry("base_file", result.id)
-        return result
-
     def getInheritedFiles(self):
         return self._inherited_files
 
@@ -63,8 +34,12 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
             container._read_only = read_only  # prevent loop instead of calling setReadOnly
 
     ##  Overridden from InstanceContainer
+    #   set the meta data for all machine / variant combinations
     def setMetaDataEntry(self, key, value):
         if self.isReadOnly():
+            return
+        if self.getMetaDataEntry(key, None) == value:
+            # Prevent loop caused by for loop.
             return
 
         super().setMetaDataEntry(key, value)
@@ -72,7 +47,7 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
         basefile = self.getMetaDataEntry("base_file", self._id)  #if basefile is self.id, this is a basefile.
         # Update all containers that share GUID and basefile
         for container in UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(base_file = basefile):
-            container.setMetaData(copy.deepcopy(self._metadata))
+            container.setMetaDataEntry(key, value)
 
     ##  Overridden from InstanceContainer, similar to setMetaDataEntry.
     #   without this function the setName would only set the name of the specific nozzle / material / machine combination container
@@ -103,10 +78,16 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
     #
     #     basefile = self.getMetaDataEntry("base_file", self._id)  #if basefile is self.id, this is a basefile.
     #     for container in UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(base_file = basefile):
-    #         container._dirty = True
+    #         if not container.isReadOnly():
+    #             container.setDirty(True)
 
     ##  Overridden from InstanceContainer
+    # base file: global settings + supported machines
+    # machine / variant combination: only changes for itself.
     def serialize(self):
+        if self._read_only:
+            return
+
         registry = UM.Settings.ContainerRegistry.getInstance()
 
         base_file = self.getMetaDataEntry("base_file", "")
@@ -114,7 +95,7 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
             # Since we create an instance of XmlMaterialProfile for each machine and nozzle in the profile,
             # we should only serialize the "base" material definition, since that can then take care of
             # serializing the machine/nozzle specific profiles.
-            raise NotImplementedError("Cannot serialize non-root XML materials")
+            raise NotImplementedError("Ignoring serializing non-root XML materials, the data is contained in the base material")
 
         builder = ET.TreeBuilder()
 
@@ -156,6 +137,10 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
 
         for key, value in metadata.items():
             builder.start(key)
+            # Normally value is a string.
+            # Nones get handled well.
+            if isinstance(value, bool):
+                value = str(value)  # parseBool in deserialize expects 'True'.
             builder.data(value)
             builder.end(key)
 
@@ -248,7 +233,7 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
         _indent(root)
         stream = io.StringIO()
         tree = ET.ElementTree(root)
-        tree.write(stream, "unicode", True)
+        tree.write(stream, encoding="unicode", xml_declaration=True)
 
         return stream.getvalue()
 
@@ -449,8 +434,8 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
             for identifier in identifiers:
                 machine_id = self.__product_id_map.get(identifier.get("product"), None)
                 if machine_id is None:
-                    Logger.log("w", "Cannot create material for unknown machine %s", identifier.get("product"))
-                    continue
+                    # Lets try again with some naive heuristics.
+                    machine_id = identifier.get("product").replace(" ", "").lower()
 
                 definitions = UM.Settings.ContainerRegistry.getInstance().findDefinitionContainers(id = machine_id)
                 if not definitions:
@@ -474,6 +459,7 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
                     new_material._dirty = False
 
                     UM.Settings.ContainerRegistry.getInstance().addContainer(new_material)
+
 
                 hotends = machine.iterfind("./um:hotend", self.__namespaces)
                 for hotend in hotends:
@@ -503,14 +489,12 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
                         else:
                             Logger.log("d", "Unsupported material setting %s", key)
 
-                    if not hotend_compatibility:
-                        continue
-
                     new_hotend_material = XmlMaterialProfile(self.id + "_" + machine_id + "_" + hotend_id.replace(" ", "_"))
                     new_hotend_material.setName(self.getName())
                     new_hotend_material.setMetaData(copy.deepcopy(self.getMetaData()))
                     new_hotend_material.setDefinition(definition)
                     new_hotend_material.addMetaDataEntry("variant", variant_containers[0].id)
+                    new_hotend_material.addMetaDataEntry("compatible", hotend_compatibility)
 
                     for key, value in global_setting_values.items():
                         new_hotend_material.setProperty(key, "value", value, definition)
@@ -528,7 +512,9 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
             # Change the type of this container so it is not shown as an option in menus.
             # This uses InstanceContainer.setMetaDataEntry because otherwise all containers that
             # share this basefile are also updated.
+            dirty = self.isDirty()
             super().setMetaDataEntry("type", "incompatible_material")
+            super().setDirty(dirty) # reset dirty flag after setMetaDataEntry
 
     def _addSettingElement(self, builder, instance):
         try:
