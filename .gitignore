@@ -16,6 +16,7 @@ resources/firmware
 *~
 *.qm
 .idea
+*.orig
 
 # Eclipse+PyDev
 .project
