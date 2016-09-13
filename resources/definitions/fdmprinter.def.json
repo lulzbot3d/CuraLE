@@ -29,6 +29,16 @@
             "icon": "category_machine",
             "children":
             {
+                "machine_name":
+                {
+                    "label": "Machine Type",
+                    "description": "The name of your 3D printer model.",
+                    "default_value": "Unknown",
+                    "type": "str",
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": false,
+                    "settable_per_meshgroup": false
+                },
                 "machine_show_variants":
                 {
                     "label": "Show machine variants",
@@ -3422,7 +3432,7 @@
                             "type": "extruder",
                             "default_value": "0",
                             "value": "support_extruder_nr",
-                            "enabled": "support_enable and machine_extruder_count > 1 and extruderValue(support_extruder_nr, 'support_interface_enable')",
+                            "enabled": "support_enable and machine_extruder_count > 1",
                             "settable_per_mesh": false,
                             "settable_per_extruder": false
                         }

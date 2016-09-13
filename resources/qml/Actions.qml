@@ -43,6 +43,7 @@ Item
     property alias preferences: preferencesAction;
 
     property alias showEngineLog: showEngineLogAction;
+    property alias showProfileFolder: showProfileFolderAction;
     property alias documentation: documentationAction;
     property alias reportBug: reportBugAction;
     property alias about: aboutAction;
@@ -286,6 +287,13 @@ Item
         iconName: "view-list-text";
         shortcut: StandardKey.WhatsThis;
     }
+
+    Action
+    {
+        id: showProfileFolderAction;
+        text: catalog.i18nc("@action:inmenu menubar:help","Show Configuration Folder");
+    }
+
 
     Action
     {

@@ -212,7 +212,7 @@ UM.MainWindow
                 //: Help menu
                 title: catalog.i18nc("@title:menu menubar:toplevel","&Help");
 
-                MenuItem { action: Cura.Actions.showEngineLog; }
+                MenuItem { action: Cura.Actions.showProfileFolder; }
                 MenuItem { action: Cura.Actions.documentation; }
                 MenuItem { action: Cura.Actions.reportBug; }
                 MenuSeparator { }
@@ -707,8 +707,15 @@ UM.MainWindow
 
     Connections
     {
-        target: Cura.Actions.showEngineLog
-        onTriggered: engineLog.visible = true;
+        target: Cura.Actions.showProfileFolder
+        onTriggered:
+        {
+            var path = UM.Resources.getPath(UM.Resources.Preferences, "");
+            if(Qt.platform.os == "windows") {
+                path = path.replace(/\\/g,"/");
+            }
+            Qt.openUrlExternally(path);
+        }
     }
 
     AddMachineDialog

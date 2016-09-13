@@ -2,6 +2,7 @@ from UM.i18n import i18nCatalog
 from UM.OutputDevice.OutputDevice import OutputDevice
 from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QObject
 from PyQt5.QtWidgets import QMessageBox
+import UM.Settings.ContainerRegistry
 
 from enum import IntEnum  # For the connection state tracking.
 from UM.Logger import Logger
@@ -24,6 +25,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
     def __init__(self, device_id, parent = None):
         super().__init__(device_id = device_id, parent = parent)
 
+        self._container_registry = UM.Settings.ContainerRegistry.getInstance()
         self._target_bed_temperature = 0
         self._bed_temperature = 0
         self._num_extruders = 1
@@ -275,6 +277,21 @@ class PrinterOutputDevice(QObject, OutputDevice):
     @pyqtProperty("QVariantList", notify = materialIdChanged)
     def materialIds(self):
         return self._material_ids
+
+    @pyqtProperty("QVariantList", notify = materialIdChanged)
+    def materialNames(self):
+        result = []
+        for material_id in self._material_ids:
+            if material_id is None:
+                result.append(i18n_catalog.i18nc("@item:material", "No material loaded"))
+                continue
+
+            containers = self._container_registry.findInstanceContainers(type = "material", GUID = material_id)
+            if containers:
+                result.append(containers[0].getName())
+            else:
+                result.append(i18n_catalog.i18nc("@item:material", "Unknown material"))
+        return result
 
     ##  Protected setter for the current material id.
     #   /param index Index of the extruder
