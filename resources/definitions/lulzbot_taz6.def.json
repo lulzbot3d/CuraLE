@@ -25,6 +25,10 @@
     },
     "overrides": 
     {
+        "machine_name":
+        {
+            "default_value": "LulzBot TAZ 6"
+        },
         "machine_heated_bed": 
         {
             "default_value": true
