@@ -14,7 +14,6 @@ Column
 {
     id: base;
 
-    property int totalHeightHeader: childrenRect.height
     property int currentExtruderIndex: ExtruderManager.activeExtruderIndex;
 
     spacing: UM.Theme.getSize("default_margin").height
@@ -91,7 +90,7 @@ Column
         id: extrudersList
         property var index: 0
 
-        visible: machineExtruderCount.properties.value > 1
+        visible: machineExtruderCount.properties.value > 1 && !sidebar.monitoringPrint
         height: UM.Theme.getSize("sidebar_header_mode_toggle").height
 
         boundsBehavior: Flickable.StopAtBounds
@@ -192,7 +191,7 @@ Column
         id: variantRow
 
         height: UM.Theme.getSize("sidebar_setup").height
-        visible: Cura.MachineManager.hasVariants || Cura.MachineManager.hasMaterials
+        visible: (Cura.MachineManager.hasVariants || Cura.MachineManager.hasMaterials) && !sidebar.monitoringPrint
 
         anchors
         {
@@ -248,7 +247,7 @@ Column
                 anchors.left: parent.left
                 style: UM.Theme.styles.sidebar_header_button
 
-                menu: NozzleMenu { }
+                menu: NozzleMenu { extruderIndex: base.currentExtruderIndex }
             }
 
             ToolButton {
@@ -276,7 +275,7 @@ Column
                 anchors.right: parent.right
                 style: UM.Theme.styles.sidebar_header_button
 
-                menu: MaterialMenu { }
+                menu: MaterialMenu { extruderIndex: base.currentExtruderIndex }
             }
         }
     }
@@ -285,6 +284,7 @@ Column
     {
         id: globalProfileRow
         height: UM.Theme.getSize("sidebar_setup").height
+        visible: !sidebar.monitoringPrint
 
         anchors
         {

@@ -118,12 +118,19 @@ _profile_translations = {
     "tpu_0.6_fast": "um2p_tpu_0.6_fast"
 }
 
+##  Settings that are no longer in the new version.
+_removed_settings = {
+    "fill_perimeter_gaps",
+    "support_area_smoothing"
+}
+
 ##  How to translate setting names from the old version to the new.
 _setting_name_translations = {
     "remove_overlapping_walls_0_enabled": "travel_compensate_overlapping_walls_0_enabled",
     "remove_overlapping_walls_enabled": "travel_compensate_overlapping_walls_enabled",
     "remove_overlapping_walls_x_enabled": "travel_compensate_overlapping_walls_x_enabled",
     "retraction_hop": "retraction_hop_enabled",
+    "skin_overlap": "infill_overlap",
     "skirt_line_width": "skirt_brim_line_width",
     "skirt_minimal_length": "skirt_brim_minimal_length",
     "skirt_speed": "skirt_brim_speed",
@@ -384,17 +391,18 @@ class VersionUpgrade21to22(VersionUpgrade):
     #   \return The same dictionary.
     @staticmethod
     def translateSettings(settings):
+        new_settings = {}
         for key, value in settings.items():
-            if key == "fill_perimeter_gaps": #Setting is removed.
-                del settings[key]
-            elif key == "retraction_combing": #Combing was made into an enum instead of a boolean.
-                settings[key] = "off" if (value == "False") else "all"
-            elif key in _setting_name_translations:
-                del settings[key]
-                settings[_setting_name_translations[key]] = value
-        if "infill_overlap" in settings:    # New setting, added in 2.3
-            settings["skin_overlap"] = settings["infill_overlap"]
-        return settings
+            if key in _removed_settings:
+                continue
+            if key == "retraction_combing": #Combing was made into an enum instead of a boolean.
+                new_settings[key] = "off" if (value == "False") else "all"
+                continue
+            if key in _setting_name_translations:
+                new_settings[_setting_name_translations[key]] = value
+                continue
+            new_settings[key] = value
+        return new_settings
 
     ##  Translates a setting name for the change from Cura 2.1 to 2.2.
     #

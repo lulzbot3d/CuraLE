@@ -140,13 +140,13 @@ UM.MainWindow
 
                 Instantiator
                 {
-                    model: Cura.ExtrudersModel { }
+                    model: Cura.ExtrudersModel { simpleNames: true }
                     Menu {
                         title: model.name
                         visible: machineExtruderCount.properties.value > 1
 
-                        NozzleMenu { title: Cura.MachineManager.activeDefinitionVariantsName; visible: Cura.MachineManager.hasVariants }
-                        MaterialMenu { title: catalog.i18nc("@title:menu", "&Material"); visible: Cura.MachineManager.hasMaterials }
+                        NozzleMenu { title: Cura.MachineManager.activeDefinitionVariantsName; visible: Cura.MachineManager.hasVariants; extruderIndex: index }
+                        MaterialMenu { title: catalog.i18nc("@title:menu", "&Material"); visible: Cura.MachineManager.hasMaterials; extruderIndex: index }
                         ProfileMenu { title: catalog.i18nc("@title:menu", "&Profile"); }
 
                         MenuSeparator { }
@@ -270,38 +270,6 @@ UM.MainWindow
                     bottomMargin: UM.Theme.getSize("default_margin").height;
                     rightMargin: UM.Theme.getSize("default_margin").width;
                 }
-            }
-
-	    Label
-            {
-		        id: selectionName
-                anchors
-		        {
-		            bottom: jobSpecs.top;
-                    right: sidebar.left;
-                    bottomMargin: UM.Theme.getSize("default_margin").height;
-                    rightMargin: UM.Theme.getSize("default_margin").width;
-		        }
-		        text: ""
-		        font: UM.Theme.getFont("small")
-                color: UM.Theme.getColor("text_subtext")
-                function changed()
-                {
-                    var count = UM.Scene.numObjectsSelected
-                    if(count == 1 && !UM.Scene.isGroupSelected)
-                    {
-                        selectionName.text = "Selected object: " + UM.Selection.getSelectionName
-                    }
-                    else if(count > 1 ||(count == 1 && UM.Scene.isGroupSelected))
-                    {
-                        selectionName.text = "Multiple objects selected"
-                    }
-                    else
-                    {
-                        selectionName.text = ""
-                    }
-                }
-                Component.onCompleted: {UM.Selection.selectionChanged.connect(changed)}
             }
 
             Loader
@@ -673,7 +641,6 @@ UM.MainWindow
         //: File open dialog title
         title: catalog.i18nc("@title:window","Open file")
         modality: UM.Application.platform == "linux" ? Qt.NonModal : Qt.WindowModal;
-        //TODO: Support multiple file selection, workaround bug in KDE file dialog
         selectMultiple: true
         nameFilters: UM.MeshFileHandler.supportedReadFileTypes;
         folder: CuraApplication.getDefaultPath("dialog_load_path")
@@ -685,12 +652,14 @@ UM.MainWindow
             folder = f;
 
             CuraApplication.setDefaultPath("dialog_load_path", folder);
-            for(var i = 0; i < fileUrls.length; i++)
+
+            for(var i in fileUrls)
             {
                 UM.MeshFileHandler.readLocalFile(fileUrls[i])
-                var meshName = backgroundItem.getMeshName(fileUrls[i].toString())
-                backgroundItem.hasMesh(decodeURIComponent(meshName))
             }
+
+            var meshName = backgroundItem.getMeshName(fileUrl.toString())
+            backgroundItem.hasMesh(decodeURIComponent(meshName))
         }
     }
 
