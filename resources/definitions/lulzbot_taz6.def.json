@@ -3,11 +3,11 @@
     "name": "LulzBot TAZ 6",
     "version": 2,
     "inherits": "lulzbot_base",
-    "metadata": 
+    "metadata":
     {
         "type": "machine",
         "platform": "lulzbot_taz6.stl",
-        "platform_offset": 
+        "platform_offset":
         [
             -140,
             -11,
@@ -17,51 +17,51 @@
         "preferred_material": "pla",
         "preferred_quality": "normal",
         "file_formats": "text/x-gcode",
-        "machine_extruder_trains": 
+        "machine_extruder_trains":
         {
             "0": "fdmextruder"
         },
         "visible": true
     },
-    "overrides": 
+    "overrides":
     {
         "machine_name":
         {
             "default_value": "LulzBot TAZ 6"
         },
-        "machine_heated_bed": 
+        "machine_heated_bed":
         {
             "default_value": true
         },
-        "machine_width": 
+        "machine_width":
         {
             "default_value": 280
         },
-        "machine_depth": 
+        "machine_depth":
         {
             "default_value": 280
         },
-        "machine_height": 
+        "machine_height":
         {
             "default_value": 250
         },
-        "machine_center_is_zero": 
+        "machine_center_is_zero":
         {
             "default_value": false
         },
-        "machine_nozzle_size": 
+        "machine_nozzle_size":
         {
             "default_value": 0.5
         },
-        "machine_gcode_flavor": 
+        "machine_gcode_flavor":
         {
             "default_value": "RepRap (Marlin/Sprinter)"
         },
-        "machine_start_gcode": 
+        "machine_start_gcode":
         {
             "default_file": "lulzbot_taz6_start"
         },
-        "machine_end_gcode": 
+        "machine_end_gcode":
         {
             "default_file": "lulzbot_taz6_end"
         }

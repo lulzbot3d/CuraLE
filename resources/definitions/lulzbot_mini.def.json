@@ -3,11 +3,11 @@
     "name": "LulzBot Mini",
     "version": 2,
     "inherits": "lulzbot_base",
-    "metadata": 
+    "metadata":
     {
         "type": "machine",
         "platform": "lulzbot_mini.stl",
-        "platform_offset": 
+        "platform_offset":
         [
             -75,
             -11,
@@ -17,55 +17,55 @@
         "preferred_material": "pla",
         "preferred_quality": "normal",
         "file_formats": "text/x-gcode",
-        "machine_extruder_trains": 
+        "machine_extruder_trains":
         {
             "0": "fdmextruder"
         },
         "visible": true
     },
-    "overrides": 
+    "overrides":
     {
         "machine_name":
         {
             "default_value": "LulzBot Mini"
         },
-        "machine_heated_bed": 
+        "machine_heated_bed":
         {
             "default_value": true
         },
-        "machine_width": 
+        "machine_width":
         {
             "default_value": 155
         },
-        "machine_depth": 
+        "machine_depth":
         {
             "default_value": 155
         },
-        "machine_height": 
+        "machine_height":
         {
             "default_value": 158
         },
-        "machine_center_is_zero": 
+        "machine_center_is_zero":
         {
             "default_value": false
         },
-        "machine_nozzle_size": 
+        "machine_nozzle_size":
         {
             "default_value": 0.5
         },
-        "machine_gcode_flavor": 
+        "machine_gcode_flavor":
         {
             "default_value": "RepRap (Marlin/Sprinter)"
         },
-        "machine_start_gcode": 
+        "machine_start_gcode":
         {
             "default_file": "lulzbot_mini_start"
         },
-        "machine_end_gcode": 
+        "machine_end_gcode":
         {
             "default_file": "lulzbot_mini_end"
         },
-        "material_soften_temperature": 
+        "material_soften_temperature":
         {
             "enabled": "False"
         }

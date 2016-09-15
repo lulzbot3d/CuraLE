@@ -265,7 +265,9 @@
                     "label": "Disallowed areas",
                     "description": "A list of polygons with areas the print head is not allowed to enter.",
                     "type": "polygons",
-                    "default_value": [],
+                    "default_value":
+                    [
+                    ],
                     "settable_per_mesh": false,
                     "settable_per_extruder": false,
                     "settable_per_meshgroup": false
@@ -580,7 +582,7 @@
                             "minimum_value": "0.0001",
                             "minimum_value_warning": "0.2",
                             "maximum_value_warning": "5",
-                            "value":"line_width",
+                            "value": "line_width",
                             "default_value": 0.4,
                             "type": "float",
                             "settable_per_mesh": true,
@@ -595,7 +597,7 @@
                                     "minimum_value_warning": "0.2",
                                     "maximum_value_warning": "5",
                                     "default_value": 0.4,
-                                    "value":"wall_line_width",
+                                    "value": "wall_line_width",
                                     "type": "float",
                                     "settable_per_mesh": true
                                 },
@@ -608,7 +610,7 @@
                                     "minimum_value_warning": "0.2",
                                     "maximum_value_warning": "5",
                                     "default_value": 0.4,
-                                    "value":"wall_line_width",
+                                    "value": "wall_line_width",
                                     "type": "float",
                                     "settable_per_mesh": true
                                 }
@@ -858,7 +860,7 @@
                             "settable_per_mesh": true
                         },
                         "travel_compensate_overlapping_walls_x_enabled":
-						{
+                        {
                             "label": "Compensate Inner Wall Overlaps",
                             "description": "Compensate the flow for parts of an inner wall being printed where there is already a wall in place.",
                             "type": "bool",
@@ -997,9 +999,9 @@
                     "enabled": "top_bottom_pattern != 'concentric'",
                     "settable_per_mesh": true,
                     "children":
-					{
+                    {
                         "skin_overlap_mm":
-						{
+                        {
                             "label": "Skin Overlap",
                             "description": "The amount of overlap between the skin and the walls. A slight overlap allows the walls to connect firmly to the skin.",
                             "unit": "mm",
@@ -1010,9 +1012,9 @@
                             "value": "skin_line_width * skin_overlap / 100 if top_bottom_pattern != 'concentric' else 0",
                             "enabled": "top_bottom_pattern != 'concentric'",
                             "settable_per_mesh": true
-                         }
-                     }
-                 },
+                        }
+                    }
+                },
                 "infill_wipe_dist":
                 {
                     "label": "Infill Wipe Distance",
@@ -1142,7 +1144,6 @@
                             "settable_per_mesh": false,
                             "settable_per_extruder": true
                         }
-
                     }
                 },
                 "material_flow_temp_graph":
@@ -1158,7 +1159,7 @@
                     "settable_per_extruder": true
                 },
                 "material_extrusion_cool_down_speed":
-				{
+                {
                     "label": "Extrusion Cool Down Speed Modifier",
                     "description": "The extra speed by which the nozzle cools while extruding. The same value is used to signify the heat up speed lost when heating up while extruding.",
                     "unit": "°C/s",
@@ -1186,7 +1187,7 @@
                     "settable_per_extruder": false,
                     "settable_per_meshgroup": false,
                     "children":
-					{
+                    {
                         "material_part_removal_temperature":
                         {
                             "label": "Part Removal Temperature",
@@ -1203,7 +1204,7 @@
                     }
                 },
                 "material_diameter":
-				{
+                {
                     "label": "Diameter",
                     "description": "Adjusts the diameter of the filament used. Match this value with the diameter of the used filament.",
                     "unit": "mm",
@@ -1216,7 +1217,7 @@
                     "settable_per_extruder": true
                 },
                 "material_flow":
-				{
+                {
                     "label": "Flow",
                     "description": "Flow compensation: the amount of material extruded is multiplied by this value.",
                     "unit": "%",
@@ -1228,7 +1229,7 @@
                     "settable_per_mesh": true
                 },
                 "retraction_enable":
-				{
+                {
                     "label": "Enable Retraction",
                     "description": "Retract the filament when the nozzle is moving over a non-printed area. ",
                     "type": "bool",
@@ -1237,7 +1238,7 @@
                     "settable_per_extruder": true
                 },
                 "retraction_amount":
-				{
+                {
                     "label": "Retraction Distance",
                     "description": "The length of material retracted during a retraction move.",
                     "unit": "mm",
@@ -1250,7 +1251,7 @@
                     "settable_per_extruder": true
                 },
                 "retraction_speed":
-				{
+                {
                     "label": "Retraction Speed",
                     "description": "The speed at which the filament is retracted and primed during a retraction move.",
                     "unit": "mm/s",
@@ -1263,9 +1264,9 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
                     "children":
-					{
+                    {
                         "retraction_retract_speed":
-						{
+                        {
                             "label": "Retraction Retract Speed",
                             "description": "The speed at which the filament is retracted during a retraction move.",
                             "unit": "mm/s",
@@ -1280,7 +1281,7 @@
                             "settable_per_extruder": true
                         },
                         "retraction_prime_speed":
-						{
+                        {
                             "label": "Retraction Prime Speed",
                             "description": "The speed at which the filament is primed during a retraction move.",
                             "unit": "mm/s",
@@ -1297,7 +1298,7 @@
                     }
                 },
                 "retraction_extra_prime_amount":
-				{
+                {
                     "label": "Retraction Extra Prime Amount",
                     "description": "Some material can ooze away during a travel move, which can be compensated for here.",
                     "unit": "mm³",
@@ -1310,7 +1311,7 @@
                     "settable_per_extruder": true
                 },
                 "retraction_min_travel":
-				{
+                {
                     "label": "Retraction Minimum Travel",
                     "description": "The minimum distance of travel needed for a retraction to happen at all. This helps to get fewer retractions in a small area.",
                     "unit": "mm",
@@ -1324,7 +1325,7 @@
                     "settable_per_extruder": true
                 },
                 "retraction_count_max":
-				{
+                {
                     "label": "Maximum Retraction Count",
                     "description": "This setting limits the number of retractions occurring within the minimum extrusion distance window. Further retractions within this window will be ignored. This avoids retracting repeatedly on the same piece of filament, as that can flatten the filament and cause grinding issues.",
                     "default_value": 90,
@@ -1336,7 +1337,7 @@
                     "settable_per_extruder": true
                 },
                 "retraction_extrusion_window":
-				{
+                {
                     "label": "Minimum Extrusion Distance Window",
                     "description": "The window in which the maximum retraction count is enforced. This value should be approximately the same as the retraction distance, so that effectively the number of times a retraction passes the same patch of material is limited.",
                     "unit": "mm",
@@ -1350,7 +1351,7 @@
                     "settable_per_extruder": true
                 },
                 "retraction_hop_enabled":
-				{
+                {
                     "label": "Z Hop when Retracted",
                     "description": "Whenever a retraction is done, the build plate is lowered to create clearance between the nozzle and the print. It prevents the nozzle from hitting the print during travel moves, reducing the chance to knock the print from the build plate.",
                     "type": "bool",
@@ -1360,7 +1361,7 @@
                     "settable_per_extruder": true
                 },
                 "retraction_hop_only_when_collides":
-				{
+                {
                     "label": "Z Hop Only Over Printed Parts",
                     "description": "Only perform a Z Hop when moving over printed parts which cannot be avoided by horizontal motion by Avoid Printed Parts when Traveling.",
                     "type": "bool",
@@ -1740,8 +1741,6 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 },
-
-
                 "acceleration_enabled":
                 {
                     "label": "Enable Acceleration Control",
@@ -1980,9 +1979,6 @@
                     "settable_per_mesh": false,
                     "global_inherits_stack": "adhesion_extruder_nr"
                 },
-
-
-
                 "jerk_enabled":
                 {
                     "label": "Enable Jerk Control",
@@ -2094,8 +2090,10 @@
                             "settable_per_mesh": false,
                             "settable_per_extruder": true,
                             "limit_to_extruder": "support_extruder_nr",
-                            "children": {
-                                "jerk_support_infill": {
+                            "children":
+                            {
+                                "jerk_support_infill":
+                                {
                                     "label": "Support Infill Jerk",
                                     "description": "The maximum instantaneous velocity change with which the infill of support is printed.",
                                     "unit": "mm/s",
