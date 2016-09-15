@@ -1,1 +1,12 @@
-M400                                         ; wait for moves to finish\nM104 S0                                      ; hotend off\nM140 S0                                      ; bed heater off\nM107                                         ; fans off\nG92 E5                                       ; set extruder to 5mm for retract on print end\nG1 X5 Y5 Z158 E0 F10000                      ; move to cooling positioning\nM190 R{material_part_removal_temperature}    ; wait for bed to cool\nM140 S0                                      ; set bed to cool all the way down\nG1 X145 F1000                                ; move to cooling positioning\nG1 Y175 F1000                                ; move to cooling positioning\nM84                                          ; steppers off\nG90                                          ; absolute positioning\n
+M400                                         ; wait for moves to finish
+M104 S0                                      ; hotend off
+M140 S0                                      ; bed heater off
+M107                                         ; fans off
+G92 E5                                       ; set extruder to 5mm for retract on print end
+G1 X5 Y5 Z158 E0 F10000                      ; move to cooling positioning
+M190 R{material_part_removal_temperature}    ; wait for bed to cool
+M140 S0                                      ; set bed to cool all the way down
+G1 X145 F1000                                ; move to cooling positioning
+G1 Y175 F1000                                ; move to cooling positioning
+M84                                          ; steppers off
+G90                                          ; absolute positioning
