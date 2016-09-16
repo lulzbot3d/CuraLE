@@ -655,8 +655,7 @@
                             "value": "line_width",
                             "enabled": "adhesion_type == \"skirt\" or adhesion_type == \"brim\"",
                             "settable_per_mesh": false,
-                            "settable_per_extruder": true,
-                            "global_inherits_stack": "adhesion_extruder_nr"
+                            "settable_per_extruder": true
                         },
                         "support_line_width":
                         {
@@ -1977,7 +1976,7 @@
                     "maximum_value_warning": "10000",
                     "enabled": "acceleration_enabled",
                     "settable_per_mesh": false,
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "limit_to_extruder": "adhesion_extruder_nr"
                 },
                 "jerk_enabled":
                 {
@@ -2215,7 +2214,7 @@
                     "value": "jerk_layer_0",
                     "enabled": "jerk_enabled",
                     "settable_per_mesh": false,
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "limit_to_extruder": "adhesion_extruder_nr"
                 }
             }
         },
@@ -2363,7 +2362,7 @@
                             "default_value": 1,
                             "minimum_value": "0",
                             "maximum_value_warning": "100",
-                            "value": "max(0, int(round((cool_fan_full_at_height - layer_height_0) / layer_height, 0)))",
+                            "value": "max(0, int(math.floor((cool_fan_full_at_height - layer_height_0) / layer_height) + 1))",
                             "settable_per_mesh": false,
                             "settable_per_extruder": true
                         }
@@ -2635,19 +2634,6 @@
                     "enabled": "support_enable",
                     "settable_per_mesh": true
                 },
-                "support_area_smoothing":
-                {
-                    "label": "Support Area Smoothing",
-                    "description": "Maximum distance in the X/Y directions of a line segment which is to be smoothed out. Ragged lines are introduced by the join distance and support bridge, which cause the machine to resonate. Smoothing the support areas won't cause them to break with the constraints, except it might change the overhang.",
-                    "unit": "mm",
-                    "type": "float",
-                    "default_value": 0.6,
-                    "global_inherits_stack": "support_extruder_nr",
-                    "minimum_value": "0",
-                    "maximum_value_warning": "1.0",
-                    "enabled": "support_enable",
-                    "settable_per_mesh": true
-                },
                 "support_interface_enable":
                 {
                     "label": "Enable Support Interface",
@@ -2668,7 +2654,7 @@
                     "minimum_value": "0",
                     "limit_to_extruder": "support_interface_extruder_nr",
                     "maximum_value_warning": "10",
-                    "enabled": "extruderValue(support_extruder_nr, 'support_interface_enable') and support_enable",
+                    "enabled": "extruderValue(support_interface_extruder_nr, 'support_interface_enable') and support_enable",
                     "settable_per_mesh": true,
                     "children":
                     {
@@ -2679,11 +2665,11 @@
                             "unit": "mm",
                             "type": "float",
                             "default_value": 1,
-                            "value": "extruderValue(support_extruder_nr, 'support_interface_height')",
+                            "value": "extruderValue(support_interface_extruder_nr, 'support_interface_height')",
                             "minimum_value": "0",
                             "limit_to_extruder": "support_interface_extruder_nr",
                             "maximum_value_warning": "10",
-                            "enabled": "extruderValue(support_extruder_nr, 'support_interface_enable') and support_enable",
+                            "enabled": "extruderValue(support_interface_extruder_nr, 'support_interface_enable') and support_enable",
                             "settable_per_mesh": true
                         },
                         "support_bottom_height":
@@ -2693,12 +2679,12 @@
                             "unit": "mm",
                             "type": "float",
                             "default_value": 1,
-                            "value": "extruderValue(support_extruder_nr, 'support_interface_height')",
+                            "value": "extruderValue(support_interface_extruder_nr, 'support_interface_height')",
                             "minimum_value": "0",
                             "minimum_value_warning": "extruderValue(support_interface_extruder_nr, 'support_bottom_stair_step_height')",
                             "limit_to_extruder": "support_interface_extruder_nr",
                             "maximum_value_warning": "10",
-                            "enabled": "extruderValue(support_extruder_nr, 'support_interface_enable') and support_enable",
+                            "enabled": "extruderValue(support_interface_extruder_nr, 'support_interface_enable') and support_enable",
                             "settable_per_mesh": true
                         }
                     }
@@ -2786,7 +2772,7 @@
                     "limit_to_extruder": "support_infill_extruder_nr",
                     "minimum_value": "0",
                     "maximum_value_warning": "10",
-                    "enabled": "support_enable and extruderValue(support_extruder_nr, 'support_use_towers')",
+                    "enabled": "support_enable and extruderValue(support_infill_extruder_nr, 'support_use_towers')",
                     "settable_per_mesh": true
                 },
                 "support_minimal_diameter":
@@ -2799,8 +2785,8 @@
                     "limit_to_extruder": "support_infill_extruder_nr",
                     "minimum_value": "0",
                     "maximum_value_warning": "10",
-                    "maximum_value": "extruderValue(support_extruder_nr, 'support_tower_diameter')",
-                    "enabled": "support_enable and extruderValue(support_extruder_nr, 'support_use_towers')",
+                    "maximum_value": "extruderValue(support_infill_extruder_nr, 'support_tower_diameter')",
+                    "enabled": "support_enable and extruderValue(support_infill_extruder_nr, 'support_use_towers')",
                     "settable_per_mesh": true
                 },
                 "support_tower_roof_angle":
@@ -2864,6 +2850,7 @@
                         "raft": "Raft"
                     },
                     "default_value": "brim",
+                    "resolve": "'raft' if 'raft' in extruderValues('adhesion_type') else ('brim' if 'brim' in extruderValues('adhesion_type') else 'skirt')",
                     "settable_per_mesh": false,
                     "settable_per_extruder": false
                 },
@@ -2878,7 +2865,7 @@
                     "enabled": "adhesion_type == \"skirt\"",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "limit_to_extruder": "adhesion_extruder_nr"
                 },
                 "skirt_gap":
                 {
@@ -2892,7 +2879,7 @@
                     "enabled": "adhesion_type == \"skirt\"",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "limit_to_extruder": "adhesion_extruder_nr"
                 },
                 "skirt_brim_minimal_length":
                 {
@@ -2906,8 +2893,7 @@
                     "maximum_value_warning": "2500",
                     "enabled": "adhesion_type == \"skirt\" or adhesion_type == \"brim\"",
                     "settable_per_mesh": false,
-                    "settable_per_extruder": true,
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "settable_per_extruder": true
                 },
                 "brim_width":
                 {
@@ -2921,7 +2907,7 @@
                     "enabled": "adhesion_type == \"brim\"",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
-                    "global_inherits_stack": "adhesion_extruder_nr",
+                    "limit_to_extruder": "adhesion_extruder_nr",
                     "children":
                     {
                         "brim_line_count":
@@ -2936,7 +2922,7 @@
                             "enabled": "adhesion_type == \"brim\"",
                             "settable_per_mesh": false,
                             "settable_per_extruder": true,
-                            "global_inherits_stack": "adhesion_extruder_nr"
+                            "limit_to_extruder": "adhesion_extruder_nr"
                         }
                     }
                 },
@@ -2949,7 +2935,7 @@
                     "enabled": "adhesion_type == \"brim\"",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "limit_to_extruder": "adhesion_extruder_nr"
                 },
                 "raft_margin":
                 {
@@ -2961,7 +2947,7 @@
                     "minimum_value_warning": "0",
                     "maximum_value_warning": "10",
                     "enabled": "adhesion_type == \"raft\"",
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "limit_to_extruder": "adhesion_extruder_nr"
                 },
                 "raft_airgap":
                 {
@@ -2975,7 +2961,7 @@
                     "enabled": "adhesion_type == \"raft\"",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "limit_to_extruder": "adhesion_extruder_nr"
                 },
                 "layer_0_z_overlap":
                 {
@@ -2990,7 +2976,7 @@
                     "enabled": "adhesion_type == \"raft\"",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "limit_to_extruder": "adhesion_extruder_nr"
                 },
                 "raft_surface_layers":
                 {
@@ -3003,7 +2989,7 @@
                     "enabled": "adhesion_type == \"raft\"",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "limit_to_extruder": "adhesion_extruder_nr"
                 },
                 "raft_surface_thickness":
                 {
@@ -3018,7 +3004,7 @@
                     "enabled": "adhesion_type == \"raft\"",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "limit_to_extruder": "adhesion_extruder_nr"
                 },
                 "raft_surface_line_width":
                 {
@@ -3033,7 +3019,7 @@
                     "enabled": "adhesion_type == \"raft\"",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "limit_to_extruder": "adhesion_extruder_nr"
                 },
                 "raft_surface_line_spacing":
                 {
@@ -3048,7 +3034,7 @@
                     "value": "raft_surface_line_width",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "limit_to_extruder": "adhesion_extruder_nr"
                 },
                 "raft_interface_thickness":
                 {
@@ -3063,7 +3049,7 @@
                     "enabled": "adhesion_type == \"raft\"",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "limit_to_extruder": "adhesion_extruder_nr"
                 },
                 "raft_interface_line_width":
                 {
@@ -3078,7 +3064,7 @@
                     "enabled": "adhesion_type == \"raft\"",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "limit_to_extruder": "adhesion_extruder_nr"
                 },
                 "raft_interface_line_spacing":
                 {
@@ -3093,7 +3079,7 @@
                     "enabled": "adhesion_type == \"raft\"",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "limit_to_extruder": "adhesion_extruder_nr"
                 },
                 "raft_base_thickness":
                 {
@@ -3108,7 +3094,7 @@
                     "enabled": "adhesion_type == \"raft\"",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "limit_to_extruder": "adhesion_extruder_nr"
                 },
                 "raft_base_line_width":
                 {
@@ -3123,7 +3109,7 @@
                     "enabled": "adhesion_type == \"raft\"",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "limit_to_extruder": "adhesion_extruder_nr"
                 },
                 "raft_base_line_spacing":
                 {
@@ -3138,7 +3124,7 @@
                     "enabled": "adhesion_type == \"raft\"",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
-                    "global_inherits_stack": "adhesion_extruder_nr"
+                    "limit_to_extruder": "adhesion_extruder_nr"
                 },
                 "raft_speed":
                 {
@@ -3154,7 +3140,7 @@
                     "value": "speed_print / 60 * 30",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
-                    "global_inherits_stack": "adhesion_extruder_nr",
+                    "limit_to_extruder": "adhesion_extruder_nr",
                     "children":
                     {
                         "raft_surface_speed":
@@ -3171,7 +3157,7 @@
                             "value": "raft_speed",
                             "settable_per_mesh": false,
                             "settable_per_extruder": true,
-                            "global_inherits_stack": "adhesion_extruder_nr"
+                            "limit_to_extruder": "adhesion_extruder_nr"
                         },
                         "raft_interface_speed":
                         {
@@ -3187,7 +3173,7 @@
                             "enabled": "adhesion_type == \"raft\"",
                             "settable_per_mesh": false,
                             "settable_per_extruder": true,
-                            "global_inherits_stack": "adhesion_extruder_nr"
+                            "limit_to_extruder": "adhesion_extruder_nr"
                         },
                         "raft_base_speed":
                         {
@@ -3203,7 +3189,7 @@
                             "value": "0.75 * raft_speed",
                             "settable_per_mesh": false,
                             "settable_per_extruder": true,
-                            "global_inherits_stack": "adhesion_extruder_nr"
+                            "limit_to_extruder": "adhesion_extruder_nr"
                         }
                     }
                 },
@@ -3220,7 +3206,7 @@
                     "value": "acceleration_print",
                     "enabled": "adhesion_type == \"raft\" and acceleration_enabled",
                     "settable_per_mesh": false,
-                    "global_inherits_stack": "adhesion_extruder_nr",
+                    "limit_to_extruder": "adhesion_extruder_nr",
                     "children":
                     {
                         "raft_surface_acceleration":
@@ -3236,7 +3222,7 @@
                             "maximum_value_warning": "10000",
                             "enabled": "adhesion_type == \"raft\" and acceleration_enabled",
                             "settable_per_mesh": false,
-                            "global_inherits_stack": "adhesion_extruder_nr"
+                            "limit_to_extruder": "adhesion_extruder_nr"
                         },
                         "raft_interface_acceleration":
                         {
@@ -3251,7 +3237,7 @@
                             "maximum_value_warning": "10000",
                             "enabled": "adhesion_type == \"raft\" and acceleration_enabled",
                             "settable_per_mesh": false,
-                            "global_inherits_stack": "adhesion_extruder_nr"
+                            "limit_to_extruder": "adhesion_extruder_nr"
                         },
                         "raft_base_acceleration":
                         {
@@ -3266,7 +3252,7 @@
                             "maximum_value_warning": "10000",
                             "enabled": "adhesion_type == \"raft\" and acceleration_enabled",
                             "settable_per_mesh": false,
-                            "global_inherits_stack": "adhesion_extruder_nr"
+                            "limit_to_extruder": "adhesion_extruder_nr"
                         }
                     }
                 },
@@ -3283,7 +3269,7 @@
                     "value": "jerk_print",
                     "enabled": "adhesion_type == \"raft\" and jerk_enabled",
                     "settable_per_mesh": false,
-                    "global_inherits_stack": "adhesion_extruder_nr",
+                    "limit_to_extruder": "adhesion_extruder_nr",
                     "children":
                     {
                         "raft_surface_jerk":
@@ -3299,7 +3285,7 @@
                             "maximum_value_warning": "100",
                             "enabled": "adhesion_type == \"raft\" and jerk_enabled",
                             "settable_per_mesh": false,
-                            "global_inherits_stack": "adhesion_extruder_nr"
+                            "limit_to_extruder": "adhesion_extruder_nr"
                         },
                         "raft_interface_jerk":
                         {
@@ -3314,7 +3300,7 @@
                             "maximum_value_warning": "50",
                             "enabled": "adhesion_type == \"raft\" and jerk_enabled",
                             "settable_per_mesh": false,
-                            "global_inherits_stack": "adhesion_extruder_nr"
+                            "limit_to_extruder": "adhesion_extruder_nr"
                         },
                         "raft_base_jerk":
                         {
@@ -3329,7 +3315,7 @@
                             "maximum_value_warning": "50",
                             "enabled": "adhesion_type == \"raft\" and jerk_enabled",
                             "settable_per_mesh": false,
-                            "global_inherits_stack": "adhesion_extruder_nr"
+                            "limit_to_extruder": "adhesion_extruder_nr"
                         }
                     }
                 },
@@ -3345,7 +3331,7 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
                     "enabled": "adhesion_type == \"raft\"",
-                    "global_inherits_stack": "adhesion_extruder_nr",
+                    "limit_to_extruder": "adhesion_extruder_nr",
                     "children":
                     {
                         "raft_surface_fan_speed":
@@ -3361,7 +3347,7 @@
                             "enabled": "adhesion_type == \"raft\"",
                             "settable_per_mesh": false,
                             "settable_per_extruder": true,
-                            "global_inherits_stack": "adhesion_extruder_nr"
+                            "limit_to_extruder": "adhesion_extruder_nr"
                         },
                         "raft_interface_fan_speed":
                         {
@@ -3376,7 +3362,7 @@
                             "enabled": "adhesion_type == \"raft\"",
                             "settable_per_mesh": false,
                             "settable_per_extruder": true,
-                            "global_inherits_stack": "adhesion_extruder_nr"
+                            "limit_to_extruder": "adhesion_extruder_nr"
                         },
                         "raft_base_fan_speed":
                         {
@@ -3391,7 +3377,7 @@
                             "enabled": "adhesion_type == \"raft\"",
                             "settable_per_mesh": false,
                             "settable_per_extruder": true,
-                            "global_inherits_stack": "adhesion_extruder_nr"
+                            "limit_to_extruder": "adhesion_extruder_nr"
                         }
                     }
                 }
@@ -3403,6 +3389,7 @@
             "type": "category",
             "icon": "category_dual",
             "description": "Settings used for printing with multiple extruders.",
+            "enabled": "machine_extruder_count > 1",
             "children":
             {
                 "adhesion_extruder_nr":
@@ -3468,6 +3455,7 @@
                     "type": "bool",
                     "enabled": "machine_extruder_count > 1",
                     "default_value": false,
+                    "resolve": "any(extruderValues('prime_tower_enable'))",
                     "settable_per_mesh": false,
                     "settable_per_extruder": false
                 },

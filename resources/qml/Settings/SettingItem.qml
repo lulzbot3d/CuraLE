@@ -34,7 +34,7 @@ Item {
     signal contextMenuRequested()
     signal showTooltip(string text);
     signal hideTooltip();
-
+    signal showAllHiddenInheritedSettings(string category_id)
     property string tooltipText:
     {
         var affects = settingDefinitionsModel.getRequiredBy(definition.key, "value")
@@ -196,19 +196,9 @@ Item {
                 // - This setting item uses inherit button at all
                 // - The type of the value of any deeper container is an "object" (eg; is a function)
                 visible:
-                 {
-                    var state = base.state == "InstanceState.User";
-                    var has_setting_function = false;
-                    for (var i = 1; i < base.stackLevels.length; i++)
-                    {
-                        has_setting_function = typeof(propertyProvider.getPropertyValue("value", base.stackLevels[i])) == "object";
-                        if(has_setting_function)
-                        {
-                            break;
-                        }
-                    }
-                    return state && base.showInheritButton && has_setting_function && typeof(propertyProvider.getPropertyValue("value", base.stackLevels[0])) != "object"
-                 }
+                {
+                    return showInheritButton && Cura.SettingInheritanceManager.settingsWithInheritanceWarning.indexOf(definition.key) >= 0;
+                }
 
                 height: parent.height;
                 width: height;
