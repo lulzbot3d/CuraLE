@@ -497,8 +497,7 @@ class ContainerManager(QObject):
         # If the container that is being removed is the currently active quality, set another quality as the active quality
         activate_quality = quality_name == self._machine_manager.activeQualityName
         activate_quality_type = None
-
-        for container in self._getFilteredContainers(name = quality_name, type = "quality_changes"):
+        for container in self._getFilteredContainers(name = quality_name, type = "quality"):
             containers_found = True
             if activate_quality and not activate_quality_type:
                 activate_quality_type = container.getMetaDataEntry("quality")
@@ -692,6 +691,7 @@ class ContainerManager(QObject):
         filter_by_material = False
 
         if global_stack.getMetaDataEntry("has_machine_quality"):
+
             definition = global_stack.getBottom()
             definition_id = definition.getMetaDataEntry("quality_definition", definition.getId())
             criteria["definition"] = definition_id
@@ -705,6 +705,7 @@ class ContainerManager(QObject):
 
         containers = self._container_registry.findInstanceContainers(**criteria)
         for container in containers:
+
             # If the machine specifies we should filter by material, exclude containers that do not match any active material.
             if filter_by_material and container.getMetaDataEntry("material") not in material_ids:
                 continue
