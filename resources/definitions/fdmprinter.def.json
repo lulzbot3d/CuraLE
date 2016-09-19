@@ -254,8 +254,19 @@
                 {
                     "label": "Gcode flavour",
                     "description": "The type of gcode to be generated.",
-                    "default_value": "RepRap",
-                    "type": "str",
+                    "type": "enum",
+                    "options":
+                    {
+                        "RepRap (Marlin/Sprinter)": "RepRap (Marlin/Sprinter)",
+                        "RepRap (Volumatric)": "RepRap (Volumetric)",
+                        "UltiGCode": "Ultimaker 2",
+                        "Griffin": "Griffin",
+                        "Makerbot": "Makerbot",
+                        "BFB": "Bits from Bytes",
+                        "MACH3": "Mach3",
+                        "Repetier": "Repetier"
+                    },
+                    "default_value": "RepRap (Marlin/Sprinter)",
                     "settable_per_mesh": false,
                     "settable_per_extruder": false,
                     "settable_per_meshgroup": false
@@ -735,7 +746,7 @@
                             "default_value": 2,
                             "minimum_value": "0",
                             "type": "int",
-                            "value": "1 if magic_spiralize else max(1, round((wall_thickness - wall_line_width_0) / wall_line_width_x) + 1)",
+                            "value": "1 if magic_spiralize else max(1, round((wall_thickness - wall_line_width_0) / wall_line_width_x) + 1) if wall_thickness != 0 else 0",
                             "settable_per_mesh": true
                         }
                     }
@@ -2359,10 +2370,10 @@
                             "label": "Regular Fan Speed at Layer",
                             "description": "The layer at which the fans spin on regular fan speed. If regular fan speed at height is set, this value is calculated and rounded to a whole number.",
                             "type": "int",
-                            "default_value": 1,
-                            "minimum_value": "0",
+                            "default_value": 2,
+                            "minimum_value": "1",
                             "maximum_value_warning": "100",
-                            "value": "max(0, int(math.floor((cool_fan_full_at_height - layer_height_0) / layer_height) + 1))",
+                            "value": "max(1, int(math.floor((cool_fan_full_at_height - layer_height_0) / layer_height) + 2))",
                             "settable_per_mesh": false,
                             "settable_per_extruder": true
                         }
