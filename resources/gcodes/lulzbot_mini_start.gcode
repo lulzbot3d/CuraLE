@@ -1,9 +1,9 @@
 ;This Gcode has been generated specifically for the LulzBot Mini
 G26                          ; clear potential 'probe fail' condition
-G21                          ; metric values
+G21                          ; set units to Millimetres
+M107                         ; disable fans
 G90                          ; absolute positioning
 M82                          ; set extruder to absolute mode
-M107                         ; start with the fan off
 G92 E0                       ; set extruder position to 0
 M140 S{material_bed_temperature}; get bed heating up
 G28                          ; home all
@@ -40,14 +40,16 @@ G1 X110 Y174 F4000           ; wiping
 G1 X115 Y172 Z-0.5 F1000     ; wipe slower and bury noz in cleanish area
 G1 Z10                       ; raise z
 G28 X0 Y0                    ; home x and y
-M109 R{material_probe_temperature}; set to probing temp
-M204 S300                    ; Set probing acceleration
-G29                          ; Probe
-M204 S2000                   ; Restore standard acceleration
+M109 R{material_probe_temperature}; heat to probe temp
+M204 S300                    ; set probing acceleration
+G29                          ; probe sequence (for auto-leveling)
+M204 S2000                   ; restore standard acceleration
 G1 X5 Y15 Z10 F5000          ; get out the way
 G4 S1                        ; pause
 M400                         ; clear buffer
-M109 R{material_print_temperature}; set extruder temp and wait
-G4 S15                       ; wait for bed to temp up
+M117 Heating...              ; LCD status message
+M140 S{material_bed_temperature}; get bed heating up
+M109 R{material_print_temperature}; wait for extruder to reach temp
+M190 R{material_bed_temperature}; get bed temping up during first layer
 G1 Z2 E0 F75                 ; extrude filament back into nozzle
-M140 S{material_bed_temperature}; get bed temping up during first layer
+M117 Mini Printing...        ; LCD status message
