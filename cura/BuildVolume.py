@@ -453,6 +453,8 @@ class BuildVolume(SceneNode):
             skirt_size = self._getSettingProperty("brim_line_count", "value") * self._getSettingProperty("skirt_brim_line_width", "value")
         elif adhesion_type == "raft":
             skirt_size = self._getSettingProperty("raft_margin", "value")
+        elif adhesion_type == "none":
+            skirt_size = 0
 
         if container_stack.getProperty("draft_shield_enabled", "value"):
             skirt_size += container_stack.getProperty("draft_shield_dist", "value")

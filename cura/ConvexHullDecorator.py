@@ -238,6 +238,8 @@ class ConvexHullDecorator(SceneNodeDecorator):
             extra_margin = max(
                 0, self._getSettingProperty("skirt_gap", "value") +
                    self._getSettingProperty("skirt_line_count", "value") * self._getSettingProperty("skirt_brim_line_width", "value"))
+        elif adhesion_type == "none":
+            extra_margin = 0
 
         # adjust head_and_fans with extra margin
         if extra_margin > 0:
