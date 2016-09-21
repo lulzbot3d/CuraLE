@@ -234,7 +234,7 @@ Item
             style: UM.Theme.styles.checkbox;
             enabled: base.settingsEnabled
 
-            checked: platformAdhesionType.properties.value != "skirt"
+            checked: platformAdhesionType.properties.value != "none"
 
             MouseArea {
                 id: adhesionMouseArea
@@ -243,13 +243,13 @@ Item
                 enabled: base.settingsEnabled
                 onClicked:
                 {
-                    var adhesionType = "skirt";
+                    var adhesionType = "none";
                     if(!parent.checked)
                     {
                         // Remove the "user" setting to see if the rest of the stack prescribes a brim or a raft
                         platformAdhesionType.removeFromContainer(0);
                         adhesionType = platformAdhesionType.properties.value;
-                        if(adhesionType == "skirt")
+                        if(adhesionType == "none")
                         {
                             // If the rest of the stack doesn't prescribe an adhesion-type, default to a brim
                             adhesionType = "brim";

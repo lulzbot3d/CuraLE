@@ -454,7 +454,7 @@ class BuildVolume(SceneNode):
         elif adhesion_type == "raft":
             skirt_size = self._getSettingProperty("raft_margin", "value")
         elif adhesion_type == "none":
-            skirt_size = 0
+            skirt_size = 0.1
 
         if container_stack.getProperty("draft_shield_enabled", "value"):
             skirt_size += container_stack.getProperty("draft_shield_dist", "value")
