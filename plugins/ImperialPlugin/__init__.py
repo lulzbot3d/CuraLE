@@ -11,7 +11,7 @@ def getMetaData():
         "type": "extension",
         "plugin":
         {
-            "name": "Imperial plugin",
+            "name": "Unit conversion",
             "author": "Jaime van Kessel",
             "version": "2.2",
             "api": 3,
