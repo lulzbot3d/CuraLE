@@ -121,6 +121,19 @@ UM.ManagementPage
         anchors.leftMargin: UM.Theme.getSize("default_lining").width;
     }
 
+    function changeSelection(id)
+    {
+        editButton.checked = true
+
+        for(var i = 0; i < objectList.count; i++)
+        {
+            if (model.getItem(i).id == id)
+            {
+                objectList.currentIndex = i
+            }
+        }
+    }
+
     buttons: [
         Button
         {
@@ -147,15 +160,7 @@ UM.ManagementPage
 
                 Cura.MachineManager.setActiveMaterial(material_id)
 
-                editButton.checked = true
-
-                for(var i = 0; i < objectList.count; i++)
-                {
-                    if (model.getItem(i).id == material_id)
-                    {
-                        objectList.currentIndex = i
-                    }
-                }
+                changeSelection(material_id)
             }
         },
         Button
@@ -298,15 +303,7 @@ UM.ManagementPage
                 messageDialog.open()
                 CuraApplication.setDefaultPath("dialog_material_path", folder)
 
-                editButton.checked = true
-
-                for(var i = 0; i < objectList.count; i++)
-                {
-                    if (model.getItem(i).id == result.id)
-                    {
-                        objectList.currentIndex = i
-                    }
-                }
+                changeSelection(result.id)
             }
         }
 
