@@ -1,8 +1,8 @@
 {
     "id": "LulzBot_Mini",
     "name": "LulzBot Mini",
-    "version": 2,
     "inherits": "lulzbot_base",
+    "version": 2,
     "metadata":
     {
         "type": "machine",

@@ -1,4 +1,8 @@
 {
+    "id": "lulzbot_base",
+    "name": "LulzBot",
+    "inherits": "fdmprinter",
+    "version": 2,
     "metadata":
     {
         "manufacturer": "Aleph Objects, Inc.",
@@ -12,7 +16,6 @@
         "has_materials": false,
         "author": "Aleph Objects, Inc."
     },
-    "id": "lulzbot_base",
     "overrides":
     {
         "retraction_extra_prime_amount":
@@ -1252,7 +1255,6 @@
             "enabled": "True"
         }
     },
-    "version": 2,
     "settings":
     {
         "resolution":
@@ -1349,7 +1351,5 @@
                 }
             }
         }
-    },
-    "inherits": "fdmprinter",
-    "name": "LulzBot"
+    }
 }
