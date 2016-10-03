@@ -9,9 +9,9 @@
         "platform": "lulzbot_mini.stl",
         "platform_offset":
         [
-            -75,
+            -100,
             -11,
-            75
+            100
         ],
         "platform_texture": "LulzBotMinibackplate.png",
         "preferred_material": "pla",
