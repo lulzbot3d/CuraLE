@@ -582,8 +582,7 @@ UM.MainWindow
             {
                 if(objectContextMenu.objectId != 0)
                 {
-                    Printer.multiplyObject(objectContextMenu.objectId, 1);
-                    objectContextMenu.objectId = 0;
+                    dup_dialog.visible = true;
                 }
             }
         }
@@ -704,6 +703,19 @@ UM.MainWindow
         {
             machineActionsWizard.firstRun = addMachineDialog.firstRun
             machineActionsWizard.start(id)
+        }
+    }
+
+    DuplicateDialog
+    {
+        id: dup_dialog
+        onDuplicate:
+        {
+            for(var i = 0; i<count_times;i++)
+            {
+                Printer.multiplyObject(objectContextMenu.objectId, 1);
+            }
+            objectContextMenu.objectId = 0;
         }
     }
 
