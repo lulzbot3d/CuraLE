@@ -30,7 +30,7 @@ ScrollView
             id: definitionsModel;
             containerId: Cura.MachineManager.activeDefinitionId
             visibilityHandler: UM.SettingPreferenceVisibilityHandler { }
-            exclude: ["machine_settings"]
+            exclude: ["machine_settings", "infill_mesh", "infill_mesh_order"]
             expanded: Printer.expandedCategories
             onExpandedChanged: Printer.setExpandedCategories(expanded)
             onVisibilityChanged: Cura.SettingInheritanceManager.forceUpdate()
@@ -137,6 +137,8 @@ ScrollView
                 key: model.key ? model.key : ""
                 watchedProperties: [ "value", "enabled", "state", "validationState", "settable_per_extruder", "resolve" ]
                 storeIndex: 0
+                // Due to the way setPropertyValue works, removeUnusedValue gives the correct output in case of resolve
+                removeUnusedValue: model.resolve == undefined
             }
 
             Connections

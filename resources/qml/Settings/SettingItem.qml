@@ -56,12 +56,12 @@ Item {
 
         if(affects_list != "")
         {
-            tooltip += "<br/><b>%1</b>\n<ul>\n%2</ul>".arg(catalog.i18nc("@label", "Affects")).arg(affects_list)
+            tooltip += "<br/><b>%1</b>\n<ul>\n%2</ul>".arg(catalog.i18nc("@label Header for list of settings.", "Affects")).arg(affects_list)
         }
 
         if(affected_by_list != "")
         {
-            tooltip += "<br/><b>%1</b>\n<ul>\n%2</ul>".arg(catalog.i18nc("@label", "Affected By")).arg(affected_by_list)
+            tooltip += "<br/><b>%1</b>\n<ul>\n%2</ul>".arg(catalog.i18nc("@label Header for list of settings.", "Affected By")).arg(affected_by_list)
         }
 
         return tooltip
@@ -217,10 +217,9 @@ Item {
                             break;
                         }
                     }
-
-                    if(last_entry == 4 && base.stackLevel == 0 && base.stackLevels.length == 2)
+                    if((last_entry == 4 || last_entry == 11) && base.stackLevel == 0 && base.stackLevels.length == 2)
                     {
-                        // Special case of the inherit reset. If only the definition (4th container) and the first
+                        // Special case of the inherit reset. If only the definition (4th or 11th) container) and the first
                         // entry (user container) are set, we can simply remove the container.
                         propertyProvider.removeFromContainer(0)
                     }

@@ -44,6 +44,8 @@ if(NOT APPLE AND NOT WIN32)
     install(FILES ${CMAKE_BINARY_DIR}/cura.desktop
             DESTINATION ${CMAKE_INSTALL_DATADIR}/applications
             RENAME cura2.desktop)
+    install(FILES cura.appdata.xml
+            DESTINATION ${CMAKE_INSTALL_DATADIR}/appdata)
     install(FILES cura.sharedmimeinfo
             DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages/
             RENAME cura.xml )

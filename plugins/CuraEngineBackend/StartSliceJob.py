@@ -163,6 +163,7 @@ class StartSliceJob(Job):
                     verts = mesh_data.getVertices()
                     indices = mesh_data.getIndices()
                     if indices is not None:
+                        #TODO: This is a very slow way of doing it! It also locks up the GUI.
                         verts = numpy.array([verts[vert_index] for face in indices for vert_index in face])
                     else:
                         verts = numpy.array(verts)
@@ -203,6 +204,9 @@ class StartSliceJob(Job):
         material_instance_container = stack.findContainer({"type": "material"})
 
         for key in stack.getAllKeys():
+            # Do not send settings that are not settable_per_extruder.
+            if stack.getProperty(key, "settable_per_extruder") == False:
+                continue
             setting = message.getMessage("settings").addRepeatedMessage("settings")
             setting.name = key
             if key == "material_guid" and material_instance_container:

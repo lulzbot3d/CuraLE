@@ -78,12 +78,17 @@ class X3DReader(MeshReader):
                 builder.setIndices(numpy.concatenate([shape.faces for shape in self.shapes]))
                 builder.calculateNormals()
                 builder.setFileName(file_name)
-                    
-                scene = SceneNode()
-                scene.setMeshData(builder.build())
-                scene.setSelectable(True)
-                scene.setName(file_name)
-                scene.getBoundingBox()
+                mesh_data = builder.build()
+
+                # Manually try and get the extents of the mesh_data. This should prevent nasty NaN issues from
+                # leaving the reader.
+                mesh_data.getExtents()
+
+                node = SceneNode()
+                node.setMeshData(mesh_data)
+                node.setSelectable(True)
+                node.setName(file_name)
+
             else:
                 return None
             
@@ -91,7 +96,7 @@ class X3DReader(MeshReader):
             Logger.logException("e", "Exception in X3D reader")
             return None
 
-        return scene
+        return node
     
     # ------------------------- XML tree traversal
   
@@ -425,6 +430,8 @@ class X3DReader(MeshReader):
             # All the spines are collinear. Fallback to the rotated source
             # XZ plane.
             # TODO: handle the situation where the first two spine points match
+            if len(spine) < 2:
+                return Vector(0, 0, 1)
             v = spine[1] - spine[0]
             orig_y = Vector(0, 1, 0)
             orig_z = Vector(0, 0, 1)
