@@ -228,7 +228,7 @@ Item
     Action
     {
         id: multiplyObjectAction;
-        text: catalog.i18nc("@action:inmenu","&Duplicate Model");
+        text: catalog.i18nc("@action:inmenu","&Multiply Model");
         iconName: "edit-duplicate"
     }
 

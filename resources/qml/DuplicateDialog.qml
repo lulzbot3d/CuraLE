@@ -12,7 +12,7 @@ UM.Dialog
     id: base
 
     //: About dialog title
-    title: catalog.i18nc("@title:window","Duplicate settings")
+    title: catalog.i18nc("@title:window","Multiply settings")
 
     minimumWidth: 200 * Screen.devicePixelRatio
     minimumHeight: 100 * Screen.devicePixelRatio
@@ -31,7 +31,7 @@ UM.Dialog
             left: parent.left
             leftMargin: UM.Theme.getSize("default_margin").width
         }
-        text: catalog.i18nc("@label:label", "Duplicate times")
+        text: catalog.i18nc("@label:label", "Multiply times")
     }
 
 

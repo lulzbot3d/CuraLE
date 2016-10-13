@@ -714,10 +714,7 @@ UM.MainWindow
         id: dup_dialog
         onDuplicate:
         {
-            for(var i = 0; i<count_times;i++)
-            {
-                Printer.multiplyObject(objectContextMenu.objectId, 1);
-            }
+            Printer.multiplyObject(objectContextMenu.objectId, count_times);
             objectContextMenu.objectId = 0;
         }
     }
