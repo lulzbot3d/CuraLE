@@ -15,6 +15,7 @@ Rectangle
 
     property int currentModeIndex;
     property bool monitoringPrint: false
+    property bool hideSettings: Printer.hideSettings
     Connections
     {
         target: Printer
@@ -194,7 +195,7 @@ Rectangle
         width: parent.width/100*45
         font: UM.Theme.getFont("large")
         color: UM.Theme.getColor("text")
-        visible: !monitoringPrint
+        visible: !monitoringPrint && !hideSettings
     }
 
     Rectangle {
@@ -205,7 +206,7 @@ Rectangle
         anchors.rightMargin: UM.Theme.getSize("default_margin").width
         anchors.top: headerSeparator.bottom
         anchors.topMargin: UM.Theme.getSize("default_margin").height
-        visible: !monitoringPrint
+        visible: !monitoringPrint && !hideSettings
         Component{
             id: wizardDelegate
             Button {
@@ -277,7 +278,7 @@ Rectangle
         anchors.topMargin: UM.Theme.getSize("default_margin").height
         anchors.left: base.left
         anchors.right: base.right
-        visible: !monitoringPrint
+        visible: !monitoringPrint && !hideSettings
 
         delegate: StackViewDelegate
         {
