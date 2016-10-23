@@ -248,13 +248,10 @@ UM.MainWindow
                     {
                         for(var i in drop.urls)
                         {
-                            UM.MeshFileHandler.readLocalFile(drop.urls[i]);
-                            if (i == drop.urls.length - 1)
-                            {
-                                var meshName = backgroundItem.getMeshName(drop.urls[i].toString())
-                                backgroundItem.hasMesh(decodeURIComponent(meshName))
-                            }
+                            Printer.loadFile(drop.urls[i]);
                         }
+                        var meshName = backgroundItem.getMeshName(drop.urls[0].toString())
+                        backgroundItem.hasMesh(decodeURIComponent(meshName))
                     }
                 }
             }
@@ -665,10 +662,10 @@ UM.MainWindow
 
             for(var i in fileUrls)
             {
-                UM.MeshFileHandler.readLocalFile(fileUrls[i])
+                Printer.loadFile(fileUrls[i])
             }
 
-            var meshName = backgroundItem.getMeshName(fileUrl.toString())
+            var meshName = backgroundItem.getMeshName(fileUrls[0].toString())
             backgroundItem.hasMesh(decodeURIComponent(meshName))
         }
     }
