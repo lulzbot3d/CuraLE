@@ -1,0 +1,38 @@
+{
+    "id": "lulzbot_taz_base",
+    "name": "LulzBot TAZ",
+    "inherits": "lulzbot_base",
+    "version": 2,
+    "metadata":
+    {
+        "type": "machine",
+        "preferred_material": "pla",
+        "preferred_quality": "normal",
+        "file_formats": "text/x-gcode",
+        "has_machine_quality": true,
+        "machine_extruder_trains":
+        {
+            "0": "fdmextruder"
+        },
+        "visible": false
+    },
+    "overrides":
+    {
+        "machine_heated_bed":
+        {
+            "default_value": true
+        },
+        "machine_center_is_zero":
+        {
+            "default_value": false
+        },
+        "machine_nozzle_size":
+        {
+            "default_value": 0.5
+        },
+        "machine_gcode_flavor":
+        {
+            "default_value": "RepRap (Marlin/Sprinter)"
+        }
+    }
+}
