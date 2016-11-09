@@ -133,6 +133,8 @@ class PrintInformation(QObject):
     @pyqtSlot(str, result = str)
     def createJobName(self, base_name):
         base_name = self._stripAccents(base_name)
+        if len(base_name) > 100:
+            base_name = "%s..." % base_name[:100]
         if self._pre_sliced:
             return "Pre-sliced file " + base_name
         elif Preferences.getInstance().getValue("cura/jobname_prefix"):
