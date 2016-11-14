@@ -14,7 +14,7 @@ add_custom_command(TARGET tests POST_BUILD COMMAND "PYTHONPATH=${CMAKE_SOURCE_DI
 
 set(CURA_VERSION "master" CACHE STRING "Version name of Cura")
 set(CURA_BUILDTYPE "" CACHE STRING "Build type of Cura, eg. 'PPA'")
-configure_file(${CMAKE_SOURCE_DIR}/cura.desktop.in ${CMAKE_BINARY_DIR}/cura.desktop @ONLY)
+configure_file(${CMAKE_SOURCE_DIR}/cura2.desktop.in ${CMAKE_BINARY_DIR}/cura2.desktop @ONLY)
 configure_file(cura/CuraVersion.py.in CuraVersion.py @ONLY)
 
 if(NOT ${URANIUM_SCRIPTS_DIR} STREQUAL "")
@@ -41,9 +41,8 @@ if(NOT APPLE AND NOT WIN32)
             FILES_MATCHING PATTERN *.py)
     install(FILES ${CMAKE_BINARY_DIR}/CuraVersion.py
             DESTINATION lib/python${PYTHON_VERSION_MAJOR}/dist-packages/cura)
-    install(FILES ${CMAKE_BINARY_DIR}/cura.desktop
-            DESTINATION ${CMAKE_INSTALL_DATADIR}/applications
-            RENAME cura2.desktop)
+    install(FILES ${CMAKE_BINARY_DIR}/cura2.desktop
+            DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
     install(FILES cura.appdata.xml
             DESTINATION ${CMAKE_INSTALL_DATADIR}/appdata)
     install(FILES cura.sharedmimeinfo
