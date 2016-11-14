@@ -24,14 +24,24 @@ Item {
             top: parent.top
             left: parent.left
             leftMargin: UM.Theme.getSize("default_margin").width
-            //right: parent.right
+            right: parent.right
+            rightMargin: UM.Theme.getSize("default_margin").width
         }
 
         placeholderText: catalog.i18nc("@label:textbox", "Filter...")
 
         onTextChanged: {
             definitionsModel.filter = {"label": "*" + text};
-            definitionsModel.expanded = text.length > 0 ? ["*"] : [""]
+            if(text.length > 0)
+            {
+                definitionsModel.expanded = ["*"]
+                definitionsModel.showAll = true
+            }
+            else
+            {
+                definitionsModel.expanded = [""]
+                definitionsModel.showAll = false
+            }
         }
     }
     ScrollView
