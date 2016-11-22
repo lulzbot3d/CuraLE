@@ -362,7 +362,7 @@ UM.MainWindow
 
                 style: UM.Theme.styles.tool_button;
                 tooltip: "";
-                enabled: !PrintInformation.isPreSliced
+                enabled: !PrintInformation.preSliced
                 menu: ViewMenu { }
             }
 
