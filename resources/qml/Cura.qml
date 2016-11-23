@@ -248,7 +248,7 @@ UM.MainWindow
                     {
                         for(var i in drop.urls)
                         {
-                            Printer.loadFile(drop.urls[i]);
+                            UM.MeshFileHandler.readLocalFile(drop.urls[i]);
                         }
                         var meshName = backgroundItem.getMeshName(drop.urls[0].toString())
                         backgroundItem.hasMesh(decodeURIComponent(meshName))
@@ -662,7 +662,7 @@ UM.MainWindow
 
             for(var i in fileUrls)
             {
-                Printer.loadFile(fileUrls[i])
+                UM.MeshFileHandler.readLocalFile(fileUrls[i])
             }
 
             var meshName = backgroundItem.getMeshName(fileUrls[0].toString())
