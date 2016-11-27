@@ -10,6 +10,7 @@ from UM.Scene.SceneNode import SceneNode
 from UM.Scene.GroupDecorator import GroupDecorator
 from UM.Math.Quaternion import Quaternion
 from UM.Job import Job
+from UM.Scene.SliceableObjectDecorator import SliceableObjectDecorator
 
 import math
 import zipfile
@@ -124,4 +125,6 @@ class ThreeMFReader(MeshReader):
         except:
             return None
 
+        sliceable_decorator = SliceableObjectDecorator()
+        result.addDecorator(sliceable_decorator)
         return result

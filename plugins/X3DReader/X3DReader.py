@@ -10,6 +10,7 @@ from UM.Scene.SceneNode import SceneNode
 from UM.Job import Job
 from math import pi, sin, cos, sqrt
 import numpy
+from UM.Scene.SliceableObjectDecorator import SliceableObjectDecorator
 
 try:
     import xml.etree.cElementTree as ET
@@ -91,6 +92,8 @@ class X3DReader(MeshReader):
             Logger.logException("e", "Exception in X3D reader")
             return None
 
+        sliceable_decorator = SliceableObjectDecorator()
+        scene.addDecorator(sliceable_decorator)
         return scene
     
     # ------------------------- XML tree traversal
