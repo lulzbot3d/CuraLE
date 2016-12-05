@@ -257,4 +257,9 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             base_list += [port[0]]
         return list(base_list)
 
+    @pyqtProperty("QVariantList")
+    def portList(self):
+        print(self.getSerialPortList())
+        return self.getSerialPortList()
+
     _instance = None
