@@ -198,6 +198,10 @@
         "prime_tower_position_y":
         {
             "default_value": 20
+        },
+        "machine_baudrate":
+        {
+            "default_value": "115200"
         }
     }
 }
