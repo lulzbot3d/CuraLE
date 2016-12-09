@@ -1,19 +1,17 @@
 # Copyright (c) 2015 Ultimaker B.V.
 # Cura is released under the terms of the AGPLv3 or higher.
 
-from UM.Mesh.MeshReader import MeshReader
-from UM.Mesh.MeshBuilder import MeshBuilder
+import math
+import zipfile
+
+from UM.Job import Job
 from UM.Logger import Logger
 from UM.Math.Matrix import Matrix
 from UM.Math.Vector import Vector
-from UM.Scene.SceneNode import SceneNode
+from UM.Mesh.MeshBuilder import MeshBuilder
+from UM.Mesh.MeshReader import MeshReader
 from UM.Scene.GroupDecorator import GroupDecorator
-from UM.Math.Quaternion import Quaternion
-from UM.Job import Job
-from UM.Scene.SliceableObjectDecorator import SliceableObjectDecorator
-
-import math
-import zipfile
+from UM.Scene.SceneNode import SceneNode
 
 try:
     import xml.etree.cElementTree as ET
@@ -125,6 +123,4 @@ class ThreeMFReader(MeshReader):
         except:
             return None
 
-        sliceable_decorator = SliceableObjectDecorator()
-        result.addDecorator(sliceable_decorator)
         return result
