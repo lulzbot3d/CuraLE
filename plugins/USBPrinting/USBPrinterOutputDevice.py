@@ -202,6 +202,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         return self._serial_port
 
     ##  Try to connect the serial. This simply starts the thread, which runs _connect.
+    @pyqtSlot()
     def _connect(self):
         if not self._updating_firmware and not self._connect_thread.isAlive() and self._connection_state in [ConnectionState.closed, ConnectionState.error]:
             self._connect_thread.start()
@@ -489,6 +490,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     ##  Send a command to printer.
     #   \param cmd string with g-code
+    @pyqtSlot(str)
     def sendCommand(self, cmd):
         if self._progress:
             self._command_queue.put(cmd)
@@ -541,6 +543,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 self.endstopStateChanged.emit("z_min", value)
             self._z_min_endstop_pressed = value
 
+    messageFromPrinter = pyqtSignal(str)
+
     ##  Listen thread function.
     def _listen(self):
         Logger.log("i", "Printer connection listen thread started for %s" % self._serial_port)
@@ -586,6 +590,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             elif b"_min" in line or b"_max" in line:
                 tag, value = line.split(b":", 1)
                 self._setEndstopState(tag,(b"H" in value or b"TRIGGERED" in value))
+            elif line not in [b"", b"ok\n"]:
+                self.messageFromPrinter.emit(line.decode("utf-8").replace("\n", ""))
 
             if self._is_printing:
                 if line == b"" and time.time() > ok_timeout:
