@@ -99,6 +99,8 @@ Column
             text: catalog.i18nc("@label", "Manual control")
             onClicked:
             {
+                Cura.USBPrinterManager.connectToCurrentPrinter()
+                connectedPrinter.messageFromPrinter.connect(printer_control.receive)
                 printer_control.visible = true;
             }
             //visible: connectedPrinter
@@ -164,6 +166,10 @@ Column
         {
             console.log("Sent command: " + command);
             receive(command);
+            if (!Cura.USBPrinterManager.sendCommandToCurrentPrinter(command))
+            {
+                receive("Error: Printer not connected")
+            }
         }
     }
 }
