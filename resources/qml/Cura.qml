@@ -248,13 +248,10 @@ UM.MainWindow
                     {
                         for(var i in drop.urls)
                         {
-                            UM.MeshFileHandler.readLocalFile(drop.urls[i]);
-                            if (i == drop.urls.length - 1)
-                            {
-                                var meshName = backgroundItem.getMeshName(drop.urls[i].toString())
-                                backgroundItem.hasMesh(decodeURIComponent(meshName))
-                            }
+                            Printer.readLocalFile(drop.urls[i]);
                         }
+                        var meshName = backgroundItem.getMeshName(drop.urls[0].toString())
+                        backgroundItem.hasMesh(decodeURIComponent(meshName))
                     }
                 }
             }
@@ -364,7 +361,8 @@ UM.MainWindow
                 iconSource: UM.Theme.getIcon("viewmode");
 
                 style: UM.Theme.styles.tool_button;
-                tooltip: '';
+                tooltip: "";
+                enabled: !PrintInformation.preSliced
                 menu: ViewMenu { }
             }
 
@@ -664,14 +662,11 @@ UM.MainWindow
 
             for(var i in fileUrls)
             {
-                UM.MeshFileHandler.readLocalFile(fileUrls[i])
-
-                if (i == fileUrls.length - 1)
-                {
-                    var meshName = backgroundItem.getMeshName(fileUrls.toString())
-                    backgroundItem.hasMesh(decodeURIComponent(meshName))
-                }
+                Printer.readLocalFile(fileUrls[i])
             }
+
+            var meshName = backgroundItem.getMeshName(fileUrls[0].toString())
+            backgroundItem.hasMesh(decodeURIComponent(meshName))
         }
     }
 
