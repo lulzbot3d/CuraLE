@@ -59,6 +59,7 @@ import copy
 import urllib.parse
 import os
 import json
+import signal
 
 
 numpy.seterr(all="ignore")
@@ -305,6 +306,8 @@ class CuraApplication(QtApplication):
 
             self._recent_files.append(QUrl.fromLocalFile(f))
         self._exit_allowed = False
+        self._original_sigint = signal.getsignal(signal.SIGINT)
+        signal.signal(signal.SIGINT, self.consoleExit)
 
     @pyqtSlot(str, result=str)
     def getComponentVersion(self, component):
@@ -498,6 +501,14 @@ class CuraApplication(QtApplication):
             return True
         self.exitRequested.emit()
         return False
+
+    def consoleExit(self, signum, frame):
+        signal.signal(signal.SIGINT, self._original_sigint)
+
+        if self.isExitAllowed():
+            self.windowClosed()
+
+        signal.signal(signal.SIGINT, self.consoleExit)
 
     exitRequested = pyqtSignal()
 
