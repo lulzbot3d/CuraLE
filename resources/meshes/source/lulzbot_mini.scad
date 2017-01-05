@@ -1,3 +1,5 @@
+use <lulzbot_generic_components.scad>;
+
 $fn = 50;
 x = 150;
 y = 150;
@@ -11,7 +13,7 @@ inner_radius = 1.7,
 outer_radius = 11, 
 washer_thickness = 1.5
 ) {
-	//outer
+	//washer
 	translate([x, y, z]){
 		cylinder(
 			h = washer_thickness,
@@ -20,7 +22,7 @@ washer_thickness = 1.5
 			center = false);
 	}
 
-	//inner
+	//pillar
 	translate([x, y, 0]){
 		cylinder(
 			h = z,
@@ -32,7 +34,7 @@ washer_thickness = 1.5
 
 x_hole_dist = 178;
 y_hole_dist = 178;
-module all_washers() {
+module probe_points() {
 	x_offset = 11;
 	y_offset = 11;
 
@@ -56,7 +58,6 @@ module all_washers() {
 		y_offset+y_hole_dist
 	);
 }
-
 
 translate([0, 0, 0]){
 	import("mini_bed_mount_plate_revC_simplified.stl");
@@ -88,16 +89,7 @@ module all_bed_corners() {
 	bed_corner(0, y_hole_dist+22, 270);
 }
 
-module wiper() {
-	translate([50, 187, 3]){
-		import("wiper_mount_v1.1.stl");
-		translate([5, 5, 0]){
-			cube(size = [90, 6.5, 13], center = false);
-		}
-	}
-}
-
-wiper();
+wiper(x = 50, y = 187, z = 3);
 all_bed_corners();
 glass();
-all_washers();
+probe_points();
