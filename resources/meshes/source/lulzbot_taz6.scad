@@ -1,5 +1,4 @@
 use <lulzbot_generic_components.scad>;
-// use a / for sub-directory pathing
 
 x = 280;
 y = 280;
