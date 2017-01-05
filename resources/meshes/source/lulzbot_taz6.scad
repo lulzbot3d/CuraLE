@@ -1,4 +1,3 @@
-use <lulzbot_taz_components.scad>;
 use <lulzbot_generic_components.scad>;
 // use a / for sub-directory pathing
 
