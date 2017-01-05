@@ -13,7 +13,7 @@ module bed_plate() {
 
 module glass() {
 	translate([15, 15, 7]){
-		cube(size = [170, 170, 4], center = false);
+		print_surface(170, 170, 4);
 	}
 }
 
