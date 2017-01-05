@@ -1,6 +1,5 @@
 use <lulzbot_generic_components.scad>;
 
-$fn = 50;
 x = 150;
 y = 150;
 plate_thickness = 11;
@@ -11,14 +10,14 @@ module bed_plate() {
 	}
 }
 
-module glass() {
-	translate([15, 15, 7]){
-		print_surface(170, 170, 4);
-	}
-}
-
 all_bed_corners(x = x, y = y, offset = 50);
 wiper(x = 50, y = 187, z = 3);
 bed_plate();
-glass();
-//probe_points();
+print_surface(
+	x = 170,
+	y = 170,
+	plate_thickness = 4,
+	x_mov = 15,
+	y_mov = 15,
+	z_mov = 7
+);

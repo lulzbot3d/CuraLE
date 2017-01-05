@@ -1,3 +1,5 @@
+$fn = 50;
+
 module wiper(
 	x = 10,
 	y = 10,
@@ -55,11 +57,15 @@ module auto_leveling_bed_corner(
 module print_surface(
 	x = 10,
 	y = 10,
-	plate_thickness = 2
+	plate_thickness = 2,
+	x_mov = 0,
+	y_mov = 0,
+	z_mov = 0
 ) {
-	cube(size = [x, y, plate_thickness], center = false);
+	translate([x_mov, y_mov, z_mov]) {
+		cube(size = [x, y, plate_thickness], center = false);
+	}
 }
-
 
 module all_bed_corners(
 	x = 50,
@@ -72,6 +78,7 @@ module all_bed_corners(
 	auto_leveling_bed_corner(0, y+offset, angle = 270);
 }
 
+separation = 30;
 all_bed_corners();
-print_surface();
-wiper(100, 20);
+print_surface(x_mov = -separation );
+wiper(100, separation );
