@@ -15,7 +15,7 @@ translate([-radius, -radius]) {
 
 //Wiper
 rotate(a = [0, 0, 90]) {
-	translate([20, 0, 0]) {
-		wiper(x = 20, y = 0, z = 0);
-	}
+	wiper(x = offset, y = 0, z = 3);
 }
+
+//Slap in simplified model of bed plate here
