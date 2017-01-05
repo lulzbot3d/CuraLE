@@ -1,4 +1,5 @@
 use <lulzbot_taz_components.scad>;
+use <lulzbot_generic_components.scad>;
 // use a / for sub-directory pathing
 
 x = 280;
@@ -27,7 +28,7 @@ translate([x, y, plate_thickness]){
 
 //Wiper
 rotate(a = [0, 0, 90]) {
-	translate([20, 0, 0]){
-		import("wiper_mount_v1.1.stl");
+	translate([20, 0, 0]) {
+		wiper(x = 20, y = 0, z = 0);
 	}
 }
