@@ -12,14 +12,13 @@ module wiper(
 		}
 	}
 }
-wiper(100, 20);
 
 module auto_leveling_bed_corner(
 	x = 0,
 	y = 0,
 	z = 11,
-	inner_radius = 1.7, 
-	outer_radius = 11, 
+	inner_radius = 1.7,
+	outer_radius = 11,
 	washer_thickness = 1.5,
 	angle = 0
 ) {
@@ -60,7 +59,7 @@ module print_surface(
 ) {
 	cube(size = [x, y, plate_thickness], center = false);
 }
-print_surface();
+
 
 module all_bed_corners(
 	x = 50,
@@ -72,4 +71,7 @@ module all_bed_corners(
 	auto_leveling_bed_corner(x+offset, y+offset, angle = 180);
 	auto_leveling_bed_corner(0, y+offset, angle = 270);
 }
+
 all_bed_corners();
+print_surface();
+wiper(100, 20);
