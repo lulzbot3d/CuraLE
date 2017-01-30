@@ -26,6 +26,7 @@ class StartJobResult(IntEnum):
     SettingError = 3
     NothingToSlice = 4
     MaterialIncompatible = 5
+    BuildPlateError = 6
 
 
 ##  Formatter class that handles token expansion in start/end gcod
@@ -76,12 +77,12 @@ class StartSliceJob(Job):
             return
 
         # Don't slice if there is a setting with an error value.
-        if not Application.getInstance().getMachineManager().isActiveStackValid:
+        if Application.getInstance().getMachineManager().stacksHaveErrors:
             self.setResult(StartJobResult.SettingError)
             return
 
         if Application.getInstance().getBuildVolume().hasErrors():
-            self.setResult(StartJobResult.SettingError)
+            self.setResult(StartJobResult.BuildPlateError)
             return
 
         for extruder_stack in cura.Settings.ExtruderManager.getInstance().getMachineExtruders(stack.getId()):
@@ -157,23 +158,29 @@ class StartSliceJob(Job):
                 if group[0].getParent().callDecoration("isGroup"):
                     self._handlePerObjectSettings(group[0].getParent(), group_message)
                 for object in group:
-                    mesh_data = object.getMeshData().getTransformed(object.getWorldTransformation())
+                    mesh_data = object.getMeshData()
+                    rot_scale = object.getWorldTransformation().getTransposed().getData()[0:3, 0:3]
+                    translate = object.getWorldTransformation().getData()[:3, 3]
 
-                    obj = group_message.addRepeatedMessage("objects")
-                    obj.id = id(object)
+                    # This effectively performs a limited form of MeshData.getTransformed that ignores normals.
                     verts = mesh_data.getVertices()
-                    indices = mesh_data.getIndices()
-                    if indices is not None:
-                        #TODO: This is a very slow way of doing it! It also locks up the GUI.
-                        verts = numpy.array([verts[vert_index] for face in indices for vert_index in face])
-                    else:
-                        verts = numpy.array(verts)
+                    verts = verts.dot(rot_scale)
+                    verts += translate
 
                     # Convert from Y up axes to Z up axes. Equals a 90 degree rotation.
                     verts[:, [1, 2]] = verts[:, [2, 1]]
                     verts[:, 1] *= -1
 
-                    obj.vertices = verts
+                    obj = group_message.addRepeatedMessage("objects")
+                    obj.id = id(object)
+
+                    indices = mesh_data.getIndices()
+                    if indices is not None:
+                        flat_verts = numpy.take(verts, indices.flatten(), axis=0)
+                    else:
+                        flat_verts = numpy.array(verts)
+
+                    obj.vertices = flat_verts
 
                     self._handlePerObjectSettings(object, obj)
 
@@ -239,6 +246,7 @@ class StartSliceJob(Job):
             else:
                 # Normal case
                 settings[key] = stack.getProperty(key, "value")
+            Job.yieldThread()
 
         start_gcode = settings["machine_start_gcode"]
         settings["material_bed_temp_prepend"] = "{material_bed_temperature}" not in start_gcode #Pre-compute material material_bed_temp_prepend and material_print_temp_prepend
@@ -258,6 +266,7 @@ class StartSliceJob(Job):
                 setting_message.value = self._expandGcodeTokens(key, value, settings)
             else:
                 setting_message.value = str(value).encode("utf-8")
+            Job.yieldThread()
 
     ##  Sends for some settings which extruder they should fallback to if not
     #   set.
@@ -274,6 +283,7 @@ class StartSliceJob(Job):
                 setting_extruder = self._slice_message.addRepeatedMessage("limit_to_extruder")
                 setting_extruder.name = key
                 setting_extruder.extruder = extruder
+            Job.yieldThread()
 
     ##  Check if a node has per object settings and ensure that they are set correctly in the message
     #   \param node \type{SceneNode} Node to check.

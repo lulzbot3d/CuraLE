@@ -2,13 +2,20 @@ import sys
 import platform
 import traceback
 import webbrowser
+import urllib
 
-from PyQt5.QtCore import QT_VERSION_STR, PYQT_VERSION_STR, QCoreApplication
-from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QVBoxLayout, QLabel, QTextEdit
+from PyQt5.QtCore import QT_VERSION_STR, PYQT_VERSION_STR, Qt, QCoreApplication
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QHBoxLayout, QVBoxLayout, QLabel, QTextEdit
 
 from UM.Logger import Logger
 from UM.i18n import i18nCatalog
 catalog = i18nCatalog("cura")
+
+try:
+    from cura.CuraVersion import CuraDebugMode
+except ImportError:
+    CuraDebugMode = False  # [CodeStyle: Reflecting imported value]
 
 # List of exceptions that should be considered "fatal" and abort the program.
 # These are primarily some exception types that we simply cannot really recover from
@@ -22,16 +29,12 @@ fatal_exception_types = [
 ]
 
 def show(exception_type, value, tb):
-    debug_mode = False
-    if QCoreApplication.instance():
-        debug_mode = QCoreApplication.instance().getCommandLineOption("debug-mode", False)
-
     Logger.log("c", "An uncaught exception has occurred!")
     for line in traceback.format_exception(exception_type, value, tb):
         for part in line.rstrip("\n").split("\n"):
             Logger.log("c", part)
 
-    if not debug_mode and exception_type not in fatal_exception_types:
+    if not CuraDebugMode and exception_type not in fatal_exception_types:
         return
 
     application = QCoreApplication.instance()
@@ -39,13 +42,39 @@ def show(exception_type, value, tb):
         sys.exit(1)
 
     dialog = QDialog()
+    dialog.setMinimumWidth(640)
+    dialog.setMinimumHeight(640)
     dialog.setWindowTitle(catalog.i18nc("@title:window", "Oops!"))
 
     layout = QVBoxLayout(dialog)
 
     label = QLabel(dialog)
+    pixmap = QPixmap()
+
+    try:
+        data = urllib.request.urlopen("http://www.randomkittengenerator.com/cats/rotator.php").read()
+        pixmap.loadFromData(data)
+    except:
+        try:
+            from UM.Resources import Resources
+            path = Resources.getPath(Resources.Images, "kitten.jpg")
+            pixmap.load(path)
+        except:
+            pass
+
+    pixmap = pixmap.scaled(150, 150)
+    label.setPixmap(pixmap)
+    label.setAlignment(Qt.AlignCenter)
     layout.addWidget(label)
-    label.setText(catalog.i18nc("@label", "<p>A fatal exception has occurred that we could not recover from!</p><p>Please use the information below to post a bug report at <a href=\"http://github.com/Ultimaker/Cura/issues\">http://github.com/Ultimaker/Cura/issues</a></p>"))
+
+    label = QLabel(dialog)
+    layout.addWidget(label)
+
+    #label.setScaledContents(True)
+    label.setText(catalog.i18nc("@label", """<p>A fatal exception has occurred that we could not recover from!</p>
+        <p>We hope this picture of a kitten helps you recover from the shock.</p>
+        <p>Please use the information below to post a bug report at <a href=\"http://github.com/Ultimaker/Cura/issues\">http://github.com/Ultimaker/Cura/issues</a></p>
+    """))
 
     textarea = QTextEdit(dialog)
     layout.addWidget(textarea)

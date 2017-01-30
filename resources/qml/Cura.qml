@@ -7,7 +7,7 @@ import QtQuick.Controls.Styles 1.1
 import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.1
 
-import UM 1.2 as UM
+import UM 1.3 as UM
 import Cura 1.0 as Cura
 
 import "Menus"
@@ -67,11 +67,17 @@ UM.MainWindow
                 id: fileMenu
                 title: catalog.i18nc("@title:menu menubar:toplevel","&File");
 
-                MenuItem {
+                MenuItem
+                {
                     action: Cura.Actions.open;
                 }
 
                 RecentFilesMenu { }
+
+                MenuItem
+                {
+                    action: Cura.Actions.loadWorkspace
+                }
 
                 MenuSeparator { }
 
@@ -100,6 +106,22 @@ UM.MainWindow
                         }
                         onObjectAdded: saveAllMenu.insertItem(index, object)
                         onObjectRemoved: saveAllMenu.removeItem(object)
+                    }
+                }
+                MenuItem
+                {
+                    id: saveWorkspaceMenu
+                    text: catalog.i18nc("@title:menu menubar:file","Save project")
+                    onTriggered:
+                    {
+                        if(UM.Preferences.getValue("cura/dialog_on_project_save"))
+                        {
+                            saveWorkspaceDialog.open()
+                        }
+                        else
+                        {
+                            UM.OutputDeviceManager.requestWriteToDevice("local_file", PrintInformation.jobName, { "filter_by_machine": false, "file_type": "workspace" })
+                        }
                     }
                 }
 
@@ -246,9 +268,34 @@ UM.MainWindow
                 {
                     if(drop.urls.length > 0)
                     {
+                        // Import models
                         for(var i in drop.urls)
                         {
-                            Printer.readLocalFile(drop.urls[i]);
+                            // There is no endsWith in this version of JS...
+                            if ((drop.urls[i].length <= 12) || (drop.urls[i].substring(drop.urls[i].length-12) !== ".curaprofile")) {
+                                // Drop an object
+                                Printer.readLocalFile(drop.urls[i]);
+                                if (i == drop.urls.length - 1)
+                                {
+                                    var meshName = backgroundItem.getMeshName(drop.urls[i].toString());
+                                    backgroundItem.hasMesh(decodeURIComponent(meshName));
+                                }
+                            }
+                        }
+
+                        // Import profiles
+                        var import_result = Cura.ContainerManager.importProfiles(drop.urls);
+                        if (import_result.message !== "") {
+                            messageDialog.text = import_result.message
+                            if(import_result.status == "ok")
+                            {
+                                messageDialog.icon = StandardIcon.Information
+                            }
+                            else
+                            {
+                                messageDialog.icon = StandardIcon.Critical
+                            }
+                            messageDialog.open()
                         }
                         var meshName = backgroundItem.getMeshName(drop.urls[0].toString())
                         backgroundItem.hasMesh(decodeURIComponent(meshName))
@@ -400,6 +447,20 @@ UM.MainWindow
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenterOffset: - UM.Theme.getSize("sidebar").width / 2
                 visible: base.monitoringPrint
+                onVisibleChanged:
+                {
+                    if(Cura.MachineManager.printerOutputDevices.length == 0 )
+                    {
+                        return;
+                    }
+                    if(visible)
+                    {
+                        Cura.MachineManager.printerOutputDevices[0].startCamera()
+                    } else
+                    {
+                        Cura.MachineManager.printerOutputDevices[0].stopCamera()
+                    }
+                }
                 source:
                 {
                     if(!base.monitoringPrint)
@@ -452,13 +513,16 @@ UM.MainWindow
 
         onVisibleChanged:
         {
-            if(!visible)
-            {
-                // When the dialog closes, switch to the General page.
-                // This prevents us from having a heavy page like Setting Visiblity active in the background.
-                setPage(0);
-            }
+            // When the dialog closes, switch to the General page.
+            // This prevents us from having a heavy page like Setting Visiblity active in the background.
+            setPage(0);
         }
+    }
+
+    WorkspaceSummaryDialog
+    {
+        id: saveWorkspaceDialog
+        onYes: UM.OutputDeviceManager.requestWriteToDevice("local_file", PrintInformation.jobName, { "filter_by_machine": false, "file_type": "workspace" })
     }
 
     Connections
@@ -472,9 +536,9 @@ UM.MainWindow
         target: Cura.Actions.addProfile
         onTriggered:
         {
-            preferences.setPage(4);
-            preferences.show();
 
+            preferences.show();
+            preferences.setPage(4);
             // Create a new profile after a very short delay so the preference page has time to initiate
             createProfileTimer.start();
         }
@@ -537,7 +601,7 @@ UM.MainWindow
         target: Cura.MachineManager
         onBlurSettings:
         {
-            contentItem.focus = true
+            contentItem.forceActiveFocus()
         }
     }
 
@@ -573,6 +637,11 @@ UM.MainWindow
             }
         }
 
+        MultiplyObjectOptions
+        {
+            id: multiplyObjectOptions
+        }
+
         Connections
         {
             target: Cura.Actions.multiplyObject
@@ -580,7 +649,10 @@ UM.MainWindow
             {
                 if(objectContextMenu.objectId != 0)
                 {
-                    dup_dialog.visible = true;
+                    multiplyObjectOptions.objectId = objectContextMenu.objectId;
+                    multiplyObjectOptions.visible = true;
+                    multiplyObjectOptions.reset();
+                    objectContextMenu.objectId = 0;
                 }
             }
         }
@@ -676,6 +748,38 @@ UM.MainWindow
         onTriggered: openDialog.open()
     }
 
+    FileDialog
+    {
+        id: openWorkspaceDialog;
+
+        //: File open dialog title
+        title: catalog.i18nc("@title:window","Open workspace")
+        modality: UM.Application.platform == "linux" ? Qt.NonModal : Qt.WindowModal;
+        selectMultiple: false
+        nameFilters: UM.WorkspaceFileHandler.supportedReadFileTypes;
+        folder: CuraApplication.getDefaultPath("dialog_load_path")
+        onAccepted:
+        {
+            //Because several implementations of the file dialog only update the folder
+            //when it is explicitly set.
+            var f = folder;
+            folder = f;
+
+            CuraApplication.setDefaultPath("dialog_load_path", folder);
+
+            for(var i in fileUrls)
+            {
+                UM.WorkspaceFileHandler.readLocalFile(fileUrls[i])
+            }
+        }
+    }
+
+    Connections
+    {
+        target: Cura.Actions.loadWorkspace
+        onTriggered: openWorkspaceDialog.open()
+    }
+
     EngineLog
     {
         id: engineLog;
@@ -701,16 +805,6 @@ UM.MainWindow
         {
             machineActionsWizard.firstRun = addMachineDialog.firstRun
             machineActionsWizard.start(id)
-        }
-    }
-
-    DuplicateDialog
-    {
-        id: dup_dialog
-        onDuplicate:
-        {
-            Printer.multiplyObject(objectContextMenu.objectId, count_times);
-            objectContextMenu.objectId = 0;
         }
     }
 

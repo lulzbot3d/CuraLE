@@ -1,4 +1,4 @@
-# Copyright (c) 2015 Ultimaker B.V.
+# Copyright (c) 2016 Ultimaker B.V.
 # Cura is released under the terms of the AGPLv3 or higher.
 
 from .avr_isp import stk500v2, ispBase, intelHex
@@ -19,14 +19,13 @@ from PyQt5.QtCore import QUrl, pyqtSlot, pyqtSignal, pyqtProperty
 from UM.i18n import i18nCatalog
 catalog = i18nCatalog("cura")
 
-
 class USBPrinterOutputDevice(PrinterOutputDevice):
     SERIAL_AUTODETECT_PORT = 'Autodetect'
 
     def __init__(self, serial_port):
         super().__init__(serial_port)
         self.setName(catalog.i18nc("@item:inmenu", "USB printing"))
-        self.setShortDescription(catalog.i18nc("@action:button", "Print via USB"))
+        self.setShortDescription(catalog.i18nc("@action:button Preceded by 'Ready to'.", "Print via USB"))
         self.setDescription(catalog.i18nc("@info:tooltip", "Print via USB"))
         self.setIconName("print")
         self.setConnectionText(catalog.i18nc("@info:status", "Connected via USB"))
@@ -315,6 +314,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             if self._serial is None:
                 try:
                     self._serial = serial.Serial(str(self._serial_port), baud_rate, timeout = 3, writeTimeout = 10000)
+                    time.sleep(10)
                 except serial.SerialException:
                     Logger.log("d", "Could not open port %s" % self._serial_port)
                     continue
@@ -427,7 +427,21 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._error_state = error
         self.onError.emit()
 
-    def requestWrite(self, node, file_name = None, filter_by_machine = False):
+    ##  Request the current scene to be sent to a USB-connected printer.
+    #
+    #   \param nodes A collection of scene nodes to send. This is ignored.
+    #   \param file_name \type{string} A suggestion for a file name to write.
+    #   This is ignored.
+    #   \param filter_by_machine Whether to filter MIME types by machine. This
+    #   is ignored.
+    def requestWrite(self, nodes, file_name = None, filter_by_machine = False, file_handler = None):
+        container_stack = Application.getInstance().getGlobalContainerStack()
+        if container_stack.getProperty("machine_gcode_flavor", "value") == "UltiGCode" or not container_stack.getMetaDataEntry("supports_usb_connection"):
+            self._error_message = Message(catalog.i18nc("@info:status",
+                                                        "Unable to start a new job because the printer does not support usb printing."))
+            self._error_message.show()
+            return
+
         Application.getInstance().showPrintMonitor.emit(True)
         self.startPrint()
 
@@ -456,7 +470,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 break  # None is only returned when something went wrong. Stop listening
 
             if time.time() > temperature_request_timeout:
-                if self._num_extruders > 0:
+                if self._num_extruders > 1:
                     self._temperature_requested_extruder_index = (self._temperature_requested_extruder_index + 1) % self._num_extruders
                     self.sendCommand("M105 T%d" % (self._temperature_requested_extruder_index))
                 else:
@@ -512,7 +526,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
             # Request the temperature on comm timeout (every 2 seconds) when we are not printing.)
             if line == b"":
-                if self._num_extruders > 0:
+                if self._num_extruders > 1:
                     self._temperature_requested_extruder_index = (self._temperature_requested_extruder_index + 1) % self._num_extruders
                     self.sendCommand("M105 T%d" % self._temperature_requested_extruder_index)
                 else:

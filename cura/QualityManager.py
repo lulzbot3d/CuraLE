@@ -27,10 +27,17 @@ class QualityManager:
     #                               specified then the currently selected machine definition is used.
     #   \param material_containers (Optional) \type{List[ContainerInstance]} If nothing is specified then
     #                               the current set of selected materials is used.
-    #   \return the matching quality containers \type{List[ContainerInstance]}
+    #   \return the matching quality container \type{ContainerInstance}
     def findQualityByName(self, quality_name, machine_definition=None, material_containers=None):
         criteria = {"type": "quality", "name": quality_name}
-        return self._getFilteredContainersForStack(machine_definition, material_containers, **criteria)
+        result = self._getFilteredContainersForStack(machine_definition, material_containers, **criteria)
+
+        # Fall back to using generic materials and qualities if nothing could be found.
+        if not result and material_containers and len(material_containers) == 1:
+            basic_materials = self._getBasicMaterials(material_containers[0])
+            result = self._getFilteredContainersForStack(machine_definition, basic_materials, **criteria)
+
+        return result[0] if result else None
 
     ##  Find a quality changes container by name.
     #
@@ -82,8 +89,9 @@ class QualityManager:
     #   \param material_containers (Optional) \type{List[ContainerInstance]} If nothing is specified then
     #                               the current set of selected materials is used.
     #   \return the matching quality container \type{ContainerInstance}
-    def findQualityByQualityType(self, quality_type, machine_definition=None, material_containers=None):
-        criteria = {"type": "quality"}
+    def findQualityByQualityType(self, quality_type, machine_definition=None, material_containers=None, **kwargs):
+        criteria = kwargs
+        criteria["type"] = "quality"
         if quality_type:
             criteria["quality_type"] = quality_type
         result = self._getFilteredContainersForStack(machine_definition, material_containers, **criteria)
@@ -131,7 +139,8 @@ class QualityManager:
     #
     #   \param global_container_stack \type{ContainerStack} the global machine definition
     #   \param extruder_stacks \type{List[ContainerStack]} the list of extruder stacks
-    #   \return \type{List[InstanceContainer]} the list of the matching qualities
+    #   \return \type{List[InstanceContainer]} the list of the matching qualities. The quality profiles
+    #       return come from the first extruder in the given list of extruders.
     def findAllUsableQualitiesForMachineAndExtruders(self, global_container_stack, extruder_stacks):
         global_machine_definition = global_container_stack.getBottom()
 
@@ -159,7 +168,8 @@ class QualityManager:
     #   \return \type{List[InstanceContainer]} a list of the basic materials or an empty list if one could not be found.
     def _getBasicMaterials(self, material_container):
         base_material = material_container.getMetaDataEntry("material")
-        if material_container.getDefinition().getMetaDataEntry("has_machine_quality"):
+        material_container_definition = material_container.getDefinition()
+        if material_container_definition and material_container_definition.getMetaDataEntry("has_machine_quality"):
             definition_id = material_container.getDefinition().getMetaDataEntry("quality_definition", material_container.getDefinition().getId())
         else:
             definition_id = "fdmprinter"
@@ -210,6 +220,9 @@ class QualityManager:
             material_ids = set()
             for material_instance in material_containers:
                 if material_instance is not None:
+                    # Add the parent material too.
+                    for basic_material in self._getBasicMaterials(material_instance):
+                        material_ids.add(basic_material.getId())
                     material_ids.add(material_instance.getId())
 
         containers = UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(**criteria)
@@ -217,7 +230,7 @@ class QualityManager:
         result = []
         for container in containers:
             # If the machine specifies we should filter by material, exclude containers that do not match any active material.
-            if filter_by_material and container.getMetaDataEntry("material") not in material_ids:
+            if filter_by_material and container.getMetaDataEntry("material") not in material_ids and not "global_quality" in kwargs:
                 continue
             result.append(container)
         return result

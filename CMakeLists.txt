@@ -1,4 +1,3 @@
-
 project(cura NONE)
 cmake_minimum_required(VERSION 2.8.12)
 
@@ -11,6 +10,7 @@ set(URANIUM_SCRIPTS_DIR "${CMAKE_SOURCE_DIR}/../uranium/scripts" CACHE DIRECTORY
 add_custom_target(tests)
 add_custom_command(TARGET tests POST_BUILD COMMAND "PYTHONPATH=${CMAKE_SOURCE_DIR}/../Uranium/:${CMAKE_SOURCE_DIR}" ${PYTHON_EXECUTABLE} -m pytest -r a --junitxml=${CMAKE_BINARY_DIR}/junit.xml ${CMAKE_SOURCE_DIR} || exit 0)
 
+option(CURA_DEBUGMODE "Enable debug dialog and other debug features" OFF)
 
 set(CURA_VERSION "master" CACHE STRING "Version name of Cura")
 set(CURA_BUILDTYPE "" CACHE STRING "Build type of Cura, eg. 'PPA'")
@@ -25,7 +25,7 @@ if(NOT ${URANIUM_SCRIPTS_DIR} STREQUAL "")
     CREATE_TRANSLATION_TARGETS()
 endif()
 
-find_package(PythonInterp 3.4.0 REQUIRED)
+find_package(PythonInterp 3.5.0 REQUIRED)
 
 install(DIRECTORY resources
         DESTINATION ${CMAKE_INSTALL_DATADIR}/cura)

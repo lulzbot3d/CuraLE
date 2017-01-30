@@ -9,15 +9,47 @@ import QtQuick.Layouts 1.1
 import UM 1.2 as UM
 import Cura 1.0 as Cura
 
-Item {
+Item
+{
     id: base;
+
+    property Action configureSettings;
+    property bool findingSettings;
     signal showTooltip(Item item, point location, string text);
     signal hideTooltip();
 
-    TextField
+    function toggleFilterField()
     {
-        id: filter;
-        visible: !monitoringPrint
+        filterContainer.visible = !filterContainer.visible
+        if(filterContainer.visible)
+        {
+            filter.forceActiveFocus();
+        }
+        else
+        {
+            filter.text = "";
+        }
+    }
+
+    Rectangle
+    {
+        id: filterContainer
+        visible: false
+
+        border.width: UM.Theme.getSize("default_lining").width
+        border.color:
+        {
+            if(hoverMouseArea.containsMouse || clearFilterButton.containsMouse)
+            {
+                return UM.Theme.getColor("setting_control_border_highlight");
+            }
+            else
+            {
+                return UM.Theme.getColor("setting_control_border");
+            }
+        }
+
+        color: UM.Theme.getColor("setting_control")
 
         anchors
         {
@@ -27,38 +59,102 @@ Item {
             right: parent.right
             rightMargin: UM.Theme.getSize("default_margin").width
         }
+        height: visible ? UM.Theme.getSize("setting_control").height : 0
+        Behavior on height { NumberAnimation { duration: 100 } }
 
-        placeholderText: catalog.i18nc("@label:textbox", "Filter...")
+        TextField
+        {
+            id: filter;
 
-        onTextChanged: {
-            definitionsModel.filter = {"label": "*" + text};
-            if(text.length > 0)
+            anchors.left: parent.left
+            anchors.right: clearFilterButton.left
+            anchors.rightMargin: UM.Theme.getSize("default_margin").width
+
+            placeholderText: catalog.i18nc("@label:textbox", "Filter...")
+
+            style: TextFieldStyle
             {
-                definitionsModel.expanded = ["*"]
-                definitionsModel.showAll = true
+                textColor: UM.Theme.getColor("setting_control_text");
+                font: UM.Theme.getFont("default");
+                background: Item {}
             }
-            else
+
+            property var expandedCategories
+            property bool lastFindingSettings: false
+
+            onTextChanged:
             {
-                definitionsModel.expanded = [""]
-                definitionsModel.showAll = false
+                definitionsModel.filter = {"i18n_label": "*" + text};
+                findingSettings = (text.length > 0);
+                if(findingSettings != lastFindingSettings)
+                {
+                    if(findingSettings)
+                    {
+                        expandedCategories = definitionsModel.expanded.slice();
+                        definitionsModel.expanded = ["*"];
+                        definitionsModel.showAncestors = true;
+                        definitionsModel.showAll = true;
+                    }
+                    else
+                    {
+                        definitionsModel.expanded = expandedCategories;
+                        definitionsModel.showAncestors = false;
+                        definitionsModel.showAll = false;
+                    }
+                    lastFindingSettings = findingSettings;
+                }
+            }
+
+            Keys.onEscapePressed:
+            {
+                filter.text = "";
+            }
+        }
+
+        MouseArea
+        {
+            id: hoverMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+            acceptedButtons: Qt.NoButton
+            cursorShape: Qt.IBeamCursor
+        }
+
+        UM.SimpleButton
+        {
+            id: clearFilterButton
+            iconSource: UM.Theme.getIcon("cross1")
+            visible: findingSettings
+
+            height: parent.height * 0.4
+            width: visible ? height : 0
+
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            anchors.rightMargin: UM.Theme.getSize("default_margin").width
+
+            color: UM.Theme.getColor("setting_control_button")
+            hoverColor: UM.Theme.getColor("setting_control_button_hover")
+
+            onClicked:
+            {
+                filter.text = "";
+                filter.forceActiveFocus();
             }
         }
     }
+
     ScrollView
     {
-        //id: base;
-        anchors.top: filter.bottom;
+        anchors.top: filterContainer.bottom;
         anchors.bottom: parent.bottom;
         anchors.right: parent.right;
         anchors.left: parent.left;
-        anchors.topMargin: UM.Theme.getSize("default_margin").width
+        anchors.topMargin: filterContainer.visible ? UM.Theme.getSize("default_margin").width : 0
+        Behavior on anchors.topMargin { NumberAnimation { duration: 100 } }
 
         style: UM.Theme.styles.scrollview;
         flickableItem.flickableDirection: Flickable.VerticalFlick;
-
-        property Action configureSettings;
-        //signal showTooltip(Item item, point location, string text);
-        //signal hideTooltip();
 
         ListView
         {
@@ -66,13 +162,22 @@ Item {
             spacing: UM.Theme.getSize("default_lining").height;
             cacheBuffer: 1000000;   // Set a large cache to effectively just cache every list item.
 
-            model: UM.SettingDefinitionsModel {
+            model: UM.SettingDefinitionsModel
+            {
                 id: definitionsModel;
                 containerId: Cura.MachineManager.activeDefinitionId
                 visibilityHandler: UM.SettingPreferenceVisibilityHandler { }
-                exclude: ["machine_settings", "infill_mesh", "infill_mesh_order"]
+                exclude: ["machine_settings", "command_line_settings", "infill_mesh", "infill_mesh_order", "support_mesh", "anti_overhang_mesh"] // TODO: infill_mesh settigns are excluded hardcoded, but should be based on the fact that settable_globally, settable_per_meshgroup and settable_per_extruder are false.
                 expanded: Printer.expandedCategories
-                onExpandedChanged: Printer.setExpandedCategories(expanded)
+                onExpandedChanged:
+                {
+                    if(!findingSettings)
+                    {
+                        // Do not change expandedCategories preference while filtering settings
+                        // because all categories are expanded while filtering
+                        Printer.setExpandedCategories(expanded)
+                    }
+                }
                 onVisibilityChanged: Cura.SettingInheritanceManager.forceUpdate()
             }
 
@@ -139,9 +244,9 @@ Item {
                     when: model.settable_per_extruder || (inheritStackProvider.properties.limit_to_extruder != null && inheritStackProvider.properties.limit_to_extruder >= 0);
                     value:
                     {
-                        if(!model.settable_per_extruder)
+                        if(!model.settable_per_extruder || machineExtruderCount.properties.value == 1)
                         {
-                            //Not settable per extruder, so we must pick global.
+                            //Not settable per extruder or there only is global, so we must pick global.
                             return Cura.MachineManager.activeMachineId;
                         }
                         if(inheritStackProvider.properties.limit_to_extruder != null && inheritStackProvider.properties.limit_to_extruder >= 0)
@@ -187,6 +292,7 @@ Item {
                     onContextMenuRequested:
                     {
                         contextMenu.key = model.key;
+                        contextMenu.settingVisible = model.visible;
                         contextMenu.provider = provider
                         contextMenu.popup();
                     }
@@ -234,6 +340,7 @@ Item {
 
                 property string key
                 property var provider
+                property bool settingVisible
 
                 MenuItem
                 {
@@ -252,8 +359,36 @@ Item {
                 MenuItem
                 {
                     //: Settings context menu action
+                    visible: !findingSettings;
                     text: catalog.i18nc("@action:menu", "Hide this setting");
                     onTriggered: definitionsModel.hide(contextMenu.key);
+                }
+                MenuItem
+                {
+                    //: Settings context menu action
+                    text:
+                    {
+                        if (contextMenu.settingVisible)
+                        {
+                            return catalog.i18nc("@action:menu", "Don't show this setting");
+                        }
+                        else
+                        {
+                            return catalog.i18nc("@action:menu", "Keep this setting visible");
+                        }
+                    }
+                    visible: findingSettings;
+                    onTriggered:
+                    {
+                        if (contextMenu.settingVisible)
+                        {
+                            definitionsModel.hide(contextMenu.key);
+                        }
+                        else
+                        {
+                            definitionsModel.show(contextMenu.key);
+                        }
+                    }
                 }
                 MenuItem
                 {

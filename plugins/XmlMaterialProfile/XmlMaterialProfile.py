@@ -39,7 +39,7 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
         if self.isReadOnly():
             return
         if self.getMetaDataEntry(key, None) == value:
-            # Prevent loop caused by for loop.
+            # Prevent recursion caused by for loop.
             return
 
         super().setMetaDataEntry(key, value)
@@ -68,6 +68,17 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
         containers = UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(base_file = basefile)
         for container in containers:
             container.setName(new_name)
+
+    ##  Overridden from InstanceContainer, to set dirty to base file as well.
+    def setDirty(self, dirty):
+        super().setDirty(dirty)
+        base_file = self.getMetaDataEntry("base_file", None)
+        if base_file is not None and base_file != self._id:
+            containers = UM.Settings.ContainerRegistry.getInstance().findContainers(id=base_file)
+            if containers:
+                base_container = containers[0]
+                if not base_container.isReadOnly():
+                    base_container.setDirty(dirty)
 
     ##  Overridden from InstanceContainer
     # def setProperty(self, key, property_name, property_value, container = None):
@@ -165,7 +176,7 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
         machine_container_map = {}
         machine_nozzle_map = {}
 
-        all_containers = registry.findInstanceContainers(GUID = self.getMetaDataEntry("GUID"))
+        all_containers = registry.findInstanceContainers(GUID = self.getMetaDataEntry("GUID"), base_file = self._id)
         for container in all_containers:
             definition_id = container.getDefinition().id
             if definition_id == "fdmprinter":
@@ -209,7 +220,17 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
                 if not variant_containers:
                     continue
 
-                builder.start("hotend", { "id": variant_containers[0].getName() })
+                builder.start("hotend", {"id": variant_containers[0].getName()})
+
+                # Compatible is a special case, as it's added as a meta data entry (instead of an instance).
+                compatible = hotend.getMetaDataEntry("compatible")
+                if compatible is not None:
+                    builder.start("setting", {"key": "hardware compatible"})
+                    if compatible:
+                        builder.data("yes")
+                    else:
+                        builder.data("no")
+                    builder.end("setting")
 
                 for instance in hotend.findInstances():
                     if container.getInstance(instance.definition.key) and container.getProperty(instance.definition.key, "value") == instance.value:
@@ -340,9 +361,21 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
                     mapping[key] = element
                     first.append(element)
 
+    def clearData(self):
+        self._metadata = {}
+        self._name = ""
+        self._definition = None
+        self._instances = {}
+        self._read_only = False
+        self._dirty = False
+        self._path = ""
+
     ##  Overridden from InstanceContainer
     def deserialize(self, serialized):
         data = ET.fromstring(serialized)
+
+        # Reset previous metadata
+        self.clearData() # Ensure any previous data is gone.
 
         self.addMetaDataEntry("type", "material")
         self.addMetaDataEntry("base_file", self.id)
@@ -403,13 +436,15 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
         for entry in settings:
             key = entry.get("key")
             if key in self.__material_property_setting_map:
-                self.setProperty(self.__material_property_setting_map[key], "value", entry.text, self._definition)
+                self.setProperty(self.__material_property_setting_map[key], "value", entry.text)
                 global_setting_values[self.__material_property_setting_map[key]] = entry.text
             elif key in self.__unmapped_settings:
                 if key == "hardware compatible":
                     global_compatibility = parseBool(entry.text)
             else:
                 Logger.log("d", "Unsupported material setting %s", key)
+
+        self.addMetaDataEntry("compatible", global_compatibility)
 
         self._dirty = False
 
@@ -443,21 +478,31 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
                 definition = definitions[0]
 
                 if machine_compatibility:
-                    new_material = XmlMaterialProfile(self.id + "_" + machine_id)
+                    new_material_id = self.id + "_" + machine_id
+
+                    # It could be that we are overwriting, so check if the ID already exists.
+                    materials = UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(id=new_material_id)
+                    if materials:
+                        new_material = materials[0]
+                        new_material.clearData()
+                    else:
+                        new_material = XmlMaterialProfile(new_material_id)
+
                     new_material.setName(self.getName())
                     new_material.setMetaData(copy.deepcopy(self.getMetaData()))
                     new_material.setDefinition(definition)
+                    # Don't use setMetadata, as that overrides it for all materials with same base file
+                    new_material.getMetaData()["compatible"] = machine_compatibility
 
                     for key, value in global_setting_values.items():
-                        new_material.setProperty(key, "value", value, definition)
+                        new_material.setProperty(key, "value", value)
 
                     for key, value in machine_setting_values.items():
-                        new_material.setProperty(key, "value", value, definition)
+                        new_material.setProperty(key, "value", value)
 
                     new_material._dirty = False
-
-                    UM.Settings.ContainerRegistry.getInstance().addContainer(new_material)
-
+                    if not materials:
+                        UM.Settings.ContainerRegistry.getInstance().addContainer(new_material)
 
                 hotends = machine.iterfind("./um:hotend", self.__namespaces)
                 for hotend in hotends:
@@ -487,32 +532,34 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
                         else:
                             Logger.log("d", "Unsupported material setting %s", key)
 
-                    new_hotend_material = XmlMaterialProfile(self.id + "_" + machine_id + "_" + hotend_id.replace(" ", "_"))
+                    # It could be that we are overwriting, so check if the ID already exists.
+                    new_hotend_id = self.id + "_" + machine_id + "_" + hotend_id.replace(" ", "_")
+                    materials = UM.Settings.ContainerRegistry.getInstance().findInstanceContainers(id=new_hotend_id)
+                    if materials:
+                        new_hotend_material = materials[0]
+                        new_hotend_material.clearData()
+                    else:
+                        new_hotend_material = XmlMaterialProfile(new_hotend_id)
+
                     new_hotend_material.setName(self.getName())
                     new_hotend_material.setMetaData(copy.deepcopy(self.getMetaData()))
                     new_hotend_material.setDefinition(definition)
                     new_hotend_material.addMetaDataEntry("variant", variant_containers[0].id)
-                    new_hotend_material.addMetaDataEntry("compatible", hotend_compatibility)
+                    # Don't use setMetadata, as that overrides it for all materials with same base file
+                    new_hotend_material.getMetaData()["compatible"] = hotend_compatibility
 
                     for key, value in global_setting_values.items():
-                        new_hotend_material.setProperty(key, "value", value, definition)
+                        new_hotend_material.setProperty(key, "value", value)
 
                     for key, value in machine_setting_values.items():
-                        new_hotend_material.setProperty(key, "value", value, definition)
+                        new_hotend_material.setProperty(key, "value", value)
 
                     for key, value in hotend_setting_values.items():
-                        new_hotend_material.setProperty(key, "value", value, definition)
+                        new_hotend_material.setProperty(key, "value", value)
 
                     new_hotend_material._dirty = False
-                    UM.Settings.ContainerRegistry.getInstance().addContainer(new_hotend_material)
-
-        if not global_compatibility:
-            # Change the type of this container so it is not shown as an option in menus.
-            # This uses InstanceContainer.setMetaDataEntry because otherwise all containers that
-            # share this basefile are also updated.
-            dirty = self.isDirty()
-            super().setMetaDataEntry("type", "incompatible_material")
-            super().setDirty(dirty) # reset dirty flag after setMetaDataEntry
+                    if not materials:  # It was not added yet, do so now.
+                        UM.Settings.ContainerRegistry.getInstance().addContainer(new_hotend_material)
 
     def _addSettingElement(self, builder, instance):
         try:
@@ -532,7 +579,7 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
 
     # Map XML file setting names to internal names
     __material_property_setting_map = {
-        "print temperature": "material_print_temperature",
+        "print temperature": "default_material_print_temperature",
         "heated bed temperature": "material_bed_temperature",
         "standby temperature": "material_standby_temperature",
         "processing temperature graph": "material_flow_temp_graph",
@@ -551,6 +598,8 @@ class XmlMaterialProfile(UM.Settings.InstanceContainer):
     # Map XML file product names to internal ids
     # TODO: Move this to definition's metadata
     __product_id_map = {
+        "Ultimaker 3": "ultimaker3",
+        "Ultimaker 3 Extended": "ultimaker3_extended",
         "Ultimaker 2": "ultimaker2",
         "Ultimaker 2+": "ultimaker2_plus",
         "Ultimaker 2 Go": "ultimaker2_go",

@@ -13,6 +13,7 @@ from UM.Settings.InstanceContainer import InstanceContainer
 
 import re #For escaping characters in the settings.
 import json
+import copy
 
 ##  Writes g-code to a file.
 #
@@ -46,7 +47,17 @@ class GCodeWriter(MeshWriter):
     def __init__(self):
         super().__init__()
 
-    def write(self, stream, node, mode = MeshWriter.OutputMode.TextMode):
+    ##  Writes the g-code for the entire scene to a stream.
+    #
+    #   Note that even though the function accepts a collection of nodes, the
+    #   entire scene is always written to the file since it is not possible to
+    #   separate the g-code for just specific nodes.
+    #
+    #   \param stream The stream to write the g-code to.
+    #   \param nodes This is ignored.
+    #   \param mode Additional information on how to format the g-code in the
+    #   file. This must always be text mode.
+    def write(self, stream, nodes, mode = MeshWriter.OutputMode.TextMode):
         if mode != MeshWriter.OutputMode.TextMode:
             Logger.log("e", "GCode Writer does not support non-text mode.")
             return False
@@ -71,7 +82,7 @@ class GCodeWriter(MeshWriter):
             flat_container.setDefinition(instance_container1.getDefinition())
         else:
             flat_container.setDefinition(instance_container2.getDefinition())
-        flat_container.setMetaData(instance_container2.getMetaData())
+        flat_container.setMetaData(copy.deepcopy(instance_container2.getMetaData()))
 
         for key in instance_container2.getAllKeys():
             flat_container.setProperty(key, "value", instance_container2.getProperty(key, "value"))
@@ -107,7 +118,7 @@ class GCodeWriter(MeshWriter):
         serialized = flat_global_container.serialize()
         data = {"global_quality": serialized}
 
-        for extruder in ExtruderManager.getInstance().getMachineExtruders(stack.getId()):
+        for extruder in sorted(ExtruderManager.getInstance().getMachineExtruders(stack.getId()), key = lambda k: k.getMetaDataEntry("position")):
             extruder_quality = extruder.findContainer({"type": "quality_changes"})
             if not extruder_quality:
                 Logger.log("w", "No extruder quality profile found, not writing quality for extruder %s to file!", extruder.getId())

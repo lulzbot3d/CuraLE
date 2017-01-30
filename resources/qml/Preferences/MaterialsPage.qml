@@ -29,7 +29,8 @@ UM.ManagementPage
             }
             else
             {
-                result.definition = "fdmprinter"
+                result.definition = "fdmprinter";
+                result.compatible = true; //NB: Only checks for compatibility in global version of material, but we don't have machine-specific materials anyway.
             }
             return result
         }
@@ -139,7 +140,7 @@ UM.ManagementPage
         {
             text: catalog.i18nc("@action:button", "Activate");
             iconName: "list-activate";
-            enabled: base.currentItem != null && base.currentItem.id != Cura.MachineManager.activeMaterialId
+            enabled: base.currentItem != null && base.currentItem.id != Cura.MachineManager.activeMaterialId && Cura.MachineManager.hasMaterials
             onClicked: Cura.MachineManager.setActiveMaterial(base.currentItem.id)
         },
         Button
@@ -157,10 +158,11 @@ UM.ManagementPage
                 {
                     return
                 }
-
-                Cura.MachineManager.setActiveMaterial(material_id)
-
-                changeSelection(material_id)
+                if(Cura.MachineManager.hasMaterials)
+                {
+                    Cura.MachineManager.setActiveMaterial(material_id)
+                    changeSelection(material_id)
+                }
             }
         },
         Button
@@ -291,6 +293,7 @@ UM.ManagementPage
                 {
                     messageDialog.icon = StandardIcon.Information
                     messageDialog.text = catalog.i18nc("@info:status", "Successfully imported material <filename>%1</filename>").arg(fileUrl)
+                    currentItem = base.model.getItem(base.objectList.currentIndex)
                 }
                 else if(result.status == "duplicate")
                 {

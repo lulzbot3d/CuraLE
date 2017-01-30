@@ -1,5 +1,5 @@
-// Copyright (c) 2015 Ultimaker B.V.
-// Uranium is released under the terms of the AGPLv3 or higher.
+// Copyright (c) 2016 Ultimaker B.V.
+// Cura is released under the terms of the AGPLv3 or higher.
 
 import QtQuick 2.1
 import QtQuick.Controls 1.1
@@ -97,6 +97,7 @@ UM.PreferencesPage
                         append({ text: "Français", code: "fr" })
                         append({ text: "Italiano", code: "it" })
                         append({ text: "Nederlands", code: "nl" })
+                        append({ text: "Русский", code: "ru" })
                         append({ text: "Türkçe", code: "tr" })
                     }
                 }
@@ -372,6 +373,20 @@ UM.PreferencesPage
                 onCheckedChanged: UM.Preferences.setValue("cura/jobname_prefix", checked)
             }
         }
+
+        UM.TooltipArea {
+            width: childrenRect.width
+            height: childrenRect.height
+            text: catalog.i18nc("@info:tooltip", "Should a summary be shown when saving a project file?")
+
+            CheckBox
+            {
+                text: catalog.i18nc("@option:check", "Show summary dialog when saving project")
+                checked: boolCheck(UM.Preferences.getValue("cura/dialog_on_project_save"))
+                onCheckedChanged: UM.Preferences.setValue("cura/dialog_on_project_save", checked)
+            }
+        }
+
 
         Item
         {

@@ -1,5 +1,5 @@
-// Copyright (c) 2015 Ultimaker B.V.
-// Uranium is released under the terms of the AGPLv3 or higher.
+// Copyright (c) 2016 Ultimaker B.V.
+// Cura is released under the terms of the AGPLv3 or higher.
 
 import QtQuick 2.1
 import QtQuick.Controls 1.1
@@ -62,7 +62,7 @@ UM.ManagementPage
         Button
         {
             text: catalog.i18nc("@label", "Create")
-            enabled: base.canCreateProfile()
+            enabled: base.canCreateProfile() && !Cura.MachineManager.stacksHaveErrors
             visible: base.canCreateProfile()
             iconName: "list-add";
 
@@ -162,7 +162,7 @@ UM.ManagementPage
             Button
             {
                 text: {
-                    return catalog.i18nc("@action:button", "Update profile with current settings");
+                    return catalog.i18nc("@action:button", "Update profile with current settings/overrides");
                 }
                 enabled: Cura.MachineManager.hasUserSettings && !Cura.MachineManager.isReadOnly(Cura.MachineManager.activeQualityId)
                 onClicked: Cura.ContainerManager.updateQualityChanges()
@@ -170,7 +170,7 @@ UM.ManagementPage
 
             Button
             {
-                text: catalog.i18nc("@action:button", "Discard current settings");
+                text: catalog.i18nc("@action:button", "Discard current changes");
                 enabled: Cura.MachineManager.hasUserSettings
                 onClicked: Cura.ContainerManager.clearUserContainers();
             }
@@ -187,7 +187,7 @@ UM.ManagementPage
             Label {
                 id: defaultsMessage
                 visible: false
-                text: catalog.i18nc("@action:label", "This profile uses the defaults specified by the printer, so it has no settings in the list below.")
+                text: catalog.i18nc("@action:label", "This profile uses the defaults specified by the printer, so it has no settings/overrides in the list below.")
                 wrapMode: Text.WordWrap
                 width: parent.width
             }
@@ -208,7 +208,7 @@ UM.ManagementPage
             anchors.right: parent.right
             anchors.bottom: parent.bottom
 
-            currentIndex: ExtruderManager.activeExtruderIndex + 1;
+            currentIndex: ExtruderManager.extruderCount > 0 ? ExtruderManager.activeExtruderIndex + 1 : 0
 
             ProfileTab
             {
@@ -235,7 +235,7 @@ UM.ManagementPage
 
     Item
     {
-        UM.I18nCatalog { id: catalog; name: "uranium"; }
+        UM.I18nCatalog { id: catalog; name: "cura"; }
 
         UM.ConfirmRemoveDialog
         {
@@ -310,7 +310,7 @@ UM.ManagementPage
             folder: CuraApplication.getDefaultPath("dialog_profile_path")
             onAccepted:
             {
-                var result = base.model.importProfile(fileUrl)
+                var result = Cura.ContainerManager.importProfile(fileUrl);
                 messageDialog.text = result.message
                 if(result.status == "ok")
                 {
@@ -339,7 +339,7 @@ UM.ManagementPage
             onAccepted:
             {
                 var containers = Cura.ContainerManager.findInstanceContainers({"type": "quality_changes", "name": base.currentItem.name})
-                var result = base.model.exportProfile(containers, fileUrl, selectedNameFilter)
+                var result = Cura.ContainerManager.exportProfile(containers, fileUrl, selectedNameFilter)
 
                 if(result && result.status == "error")
                 {

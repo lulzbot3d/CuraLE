@@ -100,7 +100,7 @@ SettingItem
 
             maximumLength: 10;
 
-            validator: RegExpValidator { regExp: (definition.type == "int") ? /^-?[0-9]{0,10}/ : /^-?[0-9.,]{0,10}/ } // definition.type property from parent loader used to disallow fractional number entry
+            validator: RegExpValidator { regExp: (definition.type == "int") ? /^-?[0-9]{0,10}$/ : /^-?[0-9]{0,9}[.,]?[0-9]{0,10}$/ } // definition.type property from parent loader used to disallow fractional number entry
 
             Binding
             {
@@ -113,12 +113,13 @@ SettingItem
                     // 2: quality
                     // 3: material  -> user changed material in materialspage
                     // 4: variant
-                    // 5: machine
-                    if ((propertyProvider.properties.resolve != "None" && propertyProvider.properties.resolve) && (stackLevel != 0) && (stackLevel != 1)) {
+                    // 5: machine_changes
+                    // 6: machine
+                    if ((base.resolve != "None" && base.resolve) && (stackLevel != 0) && (stackLevel != 1)) {
                         // We have a resolve function. Indicates that the setting is not settable per extruder and that
                         // we have to choose between the resolved value (default) and the global value
                         // (if user has explicitly set this).
-                        return propertyProvider.properties.resolve;
+                        return base.resolve;
                     } else {
                         return propertyProvider.properties.value;
                     }

@@ -21,11 +21,16 @@ SettingItem
             id: extruders_model
             onModelChanged: control.color = extruders_model.getItem(control.currentIndex).color
         }
-        property string color: extruders_model.getItem(control.currentIndex).color
+        property string color:
+        {
+            var model_color = extruders_model.getItem(control.currentIndex).color;
+            return (model_color) ? model_color : "";
+        }
 
         textRole: "name"
 
         anchors.fill: parent
+        onCurrentIndexChanged: updateCurrentColor();
 
         MouseArea
         {
@@ -111,12 +116,37 @@ SettingItem
             propertyProvider.setPropertyValue("value", extruders_model.getItem(index).index);
             control.color = extruders_model.getItem(index).color;
         }
+
         onModelChanged: updateCurrentIndex();
 
-        Connections
+        Binding
         {
-            target: propertyProvider
-            onPropertiesChanged: control.updateCurrentIndex();
+            target: control
+            property: "currentIndex"
+            value:
+            {
+                for(var i = 0; i < extruders_model.rowCount(); ++i)
+                {
+                    if(extruders_model.getItem(i).index == propertyProvider.properties.value)
+                    {
+                        return i;
+                    }
+                }
+                return -1;
+            }
+        }
+
+        // In some cases we want to update the current color without updating the currentIndex, so it's a seperate function.
+        function updateCurrentColor()
+        {
+            for(var i = 0; i < extruders_model.rowCount(); ++i)
+            {
+                if(extruders_model.getItem(i).index == currentIndex)
+                {
+                    control.color = extruders_model.getItem(i).color;
+                    return;
+                }
+            }
         }
 
         function updateCurrentIndex()
@@ -126,7 +156,6 @@ SettingItem
                 if(extruders_model.getItem(i).index == propertyProvider.properties.value)
                 {
                     control.currentIndex = i;
-                    control.color = extruders_model.getItem(i).color;
                     return;
                 }
             }

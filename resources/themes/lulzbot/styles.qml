@@ -188,12 +188,13 @@ QtObject {
             }
 
             label: Item {
-                Image {
+                UM.RecolorImage {
                     anchors.centerIn: parent;
                     opacity: !control.enabled ? 0.2 : 1.0
                     source: control.iconSource;
                     width: Theme.getSize("button_icon").width;
                     height: Theme.getSize("button_icon").height;
+                    color: Theme.getColor("button_text")
 
                     sourceSize: Theme.getSize("button_icon")
                 }
@@ -236,7 +237,7 @@ QtObject {
                     SequentialAnimation on x {
                         id: xAnim
                         property int animEndPoint: Theme.getSize("message").width - (Theme.getSize("default_margin").width * 2) - Theme.getSize("progressbar_control").width
-                        running: control.indeterminate
+                        running: control.indeterminate && control.visible
                         loops: Animation.Infinite
                         NumberAnimation { from: 0; to: xAnim.animEndPoint; duration: 2000;}
                         NumberAnimation { from: xAnim.animEndPoint; to: 0; duration: 2000;}
@@ -405,6 +406,80 @@ QtObject {
                     sourceSize.height: width + 5
 
                     color: Theme.getColor("setting_control_text");
+                }
+            }
+        }
+    }
+
+    // Combobox with items with colored rectangles
+    property Component combobox_color: Component {
+        ComboBoxStyle
+        {
+            background: Rectangle
+            {
+                color:
+                {
+                    if (!enabled)
+                    {
+                        return UM.Theme.getColor("setting_control_disabled");
+                    }
+                    if(control.hovered)
+                    {
+                        return UM.Theme.getColor("setting_control_highlight");
+                    }
+                    else
+                    {
+                        return UM.Theme.getColor("setting_control");
+                    }
+                }
+                border.width: UM.Theme.getSize("default_lining").width
+                border.color: !enabled ? UM.Theme.getColor("setting_control_disabled_border") : control.hovered ? UM.Theme.getColor("setting_control_border_highlight") : UM.Theme.getColor("setting_control_border")
+            }
+            label: Item
+            {
+                Rectangle
+                {
+                    id: swatch
+                    height: UM.Theme.getSize("setting_control").height / 2
+                    width: height
+                    anchors.left: parent.left
+                    anchors.leftMargin: UM.Theme.getSize("default_lining").width
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: if (control.color_override != "") {return control.color_override} else {return control.color;}
+                    border.width: UM.Theme.getSize("default_lining").width
+                    border.color: !enabled ? UM.Theme.getColor("setting_control_disabled_border") : UM.Theme.getColor("setting_control_border")
+                }
+                Label
+                {
+                    anchors.left: swatch.right
+                    anchors.leftMargin: UM.Theme.getSize("default_lining").width
+                    anchors.right: downArrow.left
+                    anchors.rightMargin: UM.Theme.getSize("default_lining").width
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: control.currentText
+                    font: UM.Theme.getFont("default")
+                    color: !enabled ? UM.Theme.getColor("setting_control_disabled_text") : UM.Theme.getColor("setting_control_text")
+
+                    elide: Text.ElideRight
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                UM.RecolorImage
+                {
+                    id: downArrow
+                    anchors.right: parent.right
+                    anchors.rightMargin: UM.Theme.getSize("default_lining").width * 2
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: UM.Theme.getIcon("arrow_bottom")
+                    width: UM.Theme.getSize("standard_arrow").width
+                    height: UM.Theme.getSize("standard_arrow").height
+                    sourceSize.width: width + 5
+                    sourceSize.height: width + 5
+
+                    color: UM.Theme.getColor("setting_control_text")
                 }
             }
         }
