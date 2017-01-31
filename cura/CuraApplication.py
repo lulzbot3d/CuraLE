@@ -141,6 +141,7 @@ class CuraApplication(QtApplication):
 
         self._currently_loading_files = []
         self._non_sliceable_extensions = []
+        self._print_monitor_additional_sections = []
 
         try:
             self._components_version = json.load(open("version.json", "r"))
@@ -332,6 +333,16 @@ class CuraApplication(QtApplication):
             self._message_box_callback_arguments = []
 
     showPrintMonitor = pyqtSignal(bool, arguments = ["show"])
+
+    def registerPrintMonitorAdditionalCategory(self, name, path):
+        self._print_monitor_additional_sections.append({"name": name, "path": path})
+        self.printMonitorAdditionalSectionsChanged.emit()
+
+    printMonitorAdditionalSectionsChanged = pyqtSignal()
+
+    @pyqtProperty("QVariantList", notify=printMonitorAdditionalSectionsChanged)
+    def printMonitorAdditionalSections(self):
+        return self._print_monitor_additional_sections
 
     ##  Cura has multiple locations where instance containers need to be saved, so we need to handle this differently.
     #
