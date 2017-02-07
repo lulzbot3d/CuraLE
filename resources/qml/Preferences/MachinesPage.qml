@@ -117,7 +117,7 @@ UM.ManagementPage
             minimumHeight: 350 * Screen.devicePixelRatio;
             onContentChanged:
             {
-                content = contents;
+                contents = content;
                 content.onCompleted.connect(hide)
                 content.dialog = actionDialog
             }
