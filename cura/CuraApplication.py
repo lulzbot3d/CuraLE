@@ -58,6 +58,7 @@ import numpy
 import copy
 import urllib.parse
 import os
+import json
 
 
 numpy.seterr(all="ignore")
@@ -140,13 +141,18 @@ class CuraApplication(QtApplication):
         self._currently_loading_files = []
         self._non_sliceable_extensions = []
 
+        try:
+            self._components_version = json.load(open("version.json", "r"))
+        except:
+            self._components_version = {"cura": "master"}
+
         self._machine_action_manager = MachineActionManager.MachineActionManager()
         self._machine_manager = None    # This is initialized on demand.
         self._setting_inheritance_manager = None
 
         self._additional_components = {} # Components to add to certain areas in the interface
 
-        super().__init__(name = "cura2_lulzbot", version = CuraVersion, buildtype = CuraBuildType)
+        super().__init__(name = "cura2_lulzbot", version = self.getComponentVersion("cura"), buildtype = CuraBuildType)
 
         self.setWindowIcon(QIcon(Resources.getPath(Resources.Images, "cura-icon.png")))
 
@@ -298,6 +304,10 @@ class CuraApplication(QtApplication):
                 continue
 
             self._recent_files.append(QUrl.fromLocalFile(f))
+
+    @pyqtSlot(str, result=str)
+    def getComponentVersion(self, component):
+        return self._components_version.get(component, "unknown")
 
     def _onEngineCreated(self):
         self._engine.addImageProvider("camera", CameraImageProvider.CameraImageProvider())

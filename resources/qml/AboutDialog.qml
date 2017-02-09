@@ -40,11 +40,12 @@ UM.Dialog
     {
         id: version
 
-        text: "Cura %1".arg(UM.Application.version)
+        text: "Cura %1\nUranium %2\nCuraEngine %3\nlibArcus %4".arg(Printer.getComponentVersion("cura")).arg(Printer.getComponentVersion("uranium")).arg(Printer.getComponentVersion("engine")).arg(Printer.getComponentVersion("libarcus"))
         font: UM.Theme.getFont("large")
         anchors.right : logo.right
         anchors.top: logo.bottom
         anchors.topMargin: UM.Theme.getSize("default_margin").height / 2
+        horizontalAlignment: Text.AlignRight
     }
 
     Label
