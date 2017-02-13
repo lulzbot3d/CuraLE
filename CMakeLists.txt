@@ -12,6 +12,11 @@ add_custom_command(TARGET tests POST_BUILD COMMAND "PYTHONPATH=${CMAKE_SOURCE_DI
 
 option(CURA_DEBUGMODE "Enable debug dialog and other debug features" OFF)
 
+if (NOT MINIMUM_PYTHON_VERSION)
+    set(MINIMUM_PYTHON_VERSION 3.5.0)
+endif()
+set(MINIMUM_PYTHON_VERSION ${MINIMUM_PYTHON_VERSION} CACHE STRING "Minimum Python Version")
+
 set(CURA_VERSION "master" CACHE STRING "Version name of Cura")
 set(CURA_BUILDTYPE "" CACHE STRING "Build type of Cura, eg. 'PPA'")
 configure_file(${CMAKE_SOURCE_DIR}/cura2.desktop.in ${CMAKE_BINARY_DIR}/cura2.desktop @ONLY)
@@ -25,7 +30,7 @@ if(NOT ${URANIUM_SCRIPTS_DIR} STREQUAL "")
     CREATE_TRANSLATION_TARGETS()
 endif()
 
-find_package(PythonInterp 3.5.0 REQUIRED)
+find_package(PythonInterp ${MINIMUM_PYTHON_VERSION} REQUIRED)
 
 install(DIRECTORY resources
         DESTINATION ${CMAKE_INSTALL_DATADIR}/cura)
