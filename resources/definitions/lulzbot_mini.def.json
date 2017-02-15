@@ -17,7 +17,6 @@
         "preferred_material": "pla",
         "preferred_quality": "normal",
         "file_formats": "text/x-gcode",
-        "has_machine_quality": true,
         "visible": true
     },
     "overrides":

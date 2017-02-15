@@ -13,8 +13,9 @@
         "category": "LulzBot",
         "file_formats": "text/x-gcode;application/x-stl-ascii;application/x-stl-binary;application/x-wavefront-obj;application/x3g",
         "visible": false,
-        "has_materials": false,
-        "author": "Aleph Objects, Inc."
+        "has_materials": true,
+        "author": "Aleph Objects, Inc.",
+        "has_machine_quality": true
     },
     "overrides":
     {
