@@ -586,8 +586,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             elif b"_min" in line or b"_max" in line:
                 tag, value = line.split(b":", 1)
                 self._setEndstopState(tag,(b"H" in value or b"TRIGGERED" in value))
-            elif line not in [b"", b"ok\n", b" \n", b"\n"]:
-                self.messageFromPrinter.emit(line.decode("utf-8").replace("\n", ""))
 
             if self._is_printing:
                 if line == b"" and time.time() > ok_timeout:
