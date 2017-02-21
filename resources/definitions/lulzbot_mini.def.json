@@ -193,11 +193,11 @@
         },
         "prime_tower_position_x":
         {
-            "default_value": 20,
+            "default_value": 20
         },
         "prime_tower_position_y":
         {
-            "default_value": 20,
+            "default_value": 20
         }
     }
 }
