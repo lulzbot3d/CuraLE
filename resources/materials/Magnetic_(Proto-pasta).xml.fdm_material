@@ -21,6 +21,6 @@
         <setting key="soften temperature">175</setting>
         <setting key="probe temperature">175</setting>
         <setting key="wipe temperature">175</setting>
-        <setting key="part removal temperature">75</setting>
+        <setting key="part removal temperature">45</setting>
     </settings>
 </fdmmaterial>
