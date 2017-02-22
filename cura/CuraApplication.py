@@ -154,6 +154,8 @@ class CuraApplication(QtApplication):
 
         self._additional_components = {} # Components to add to certain areas in the interface
 
+        Preferences.getInstance().addPreference("info/automatic_update_check", False)
+
         super().__init__(name = "cura2_lulzbot", version = self.getComponentVersion("cura"), buildtype = CuraBuildType)
 
         self.setWindowIcon(QIcon(Resources.getPath(Resources.Images, "cura-icon.png")))
@@ -238,6 +240,8 @@ class CuraApplication(QtApplication):
             Preferences.getInstance().addPreference("local_file/%s" % key, os.path.expanduser("~/"))
 
         Preferences.getInstance().setDefault("local_file/last_used_type", "text/x-gcode")
+
+        Preferences.getInstance().setDefault("info/automatic_update_check", False)
 
         Preferences.getInstance().setDefault("general/visible_settings", """
             machine_settings
