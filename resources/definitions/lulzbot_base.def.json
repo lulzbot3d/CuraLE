@@ -15,6 +15,7 @@
         "visible": false,
         "has_materials": true,
         "author": "Aleph Objects, Inc.",
+        "has_machine_materials": true,
         "has_machine_quality": true
     },
     "overrides":
