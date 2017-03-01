@@ -1066,7 +1066,8 @@
         },
         "infill_before_walls":
         {
-            "enabled": "True"
+            "enabled": "True",
+            "default_value": "False"
         },
         "raft_margin":
         {
