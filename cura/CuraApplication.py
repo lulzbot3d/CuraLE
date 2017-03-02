@@ -142,7 +142,8 @@ class CuraApplication(QtApplication):
         self._non_sliceable_extensions = []
 
         try:
-            self._components_version = json.load(open("version.json", "r"))
+            self._components_version = json.load(open(
+                        os.path.join(QtApplication.getInstallPrefix(), "share", "cura", "resources","version.json"), "r"))
         except:
             self._components_version = {"cura": "master"}
 
