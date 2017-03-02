@@ -162,7 +162,7 @@ class CuraApplication(QtApplication):
 
         Preferences.getInstance().addPreference("info/automatic_update_check", False)
 
-        super().__init__(name = "cura2_lulzbot", version = self.getComponentVersion("cura"), buildtype = CuraBuildType)
+        super().__init__(name = "cura2_lulzbot", version = self.getComponentVersion("cura_version"), buildtype = CuraBuildType)
 
         self.setWindowIcon(QIcon(Resources.getPath(Resources.Images, "cura-icon.png")))
 
