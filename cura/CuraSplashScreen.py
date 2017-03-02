@@ -26,10 +26,8 @@ class CuraSplashScreen(QSplashScreen):
             version[0] += " (%s)" %(buildtype)
 
         application = Application.getInstance()
-        version = ["Cura %s\nUranium %s\nCuraEngine %s\nlibArcus %s" % (application.getComponentVersion("cura"),
-                                                                        application.getComponentVersion("uranium"),
-                                                                        application.getComponentVersion("engine"),
-                                                                        application.getComponentVersion("libarcus"))]
+        version = ["Version %s" % (
+            application.getComponentVersion("cura_version"))]
 
         font = QFont() # Using system-default font here
         font.setPointSize(8)
@@ -38,7 +36,7 @@ class CuraSplashScreen(QSplashScreen):
         if len(version) > 1:
             font.setPointSize(12)
             painter.setFont(font)
-            painter.drawText(0, 0, 330 * self._scale, 255 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, version[1])
+            painter.drawText(0, 0, 330 * self._scale, 265 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, version[1])
 
         painter.restore()
         super().drawContents(painter)

@@ -147,7 +147,7 @@ class CuraApplication(QtApplication):
             self._components_version = json.load(open(
                         os.path.join(QtApplication.getInstallPrefix(), "share", "cura", "resources","version.json"), "r"))
         except:
-            self._components_version = {"cura": "master"}
+            self._components_version = {"cura_version": "master"}
 
         self._machine_action_manager = MachineActionManager.MachineActionManager()
         self._machine_manager = None    # This is initialized on demand.
@@ -157,7 +157,7 @@ class CuraApplication(QtApplication):
 
         Preferences.getInstance().addPreference("info/automatic_update_check", False)
 
-        super().__init__(name = "cura2_lulzbot", version = self.getComponentVersion("cura"), buildtype = CuraBuildType)
+        super().__init__(name = "cura2_lulzbot", version = self.getComponentVersion("cura_version"), buildtype = CuraBuildType)
 
         self.setWindowIcon(QIcon(Resources.getPath(Resources.Images, "cura-icon.png")))
 

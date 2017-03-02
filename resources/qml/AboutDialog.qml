@@ -14,8 +14,8 @@ UM.Dialog
     //: About dialog title
     title: catalog.i18nc("@title:window","About Cura")
 
-    minimumWidth: 450 * Screen.devicePixelRatio
-    minimumHeight: 550 * Screen.devicePixelRatio
+    minimumWidth: 550 * Screen.devicePixelRatio
+    minimumHeight: 720 * Screen.devicePixelRatio
     width: minimumWidth
     height: minimumHeight
 
@@ -39,8 +39,7 @@ UM.Dialog
     Label
     {
         id: version
-
-        text: "Cura %1\nUranium %2\nCuraEngine %3\nlibArcus %4".arg(Printer.getComponentVersion("cura")).arg(Printer.getComponentVersion("uranium")).arg(Printer.getComponentVersion("engine")).arg(Printer.getComponentVersion("libarcus"))
+	text: "Version %1\nCura %2\nUranium %3\nCuraEngine %4\nlibArcus %5\n Data %6\n Build %7".arg(Printer.getComponentVersion("cura_version")).arg(Printer.getComponentVersion("cura")).arg(Printer.getComponentVersion("uranium")).arg(Printer.getComponentVersion("engine")).arg(Printer.getComponentVersion("libarcus")).arg(Printer.getComponentVersion("binarydata")).arg(Printer.getComponentVersion("build"))
         font: UM.Theme.getFont("large")
         anchors.right : logo.right
         anchors.top: logo.bottom
