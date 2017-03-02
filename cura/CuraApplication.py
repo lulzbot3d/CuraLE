@@ -144,7 +144,8 @@ class CuraApplication(QtApplication):
         self._print_monitor_additional_sections = []
 
         try:
-            self._components_version = json.load(open("version.json", "r"))
+            self._components_version = json.load(open(
+                        os.path.join(QtApplication.getInstallPrefix(), "share", "cura", "resources","version.json"), "r"))
         except:
             self._components_version = {"cura": "master"}
 
