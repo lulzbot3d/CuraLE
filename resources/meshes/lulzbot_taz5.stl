@@ -2,7 +2,7 @@ solid OpenSCAD_Model
   facet normal -1 0 0
     outer loop
       vertex -140 -140 0
-      vertex 140 140 0
+      vertex -140 140 0
       vertex -140 -140 -4
     endloop
   endfacet
