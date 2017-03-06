@@ -8,9 +8,9 @@
         "platform": "lulzbot_taz6.stl",
         "platform_offset":
         [
-            -140,
-            -11,
-            140
+            0,
+            0,
+            0
         ],
         "visible": true
     },
