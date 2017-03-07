@@ -21,7 +21,7 @@
     <setting key="soften temperature">175</setting>
     <setting key="probe temperature">185</setting>
     <setting key="wipe temperature">185</setting>
-    <setting key="part removal temperature">60</setting>
+    <setting key="part removal temperature">50</setting>
     <machine>
       <machine_identifier product="lulzbot_mini"/>
     </machine>
