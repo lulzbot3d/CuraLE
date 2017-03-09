@@ -45,6 +45,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
         self._job_name = ""
         self._error_text = ""
         self._accepts_commands = True
+        self._current_hotend = 0
 
         self._printer_state = ""
         self._printer_type = "unknown"
@@ -584,6 +585,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
 
     @pyqtSlot(int)
     def setHotend(self, num):
+        self._current_hotend = num
         self._setHotend(num)
 
     def _setHotend(self, num):

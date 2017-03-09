@@ -110,10 +110,14 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._sendCommand("M140 S%s" % temperature)
 
     def _setTargetHotendTemperature(self, index, temperature):
+        if index == -1:
+            index = self._current_hotend
         Logger.log("d", "Setting hotend %s temperature to %s", index, temperature)
         self._sendCommand("M104 T%s S%s" % (index, temperature))
 
     def _setTargetHotendTemperatureAndWait(self, index, temperature):
+        if index == -1:
+            index = self._current_hotend
         Logger.log("d", "Setting hotend %s temperature to %s", index, temperature)
         self._sendCommand("M109 T%s S%s" % (index, temperature))
 

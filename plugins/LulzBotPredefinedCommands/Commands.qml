@@ -36,7 +36,7 @@ Item
 
             onClicked:
             {
-                connectedPrinter.preheatHotend(extruderSelector.currentIndex)
+                connectedPrinter.preheatHotend(-1)
             }
         }
 
@@ -69,7 +69,7 @@ Item
 
             onClicked:
             {
-                connectedPrinter.setTargetHotendTemperature(extruderSelector.currentIndex, 0)
+                connectedPrinter.setTargetHotendTemperature(-1, 0)
             }
         }
 
@@ -91,7 +91,7 @@ Item
 
             onClicked:
             {
-                connectedPrinter.coldPull(extruderSelector.currentIndex)
+                connectedPrinter.coldPull(-1)
             }
         }
     }
