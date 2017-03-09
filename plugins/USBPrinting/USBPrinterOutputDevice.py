@@ -351,8 +351,14 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     ##  Private connect function run by thread. Can be started by calling connect.
     def _connect_thread_function(self):
+        port = Application.getInstance().getGlobalContainerStack().getProperty("machine_port", "value")
+        if port != "AUTO":
+            self._serial_port = port
+            self._autodetect_port = False
+
         Logger.log("d", "Attempting to connect to %s", self._serial_port)
         self.setConnectionState(ConnectionState.connecting)
+
         if self._autodetect_port:
             self.setConnectionText(catalog.i18nc("@info:status", "Scanning available serial ports for printers"))
             self._detectSerialPort()
@@ -369,6 +375,45 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             Logger.log("i", "Could not establish connection on %s: %s. Device is not arduino based." %(self._serial_port,str(e)))
         except Exception as e:
             Logger.log("i", "Could not establish connection on %s, unknown reasons.  Device is not arduino based." % self._serial_port)
+
+        baud_rate = Application.getInstance().getGlobalContainerStack().getProperty("machine_baudrate", "value")
+        if baud_rate != "AUTO":
+            self.setConnectionText(catalog.i18nc("@info:status", "Connecting"))
+            Logger.log("d", "Attempting to connect to printer with serial %s on baud rate %s", self._serial_port, baud_rate)
+            if self._serial is None:
+                try:
+                    self._serial = serial.Serial(str(self._serial_port), baud_rate, timeout=3, writeTimeout=10000)
+                    time.sleep(10)
+                except serial.SerialException:
+                    Logger.log("d", "Could not open port %s" % self._serial_port)
+            else:
+                self.setBaudRate(baud_rate)
+
+            time.sleep(1.5)
+            timeout_time = time.time() + 5
+            self._serial.write(b"\n")
+            self._sendCommand("M105")
+            while timeout_time > time.time():
+                line = self._readline()
+                if line is None:
+                    Logger.log("d", "No response from serial connection received.")
+                    # Something went wrong with reading, could be that close was called.
+                    self.setConnectionState(ConnectionState.closed)
+                    self.setConnectionText(catalog.i18nc("@info:status", "Connection to USB device failed"))
+                    self._serial_port = None
+                    return
+
+                if b"T:" in line:
+                    Logger.log("d", "Correct response for connection")
+                    self._serial.timeout = 2  # Reset serial timeout
+                    self.setConnectionState(ConnectionState.connected)
+                    self.setConnectionText(catalog.i18nc("@info:status", "Connected via USB"))
+                    self._listen_thread.start()  # Start listening
+                    Logger.log("i", "Established printer connection on port %s" % self._serial_port)
+                    if self._write_requested:
+                        self.startPrint()
+                    self._write_requested = False
+                    return
 
         self.setConnectionText(catalog.i18nc("@info:status", "Autodetecting Baudrate"))
         # If the programmer connected, we know its an atmega based version.
