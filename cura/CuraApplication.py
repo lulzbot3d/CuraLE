@@ -145,7 +145,7 @@ class CuraApplication(QtApplication):
 
         try:
             self._components_version = json.load(open(
-                        os.path.join(QtApplication.getInstallPrefix(), "share", "cura", "resources","version.json"), "r"))
+                        os.path.join(QtApplication.getInstallPrefix(), "version.json"), "r"))
         except:
             self._components_version = {"cura_version": "master"}
 
