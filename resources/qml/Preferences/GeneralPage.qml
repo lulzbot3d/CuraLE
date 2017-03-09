@@ -427,7 +427,7 @@ UM.PreferencesPage
             {
                 id: sendDataCheckbox
                 text: catalog.i18nc("@option:check","Send (anonymous) print information")
-                checked: boolCheck(UM.Preferences.getValue("info/send_slice_info"))
+                checked: parent.visible ? boolCheck(UM.Preferences.getValue("info/send_slice_info")) : false
                 onCheckedChanged: UM.Preferences.setValue("info/send_slice_info", checked)
             }
         }
