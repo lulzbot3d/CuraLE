@@ -527,7 +527,7 @@ Cura.MachineAction
         containerStackId: Cura.MachineManager.activeMachineId
         key: "machine_port"
         watchedProperties: [ "value" ]
-        storeIndex: 4
+        storeIndex: manager.containerIndex
     }
 
     UM.SettingPropertyProvider
@@ -537,7 +537,7 @@ Cura.MachineAction
         containerStackId: Cura.MachineManager.activeMachineId
         key: "machine_baudrate"
         watchedProperties: [ "value" ]
-        storeIndex: 4
+        storeIndex: manager.containerIndex
     }
 
     UM.SettingPropertyProvider
