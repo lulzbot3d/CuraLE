@@ -144,10 +144,17 @@ class CuraApplication(QtApplication):
         self._print_monitor_additional_sections = []
 
         try:
-            self._components_version = json.load(open(
-                        os.path.join(QtApplication.getInstallPrefix(), "version.json"), "r"))
+             self._components_version = json.load(open("version.json", "r"))
         except:
-            self._components_version = {"cura_version": "master"}
+             try:
+                  self._components_version = json.load(open(
+                       os.path.join(QtApplication.getInstallPrefix(), "version.json"), "r"))
+             except:
+                  try:
+                       self._components_version = json.load(open(
+                            os.path.join(QtApplication.getInstallPrefix(), "share", "cura","version.json"), "r"))
+                  except:
+                       self._components_version = {"cura_version": "master"}
 
         self._machine_action_manager = MachineActionManager.MachineActionManager()
         self._machine_manager = None    # This is initialized on demand.
