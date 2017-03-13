@@ -3,40 +3,40 @@
         "large": {
             "size": 1.25,
             "bold": true,
-            "family": "Titillium"
+            "family": "Lato"
         },
         "default": {
             "size": 1.15,
-            "family": "Titillium"
+            "family": "Lato"
         },
         "default_bold": {
             "size": 1.15,
             "bold": true,
-            "family": "Titillium"
+            "family": "Lato"
         },
         "default_italic": {
             "size": 1.15,
             "italic": true,
-            "family": "Titillium"
+            "family": "Lato"
         },
         "small": {
             "size": 1.0,
             "bold": true,
-            "family": "Titillium"
+            "family": "Lato"
         },
         "button_tooltip": {
             "size": 1.0,
-            "family": "Titillium"
+            "family": "Lato"
         },
         "setting_category": {
             "size": 1.15,
             "bold": true,
-            "family": "Titillium"
+            "family": "Lato"
         },
         "action_button": {
             "size": 1.15,
             "bold": true,
-            "family": "Titillium"
+            "family": "Lato"
         }
     },
 
@@ -69,9 +69,9 @@
         "sidebar_lining": [245, 245, 245, 255],
 
         "button": [193, 216, 47, 255],
-        "button_hover": [120, 136, 104, 255],
-        "button_active": [226, 232, 104, 255],
-        "button_active_hover": [120, 136, 104, 255],
+        "button_hover": [245, 245, 190, 255],
+        "button_active": [120, 136, 20, 255],
+        "button_active_hover": [245, 245, 190, 255],
         "button_text": [0, 0, 0, 255],
         "button_disabled": [102, 102, 102, 255],
         "button_disabled_text": [102, 102, 102, 255],
@@ -135,7 +135,7 @@
         "setting_category_disabled_border": [245, 245, 245, 255],
         "setting_category_hover_border": [12, 159, 227, 255],
         "setting_category_active_border": [245, 245, 245, 255],
-        "setting_category_active_hover_border": [12, 159, 227, 255],
+        "setting_category_active_hover_border": [120, 136, 20, 255],
 
         "setting_control": [255, 255, 255, 255],
         "setting_control_selected": [24, 41, 77, 255],
@@ -171,7 +171,7 @@
         "checkbox_mark": [120, 136, 20, 255],
         "checkbox_text": [193, 216, 47, 255],
 
-        "tooltip": [12, 169, 227, 255],
+        "tooltip": [120, 136, 20, 255],
         "tooltip_text": [255, 255, 255, 255],
 
         "message_background": [120, 136, 20, 255],
@@ -231,8 +231,8 @@
         "standard_list_input": [20.0, 25.0],
         "standard_arrow": [0.8, 0.8],
 
-        "button": [8, 8],
-        "button_icon": [5, 5],
+        "button": [6, 6],
+        "button_icon": [4, 4],
         "button_lining": [0, 0],
 
         "button_tooltip": [1.0, 1.3],
