@@ -69,8 +69,8 @@
         "sidebar_lining": [245, 245, 245, 255],
 
         "button": [193, 216, 47, 255],
-        "button_hover": [245, 245, 190, 255],
-        "button_active": [120, 136, 20, 255],
+        "button_hover": [120, 136, 20, 255],
+        "button_active": [230, 235, 145, 255],
         "button_active_hover": [245, 245, 190, 255],
         "button_text": [0, 0, 0, 255],
         "button_disabled": [102, 102, 102, 255],
@@ -91,7 +91,7 @@
         "toggle_hovered_text": [255, 255, 255, 255],
         "toggle_active": [120, 120, 120, 255],
         "toggle_active_border": [120, 120, 120, 255],
-        "toggle_active_text": [24, 41, 77, 255],
+        "toggle_active_text": [102, 102, 102, 255],
 
         "tab_checked": [255, 255, 255, 255],
         "tab_checked_border": [255, 255, 255, 255],
@@ -125,20 +125,20 @@
         "scrollbar_handle_hover": [120, 136, 20, 255],
         "scrollbar_handle_down": [120, 136, 20, 255],
 
-        "setting_category": [245, 245, 245, 255],
+        "setting_category": [230, 235, 145, 255],
         "setting_category_disabled": [255, 255, 255, 255],
         "setting_category_hover": [245, 245, 245, 255],
         "setting_category_active": [245, 245, 245, 255],
         "setting_category_active_hover": [245, 245, 245, 255],
-        "setting_category_text": [24, 41, 77, 255],
+        "setting_category_text": [102, 102, 102, 255],
         "setting_category_border": [245, 245, 245, 255],
         "setting_category_disabled_border": [245, 245, 245, 255],
-        "setting_category_hover_border": [12, 159, 227, 255],
+        "setting_category_hover_border": [120, 136, 20, 255],
         "setting_category_active_border": [245, 245, 245, 255],
         "setting_category_active_hover_border": [120, 136, 20, 255],
 
         "setting_control": [255, 255, 255, 255],
-        "setting_control_selected": [24, 41, 77, 255],
+        "setting_control_selected": [230, 235, 145, 255],
         "setting_control_highlight": [255, 255, 255, 0],
         "setting_control_border": [127, 127, 127, 255],
         "setting_control_border_highlight": [12, 169, 227, 255],
@@ -155,7 +155,7 @@
         "setting_validation_ok": [255, 255, 255, 255],
 
         "progressbar_background": [245, 245, 245, 255],
-        "progressbar_control": [24, 41, 77, 255],
+        "progressbar_control": [193, 216, 47, 255],
 
         "slider_groove": [193, 216, 47, 255],
         "slider_groove_border": [120, 136, 20, 255],
