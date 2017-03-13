@@ -3,127 +3,127 @@
         "large": {
             "size": 1.25,
             "bold": true,
-            "family": "Open Sans"
+            "family": "Titillium"
         },
         "default": {
             "size": 1.15,
-            "family": "Open Sans"
+            "family": "Titillium"
         },
         "default_bold": {
             "size": 1.15,
             "bold": true,
-            "family": "Open Sans"
+            "family": "Titillium"
         },
         "default_italic": {
             "size": 1.15,
             "italic": true,
-            "family": "Open Sans"
+            "family": "Titillium"
         },
         "small": {
             "size": 1.0,
             "bold": true,
-            "family": "Open Sans"
+            "family": "Titillium"
         },
         "button_tooltip": {
             "size": 1.0,
-            "family": "Open Sans"
+            "family": "Titillium"
         },
         "setting_category": {
             "size": 1.15,
             "bold": true,
-            "family": "Open Sans"
+            "family": "Titillium"
         },
         "action_button": {
             "size": 1.15,
             "bold": true,
-            "family": "Open Sans"
+            "family": "Titillium"
         }
     },
 
     "colors": {
         "sidebar": [255, 255, 255, 255],
         "lining": [127, 127, 127, 255],
-        "viewport_overlay": [24, 41, 77, 255],
+        "viewport_overlay": [193, 216, 47, 255],
 
-        "primary": [12, 169, 227, 255],
-        "primary_hover": [48, 182, 231, 255],
+        "primary": [120, 136, 20, 255],
+        "primary_hover": [226, 232, 104, 255],
         "primary_text": [255, 255, 255, 255],
         "border": [127, 127, 127, 255],
         "secondary": [245, 245, 245, 255],
 
-        "text": [24, 41, 77, 255],
+        "text": [0, 0, 0, 255],
         "text_detail": [174, 174, 174, 128],
-        "text_link": [12, 169, 227, 255],
+        "text_link": [102, 102, 102, 255],
         "text_inactive": [174, 174, 174, 255],
-        "text_hover": [70, 84, 113, 255],
-        "text_pressed": [12, 169, 227, 255],
+        "text_hover": [120, 136, 20, 255],
+        "text_pressed": [120, 136, 20, 255],
         "text_reversed": [255, 255, 255, 255],
-        "text_subtext": [70, 84, 113, 255],
+        "text_subtext": [102, 102, 102, 255],
 
         "error": [255, 140, 0, 255],
-        "sidebar_header_bar": [24, 41, 77, 255],
-        "sidebar_header_active": [70, 84, 113, 255],
-        "sidebar_header_hover": [24, 41, 77, 255],
-        "sidebar_header_highlight": [12, 169, 227, 255],
+        "sidebar_header_bar": [193, 216, 47, 255],
+        "sidebar_header_active": [226, 232, 104, 255],
+        "sidebar_header_hover": [120, 136, 20, 255],
+        "sidebar_header_highlight": [226, 232, 104, 255],
         "sidebar_header_highlight_hover": [255, 255, 255, 255],
         "sidebar_lining": [245, 245, 245, 255],
 
-        "button": [24, 41, 77, 255],
-        "button_hover": [70, 84, 113, 255],
-        "button_active": [32, 166, 219, 255],
-        "button_active_hover": [12, 169, 227, 255],
-        "button_text": [255, 255, 255, 255],
-        "button_disabled": [24, 41, 77, 255],
-        "button_disabled_text": [70, 84, 113, 255],
+        "button": [193, 216, 47, 255],
+        "button_hover": [120, 136, 104, 255],
+        "button_active": [226, 232, 104, 255],
+        "button_active_hover": [120, 136, 104, 255],
+        "button_text": [0, 0, 0, 255],
+        "button_disabled": [102, 102, 102, 255],
+        "button_disabled_text": [102, 102, 102, 255],
 
-        "button_tooltip": [255, 255, 255, 255],
-        "button_tooltip_border": [24, 41, 77, 255],
-        "button_tooltip_text": [24, 41, 77, 255],
+        "button_tooltip": [120, 136, 20, 255],
+        "button_tooltip_border": [120, 136, 20, 255],
+        "button_tooltip_text": [255, 255, 255, 255],
 
-        "toggle_checked": [24, 41, 77, 255],
-        "toggle_checked_border": [24, 41, 77, 255],
+        "toggle_checked": [193, 216, 47, 255],
+        "toggle_checked_border": [193, 216, 47, 255],
         "toggle_checked_text": [255, 255, 255, 255],
         "toggle_unchecked": [255, 255, 255, 255],
         "toggle_unchecked_border": [127, 127, 127, 255],
-        "toggle_unchecked_text": [24, 41, 77, 255],
+        "toggle_unchecked_text": [193, 216, 47, 255],
         "toggle_hovered": [255, 255, 255, 255],
-        "toggle_hovered_border": [32, 166, 219, 255],
-        "toggle_hovered_text": [24, 41, 77, 255],
-        "toggle_active": [32, 166, 219, 255],
-        "toggle_active_border": [32, 166, 219, 255],
+        "toggle_hovered_border": [120, 136, 20, 255],
+        "toggle_hovered_text": [255, 255, 255, 255],
+        "toggle_active": [120, 120, 120, 255],
+        "toggle_active_border": [120, 120, 120, 255],
         "toggle_active_text": [24, 41, 77, 255],
 
         "tab_checked": [255, 255, 255, 255],
         "tab_checked_border": [255, 255, 255, 255],
-        "tab_checked_text": [24, 41, 77, 255],
+        "tab_checked_text": [0, 0, 0, 255],
         "tab_unchecked": [245, 245, 245, 255],
         "tab_unchecked_border": [245, 245, 245, 255],
         "tab_unchecked_text": [127, 127, 127, 255],
         "tab_hovered": [245, 245, 245, 255],
         "tab_hovered_border": [245, 245, 245, 255],
-        "tab_hovered_text": [32, 166, 219, 255],
-        "tab_active": [255, 255, 255, 255],
+        "tab_hovered_text": [0, 0, 0, 255],
+        "tab_active": [226, 232, 104, 255],
         "tab_active_border": [255, 255, 255, 255],
-        "tab_active_text": [24, 41, 77, 255],
+        "tab_active_text": [0, 0, 0, 255],
         "tab_background": [245, 245, 245, 255],
 
         "action_button": [255, 255, 255, 255],
-        "action_button_text": [24, 41, 77, 255],
+        "action_button_text": [193, 216, 47, 255],
         "action_button_border": [127, 127, 127, 255],
         "action_button_hovered": [255, 255, 255, 255],
-        "action_button_hovered_text": [24, 41, 77, 255],
-        "action_button_hovered_border": [12, 169, 227, 255],
-        "action_button_active": [12, 169, 227, 255],
-        "action_button_active_text": [255, 255, 255, 255],
-        "action_button_active_border": [12, 169, 227, 255],
+        "action_button_hovered_text": [0, 0, 0, 255],
+        "action_button_hovered_border": [120, 136, 47, 255],
+        "action_button_active": [226, 232, 104, 255],
+        "action_button_active_text": [0, 0, 0, 255],
+        "action_button_active_border": [226, 232, 47, 255],
         "action_button_disabled": [245, 245, 245, 255],
         "action_button_disabled_text": [127, 127, 127, 255],
         "action_button_disabled_border": [245, 245, 245, 255],
 
         "scrollbar_background": [255, 255, 255, 255],
-        "scrollbar_handle": [24, 41, 77, 255],
-        "scrollbar_handle_hover": [12, 159, 227, 255],
-        "scrollbar_handle_down": [12, 159, 227, 255],
+        "scrollbar_handle": [193, 216, 47, 255],
+        "scrollbar_handle_hover": [120, 136, 20, 255],
+        "scrollbar_handle_down": [120, 136, 20, 255],
 
         "setting_category": [245, 245, 245, 255],
         "setting_category_disabled": [255, 255, 255, 255],
@@ -142,10 +142,10 @@
         "setting_control_highlight": [255, 255, 255, 0],
         "setting_control_border": [127, 127, 127, 255],
         "setting_control_border_highlight": [12, 169, 227, 255],
-        "setting_control_text": [24, 41, 77, 255],
+        "setting_control_text": [0, 0, 0, 255],
         "setting_control_depth_line": [127, 127, 127, 255],
         "setting_control_button": [127, 127, 127, 255],
-        "setting_control_button_hover": [70, 84, 113, 255],
+        "setting_control_button_hover": [226, 232, 104, 255],
         "setting_control_disabled": [245, 245, 245, 255],
         "setting_control_disabled_text": [127, 127, 127, 255],
         "setting_control_disabled_border": [127, 127, 127, 255],
@@ -231,8 +231,8 @@
         "standard_list_input": [20.0, 25.0],
         "standard_arrow": [0.8, 0.8],
 
-        "button": [4, 4],
-        "button_icon": [2.5, 2.5],
+        "button": [8, 8],
+        "button_icon": [5, 5],
         "button_lining": [0, 0],
 
         "button_tooltip": [1.0, 1.3],
