@@ -43,6 +43,14 @@
         "machine_baudrate":
         {
             "default_value": "115200"
+        },
+        "material_wipe_temperature":
+        {
+            "enabled": "False"
+        },
+        "material_probe_temperature":
+        {
+            "enabled": "False"
         }
     }
 }
