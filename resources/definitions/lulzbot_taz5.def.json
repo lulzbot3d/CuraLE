@@ -39,6 +39,14 @@
         "machine_end_gcode":
         {
             "default_value_from_file": "lulzbot_taz5_end"
+        },
+        "material_wipe_temperature":
+        {
+            "enabled": "False"
+        },
+        "material_probe_temperature":
+        {
+            "enabled": "False"
         }
     }
 }
