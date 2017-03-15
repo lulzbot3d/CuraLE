@@ -10,5 +10,6 @@ G90                                       ; absolute positioning
 G1 Y0 F3000                               ; move to cooling position
 M190 R{material_part_removal_temperature} ; wait for bed to cool down to removal temp
 G1 Y280 F3000                             ; present finished print
+M140 S{material_keep_part_removal_temperature_t}; keep temperature or cool downs
 M84                                       ; disable steppers
 G90                                       ; absolute positioning

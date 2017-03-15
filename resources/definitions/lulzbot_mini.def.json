@@ -197,6 +197,10 @@
         "prime_tower_position_y":
         {
             "default_value": 20
+        },
+        "material_keep_part_removal_temperature":
+        {
+            "enabled": "True"
         }
     }
 }
