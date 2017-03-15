@@ -744,7 +744,7 @@ class CuraApplication(QtApplication):
             for _ in range(count):
                 new_node = copy.deepcopy(current_node)
                 op.addOperation(AddSceneNodeOperation(new_node, current_node.getParent()))
-                op.push()
+            op.push()
 
     ##  Center object on platform.
     @pyqtSlot("quint64")
