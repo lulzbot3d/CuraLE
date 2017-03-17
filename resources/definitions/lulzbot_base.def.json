@@ -1256,6 +1256,10 @@
         "machine_max_jerk_z":
         {
             "enabled": "True"
+        },
+        "material_keep_part_removal_temperature":
+        {
+            "enabled": "True"
         }
     },
     "settings":
