@@ -186,6 +186,22 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
         machine_with_heated_bed = {"ultimaker_original"       : "MarlinUltimaker-HBK-{baudrate}.hex",
                                    "ultimaker_original_dual"  : "MarlinUltimaker-HBK-{baudrate}-dual.hex",
                                    }
+        lulzbot_machines = {
+            "lulzbot_mini": "Mini-Single-or-Flexystruder-LBHexagon-v1.1.0.11.hex",
+            "lulzbot_mini_flexy": "Mini-Single-or-Flexystruder-LBHexagon-v1.1.0.11.hex",
+
+            "lulzbot_taz5": "TAZ4-5-Standard-LBHexagon-1.0.0.1.hex",
+            "lulzbot_taz5_flexy_v2": "TAZ4-5-Flexystruder-LBHexagon-1.0.0.2.hex",
+            "lulzbot_taz5_moarstruder": "TAZ5-Moarstruder-LBHexagon-1.0.0.2.hex",
+            "lulzbot_taz5_dual_v2": "TAZ4-5-Dual-LBHexagon-1.0.0.1.hex",
+            "lulzbot_taz5_flexy_dually_v2": "TAZ4-5-FlexyDually-LBHexagon-1.0.0.1.hex",
+
+            "lulzbot_taz6": "TAZ6_Single_Extruder_v1.0.2.21.hex",
+            "lulzbot_taz6_flexy_v2": "TAZ6_Flexystruder_v1.0.2.21.hex",
+            "lulzbot_taz6_moarstruder": "TAZ6_Moarstruder_v1.0.2.21.hex",
+            "lulzbot_taz6_dual_v2": "TAZ6_Dual_v1.0.2.21.hex",
+            ##TODO: "lulzbot_taz6_flexy_dually_v2": "",
+        }
         ##TODO: Add check for multiple extruders
         hex_file = None
         if machine_id in machine_without_extras.keys():  # The machine needs to be defined here!
@@ -195,6 +211,9 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             else:
                 Logger.log("d", "Choosing basic firmware for machine %s.", machine_id)
                 hex_file = machine_without_extras[machine_id]  # Return "basic" firmware
+        elif machine_id in lulzbot_machines.keys():
+            Logger.log("d", "Found firmware for machine %s.", machine_id)
+            hex_file = lulzbot_machines[machine_id]
         else:
             Logger.log("w", "There is no firmware for machine %s.", machine_id)
 
