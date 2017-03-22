@@ -458,11 +458,32 @@ UM.MainWindow
 
             Button
             {
-                id: viewModeButton
+                id: multiplyObjectButton
 
                 anchors
                 {
                     top: toolbar.bottom;
+                    topMargin: UM.Theme.getSize("window_margin").height;
+                    left: parent.left;
+                }
+                text: catalog.i18nc("@action:button","Multiply Object");
+                iconSource: UM.Theme.getIcon("multiply");
+
+                style: UM.Theme.styles.tool_button;
+                tooltip: "";
+
+                enabled: UM.Selection.hasSelection
+
+                onClicked: Cura.Actions.multiplyObject.trigger();
+            }
+
+            Button
+            {
+                id: viewModeButton
+
+                anchors
+                {
+                    top: multiplyObjectButton.bottom;
                     topMargin: UM.Theme.getSize("window_margin").height;
                     left: parent.left;
                 }
@@ -715,6 +736,12 @@ UM.MainWindow
                     multiplyObjectOptions.visible = true;
                     multiplyObjectOptions.reset();
                     objectContextMenu.objectId = 0;
+                }
+                else if (UM.Selection.hasSelection)
+                {
+                    multiplyObjectOptions.objectId = -1;
+                    multiplyObjectOptions.visible = true;
+                    multiplyObjectOptions.reset();
                 }
             }
         }
