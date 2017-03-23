@@ -255,6 +255,7 @@ class CuraApplication(QtApplication):
             machine_settings
             resolution
                 layer_height
+                machine_nozzle_size_for_extruder
             shell
                 wall_thickness
                 top_bottom_thickness
