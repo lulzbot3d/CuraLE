@@ -2951,6 +2951,16 @@ msgctxt "@label"
 msgid "Profile:"
 msgstr "Profile:"
 
+#: /home/ruben/Projects/Cura/resources/qml/SidebarHeader.qml:278
+msgctxt "@label"
+msgid "Profile:"
+msgstr "Profile:"
+
+#: /home/ruben/Projects/Cura/resources/qml/SidebarHeader.qml:281
+msgctxt "@label"
+msgid "Adhesion Information:"
+msgstr ""
+
 #: /home/ruben/Projects/Cura/resources/qml/SidebarHeader.qml:329
 msgctxt "@tooltip"
 msgid ""
@@ -2961,3 +2971,5 @@ msgstr ""
 "Some setting/override values are different from the values stored in the profile.\n"
 "\n"
 "Click to open the profile manager."
+
+

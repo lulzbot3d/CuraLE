@@ -10,6 +10,7 @@ Item
 
     property alias text: textArea.text
     property alias wrapMode: textArea.wrapMode
+    property alias txtFont: textArea.font
 
     signal editingFinished();
 
