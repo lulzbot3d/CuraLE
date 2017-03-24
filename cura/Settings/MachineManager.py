@@ -812,7 +812,7 @@ class MachineManager(QObject):
         for stack in name_changed_connect_stacks:
             stack.nameChanged.connect(self._onQualityNameChanged)
 
-        if self.hasUserSettings and Preferences.getInstance().getValue("cura/active_mode") == 1:
+        if self.hasUserSettings:
             self._askUserToKeepOrClearCurrentSettings()
 
         self.activeQualityChanged.emit()
