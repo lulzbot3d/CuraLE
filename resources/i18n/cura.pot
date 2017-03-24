@@ -3045,6 +3045,11 @@ msgctxt "@label"
 msgid "Material"
 msgstr ""
 
+#: /home/ruben/Projects/Cura/resources/qml/SidebarHeader.qml:281
+msgctxt "@label"
+msgid "Adhesion Information:"
+msgstr ""
+
 #: /home/ruben/Projects/Cura/resources/qml/SidebarHeader.qml:278
 msgctxt "@label"
 msgid "Profile:"

@@ -9,6 +9,7 @@ import UM 1.2 as UM
 import Cura 1.0 as Cura
 
 import "Menus"
+import "Preferences"
 
 Column
 {
@@ -259,6 +260,53 @@ Column
 
     Row
     {
+        id: adhesionRow
+
+        height: UM.Theme.getSize("sidebar_setup").height*4
+        visible: (Cura.MachineManager.hasVariants || Cura.MachineManager.hasMaterials) && !sidebar.monitoringPrint
+
+
+        anchors
+        {
+            left: parent.left
+            leftMargin: UM.Theme.getSize("default_margin").width
+            right: parent.right
+            rightMargin: UM.Theme.getSize("default_margin").width
+        }
+
+        Label
+        {
+            height: parent.rowHeight;
+            verticalAlignment: Qt.AlignVCenter;
+            text: catalog.i18nc("@label", "Adhesion Information:")
+
+            anchors.verticalCenter: parent.verticalCenter
+            width: parent.width * 0.45 - UM.Theme.getSize("default_margin").width
+            font: UM.Theme.getFont("default");
+            color: UM.Theme.getColor("text");
+        }
+
+        ReadOnlyTextArea
+        {
+            //text: properties.adhesion_info;
+            // TODO: need fill and data to/from somewhere???
+            text: ""
+            wrapMode: Text.WordWrap;
+            readOnly: false;
+            visible: true;
+
+            width: parent.width * 0.55 + UM.Theme.getSize("default_margin").width
+            height: parent.height;
+            txtFont: UM.Theme.getFont("default");
+
+            // TODO: need fill and data to/from somewhere???
+            //onEditingFinished: base.setMetaDataEntry("adhesion_info", properties.adhesion_info, text)
+        }
+
+    }
+
+    Row
+    {
         id: globalProfileRow
         height: UM.Theme.getSize("sidebar_setup").height
         visible: !sidebar.monitoringPrint
@@ -333,6 +381,7 @@ Column
             }
         }
     }
+
 
     UM.SettingPropertyProvider
     {
