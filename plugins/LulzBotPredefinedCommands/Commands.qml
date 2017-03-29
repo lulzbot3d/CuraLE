@@ -17,6 +17,7 @@ Item
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: UM.Theme.getSize("default_margin").width
+        spacing: UM.Theme.getSize("button_spacing").height
 
         Button
         {
@@ -27,6 +28,7 @@ Item
             {
                 connectedPrinter.wipeNozzle()
             }
+            style: UM.Theme.styles.print_monitor_control_button
         }
 
         Button
@@ -38,6 +40,7 @@ Item
             {
                 connectedPrinter.preheatHotend(-1)
             }
+            style: UM.Theme.styles.print_monitor_control_button
         }
 
         Button
@@ -49,6 +52,7 @@ Item
             {
                 connectedPrinter.preheatBed()
             }
+            style: UM.Theme.styles.print_monitor_control_button
         }
 
         Button
@@ -60,6 +64,7 @@ Item
             {
                 Cura.USBPrinterManager.sendCommandToCurrentPrinter("M18")
             }
+            style: UM.Theme.styles.print_monitor_control_button
         }
 
         Button
@@ -71,6 +76,7 @@ Item
             {
                 connectedPrinter.setTargetHotendTemperature(-1, 0)
             }
+            style: UM.Theme.styles.print_monitor_control_button
         }
 
         Button
@@ -82,6 +88,7 @@ Item
             {
                 connectedPrinter.setTargetBedTemperature(0)
             }
+            style: UM.Theme.styles.print_monitor_control_button
         }
 
         Button
@@ -93,6 +100,7 @@ Item
             {
                 connectedPrinter.coldPull(-1)
             }
+            style: UM.Theme.styles.print_monitor_control_button
         }
     }
 }

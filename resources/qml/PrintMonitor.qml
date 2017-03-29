@@ -196,6 +196,7 @@ ScrollView
                     anchors.leftMargin: UM.Theme.getSize("default_margin").width
                     anchors.top: parent.top
                     anchors.topMargin: UM.Theme.getSize("default_margin").width
+                    spacing: UM.Theme.getSize("button_spacing").width
 
                     Button
                     {
@@ -204,6 +205,8 @@ ScrollView
                         {
                             connectedPrinter.connect()
                         }
+
+                        style: UM.Theme.styles.print_monitor_control_button
                     }
 
                     Button
@@ -213,7 +216,8 @@ ScrollView
                         {
                             connectedPrinter.close()
                         }
-                    }
+                        style: UM.Theme.styles.print_monitor_control_button
+                     }
 
                     Button
                     {
@@ -224,6 +228,7 @@ ScrollView
                             connectedPrinter.messageFromPrinter.connect(printer_control.receive)
                             printer_control.visible = true;
                         }
+                        style: UM.Theme.styles.print_monitor_control_button
                     }
                 }
 
@@ -479,6 +484,7 @@ ScrollView
                     {
                         width: parent.width
                         height: childrenRect.height
+                        spacing: UM.Theme.getSize("button_spacing").width
 
                         Button
                         {
@@ -489,6 +495,8 @@ ScrollView
                             {
                                 connectedPrinter.extrude(parseFloat(extrusionAmountTextField.text))
                             }
+
+                            style: UM.Theme.styles.print_monitor_control_button
                         }
 
                         Button
@@ -500,6 +508,8 @@ ScrollView
                             {
                                 connectedPrinter.extrude(-parseFloat(extrusionAmountTextField.text))
                             }
+
+                            style: UM.Theme.styles.print_monitor_control_button
                         }
                     }
 
@@ -533,6 +543,7 @@ ScrollView
                     {
                         width: parent.width
                         height: childrenRect.height
+                        spacing: UM.Theme.getSize("button_spacing").width
 
                         Button
                         {
@@ -543,6 +554,8 @@ ScrollView
                             {
                                 connectedPrinter.setTargetHotendTemperature(extruderSelector.currentIndex, parseInt(temperatureTextField.text))
                             }
+
+                            style: UM.Theme.styles.print_monitor_control_button
                         }
 
                         Button
@@ -554,6 +567,8 @@ ScrollView
                             {
                                 connectedPrinter.setTargetBedTemperature(parseInt(temperatureTextField.text))
                             }
+
+                            style: UM.Theme.styles.print_monitor_control_button
                         }
                     }
                 }
