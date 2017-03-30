@@ -4,6 +4,8 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Window 2.1
+import QtQuick.Layouts 1.1
+
 
 import UM 1.1 as UM
 
@@ -116,6 +118,7 @@ UM.Dialog
         {
             text: catalog.i18nc("@action:button","Close");
             onClicked: base.visible = false;
+            style: UM.Theme.styles.print_monitor_control_button
         },
 
         Button
@@ -126,6 +129,7 @@ UM.Dialog
             {
                 base.sendCommand();
             }
+            style: UM.Theme.styles.print_monitor_control_button
         }
     ]
 
