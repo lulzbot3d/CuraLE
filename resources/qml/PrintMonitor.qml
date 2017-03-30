@@ -650,31 +650,80 @@ ScrollView
                         ctx.clearRect(0, 0, temperatureGraph.width, temperatureGraph.height);
                         ctx.translate(0,0);
                         ctx.lineWidth = 1;
-                        ctx.strokeStyle = Qt.rgba(.3, .3, .3, 1);
+                        //ctx.strokeStyle = Qt.rgba(.3, .3, .3, 1);
+                        ctx.strokeStyle = Qt.rgba(.75, .84, .18, 1);
 
+                        // Horizontal lines
                         for(var i = 0; i < 6; i++)
                         {
                             if(i > 0)
                             {
                                 ctx.beginPath();
-                                ctx.moveTo(0, temperatureGraph.height / 6 * i);
+                                //ctx.moveTo(0, temperatureGraph.height / 6 * i);
+                                ctx.moveTo(temperatureGraph.width/12, temperatureGraph.height / 6 * i);
                                 ctx.lineTo(temperatureGraph.width, temperatureGraph.height / 6 * i);
                                 ctx.closePath();
                                 ctx.stroke();
                             }
                         }
 
+                        // Very bottom line
+                        ctx.beginPath();
+                        ctx.moveTo(0, temperatureGraph.height-1);
+                        ctx.lineTo(temperatureGraph.width, temperatureGraph.height-1);
+                        ctx.closePath();
+                        ctx.stroke();
+
+                        // Very top line
+                        ctx.beginPath();
+                        ctx.moveTo(0, 1);
+                        ctx.lineTo(temperatureGraph.width, 1);
+                        ctx.closePath();
+                        ctx.stroke();
+
+                        // Vertical lineStyles
+                        for(var i = 0; i < 12; i++)
+                        {
+                            if(i > 0 )
+                            {
+                                ctx.beginPath();
+                                ctx.moveTo(temperatureGraph.width / 12 * i, 0);
+                                ctx.lineTo(temperatureGraph.width / 12 * i, temperatureGraph.height);
+                                ctx.closePath();
+                                ctx.stroke();
+                            }
+
+                            else
+                            {
+                                ctx.beginPath();
+                                ctx.moveTo(0, 0);
+                                ctx.lineTo(0, temperatureGraph.height);
+                                ctx.closePath();
+                                ctx.stroke();
+                            }
+                        }
+
+                        // Vertical ver right lineStyles
+                        ctx.beginPath();
+                        ctx.moveTo(temperatureGraph.width - 1, 0);
+                        ctx.lineTo(temperatureGraph.width - 1, temperatureGraph.height);
+                        ctx.closePath();
+                        ctx.stroke();
+
+
                         for(var k = 0; k < nozzleTemperatureValues.length; k++)
                         {
                             ctx.strokeStyle = lineStyles[k];
 
                             ctx.beginPath();
-                            ctx.moveTo(0, temperatureGraph.height + 1);
+                            //ctx.moveTo(0, temperatureGraph.height + 1);
+                            ctx.moveTo(0, temperatureGraph.height + 2);
                             for(var i = 0; i < nozzleTemperatureValues[k].length; i++)
                             {
                                 ctx.lineTo(i * temperatureGraph.width / (nozzleTemperatureValues[k].length - 1), temperatureGraph.height - nozzleTemperatureValues[k][i] / 300 * temperatureGraph.height);
                             }
-                            ctx.lineTo(temperatureGraph.width, temperatureGraph.height + 1);
+                            //ctx.lineTo(temperatureGraph.width, temperatureGraph.height + 1);
+                            ctx.lineTo(temperatureGraph.width, temperatureGraph.height + 2);
                             ctx.closePath();
                             ctx.stroke();
                         }
@@ -692,9 +741,10 @@ ScrollView
                         ctx.stroke();
 
                         ctx.fillStyle = Qt.rgba(0, 0, 0, 1);
-                        for(var i = 0; i < 6; i++)
+                        ctx.fillText( 0, 2, temperatureGraph.height - 3)
+                        for(var i = 0; i < 5; i++)
                         {
-                            ctx.fillText((5-i) * 50, 0, temperatureGraph.height / 6 * (i+1))
+                            ctx.fillText((5-i) * 50, 2, temperatureGraph.height / 6 * (i+1))
                         }
 
                         ctx.restore();
