@@ -74,6 +74,7 @@
         "button_active_hover": [120, 136, 190, 255],
         "button_text": [0, 0, 0, 255],
         "button_disabled": [102, 102, 102, 255],
+        "button_disabled_lighter": [204, 204, 204, 255],
         "button_disabled_text": [102, 102, 102, 255],
 
         "button_tooltip": [120, 136, 20, 255],

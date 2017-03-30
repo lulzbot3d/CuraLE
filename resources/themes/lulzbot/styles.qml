@@ -658,7 +658,8 @@ QtObject {
                 color:
                 {
                     if(!control.enabled)
-                        return UM.Theme.getColor("button_disabled");
+                        //return UM.Theme.getColor("button_disabled");
+                        return UM.Theme.getColor("button_disabled_lighter");
                     else if(control.pressed)
                         return UM.Theme.getColor("button_active");
                     else if(control.hovered)
