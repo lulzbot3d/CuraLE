@@ -12,10 +12,14 @@ from UM.Logger import Logger
 from UM.i18n import i18nCatalog
 catalog = i18nCatalog("cura")
 
-try:
-    from cura.CuraVersion import CuraDebugMode
-except ImportError:
-    CuraDebugMode = False  # [CodeStyle: Reflecting imported value]
+MYPY = False
+if MYPY:
+    CuraDebugMode = False
+else:
+    try:
+        from cura.CuraVersion import CuraDebugMode
+    except ImportError:
+        CuraDebugMode = False  # [CodeStyle: Reflecting imported value]
 
 # List of exceptions that should be considered "fatal" and abort the program.
 # These are primarily some exception types that we simply cannot really recover from
@@ -69,7 +73,6 @@ def show(exception_type, value, tb):
 
     label = QLabel(dialog)
     layout.addWidget(label)
-
     #label.setScaledContents(True)
     label.setText(catalog.i18nc("@label", """<p>A fatal exception has occurred that we could not recover from!</p>
         <p>We hope this picture of a kitten helps you recover from the shock.</p>

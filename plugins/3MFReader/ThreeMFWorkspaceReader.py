@@ -182,7 +182,7 @@ class ThreeMFWorkspaceReader(WorkspaceReader):
         self._dialog.setMachineType(machine_type)
         self._dialog.setExtruders(extruders)
         self._dialog.setVariantType(variant_type_name)
-        self._dialog.setHasObjectsOnPlate(Application.getInstance().getPlatformActivity)
+        self._dialog.setHasObjectsOnPlate(Application.getInstance().platformActivity)
         self._dialog.show()
 
         # Block until the dialog is closed.
@@ -476,7 +476,9 @@ class ThreeMFWorkspaceReader(WorkspaceReader):
         return nodes
 
     def _stripFileToId(self, file):
-        return file.replace("Cura/", "").split(".")[0]
+        mime_type = MimeTypeDatabase.getMimeTypeForFile(file)
+        file = mime_type.stripExtension(file)
+        return file.replace("Cura/", "")
 
     def _getXmlProfileClass(self):
         return self._container_registry.getContainerForMimeType(MimeTypeDatabase.getMimeType("application/x-ultimaker-material-profile"))
