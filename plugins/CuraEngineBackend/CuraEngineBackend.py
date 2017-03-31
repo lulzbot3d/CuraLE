@@ -180,8 +180,6 @@ class CuraEngineBackend(QObject, Backend):
 
     ##  Perform a slice of the scene.
     def slice(self):
-        if self._pause_slicing:
-            return
         Logger.log("d", "Starting slice job...")
         self._slice_start_time = time()
         if not self._need_slicing:

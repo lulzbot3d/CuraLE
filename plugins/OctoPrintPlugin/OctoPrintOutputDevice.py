@@ -103,6 +103,10 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
         self._recreate_network_manager_time = 30 # If we have no connection, re-create network manager every 30 sec.
         self._recreate_network_manager_count = 1
 
+        self._preheat_timer = QTimer()
+        self._preheat_timer.setSingleShot(True)
+        self._preheat_timer.timeout.connect(self.cancelPreheatBed)
+
     def getProperties(self):
         return self._properties
 
@@ -330,6 +334,8 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
         if not global_container_stack:
             return
 
+        self._preheat_timer.stop()
+
         self._auto_print = parseBool(global_container_stack.getMetaDataEntry("octoprint_auto_print", True))
         if self._auto_print:
             Application.getInstance().showPrintMonitor.emit(True)
@@ -399,7 +405,7 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
             Logger.log("e", "An exception occurred in network connection: %s" % str(e))
 
     def _sendCommand(self, command):
-        url = QUrl(self._api_url + "job")
+        url = QUrl(self._api_url + "printer/command")
         self._command_request = QNetworkRequest(url)
         self._command_request.setRawHeader(self._api_header.encode(), self._api_key.encode())
         self._command_request.setHeader(QNetworkRequest.ContentTypeHeader, "application/json")
@@ -407,6 +413,28 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
         data = "{\"command\": \"%s\"}" % command
         self._command_reply = self._manager.post(self._command_request, data.encode())
         Logger.log("d", "Sent command to OctoPrint instance: %s", data)
+
+    ##  Pre-heats the heated bed of the printer.
+    #
+    #   \param temperature The temperature to heat the bed to, in degrees
+    #   Celsius.
+    #   \param duration How long the bed should stay warm, in seconds.
+    @pyqtSlot(float, float)
+    def preheatBed(self, temperature, duration):
+        self._setTargetBedTemperature(temperature)
+        if duration > 0:
+            self._preheat_timer.setInterval(duration * 1000)
+            self._preheat_timer.start()
+        else:
+            self._preheat_timer.stop()
+
+    ##  Cancels pre-heating the heated bed of the printer.
+    #
+    #   If the bed is not pre-heated, nothing happens.
+    @pyqtSlot()
+    def cancelPreheatBed(self):
+        self._setTargetBedTemperature(0)
+        self._preheat_timer.stop()
 
     def _setTargetBedTemperature(self, temperature):
         Logger.log("d", "Setting bed temperature to %s", temperature)
@@ -504,8 +532,15 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
                 elif http_status_code == 401:
                     self.setAcceptsCommands(False)
                     self.setConnectionText(i18n_catalog.i18nc("@info:status", "OctoPrint on {0} does not allow access to print").format(self._key))
+                elif http_status_code == 409:
+                    if self._connection_state == ConnectionState.connecting:
+                        self.setConnectionState(ConnectionState.connected)
+
+                    self.setAcceptsCommands(False)
+                    self.setConnectionText(i18n_catalog.i18nc("@info:status", "The printer connected to OctoPrint on {0} is not operational").format(self._key))
                 else:
-                    pass  # TODO: Handle errors
+                    self.setAcceptsCommands(False)
+                    Logger.log("w", "Received an unexpected returncode: %d", http_status_code)
 
             elif "job" in reply.url().toString():  # Status update from /job:
                 if http_status_code == 200:
