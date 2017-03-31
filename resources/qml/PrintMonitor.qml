@@ -308,6 +308,7 @@ ScrollView
             content.item.width = base.width - 2 * UM.Theme.getSize("default_margin").width
         }
 
+        // Comands.qml loaded hear
         Repeater
         {
             model: Printer.printMonitorAdditionalSections
@@ -477,10 +478,7 @@ ScrollView
                         rowSpacing: 1
                         columnSpacing: 1
 
-                        anchors.top: positionLabel.bottom
-                        anchors.topMargin: UM.Theme.getSize("default_margin").width
                         anchors.leftMargin: 0
-
                         anchors.left: parent.left
 
                         Label
@@ -592,9 +590,6 @@ ScrollView
                         rows: 4
                         rowSpacing: 1
                         columnSpacing: 1
-
-                        anchors.top: positionLabel.bottom
-                        anchors.topMargin: UM.Theme.getSize("default_margin").width
 
                         anchors.left: parent.left
 
