@@ -425,125 +425,302 @@ ScrollView
                     }
                 }
 
-                GridLayout
-                {
-                    id: controlsLayout
-                    columns: 4
-                    rows: 3
-                    rowSpacing: 1
-                    columnSpacing: 1
 
-                    anchors.top: baseControls.bottom
-                    anchors.topMargin: UM.Theme.getSize("default_margin").width
+
+                Row
+                {
+                    id: positionLabel
 
                     anchors.left: parent.left
-                    anchors.leftMargin: UM.Theme.getSize("default_margin").width
+                    anchors.leftMargin: parent.width/9
+                    anchors.top: baseControls.bottom
+                    anchors.topMargin: UM.Theme.getSize("default_margin").height
+                    spacing: parent.width*5/18
+                    width: parent.width
 
-                    Button
+                    Label
                     {
-                        text: "/\\"
-                        Layout.row: 1
-                        Layout.column: 2
-                        Layout.preferredWidth: UM.Theme.getSize("section").height
-                        Layout.preferredHeight: UM.Theme.getSize("section").height
+                        text: "Position"
+                        color: UM.Theme.getColor("setting_control_text")
+                        font: UM.Theme.getFont("default")
+                        width: parent.width/5
+                    }
 
-                        onClicked:
+                    Label
+                    {
+                        text: "Extrusion"
+                        color: UM.Theme.getColor("setting_control_text")
+                        font: UM.Theme.getFont("default")
+                        width: parent.width/3
+                    }
+                }
+
+                //Column 1: Position: X/Y
+                Column
+                {
+                    id: positionXYColumn
+
+                    anchors.top: positionLabel.bottom
+                    anchors.topMargin: UM.Theme.getSize("default_margin").width
+                    anchors.leftMargin: UM.Theme.getSize("default_margin").width/2
+
+                    width: childrenRect.width
+                    height: childrenRect.height
+
+                    spacing: 1
+
+                    GridLayout
+                    {
+                        id: controlsXYLayout
+                        columns: 3
+                        rows: 4
+                        rowSpacing: 1
+                        columnSpacing: 1
+
+                        anchors.top: positionLabel.bottom
+                        anchors.topMargin: UM.Theme.getSize("default_margin").width
+                        anchors.leftMargin: 0
+
+                        anchors.left: parent.left
+
+                        Label
                         {
-                            connectedPrinter.moveHead(0, -parseFloat(moveLengthTextField.text), 0)
+                            text: "X/Y"
+                            color: UM.Theme.getColor("setting_control_text")
+                            font: UM.Theme.getFont("default")
+                            width: parent.width
+                            Layout.row: 1
+                            Layout.column: 2
+                            Layout.preferredWidth: UM.Theme.getSize("section").height
+                            Layout.preferredHeight: UM.Theme.getSize("section").height
                         }
+
+                        Button
+                        {
+                            //text: "/\\"
+                            Layout.row: 2
+                            Layout.column: 2
+                            Layout.preferredWidth: UM.Theme.getSize("section").height
+                            Layout.preferredHeight: UM.Theme.getSize("section").height
+                            iconSource: UM.Theme.getIcon("control_y_back");
+
+                            onClicked:
+                            {
+                                connectedPrinter.moveHead(0, -parseFloat(moveLengthTextField.text), 0)
+                            }
+                        }
+
+                        Button
+                        {
+                            //text: "<"
+                            Layout.row: 3
+                            Layout.column: 1
+                            Layout.preferredWidth: UM.Theme.getSize("section").height
+                            Layout.preferredHeight: UM.Theme.getSize("section").height
+                            iconSource: UM.Theme.getIcon("control_x_left");
+
+                            onClicked:
+                            {
+                                connectedPrinter.moveHead(-parseFloat(moveLengthTextField.text), 0, 0)
+                            }
+                        }
+
+                        Button
+                        {
+                            //text: ">"
+                            Layout.row: 3
+                            Layout.column: 3
+                            Layout.preferredWidth: UM.Theme.getSize("section").height
+                            Layout.preferredHeight: UM.Theme.getSize("section").height
+                            iconSource: UM.Theme.getIcon("control_x_right");
+
+                            onClicked:
+                            {
+                                connectedPrinter.moveHead(parseFloat(moveLengthTextField.text), 0, 0)
+                            }
+                        }
+
+                        Button
+                        {
+                            //text: "V"
+                            Layout.row: 4
+                            Layout.column: 2
+                            Layout.preferredWidth: UM.Theme.getSize("section").height
+                            Layout.preferredHeight: UM.Theme.getSize("section").height
+                            iconSource: UM.Theme.getIcon("control_y_forward");
+
+                            onClicked:
+                            {
+                                connectedPrinter.moveHead(0, parseFloat(moveLengthTextField.text), 0)
+                            }
+                        }
+
+                        Button
+                        {
+                            //text: "H"
+                            Layout.row: 3
+                            Layout.column: 2
+                            Layout.preferredWidth: UM.Theme.getSize("section").height
+                            Layout.preferredHeight: UM.Theme.getSize("section").height
+                            iconSource: UM.Theme.getIcon("xy_home");
+
+                            onClicked:
+                            {
+                                connectedPrinter.homeHead()
+                            }
+                        }
+                    }
+                }
+
+                Column
+                {
+                    id: positionZColumn
+
+                    anchors.left: positionXYColumn.right
+                    anchors.leftMargin: UM.Theme.getSize("default_margin").width/2
+                    anchors.top: positionXYColumn.top
+
+                    width: childrenRect.width
+                    height: childrenRect.height
+
+                    spacing: 1
+
+                    GridLayout
+                    {
+                        id: controlsZLayout
+                        columns: 1
+                        rows: 4
+                        rowSpacing: 1
+                        columnSpacing: 1
+
+                        anchors.top: positionLabel.bottom
+                        anchors.topMargin: UM.Theme.getSize("default_margin").width
+
+                        anchors.left: parent.left
+
+                        Label
+                        {
+                            text: "Z"
+                            color: UM.Theme.getColor("setting_control_text")
+                            font: UM.Theme.getFont("default")
+                            Layout.row: 1
+                            Layout.column: 1
+                            Layout.preferredWidth: UM.Theme.getSize("section").height
+                            Layout.preferredHeight: UM.Theme.getSize("section").height
+                            width: UM.Theme.getSize("section").height
+                        }
+
+                        Button
+                        {
+                            //text: "/\\"
+                            Layout.row: 2
+                            Layout.column: 1
+                            Layout.preferredWidth: UM.Theme.getSize("section").height
+                            Layout.preferredHeight: UM.Theme.getSize("section").height
+                            width: UM.Theme.getSize("section").height
+                            iconSource: UM.Theme.getIcon("control_z_up");
+
+                            onClicked:
+                            {
+                                connectedPrinter.moveHead(0, 0, parseFloat(moveLengthTextField.text))
+                            }
+                        }
+
+                        Button
+                        {
+                            //text: "Z"
+                            Layout.row: 3
+                            Layout.column: 1
+                            Layout.preferredWidth: UM.Theme.getSize("section").height
+                            Layout.preferredHeight: UM.Theme.getSize("section").height
+                            width: UM.Theme.getSize("section").height
+                            height: UM.Theme.getSize("section").height
+                            iconSource: UM.Theme.getIcon("z_home");
+                            //style: UM.Theme.styles.print_monitor_position_button
+
+                            onClicked:
+                            {
+                                connectedPrinter.homeBed()
+                            }
+                        }
+
+                        Button
+                        {
+                            //text: "V"
+                            Layout.row: 4
+                            Layout.column: 1
+                            Layout.preferredWidth: UM.Theme.getSize("section").height
+                            Layout.preferredHeight: UM.Theme.getSize("section").height
+                            width: UM.Theme.getSize("section").height
+                            iconSource: UM.Theme.getIcon("control_z_down");
+
+                            onClicked:
+                            {
+                                connectedPrinter.moveHead(0, 0, -parseFloat(moveLengthTextField.text))
+                            }
+                        }
+                    }
+                }
+
+
+                Row
+                {
+                    id: homeXRow
+
+                    //anchors.left: positionXYColumn.right
+                    anchors.leftMargin: UM.Theme.getSize("default_margin").width/2
+                    anchors.top: positionXYColumn.bottom
+                    anchors.topMargin: UM.Theme.getSize("default_margin").height/4
+
+                    spacing: 4
+                    width: parent.width
+
+                    Label
+                    {
+                        text: "Home X:"
+                        color: UM.Theme.getColor("setting_control_text")
+                        font: UM.Theme.getFont("default")
+
                     }
 
                     Button
                     {
-                        text: "<"
-                        Layout.row: 2
-                        Layout.column: 1
-                        Layout.preferredWidth: UM.Theme.getSize("section").height
-                        Layout.preferredHeight: UM.Theme.getSize("section").height
-
-                        onClicked:
-                        {
-                            connectedPrinter.moveHead(-parseFloat(moveLengthTextField.text), 0, 0)
-                        }
-                    }
-
-                    Button
-                    {
-                        text: ">"
-                        Layout.row: 2
-                        Layout.column: 3
-                        Layout.preferredWidth: UM.Theme.getSize("section").height
-                        Layout.preferredHeight: UM.Theme.getSize("section").height
-
-                        onClicked:
-                        {
-                            connectedPrinter.moveHead(parseFloat(moveLengthTextField.text), 0, 0)
-                        }
-                    }
-
-                    Button
-                    {
-                        text: "V"
-                        Layout.row: 3
-                        Layout.column: 2
-                        Layout.preferredWidth: UM.Theme.getSize("section").height
-                        Layout.preferredHeight: UM.Theme.getSize("section").height
-
-                        onClicked:
-                        {
-                            connectedPrinter.moveHead(0, parseFloat(moveLengthTextField.text), 0)
-                        }
-                    }
-
-                    Button
-                    {
-                        text: "/\\"
-                        Layout.row: 1
-                        Layout.column: 4
-                        Layout.preferredWidth: UM.Theme.getSize("section").height
-                        Layout.preferredHeight: UM.Theme.getSize("section").height
-
-                        onClicked:
-                        {
-                            connectedPrinter.moveHead(0, 0, parseFloat(moveLengthTextField.text))
-                        }
-                    }
-
-                    Button
-                    {
-                        text: "V"
-                        Layout.row: 3
-                        Layout.column: 4
-                        Layout.preferredWidth: UM.Theme.getSize("section").height
-                        Layout.preferredHeight: UM.Theme.getSize("section").height
-
-                        onClicked:
-                        {
-                            connectedPrinter.moveHead(0, 0, -parseFloat(moveLengthTextField.text))
-                        }
-                    }
-
-                    Button
-                    {
-                        text: "X"
-                        Layout.row: 1
-                        Layout.column: 1
-                        Layout.preferredWidth: UM.Theme.getSize("section").height
-                        Layout.preferredHeight: UM.Theme.getSize("section").height
+                        //text: "X"
+                        width: UM.Theme.getSize("section").height
+                        height: UM.Theme.getSize("section").height
+                        iconSource: UM.Theme.getIcon("x_home");
 
                         onClicked:
                         {
                             connectedPrinter.homeX()
                         }
                     }
+                }
+
+                Row
+                {
+                    id: homeYRow
+
+                    anchors.leftMargin: UM.Theme.getSize("default_margin").width/2
+                    anchors.top: homeXRow.bottom
+                    anchors.topMargin: UM.Theme.getSize("default_margin").height/4
+
+                    spacing: 4
+                    width: parent.width
+
+                    Label
+                    {
+                        text: "Home Y:"
+                        color: UM.Theme.getColor("setting_control_text")
+                        font: UM.Theme.getFont("default")
+                    }
 
                     Button
                     {
-                        text: "Y"
-                        Layout.row: 3
-                        Layout.column: 1
-                        Layout.preferredWidth: UM.Theme.getSize("section").height
-                        Layout.preferredHeight: UM.Theme.getSize("section").height
+                        //text: "Y"
+                        width: UM.Theme.getSize("section").height
+                        height: UM.Theme.getSize("section").height
+                        iconSource: UM.Theme.getIcon("y_home");
 
                         onClicked:
                         {
@@ -551,44 +728,19 @@ ScrollView
                         }
                     }
 
-                    Button
-                    {
-                        text: "H"
-                        Layout.row: 2
-                        Layout.column: 2
-                        Layout.preferredWidth: UM.Theme.getSize("section").height
-                        Layout.preferredHeight: UM.Theme.getSize("section").height
-
-                        onClicked:
-                        {
-                            connectedPrinter.homeHead()
-                        }
-                    }
-
-                    Button
-                    {
-                        text: "Z"
-                        Layout.row: 2
-                        Layout.column: 4
-                        Layout.preferredWidth: UM.Theme.getSize("section").height
-                        Layout.preferredHeight: UM.Theme.getSize("section").height
-
-                        onClicked:
-                        {
-                            connectedPrinter.homeBed()
-                        }
-                    }
                 }
 
+
+                // Extrusion
                 Column
                 {
                     id: settingColumn
 
-                    anchors.left: controlsLayout.right
+                    anchors.left: positionZColumn.right
                     anchors.leftMargin: UM.Theme.getSize("default_margin").width
-                    anchors.top: controlsLayout.top
+                    anchors.top: positionZColumn.top
 
-                    width: parent.width - controlsLayout.width - UM.Theme.getSize("default_margin").width * 3
+                    width: parent.width - positionXYColumn.width - positionZColumn.width - UM.Theme.getSize("default_margin").width * 2
                     height: childrenRect.height
 
                     spacing: 4
