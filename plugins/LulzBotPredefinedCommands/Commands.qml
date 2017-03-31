@@ -10,6 +10,7 @@ Item
 {
     property var connectedPrinter: printerConnected ? Cura.MachineManager.printerOutputDevices[0] : null
     height: childrenRect.height + UM.Theme.getSize("default_margin").width * 2
+    enabled: connectedPrinter
 
     Column
     {
