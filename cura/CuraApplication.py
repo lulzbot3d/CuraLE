@@ -31,7 +31,8 @@ from UM.Operations.AddSceneNodeOperation import AddSceneNodeOperation
 from UM.Operations.RemoveSceneNodeOperation import RemoveSceneNodeOperation
 from UM.Operations.GroupedOperation import GroupedOperation
 from UM.Operations.SetTransformOperation import SetTransformOperation
-from cura.Arrange import Arrange, ShapeArray
+from cura.Arrange import Arrange
+from cura.ShapeArray import ShapeArray
 from cura.ConvexHullDecorator import ConvexHullDecorator
 from cura.SetParentOperation import SetParentOperation
 from cura.SliceableObjectDecorator import SliceableObjectDecorator
@@ -1001,7 +1002,6 @@ class CuraApplication(QtApplication):
     @pyqtSlot()
     def arrangeAll(self):
         nodes = []
-        fixed_nodes = []
         for node in DepthFirstIterator(self.getController().getScene().getRoot()):
             if type(node) is not SceneNode:
                 continue
@@ -1012,7 +1012,7 @@ class CuraApplication(QtApplication):
             if not node.isSelectable():
                 continue  # i.e. node with layer data
             nodes.append(node)
-        self.arrange(nodes, fixed_nodes)
+        self.arrange(nodes, fixed_nodes = [])
 
     ##  Arrange Selection
     @pyqtSlot()
@@ -1030,6 +1030,8 @@ class CuraApplication(QtApplication):
                 continue  # Grouped nodes don't need resetting as their parent (the group) is resetted)
             if not node.isSelectable():
                 continue  # i.e. node with layer data
+            if node in nodes:  # exclude selected node from fixed_nodes
+                continue
             fixed_nodes.append(node)
         self.arrange(nodes, fixed_nodes)
 
