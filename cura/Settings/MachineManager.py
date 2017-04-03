@@ -1059,7 +1059,7 @@ class MachineManager(QObject):
 
     @pyqtSlot(str)
     def resetMachine(self, machine_id):
-        containers = UM.Settings.ContainerRegistry.getInstance().findContainerStacks(type = "machine", machine = machine_id)
+        containers = ContainerRegistry.getInstance().findContainerStacks(type = "machine", machine = machine_id)
         if containers:
             container = containers[0]
             c = container.findContainer({'type': 'definition_changes'})
