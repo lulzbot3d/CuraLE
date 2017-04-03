@@ -14,6 +14,7 @@ from UM.Settings.Validator import ValidatorState #To find if a setting is in an 
 from UM.Platform import Platform
 from UM.Scene.Iterator.DepthFirstIterator import DepthFirstIterator
 from PyQt5.QtCore import QObject, pyqtSlot
+from UM.Qt.Duration import DurationFormat
 
 
 from cura.Settings.ExtruderManager import ExtruderManager
