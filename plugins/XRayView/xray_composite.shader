@@ -28,10 +28,6 @@ fragment =
     const vec3 y_axis = vec3(0.0, 1.0, 0.0);
     const vec3 z_axis = vec3(0.0, 0.0, 1.0);
 
-    const vec3 x_axis = vec3(1.0, 0.0, 0.0);
-    const vec3 y_axis = vec3(0.0, 1.0, 0.0);
-    const vec3 z_axis = vec3(0.0, 0.0, 1.0);
-
     varying vec2 v_uvs;
 
     float kernel[9];
