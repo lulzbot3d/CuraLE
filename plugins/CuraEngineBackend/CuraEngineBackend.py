@@ -506,6 +506,7 @@ class CuraEngineBackend(QObject, Backend):
     #   This indicates that we should probably re-slice soon.
     def _onChanged(self, *args, **kwargs):
         self.needsSlicing()
+        self.determineAutoSlicing()
         if self._use_timer:
             self._change_timer.start()
 

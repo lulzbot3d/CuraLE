@@ -261,7 +261,7 @@ Column
         id: adhesionRow
 
         height: UM.Theme.getSize("sidebar_setup").height*4
-        visible: (Cura.MachineManager.hasVariants || Cura.MachineManager.hasMaterials) && !sidebar.monitoringPrint
+        visible: (Cura.MachineManager.hasVariants || Cura.MachineManager.hasMaterials) && !sidebar.monitoringPrint && !sidebar.hideSettings
 
 
         anchors
