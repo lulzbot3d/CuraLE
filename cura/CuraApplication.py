@@ -35,6 +35,8 @@ from UM.Settings.SettingDefinition import SettingDefinition, DefinitionPropertyT
 from UM.Settings.ContainerRegistry import ContainerRegistry
 from UM.Settings.SettingFunction import SettingFunction
 
+import time
+
 from . import PlatformPhysics
 from . import BuildVolume
 from . import CameraAnimation
@@ -181,6 +183,7 @@ class CuraApplication(QtApplication):
         self._output_devices = {}
         self._print_information = None
         self._previous_active_tool = None
+        self._previous_active_tool_time = time.time()
         self._platform_activity = False
         self._scene_bounding_box = AxisAlignedBox.Null
 
@@ -573,6 +576,8 @@ class CuraApplication(QtApplication):
                     # Default
                     self.getController().setActiveTool("TranslateTool")
             else:
+                if abs(time.time() - self._previous_active_tool_time) > 0.5:
+                    self._previous_active_tool = None
                 if self._previous_active_tool:
                     self.getController().setActiveTool(self._previous_active_tool)
                     if not self.getController().getActiveTool().getEnabled():
@@ -587,6 +592,7 @@ class CuraApplication(QtApplication):
             if self.getController().getActiveTool():
                 self._previous_active_tool = self.getController().getActiveTool().getPluginId()
                 self.getController().setActiveTool(None)
+                self._previous_active_tool_time = time.time()
 
     def _onToolOperationStopped(self, event):
         if self._center_after_select:
