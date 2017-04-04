@@ -104,9 +104,9 @@ class SolidView(View):
                         #   1.0
                         #]
                         uniforms["diffuse_color"] = [
-                            shade_factor * 0.78,
-                            shade_factor * 0.88,
-                            shade_factor * 0.25,
+                            shade_factor * 0.75,
+                            shade_factor * 0.84,
+                            shade_factor * 0.18,
                             1.0
                         ]
                     except ValueError:

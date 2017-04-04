@@ -23,7 +23,8 @@ class ConvexHullNode(SceneNode):
         self._original_parent = parent
 
         # Color of the drawn convex hull
-        self._color = Color(0.4, 0.4, 0.4, 1.0)
+        #self._color = Color(0.4, 0.4, 0.4, 1.0)
+        self._color = Color(0.1, 0.1, 0.1, 1.0)
 
         # The y-coordinate of the convex hull mesh. Must not be 0, to prevent z-fighting.
         self._mesh_height = 0.1
@@ -61,7 +62,7 @@ class ConvexHullNode(SceneNode):
         if not self._shader:
             self._shader = OpenGL.getInstance().createShaderProgram(Resources.getPath(Resources.Shaders, "transparent_object.shader"))
             self._shader.setUniformValue("u_diffuseColor", self._color)
-            self._shader.setUniformValue("u_opacity", 0.6)
+            self._shader.setUniformValue("u_opacity", 0.45)
 
         if self.getParent():
             if self.getMeshData():
