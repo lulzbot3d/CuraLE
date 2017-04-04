@@ -259,6 +259,11 @@ class StartSliceJob(Job):
         settings["date"] = time.strftime('%d-%m-%Y')
         settings["day"] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][int(time.strftime('%w'))]
 
+        manager = Application.getInstance().getMachineManager()
+        settings["printer_name"] = manager.activeDefinitionName
+        settings["material_name"] = manager.activeMaterialName
+        settings["quality_name"] = manager.activeQualityName
+
         for key, value in settings.items(): #Add all submessages for each individual setting.
             setting_message = self._slice_message.getMessage("global_settings").addRepeatedMessage("settings")
             setting_message.name = key
