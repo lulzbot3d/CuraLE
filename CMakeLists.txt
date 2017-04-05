@@ -30,7 +30,9 @@ if(NOT ${URANIUM_SCRIPTS_DIR} STREQUAL "")
     CREATE_TRANSLATION_TARGETS()
 endif()
 
-find_package(PythonInterp ${MINIMUM_PYTHON_VERSION} REQUIRED)
+if (NOT BUILD_PYTHON)
+    find_package(PythonInterp ${MINIMUM_PYTHON_VERSION} REQUIRED)
+endif()
 
 install(DIRECTORY resources
         DESTINATION ${CMAKE_INSTALL_DATADIR}/cura)
