@@ -109,6 +109,7 @@ class MachineActionManager(QObject):
     ##  Get all actions required by given machine
     #   \param definition_id The ID of the definition you want the required actions of
     #   \returns set of required actions.
+    @pyqtSlot(str, result="QVariantList")
     def getRequiredActions(self, definition_id):
         if definition_id in self._required_actions:
             return self._required_actions[definition_id]
