@@ -69,7 +69,7 @@ UM.MainWindow
         function getMeshName(path){
             //takes the path the complete path of the meshname and returns only the filebase
             var fileName = path.slice(path.lastIndexOf("/") + 1)
-            var fileBase = fileName.slice(0, fileName.lastIndexOf("."))
+            var fileBase = fileName.slice(0, fileName.indexOf("."))
             return fileBase
         }
 
@@ -290,19 +290,19 @@ UM.MainWindow
                 anchors.fill: parent;
                 onDropped:
                 {
-                    if(drop.urls.length > 0)
+                    if (drop.urls.length > 0)
                     {
                         // Import models
-                        for(var i in drop.urls)
+                        var imported_model = -1;
+                        for (var i in drop.urls)
                         {
                             // There is no endsWith in this version of JS...
                             if ((drop.urls[i].length <= 12) || (drop.urls[i].substring(drop.urls[i].length-12) !== ".curaprofile")) {
                                 // Drop an object
                                 Printer.readLocalFile(drop.urls[i]);
-                                if (i == drop.urls.length - 1)
+                                if (imported_model == -1)
                                 {
-                                    var meshName = backgroundItem.getMeshName(drop.urls[i].toString());
-                                    backgroundItem.hasMesh(decodeURIComponent(meshName));
+                                    imported_model = i;
                                 }
                             }
                         }
@@ -311,7 +311,7 @@ UM.MainWindow
                         var import_result = Cura.ContainerManager.importProfiles(drop.urls);
                         if (import_result.message !== "") {
                             messageDialog.text = import_result.message
-                            if(import_result.status == "ok")
+                            if (import_result.status == "ok")
                             {
                                 messageDialog.icon = StandardIcon.Information
                             }
@@ -320,6 +320,11 @@ UM.MainWindow
                                 messageDialog.icon = StandardIcon.Critical
                             }
                             messageDialog.open()
+                        }
+                        if (imported_model != -1)
+                        {
+                            var meshName = backgroundItem.getMeshName(drop.urls[imported_model].toString())
+                            backgroundItem.hasMesh(decodeURIComponent(meshName))
                         }
                         var meshName = backgroundItem.getMeshName(drop.urls[0].toString())
                         backgroundItem.hasMesh(decodeURIComponent(meshName))
@@ -860,6 +865,8 @@ UM.MainWindow
             {
                 UM.WorkspaceFileHandler.readLocalFile(fileUrls[i])
             }
+            var meshName = backgroundItem.getMeshName(fileUrls[0].toString())
+            backgroundItem.hasMesh(decodeURIComponent(meshName))
         }
     }
 
@@ -989,6 +996,21 @@ UM.MainWindow
             messageDialog.icon = icon
             messageDialog.visible = true
         }
+    }
+
+    DiscardOrKeepProfileChangesDialog
+    {
+        id: discardOrKeepProfileChangesDialog
+    }
+
+    Connections
+    {
+        target: Printer
+        onShowDiscardOrKeepProfileChanges:
+        {
+            discardOrKeepProfileChangesDialog.show()
+        }
+
     }
 
     Connections

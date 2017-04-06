@@ -45,11 +45,9 @@ Column
         {
             id: extrudersList
             property var index: 0
-
             height: UM.Theme.getSize("sidebar_header_mode_tabs").height
             width: parent.width
             boundsBehavior: Flickable.StopAtBounds
-
             anchors
             {
                 left: parent.left
@@ -165,7 +163,7 @@ Column
         id: variantRow
 
         height: UM.Theme.getSize("sidebar_setup").height
-        visible: (Cura.MachineManager.hasVariants || Cura.MachineManager.hasMaterials) && !sidebar.monitoringPrint
+        visible: (Cura.MachineManager.hasVariants || Cura.MachineManager.hasMaterials) && !sidebar.monitoringPrint && !sidebar.hideSettings
 
         anchors
         {
@@ -202,7 +200,7 @@ Column
             color: UM.Theme.getColor("text");
         }
 
-        Rectangle
+        Item
         {
             anchors.verticalCenter: parent.verticalCenter
 
@@ -263,7 +261,7 @@ Column
         id: adhesionRow
 
         height: UM.Theme.getSize("sidebar_setup").height*4
-        visible: (Cura.MachineManager.hasVariants || Cura.MachineManager.hasMaterials) && !sidebar.monitoringPrint
+        visible: (Cura.MachineManager.hasVariants || Cura.MachineManager.hasMaterials) && !sidebar.monitoringPrint && !sidebar.hideSettings
 
 
         anchors
@@ -309,7 +307,7 @@ Column
     {
         id: globalProfileRow
         height: UM.Theme.getSize("sidebar_setup").height
-        visible: !sidebar.monitoringPrint
+        visible: !sidebar.monitoringPrint && !sidebar.hideSettings
 
         anchors
         {

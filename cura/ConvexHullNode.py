@@ -1,6 +1,7 @@
 # Copyright (c) 2015 Ultimaker B.V.
 # Cura is released under the terms of the AGPLv3 or higher.
 
+from UM.Application import Application
 from UM.Scene.SceneNode import SceneNode
 from UM.Resources import Resources
 from UM.Math.Color import Color
@@ -73,7 +74,7 @@ class ConvexHullNode(SceneNode):
         return True
 
     def _onNodeDecoratorsChanged(self, node):
-        self._color = Color(35, 35, 35, 0.5)
+        self._color = Color(*Application.getInstance().getTheme().getColor("convex_hull").getRgb())
 
         convex_hull_head = self._node.callDecoration("getConvexHullHead")
         if convex_hull_head:

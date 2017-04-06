@@ -1,4 +1,4 @@
-# Copyright (c) 2015 Ultimaker B.V.
+# Copyright (c) 2017 Ultimaker B.V.
 # Cura is released under the terms of the AGPLv3 or higher.
 
 from UM.Signal import Signal, signalemitter
@@ -80,10 +80,6 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
 
     def stop(self):
         self._check_updates = False
-        try:
-            self._update_thread.join()
-        except RuntimeError:
-            pass
 
     def _updateThread(self):
         while self._check_updates:
@@ -268,19 +264,29 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
     #   \param only_list_usb If true, only usb ports are listed
     def getSerialPortList(self, only_list_usb = False):
         base_list = []
-        for port in serial.tools.list_ports.comports():
-            if not isinstance(port, tuple):
-                port = (port.device, port.description, port.hwid)
-            if only_list_usb and not port[2].startswith("USB"):
-                continue
-            base_list += [port[0]]
+        if platform.system() == "Windows":
+            import winreg # type: ignore @UnresolvedImport
+            try:
+                key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,"HARDWARE\\DEVICEMAP\\SERIALCOMM")
+                i = 0
+                while True:
+                    values = winreg.EnumValue(key, i)
+                    if not only_list_usb or "USBSER" in values[0]:
+                        base_list += [values[1]]
+                    i += 1
+            except Exception as e:
+                pass
+        else:
+            if only_list_usb:
+                base_list = base_list + glob.glob("/dev/ttyUSB*") + glob.glob("/dev/ttyACM*") + glob.glob("/dev/cu.usb*") + glob.glob("/dev/tty.wchusb*") + glob.glob("/dev/cu.wchusb*")
+                base_list = filter(lambda s: "Bluetooth" not in s, base_list) # Filter because mac sometimes puts them in the list
+            else:
+                base_list = base_list + glob.glob("/dev/ttyUSB*") + glob.glob("/dev/ttyACM*") + glob.glob("/dev/cu.*") + glob.glob("/dev/tty.usb*") + glob.glob("/dev/tty.wchusb*") + glob.glob("/dev/cu.wchusb*") + glob.glob("/dev/rfcomm*") + glob.glob("/dev/serial/by-id/*")
         return list(base_list)
 
     @pyqtProperty("QVariantList", constant=True)
     def portList(self):
         return self.getSerialPortList()
-
-    _instance = None
 
     @pyqtSlot(str, result=bool)
     def sendCommandToCurrentPrinter(self, command):
@@ -303,3 +309,5 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             return False
         printer.connect()
         return True
+
+    _instance = None    # type: "USBPrinterOutputDeviceManager"
