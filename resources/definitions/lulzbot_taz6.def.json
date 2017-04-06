@@ -8,9 +8,9 @@
         "platform": "lulzbot_taz6.stl",
         "platform_offset":
         [
-            -140,
-            -11,
-            140
+            0,
+            0,
+            0
         ],
         "visible": true
     },
@@ -39,6 +39,14 @@
         "machine_end_gcode":
         {
             "default_value_from_file": "lulzbot_taz6_end"
+        },
+        "machine_baudrate":
+        {
+            "default_value": "250000"
+        },
+        "material_keep_part_removal_temperature":
+        {
+            "enabled": "True"
         }
     }
 }

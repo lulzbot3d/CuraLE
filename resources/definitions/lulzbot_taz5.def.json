@@ -40,6 +40,10 @@
         {
             "default_value_from_file": "lulzbot_taz5_end"
         },
+        "machine_baudrate":
+        {
+            "default_value": "115200"
+        },
         "material_wipe_temperature":
         {
             "enabled": "False"
