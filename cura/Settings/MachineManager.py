@@ -725,6 +725,7 @@ class MachineManager(QObject):
             material_index = self._active_container_stack.getContainerIndex(old_material)
             self._active_container_stack.replaceContainer(material_index, material_container)
             Logger.log("d", "Active material changed")
+            self.activeMaterialChanged.emit()
 
             material_container.nameChanged.connect(self._onMaterialNameChanged)
 
