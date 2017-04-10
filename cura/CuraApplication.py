@@ -202,7 +202,8 @@ class CuraApplication(QtApplication):
             "SelectionTool",
             "CameraTool",
             "GCodeWriter",
-            "LocalFileOutputDevice"
+            "LocalFileOutputDevice",
+            "SolidView"
         ])
         self._physics = None
         self._volume = None
