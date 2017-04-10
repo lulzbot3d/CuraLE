@@ -164,6 +164,7 @@ UM.MainWindow
                 MenuItem { action: Cura.Actions.redo; }
                 MenuSeparator { }
                 MenuItem { action: Cura.Actions.selectAll; }
+                MenuItem { action: Cura.Actions.arrangeAll; }
                 MenuItem { action: Cura.Actions.deleteSelection; }
                 MenuItem { action: Cura.Actions.deleteAll; }
                 MenuItem { action: Cura.Actions.resetAllTranslation; }
@@ -703,6 +704,7 @@ UM.MainWindow
         MenuItem { action: Cura.Actions.multiplyObject; }
         MenuSeparator { }
         MenuItem { action: Cura.Actions.selectAll; }
+        MenuItem { action: Cura.Actions.arrangeAll; }
         MenuItem { action: Cura.Actions.deleteAll; }
         MenuItem { action: Cura.Actions.reloadAll; }
         MenuItem { action: Cura.Actions.resetAllTranslation; }
@@ -769,6 +771,7 @@ UM.MainWindow
     {
         id: contextMenu;
         MenuItem { action: Cura.Actions.selectAll; }
+        MenuItem { action: Cura.Actions.arrangeAll; }
         MenuItem { action: Cura.Actions.deleteAll; }
         MenuItem { action: Cura.Actions.reloadAll; }
         MenuItem { action: Cura.Actions.resetAllTranslation; }
