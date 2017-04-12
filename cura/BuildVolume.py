@@ -51,6 +51,16 @@ class BuildVolume(SceneNode):
         self._disallowed_area_color = None
         self._error_area_color = None
 
+        self._lines_mesh =None
+        self._cube_color_darker_white = None
+        self._cube_color_lighter_white = None
+        self._cube_color_white_1 = None
+        self._cube_color_white_2 = None
+        self._cube_color_white_3 = None
+        self._cube_color_white_4 = None
+        self._cube_color_white_5 = None
+        self._cube_color_white = None
+
         self._width = 0
         self._height = 0
         self._depth = 0
@@ -64,6 +74,7 @@ class BuildVolume(SceneNode):
 
         self._grid_mesh = None
         self._grid_shader = None
+        self._transparent_object_shader = None
 
         self._disallowed_areas = []
         self._disallowed_area_mesh = None
@@ -174,8 +185,17 @@ class BuildVolume(SceneNode):
             theme = Application.getInstance().getTheme()
             self._grid_shader.setUniformValue("u_gridColor0", Color(*theme.getColor("buildplate").getRgb()))
             self._grid_shader.setUniformValue("u_gridColor1", Color(*theme.getColor("buildplate_alt").getRgb()))
+            self._transparent_object_shader = OpenGL.getInstance().createShaderProgram(Resources.getPath(Resources.Shaders, "transparent_object.shader"))
+            #self._transparent_object_shader = OpenGL.getInstance().createShaderProgram(Resources.getPath(Resources.Shaders, "transparent_object_with_light.shader"))
+            self._transparent_object_shader.setUniformValue("u_ambientColor", Color(*theme.getColor("cube_color_yellow").getRgb()))
+            self._transparent_object_shader.setUniformValue("u_diffuseColor", Color(*theme.getColor("cube_color_white").getRgb()))
+            self._transparent_object_shader.setUniformValue("u_opacity", 0.1)
 
-        renderer.queueNode(self, mode = RenderBatch.RenderMode.Lines)
+        #renderer.queueNode(self, mode = RenderBatch.RenderMode.Lines)
+        #renderer.queueNode(self, mode = RenderBatch.RenderMode.Triangles, shader = self._transparent_object_shader, blend_mode = RenderBatch.BlendMode.NoBlending, render_type = RenderBatch.RenderType.Solid, sort = -9, backface_cull = False )
+
+        renderer.queueNode(self, mode = RenderBatch.RenderMode.Triangles, shader = self._transparent_object_shader, transparent = True, blend_mode = RenderBatch.BlendMode.NoBlending, render_type = RenderBatch.RenderType.Solid, backface_cull = False )
+        renderer.queueNode(self, mesh = self._lines_mesh, mode = RenderBatch.RenderMode.Lines)
         renderer.queueNode(self, mesh = self._origin_mesh)
         renderer.queueNode(self, mesh = self._grid_mesh, shader = self._grid_shader, backface_cull = True)
         if self._disallowed_area_mesh:
@@ -203,6 +223,14 @@ class BuildVolume(SceneNode):
             self._z_axis_color = Color(*theme.getColor("z_axis").getRgb())
             self._disallowed_area_color = Color(*theme.getColor("disallowed_area").getRgb())
             self._error_area_color = Color(*theme.getColor("error_area").getRgb())
+            self._cube_color_darker_white = Color(*theme.getColor("cube_color_darker_white").getRgb())
+            self._cube_color_lighter_white = Color(*theme.getColor("cube_color_lighter_white").getRgb())
+            self._cube_color_white_1 = Color(*theme.getColor("cube_color_white_1").getRgb())
+            self._cube_color_white_2 = Color(*theme.getColor("cube_color_white_2").getRgb())
+            self._cube_color_white_3 = Color(*theme.getColor("cube_color_white_3").getRgb())
+            self._cube_color_white_4 = Color(*theme.getColor("cube_color_white_4").getRgb())
+            self._cube_color_white_5 = Color(*theme.getColor("cube_color_white_5").getRgb())
+            self._cube_color_white = Color(*theme.getColor("cube_color_white").getRgb())
 
         min_w = -self._width / 2
         max_w = self._width / 2
@@ -214,24 +242,62 @@ class BuildVolume(SceneNode):
         z_fight_distance = 0.2 # Distance between buildplate and disallowed area meshes to prevent z-fighting
 
         if self._shape != "elliptic":
+
             # Outline 'cube' of the build volume
             mb = MeshBuilder()
-            mb.addLine(Vector(min_w, min_h, min_d), Vector(max_w, min_h, min_d), color = self._volume_outline_color)
-            mb.addLine(Vector(min_w, min_h, min_d), Vector(min_w, max_h, min_d), color = self._volume_outline_color)
-            mb.addLine(Vector(min_w, max_h, min_d), Vector(max_w, max_h, min_d), color = self._volume_outline_color)
-            mb.addLine(Vector(max_w, min_h, min_d), Vector(max_w, max_h, min_d), color = self._volume_outline_color)
+            #Back
+            #mb.addLine(Vector(min_w, min_h, min_d), Vector(max_w, min_h, min_d), color = self._volume_outline_color)
+            #mb.addLine(Vector(min_w, min_h, min_d), Vector(min_w, max_h, min_d), color = self._volume_outline_color)
+            #mb.addLine(Vector(min_w, max_h, min_d), Vector(max_w, max_h, min_d), color = self._volume_outline_color)
+            #mb.addLine(Vector(max_w, min_h, min_d), Vector(max_w, max_h, min_d), color = self._volume_outline_color)
+            #mb.addCube( self._width, self._height, self._depth, center=Vector(self._width/2,self._height/2,self._depth/2), color = self._volume_outline_color)
 
-            mb.addLine(Vector(min_w, min_h, max_d), Vector(max_w, min_h, max_d), color = self._volume_outline_color)
-            mb.addLine(Vector(min_w, min_h, max_d), Vector(min_w, max_h, max_d), color = self._volume_outline_color)
-            mb.addLine(Vector(min_w, max_h, max_d), Vector(max_w, max_h, max_d), color = self._volume_outline_color)
-            mb.addLine(Vector(max_w, min_h, max_d), Vector(max_w, max_h, max_d), color = self._volume_outline_color)
+            #Face
+            #mb.addLine(Vector(min_w, min_h, max_d), Vector(max_w, min_h, max_d), color = self._volume_outline_color)
+            #mb.addLine(Vector(min_w, min_h, max_d), Vector(min_w, max_h, max_d), color = self._volume_outline_color)
+            #mb.addLine(Vector(min_w, max_h, max_d), Vector(max_w, max_h, max_d), color = self._volume_outline_color)
+            #mb.addLine(Vector(max_w, min_h, max_d), Vector(max_w, max_h, max_d), color = self._volume_outline_color)
 
-            mb.addLine(Vector(min_w, min_h, min_d), Vector(min_w, min_h, max_d), color = self._volume_outline_color)
-            mb.addLine(Vector(max_w, min_h, min_d), Vector(max_w, min_h, max_d), color = self._volume_outline_color)
-            mb.addLine(Vector(min_w, max_h, min_d), Vector(min_w, max_h, max_d), color = self._volume_outline_color)
-            mb.addLine(Vector(max_w, max_h, min_d), Vector(max_w, max_h, max_d), color = self._volume_outline_color)
+            #mb.addLine(Vector(min_w, min_h, min_d), Vector(min_w, min_h, max_d), color = self._volume_outline_color)
+            #mb.addLine(Vector(max_w, min_h, min_d), Vector(max_w, min_h, max_d), color = self._volume_outline_color)
+            #mb.addLine(Vector(min_w, max_h, min_d), Vector(min_w, max_h, max_d), color = self._volume_outline_color)
+            #mb.addLine(Vector(max_w, max_h, min_d), Vector(max_w, max_h, max_d), color = self._volume_outline_color)
+
+            #top
+            mb.addQuad(Vector(min_w, max_h, min_d), Vector(max_w, max_h, min_d),Vector(max_w, max_h, max_d), Vector(min_w,max_h,max_d),color = self._cube_color_white_1)
+            #left
+            mb.addQuad(Vector(min_w, min_h, max_d), Vector(min_w, max_h, max_d),Vector(min_w, max_h, min_d), Vector(min_w,min_h,min_d),color = self._cube_color_white_2)
+            #right
+            mb.addQuad(Vector(max_w, min_h, max_d), Vector(max_w, max_h, max_d),Vector(max_w, max_h, min_d), Vector(max_w,min_h,min_d),color = self._cube_color_white_3)
+            #back
+            mb.addQuad(Vector(min_w, max_h, min_d), Vector(max_w, max_h, min_d),Vector(max_w, min_h, min_d), Vector(min_w,min_h,min_d),color = self._cube_color_white_4)
+            #face
+            mb.addQuad(Vector(min_w, min_h, max_d), Vector(max_w, min_h, max_d),Vector(max_w, max_h, max_d), Vector(min_w,max_h,max_d),color = self._cube_color_white_5)
 
             self.setMeshData(mb.build())
+
+            # Add white lines
+            mb = MeshBuilder()
+
+            # Back
+            mb.addLine(Vector(min_w, min_h, min_d), Vector(max_w, min_h, min_d), color = self._cube_color_white)
+            mb.addLine(Vector(min_w, min_h, min_d), Vector(min_w, max_h, min_d), color = self._cube_color_white)
+            mb.addLine(Vector(min_w, max_h, min_d), Vector(max_w, max_h, min_d), color = self._cube_color_white)
+            mb.addLine(Vector(max_w, min_h, min_d), Vector(max_w, max_h, min_d), color = self._cube_color_white)
+
+            # Face
+            mb.addLine(Vector(min_w, min_h, max_d), Vector(max_w, min_h, max_d), color = self._cube_color_white)
+            mb.addLine(Vector(min_w, min_h, max_d), Vector(min_w, max_h, max_d), color = self._cube_color_white)
+            mb.addLine(Vector(min_w, max_h, max_d), Vector(max_w, max_h, max_d), color = self._cube_color_white)
+            mb.addLine(Vector(max_w, min_h, max_d), Vector(max_w, max_h, max_d), color = self._cube_color_white)
+
+            mb.addLine(Vector(min_w, min_h, min_d), Vector(min_w, min_h, max_d), color = self._cube_color_white)
+            mb.addLine(Vector(max_w, min_h, min_d), Vector(max_w, min_h, max_d), color = self._cube_color_white)
+            mb.addLine(Vector(min_w, max_h, min_d), Vector(min_w, max_h, max_d), color = self._cube_color_white)
+            mb.addLine(Vector(max_w, max_h, min_d), Vector(max_w, max_h, max_d), color = self._cube_color_white)
+
+            #self.setMeshData(mb.build())
+            self._lines_mesh = mb.build()
 
             # Build plate grid mesh
             mb = MeshBuilder()
