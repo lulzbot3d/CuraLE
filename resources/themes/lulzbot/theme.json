@@ -206,16 +206,11 @@
         "z_axis": [0, 255, 0, 255],
         "all_axis": [255, 255, 255, 255],
 
-        "cube_color_white_1": [250,250,250,255],
-        "cube_color_white_2": [245,245,245,255],
-        "cube_color_white_3": [240,240,240,255],
-        "cube_color_white_4": [235,235,235,255],
-        "cube_color_white_5": [230,230,230,255],
-        "cube_color_yellow": [187,206,17,255],
+        "cube_color_yellow": [187,206,0,255],
         "cube_color_white": [255,255,255,255],
 
 
-        "viewport_background": [225, 225, 225, 1],
+        "viewport_background": [117, 117, 117, 1],
         "volume_outline": [12, 169, 227, 255],
         "buildplate": [244, 244, 244, 255],
         "buildplate_alt": [204, 204, 204, 255],
