@@ -2,9 +2,10 @@
 <fdmmaterial xmlns="http://www.ultimaker.com/material">
   <metadata>
     <name>
-      <brand>Experimental</brand>
+      <brand>Generic</brand>
       <material>PLA (eSUN)</material>
       <color>Generic</color>
+      <category>Experimental</category>
     </name>
     <GUID>506c9f0d-e3aa-4bd4-b2d2-23e2425b1aa9</GUID>
     <version>1</version>

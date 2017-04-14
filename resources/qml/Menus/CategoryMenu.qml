@@ -29,19 +29,29 @@ Menu
         onObjectRemoved: menu.removeItem(object)
     }
 
+    function resetModel()
+    {
+        categoriesModel.clear();
+        var categories = Cura.MachineManager.categories
+        for(var i = 0; i < categories.length; i++)
+        {
+            categoriesModel.append({
+                name: categories[i]
+            });
+        }
+        Cura.MachineManager.setCurrentCategory("All");
+    }
+
     ListModel
     {
         id: categoriesModel
-        Component.onCompleted:
-        {
-            categoriesModel.clear();
-            for(var i = 0; i < Cura.MachineManager.categories.length; i++)
-            {
-                categoriesModel.append({
-                    name: Cura.MachineManager.categories[i]
-                });
-            }
-        }
+        Component.onCompleted: resetModel()
+    }
+
+    Connections
+    {
+        target: Cura.MachineManager
+        onGlobalContainerChanged: resetModel()
     }
 
     ExclusiveGroup { id: group }

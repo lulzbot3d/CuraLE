@@ -126,10 +126,20 @@ class MachineManager(QObject):
         self._current_category = category
         self.currentCategoryChanged.emit()
 
-    @pyqtProperty("QVariantList", notify=currentCategoryChanged)
+    @pyqtProperty("QVariantList", notify=globalContainerChanged)
     def categories(self):
         categories_list = ["All"]
-        materials = ContainerRegistry.getInstance().findInstanceContainers(type="material")
+
+        f = {"type": "material"}
+        if self.filterMaterialsByMachine:
+            f["definition"] = self.activeQualityDefinitionId
+            if self.hasVariants:
+                f["variant"] = self.activeQualityVariantId
+        else:
+            f["definition"] = "fdmprinter"
+            f["compatible"] = True
+
+        materials = ContainerRegistry.getInstance().findInstanceContainers(**f)
         for material in materials:
             category = material.getMetaDataEntry("category")
             if category and category not in categories_list:
