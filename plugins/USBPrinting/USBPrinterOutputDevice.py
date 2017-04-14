@@ -744,7 +744,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         moveZ = 10.0
 
         Logger.log("d", "Pausing print")
-        if self._printProgress - 5 > start_gcode_lines:  # Substract 5 because of the marlin queue
+        if self._gcode_position - 5 > start_gcode_lines:  # Substract 5 because of the marlin queue
             x = None
             y = None
             e = None
