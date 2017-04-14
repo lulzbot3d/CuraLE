@@ -138,6 +138,10 @@ class XmlMaterialProfile(InstanceContainer):
         builder.data(self._name)
         builder.end("label")
 
+        builder.start("category")
+        builder.data(metadata.pop("category", ""))
+        builder.end("category")
+
         builder.end("name")
         ## End Name Block
 
@@ -394,6 +398,7 @@ class XmlMaterialProfile(InstanceContainer):
                 material = entry.find("./um:material", self.__namespaces)
                 color = entry.find("./um:color", self.__namespaces)
                 label = entry.find("./um:label", self.__namespaces)
+                category = entry.find("./um:category", self.__namespaces)
 
                 if label is not None:
                     self._name = label.text
@@ -402,6 +407,7 @@ class XmlMaterialProfile(InstanceContainer):
                 meta_data["brand"] = brand.text
                 meta_data["material"] = material.text
                 meta_data["color_name"] = color.text
+                meta_data["category"] = category.text if category is not None else "Other"
                 continue
             meta_data[tag_name] = entry.text
 

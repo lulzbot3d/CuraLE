@@ -160,6 +160,55 @@ Column
 
     Row
     {
+        id: categoryRow
+
+        height: UM.Theme.getSize("sidebar_setup").height
+        visible: Cura.MachineManager.hasMaterials && !sidebar.monitoringPrint && !sidebar.hideSettings
+
+        anchors
+        {
+            left: parent.left
+            leftMargin: UM.Theme.getSize("default_margin").width
+            right: parent.right
+            rightMargin: UM.Theme.getSize("default_margin").width
+        }
+
+        Label
+        {
+            id: categoryLabel
+            text: "Category:"
+
+            anchors.verticalCenter: parent.verticalCenter
+            width: parent.width * 0.45 - UM.Theme.getSize("default_margin").width
+            font: UM.Theme.getFont("default");
+            color: UM.Theme.getColor("text");
+        }
+
+        Item
+        {
+            anchors.verticalCenter: parent.verticalCenter
+
+            width: parent.width * 0.55 + UM.Theme.getSize("default_margin").width
+            height: UM.Theme.getSize("setting_control").height
+
+            ToolButton {
+                id: categorySelection
+                text: Cura.MachineManager.currentCategory
+                tooltip: Cura.MachineManager.currentCategory
+
+                height: UM.Theme.getSize("setting_control").height
+                width: parent.width
+                anchors.right: parent.right
+                style: UM.Theme.styles.sidebar_header_button
+                activeFocusOnPress: true;
+
+                menu: CategoryMenu {}
+            }
+        }
+    }
+
+    Row
+    {
         id: variantRow
 
         height: UM.Theme.getSize("sidebar_setup").height
@@ -251,7 +300,7 @@ Column
                 style: UM.Theme.styles.sidebar_header_button
                 activeFocusOnPress: true;
 
-                menu: MaterialMenu { extruderIndex: base.currentExtruderIndex }
+                menu: MaterialMenu { extruderIndex: base.currentExtruderIndex; }
             }
         }
     }
