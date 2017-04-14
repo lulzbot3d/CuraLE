@@ -716,13 +716,110 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     #   Sent from the print monitor
     def _setJobState(self, job_state):
         if job_state == "pause":
+            self._pausePrint()
             self._is_paused = True
             self._updateJobState("paused")
         elif job_state == "print":
+            self._resumePrint()
             self._is_paused = False
             self._updateJobState("printing")
         elif job_state == "abort":
             self.cancelPrint()
+
+    def _pausePrint(self):
+        if not self._is_printing or self._is_paused:
+            return
+
+        settings = Application.getInstance().getGlobalContainerStack()
+        machine_width = settings.getProperty("machine_width", "value")
+        machine_depth = settings.getProperty("machine_depth", "value")
+        machine_height = settings.getProperty("machine_height", "value")
+
+        start_gcode = settings.getProperty("machine_start_gcode", "value")
+        start_gcode_lines = len(start_gcode.split("\n")) + 10
+        parkX = machine_width - 10
+        parkY = machine_depth - 10
+        maxZ = machine_height - 10
+        retract_amount = settings.getProperty("retraction_amount", "value")
+        moveZ = 10.0
+
+        Logger.log("d", "Pausing print")
+        if self._printProgress - 5 > start_gcode_lines:  # Substract 5 because of the marlin queue
+            x = None
+            y = None
+            e = None
+            f = None
+            for i in range(self._gcode_position - 1, start_gcode_lines, -1):
+                line = self._gcode[i]
+                if ('G0' in line or 'G1' in line) and 'X' in line and x is None:
+                    x = float(re.search('X(-?[0-9\.]*)', line).group(1))
+                if ('G0' in line or 'G1' in line) and 'Y' in line and y is None:
+                    y = float(re.search('Y(-?[0-9\.]*)', line).group(1))
+                if ('G0' in line or 'G1' in line) and 'E' in line and e is None:
+                    e = float(re.search('E(-?[0-9\.]*)', line).group(1))
+                if ('G0' in line or 'G1' in line) and 'F' in line and f is None:
+                    f = int(re.search('F(-?[0-9\.]*)', line).group(1))
+                if x is not None and y is not None and f is not None and e is not None:
+                    break
+            if f is None:
+                f = 1200
+
+            if x is not None and y is not None:
+                # Set E relative positioning
+                self.sendCommand("M83")
+
+                # Retract 1mm
+                retract = ("E-%f" % retract_amount)
+
+                # Move the toolhead up
+                newZ = self._current_z + moveZ
+                if maxZ < newZ:
+                    newZ = maxZ
+
+                if newZ > self._current_z:
+                    move = ("Z%f " % newZ)
+                else:  # No z movement, too close to max height
+                    move = ""
+                retract_and_move = "G1 {} {}F120".format(retract, move)
+                self.sendCommand(retract_and_move)
+
+                # Move the head away
+                self.sendCommand("G1 X%f Y%f F9000" % (parkX, parkY))
+
+                # Disable the E steppers
+                self.sendCommand("M84 E0")
+                # Set E absolute positioning
+                self.sendCommand("M82")
+
+                self._pausePosition = (x, y, self._current_z, f, e)
+
+    def _resumePrint(self):
+        if not self._is_printing or not self._is_paused:
+            return
+        if self._pausePosition:
+            settings = Application.getInstance().getGlobalContainerStack()
+            retract_amount = settings.getProperty("retraction_amount", "value")
+            # Set E relative positioning
+            self.sendCommand("M83")
+
+            # Prime the nozzle when changing filament
+            self.sendCommand("G1 E%f F120" % retract_amount)  # Push the filament out
+            self.sendCommand("G1 E-%f F120" % retract_amount)  # retract again
+
+            # Position the toolhead to the correct position again
+            self.sendCommand("G1 X%f Y%f Z%f F%d" % self._pausePosition[0:4])
+
+            # Prime the nozzle again
+            self.sendCommand("G1 E%f F120" % retract_amount)
+            # Set proper feedrate
+            self.sendCommand("G1 F%d" % (self._pausePosition[3]))
+            # Set E absolute position to cancel out any extrude/retract that occured
+            self.sendCommand("G92 E%f" % (self._pausePosition[4]))
+            # Set E absolute positioning
+            self.sendCommand("M82")
+        Logger.log("d", "Print resumed")
+        self._pausePosition = None
+
 
     ##  Set the progress of the print.
     #   It will be normalized (based on max_progress) to range 0 - 100
