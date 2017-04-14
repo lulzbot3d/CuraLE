@@ -34,10 +34,10 @@ class SolidView(View):
         self._enabled_shader = None
         self._disabled_shader = None
 
-        self._solid_pass = None
-        self._solid_composite_shader = None
-        self._composite_pass = None
-        self._old_composite_shader = None
+        #self._solid_pass = None
+        #self._solid_composite_shader = None
+        #self._composite_pass = None
+        #self._old_composite_shader = None
 
         self._extruders_model = ExtrudersModel()
 
