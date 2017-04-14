@@ -49,6 +49,8 @@ class MachineManager(QObject):
         self._empty_quality_changes_container = ContainerRegistry.getInstance().findInstanceContainers(id="empty_quality_changes")[0]
         self._onGlobalContainerChanged()
 
+        self._current_category = "All"
+
         ExtruderManager.getInstance().activeExtruderChanged.connect(self._onActiveExtruderStackChanged)
         self._onActiveExtruderStackChanged()
 
@@ -112,6 +114,27 @@ class MachineManager(QObject):
                 printer_output_device.materialIdChanged.connect(self._onMaterialIdChanged)
 
         self.outputDevicesChanged.emit()
+
+    currentCategoryChanged = pyqtSignal()
+
+    @pyqtProperty(str, notify = currentCategoryChanged)
+    def currentCategory(self):
+        return self._current_category
+
+    @pyqtSlot(str)
+    def setCurrentCategory(self, category):
+        self._current_category = category
+        self.currentCategoryChanged.emit()
+
+    @pyqtProperty("QVariantList", notify=currentCategoryChanged)
+    def categories(self):
+        categories_list = ["All"]
+        materials = ContainerRegistry.getInstance().findInstanceContainers(type="material")
+        for material in materials:
+            category = material.getMetaDataEntry("category")
+            if category and category not in categories_list:
+                categories_list.append(category)
+        return categories_list
 
     @pyqtProperty("QVariantList", notify = outputDevicesChanged)
     def printerOutputDevices(self):
