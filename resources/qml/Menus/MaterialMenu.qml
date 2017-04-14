@@ -14,6 +14,7 @@ Menu
 
     property int extruderIndex: 0
     property bool printerConnected: Cura.MachineManager.printerOutputDevices.length != 0
+    property string category: Cura.MachineManager.currentCategory
 
     MenuItem
     {
@@ -154,6 +155,10 @@ Menu
         {
             result.definition = "fdmprinter";
             result.compatible = true; //NB: Only checks for compatibility in global version of material, but we don't have machine-specific materials anyway.
+        }
+        if(category != "All")
+        {
+            result.category = category
         }
         return result;
     }
