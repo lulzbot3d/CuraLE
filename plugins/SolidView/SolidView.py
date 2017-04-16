@@ -16,7 +16,7 @@ from UM.Event import Event
 from UM.PluginRegistry import PluginRegistry
 
 
-from . import SolidPass
+# from . import SolidPass
 
 from cura.Settings.ExtruderManager import ExtruderManager
 from cura.Settings.ExtrudersModel import ExtrudersModel
