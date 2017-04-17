@@ -19,6 +19,7 @@ from cura import LayerDataBuilder
 from cura import LayerDataDecorator
 from cura.LayerPolygon import LayerPolygon
 from cura.GCodeListDecorator import GCodeListDecorator
+from cura.PrintStatisticsDecorator import PrintStatisticsDecorator
 from cura.Settings.ExtruderManager import ExtruderManager
 
 import numpy
@@ -37,6 +38,8 @@ class GCodeReader(MeshReader):
         self._message = None
         self._layer_number = 0
         self._extruder_number = 0
+        self._total_move_length = 0
+        self._extrusion_retraction_length = 0
 
         self._clearValues()
         self._scene_node = None
@@ -54,6 +57,8 @@ class GCodeReader(MeshReader):
         self._previous_z = 0
         self._layer_data_builder = LayerDataBuilder.LayerDataBuilder()
         self._center_is_zero = False
+        self._total_move_length = 0
+        self._extrusion_retraction_length = 0
 
     @staticmethod
     def _getValue(line, code):
@@ -140,7 +145,10 @@ class GCodeReader(MeshReader):
         y = params.y if params.y is not None else y
         z = params.z if params.z is not None else position.z
 
+        self._total_move_length += math.sqrt(math.pow(x - position.x, 2) + math.pow(y - position.y, 2) + math.pow(z - position.z, 2))
+
         if params.e is not None:
+            self._extrusion_retraction_length += math.sqrt(math.pow(x - position.x, 2) + math.pow(y - position.y, 2) + math.pow(z - position.z, 2))
             if params.e > e[self._extruder_number]:
                 path.append([x, y, z, self._layer_type])  # extrusion
             else:
@@ -336,6 +344,13 @@ class GCodeReader(MeshReader):
         settings = Application.getInstance().getGlobalContainerStack()
         machine_width = settings.getProperty("machine_width", "value")
         machine_depth = settings.getProperty("machine_depth", "value")
+        print_speed = settings.getProperty("speed_wall_0", "value")
+        travel_speed = settings.getProperty("speed_travel", "value")
+        time = (self._total_move_length - self._extrusion_retraction_length) / travel_speed + self._extrusion_retraction_length / print_speed
+
+        print_statistics_decorator = PrintStatisticsDecorator()
+        print_statistics_decorator.setPrintTime(time)
+        scene_node.addDecorator(print_statistics_decorator)
 
         if not self._center_is_zero:
             scene_node.setPosition(Vector(-machine_width / 2, 0, machine_depth / 2))

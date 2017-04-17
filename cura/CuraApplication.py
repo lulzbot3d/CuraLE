@@ -786,6 +786,8 @@ class CuraApplication(QtApplication):
                 continue
             if node.callDecoration("isBlockSlicing"):
                 is_block_slicing_node = True
+            if node.callDecoration("hasPrintStatistics"):
+                self.getBackend().printDurationMessage.emit(node.callDecoration("getPrintTime"), [0])
 
             count += 1
             if not scene_bounding_box:
@@ -798,6 +800,7 @@ class CuraApplication(QtApplication):
         print_information = self.getPrintInformation()
         if print_information:
             print_information.setPreSliced(is_block_slicing_node)
+
 
         if not scene_bounding_box:
             scene_bounding_box = AxisAlignedBox.Null
