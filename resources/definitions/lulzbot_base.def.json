@@ -1345,7 +1345,7 @@
                         },
                         "material_wipe_temperature":
                         {
-                            "settable_per_extruder": false,
+                            "settable_per_extruder": true,
                             "minimum_value": "0",
                             "enabled": true,
                             "description": "The nozzle temperature used before nozzle wiping.",
