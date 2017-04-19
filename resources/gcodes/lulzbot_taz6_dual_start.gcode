@@ -8,11 +8,11 @@ T0                           ; select this extruder first
 M82                          ; set extruder to absolute mode
 G92 E0                       ; set extruder position to 0
 M140 S{material_bed_temperature}; get bed heating up
-M109 R{material_soften_temperature} T0                 ; soften filament
+M109 R{material_soften_temperature_0} T0                 ; soften filament
 M109 R{material_soften_temperature_1} T1                 ; soften filament
 G28 X Y                      ; home X and Y
 G1 X-19 Y258                 ; move over the Z_MIN switch
-M109 R{material_wipe_temperature} T0                 ; wait for T0 to reach temp
+M109 R{material_wipe_temperature_0} T0                 ; wait for T0 to reach temp
 M109 R{material_wipe_temperature_1} T1                 ; wait for T1 to reach temp
 G28 Z                        ; home Z
 G1 E-30 F100                 ; suck up XXmm of filament
@@ -46,7 +46,7 @@ G1 X-17 Y80 F2000            ; fast wipe
 G1 X-19 Y90 F2000            ; fast wipe
 G1 X-17 Y85 F2000            ; fast wipe
 G1 Z10                       ; raise extruder
-M109 R{material_probe_temperature}                   ; heat to probe temp
+M109 R{material_probe_temperature_0}                   ; heat to probe temp
 G1 X-9 Y-9                   ; move above first probe point
 M204 S100                    ; set accel for probing
 G29                          ; probe sequence (for auto-leveling)
