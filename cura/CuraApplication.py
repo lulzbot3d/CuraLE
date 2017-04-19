@@ -167,7 +167,7 @@ class CuraApplication(QtApplication):
         self._currently_loading_files = []
         self._non_sliceable_extensions = []
         self._print_monitor_additional_sections = []
-
+        Logger.log("d", "QtApplication Install Prefix : \"" + str(QtApplication.getInstallPrefix()) + "\"")
         try:
              self._components_version = json.load(open("version.json", "r"))
         except:
@@ -177,7 +177,7 @@ class CuraApplication(QtApplication):
              except:
                   try:
                        self._components_version = json.load(open(
-                            os.path.join(QtApplication.getInstallPrefix(), "share", "cura","version.json"), "r"))
+                            os.path.join(QtApplication.getInstallPrefix(), "cura2","version.json"), "r"))
                   except:
                        self._components_version = {"cura_version": "master"}
 
