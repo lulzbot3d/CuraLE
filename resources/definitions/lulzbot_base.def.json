@@ -1272,6 +1272,7 @@
                 "layer_height_0":
                 {
                     "maximum_value_warning": "0.5"
+
                 },
                 "machine_nozzle_size_for_extruder": {
                     "label": "Extruder Nozzle Size",
@@ -1306,7 +1307,8 @@
                             "type": "float",
                             "maximum_value": "110",
                             "default_value": 50,
-                            "settable_per_mesh": false
+                            "settable_per_mesh": false,
+                            "resolve": "sum(extruderValues('material_part_removal_temperature')) / len(extruderValues('material_part_removal_temperature'))"
                         }
                     }
                 },
