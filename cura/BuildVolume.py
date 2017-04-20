@@ -44,15 +44,14 @@ class BuildVolume(SceneNode):
     def __init__(self, parent = None):
         super().__init__(parent)
 
-        self._volume_outline_color = None
+        #self._volume_outline_color = None
         self._x_axis_color = None
         self._y_axis_color = None
         self._z_axis_color = None
         self._disallowed_area_color = None
         self._error_area_color = None
 
-        self._lines_mesh =None
-        self._cube_color_yellow = None
+        #self._lines_mesh =None
         self._cube_color_white = None
 
         self._width = 0
@@ -68,7 +67,7 @@ class BuildVolume(SceneNode):
 
         self._grid_mesh = None
         self._grid_shader = None
-        self._transparent_object_shader = None
+        #self._transparent_object_shader = None
 
         self._disallowed_areas = []
         self._disallowed_area_mesh = None
@@ -179,19 +178,18 @@ class BuildVolume(SceneNode):
             theme = Application.getInstance().getTheme()
             self._grid_shader.setUniformValue("u_gridColor0", Color(*theme.getColor("buildplate").getRgb()))
             self._grid_shader.setUniformValue("u_gridColor1", Color(*theme.getColor("buildplate_alt").getRgb()))
-            self._transparent_object_shader = OpenGL.getInstance().createShaderProgram(Resources.getPath(Resources.Shaders, "transparent_object.shader"))
-            #self._transparent_object_shader = OpenGL.getInstance().createShaderProgram(Resources.getPath(Resources.Shaders, "transparent_object_with_light.shader"))
-            self._transparent_object_shader.setUniformValue("u_ambientColor", Color(*theme.getColor("cube_color_yellow").getRgb()))
-            self._transparent_object_shader.setUniformValue("u_diffuseColor", Color(*theme.getColor("cube_color_white").getRgb()))
-            self._transparent_object_shader.setUniformValue("u_opacity", 0.15)
+            #self._transparent_object_shader = OpenGL.getInstance().createShaderProgram(Resources.getPath(Resources.Shaders, "transparent_object.shader"))
+            #self._transparent_object_shader.setUniformValue("u_ambientColor", Color(*theme.getColor("cube_color_white").getRgb()))
+            #self._transparent_object_shader.setUniformValue("u_diffuseColor", Color(*theme.getColor("cube_color_white").getRgb()))
+            #self._transparent_object_shader.setUniformValue("u_opacity", 0.01)
 
-        #renderer.queueNode(self, mode = RenderBatch.RenderMode.Lines)
+        renderer.queueNode(self, mode = RenderBatch.RenderMode.Lines)
         #renderer.queueNode(self, mode = RenderBatch.RenderMode.Triangles, shader = self._transparent_object_shader, blend_mode = RenderBatch.BlendMode.NoBlending, render_type = RenderBatch.RenderType.Solid, sort = -9, backface_cull = False )
 
-        renderer.queueNode(self, mode = RenderBatch.RenderMode.Triangles, shader = self._transparent_object_shader,
-            transparent = True, blend_mode = RenderBatch.BlendMode.NoBlending,
-            render_type = RenderBatch.RenderType.Solid, backface_cull = False )
-        renderer.queueNode(self, mesh = self._lines_mesh, mode = RenderBatch.RenderMode.Lines)
+        #renderer.queueNode(self, mode = RenderBatch.RenderMode.Triangles, shader = self._transparent_object_shader,
+        #    transparent = True, blend_mode = RenderBatch.BlendMode.NoBlending,
+        #    render_type = RenderBatch.RenderType.Solid, backface_cull = False )
+        #renderer.queueNode(self, mesh = self._lines_mesh, mode = RenderBatch.RenderMode.Lines)
         renderer.queueNode(self, mesh = self._origin_mesh)
         renderer.queueNode(self, mesh = self._grid_mesh, shader = self._grid_shader, backface_cull = True)
         if self._disallowed_area_mesh:
@@ -211,15 +209,17 @@ class BuildVolume(SceneNode):
         if not Application.getInstance()._engine:
             return
 
-        if not self._volume_outline_color:
+        #if not self._volume_outline_color:
+        if not self._cube_color_white:
             theme = Application.getInstance().getTheme()
-            self._volume_outline_color = Color(*theme.getColor("volume_outline").getRgb())
+            #this is unused for now and not relevant to model ouline
+            #it was used as shade in elliptical view, which is now commented out
+            #self._volume_outline_color = Color(*theme.getColor("volume_outline").getRgb())
             self._x_axis_color = Color(*theme.getColor("x_axis").getRgb())
             self._y_axis_color = Color(*theme.getColor("y_axis").getRgb())
             self._z_axis_color = Color(*theme.getColor("z_axis").getRgb())
             self._disallowed_area_color = Color(*theme.getColor("disallowed_area").getRgb())
             self._error_area_color = Color(*theme.getColor("error_area").getRgb())
-            self._cube_color_yellow = Color(*theme.getColor("cube_color_yellow").getRgb())
             self._cube_color_white = Color(*theme.getColor("cube_color_white").getRgb())
 
         min_w = -self._width / 2
@@ -232,20 +232,20 @@ class BuildVolume(SceneNode):
         z_fight_distance = 0.2 # Distance between buildplate and disallowed area meshes to prevent z-fighting
 
         # Create 'cube' of the build volume
-        mb = MeshBuilder()
+        #mb = MeshBuilder()
 
         #top
-        mb.addQuad(Vector(min_w, max_h, min_d), Vector(max_w, max_h, min_d),Vector(max_w, max_h, max_d), Vector(min_w,max_h,max_d),color = self._cube_color_white)
+        #mb.addQuad(Vector(min_w, max_h, min_d), Vector(max_w, max_h, min_d),Vector(max_w, max_h, max_d), Vector(min_w,max_h,max_d),color = self._cube_color_white)
         #left
-        mb.addQuad(Vector(min_w, min_h, max_d), Vector(min_w, max_h, max_d),Vector(min_w, max_h, min_d), Vector(min_w,min_h,min_d),color = self._cube_color_white)
+        #mb.addQuad(Vector(min_w, min_h, max_d), Vector(min_w, max_h, max_d),Vector(min_w, max_h, min_d), Vector(min_w,min_h,min_d),color = self._cube_color_white)
         #right
-        mb.addQuad(Vector(max_w, min_h, max_d), Vector(max_w, max_h, max_d),Vector(max_w, max_h, min_d), Vector(max_w,min_h,min_d),color = self._cube_color_white)
+        #mb.addQuad(Vector(max_w, min_h, max_d), Vector(max_w, max_h, max_d),Vector(max_w, max_h, min_d), Vector(max_w,min_h,min_d),color = self._cube_color_white)
         #back
-        mb.addQuad(Vector(min_w, max_h, min_d), Vector(max_w, max_h, min_d),Vector(max_w, min_h, min_d), Vector(min_w,min_h,min_d),color = self._cube_color_white)
+        #mb.addQuad(Vector(min_w, max_h, min_d), Vector(max_w, max_h, min_d),Vector(max_w, min_h, min_d), Vector(min_w,min_h,min_d),color = self._cube_color_white)
         #face
-        mb.addQuad(Vector(min_w, min_h, max_d), Vector(max_w, min_h, max_d),Vector(max_w, max_h, max_d), Vector(min_w,max_h,max_d),color = self._cube_color_white)
+        #mb.addQuad(Vector(min_w, min_h, max_d), Vector(max_w, min_h, max_d),Vector(max_w, max_h, max_d), Vector(min_w,max_h,max_d),color = self._cube_color_white)
 
-        self.setMeshData(mb.build())
+        #self.setMeshData(mb.build())
 
         # Add white lines
         mb = MeshBuilder()
@@ -267,8 +267,8 @@ class BuildVolume(SceneNode):
         mb.addLine(Vector(min_w, max_h, min_d), Vector(min_w, max_h, max_d), color = self._cube_color_white)
         mb.addLine(Vector(max_w, max_h, min_d), Vector(max_w, max_h, max_d), color = self._cube_color_white)
 
-        #self.setMeshData(mb.build())
-        self._lines_mesh = mb.build()
+        self.setMeshData(mb.build())
+        #self._lines_mesh = mb.build()
 
 
         if self._shape != "elliptic":
