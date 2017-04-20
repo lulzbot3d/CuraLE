@@ -501,7 +501,10 @@ class CuraApplication(QtApplication):
         self._plugin_registry.addType("profile_reader", self._addProfileReader)
         self._plugin_registry.addType("profile_writer", self._addProfileWriter)
         self._plugin_registry.addPluginLocation(os.path.join(QtApplication.getInstallPrefix(), "lib", "cura"))
-        if not hasattr(sys, "frozen"):
+        if hasattr(sys, "frozen"):
+            # This what works for MacOS currently
+            self._plugin_registry.addPluginLocation(os.path.join(QtApplication.getInstallPrefix(), "Resources", "cura", "plugins"))
+        else:
             self._plugin_registry.addPluginLocation(os.path.join(os.path.abspath(os.path.dirname(__file__)), "..", "plugins"))
 
         self._plugin_registry.loadPlugins()
