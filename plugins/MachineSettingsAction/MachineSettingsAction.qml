@@ -68,6 +68,7 @@ Cura.MachineAction
                     {
                         columns: 3
                         columnSpacing: UM.Theme.getSize("default_margin").width
+                        rowSpacing: UM.Theme.getSize("default_margin").height
 
                         Label
                         {
@@ -120,6 +121,8 @@ Cura.MachineAction
 
                     Column
                     {
+                        spacing: UM.Theme.getSize("default_margin").height
+
                         Row
                         {
                             spacing: UM.Theme.getSize("default_margin").width
@@ -256,6 +259,7 @@ Cura.MachineAction
                     {
                         columns: 3
                         columnSpacing: UM.Theme.getSize("default_margin").width
+                        rowSpacing: UM.Theme.getSize("default_margin").height
 
                         Label
                         {
@@ -369,6 +373,7 @@ Cura.MachineAction
                 Column
                 {
                     width: parent.width / 3
+                    spacing: UM.Theme.getSize("default_margin").height
 
                     Label
                     {
@@ -435,10 +440,13 @@ Cura.MachineAction
                 anchors.left: parent.left
                 anchors.right: parent.right
                 height: parent.height - y
+
                 Column
                 {
                     height: parent.height
                     width: parent.width / 2
+                    spacing: UM.Theme.getSize("default_margin").height
+
                     Label
                     {
                         text: catalog.i18nc("@label", "Start Gcode")
@@ -463,6 +471,8 @@ Cura.MachineAction
                 Column {
                     height: parent.height
                     width: parent.width / 2
+                    spacing: UM.Theme.getSize("default_margin").height
+
                     Label
                     {
                         text: catalog.i18nc("@label", "End Gcode")
