@@ -68,6 +68,7 @@ Cura.MachineAction
                     {
                         columns: 3
                         columnSpacing: UM.Theme.getSize("default_margin").width
+                        rowSpacing: UM.Theme.getSize("default_margin").height
 
                         Label
                         {
@@ -120,6 +121,8 @@ Cura.MachineAction
 
                     Column
                     {
+                        spacing: UM.Theme.getSize("default_margin").height
+
                         Row
                         {
                             spacing: UM.Theme.getSize("default_margin").width
@@ -256,6 +259,7 @@ Cura.MachineAction
                     {
                         columns: 3
                         columnSpacing: UM.Theme.getSize("default_margin").width
+                        rowSpacing: UM.Theme.getSize("default_margin").height
 
                         Label
                         {
@@ -367,6 +371,55 @@ Cura.MachineAction
                 }
             }
 
+<<<<<<< HEAD
+=======
+                Column
+                {
+                    width: parent.width / 3
+                    spacing: UM.Theme.getSize("default_margin").height
+
+                    Label
+                    {
+                        text: catalog.i18nc("@label", "Connection Settings")
+                        font.bold: true
+                    }
+
+                    Label
+                    {
+                        text: catalog.i18nc("@label", "Port:")
+                    }
+                    ComboBox
+                    {
+                        model:
+                        {
+                            var port_list = Cura.USBPrinterManager.portList
+                            var ind = port_list.indexOf(machinePortProvider.properties.value)
+                            port_list.push("AUTO")
+                            return port_list
+                        }
+
+                        currentIndex:
+                        {
+                            var index = model.indexOf(machinePortProvider.properties.value);
+                            if(index == -1)
+                            {
+                                index = 0;
+                            }
+                            return index
+                        }
+                        onActivated:
+                        {
+                            machinePortProvider.setPropertyValue("value", model[index]);
+                        }
+                    }
+                    Label
+                    {
+                        text: catalog.i18nc("@label", "Communication Speed:")
+                    }
+                    ComboBox
+                    {
+                        model: ["AUTO", "250000", "230400", "115200", "57600", "38400", "19200", "9600"]
+>>>>>>> e96c4f2... T712: added standart vertical spacing between grid and columns. It would fix part of the bug related to machine setting page
 
 
             Row
@@ -375,10 +428,13 @@ Cura.MachineAction
                 anchors.left: parent.left
                 anchors.right: parent.right
                 height: parent.height - y
+
                 Column
                 {
                     height: parent.height
                     width: parent.width / 2
+                    spacing: UM.Theme.getSize("default_margin").height
+
                     Label
                     {
                         text: catalog.i18nc("@label", "Start Gcode")
@@ -403,6 +459,8 @@ Cura.MachineAction
                 Column {
                     height: parent.height
                     width: parent.width / 2
+                    spacing: UM.Theme.getSize("default_margin").height
+
                     Label
                     {
                         text: catalog.i18nc("@label", "End Gcode")
