@@ -55,7 +55,7 @@ Cura.MachineAction
 
                 Column
                 {
-                    width: parent.width / 2
+                    width: parent.width / 3
                     spacing: UM.Theme.getSize("default_margin").height
 
                     Label
@@ -246,7 +246,7 @@ Cura.MachineAction
 
                 Column
                 {
-                    width: parent.width / 2
+                    width: parent.width / 3
                     spacing: UM.Theme.getSize("default_margin").height
 
                     Label
@@ -369,10 +369,7 @@ Cura.MachineAction
                         }
                     }
                 }
-            }
 
-<<<<<<< HEAD
-=======
                 Column
                 {
                     width: parent.width / 3
@@ -419,8 +416,23 @@ Cura.MachineAction
                     ComboBox
                     {
                         model: ["AUTO", "250000", "230400", "115200", "57600", "38400", "19200", "9600"]
->>>>>>> e96c4f2... T712: added standart vertical spacing between grid and columns. It would fix part of the bug related to machine setting page
 
+                        currentIndex:
+                        {
+                            var index = model.indexOf(machineBaudrateProvider.properties.value);
+                            if(index == -1)
+                            {
+                                index = 0;
+                            }
+                            return index
+                        }
+                        onActivated:
+                        {
+                            machineBaudrateProvider.setPropertyValue("value", model[index]);
+                        }
+                    }
+                }
+            }
 
             Row
             {
@@ -510,6 +522,26 @@ Cura.MachineAction
         polygon.push([ parseFloat(printheadXMaxField.text),-parseFloat(printheadYMinField.text)]);
         machineHeadPolygonProvider.setPropertyValue("value", JSON.stringify(polygon));
         manager.forceUpdate();
+    }
+
+    UM.SettingPropertyProvider
+    {
+        id: machinePortProvider
+
+        containerStackId: Cura.MachineManager.activeMachineId
+        key: "machine_port"
+        watchedProperties: [ "value" ]
+        storeIndex: manager.containerIndex
+    }
+
+    UM.SettingPropertyProvider
+    {
+        id: machineBaudrateProvider
+
+        containerStackId: Cura.MachineManager.activeMachineId
+        key: "machine_baudrate"
+        watchedProperties: [ "value" ]
+        storeIndex: manager.containerIndex
     }
 
     UM.SettingPropertyProvider
