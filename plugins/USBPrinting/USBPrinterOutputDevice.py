@@ -57,6 +57,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self.firmwareUpdateComplete.connect(self._onFirmwareUpdateComplete)
 
         self._heatup_wait_start_time = time.time()
+        self._heatup_state = False
 
         ## Queue for commands that need to be send. Used when command is sent when a print is active.
         self._command_queue = queue.Queue()
@@ -526,8 +527,17 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         if self._serial is None:
             return
 
-        if "M109" in cmd or "M190" in cmd:
+        if cmd.startswith("M109") or cmd.startswith("M190"):
             self._heatup_wait_start_time = time.time()
+
+            search = re.search("R(-?[0-9\.]+)", cmd)
+            if search is None:
+                search = re.search("S(-?[0-9\.]+)", cmd)
+
+            if search is not None and int(search.group(1)) == 0:
+                return
+
+            self._heatup_state = True
 
         try:
             command = (cmd + "\n").encode()
@@ -551,6 +561,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     #   \param cmd string with g-code
     @pyqtSlot(str)
     def sendCommand(self, cmd):
+        if "M108" in cmd:
+            self._sendCommand(cmd)
         if self._progress:
             self._command_queue.put(cmd)
         elif self._connection_state == ConnectionState.connected:
@@ -617,7 +629,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             if line is None:
                 break  # None is only returned when something went wrong. Stop listening
 
-            if time.time() > temperature_request_timeout:
+            if time.time() > temperature_request_timeout and not self._heatup_state:
                 if self._num_extruders > 1:
                     self._temperature_requested_extruder_index = (self._temperature_requested_extruder_index + 1) % self._num_extruders
                     self.sendCommand("M105 T%d" % (self._temperature_requested_extruder_index))
@@ -656,10 +668,15 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 self.messageFromPrinter.emit(line.decode("utf-8").replace("\n", ""))
 
             if self._is_printing:
-                if line == b"" and time.time() > ok_timeout:
+                if line == b"" and not self._heatup_state and time.time() > ok_timeout:
                     line = b"ok"  # Force a timeout (basically, send next command)
+                elif self._heatup_state and time.time() > self._heatup_wait_start_time + 600:
+                    line = b"ok"
+                    self._heatup_state = False
 
                 if b"ok" in line:
+                    if self._heatup_state:
+                        self._heatup_state = False
                     ok_timeout = time.time() + 5
                     if not self._command_queue.empty():
                         self._sendCommand(self._command_queue.get())
@@ -697,6 +714,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         line = line.strip()
         try:
             if line == "M0" or line == "M1":
+                self._setJobState("pause")
                 line = "M105"  # Don't send the M0 or M1 to the machine, as M0 and M1 are handled as an LCD menu pause.
             if ("G0" in line or "G1" in line) and "Z" in line:
                 z = float(re.search("Z([-0-9\.]*)", line).group(1))
