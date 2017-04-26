@@ -121,7 +121,8 @@ Item {
                     regExp: /^[^\\ \/ \*\?\|\[\]]*$/
                 }
                 style: TextFieldStyle{
-                    textColor: UM.Theme.getColor("setting_control_text");
+                    //textColor: UM.Theme.getColor("setting_control_text");
+                    textColor: UM.Theme.getColor("text_green");
                     font: UM.Theme.getFont("default_bold");
                     background: Rectangle {
                         opacity: 0
@@ -140,7 +141,8 @@ Item {
         height: UM.Theme.getSize("jobspecs_line").height
         verticalAlignment: Text.AlignVCenter
         font: UM.Theme.getFont("small")
-        color: UM.Theme.getColor("text_subtext")
+        //color: UM.Theme.getColor("text_subtext")
+        color: UM.Theme.getColor("text_green")
         text: Printer.getSceneBoundingBoxString
     }
 
@@ -166,7 +168,8 @@ Item {
                 height: UM.Theme.getSize("save_button_specs_icons").height
                 sourceSize.width: width
                 sourceSize.height: width
-                color: UM.Theme.getColor("text_subtext")
+                //color: UM.Theme.getColor("text_subtext")
+                color: UM.Theme.getColor("text_green")
                 source: UM.Theme.getIcon("print_time")
             }
             Label
@@ -176,7 +179,8 @@ Item {
                 anchors.rightMargin: UM.Theme.getSize("default_margin").width
                 anchors.verticalCenter: parent.verticalCenter
                 font: UM.Theme.getFont("small")
-                color: UM.Theme.getColor("text_subtext")
+                //color: UM.Theme.getColor("text_subtext")
+                color: UM.Theme.getColor("text_green")
                 text: (!base.printDuration || !base.printDuration.valid) ? catalog.i18nc("@label", "00h 00min") : base.printDuration.getDisplayString(UM.DurationFormat.Short)
             }
             UM.RecolorImage
@@ -189,7 +193,8 @@ Item {
                 height: UM.Theme.getSize("save_button_specs_icons").height
                 sourceSize.width: width
                 sourceSize.height: width
-                color: UM.Theme.getColor("text_subtext")
+                //color: UM.Theme.getColor("text_subtext")
+                color: UM.Theme.getColor("text_green")
                 source: UM.Theme.getIcon("category_material")
             }
             Label
@@ -198,7 +203,8 @@ Item {
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 font: UM.Theme.getFont("small")
-                color: UM.Theme.getColor("text_subtext")
+                //color: UM.Theme.getColor("text_subtext")
+                color: UM.Theme.getColor("text_green")
                 text:
                 {
                     var lengths = [];
