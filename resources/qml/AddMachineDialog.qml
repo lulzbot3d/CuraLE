@@ -58,6 +58,7 @@ UM.Dialog
         ListView
         {
             id: machineList
+            signal reset();
 
             model: UM.DefinitionContainersModel
             {
@@ -119,57 +120,79 @@ UM.Dialog
                 }
             }
 
-            delegate: RadioButton
+            delegate: Column
             {
-                id: machineButton
+                id: machineColumn
+                spacing: (machineButton.opacity == 1) ? (UM.Theme.getSize("default_margin").height/2) : 0;
+                property bool checked: ListView.isCurrentItem;
+                property int columnIndex: index
+                property ListView listView: ListView.view
 
-                anchors.left: parent.left
-                anchors.leftMargin: UM.Theme.getSize("standard_list_lineheight").width
-
-                opacity: 1;
-                height: UM.Theme.getSize("standard_list_lineheight").height;
-
-                checked: ListView.isCurrentItem;
-
-                exclusiveGroup: printerGroup;
-
-                text: model.name
-
-                onClicked:
+                Rectangle
                 {
-                    ListView.view.currentIndex = index;
-                    machineName.text = getMachineName()
+                    width: 5
+                    height: 0.000001
                 }
 
-                states: State
+                RadioButton
                 {
-                    name: "collapsed";
-                    when: base.activeCategory != model.section;
+                    id: machineButton
 
-                    PropertyChanges { target: machineButton; opacity: 0; height: 0; }
-                }
+                    anchors.left: parent.left
+                    anchors.leftMargin: UM.Theme.getSize("standard_list_lineheight").width
 
-                transitions:
-                [
-                    Transition
+                    opacity: 1;
+                    height: UM.Theme.getSize("standard_list_lineheight").height;
+
+                    //checked: ListView.isCurrentItem;
+                    checked: machineColumn.checked
+
+                    exclusiveGroup: printerGroup;
+
+                    text: model.name
+
+                    onClicked:
                     {
-                        to: "collapsed";
-                        SequentialAnimation
-                        {
-                            NumberAnimation { property: "opacity"; duration: 75; }
-                            NumberAnimation { property: "height"; duration: 75; }
-                        }
-                    },
-                    Transition
-                    {
-                        from: "collapsed";
-                        SequentialAnimation
-                        {
-                            NumberAnimation { property: "height"; duration: 75; }
-                            NumberAnimation { property: "opacity"; duration: 75; }
-                        }
+                        machineColumn.listView.currentIndex = machineColumn.columnIndex;
+                        machineName.text = getMachineName()
                     }
-                ]
+
+                    states: State
+                    {
+                        name: "collapsed";
+                        when: base.activeCategory != model.section;
+
+                        PropertyChanges { target: machineButton; opacity: 0; height: 0; }
+                    }
+
+                    transitions:
+                    [
+                        Transition
+                        {
+                            to: "collapsed";
+                            SequentialAnimation
+                            {
+                                NumberAnimation { property: "opacity"; duration: 75; }
+                                NumberAnimation { property: "height"; duration: 75; }
+                            }
+                        },
+                        Transition
+                        {
+                            from: "collapsed";
+                            SequentialAnimation
+                            {
+                                NumberAnimation { property: "height"; duration: 75; }
+                                NumberAnimation { property: "opacity"; duration: 75; }
+                            }
+                        }
+                    ]
+                }
+
+                Rectangle
+                {
+                    width: 5
+                    height: 0.000001
+                }
             }
         }
     }
