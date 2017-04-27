@@ -352,20 +352,20 @@ Cura.MachineAction
                         Label
                         {
                             text: catalog.i18nc("@label", "Nozzle size")
-                            visible: !Cura.MachineManager.hasVariants
+                            visible: !Cura.MachineManager.hasVariants && machineExtruderCountProvider.properties.value == 1
                         }
                         TextField
                         {
                             id: nozzleSizeField
                             text: machineNozzleSizeProvider.properties.value
-                            visible: !Cura.MachineManager.hasVariants
+                            visible: !Cura.MachineManager.hasVariants && machineExtruderCountProvider.properties.value == 1
                             validator: RegExpValidator { regExp: /[0-9\.]{0,6}/ }
                             onEditingFinished: { machineNozzleSizeProvider.setPropertyValue("value", text) }
                         }
                         Label
                         {
                             text: catalog.i18nc("@label", "mm")
-                            visible: !Cura.MachineManager.hasVariants
+                            visible: !Cura.MachineManager.hasVariants && machineExtruderCountProvider.properties.value == 1
                         }
                     }
                 }
@@ -665,4 +665,13 @@ Cura.MachineAction
         storeIndex: manager.containerIndex
     }
 
+    UM.SettingPropertyProvider
+    {
+        id: machineExtruderCountProvider
+
+        containerStackId: Cura.MachineManager.activeMachineId
+        key: "machine_extruder_count"
+        watchedProperties: [ "value" ]
+        storeIndex: manager.containerIndex
+    }
 }
