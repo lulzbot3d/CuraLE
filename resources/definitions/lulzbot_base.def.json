@@ -1265,6 +1265,34 @@
     },
     "settings":
     {
+        "machine_settings":
+        {
+            "children":
+            {
+                "machine_nozzle_offset_x":
+                {
+                    "label": "Nozzle X Offset",
+                    "description": "The x-coordinate of the offset of the nozzle.",
+                    "unit": "mm",
+                    "type": "float",
+                    "default_value": 0,
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true,
+                    "enabled": "False"
+                },
+                "machine_nozzle_offset_y":
+                {
+                    "label": "Nozzle Y Offset",
+                    "description": "The y-coordinate of the offset of the nozzle.",
+                    "unit": "mm",
+                    "type": "float",
+                    "default_value": 0,
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true,
+                    "enabled": "False"
+                }
+            }
+        },
         "resolution":
         {
             "children":
@@ -1272,7 +1300,6 @@
                 "layer_height_0":
                 {
                     "maximum_value_warning": "0.5"
-
                 }
             }
         },
