@@ -47,6 +47,8 @@ class GCodeReader(MeshReader):
         self._is_layers_in_file = False  # Does the Gcode have the layers comment?
         self._extruder_offsets = {}  # Offsets for multi extruders. key is index, value is [x-offset, y-offset]
         self._current_layer_thickness = 0.2  # default
+        self._extrusion_max_amounts = [0]
+        self._extrusion_saved_value = [0]
 
         Preferences.getInstance().addPreference("gcodereader/show_caution", True)
 
@@ -59,6 +61,8 @@ class GCodeReader(MeshReader):
         self._center_is_zero = False
         self._total_move_length = 0
         self._extrusion_retraction_length = 0
+        self._extrusion_max_amounts = [0]
+        self._extrusion_saved_value = [0]
 
     @staticmethod
     def _getValue(line, code):
@@ -173,6 +177,7 @@ class GCodeReader(MeshReader):
 
     def _gCode92(self, position, params, path):
         if params.e is not None:
+            self._extrusion_saved_value[self._extruder_number] += position.e[self._extruder_number]
             position.e[self._extruder_number] = params.e
         return self._position(
             params.x if params.x is not None else position.x,
@@ -200,6 +205,8 @@ class GCodeReader(MeshReader):
         self._extruder_number = T
         if self._extruder_number + 1 > len(position.e):
             position.e.extend([0] * (self._extruder_number - len(position.e) + 1))
+            self._extrusion_max_amounts.extend([0] * (self._extruder_number - len(position.e) + 1))
+            self._extrusion_saved_value.extend([0] * (self._extruder_number - len(position.e) + 1))
         return position
 
     _type_keyword = ";TYPE:"
@@ -298,6 +305,10 @@ class GCodeReader(MeshReader):
                 G = self._getInt(line, "G")
                 if G is not None:
                     current_position = self._processGCode(G, line, current_position, current_path)
+                    for i in range(len(current_position.e)):
+                        real_value = current_position.e[i] + self._extrusion_saved_value[i]
+                        if real_value > self._extrusion_max_amounts[i]:
+                            self._extrusion_max_amounts[i] = real_value
 
                     # < 2 is a heuristic for a movement only, that should not be counted as a layer
                     if current_position.z > last_z and abs(current_position.z - last_z) < 2:
@@ -347,9 +358,15 @@ class GCodeReader(MeshReader):
         print_speed = settings.getProperty("speed_wall_0", "value")
         travel_speed = settings.getProperty("speed_travel", "value")
         time = (self._total_move_length - self._extrusion_retraction_length) / travel_speed + self._extrusion_retraction_length / print_speed
+        radius = Application.getInstance().getGlobalContainerStack().getProperty("material_diameter", "value") / 2
+
+        for i in range(len(self._extrusion_max_amounts)):
+            self._extrusion_max_amounts[i] *= (math.pi * (radius ** 2))
+        total_extrusion = self._extrusion_max_amounts
 
         print_statistics_decorator = PrintStatisticsDecorator()
         print_statistics_decorator.setPrintTime(time)
+        print_statistics_decorator.setMaterialAmounts(total_extrusion)
         scene_node.addDecorator(print_statistics_decorator)
 
         if not self._center_is_zero:

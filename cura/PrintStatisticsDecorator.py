@@ -5,6 +5,7 @@ class PrintStatisticsDecorator(SceneNodeDecorator):
     def __init__(self):
         super().__init__()
         self.print_time = 0
+        self.material_amounts = None
 
     def hasPrintStatistics(self):
         return True
@@ -14,3 +15,9 @@ class PrintStatisticsDecorator(SceneNodeDecorator):
 
     def setPrintTime(self, time):
         self.print_time = time
+
+    def getMaterialAmounts(self):
+        return self.material_amounts
+
+    def setMaterialAmounts(self, amounts):
+        self.material_amounts = amounts
