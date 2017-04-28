@@ -787,7 +787,10 @@ class CuraApplication(QtApplication):
             if node.callDecoration("isBlockSlicing"):
                 is_block_slicing_node = True
             if node.callDecoration("hasPrintStatistics"):
-                self.getBackend().printDurationMessage.emit(node.callDecoration("getPrintTime"), [0])
+                amounts = node.callDecoration("getMaterialAmounts")
+                if type(amounts) is not list:
+                    amounts = [0]
+                self.getBackend().printDurationMessage.emit(node.callDecoration("getPrintTime"), amounts)
 
             count += 1
             if not scene_bounding_box:
