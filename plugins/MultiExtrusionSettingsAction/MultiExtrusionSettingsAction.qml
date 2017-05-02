@@ -112,7 +112,7 @@ Cura.MachineAction
                 {
                     id: xOffsetField
                     text: extruderXOffsetProvider.properties.value
-                    validator: RegExpValidator { regExp: /[0-9\.]{0,6}/ }
+                    validator: RegExpValidator { regExp: /-?[0-9\.]{0,6}/ }
                     onEditingFinished: { extruderXOffsetProvider.setPropertyValue("value", text) }
                 }
                 Label
@@ -128,7 +128,7 @@ Cura.MachineAction
                 {
                     id: yOffsetField
                     text: extruderYOffsetProvider.properties.value
-                    validator: RegExpValidator { regExp: /[0-9\.]{0,6}/ }
+                    validator: RegExpValidator { regExp: /-?[0-9\.]{0,6}/ }
                     onEditingFinished: { extruderYOffsetProvider.setPropertyValue("value", text) }
                 }
                 Label
