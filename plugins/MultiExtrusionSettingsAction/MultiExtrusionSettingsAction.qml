@@ -113,7 +113,7 @@ Cura.MachineAction
                     id: xOffsetField
                     text: extruderXOffsetProvider.properties.value
                     validator: RegExpValidator { regExp: /-?[0-9\.]{0,6}/ }
-                    onEditingFinished: { extruderXOffsetProvider.setPropertyValue("value", text) }
+                    onEditingFinished: { extruderXOffsetProvider.setPropertyValue("value", text); manager.forceUpdate() }
                 }
                 Label
                 {
@@ -129,7 +129,7 @@ Cura.MachineAction
                     id: yOffsetField
                     text: extruderYOffsetProvider.properties.value
                     validator: RegExpValidator { regExp: /-?[0-9\.]{0,6}/ }
-                    onEditingFinished: { extruderYOffsetProvider.setPropertyValue("value", text) }
+                    onEditingFinished: { extruderYOffsetProvider.setPropertyValue("value", text); manager.forceUpdate() }
                 }
                 Label
                 {
@@ -144,7 +144,6 @@ Cura.MachineAction
                 containerStackId: Cura.ExtruderManager.extruderIds[extruderId]
                 key: "machine_nozzle_size"
                 watchedProperties: [ "value" ]
-                storeIndex: manager.containerIndex
             }
 
             UM.SettingPropertyProvider
@@ -154,7 +153,6 @@ Cura.MachineAction
                 containerStackId: Cura.ExtruderManager.extruderIds[extruderId]
                 key: "machine_nozzle_offset_x"
                 watchedProperties: [ "value" ]
-                storeIndex: manager.containerIndex
             }
 
             UM.SettingPropertyProvider
@@ -164,7 +162,6 @@ Cura.MachineAction
                 containerStackId: Cura.ExtruderManager.extruderIds[extruderId]
                 key: "machine_nozzle_offset_y"
                 watchedProperties: [ "value" ]
-                storeIndex: manager.containerIndex
             }
 
             UM.SettingPropertyProvider
@@ -174,7 +171,6 @@ Cura.MachineAction
                 containerStackId: Cura.ExtruderManager.extruderIds[extruderId]
                 key: "extruder_nr"
                 watchedProperties: [ "value" ]
-                storeIndex: manager.containerIndex
             }
         }
     }
@@ -186,6 +182,5 @@ Cura.MachineAction
         containerStackId: Cura.MachineManager.activeMachineId
         key: "machine_extruder_count"
         watchedProperties: [ "value" ]
-        storeIndex: manager.containerIndex
     }
 }

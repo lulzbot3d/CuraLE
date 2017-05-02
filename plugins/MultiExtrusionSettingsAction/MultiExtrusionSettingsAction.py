@@ -34,3 +34,7 @@ class MultiExtrusionSettingsAction(MachineAction):
             if container.getProperty("machine_extruder_count", "value") > 1:
                 Application.getInstance().getMachineActionManager().addSupportedAction(container.getId(), self.getKey())
 
+    @pyqtSlot()
+    def forceUpdate(self):
+        Application.getInstance().getBuildVolume()._onStackChanged()
+
