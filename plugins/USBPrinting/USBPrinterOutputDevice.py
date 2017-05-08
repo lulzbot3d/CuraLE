@@ -61,6 +61,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
         ## Queue for commands that need to be send. Used when command is sent when a print is active.
         self._command_queue = queue.Queue()
+        self._printer_buffer = []
 
         self._write_requested = False
         self._is_printing = False
@@ -520,24 +521,16 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._listen_thread.daemon = True
         self._serial = None
         self._serial_port = None
+        while not self._command_queue.empty():
+            self._command_queue.get()
+        self._printer_buffer.clear()
+
 
     ##  Directly send the command, withouth checking connection state (eg; printing).
     #   \param cmd string with g-code
     def _sendCommand(self, cmd):
         if self._serial is None:
             return
-
-        if cmd.startswith("M109") or cmd.startswith("M190"):
-            self._heatup_wait_start_time = time.time()
-
-            search = re.search("R(-?[0-9\.]+)", cmd)
-            if search is None:
-                search = re.search("S(-?[0-9\.]+)", cmd)
-
-            if search is not None and int(search.group(1)) == 0:
-                return
-
-            self._heatup_state = True
 
         try:
             command = (cmd + "\n").encode()
@@ -563,10 +556,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     def sendCommand(self, cmd):
         if "M108" in cmd:
             self._sendCommand(cmd)
-        if self._progress:
-            self._command_queue.put(cmd)
-        elif self._connection_state == ConnectionState.connected:
-            self._sendCommand(cmd)
+        self._command_queue.put(cmd)
 
     ##  Set the error state with a message.
     #   \param error String with the error message.
@@ -667,29 +657,44 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             elif line not in [b"", b"ok\n"]:
                 self.messageFromPrinter.emit(line.decode("utf-8").replace("\n", ""))
 
-            if self._is_printing:
-                if line == b"" and not self._heatup_state and time.time() > ok_timeout:
-                    line = b"ok"  # Force a timeout (basically, send next command)
-                elif self._heatup_state and time.time() > self._heatup_wait_start_time + 600:
-                    line = b"ok"
-                    self._heatup_state = False
+            first_cmd = self._printer_buffer[0] if len(self._printer_buffer) > 0 else ""
+            if (first_cmd.startswith("M109") or first_cmd.startswith("M190")) and time.time() > self._heatup_wait_start_time + 600:
+                line = b"ok"
+            elif line == b"" and time.time() > ok_timeout and len(self._printer_buffer) > 0:
+                line = b"ok"  # Force a timeout (basically, send next command)
 
-                if b"ok" in line:
-                    if self._heatup_state:
-                        self._heatup_state = False
-                    ok_timeout = time.time() + 5
-                    if not self._command_queue.empty():
-                        self._sendCommand(self._command_queue.get())
-                    elif self._is_paused:
-                        line = b""  # Force getting temperature as keep alive
-                    else:
-                        self._sendNextGcodeLine()
-                elif b"resend" in line.lower() or b"rs" in line:  # Because a resend can be asked with "resend" and "rs"
-                    try:
-                        self._gcode_position = int(line.replace(b"N:",b" ").replace(b"N",b" ").replace(b":",b" ").split()[-1])
-                    except:
-                        if b"rs" in line:
-                            self._gcode_position = int(line.split()[1])
+            if b"ok" in line:
+                if len(self._printer_buffer) > 0:
+                    self._printer_buffer.pop(0)
+                if self._is_paused:
+                    line = b""  # Force getting temperature as keep alive
+                elif self._is_printing:
+                    self._sendNextGcodeLine()
+            elif b"resend" in line.lower() or b"rs" in line:  # Because a resend can be asked with "resend" and "rs"
+                try:
+                    self._gcode_position = int(line.replace(b"N:",b" ").replace(b"N",b" ").replace(b":",b" ").split()[-1])
+                except:
+                    if b"rs" in line:
+                        self._gcode_position = int(line.split()[1])
+
+            while not self._command_queue.empty() and \
+                    (len(self._printer_buffer) < 3):
+                cmd = self._command_queue.get()
+                if cmd.startswith("M109") or cmd.startswith("M190"):
+                    self._heatup_wait_start_time = time.time()
+
+                    search = re.search("R(-?[0-9\.]+)", cmd)
+                    if search is None:
+                        search = re.search("S(-?[0-9\.]+)", cmd)
+
+                    if search is not None and int(search.group(1)) == 0:
+                        cmd = None
+                if cmd is not None:
+                    self._printer_buffer.append(cmd)
+                    self._sendCommand(cmd)
+                    ok_timeout = time.time() + 30
+                    if cmd.startswith("G28") or cmd.startswith("G29"):
+                        ok_timeout = time.time() + 600
 
             # Request the temperature on comm timeout (every 2 seconds) when we are not printing.)
             if line == b"":
@@ -725,7 +730,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self._setErrorState("Unexpected error: %s" %e)
         checksum = functools.reduce(lambda x,y: x^y, map(ord, "N%d%s" % (self._gcode_position, line)))
 
-        self._sendCommand("N%d%s*%d" % (self._gcode_position, line, checksum))
+        self.sendCommand("N%d%s*%d" % (self._gcode_position, line, checksum))
         self._gcode_position += 1
         self.setProgress((self._gcode_position / len(self._gcode)) * 100)
         self.progressChanged.emit()
@@ -776,7 +781,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 if ('G0' in line or 'G1' in line) and 'E' in line and e is None:
                     e = float(re.search('E(-?[0-9\.]*)', line).group(1))
                 if ('G0' in line or 'G1' in line) and 'F' in line and f is None:
-                    f = int(re.search('F(-?[0-9\.]*)', line).group(1))
+                    f = float(re.search('F(-?[0-9\.]*)', line).group(1))
                 if x is not None and y is not None and f is not None and e is not None:
                     break
             if f is None:
