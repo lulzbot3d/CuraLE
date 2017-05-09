@@ -294,6 +294,8 @@
 
         "scrollbar": [0.75, 0.5],
 
+        "scrollbar": [0.75, 0.5],
+
         "slider_groove": [0.5, 0.5],
         "slider_handle": [1.5, 1.5],
         "slider_layerview_size": [1.0, 22.0],
@@ -305,6 +307,7 @@
         "layerview_legend_size": [1.0, 1.0],
         "layerview_row": [11.0, 1.5],
         "layerview_row_spacing": [0.0, 0.5],
+        "layered_view_scrollbar": [1.0, 0],
 
         "checkbox": [2.0, 2.0],
 

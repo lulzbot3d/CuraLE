@@ -2,7 +2,7 @@
 // Cura is released under the terms of the AGPLv3 or higher.
 
 import QtQuick 2.2
-import QtQuick.Controls 1.2
+import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.1
 
@@ -12,43 +12,69 @@ import UM 1.0 as UM
 
 Item
 {
-    width: {
-        if (UM.LayerView.compatibilityMode) {
-            return UM.Theme.getSize("layerview_menu_size_compatibility").width;
-        } else {
-            return UM.Theme.getSize("layerview_menu_size").width;
-        }
-    }
-    height: {
-        var height_left = Screen.desktopAvailableHeight - 5*UM.Theme.getSize("default_margin").height - 8*UM.Theme.getSize("button").height;
-        var desired;
-
-        if (UM.LayerView.compatibilityMode) {
-            desired = UM.Theme.getSize("layerview_menu_size_compatibility").height;
-        } else {
-            desired = UM.Theme.getSize("layerview_menu_size").height + UM.LayerView.extruderCount * (UM.Theme.getSize("layerview_row").height + UM.Theme.getSize("layerview_row_spacing").height);
-        }
-
-        return ((height_left >= desired) ? desired : height_left);
-    }
-
-    ScrollView{
+     ScrollView{
         id: scrollView
-        anchors.fill: parent
-        anchors.centerIn: parent
-        anchors.margins: 0
-        verticalScrollBarPolicy: Qt.ScrollBarAsNeeded
+
+        width: {
+             if (UM.LayerView.compatibilityMode) {
+                return UM.Theme.getSize("layerview_menu_size_compatibility").width + UM.Theme.getSize("layered_view_scrollbar").width;
+            } else {
+                return UM.Theme.getSize("layerview_menu_size").width + UM.Theme.getSize("layered_view_scrollbar").width;
+            }
+        }
+
+        height: {
+            var height_left = Screen.desktopAvailableHeight - 5*UM.Theme.getSize("default_margin").height - 8*UM.Theme.getSize("button").height;
+            var desired;
+
+            if (UM.LayerView.compatibilityMode) {
+                desired = UM.Theme.getSize("layerview_menu_size_compatibility").height;
+            } else {
+                desired = UM.Theme.getSize("layerview_menu_size").height + UM.LayerView.extruderCount * (UM.Theme.getSize("layerview_row").height + UM.Theme.getSize("layerview_row_spacing").height);
+            }
+
+            return ((height_left >= desired) ? desired : height_left);
+        }
+
+        verticalScrollBarPolicy: Qt.ScrollBarAlwaysOn
+
+        style: ScrollViewStyle {
+
+            handle: Rectangle {
+                implicitWidth: UM.Theme.getSize("layered_view_scrollbar").width
+                radius: implicitWidth / 2
+                color: styleData.pressed ? UM.Theme.getColor("scrollbar_handle_down") : styleData.hovered ? UM.Theme.getColor("scrollbar_handle_hover") : UM.Theme.getColor("scrollbar_handle");
+                Behavior on color { ColorAnimation { duration: 50; } }
+            }
+            scrollBarBackground: Rectangle {
+                implicitWidth: UM.Theme.getSize("layered_view_scrollbar").width
+                color: UM.Theme.getColor("scrollbar_background");
+            }
+
+            transientScrollBars: false
+
+            decrementControl: Item {}
+
+            incrementControl: Item {}
+        }
 
          contentItem: Rectangle {
             id: layerViewMenu
             anchors.left: parent.left
             anchors.top: parent.top
-            width: scrollView.viewport.width
-            height:{
+
+            width: {
+                if (UM.LayerView.compatibilityMode) {
+                    return UM.Theme.getSize("layerview_menu_size_compatibility").width;
+                } else {
+                    return UM.Theme.getSize("layerview_menu_size").width;
+                }
+            }
+            height: {
                 if (UM.LayerView.compatibilityMode) {
                     return UM.Theme.getSize("layerview_menu_size_compatibility").height;
                 } else {
-                    return UM.Theme.getSize("layerview_menu_size").height + UM.LayerView.extruderCount * (UM.Theme.getSize("layerview_row").height + UM.Theme.getSize("layerview_row_spacing").height)
+                    return UM.Theme.getSize("layerview_menu_size").height + UM.LayerView.extruderCount * (UM.Theme.getSize("layerview_row").height + UM.Theme.getSize("layerview_row_spacing").height);
                 }
             }
 
