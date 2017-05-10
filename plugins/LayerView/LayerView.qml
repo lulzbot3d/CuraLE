@@ -24,7 +24,8 @@ Item
         }
 
         height: {
-            var height_left = Screen.desktopAvailableHeight - 5*UM.Theme.getSize("default_margin").height - 8*UM.Theme.getSize("button").height;
+            var height_left = Screen.desktopAvailableHeight*0.9 - 5*UM.Theme.getSize("default_margin").height - 8*UM.Theme.getSize("button").height;
+
             var desired;
 
             if (UM.LayerView.compatibilityMode) {
