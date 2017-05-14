@@ -667,7 +667,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 tag, value = line.split(b":", 1)
                 self._setEndstopState(tag,(b"H" in value or b"TRIGGERED" in value))
             elif line not in [b"", b"ok\n"]:
-                self.messageFromPrinter.emit(line.decode("utf-8").replace("\n", ""))
+                #self.messageFromPrinter.emit(line.decode("utf-8").replace("\n", ""))
+                self.messageFromPrinter.emit(line.decode("latin-1").replace("\n", ""))
 
             first_cmd = self._printer_buffer[0] if len(self._printer_buffer) > 0 else ""
             if (first_cmd.startswith("M109") or first_cmd.startswith("M190")) and time.time() > self._heatup_wait_start_time + 600:
