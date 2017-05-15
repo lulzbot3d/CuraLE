@@ -18,6 +18,12 @@ import math
 i18n_catalog = i18nCatalog("ModelSubdividerPlugin")
 
 
+class IntersectionType:
+    Point = 0
+    Segment = 1
+    Face = 2
+
+
 class ModelSubdividerPlugin(Extension):
     def __init__(self):
         super().__init__()
@@ -67,23 +73,62 @@ class ModelSubdividerPlugin(Extension):
         vertices = mesh_data.getVertices()
         indices = mesh_data.getIndices()
         faces = []
-        for i in range(0, len(indices), 3):
-            faces.append([vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]]])
+        for index_array in indices:
+            faces.append([vertices[index_array[0]], vertices[index_array[1]], vertices[index_array[2]]])
         intersected_faces = []
         for f in faces:
-            intersected = False
-            for i in range(3):
-                i2 = i + 1 if i < 2 else 0
-                segment = [f[i], f[i2]]
-                if self.cross(plane_face, segment):
-                    intersected = True
-                    break
-            if intersected:
-                intersected_faces.append(f)
-        print(intersected_faces)
-        return mesh,
+            intersection_type = self.check_intersection_with_triangle(plane_face, f)
+            if (intersection_type is not None and intersection_type[0] == IntersectionType.Point) \
+                    or intersection_type is None:
+                side = self.check_plane_side(plane_face, f)
+                self.add_face_to_builder(builders[side], f)
+            else:
+                intersected_faces.append([f, intersection_type])
+        for f in intersected_faces:
+            if f[1][0] == IntersectionType.Face:
+                self.add_face_to_builder(builders[0], f[0])
+                self.add_face_to_builder(builders[1], f[0])
+            elif f[1][0] == IntersectionType.Segment:
+                self.add_face_to_builder(builders[0], f[0])
+                self.add_face_to_builder(builders[1], f[0])
+        nodes = [SceneNode(), SceneNode()]
+        for n in range(len(nodes)):
+            nodes[n].setMeshData(builders[n].build())
+            nodes[n].setSelectable(True)
+            nodes[n].setScale(mesh.getScale())
+        return nodes[0], nodes[1]
 
-    def cross(self, plane_face, segment):
+    def add_face_to_builder(self, builder, face):
+        builder.addFaceByPoints(face[0][0], face[0][1], face[0][2],
+                                face[1][0], face[1][1], face[1][2],
+                                face[2][0], face[2][1], face[2][2])
+
+    def check_plane_side(self, plane_face, face):
+        n = numpy.cross(plane_face[1] - plane_face[0], plane_face[2] - plane_face[0])
+        v = plane_face[0] - face[0]
+        d = numpy.inner(n, v)
+        if d > 0:
+            return 0
+        else:
+            return 1
+
+    def check_intersection_with_triangle(self, plane_face, face):
+        intersection_points = []
+        for i in range(3):
+            i2 = i + 1 if i < 2 else 0
+            segment = [face[i], face[i2]]
+            point = self.check_intersection_with_segment(plane_face, segment)
+            if point is not None:
+                intersection_points.append(point)
+        if len(intersection_points) == 1:
+            return IntersectionType.Point, intersection_points[0]
+        elif len(intersection_points) == 2:
+            return IntersectionType.Segment, intersection_points
+        elif len(intersection_points) == 3:
+            return IntersectionType.Face, face
+        return None
+
+    def check_intersection_with_segment(self, plane_face, segment):
         epsilon = 1e-4
         n = numpy.cross(plane_face[1] - plane_face[0], plane_face[2] - plane_face[0])
         v = plane_face[0] - segment[0]
@@ -93,5 +138,5 @@ class ModelSubdividerPlugin(Extension):
         if math.fabs(e) > epsilon:
             o = segment[0] + w * d / e
             if numpy.inner(segment[0] - o, segment[1] - o) <= 0:
-                return True
-        return False
+                return o
+        return None
