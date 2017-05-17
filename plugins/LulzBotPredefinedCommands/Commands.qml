@@ -9,18 +9,20 @@ import Cura 1.0 as Cura
 Item
 {
     property var connectedPrinter: printerConnected ? Cura.MachineManager.printerOutputDevices[0] : null
-    height: childrenRect.height + 10
-    width: childrenRect.width + 10
+    //height: childrenRect.height + 10
+    //width: childrenRect.width + 10
+    width: 410
+    height: 130
     enabled: connectedPrinter
 
-    Column
-    {
-        width: 400
-        height: 120
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.topMargin: 1
-        spacing: 1
+    //Column
+    //{
+    //    width: 400
+    //    height: 120
+    //    anchors.left: parent.left
+    //    anchors.top: parent.top
+    //    anchors.topMargin: 1
+    //    spacing: 1
 
         GridLayout
         {
@@ -30,6 +32,9 @@ Item
             rowSpacing: 1
             columnSpacing: 1
             anchors.fill: parent
+            anchors.centerIn: parent
+            anchors.leftMargin: 5
+            anchors.rightMargin: 5
 
             Button
             {
@@ -230,5 +235,5 @@ Item
             style: UM.Theme.styles.print_monitor_control_button
         }
         */
-    }
+    //}
 }
