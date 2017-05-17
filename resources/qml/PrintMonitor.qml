@@ -100,13 +100,48 @@ ScrollView
 	                        anchors.top: parent.top
 	                        anchors.margins: UM.Theme.getSize("default_margin").width
 	                    }
+
+                        Label //Extruder target temperature.
+                        {
+                            id: extruderTargetTemperature
+                            text: (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.targetHotendTemperatures[index] != null) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
+                            font: UM.Theme.getFont("small")
+                            color: UM.Theme.getColor("text_inactive")
+                            anchors.right: parent.right
+                            anchors.top: parent.top
+                            anchors.margins: UM.Theme.getSize("default_margin").width
+
+                            MouseArea //For tooltip.
+                            {
+                                id: extruderTargetTemperatureTooltipArea
+                                hoverEnabled: true
+                                anchors.fill: parent
+                                onHoveredChanged:
+                                {
+                                    if (containsMouse)
+                                    {
+                                        base.showTooltip(
+                                            base,
+                                            {x: 0, y: parent.mapToItem(base, 0, -parent.height / 4).y},
+                                            catalog.i18nc("@tooltip", "The target hot end temperature of this extruder.")
+                                        );
+                                    }
+                                    else
+                                    {
+                                        base.hideTooltip();
+                                    }
+                                }
+                            }
+                        }
+
 	                    Label //Temperature indication.
 	                    {
 	                        id: extruderTemperature
 	                        text: (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.hotendTemperatures[index] != null) ? Math.round(connectedPrinter.hotendTemperatures[index]) + "°C" : ""
 	                        color: UM.Theme.getColor("text")
 	                        font: UM.Theme.getFont("large")
-	                        anchors.right: parent.right
+                            //anchors.right: parent.right
+                            anchors.right: extruderTargetTemperature.left
 	                        anchors.top: parent.top
 	                        anchors.margins: UM.Theme.getSize("default_margin").width
 
@@ -132,6 +167,7 @@ ScrollView
 	                            }
 	                        }
 	                    }
+
 	                    Rectangle //Material colour indication.
 	                    {
 	                        id: materialColor
@@ -231,7 +267,7 @@ ScrollView
 	                            }
 	                        }
 	                    }
-	                }
+                    }//delegate
 	            }
 	        }
 	    }
@@ -259,7 +295,7 @@ ScrollView
 	            anchors.top: parent.top
 	            anchors.margins: UM.Theme.getSize("default_margin").width
 	        }
-	        Label //Target temperature.
+            Label //Bed target temperature.
 	        {
 	            id: bedTargetTemperature
 	            text: connectedPrinter != null ? connectedPrinter.targetBedTemperature + "°C" : ""
