@@ -200,6 +200,7 @@ class CuraApplication(QtApplication):
             "CameraTool",
             "GCodeWriter",
             "LocalFileOutputDevice",
+            "LulzBotPredefinedCommands",
             "SolidView"
         ])
         self._physics = None
