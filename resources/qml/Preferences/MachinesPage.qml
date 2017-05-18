@@ -118,8 +118,12 @@ UM.ManagementPage
         {
             id: actionDialog
             property var content
-            minimumWidth: 350 * Screen.devicePixelRatio;
-            minimumHeight: 350 * Screen.devicePixelRatio;
+            //minimumWidth: 350 * Screen.devicePixelRatio;
+            //minimumHeight: 350 * Screen.devicePixelRatio;
+            minimumWidth: UM.Theme.getSize("modal_window_minimum").width
+            minimumHeight: UM.Theme.getSize("modal_window_minimum").height
+            width: minimumWidth
+            height: minimumHeight
             onContentChanged:
             {
                 contents = content;
