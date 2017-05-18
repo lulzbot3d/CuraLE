@@ -666,29 +666,31 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             elif b"_min" in line or b"_max" in line:
                 tag, value = line.split(b":", 1)
                 self._setEndstopState(tag,(b"H" in value or b"TRIGGERED" in value))
-            elif line not in [b"", b"ok\n"]:
+            if line not in [b"", b"ok\n"]:
                 #self.messageFromPrinter.emit(line.decode("utf-8").replace("\n", ""))
                 self.messageFromPrinter.emit(line.decode("latin-1").replace("\n", ""))
 
-            first_cmd = self._printer_buffer[0] if len(self._printer_buffer) > 0 else ""
-            if (first_cmd.startswith("M109") or first_cmd.startswith("M190")) and time.time() > self._heatup_wait_start_time + 600:
-                line = b"ok"
-            elif line == b"" and time.time() > ok_timeout and len(self._printer_buffer) > 0:
-                line = b"ok"  # Force a timeout (basically, send next command)
+            # first_cmd = self._printer_buffer[0] if len(self._printer_buffer) > 0 else ""
+            # if (first_cmd.startswith("M109") or first_cmd.startswith("M190")) and time.time() > self._heatup_wait_start_time + 600:
+            #     line = b"ok"
+            # elif line == b"" and time.time() > ok_timeout and len(self._printer_buffer) > 0:
+            #     line = b"ok"  # Force a timeout (basically, send next command)
 
             if b"ok" in line:
                 if len(self._printer_buffer) > 0:
                     self._printer_buffer.pop(0)
-                if self._is_paused:
-                    line = b""  # Force getting temperature as keep alive
-                elif self._is_printing:
-                    self._sendNextGcodeLine()
+
             elif b"resend" in line.lower() or b"rs" in line:  # Because a resend can be asked with "resend" and "rs"
                 try:
                     self._gcode_position = int(line.replace(b"N:",b" ").replace(b"N",b" ").replace(b":",b" ").split()[-1])
                 except:
                     if b"rs" in line:
                         self._gcode_position = int(line.split()[1])
+
+            if self._is_paused:
+                line = b""  # Force getting temperature as keep alive
+            elif self._is_printing and self._command_queue.empty():
+                self._sendNextGcodeLine()
 
             while not self._command_queue.empty() and \
                     (len(self._printer_buffer) < 3):
@@ -705,9 +707,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 if cmd is not None:
                     self._printer_buffer.append(cmd)
                     self._sendCommand(cmd)
-                    ok_timeout = time.time() + 30
-                    if cmd.startswith("G28") or cmd.startswith("G29"):
-                        ok_timeout = time.time() + 600
+                    # ok_timeout = time.time() + 30
+                    # if cmd.startswith("G28") or cmd.startswith("G29"):
+                    #     ok_timeout = time.time() + 600
+
+
 
             # Request the temperature on comm timeout (every 2 seconds) when we are not printing.)
             if line == b"":
