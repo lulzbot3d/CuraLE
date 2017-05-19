@@ -679,6 +679,10 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             if b"ok" in line:
                 if len(self._printer_buffer) > 0:
                     self._printer_buffer.pop(0)
+                if self._is_paused:
+                    line = b""  # Force getting temperature as keep alive
+                elif self._is_printing:
+                    self._sendNextGcodeLine()
 
             elif b"resend" in line.lower() or b"rs" in line:  # Because a resend can be asked with "resend" and "rs"
                 try:
@@ -686,11 +690,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 except:
                     if b"rs" in line:
                         self._gcode_position = int(line.split()[1])
-
-            if self._is_paused:
-                line = b""  # Force getting temperature as keep alive
-            elif self._is_printing and self._command_queue.empty():
-                self._sendNextGcodeLine()
 
             while not self._command_queue.empty() and \
                     (len(self._printer_buffer) < 3):
