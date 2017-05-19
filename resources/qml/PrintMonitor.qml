@@ -1541,7 +1541,8 @@ ScrollView
 
 	                        onCurrentIndexChanged:
 	                        {
-	                            connectedPrinter.setHotend(currentIndex)
+                                if( connectedPrinter != null )
+                                    connectedPrinter.setHotend(currentIndex)
 	                        }
 	                    }
 	                }
