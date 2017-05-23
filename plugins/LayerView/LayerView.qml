@@ -29,7 +29,10 @@ Item
 
     MouseArea {
         id: dragArea
-        anchors.fill: parent
+        anchors.left: parent.left
+        anchors.top: parent.top
+        width: parent.width
+        height: 40
         drag.axis: Drag.XAndYAxis
 
         onPressed: {
