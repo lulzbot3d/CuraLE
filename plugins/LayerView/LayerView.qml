@@ -10,6 +10,8 @@ import UM 1.0 as UM
 
 Item
 {
+    id: topLayerView
+
     width: {
         if (UM.LayerView.compatibilityMode) {
             return UM.Theme.getSize("layerview_menu_size_compatibility").width;
@@ -22,6 +24,21 @@ Item
             return UM.Theme.getSize("layerview_menu_size_compatibility").height;
         } else {
             return UM.Theme.getSize("layerview_menu_size").height + UM.LayerView.extruderCount * (UM.Theme.getSize("layerview_row").height + UM.Theme.getSize("layerview_row_spacing").height)
+        }
+    }
+
+    MouseArea {
+        id: dragArea
+        anchors.fill: parent
+        drag.axis: Drag.XAndYAxis
+
+        onPressed: {
+            layerViewMenu.opacity = 0.5
+            dragArea.drag.target = topLayerView
+        }
+
+        onReleased: {
+            layerViewMenu.opacity = 1.0
         }
     }
 
