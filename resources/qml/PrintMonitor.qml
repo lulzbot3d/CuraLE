@@ -397,7 +397,7 @@ ScrollView
 	            }
 	            Label //Maximum temperature indication.
 	            {
-	                text: (bedTemperature.properties.maximum_value != "None" ? bedTemperature.properties.maximum_value : "") + "°C"
+                    text: (bedTemperature.properties.maximum_value != "None" ? bedTemperature.properties.maximum_value : "") + "°C"
 	                color: UM.Theme.getColor("setting_unit")
 	                font: UM.Theme.getFont("default")
 	                anchors.right: parent.right
@@ -448,11 +448,13 @@ ScrollView
 	                        // We have a resolve function. Indicates that the setting is not settable per extruder and that
 	                        // we have to choose between the resolved value (default) and the global value
 	                        // (if user has explicitly set this).
-	                        text = bedTemperature.resolve;
+                            //text = bedTemperature.resolve;
+                            text = "";
 	                    }
 	                    else
-	                    {
-	                        text = bedTemperature.properties.value;
+                        {
+                            //text = bedTemperature.properties.value;
+                            text = "";
 	                    }
 	                }
 	            }
