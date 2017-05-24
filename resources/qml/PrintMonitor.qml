@@ -104,7 +104,7 @@ ScrollView
                         Label //Extruder target temperature.
                         {
                             id: extruderTargetTemperature
-                            text: (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.targetHotendTemperatures[index] != null) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
+                            text: (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
                             font: UM.Theme.getFont("small")
                             color: UM.Theme.getColor("text_inactive")
                             anchors.right: parent.right
@@ -137,7 +137,7 @@ ScrollView
 	                    Label //Temperature indication.
 	                    {
 	                        id: extruderTemperature
-	                        text: (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.hotendTemperatures[index] != null) ? Math.round(connectedPrinter.hotendTemperatures[index]) + "°C" : ""
+                            text: (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.hotendTemperatures[index] != null && connectedPrinter.hotendTemperatures[index] != 0) ? Math.round(connectedPrinter.hotendTemperatures[index]) + "°C" : ""
 	                        color: UM.Theme.getColor("text")
 	                        font: UM.Theme.getFont("large")
                             //anchors.right: parent.right
@@ -298,7 +298,7 @@ ScrollView
             Label //Bed target temperature.
 	        {
 	            id: bedTargetTemperature
-	            text: connectedPrinter != null ? connectedPrinter.targetBedTemperature + "°C" : ""
+                text: (connectedPrinter != null && connectedPrinter.targetBedTemperature != 0) ? connectedPrinter.targetBedTemperature + "°C" : ""
 	            font: UM.Theme.getFont("small")
 	            color: UM.Theme.getColor("text_inactive")
 	            anchors.right: parent.right
@@ -327,7 +327,7 @@ ScrollView
 	                }
 	            }
 	        }
-	        Label //Current temperature.
+            Label //Current bed temperature.
 	        {
 	            id: bedCurrentTemperature
 	            text: connectedPrinter != null ? connectedPrinter.bedTemperature + "°C" : ""
@@ -1721,12 +1721,12 @@ ScrollView
 
 	                    TextField
 	                    {
-	                        text: "0"
+                            text: "1"
 	                        id: temperatureTextField
 	                        width: parent.width / 2
 	                        validator: IntValidator
 	                        {
-	                            bottom: 0
+                                bottom: 1
 	                            top: 300
 	                        }
 	                    }
