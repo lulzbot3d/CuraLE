@@ -20,7 +20,7 @@ from UM.i18n import i18nCatalog
 catalog = i18nCatalog("cura")
 
 class USBPrinterOutputDevice(PrinterOutputDevice):
-    SERIAL_AUTODETECT_PORT = 'Autodetect'
+    SERIAL_AUTODETECT_PORT = "Autodetect"
 
     def __init__(self, serial_port):
         super().__init__(serial_port)
@@ -189,6 +189,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     ##  Start a print based on a g-code.
     #   \param gcode_list List with gcode (strings).
     def printGCode(self, gcode_list):
+        Logger.log("d", "Started printing g-code")
         if self._progress or self._connection_state != ConnectionState.connected:
             self._error_message = Message(catalog.i18nc("@info:status", "Unable to start a new job because the printer is busy or not connected."))
             self._error_message.show()
@@ -237,6 +238,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     ##  Private function (threaded) that actually uploads the firmware.
     def _updateFirmware(self):
+        Logger.log("d", "Attempting to update firmware")
         self._error_code = 0
         self.setProgress(0, 100)
         self._firmware_update_finished = False
@@ -256,6 +258,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         try:
             programmer.connect(self._serial_port)
         except Exception:
+            programmer.close()
             pass
 
         # Give programmer some time to connect. Might need more in some cases, but this worked in all tested cases.
@@ -400,8 +403,10 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             programmer.connect(self._serial_port) # Connect with the serial, if this succeeds, it's an arduino based usb device.
             self._serial = programmer.leaveISP()
         except ispBase.IspError as e:
+            programmer.close()
             Logger.log("i", "Could not establish connection on %s: %s. Device is not arduino based." %(self._serial_port,str(e)))
         except Exception as e:
+            programmer.close()
             Logger.log("i", "Could not establish connection on %s, unknown reasons.  Device is not arduino based." % self._serial_port)
 
         baud_rate = Application.getInstance().getGlobalContainerStack().getProperty("machine_baudrate", "value")
@@ -584,7 +589,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     #   This is ignored.
     #   \param filter_by_machine Whether to filter MIME types by machine. This
     #   is ignored.
-    def requestWrite(self, nodes, file_name = None, filter_by_machine = False, file_handler = None):
+    #   \param kwargs Keyword arguments.
+    def requestWrite(self, nodes, file_name = None, filter_by_machine = False, file_handler = None, **kwargs):
         container_stack = Application.getInstance().getGlobalContainerStack()
         if container_stack.getProperty("machine_gcode_flavor", "value") == "UltiGCode":
             self._error_message = Message(catalog.i18nc("@info:status", "This printer does not support USB printing because it uses UltiGCode flavor."))
@@ -710,7 +716,30 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                     # if cmd.startswith("G28") or cmd.startswith("G29"):
                     #     ok_timeout = time.time() + 600
 
+            if self._is_printing:
+                if line == b"" and not self._heatup_state and time.time() > ok_timeout:
+                    line = b"ok"  # Force a timeout (basically, send next command)
+                elif self._heatup_state and time.time() > self._heatup_wait_start_time + 600:
+                    line = b"ok"
+                    self._heatup_state = False
 
+                if b"ok" in line:
+                    if self._heatup_state:
+                        self._heatup_state = False
+                    ok_timeout = time.time() + 5
+                    if not self._command_queue.empty():
+                        self._sendCommand(self._command_queue.get())
+                    elif self._is_paused:
+                        line = b""  # Force getting temperature as keep alive
+                    else:
+                        self._sendNextGcodeLine()
+                elif b"resend" in line.lower() or b"rs" in line:  # Because a resend can be asked with "resend" and "rs"
+                    try:
+                        Logger.log("d", "Got a resend response")
+                        self._gcode_position = int(line.replace(b"N:",b" ").replace(b"N",b" ").replace(b":",b" ").split()[-1])
+                    except:
+                        if b"rs" in line:
+                            self._gcode_position = int(line.split()[1])
 
             # Request the temperature on comm timeout (every 2 seconds) when we are not printing.)
             if line == b"":
@@ -733,6 +762,13 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         if ";" in line:
             line = line[:line.find(";")]
         line = line.strip()
+
+        # Don't send empty lines. But we do have to send something, so send
+        # m105 instead.
+        # Don't send the M0 or M1 to the machine, as M0 and M1 are handled as
+        # an LCD menu pause.
+        if line == "" or line == "M0" or line == "M1":
+            line = "M105"
         try:
             if line == "M0" or line == "M1":
                 self._setJobState("pause")
@@ -742,7 +778,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 if self._current_z != z:
                     self._current_z = z
         except Exception as e:
-            Logger.log("e", "Unexpected error with printer connection: %s" % e)
+            Logger.log("e", "Unexpected error with printer connection, could not parse current Z: %s: %s" % (e, line))
             self._setErrorState("Unexpected error: %s" %e)
         checksum = functools.reduce(lambda x,y: x^y, map(ord, "N%d%s" % (self._gcode_position, line)))
 
