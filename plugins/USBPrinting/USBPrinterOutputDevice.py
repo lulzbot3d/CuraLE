@@ -20,6 +20,8 @@ from UM.i18n import i18nCatalog
 catalog = i18nCatalog("cura")
 
 class USBPrinterOutputDevice(PrinterOutputDevice):
+    SERIAL_AUTODETECT_PORT = "Autodetect"
+
     def __init__(self, serial_port):
         super().__init__(serial_port)
         self.setName(catalog.i18nc("@item:inmenu", "USB printing"))

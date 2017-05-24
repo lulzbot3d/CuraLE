@@ -305,21 +305,6 @@ Item
 
     Action
     {
-        id: arrangeAllAction;
-        text: catalog.i18nc("@action:inmenu menubar:edit","Arrange All Models");
-        onTriggered: Printer.arrangeAll();
-        shortcut: "Ctrl+R";
-    }
-
-    Action
-    {
-        id: arrangeSelectionAction;
-        text: catalog.i18nc("@action:inmenu menubar:edit","Arrange Selection");
-        onTriggered: Printer.arrangeSelection();
-    }
-
-    Action
-    {
         id: resetAllTranslationAction;
         text: catalog.i18nc("@action:inmenu menubar:edit","Reset All Model Positions");
         onTriggered: CuraApplication.resetAllTranslation();

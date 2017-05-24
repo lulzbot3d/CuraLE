@@ -1,12 +1,8 @@
 from UM.Scene.Iterator.DepthFirstIterator import DepthFirstIterator
 from UM.Logger import Logger
-<<<<<<< HEAD
-from cura.ShapeArray import ShapeArray
-=======
 from UM.Math.Vector import Vector
 from cura.ShapeArray import ShapeArray
 from cura import ZOffsetDecorator
->>>>>>> um/2.6
 
 from collections import namedtuple
 

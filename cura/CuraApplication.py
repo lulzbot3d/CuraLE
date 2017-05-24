@@ -222,7 +222,6 @@ class CuraApplication(QtApplication):
             "CameraTool",
             "GCodeWriter",
             "LocalFileOutputDevice",
-            "LulzBotPredefinedCommands",
             "SolidView",
             "TranslateTool",
             "FileLogger",
