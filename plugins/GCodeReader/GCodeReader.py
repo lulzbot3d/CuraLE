@@ -2,6 +2,7 @@
 # Cura is released under the terms of the AGPLv3 or higher.
 
 from UM.Application import Application
+from UM.Backend import Backend
 from UM.Job import Job
 from UM.Logger import Logger
 from UM.Math.AxisAlignedBox import AxisAlignedBox
@@ -40,7 +41,6 @@ class GCodeReader(MeshReader):
         self._extruder_number = 0
         self._total_move_length = 0
         self._extrusion_retraction_length = 0
-
         self._clearValues()
         self._scene_node = None
         self._position = namedtuple('Position', ['x', 'y', 'z', 'e'])
@@ -168,6 +168,10 @@ class GCodeReader(MeshReader):
             path.append([x, y, z, LayerPolygon.MoveCombingType])
         return self._position(x, y, z, e)
 
+    # G0 and G1 should be handled exactly the same.
+    _gCode1 = _gCode0
+
+    ##  Home the head.
     def _gCode28(self, position, params, path):
         return self._position(
             params.x if params.x is not None else position.x,
@@ -175,6 +179,8 @@ class GCodeReader(MeshReader):
             0,
             position.e)
 
+    ##  Reset the current position to the values specified.
+    #   For example: G92 X10 will set the X to 10 without any physical motion.
     def _gCode92(self, position, params, path):
         if params.e is not None:
             self._extrusion_saved_value[self._extruder_number] += position.e[self._extruder_number]
@@ -185,14 +191,13 @@ class GCodeReader(MeshReader):
             params.z if params.z is not None else position.z,
             position.e)
 
-    _gCode1 = _gCode0
-
     def _processGCode(self, G, line, position, path):
         func = getattr(self, "_gCode%s" % G, None)
         x = self._getFloat(line, "X")
         y = self._getFloat(line, "Y")
         z = self._getFloat(line, "Z")
         e = self._getFloat(line, "E")
+        line = line.split(";", 1)[0]  # Remove comments (if any)
         if func is not None:
             if (x is not None and x < 0) or (y is not None and y < 0):
                 self._center_is_zero = True
@@ -274,6 +279,7 @@ class GCodeReader(MeshReader):
                     Job.yieldThread()
                 if len(line) == 0:
                     continue
+
                 if line.find(self._type_keyword) == 0:
                     type = line[len(self._type_keyword):].strip()
                     if type == "WALL-INNER":
@@ -288,6 +294,8 @@ class GCodeReader(MeshReader):
                         self._layer_type = LayerPolygon.SupportType
                     elif type == "FILL":
                         self._layer_type = LayerPolygon.InfillType
+                    else:
+                        Logger.log("w", "Encountered a unknown type (%s) while parsing g-code.", type)
 
                 if self._is_layers_in_file and line[:len(self._layer_keyword)] == self._layer_keyword:
                     try:
@@ -314,7 +322,6 @@ class GCodeReader(MeshReader):
                     if current_position.z > last_z and abs(current_position.z - last_z) < 2:
                         if self._createPolygon(self._current_layer_thickness, current_path, self._extruder_offsets.get(self._extruder_number, [0, 0])):
                             current_path.clear()
-
                             if not self._is_layers_in_file:
                                 self._layer_number += 1
 
@@ -345,6 +352,8 @@ class GCodeReader(MeshReader):
         gcode_list_decorator = GCodeListDecorator()
         gcode_list_decorator.setGCodeList(gcode_list)
         scene_node.addDecorator(gcode_list_decorator)
+
+        Application.getInstance().getController().getScene().gcode_list = gcode_list
 
         Logger.log("d", "Finished parsing %s" % file_name)
         self._message.hide()
@@ -379,5 +388,9 @@ class GCodeReader(MeshReader):
                 "@info:generic",
                 "Make sure the g-code is suitable for your printer and printer configuration before sending the file to it. The g-code representation may not be accurate."), lifetime=0)
             caution_message.show()
+
+        # The "save/print" button's state is bound to the backend state.
+        backend = Application.getInstance().getBackend()
+        backend.backendStateChange.emit(Backend.BackendState.Disabled)
 
         return scene_node
