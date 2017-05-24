@@ -219,6 +219,7 @@ UM.PreferencesPage
 
                         Component.onCompleted: {
                             append({ text: catalog.i18nc("@item:inlistbox", "Ultimaker"), code: "cura" })
+                            append({ text: catalog.i18nc("@item:inlistbox", "LulzBot"), code: "lulzbot" })
                         }
                     }
 
@@ -261,75 +262,6 @@ UM.PreferencesPage
 
                 //: Language change warning
                 text: catalog.i18nc("@label", "You will need to restart the application for these changes to have effect.")
-                wrapMode: Text.WordWrap
-                font.italic: true
-            }
-
-            Item
-            {
-                //: Spacer
-                height: UM.Theme.getSize("default_margin").height
-                width: UM.Theme.getSize("default_margin").width
-            }
-
-            Row
-            {
-                spacing: UM.Theme.getSize("default_margin").width
-                Label
-                {
-                    id: themeLabel
-                    text: catalog.i18nc("@label","Theme:")
-                    anchors.verticalCenter: themeComboBox.verticalCenter
-                }
-
-                ComboBox
-                {
-                    id: themeComboBox
-                    model: ListModel
-                    {
-                        id: themeList
-
-                        Component.onCompleted: {
-                            append({ text: catalog.i18nc("@item:inlistbox", "Ultimaker"), code: "cura" })
-                            append({ text: catalog.i18nc("@item:inlistbox", "LulzBot"), code: "lulzbot" })
-                        }
-                    }
-
-                    currentIndex:
-                    {
-                        var code = UM.Preferences.getValue("general/theme");
-                        for(var i = 0; i < themeList.count; ++i)
-                        {
-                            if(model.get(i).code == code)
-                            {
-                                return i
-                            }
-                        }
-                    }
-                    onActivated: UM.Preferences.setValue("general/theme", model.get(index).code)
-
-                    Component.onCompleted:
-                    {
-                        // Because ListModel is stupid and does not allow using qsTr() for values.
-                        for(var i = 0; i < themeList.count; ++i)
-                        {
-                            themeList.setProperty(i, "text", catalog.i18n(themeList.get(i).text));
-                        }
-
-                        // Glorious hack time. ComboBox does not update the text properly after changing the
-                        // model. So change the indices around to force it to update.
-                        currentIndex += 1;
-                        currentIndex -= 1;
-                    }
-                }
-            }
-
-            Label
-            {
-                id: themeCaption
-
-                //: Theme change warning
-                text: catalog.i18nc("@label", "You will need to restart the application for theme changes to have effect.")
                 wrapMode: Text.WordWrap
                 font.italic: true
             }
@@ -699,7 +631,7 @@ UM.PreferencesPage
                 {
                     id: sendDataCheckbox
                     text: catalog.i18nc("@option:check","Send (anonymous) print information")
-                    checked: boolCheck(UM.Preferences.getValue("info/send_slice_info"))
+                    checked: visible ? boolCheck(UM.Preferences.getValue("info/send_slice_info")) : false
                     onCheckedChanged: UM.Preferences.setValue("info/send_slice_info", checked)
                 }
             }
