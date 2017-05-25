@@ -375,7 +375,6 @@ class CuraApplication(QtApplication):
         self.applicationShuttingDown.connect(self.saveSettings)
         self.engineCreatedSignal.connect(self._onEngineCreated)
 
-        self._recent_files.append(QUrl.fromLocalFile(f))
         self._exit_allowed = False
         self._original_sigint = signal.getsignal(signal.SIGINT)
         signal.signal(signal.SIGINT, self.consoleExit)
