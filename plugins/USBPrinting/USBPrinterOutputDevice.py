@@ -691,11 +691,17 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                     self._sendNextGcodeLine()
 
             elif b"resend" in line.lower() or b"rs" in line:  # Because a resend can be asked with "resend" and "rs"
+                self._printer_buffer.clear()
+                while not self._command_queue.empty():
+                    self._command_queue.get()
                 try:
                     self._gcode_position = int(line.replace(b"N:",b" ").replace(b"N",b" ").replace(b":",b" ").split()[-1])
                 except:
                     if b"rs" in line:
                         self._gcode_position = int(line.split()[1])
+                if self._is_printing:
+                    for i in range(3):
+                        self._sendNextGcodeLine()
 
             while not self._command_queue.empty() and \
                     (len(self._printer_buffer) < 3):
@@ -715,32 +721,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                     # ok_timeout = time.time() + 30
                     # if cmd.startswith("G28") or cmd.startswith("G29"):
                     #     ok_timeout = time.time() + 600
-
-            if self._is_printing:
-                if line == b"" and not self._heatup_state and time.time() > ok_timeout:
-                    line = b"ok"  # Force a timeout (basically, send next command)
-                elif self._heatup_state and time.time() > self._heatup_wait_start_time + 600:
-                    line = b"ok"
-                    self._heatup_state = False
-
-                if b"ok" in line:
-                    if self._heatup_state:
-                        self._heatup_state = False
-                    ok_timeout = time.time() + 5
-                    if not self._command_queue.empty():
-                        self._sendCommand(self._command_queue.get())
-                    elif self._is_paused:
-                        line = b""  # Force getting temperature as keep alive
-                    else:
-                        self._sendNextGcodeLine()
-                elif b"resend" in line.lower() or b"rs" in line:  # Because a resend can be asked with "resend" and "rs"
-                    try:
-                        Logger.log("d", "Got a resend response")
-                        self._gcode_position = int(line.replace(b"N:",b" ").replace(b"N",b" ").replace(b":",b" ").split()[-1])
-                    except:
-                        if b"rs" in line:
-                            self._gcode_position = int(line.split()[1])
-
             # Request the temperature on comm timeout (every 2 seconds) when we are not printing.)
             if line == b"":
                 if self._num_extruders > 1:
