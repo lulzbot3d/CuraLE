@@ -13,6 +13,12 @@ Item
 {
     id: topLayerView
 
+    x: {
+        return UM.Theme.getSize("layerview_menu_origin").width;
+    }
+    y: {
+        return UM.Theme.getSize("layerview_menu_origin").height;
+    }
     width: {
         if (UM.LayerView.compatibilityMode) {
             return UM.Theme.getSize("layerview_menu_size_compatibility").width;
@@ -32,8 +38,8 @@ Item
         id: dragArea
         anchors.left: parent.left
         anchors.top: parent.top
-        width: parent.width
-        height: 40
+        width: parent.width - 50
+        height: 50
         drag.axis: Drag.XAndYAxis
 
         onPressed: {
