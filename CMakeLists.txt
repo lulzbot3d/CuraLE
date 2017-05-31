@@ -14,6 +14,8 @@ include(CuraTests)
 
 option(CURA_DEBUGMODE "Enable debug dialog and other debug features" OFF)
 
+set(DEB_PACKAGE_TARGET_PLATFORM "default" STRING CACHE "Target OS Platform")
+
 if (NOT MINIMUM_PYTHON_VERSION)
     set(MINIMUM_PYTHON_VERSION 3.5.0)
 endif()
@@ -48,10 +50,21 @@ install(DIRECTORY resources
 install(DIRECTORY plugins
         DESTINATION lib/cura)
 if(NOT APPLE AND NOT WIN32)
-    install(FILES cura_app.py
-            DESTINATION ${CMAKE_INSTALL_BINDIR}
-            PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+    if(DEB_PACKAGE_TARGET_PLATFORM STREQUAL "ubuntu-xenial")
+      install(FILES cura_app.py
+              DESTINATION ${CMAKE_INSTALL_BINDIR}
+              PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+      install(FILES run_cura2.py
+              DESTINATION ${CMAKE_INSTALL_BINDIR}
+              PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
             RENAME cura2)
+    else()
+      install(FILES cura_app.py
+              DESTINATION ${CMAKE_INSTALL_BINDIR}
+              PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+              RENAME cura2)
+    endif()
+
     install(DIRECTORY cura
             DESTINATION lib/python${PYTHON_VERSION_MAJOR}/dist-packages
             FILES_MATCHING PATTERN *.py)
