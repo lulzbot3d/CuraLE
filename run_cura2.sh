@@ -13,7 +13,7 @@ export PYTHONPATH=/opt/cura2/python3.5/site-packages
 
 # Protobuf Custom location
 if [ -z "$CURA2_LIBS" ]; then
-  CURA2_LIBS="/opt/cura2/lib/lib"
+  CURA2_LIBS="/opt/cura2/lib"
 fi
 if [ ! -z "$CURA2_LIBS" ]; then
   export LD_LIBRARY_PATH="$CURA2_LIBS:$LD_LIBRARY_PATH"
