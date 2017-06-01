@@ -302,6 +302,8 @@ class CuraApplication(QtApplication):
 
         Preferences.getInstance().addPreference("view/invert_zoom", False)
 
+        Preferences.getInstance().addPreference("cura/recent_files", "")
+
         for key in [
             "dialog_load_path",  # dialog_save_path is in LocalFileOutputDevicePlugin
             "dialog_profile_path",
