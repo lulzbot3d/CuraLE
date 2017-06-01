@@ -88,6 +88,7 @@ import urllib.parse
 import os
 import argparse
 import json
+import signal
 
 numpy.seterr(all="ignore")
 
@@ -187,7 +188,8 @@ class CuraApplication(QtApplication):
 
         self._currently_loading_files = []
         self._non_sliceable_extensions = []
-
+        self._print_monitor_additional_sections = []
+        Logger.log("d", "QtApplication Install Prefix : \"" + str(QtApplication.getInstallPrefix()) + "\"")
         try:
              self._components_version = json.load(open("version.json", "r"))
         except:
@@ -197,7 +199,7 @@ class CuraApplication(QtApplication):
              except:
                   try:
                        self._components_version = json.load(open(
-                            os.path.join(QtApplication.getInstallPrefix(), "share", "cura","version.json"), "r"))
+                            os.path.join(QtApplication.getInstallPrefix(), "cura2","version.json"), "r"))
                   except:
                        self._components_version = {"cura_version": "master"}
 
@@ -211,6 +213,7 @@ class CuraApplication(QtApplication):
 
         super().__init__(name = "cura2_lulzbot", version = self.getComponentVersion("cura_version"), buildtype = CuraBuildType)
 
+        Logger.log("d", "Trying to Set icon : \"" + str(Resources.getPath(Resources.Images, "cura-icon.png"))  + "\"")
         self.setWindowIcon(QIcon(Resources.getPath(Resources.Images, "cura-icon.png")))
 
         self.setRequiredPlugins([
@@ -314,6 +317,7 @@ class CuraApplication(QtApplication):
             machine_settings
             resolution
                 layer_height
+                machine_nozzle_size_for_extruder
             shell
                 wall_thickness
                 top_bottom_thickness
@@ -371,6 +375,17 @@ class CuraApplication(QtApplication):
         self.applicationShuttingDown.connect(self.saveSettings)
         self.engineCreatedSignal.connect(self._onEngineCreated)
 
+        self._recent_files = []
+        files = Preferences.getInstance().getValue("cura/recent_files").split(";")
+        for f in files:
+            if not os.path.isfile(f):
+                continue
+
+            self._recent_files.append(QUrl.fromLocalFile(f))
+
+        self._exit_allowed = False
+        self._original_sigint = signal.getsignal(signal.SIGINT)
+        signal.signal(signal.SIGINT, self.consoleExit)
         self.globalContainerStackChanged.connect(self._onGlobalContainerChanged)
         self._onGlobalContainerChanged()
 
@@ -421,6 +436,16 @@ class CuraApplication(QtApplication):
             self._message_box_callback_arguments = []
 
     showPrintMonitor = pyqtSignal(bool, arguments = ["show"])
+
+    def registerPrintMonitorAdditionalCategory(self, name, path):
+        self._print_monitor_additional_sections.append({"name": name, "path": path})
+        self.printMonitorAdditionalSectionsChanged.emit()
+
+    printMonitorAdditionalSectionsChanged = pyqtSignal()
+
+    @pyqtProperty("QVariantList", notify=printMonitorAdditionalSectionsChanged)
+    def printMonitorAdditionalSections(self):
+        return self._print_monitor_additional_sections
 
     ##  Cura has multiple locations where instance containers need to be saved, so we need to handle this differently.
     #
@@ -512,7 +537,10 @@ class CuraApplication(QtApplication):
         self._plugin_registry.addType("profile_reader", self._addProfileReader)
         self._plugin_registry.addType("profile_writer", self._addProfileWriter)
         self._plugin_registry.addPluginLocation(os.path.join(QtApplication.getInstallPrefix(), "lib", "cura"))
-        if not hasattr(sys, "frozen"):
+        if hasattr(sys, "frozen"):
+            # This what works for MacOS currently
+            self._plugin_registry.addPluginLocation(os.path.join(QtApplication.getInstallPrefix(), "Resources", "cura", "plugins"))
+        else:
             self._plugin_registry.addPluginLocation(os.path.join(os.path.abspath(os.path.dirname(__file__)), "..", "plugins"))
 
         self._plugin_registry.loadPlugins()
@@ -664,7 +692,7 @@ class CuraApplication(QtApplication):
         self.showSplashMessage(self._i18n_catalog.i18nc("@info:progress", "Loading interface..."))
 
         # Initialise extruder so as to listen to global container stack changes before the first global container stack is set.
-        ExtruderManager.getInstance()
+        qmlRegisterSingletonType(ExtruderManager, "Cura", 1, 0, "ExtruderManager", self.getExtruderManager)
         qmlRegisterSingletonType(MachineManager, "Cura", 1, 0, "MachineManager", self.getMachineManager)
         qmlRegisterSingletonType(SettingInheritanceManager, "Cura", 1, 0, "SettingInheritanceManager",
                          self.getSettingInheritanceManager)
@@ -686,10 +714,41 @@ class CuraApplication(QtApplication):
 
             self.exec_()
 
+    def isExitAllowed(self):
+        is_printing = len(self.getMachineManager().printerOutputDevices) > 0 and\
+                      self.getMachineManager().printerOutputDevices[0].acceptsCommands and\
+                      self.getMachineManager().printerOutputDevices[0].jobState in ["paused", "printing", "pre_print"]
+        if not is_printing:
+            return True
+        if self._exit_allowed:
+            return True
+        self.exitRequested.emit()
+        return False
+
+    def consoleExit(self, signum, frame):
+        signal.signal(signal.SIGINT, self._original_sigint)
+
+        if self.isExitAllowed():
+            self.windowClosed()
+
+        signal.signal(signal.SIGINT, self.consoleExit)
+
+    exitRequested = pyqtSignal()
+
+    def setExitAllowed(self, allowed):
+        self._exit_allowed = allowed
+
+    @pyqtProperty(bool, fset=setExitAllowed)
+    def exitAllowed(self):
+        return self._exit_allowed
+
     def getMachineManager(self, *args):
         if self._machine_manager is None:
             self._machine_manager = MachineManager.createMachineManager()
         return self._machine_manager
+
+    def getExtruderManager(self, *args):
+        return ExtruderManager.getInstance()
 
     def getSettingInheritanceManager(self, *args):
         if self._setting_inheritance_manager is None:
