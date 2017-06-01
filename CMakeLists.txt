@@ -14,7 +14,7 @@ include(CuraTests)
 
 option(CURA_DEBUGMODE "Enable debug dialog and other debug features" OFF)
 
-set(DEB_PACKAGE_TARGET_PLATFORM "default" STRING CACHE "Target OS Platform")
+set(DEB_PACKAGE_TARGET_PLATFORM "default" CACHE STRING "Target OS Platform")
 
 if (NOT MINIMUM_PYTHON_VERSION)
     set(MINIMUM_PYTHON_VERSION 3.5.0)
@@ -54,7 +54,7 @@ if(NOT APPLE AND NOT WIN32)
       install(FILES cura_app.py
               DESTINATION ${CMAKE_INSTALL_BINDIR}
               PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
-      install(FILES run_cura2.py
+      install(FILES run_cura2.sh
               DESTINATION ${CMAKE_INSTALL_BINDIR}
               PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
             RENAME cura2)
