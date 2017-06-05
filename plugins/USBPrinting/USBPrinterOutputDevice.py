@@ -889,16 +889,20 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     ##  Cancel the current print. Printer connection wil continue to listen.
     def cancelPrint(self):
+        self._printingStopped()
         self._gcode_position = 0
         self.setProgress(0)
         self._gcode = []
+
+        while not self._command_queue.empty():
+            self._command_queue.get()
+        self._printer_buffer.clear()
 
         # Turn off temperatures, fan and steppers
         self._sendCommand("M140 S0")
         self._sendCommand("M104 S0")
         self._sendCommand("M107")
         self._sendCommand("M84")
-        self._printingStopped()
         Application.getInstance().showPrintMonitor.emit(False)
 
     ##  Check if the process did not encounter an error yet.
