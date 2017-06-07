@@ -193,11 +193,11 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_taz5_dual_v2": "TAZ4-5-Dual-LBHexagon-1.0.0.1.hex",
             "lulzbot_taz5_flexy_dually_v2": "TAZ4-5-FlexyDually-LBHexagon-1.0.0.1.hex",
 
-            "lulzbot_taz6": "TAZ6_Single_Extruder_v1.0.2.21.hex",
-            "lulzbot_taz6_flexy_v2": "TAZ6_Flexystruder_v1.0.2.21.hex",
-            "lulzbot_taz6_moarstruder": "TAZ6_Moarstruder_v1.0.2.21.hex",
-            "lulzbot_taz6_dual_v2": "TAZ6_Dual_v1.0.2.21.hex",
-            "lulzbot_taz6_flexy_dually_v2": "TAZ6_Dual_v1.0.2.21.hex",
+            "lulzbot_taz6": "TAZ6_Single_Extruder_v1.0.2.22.hex",
+            "lulzbot_taz6_flexy_v2": "TAZ6_Flexystruder_v1.0.2.22.hex",
+            "lulzbot_taz6_moarstruder": "TAZ6_Moarstruder_v1.0.2.22.hex",
+            "lulzbot_taz6_dual_v2": "TAZ6_Dual_v1.0.2.22.hex",
+            "lulzbot_taz6_flexy_dually_v2": "TAZ6_Dual_v1.0.2.22.hex",
         }
         ##TODO: Add check for multiple extruders
         hex_file = None
