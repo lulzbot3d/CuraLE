@@ -234,19 +234,12 @@ class StartSliceJob(Job):
             settings[key] = stack.getProperty(key, "value")
             Job.yieldThread()
 
-        start_gcode = settings["machine_start_gcode"]
+        #start_gcode = settings["machine_start_gcode"]
         #Pre-compute material material_bed_temp_prepend and material_print_temp_prepend
-        bed_temperature_settings = {"material_bed_temperature", "material_bed_temperature_layer_0"}
-        settings["material_bed_temp_prepend"] = all(("{" + setting + "}" not in start_gcode for setting in bed_temperature_settings))
-        print_temperature_settings = {"material_print_temperature", "material_print_temperature_layer_0", "default_material_print_temperature", "material_initial_print_temperature", "material_final_print_temperature", "material_standby_temperature"}
-        settings["material_print_temp_prepend"] = all(("{" + setting + "}" not in start_gcode for setting in print_temperature_settings))
-
-        settings["print_bed_temperature"] = settings["material_bed_temperature"]
-        settings["print_temperature"] = settings["material_print_temperature"]
-
-        settings["time"] = time.strftime('%H:%M:%S')
-        settings["date"] = time.strftime('%d-%m-%Y')
-        settings["day"] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][int(time.strftime('%w'))]
+        #bed_temperature_settings = {"material_bed_temperature", "material_bed_temperature_layer_0"}
+        settings["material_bed_temp_prepend"] = False #all(("{" + setting + "}" not in start_gcode for setting in bed_temperature_settings))
+        #print_temperature_settings = {"material_print_temperature", "material_print_temperature_layer_0", "default_material_print_temperature", "material_initial_print_temperature", "material_final_print_temperature", "material_standby_temperature"}
+        settings["material_print_temp_prepend"] = False #all(("{" + setting + "}" not in start_gcode for setting in print_temperature_settings))
 
         settings["print_bed_temperature"] = settings["material_bed_temperature"]
         settings["print_temperature"] = settings["material_print_temperature"]
