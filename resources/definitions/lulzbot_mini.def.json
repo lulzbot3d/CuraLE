@@ -16,7 +16,14 @@
         "preferred_material": "pla",
         "preferred_quality": "normal",
         "file_formats": "text/x-gcode",
-        "visible": true
+        "visible": true,
+        "toolhead": "mini_toolhead.stl",
+        "toolhead_offset":
+        [
+            -77.5,
+            158,
+            -77.5
+        ]
     },
     "overrides":
     {
