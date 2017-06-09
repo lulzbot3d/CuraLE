@@ -14,6 +14,7 @@ from UM.Logger import Logger
 from cura.PrinterOutputDevice import PrinterOutputDevice, ConnectionState
 from UM.Message import Message
 
+from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtCore import QUrl, pyqtSlot, pyqtSignal, pyqtProperty
 
 from UM.i18n import i18nCatalog
@@ -167,11 +168,15 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         code = Application.getInstance().getGlobalContainerStack().getProperty("machine_wipe_gcode", "value")
         if not code:
             Logger.log("w", "This device doesn't support wiping")
+            QMessageBox.critical(None, "Error wiping nozzle", "This device doesn't support wiping" )
             return
         code = code.replace("{material_wipe_temperature}", str(Application.getInstance().getGlobalContainerStack().getProperty("material_wipe_temperature", "value"))).split("\n")
         self.writeStarted.emit(self)
         self._updateJobState("printing")
-        self.printGCode(code)
+        result=self.printGCode(code)
+
+        if result == False:
+            QMessageBox.critical(None, "Error wiping nozzle", "Printer is busy or not connected" )
 
     def _moveHead(self, x, y, z, speed):
         self._sendCommand("G91")
@@ -195,7 +200,9 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self._error_message.show()
             Logger.log("d", "Printer is busy or not connected, aborting print")
             self.writeError.emit(self)
-            return
+            return False
+        else:
+            return True
 
         self._gcode.clear()
         for layer in gcode_list:
