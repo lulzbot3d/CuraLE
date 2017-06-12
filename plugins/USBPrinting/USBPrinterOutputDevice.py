@@ -9,6 +9,8 @@ import queue
 import re
 import functools
 
+from enum import Enum
+
 from UM.Application import Application
 from UM.Logger import Logger
 from cura.PrinterOutputDevice import PrinterOutputDevice, ConnectionState
@@ -19,6 +21,11 @@ from PyQt5.QtCore import QUrl, pyqtSlot, pyqtSignal, pyqtProperty
 
 from UM.i18n import i18nCatalog
 catalog = i18nCatalog("cura")
+
+class Error(Enum):
+    SUCCESS = 0
+    PRINTER_BUSY = 1
+    PRINTER_NOT_CONNECTED = 2
 
 class USBPrinterOutputDevice(PrinterOutputDevice):
     SERIAL_AUTODETECT_PORT = "Autodetect"
@@ -175,8 +182,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._updateJobState("printing")
         result=self.printGCode(code)
 
-        if result == False:
-            QMessageBox.critical(None, "Error wiping nozzle", "Printer is busy or not connected" )
+        if result == Error.PRINTER_BUSY:
+            QMessageBox.critical(None, "Error wiping nozzle", "Printer is busy" )
+
+        if result == Error.PRINTER_NOT_CONNECTED:
+            QMessageBox.critical(None, "Error wiping nozzle", "Printer is not connected" )
 
     def _moveHead(self, x, y, z, speed):
         self._sendCommand("G91")
@@ -194,16 +204,24 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     ##  Start a print based on a g-code.
     #   \param gcode_list List with gcode (strings).
     def printGCode(self, gcode_list):
-        result = False
+        result = Error.SUCCESS
+
         Logger.log("d", "Started printing g-code")
-        if self._progress or self._connection_state != ConnectionState.connected:
-            self._error_message = Message(catalog.i18nc("@info:status", "Unable to start a new job because the printer is busy or not connected."))
+        if self._progress:
+            self._error_message = Message(catalog.i18nc("@info:status", "Unable to start a new job because the printer is busy."))
             self._error_message.show()
-            Logger.log("d", "Printer is busy or not connected, aborting print")
+            Logger.log("d", "Printer is busy, aborting print")
             self.writeError.emit(self)
-            return False
-        else:
-            result = True
+            result = Error.PRINTER_BUSY
+            return result
+
+        if self._connection_state != ConnectionState.connected:
+            self._error_message = Message(catalog.i18nc("@info:status", "Unable to start a new job because the printer is not connected."))
+            self._error_message.show()
+            Logger.log("d", "Printer is not connected, aborting print")
+            self.writeError.emit(self)
+            result = Error.PRINTER_NOT_CONNECTED
+            return result
 
         self._gcode.clear()
         for layer in gcode_list:
@@ -220,6 +238,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self._sendNextGcodeLine()
 
         self.writeFinished.emit(self)
+        # Returning Error.SUCCESS here, currently is unused
         return result
 
     ## Called when print is starting
