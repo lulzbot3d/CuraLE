@@ -201,7 +201,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self._error_message.show()
             Logger.log("d", "Printer is busy or not connected, aborting print")
             self.writeError.emit(self)
-            #return False
+            return False
         else:
             result = True
 
