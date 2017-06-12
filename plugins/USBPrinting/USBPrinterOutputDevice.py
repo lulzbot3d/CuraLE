@@ -194,15 +194,16 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     ##  Start a print based on a g-code.
     #   \param gcode_list List with gcode (strings).
     def printGCode(self, gcode_list):
+        result = False
         Logger.log("d", "Started printing g-code")
         if self._progress or self._connection_state != ConnectionState.connected:
             self._error_message = Message(catalog.i18nc("@info:status", "Unable to start a new job because the printer is busy or not connected."))
             self._error_message.show()
             Logger.log("d", "Printer is busy or not connected, aborting print")
             self.writeError.emit(self)
-            return False
+            #return False
         else:
-            return True
+            result = True
 
         self._gcode.clear()
         for layer in gcode_list:
@@ -219,6 +220,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self._sendNextGcodeLine()
 
         self.writeFinished.emit(self)
+        return result
 
     ## Called when print is starting
     def _printingStarted(self):
