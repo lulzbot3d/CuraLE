@@ -97,6 +97,7 @@ else()
 endif()
 string(REPLACE ";" "," DEB_DEPENDS "${DEB_DEPENDS}")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS ${DEB_DEPENDS})
+set(CPACK_DEBIAN_PACKAGE_RECOMMENDS "cura-binary-data")
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE amd64)
 
 # Set the right epoch so Debian knows this is a more recent version
