@@ -4,6 +4,8 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
+// For Screen availability
+import QtQuick.Window 2.1
 
 import UM 1.1 as UM
 
@@ -160,8 +162,10 @@ QtObject {
     property Component tool_button: Component {
         ButtonStyle {
             background: Item {
-                implicitWidth: Theme.getSize("button").width;
-                implicitHeight: Theme.getSize("button").height;
+                //implicitWidth: Theme.getSize("button").width;
+                //implicitHeight: Theme.getSize("button").height;
+                implicitWidth: Screen.desktopAvailableHeight/16;
+                implicitHeight: Screen.desktopAvailableHeight/16;
 
                 UM.PointingRectangle {
                     id: button_tooltip
