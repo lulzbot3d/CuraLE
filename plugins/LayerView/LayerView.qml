@@ -5,6 +5,8 @@ import QtQuick 2.2
 import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.1
+// For Screen availability
+import QtQuick.Window 2.1
 
 import UM 1.0 as UM
 import Cura 1.0 as Cura
@@ -14,10 +16,12 @@ Item
     id: topLayerView
 
     x: {
-        return UM.Theme.getSize("layerview_menu_origin").width;
+        //return UM.Theme.getSize("layerview_menu_origin").width;
+        return Screen.desktopAvailableHeight/16;
     }
     y: {
         return UM.Theme.getSize("layerview_menu_origin").height;
+        //return Screen.desktopAvailableHeight/16;
     }
     width: {
         if (UM.LayerView.compatibilityMode) {
