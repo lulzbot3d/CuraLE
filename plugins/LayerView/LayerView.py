@@ -7,7 +7,8 @@ from UM.PluginRegistry import PluginRegistry
 from UM.View.View import View
 from UM.Scene.Iterator.DepthFirstIterator import DepthFirstIterator
 from UM.Resources import Resources
-from UM.Event import Event, KeyEvent
+#from UM.Event import Event, KeyEvent
+from UM.Event import Event, KeyEvent, WheelEvent
 from UM.Signal import Signal
 from UM.Scene.Selection import Selection
 from UM.Math.Color import Color
@@ -306,6 +307,16 @@ class LayerView(View):
             if event.key == KeyEvent.DownKey:
                 self.setLayer(self._current_layer_num - amount)
                 return True
+            if event.type == Event.MouseWheelEvent and ctrl_is_active:
+                amount = 10 if shift_is_active else 1
+                vertical_delta = str(event.vertical)
+                if event.vertical > 0 :
+                    self.setLayer(self._current_layer_num + amount)
+                    return True
+                if event.vertical < 0:
+                    self.setLayer(self._current_layer_num - amount)
+                    return True
+
 
         if event.type == Event.ViewActivateEvent:
             # Make sure the LayerPass is created

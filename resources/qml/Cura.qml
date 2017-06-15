@@ -19,6 +19,29 @@ UM.MainWindow
     title: catalog.i18nc("@title:window","Cura 2 (ALPHA) - ") + UM.Application.version;
     viewportRect: Qt.rect(0, 0, (base.width - sidebar.width) / base.width, 1.0)
     property bool monitoringPrint: false
+
+    function onExitRequested()
+    {
+        confirmationDialog.visible = true
+    }
+
+    MessageDialog
+    {
+        id: confirmationDialog
+
+        title: catalog.i18nc("@text:MessageDialog", "Exit")
+        icon: StandardIcon.Warning
+        text: catalog.i18nc("@text:MessageDialog", "Do you really want to exit while printing?")
+        standardButtons: StandardButton.Yes | StandardButton.No
+        Component.onCompleted: visible = false
+        onYes:
+        {
+            Cura.MachineManager.printerOutputDevices[0].setJobState("abort")
+            Printer.exitAllowed = true
+            base.close()
+        }
+    }
+
     Component.onCompleted:
     {
         CuraApplication.setMinimumWindowSize(UM.Theme.getSize("window_minimum_size"))
@@ -33,6 +56,7 @@ UM.MainWindow
         //
         // This has been fixed for QtQuick Controls 2 since the Shortcut item has a context property.
         Cura.Actions.parent = backgroundItem
+        Printer.exitRequested.connect(base.onExitRequested);
     }
 
     Item
@@ -512,6 +536,8 @@ UM.MainWindow
     UM.PreferencesDialog
     {
         id: preferences
+        minimumWidth: UM.Theme.getSize("modal_window_minimum").width
+        minimumHeight: UM.Theme.getSize("modal_window_minimum").height
 
         Component.onCompleted:
         {
@@ -660,7 +686,7 @@ UM.MainWindow
     Connections
     {
         target: Cura.Actions.quit
-        onTriggered: base.visible = false;
+        onTriggered: base.close()
     }
 
     Connections
