@@ -98,9 +98,11 @@ endif()
 string(REPLACE ";" "," DEB_DEPENDS "${DEB_DEPENDS}")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS ${DEB_DEPENDS})
 set(CPACK_DEBIAN_PACKAGE_RECOMMENDS
-  "cura-binary-data-all"
-  "cura-binary-data-lulzbot"
-  "cura-binary-data-ultimaker")
+  "cura-binary-data-all (>=1.0.0)"
+  "cura-binary-data-lulzbot (>=1.0.0)"
+  "cura-binary-data-ultimaker (>=1.0.0)"
+  "ultimaker (>=1.0.0)")
+string(REPLACE ";" "," CPACK_DEBIAN_PACKAGE_RECOMMENDS "${CPACK_DEBIAN_PACKAGE_RECOMMENDS}")
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE amd64)
 
 # Set the right epoch so Debian knows this is a more recent version
