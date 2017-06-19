@@ -20,10 +20,6 @@ UM.MainWindow
     viewportRect: Qt.rect(0, 0, (base.width - sidebar.width) / base.width, 1.0)
     property bool monitoringPrint: false
 
-    function onExitRequested()
-    {
-        confirmationDialog.visible = true
-    }
 
     MessageDialog
     {
@@ -34,6 +30,10 @@ UM.MainWindow
         text: catalog.i18nc("@text:MessageDialog", "Do you really want to exit while printing?")
         standardButtons: StandardButton.Yes | StandardButton.No
         Component.onCompleted: visible = false
+        function onExitRequested()
+        {
+            confirmationDialog.visible = true
+        }
         onYes:
         {
             Cura.MachineManager.printerOutputDevices[0].setJobState("abort")
@@ -56,7 +56,7 @@ UM.MainWindow
         //
         // This has been fixed for QtQuick Controls 2 since the Shortcut item has a context property.
         Cura.Actions.parent = backgroundItem
-        Printer.exitRequested.connect(base.onExitRequested);
+        Printer.exitRequested.connect(confirmationDialog.onExitRequested);
     }
 
     Item
