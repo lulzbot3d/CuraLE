@@ -212,6 +212,33 @@ Item
             }
         }
 
+
+        Button
+        {
+            id: printButton
+
+            height: UM.Theme.getSize("save_button_save_to_button").height
+
+            text: catalog.i18nc("@label:", "Start Print")
+
+            // 3 = Done, 5 = Disabled
+            enabled: (UM.Backend.state == 3 || UM.Backend.state == 5) && CuraApplication.platformActivity == true
+            visible: (UM.Backend.state == 3 || UM.Backend.state == 5) && CuraApplication.platformActivity == true
+            tooltip: "Print";
+
+            onClicked:
+            {
+                var active_machine_id = "Autodetect"
+                UM.OutputDeviceManager.setActiveDevice(active_machine_id);
+                //console.log( "-------------------UM.OutputDeviceManager.activeDevice : ", UM.OutputDeviceManager.activeDevice )
+                UM.OutputDeviceManager.requestWriteToDevice(UM.OutputDeviceManager.activeDevice, PrintInformation.jobName, { "filter_by_machine": true, "preferred_mimetype":Printer.preferredOutputMimetype })
+           }
+
+
+
+            style: UM.Theme.styles.sidebar_action_button
+        }
+
         Button
         {
             id: pauseResumeButton
