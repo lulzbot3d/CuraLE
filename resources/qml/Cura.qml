@@ -436,7 +436,7 @@ UM.MainWindow
 
                 enabled: UM.Selection.hasSelection
 
-                onClicked: Cura.Actions.multiplyObject.trigger();
+                onClicked: Cura.Actions.multiplySelection.trigger();
             }
 
             Button
