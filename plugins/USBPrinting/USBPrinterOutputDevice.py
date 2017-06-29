@@ -541,7 +541,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     ##  Close the printer connection
     def _close(self):
         Logger.log("d", "Closing the USB printer connection.")
-        self.cancelPrint()
+        self._printingStopped()
         if self._connect_thread.isAlive():
             try:
                 # TODO: to avoid waiting indefinitely, notify the thread that it needs
