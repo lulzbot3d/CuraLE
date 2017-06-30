@@ -28,7 +28,7 @@ class CuraActions(QObject):
         # Starting a web browser from a signal handler connected to a menu will crash on windows.
         # So instead, defer the call to the next run of the event loop, since that does work.
         # Note that weirdly enough, only signal handlers that open a web browser fail like that.
-        event = CallFunctionEvent(self._openUrl, [QUrl("http://ultimaker.com/en/support/software")], {})
+        event = CallFunctionEvent(self._openUrl, [QUrl("https://www.lulzbot.com/support")], {})
         Application.getInstance().functionEvent(event)
 
     @pyqtSlot()
@@ -117,3 +117,28 @@ class CuraActions(QObject):
 
     def _openUrl(self, url):
         QDesktopServices.openUrl(url)
+
+    @pyqtSlot()
+    def openFilamentsPage(self):
+        event = CallFunctionEvent(self._openUrl, [QUrl("https://www.lulzbot.com/store/filament")], {})
+        Application.getInstance().functionEvent(event)
+
+    @pyqtSlot()
+    def openPrintersPage(self):
+        event = CallFunctionEvent(self._openUrl, [QUrl("https://www.lulzbot.com/store/printers")], {})
+        Application.getInstance().functionEvent(event)
+
+    @pyqtSlot()
+    def openToolheadsPage(self):
+        event = CallFunctionEvent(self._openUrl, [QUrl("https://www.lulzbot.com/store/tool-heads")], {})
+        Application.getInstance().functionEvent(event)
+
+    @pyqtSlot()
+    def openPartsPage(self):
+        event = CallFunctionEvent(self._openUrl, [QUrl("https://www.lulzbot.com/store/parts")], {})
+        Application.getInstance().functionEvent(event)
+
+    @pyqtSlot()
+    def openMerchandisePage(self):
+        event = CallFunctionEvent(self._openUrl, [QUrl("https://www.lulzbot.com/store/merchandise")], {})
+        Application.getInstance().functionEvent(event)
