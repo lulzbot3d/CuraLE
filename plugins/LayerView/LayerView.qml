@@ -20,8 +20,8 @@ Item
         return Screen.desktopAvailableHeight/16;
     }
     y: {
-        return UM.Theme.getSize("layerview_menu_origin").height;
-        //return Screen.desktopAvailableHeight/16;
+        //return UM.Theme.getSize("layerview_menu_origin").height;
+        return -Screen.desktopAvailableHeight/2 - 4*UM.Theme.getSize("default_margin").height;
     }
     width: {
         if (UM.LayerView.compatibilityMode) {
