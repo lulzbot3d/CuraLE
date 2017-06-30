@@ -256,6 +256,17 @@ UM.MainWindow
                 MenuSeparator { }
                 MenuItem { action: Cura.Actions.about; }
             }
+
+            Menu
+            {
+                title: catalog.i18nc("@title:menu menubar:toplevel","&Buy now");
+
+                MenuItem { action: Cura.Actions.buyFilament; }
+                MenuItem { action: Cura.Actions.buyPrinters; }
+                MenuItem { action: Cura.Actions.buyToolheads; }
+                MenuItem { action: Cura.Actions.buyParts; }
+                MenuItem { action: Cura.Actions.buyMerchandise; }
+            }
         }
 
         UM.SettingPropertyProvider
