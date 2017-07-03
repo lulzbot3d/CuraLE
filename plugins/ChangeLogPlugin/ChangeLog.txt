@@ -42,27 +42,16 @@ It’s a lot simpler to save and open files, and Cura will know if it’s a proj
 If you have a custom theme, you can now apply it more easily in the preferences screen.
 
 *Time estimates per feature
-<<<<<<< HEAD
-You can hover over the print time estimate in the lower right corner to see how the printing time is divided over the printing features (walls, infill, etc.).
-=======
 You can hover over the print time estimate in the lower right corner to see how the printing time is divided over the printing features (walls, infill, etc.). Thanks to 14bitVoid for this feature.
->>>>>>> 2.6
 
 *Invert the direction of camera zoom
 We’ve added an option to invert mouse direction for a better user experience.
 
 *Olsson block upgrade
-<<<<<<< HEAD
-Ultimaker 2 users can now specify if they have the Olsson block installed on their machine.
-
-*OctoPrint plugin
-Cura 2.6 beta allows users to send prints to OctoPrint.
-=======
 Ultimaker 2 users can now specify if they have the Olsson block installed on their machine. Thanks to Aldo Hoeben for this feature.
 
 *OctoPrint plugin
 Cura 2.6 beta allows users to send prints to OctoPrint. Thanks to Aldo Hoeben for this feature.
->>>>>>> 2.6
 
 *Bug fixes
 - Post Processing plugin
