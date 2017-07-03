@@ -183,10 +183,10 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         result=self.printGCode(code)
 
         if result == Error.PRINTER_BUSY:
-            QMessageBox.critical(None, "Error wiping nozzle", "Printer is busy" )
+            QMessageBox.critical(None, "Error wiping nozzle", "Printer is busy, aborting print" )
 
         if result == Error.PRINTER_NOT_CONNECTED:
-            QMessageBox.critical(None, "Error wiping nozzle", "Printer is not connected" )
+            QMessageBox.critical(None, "Error wiping nozzle", "Printer is not connected  " )
 
     def _moveHead(self, x, y, z, speed):
         self._sendCommand("G91")
@@ -541,6 +541,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     ##  Close the printer connection
     def _close(self):
         Logger.log("d", "Closing the USB printer connection.")
+        self.cancelPrint()
         if self._connect_thread.isAlive():
             try:
                 # TODO: to avoid waiting indefinitely, notify the thread that it needs
@@ -569,6 +570,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         while not self._command_queue.empty():
             self._command_queue.get()
         self._printer_buffer.clear()
+        self._is_printing = False
+        self._is_paused = False
 
 
     ##  Directly send the command, withouth checking connection state (eg; printing).
@@ -654,6 +657,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self._z_min_endstop_pressed = value
 
     messageFromPrinter = pyqtSignal(str)
+    errorFromPrinter = pyqtSignal(str)
 
     ##  Listen thread function.
     def _listen(self):
@@ -665,6 +669,13 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             if line is None:
                 break  # None is only returned when something went wrong. Stop listening
 
+            if b"PROBE FAIL CLEAN NOZZLE" in line:
+               self._error_message = Message(catalog.i18nc("@info:status", "Wipe nozzle failed."))
+               self._error_message.show()
+               #QMessageBox.critical(None, "Error wiping nozzle", "Wipe nozzle failed."
+               self.errorFromPrinter.emit( "Wipe nozzle failed." )
+               Logger.log("d", "---------------PROBE FAIL CLEAN NOZZLE" )
+
             if time.time() > temperature_request_timeout and not self._heatup_state:
                 if self._num_extruders > 1:
                     self._temperature_requested_extruder_index = (self._temperature_requested_extruder_index + 1) % self._num_extruders
@@ -674,6 +685,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 temperature_request_timeout = time.time() + 5
 
             if line.startswith(b"Error:"):
+                #if b"PROBE FAIL CLEAN NOZZLE" in line:
+                #   self._error_message = Message(catalog.i18nc("@info:status", "Wipe nozzle failed."))
+                #   self._error_message.show()
+                #   QMessageBox.critical(None, "Error wiping nozzle", "Probe fail clean nozzle"
+
                 # Oh YEAH, consistency.
                 # Marlin reports a MIN/MAX temp error as "Error:x\n: Extruder switched off. MAXTEMP triggered !\n"
                 # But a bed temp error is reported as "Error: Temperature heated bed switched off. MAXTEMP triggered !!"

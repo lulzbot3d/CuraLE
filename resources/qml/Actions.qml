@@ -353,4 +353,49 @@ Item
         text: catalog.i18nc("@action:menu", "Configure setting visibility...");
         iconName: "configure"
     }
+
+    Action
+    {
+        id: buyFilamentAction;
+        text: catalog.i18nc("@action:inmenu menubar:help","&Filament");
+        onTriggered: CuraActions.openFilamentsPage();
+    }
+
+    property alias buyFilament: buyFilamentAction
+
+    Action
+    {
+        id: buyPrintersAction;
+        text: catalog.i18nc("@action:inmenu menubar:help","&Printers");
+        onTriggered: CuraActions.openPrintersPage();
+    }
+
+    property alias buyPrinters: buyPrintersAction
+
+    Action
+    {
+        id: buyToolheadsAction;
+        text: catalog.i18nc("@action:inmenu menubar:help","&Toolheads");
+        onTriggered: CuraActions.openToolheadsPage();
+    }
+
+    property alias buyToolheads: buyToolheadsAction
+
+    Action
+    {
+        id: buyPartsAction;
+        text: catalog.i18nc("@action:inmenu menubar:help","P&arts");
+        onTriggered: CuraActions.openPartsPage();
+    }
+
+    property alias buyParts: buyPartsAction
+
+    Action
+    {
+        id: buyMerchandiseAction;
+        text: catalog.i18nc("@action:inmenu menubar:help","&Merchandise");
+        onTriggered: CuraActions.openMerchandisePage();
+    }
+
+    property alias buyMerchandise: buyMerchandiseAction
 }

@@ -95,7 +95,7 @@ Item
         width:
         {
             if (panel.item && panel.width > 0){
-                 return Math.max(panel.width + 2 * UM.Theme.getSize("default_margin").width)
+                 return Math.max(1.1*panel.width + 2 * UM.Theme.getSize("default_margin").width)
             }
             else {
                 return 0

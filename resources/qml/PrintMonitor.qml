@@ -5,6 +5,7 @@ import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 import QtQuick.Layouts 1.1
+import QtQuick.Dialogs 1.2
 
 import UM 1.2 as UM
 import Cura 1.0 as Cura
@@ -19,6 +20,15 @@ ScrollView
 	Column
 	{
 	    id: printMonitor
+
+        signal receive( string error )
+
+        onReceive:
+        {
+            message_dialog.icon = StandardIcon.Critical
+            message_dialog.text = error
+            message_dialog.open()
+        }
 
 	    Cura.ExtrudersModel
 	    {
@@ -1002,6 +1012,8 @@ ScrollView
 	                    onClicked:
 	                    {
 	                        connectedPrinter.connect()
+                            connectedPrinter.errorFromPrinter.disconnect(printMonitor.receive)
+                            connectedPrinter.errorFromPrinter.connect(printMonitor.receive)
 	                    }
 
                         style:   ButtonStyle
@@ -1880,5 +1892,13 @@ ScrollView
 	            }
 	        }
 		}
+
+        MessageDialog
+        {
+            id: message_dialog
+            title: catalog.i18nc("@window:title", "Error");
+            standardButtons: StandardButton.Ok
+            modality: Qt.ApplicationModal
+        }
 	}
 }
