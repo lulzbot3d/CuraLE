@@ -541,7 +541,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     ##  Close the printer connection
     def _close(self):
         Logger.log("d", "Closing the USB printer connection.")
-        self.cancelPrint()
+        self._printingStopped()
         if self._connect_thread.isAlive():
             try:
                 # TODO: to avoid waiting indefinitely, notify the thread that it needs
@@ -670,11 +670,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 break  # None is only returned when something went wrong. Stop listening
 
             if b"PROBE FAIL CLEAN NOZZLE" in line:
-               self._error_message = Message(catalog.i18nc("@info:status", "Wipe nozzle failed."))
-               self._error_message.show()
-               #QMessageBox.critical(None, "Error wiping nozzle", "Wipe nozzle failed."
                self.errorFromPrinter.emit( "Wipe nozzle failed." )
                Logger.log("d", "---------------PROBE FAIL CLEAN NOZZLE" )
+               self._error_message = Message(catalog.i18nc("@info:status", "Wipe nozzle failed."))
+               self._error_message.show()
+               return
 
             if time.time() > temperature_request_timeout and not self._heatup_state:
                 if self._num_extruders > 1:
