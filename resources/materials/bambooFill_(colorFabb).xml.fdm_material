@@ -24,10 +24,10 @@
     <setting key="wipe temperature">130</setting>
     <setting key="part removal temperature">50</setting>
     <machine>
-      <machine_identifier product="lulzbot_taz6_dual_v2"/>
+      <machine_identifier product="lulzbot_mini"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_mini"/>
+      <machine_identifier product="lulzbot_taz6_dual_v2"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz6"/>
