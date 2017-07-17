@@ -20,8 +20,8 @@
     <setting key="heated bed temperature">60</setting>
     <setting key="standby temperature">175</setting>
     <setting key="soften temperature">175</setting>
-    <setting key="probe temperature">180</setting>
-    <setting key="wipe temperature">170</setting>
+    <setting key="probe temperature">140</setting>
+    <setting key="wipe temperature">140</setting>
     <setting key="part removal temperature">0</setting>
     <machine>
       <machine_identifier product="lulzbot_taz5_flexy_v2"/>
