@@ -45,10 +45,23 @@ if (NOT BUILD_PYTHON)
     find_package(PythonInterp ${MINIMUM_PYTHON_VERSION} REQUIRED)
 endif()
 
+if(NOT PYTHON_SITE_PACKAGES_DIR)
+	if(APPLE OR WIN32)
+		set(PYTHON_SITE_PACKAGES_DIR lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages
+			CACHE STRING "Directory to install Python bindings to")
+	else()
+		set(PYTHON_SITE_PACKAGES_DIR lib/python${PYTHON_VERSION_MAJOR}/dist-packages
+			CACHE STRING "Directory to install Python bindings to")
+	endif()
+	set(CURA_INSTALL_PLUGINS_PATH lib/cura)
+else()
+	set(CURA_INSTALL_PLUGINS_PATH ${CMAKE_INSTALL_LIBDIR}/cura)
+endif()
+
 install(DIRECTORY resources
         DESTINATION ${CMAKE_INSTALL_DATADIR}/cura)
 install(DIRECTORY plugins
-        DESTINATION lib/cura)
+        DESTINATION ${CURA_INSTALL_PLUGINS_PATH})
 if(NOT APPLE AND NOT WIN32)
     if(DEB_PACKAGE_TARGET_PLATFORM STREQUAL "ubuntu-xenial")
       install(FILES cura_app.py
@@ -66,10 +79,10 @@ if(NOT APPLE AND NOT WIN32)
     endif()
 
     install(DIRECTORY cura
-            DESTINATION lib/python${PYTHON_VERSION_MAJOR}/dist-packages
+            DESTINATION ${PYTHON_SITE_PACKAGES_DIR}
             FILES_MATCHING PATTERN *.py)
     install(FILES ${CMAKE_BINARY_DIR}/CuraVersion.py
-            DESTINATION lib/python${PYTHON_VERSION_MAJOR}/dist-packages/cura)
+            DESTINATION ${PYTHON_SITE_PACKAGES_DIR}/cura)
     install(FILES ${CMAKE_BINARY_DIR}/cura2.desktop
             DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
     install(FILES cura.appdata.xml
@@ -82,10 +95,10 @@ else()
             DESTINATION ${CMAKE_INSTALL_BINDIR}
             PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
     install(DIRECTORY cura
-            DESTINATION lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages
+            DESTINATION ${PYTHON_SITE_PACKAGES_DIR}
             FILES_MATCHING PATTERN *.py)
     install(FILES ${CMAKE_BINARY_DIR}/CuraVersion.py
-            DESTINATION lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages/cura)
+            DESTINATION ${PYTHON_SITE_PACKAGES_DIR}/cura)
 endif()
 
 include(CPackConfig.cmake)

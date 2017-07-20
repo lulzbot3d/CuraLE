@@ -64,7 +64,8 @@ Cura.MachineAction
             anchors.top: pageTitle.bottom
             anchors.topMargin: UM.Theme.getSize("default_margin").height
 
-            property real columnWidth: Math.floor((width - 3 * UM.Theme.getSize("default_margin").width) / 2)
+            property real columnWidth: Math.floor((width - 3 * UM.Theme.getSize("default_margin").width) / 3)
+            property real gcodeColumnWidth: Math.floor((width - 3 * UM.Theme.getSize("default_margin").width) / 2)
 
             Tab
             {
@@ -399,6 +400,68 @@ Cura.MachineAction
                                 }
                             }
                         }
+                        Column
+                        {
+                            width: parent.width / 3
+                            spacing: UM.Theme.getSize("default_margin").height
+
+                            Label
+                            {
+                                text: catalog.i18nc("@label", "Connection Settings")
+                                font.bold: true
+                            }
+
+                            Label
+                            {
+                                text: catalog.i18nc("@label", "Port:")
+                            }
+                            ComboBox
+                            {
+                                model:
+                                {
+                                    var port_list = Cura.USBPrinterManager.portList
+                                    var ind = port_list.indexOf(machinePortProvider.properties.value)
+                                    port_list.push("AUTO")
+                                    return port_list
+                                }
+
+                                currentIndex:
+                                {
+                                    var index = model.indexOf(machinePortProvider.properties.value);
+                                    if(index == -1)
+                                    {
+                                        index = 0;
+                                    }
+                                    return index
+                                }
+                                onActivated:
+                                {
+                                    machinePortProvider.setPropertyValue("value", model[index]);
+                                }
+                            }
+                            Label
+                            {
+                                text: catalog.i18nc("@label", "Communication Speed:")
+                            }
+                            ComboBox
+                            {
+                                model: ["AUTO", "250000", "230400", "115200", "57600", "38400", "19200", "9600"]
+
+                                currentIndex:
+                                {
+                                    var index = model.indexOf(machineBaudrateProvider.properties.value);
+                                    if(index == -1)
+                                    {
+                                        index = 0;
+                                    }
+                                    return index
+                                }
+                                onActivated:
+                                {
+                                    machineBaudrateProvider.setPropertyValue("value", model[index]);
+                                }
+                            }
+                        }
                     }
 
                     Row
@@ -407,10 +470,11 @@ Cura.MachineAction
                         anchors.left: parent.left
                         anchors.right: parent.right
                         height: parent.height - y
+
                         Column
                         {
                             height: parent.height
-                            width: settingsTabs.columnWidth
+                            width: settingsTabs.gcodeColumnWidth
                             Label
                             {
                                 text: catalog.i18nc("@label", "Start Gcode")
@@ -439,7 +503,7 @@ Cura.MachineAction
 
                         Column {
                             height: parent.height
-                            width: settingsTabs.columnWidth
+                            width: settingsTabs.gcodeColumnWidth
                             Label
                             {
                                 text: catalog.i18nc("@label", "End Gcode")
@@ -546,7 +610,6 @@ Cura.MachineAction
                                 property var propertyProvider: extruderNozzleSizeProvider
                                 property string unit: catalog.i18nc("@label", "mm")
                             }
-
                             Label
                             {
                                 text: catalog.i18nc("@label", "Nozzle offset X")
@@ -573,10 +636,7 @@ Cura.MachineAction
                                 property bool forceUpdateOnChange: true
                                 property bool allowNegative: true
                             }
-                        }
 
-                        Row
-                        {
                             spacing: UM.Theme.getSize("default_margin").width
                             anchors.left: parent.left
                             anchors.right: parent.right
@@ -584,7 +644,7 @@ Cura.MachineAction
                             Column
                             {
                                 height: parent.height
-                                width: settingsTabs.columnWidth
+                                width: settingsTabs.gcodeColumnWidth
                                 Label
                                 {
                                     text: catalog.i18nc("@label", "Extruder Start Gcode")
@@ -612,7 +672,7 @@ Cura.MachineAction
                             }
                             Column {
                                 height: parent.height
-                                width: settingsTabs.columnWidth
+                                width: settingsTabs.gcodeColumnWidth
                                 Label
                                 {
                                     text: catalog.i18nc("@label", "Extruder End Gcode")
@@ -638,69 +698,6 @@ Cura.MachineAction
                                     }
                                 }
                             }
-                        }
-                    }
-                }
-
-                Column
-                {
-                    width: parent.width / 3
-                    spacing: UM.Theme.getSize("default_margin").height
-
-                    Label
-                    {
-                        text: catalog.i18nc("@label", "Connection Settings")
-                        font.bold: true
-                    }
-
-                    Label
-                    {
-                        text: catalog.i18nc("@label", "Port:")
-                    }
-                    ComboBox
-                    {
-                        model:
-                        {
-                            var port_list = Cura.USBPrinterManager.portList
-                            var ind = port_list.indexOf(machinePortProvider.properties.value)
-                            port_list.push("AUTO")
-                            return port_list
-                        }
-
-                        currentIndex:
-                        {
-                            var index = model.indexOf(machinePortProvider.properties.value);
-                            if(index == -1)
-                            {
-                                index = 0;
-                            }
-                            return index
-                        }
-                        onActivated:
-                        {
-                            machinePortProvider.setPropertyValue("value", model[index]);
-                        }
-                    }
-                    Label
-                    {
-                        text: catalog.i18nc("@label", "Communication Speed:")
-                    }
-                    ComboBox
-                    {
-                        model: ["AUTO", "250000", "230400", "115200", "57600", "38400", "19200", "9600"]
-
-                        currentIndex:
-                        {
-                            var index = model.indexOf(machineBaudrateProvider.properties.value);
-                            if(index == -1)
-                            {
-                                index = 0;
-                            }
-                            return index
-                        }
-                        onActivated:
-                        {
-                            machineBaudrateProvider.setPropertyValue("value", model[index]);
                         }
                     }
                 }

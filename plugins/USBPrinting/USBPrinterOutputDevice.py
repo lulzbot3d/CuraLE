@@ -273,6 +273,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
         if self._connection_state != ConnectionState.closed:
             self.close()
+        port = Application.getInstance().getGlobalContainerStack().getProperty("machine_port", "value")
+        if port != "AUTO":
+            self._serial_port = port
+        else:
+            self._detectSerialPort()
         hex_file = intelHex.readHex(self._firmware_file_name)
 
         if len(hex_file) == 0:

@@ -253,6 +253,15 @@ class StartSliceJob(Job):
         settings["material_name"] = manager.activeMaterialName
         settings["quality_name"] = manager.activeQualityName
 
+        for extruder_stack in ExtruderManager.getInstance().getMachineExtruders(stack.getId()):
+            num = extruder_stack.getMetaDataEntry("position")
+            for key in extruder_stack.getAllKeys():
+                if extruder_stack.getProperty(key, "settable_per_extruder") == False:
+                    continue
+                if key in ["material_soften_temperature", "material_wipe_temperature", "material_probe_temperature",
+                           "material_print_temperature"]:
+                    settings["%s_%s" % (key, num)] = extruder_stack.getProperty(key, "value")
+
         for key, value in settings.items(): #Add all submessages for each individual setting.
             setting_message = self._slice_message.getMessage("global_settings").addRepeatedMessage("settings")
             setting_message.name = key

@@ -106,6 +106,11 @@ UM.Dialog
                 }
                 event.accepted = true;
             }
+            else if (event.key == Qt.Key_Enter)
+            {
+                base.sendCommand();
+                event.accepted = true;
+            }
             else
             {
                 current_history_index = 0;

@@ -17,26 +17,32 @@
   </properties>
   <settings>
     <setting key="print temperature">200</setting>
-    <setting key="heated bed temperature">60</setting>
+    <setting key="heated bed temperature">110</setting>
     <setting key="standby temperature">175</setting>
     <setting key="soften temperature">175</setting>
     <setting key="probe temperature">170</setting>
     <setting key="wipe temperature">170</setting>
     <setting key="part removal temperature">50</setting>
     <machine>
-      <machine_identifier product="lulzbot_mini"/>
+      <machine_identifier product="lulzbot_taz6_moarstruder"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz5"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_taz6"/>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_taz6_moarstruder"/>
+      <machine_identifier product="lulzbot_taz6_flexy_dually_v2"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz5_moarstruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_dual_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6"/>
     </machine>
   </settings>
 </fdmmaterial>

@@ -19,6 +19,7 @@ import platform
 import glob
 import time
 import os.path
+import serial.tools.list_ports
 from UM.Extension import Extension
 
 from PyQt5.QtQml import QQmlComponent, QQmlContext
@@ -192,11 +193,11 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_taz5_dual_v2": "TAZ4-5-Dual-LBHexagon-1.0.0.1.hex",
             "lulzbot_taz5_flexy_dually_v2": "TAZ4-5-FlexyDually-LBHexagon-1.0.0.1.hex",
 
-            "lulzbot_taz6": "TAZ6_Single_Extruder_v1.0.2.21.hex",
-            "lulzbot_taz6_flexy_v2": "TAZ6_Flexystruder_v1.0.2.21.hex",
-            "lulzbot_taz6_moarstruder": "TAZ6_Moarstruder_v1.0.2.21.hex",
-            "lulzbot_taz6_dual_v2": "TAZ6_Dual_v1.0.2.21.hex",
-            "lulzbot_taz6_flexy_dually_v2": "TAZ6_Dual_v1.0.2.21.hex",
+            "lulzbot_taz6": "TAZ6_Single_Extruder_v1.0.2.22.hex",
+            "lulzbot_taz6_flexy_v2": "TAZ6_Flexystruder_v1.0.2.22.hex",
+            "lulzbot_taz6_moarstruder": "TAZ6_Moarstruder_v1.0.2.22.hex",
+            "lulzbot_taz6_dual_v2": "TAZ6_Dual_v1.0.2.22.hex",
+            "lulzbot_taz6_flexy_dually_v2": "TAZ6_Dual_v1.0.2.22.hex",
         }
         ##TODO: Add check for multiple extruders
         hex_file = None
@@ -281,5 +282,31 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             else:
                 base_list = base_list + glob.glob("/dev/ttyUSB*") + glob.glob("/dev/ttyACM*") + glob.glob("/dev/cu.*") + glob.glob("/dev/tty.usb*") + glob.glob("/dev/tty.wchusb*") + glob.glob("/dev/cu.wchusb*") + glob.glob("/dev/rfcomm*") + glob.glob("/dev/serial/by-id/*")
         return list(base_list)
+
+    @pyqtProperty("QVariantList", constant=True)
+    def portList(self):
+        return self.getSerialPortList()
+
+    @pyqtSlot(str, result=bool)
+    def sendCommandToCurrentPrinter(self, command):
+        try:
+            printer = Application.getInstance().getMachineManager().printerOutputDevices[0]
+        except:
+            return False
+        if type(printer) != USBPrinterOutputDevice:
+            return False
+        printer.sendCommand(command)
+        return True
+
+    @pyqtSlot(result=bool)
+    def connectToCurrentPrinter(self):
+        try:
+            printer = Application.getInstance().getMachineManager().printerOutputDevices[0]
+        except:
+            return False
+        if type(printer) != USBPrinterOutputDevice:
+            return False
+        printer.connect()
+        return True
 
     _instance = None    # type: "USBPrinterOutputDeviceManager"

@@ -479,6 +479,8 @@ class CuraEngineBackend(QObject, Backend):
             replaced = replaced.replace("{filament_weight}", str(Application.getInstance().getPrintInformation().materialWeights))
             replaced = replaced.replace("{filament_cost}", str(Application.getInstance().getPrintInformation().materialCosts))
             replaced = replaced.replace("{jobname}", str(Application.getInstance().getPrintInformation().jobName))
+            replaced = replaced.replace("M190 R0", "M105;")
+            replaced = replaced.replace("M190 S0", "M105;")
 
             self._scene.gcode_list[self._scene.gcode_list.index(line)] = replaced
 

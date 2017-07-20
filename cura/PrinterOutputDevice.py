@@ -279,6 +279,30 @@ class PrinterOutputDevice(QObject, OutputDevice):
     def _homeHead(self):
         Logger.log("w", "_homeHead is not implemented by this output device")
 
+    ##  Home the headX of the connected printer
+    #   This function is "final" (do not re-implement)
+    #   /sa _homeHead implementation function
+    @pyqtSlot()
+    def homeX(self):
+        self._homeX()
+
+    ##  Home the headX of the connected printer
+    #   This is an implementation function and should be overriden by children.
+    def _homeX(self):
+        Logger.log("w", "_homeX is not implemented by this output device")
+
+    ##  Home the headY of the connected printer
+    #   This function is "final" (do not re-implement)
+    #   /sa _homeHead implementation function
+    @pyqtSlot()
+    def homeY(self):
+        self._homeY()
+
+    ##  Home the headY of the connected printer
+    #   This is an implementation function and should be overriden by children.
+    def _homeY(self):
+        Logger.log("w", "_homeY is not implemented by this output device")
+
     ##  Home the bed of the connected printer
     #   This function is "final" (do not re-implement)
     #   /sa _homeBed implementation function
@@ -346,6 +370,51 @@ class PrinterOutputDevice(QObject, OutputDevice):
     #   /sa setTargetHotendTemperature
     def _setTargetHotendTemperature(self, index, temperature):
         Logger.log("w", "_setTargetHotendTemperature is not implemented by this output device")
+
+    ##  Set the (target) hotend temperature and wait
+    #   This function is "final" (do not re-implement)
+    #   /param index the index of the hotend that needs to change temperature
+    #   /param temperature The temperature it needs to change to (in deg celsius).
+    #   /sa _setTargetHotendTemperatureAndWait implementation function
+    @pyqtSlot(int, int)
+    def setTargetHotendTemperatureAndWait(self, index, temperature):
+        self._setTargetHotendTemperatureAndWait(index, temperature)
+
+        if self._target_hotend_temperatures[index] != temperature:
+            self._target_hotend_temperatures[index] = temperature
+            self.targetHotendTemperaturesChanged.emit()
+
+    ##  Implementation function of setTargetHotendTemperatureAndWait.
+    #   /param index Index of the hotend to set the temperature of
+    #   /param temperature Temperature to set the hotend to (in deg C)
+    #   /sa setTargetHotendTemperatureAndWait
+    def _setTargetHotendTemperatureAndWait(self, index, temperature):
+        Logger.log("w", "_setTargetHotendTemperatureAndWait is not implemented by this output device")
+
+    @pyqtSlot(int)
+    def preheatHotend(self, index):
+        temperature = Application.getInstance().getGlobalContainerStack().getProperty("material_print_temperature", "value")
+        self.setTargetHotendTemperature(index, temperature)
+
+    @pyqtSlot(int)
+    def coldPull(self, index):
+        temperature = Application.getInstance().getGlobalContainerStack().getProperty("material_print_temperature", "value")
+        self.setTargetHotendTemperatureAndWait(index, temperature)
+        self.extrude(1)
+        temperature = Application.getInstance().getGlobalContainerStack().getProperty("material_wipe_temperature", "value")
+        self.setTargetHotendTemperatureAndWait(index, temperature)
+
+    @pyqtSlot()
+    def wipeNozzle(self):
+        self._wipeNozzle()
+
+    def _wipeNozzle(self):
+        Logger.log("w", "_wipeNozzle is not implemented by this output device")
+
+    @pyqtSlot()
+    def preheatBed(self):
+        temperature = Application.getInstance().getGlobalContainerStack().getProperty("material_bed_temperature", "value")
+        self.setTargetBedTemperature(temperature)
 
     @pyqtProperty("QVariantList", notify = targetHotendTemperaturesChanged)
     def targetHotendTemperatures(self):
@@ -438,11 +507,19 @@ class PrinterOutputDevice(QObject, OutputDevice):
         callback(QMessageBox.Yes)
 
     ##  Attempt to establish connection
+    @pyqtSlot()
     def connect(self):
+        self._connect()
+
+    def _connect(self):
         raise NotImplementedError("connect needs to be implemented")
 
     ##  Attempt to close the connection
+    @pyqtSlot()
     def close(self):
+        self._close()
+
+    def _close(self):
         raise NotImplementedError("close needs to be implemented")
 
     @pyqtProperty(bool, notify = connectionStateChanged)
@@ -468,7 +545,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
 
     ##  Ensure that close gets called when object is destroyed
     def __del__(self):
-        self.close()
+        self._close()
 
     ##  Get the x position of the head.
     #   This function is "final" (do not re-implement)
@@ -572,6 +649,32 @@ class PrinterOutputDevice(QObject, OutputDevice):
     #   /sa moveHead
     def _moveHead(self, x, y, z, speed):
         Logger.log("w", "_moveHead is not implemented by this output device")
+
+    ##  Extrude.
+    #   Note that this is a relative move.
+    #   This function is "final" (do not re-implement)
+    #   /param e distance in e to move
+    #   /param speed Speed by which it needs to move (in mm/minute)
+    #   /sa _moveHead implementation function
+    @pyqtSlot("long")
+    @pyqtSlot("long", "long")
+    def extrude(self, e=0, speed=100):
+        self._extrude(e, speed)
+
+    ##  Implementation function of extrude.
+    #   /param e distance in e to move
+    #   /param speed Speed by which it needs to move (in mm/minute)
+    #   /sa moveHead
+    def _extrude(self, e, speed):
+        Logger.log("w", "_extrude is not implemented by this output device")
+
+    @pyqtSlot(int)
+    def setHotend(self, num):
+        self._current_hotend = num
+        self._setHotend(num)
+
+    def _setHotend(self, num):
+        Logger.log("w", "_setHotend is not implemented by this output device")
 
     ##  Implementation function of setHeadPosition.
     #   /param x new x location of the head.

@@ -70,6 +70,31 @@
                     "settable_per_extruder": false,
                     "settable_per_meshgroup": false
                 },
+                "machine_wipe_gcode":
+                {
+                    "label": "Wipe GCode",
+                    "description": "Gcode commands to be executed at the very start - separated by \\n.",
+                    "type": "str",
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": false,
+                    "settable_per_meshgroup": false
+                },
+                "machine_port":
+                {
+                    "label": "Machine Port",
+                    "description": "Port",
+                    "default_value": "AUTO",
+                    "type": "str",
+                    "enabled": false
+                },
+                "machine_baudrate":
+                {
+                    "label": "Machine Baudrate",
+                    "description": "Baudrate",
+                    "default_value": "AUTO",
+                    "type": "str",
+                    "enabled": false
+                },
                 "material_guid":
                 {
                     "label": "Material GUID",
@@ -614,7 +639,8 @@
                     "minimum_value_warning": "0.04",
                     "maximum_value_warning": "0.8 * min(extruderValues('machine_nozzle_size'))",
                     "settable_per_mesh": false,
-                    "settable_per_extruder": false
+                    "settable_per_extruder": false,
+                    "resolve": "sum(extruderValues('layer_height')) / len(extruderValues('layer_height'))"
                 },
                 "layer_height_0":
                 {

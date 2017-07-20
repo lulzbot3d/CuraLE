@@ -1,5 +1,60 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
-    <path d="M2.5 2.5h25v1.19h-25V2.5zm0 23.81h2.287l2.272-1.19h15.966l2.234 1.19H27.5v1.19h-2.239l-2.236-1.19H7.057l-2.27 1.177L2.5 27.5v-1.19zM26.364 3.69H27.5v22.62h-1.136V3.69zM2.5 3.69h1.136v22.62H2.5V3.69zm3.41 2.381h18.18v16.667H5.91V6.071zm1.135 1.19h15.91v14.287H7.045V7.262zm5.682 0h4.546v3.572h-4.546V7.262zM9.318 20.358h11.364v1.19H9.318v-1.19zm4.546-9.524h2.272v1.19h-2.272v-1.19z" fill="#fff" fill-rule="evenodd"/>
-    <circle cx="22.5" cy="7.5" r="7.5" fill="#7f7f7f"/>
-    <path d="M25.538 5.675q0 .532-.158.943-.153.405-.437.706-.285.3-.685.537-.395.237-.895.432v1.2h-1.854V7.718q.374-.1.674-.205.305-.105.637-.342.31-.21.485-.49.179-.28.179-.632 0-.527-.343-.748-.337-.226-.953-.226-.38 0-.858.163-.474.163-.87.421h-.21V4.053q.337-.142 1.038-.295.7-.158 1.422-.158 1.3 0 2.064.574t.764 1.501zM23.51 11.6h-2.128v-1.39h2.128v1.39z" style="-inkscape-font-specification:'Verdana Bold'" font-weight="700" font-family="Verdana" fill="#fff" font-size="10.786" letter-spacing="0" word-spacing="0"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   id="svg2"
+   viewBox="0 0 30 30">
+  <metadata
+     id="metadata18">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs16" />
+  <g
+     style="fill:#000000"
+     id="g8084"
+     transform="matrix(1.5899465,0,0,1.5899465,-0.61775243,0.09141122)">
+    <path
+       style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.125;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:825.36413574;stroke-opacity:1"
+       d="m 3.3632812,3.9316406 0,0.6855469 0,2.375 -2.5429687,0 0,9.9062505 2.5429687,0 0,0.0078 14.8417968,0 0,-12.9746094 -14.8417968,0 z m 1.3691407,1.3691406 12.1035161,0 0,3.7636719 -3.869141,0 0,-0.7714843 -4.0468751,0 0,0.7714843 -4.1875,0 0,-3.7636719 z m -2.0859375,3.5488282 1.109375,1.9218746 -2.21875,0 1.109375,-1.9218746 z M 10.857422,9.140625 a 0.9935109,0.9935109 0 0 1 0.99414,0.994141 0.9935109,0.9935109 0 0 1 -0.99414,0.992187 0.9935109,0.9935109 0 0 1 -0.9921876,-0.992187 0.9935109,0.9935109 0 0 1 0.9921876,-0.994141 z m -6.1250001,0.453125 4.1875,0 0,1.306641 -4.1875,0 0,-1.306641 z m 8.2343751,0 3.869141,0 0,1.306641 -3.869141,0 0,-1.306641 z m -8.2343751,1.8125 3.6953125,0 0.3632812,1.365234 1.6464844,-0.326172 0,0.470704 0.423828,0.255859 0.369141,-0.255859 0,-0.476563 1.876953,0.416016 0.324219,-1.449219 3.404297,0 0,4.128906 -3.546876,0 0,-0.638672 1.783204,0 0,-0.773437 -8.3242191,0 0,0.773437 1.7832031,0 0,0.638672 -3.7988281,0 0,-4.128906 z"
+       id="rect8070" />
+    <circle
+       cy="10.134058"
+       cx="10.870782"
+       id="circle8134"
+       style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.42499995;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:825.36413574;stroke-opacity:1"
+       r="0.36090249" />
+  </g>
+  <g
+     transform="translate(-20.216744,1.7110104)"
+     id="g8283">
+    <circle
+       style="fill:#7f7f7f"
+       cx="42.504063"
+       cy="5.8871179"
+       r="7.5"
+       id="circle6-3" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:15.89478779px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="39.416954"
+       y="11.608817"
+       id="text8279"><tspan
+         id="tspan8281"
+         x="39.416954"
+         y="11.608817"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-family:Titillium;-inkscape-font-specification:'Titillium Semi-Bold';fill:#ffffff">?</tspan></text>
+  </g>
 </svg>

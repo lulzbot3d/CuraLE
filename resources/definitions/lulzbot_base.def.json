@@ -1265,6 +1265,34 @@
     },
     "settings":
     {
+        "machine_settings":
+        {
+            "children":
+            {
+                "machine_nozzle_offset_x":
+                {
+                    "label": "Nozzle X Offset",
+                    "description": "The x-coordinate of the offset of the nozzle.",
+                    "unit": "mm",
+                    "type": "float",
+                    "default_value": 0,
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true,
+                    "enabled": "False"
+                },
+                "machine_nozzle_offset_y":
+                {
+                    "label": "Nozzle Y Offset",
+                    "description": "The y-coordinate of the offset of the nozzle.",
+                    "unit": "mm",
+                    "type": "float",
+                    "default_value": 0,
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true,
+                    "enabled": "False"
+                }
+            }
+        },
         "resolution":
         {
             "children":
@@ -1294,7 +1322,8 @@
                             "type": "float",
                             "maximum_value": "110",
                             "default_value": 50,
-                            "settable_per_mesh": false
+                            "settable_per_mesh": false,
+                            "resolve": "sum(extruderValues('material_part_removal_temperature')) / len(extruderValues('material_part_removal_temperature'))"
                         }
                     }
                 },
@@ -1333,7 +1362,7 @@
                         },
                         "material_wipe_temperature":
                         {
-                            "settable_per_extruder": false,
+                            "settable_per_extruder": true,
                             "minimum_value": "0",
                             "enabled": true,
                             "description": "The nozzle temperature used before nozzle wiping.",

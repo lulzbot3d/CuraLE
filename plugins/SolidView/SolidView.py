@@ -154,29 +154,29 @@ class SolidView(View):
         #if preference == "view/show_overhang": ## Todo: This a printer only setting. Should be removed from Uranium.
             #self._enabled_material = None
 
-    # def event(self, event):
-    #     if event.type == Event.ViewActivateEvent:
-    #         if not self._solid_pass:
-    #             # Currently the RenderPass constructor requires a size > 0
-    #             # This should be fixed in RenderPass's constructor.
-    #             self._solid_pass = SolidPass.SolidPass(2, 2)
-    #             self.getRenderer().addRenderPass(self._solid_pass)
-    #
-    #         if not self._solid_composite_shader:
-    #             self._solid_composite_shader = OpenGL.getInstance().createShaderProgram(os.path.join(PluginRegistry.getInstance().getPluginPath("SolidView"), "solid_composite.shader"))
-    #             theme = Application.getInstance().getTheme()
-    #             self._solid_composite_shader.setUniformValue("u_background_color", Color(*theme.getColor("viewport_background").getRgb()))
-    #             self._solid_composite_shader.setUniformValue("u_error_color", Color(*theme.getColor("xray_error").getRgb()))
-    #             self._solid_composite_shader.setUniformValue("u_outline_color", Color(*theme.getColor("model_selection_outline").getRgb()))
-    #
-    #         if not self._composite_pass:
-    #             self._composite_pass = self.getRenderer().getRenderPass("composite")
-    #
-    #         self._old_layer_bindings = self._composite_pass.getLayerBindings()
-    #         self._composite_pass.setLayerBindings(["default", "selection", "solid"])
-    #         self._old_composite_shader = self._composite_pass.getCompositeShader()
-    #         self._composite_pass.setCompositeShader(self._solid_composite_shader)
-    #
-    #     if event.type == Event.ViewDeactivateEvent:
-    #         self._composite_pass.setLayerBindings(self._old_layer_bindings)
-    #         self._composite_pass.setCompositeShader(self._old_composite_shader)
+    #def event(self, event):
+    #    if event.type == Event.ViewActivateEvent:
+    #        if not self._solid_pass:
+    #            # Currently the RenderPass constructor requires a size > 0
+    #            # This should be fixed in RenderPass's constructor.
+    #            self._solid_pass = SolidPass.SolidPass(2, 2)
+    #            self.getRenderer().addRenderPass(self._solid_pass)
+
+    #        if not self._solid_composite_shader:
+    #            self._solid_composite_shader = OpenGL.getInstance().createShaderProgram(os.path.join(PluginRegistry.getInstance().getPluginPath("SolidView"), "solid_composite.shader"))
+    #            theme = Application.getInstance().getTheme()
+    #            self._solid_composite_shader.setUniformValue("u_background_color", Color(*theme.getColor("viewport_background").getRgb()))
+    #            self._solid_composite_shader.setUniformValue("u_error_color", Color(*theme.getColor("xray_error").getRgb()))
+    #            self._solid_composite_shader.setUniformValue("u_outline_color", Color(*theme.getColor("model_selection_outline").getRgb()))
+
+    #        if not self._composite_pass:
+    #            self._composite_pass = self.getRenderer().getRenderPass("composite")
+
+    #        self._old_layer_bindings = self._composite_pass.getLayerBindings()
+    #        self._composite_pass.setLayerBindings(["default", "selection", "solid"])
+    #        self._old_composite_shader = self._composite_pass.getCompositeShader()
+    #        self._composite_pass.setCompositeShader(self._solid_composite_shader)
+
+    #    if event.type == Event.ViewDeactivateEvent:
+    #        self._composite_pass.setLayerBindings(self._old_layer_bindings)
+    #        self._composite_pass.setCompositeShader(self._old_composite_shader)

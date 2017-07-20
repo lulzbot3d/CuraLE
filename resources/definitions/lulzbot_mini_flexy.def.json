@@ -16,11 +16,11 @@
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "lulzbot_mini_start"
+            "default_value_from_file": "lulzbot_mini_flexy_start"
         },
         "machine_end_gcode":
         {
-            "default_value_from_file": "lulzbot_mini_end"
+            "default_value_from_file": "lulzbot_mini_flexy_end"
         }
     }
 }
