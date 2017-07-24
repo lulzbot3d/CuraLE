@@ -39,7 +39,7 @@ UM.Dialog
     Label
     {
         id: version
-	text: "Version %1\nCura %2\nUranium %3\nCuraEngine %4\nlibArcus %5\n Data %6\n Build %7".arg(Printer.getComponentVersion("cura_version")).arg(Printer.getComponentVersion("cura")).arg(Printer.getComponentVersion("uranium")).arg(Printer.getComponentVersion("engine")).arg(Printer.getComponentVersion("libarcus")).arg(Printer.getComponentVersion("binarydata")).arg(Printer.getComponentVersion("build"))
+	text: "Version %1\nCura %2\nUranium %3\nCuraEngine %4\nlibArcus %5\n Data %6\n Build %7\nlibSavitar %8".arg(Printer.getComponentVersion("cura_version")).arg(Printer.getComponentVersion("cura")).arg(Printer.getComponentVersion("uranium")).arg(Printer.getComponentVersion("engine")).arg(Printer.getComponentVersion("libarcus")).arg(Printer.getComponentVersion("binarydata")).arg(Printer.getComponentVersion("build")).arg(Printer.getComponentVersion("libsavitar"))
         font: UM.Theme.getFont("large")
         anchors.right : logo.right
         anchors.top: logo.bottom
