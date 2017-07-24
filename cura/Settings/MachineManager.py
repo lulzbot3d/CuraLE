@@ -24,6 +24,7 @@ from cura.PrinterOutputDevice import PrinterOutputDevice
 from cura.Settings.ExtruderManager import ExtruderManager
 
 from .CuraStackBuilder import CuraStackBuilder
+from cura.CuraActions import CuraActions
 
 from UM.i18n import i18nCatalog
 catalog = i18nCatalog("cura")
@@ -735,6 +736,27 @@ class MachineManager(QObject):
         for extruder_stack in stacks:
             if extruder_stack != self._active_container_stack and extruder_stack.getProperty(key, "value") != new_value:
                 extruder_stack.getTop().setProperty(key, "value", new_value)
+
+    @pyqtSlot()
+    def openCurrentMaterialInfo(self):
+        containers = ContainerRegistry.getInstance().findInstanceContainers(id=self.activeMaterialId)
+        if not containers or not self._active_container_stack:
+            return
+        material_container = containers[0]
+        link = material_container.getMetaDataEntry("info_link")
+        if link is not None:
+            Application.getInstance()._cura_actions.openLink(link)
+
+    @pyqtProperty(bool, notify=activeMaterialChanged)
+    def currentMaterialHasInfo(self):
+        containers = ContainerRegistry.getInstance().findInstanceContainers(id=self.activeMaterialId)
+        if not containers or not self._active_container_stack:
+            return
+        material_container = containers[0]
+        link = material_container.getMetaDataEntry("info_link")
+        if link is not None:
+            return True
+        return False
 
     ## Set the active material by switching out a container
     #  Depending on from/to material+current variant, a quality profile is chosen and set.

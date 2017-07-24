@@ -142,3 +142,8 @@ class CuraActions(QObject):
     def openMerchandisePage(self):
         event = CallFunctionEvent(self._openUrl, [QUrl("https://www.lulzbot.com/store/merchandise")], {})
         Application.getInstance().functionEvent(event)
+
+    @pyqtSlot(str)
+    def openLink(self, link):
+        event = CallFunctionEvent(self._openUrl, [QUrl(link)], {})
+        Application.getInstance().functionEvent(event)

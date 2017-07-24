@@ -240,7 +240,7 @@ Column
                 {
                     label = catalog.i18nc("@label","Material");
                 }
-                return "%1:".arg(label);
+                return "%1: %2".arg(label).arg(Cura.MachineManager.currentMaterialHasInfo?'<html><style type="text/css"></style><a href=" ">(Info)</a></html>':"")
             }
 
             anchors.verticalCenter: parent.verticalCenter
