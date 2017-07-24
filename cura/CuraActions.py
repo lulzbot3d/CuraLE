@@ -33,7 +33,7 @@ class CuraActions(QObject):
 
     @pyqtSlot()
     def openBugReportPage(self):
-        event = CallFunctionEvent(self._openUrl, [QUrl("http://github.com/Ultimaker/Cura/issues")], {})
+        event = CallFunctionEvent(self._openUrl, [QUrl("https://code.alephobjects.com/project/board/10/")], {})
         Application.getInstance().functionEvent(event)
 
     ##  Center all objects in the selection
