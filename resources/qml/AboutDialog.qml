@@ -116,10 +116,11 @@ UM.Dialog
             }
             Component.onCompleted:
             {
-                projectsModel.append({ name:"Cura", description: catalog.i18nc("@label", "Graphical user interface"), license: "AGPLv3", url: "https://github.com/Ultimaker/Cura" });
-                projectsModel.append({ name:"Uranium", description: catalog.i18nc("@label", "Application framework"), license: "AGPLv3", url: "https://github.com/Ultimaker/Uranium" });
-                projectsModel.append({ name:"CuraEngine", description: catalog.i18nc("@label", "GCode generator"), license: "AGPLv3", url: "https://github.com/Ultimaker/CuraEngine" });
-                projectsModel.append({ name:"libArcus", description: catalog.i18nc("@label", "Interprocess communication library"), license: "AGPLv3", url: "https://github.com/Ultimaker/libArcus" });
+                projectsModel.append({ name:"Cura", description: catalog.i18nc("@label", "Graphical user interface"), license: "AGPLv3", url: "https://code.alephobjects.com/source/Cura2/" });
+                projectsModel.append({ name:"Uranium", description: catalog.i18nc("@label", "Application framework"), license: "AGPLv3", url: "https://code.alephobjects.com/diffusion/U/" });
+                projectsModel.append({ name:"CuraEngine", description: catalog.i18nc("@label", "GCode generator"), license: "AGPLv3", url: "https://code.alephobjects.com/diffusion/CTE/" });
+                projectsModel.append({ name:"libArcus", description: catalog.i18nc("@label", "Interprocess communication library"), license: "AGPLv3", url: "https://code.alephobjects.com/source/arcus/" });
+                projectsModel.append({ name:"libSavitar", description: catalog.i18nc("@label", "Support library for handling 3MF files"), license: "AGPLv3", url: "https://code.alephobjects.com/source/savitar/" });
 
                 projectsModel.append({ name:"Python", description: catalog.i18nc("@label", "Programming language"), license: "Python", url: "http://python.org/" });
                 projectsModel.append({ name:"Qt5", description: catalog.i18nc("@label", "GUI framework"), license: "LGPLv3", url: "https://www.qt.io/" });
@@ -129,7 +130,6 @@ UM.Dialog
                 projectsModel.append({ name:"SciPy", description: catalog.i18nc("@label", "Support library for scientific computing "), license: "BSD-new", url: "https://www.scipy.org/" });
                 projectsModel.append({ name:"NumPy", description: catalog.i18nc("@label", "Support library for faster math"), license: "BSD", url: "http://www.numpy.org/" });
                 projectsModel.append({ name:"NumPy-STL", description: catalog.i18nc("@label", "Support library for handling STL files"), license: "BSD", url: "https://github.com/WoLpH/numpy-stl" });
-                projectsModel.append({ name:"libSavitar", description: catalog.i18nc("@label", "Support library for handling 3MF files"), license: "AGPLv3", url: "https://github.com/ultimaker/libsavitar" });
                 projectsModel.append({ name:"PySerial", description: catalog.i18nc("@label", "Serial communication library"), license: "Python", url: "http://pyserial.sourceforge.net/" });
                 projectsModel.append({ name:"python-zeroconf", description: catalog.i18nc("@label", "ZeroConf discovery library"), license: "LGPL", url: "https://github.com/jstasiak/python-zeroconf" });
                 projectsModel.append({ name:"Clipper", description: catalog.i18nc("@label", "Polygon clipping library"), license: "Boost", url: "http://www.angusj.com/delphi/clipper.php" });
