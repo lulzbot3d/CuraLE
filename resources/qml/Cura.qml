@@ -259,7 +259,8 @@ UM.MainWindow
                 MenuSeparator { }
                 MenuItem { action: Cura.Actions.about; }
             }
-
+// Commenting out Buy Now menu for now...
+/*
             Menu
             {
                 title: catalog.i18nc("@title:menu menubar:toplevel","&Buy now");
@@ -270,6 +271,7 @@ UM.MainWindow
                 MenuItem { action: Cura.Actions.buyParts; }
                 MenuItem { action: Cura.Actions.buyMerchandise; }
             }
+*/
         }
 
         UM.SettingPropertyProvider
