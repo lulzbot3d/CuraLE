@@ -222,6 +222,8 @@ Column
             rightMargin: UM.Theme.getSize("default_margin").width
         }
 
+        spacing: UM.Theme.getSize("default_margin").width
+
         Text
         {
             id: variantLabel
@@ -240,13 +242,34 @@ Column
                 {
                     label = catalog.i18nc("@label","Material");
                 }
-                return "%1: %2".arg(label).arg(Cura.MachineManager.currentMaterialHasInfo?'<html><style type="text/css"></style><a href=" ">(Info)</a></html>':"")
+                return "%1:".arg(label)
             }
 
             anchors.verticalCenter: parent.verticalCenter
-            width: parent.width * 0.45 - UM.Theme.getSize("default_margin").width
+            width: parent.width * 0.45 - UM.Theme.getSize("default_margin").width*3 - infoButton.width
             font: UM.Theme.getFont("default");
             color: UM.Theme.getColor("text");
+        }
+
+        Button
+        {
+            id: infoButton
+            onClicked: Cura.MachineManager.openCurrentMaterialInfo()
+            enabled: Cura.MachineManager.currentMaterialHasInfo
+
+            width: UM.Theme.getSize("setting_control").height
+            height: UM.Theme.getSize("setting_control").height
+
+            style: UM.Theme.styles.sidebar_header_button
+
+
+            UM.RecolorImage
+            {
+                anchors.fill: parent
+
+                source: UM.Theme.getIcon("notice")
+                color: parent.enabled ? UM.Theme.getColor("text") : UM.Theme.getColor("button_disabled")
+            }
         }
 
         Item
