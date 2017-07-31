@@ -6,7 +6,8 @@
     "metadata":
     {
         "type": "machine",
-        "visible": true
+        "visible": true,
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-flexystruder-tool-head-v2"
     },
     "overrides":
     {

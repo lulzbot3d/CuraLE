@@ -251,24 +251,30 @@ Column
             color: UM.Theme.getColor("text");
         }
 
-        Button
+        Item
         {
-            id: infoButton
-            onClicked: Cura.MachineManager.openCurrentMaterialInfo()
-            enabled: Cura.MachineManager.currentMaterialHasInfo
-
             width: UM.Theme.getSize("setting_control").height
             height: UM.Theme.getSize("setting_control").height
 
-            style: UM.Theme.styles.sidebar_header_button
-
-
-            UM.RecolorImage
+            Button
             {
+                id: infoButton
+                onClicked: Cura.MachineManager.openCurrentMaterialInfo()
+                visible: Cura.MachineManager.currentMaterialHasInfo
+
                 anchors.fill: parent
 
-                source: UM.Theme.getIcon("notice")
-                color: parent.enabled ? UM.Theme.getColor("text") : UM.Theme.getColor("button_disabled")
+                style: UM.Theme.styles.sidebar_header_button
+
+                tooltip: catalog.i18nc("@tooltip", "Material Info")
+
+                UM.RecolorImage
+                {
+                    anchors.fill: parent
+
+                    source: UM.Theme.getIcon("notice")
+                    color: UM.Theme.getColor("text")
+                }
             }
         }
 

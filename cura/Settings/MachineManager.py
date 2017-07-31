@@ -758,6 +758,32 @@ class MachineManager(QObject):
             return True
         return False
 
+    @pyqtSlot()
+    def openCurrentPrinterInfo(self):
+        link = self.activeMachine.getBottom().getMetaDataEntry("printer_info_link")
+        if link is not None:
+            Application.getInstance()._cura_actions.openLink(link)
+
+    @pyqtProperty(bool, notify=activeMaterialChanged)
+    def currentPrinterHasInfo(self):
+        link = self.activeMachine.getBottom().getMetaDataEntry("printer_info_link")
+        if link is not None:
+            return True
+        return False
+
+    @pyqtSlot()
+    def openCurrentToolheadInfo(self):
+        link = self.activeMachine.getBottom().getMetaDataEntry("toolhead_info_link")
+        if link is not None:
+            Application.getInstance()._cura_actions.openLink(link)
+
+    @pyqtProperty(bool, notify=activeMaterialChanged)
+    def currentToolheadHasInfo(self):
+        link = self.activeMachine.getBottom().getMetaDataEntry("toolhead_info_link")
+        if link is not None:
+            return True
+        return False
+
     ## Set the active material by switching out a container
     #  Depending on from/to material+current variant, a quality profile is chosen and set.
     @pyqtSlot(str)

@@ -23,7 +23,9 @@
             -77.5,
             158,
             -77.5
-        ]
+        ],
+        "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-mini",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-mini-single-extruder-tool-head-v2_1"
     },
     "overrides":
     {

@@ -12,7 +12,9 @@
             0,
             0
         ],
-        "visible": true
+        "visible": true,
+        "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-taz-6",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-single-extruder-tool-head-v21"
     },
     "overrides":
     {
