@@ -232,6 +232,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._gcode_position = 0
         self._print_start_time_100 = None
         self._print_start_time = time.time()
+        self.setTimeTotal(0)
+        self.setTimeElapsed(0)
         self._printingStarted()
 
         for i in range(0, 4):  # Push first 4 entries before accepting other inputs
@@ -252,6 +254,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._is_printing = False
         self._is_paused = False
         self._updateJobState("ready")
+        self.setTimeElapsed(0)
+        self.setTimeTotal(0)
 
     ##  Get the serial port string of this connection.
     #   \return serial port
@@ -786,6 +790,12 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             return
         if self._gcode_position == 100:
             self._print_start_time_100 = time.time()
+        if self._gcode_position % 100 == 0:
+            elapsed = time.time() - self._print_start_time
+            self.setTimeElapsed(elapsed)
+            progress = self._gcode_position / len(self._gcode)
+            if progress > 0:
+                self.setTimeTotal(elapsed / progress)
         line = self._gcode[self._gcode_position]
 
         if ";" in line:
