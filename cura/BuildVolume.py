@@ -5,7 +5,6 @@ from cura.Settings.ExtruderManager import ExtruderManager
 from UM.Settings.ContainerRegistry import ContainerRegistry
 from UM.i18n import i18nCatalog
 from UM.Scene.Platform import Platform
-from UM.Scene.Toolhead import Toolhead
 from UM.Scene.Iterator.BreadthFirstIterator import BreadthFirstIterator
 from UM.Scene.SceneNode import SceneNode
 from UM.Application import Application
@@ -82,7 +81,6 @@ class BuildVolume(SceneNode):
         self._extra_z_clearance = 0.0
         self._adhesion_type = None
         self._platform = Platform(self)
-        self._toolhead = Toolhead(self)
 
         self._global_container_stack = None
         Application.getInstance().globalContainerStackChanged.connect(self._onStackChanged)
