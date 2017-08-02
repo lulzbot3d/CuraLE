@@ -17,13 +17,6 @@
         "preferred_quality": "normal",
         "file_formats": "text/x-gcode",
         "visible": true,
-        "toolhead": "mini_toolhead.stl",
-        "toolhead_offset":
-        [
-            -77.5,
-            158,
-            -77.5
-        ],
         "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-mini",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-mini-single-extruder-tool-head-v2_1"
     },
