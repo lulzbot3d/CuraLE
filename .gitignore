@@ -54,6 +54,5 @@ CuraVersion.py
 cmake_install.cmake
 
 #Debug
-*.gcode
 run.sh
 
