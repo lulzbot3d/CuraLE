@@ -491,7 +491,7 @@ Item
         supportExtruderCombobox.updateCurrentColor();
     }
 
-
+/*
     Item
     {
         id: tipsCell
@@ -516,6 +516,7 @@ Item
             onLinkActivated: Qt.openUrlExternally(link)
         }
     }
+*/
 
     UM.SettingPropertyProvider
     {
