@@ -681,7 +681,10 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
         # Wrap a MarlinSerialProtocol object around the serial port
         # for serial error correction.
-        serial_proto = MarlinSerialProtocol(self._serial)
+        def onResendCallback(line):
+            Logger.log("i", "USBPrinterOutputDevice: Resending from: %d" % (line))
+            self.messageFromPrinter.emit("USBPrinterOutputDevice: Resending from: %d" % (line))
+        serial_proto = MarlinSerialProtocol(self._serial, onResendCallback)
 
         temperature_request_timeout = time.time()
         while self._connection_state == ConnectionState.connected:
