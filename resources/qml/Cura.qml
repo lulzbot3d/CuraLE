@@ -20,11 +20,6 @@ UM.MainWindow
     viewportRect: Qt.rect(0, 0, (base.width - sidebar.width) / base.width, 1.0)
     property bool monitoringPrint: false
 
-    function onExitRequested()
-    {
-        confirmationDialog.visible = true
-    }
-
     MessageDialog
     {
         id: confirmationDialog

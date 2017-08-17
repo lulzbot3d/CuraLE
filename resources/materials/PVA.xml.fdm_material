@@ -3,16 +3,15 @@
   <metadata>
     <name>
       <brand>Generic</brand>
-      <material>ABS (Chroma Strand Labs)</material>
+      <material>PVA</material>
       <color>Generic</color>
-      <category>Intermediate</category>
     </name>
     <GUID>506c9f0d-e3aa-4bd4-b2d2-23e2425b1aa9</GUID>
     <version>1</version>
-    <color_code>#a6acff</color_code>
+    <color_code>#8DB6CD</color_code>
   </metadata>
   <properties>
-    <density>1.05</density>
+    <density>1.25</density>
     <diameter>2.85</diameter>
   </properties>
   <settings>
@@ -20,17 +19,11 @@
     <setting key="heated bed temperature">60</setting>
     <setting key="standby temperature">175</setting>
     <setting key="soften temperature">175</setting>
-    <setting key="probe temperature">170</setting>
-    <setting key="wipe temperature">170</setting>
-    <setting key="part removal temperature">50</setting>
-    <machine>
-      <machine_identifier product="lulzbot_mini"/>
-    </machine>
+    <setting key="probe temperature">140</setting>
+    <setting key="wipe temperature">140</setting>
+    <setting key="part removal temperature">45</setting>
     <machine>
       <machine_identifier product="lulzbot_taz6_dual_v3"/>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_taz6"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz6_dual_v2"/>
