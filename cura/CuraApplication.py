@@ -1464,6 +1464,13 @@ class CuraApplication(QtApplication):
     def addNonSliceableExtension(self, extension):
         self._non_sliceable_extensions.append(extension)
 
+    ##  Display text on the splash screen.
+    def showSplashMessage(self, message):
+        splash = self.getSplashScreen()
+        if splash:
+            splash.setText(message)
+            self.processEvents()
+
     @pyqtSlot(str, result=bool)
     def checkIsValidProjectFile(self, file_url):
         """
