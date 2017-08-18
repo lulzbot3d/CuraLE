@@ -19,7 +19,7 @@ from UM.Message import Message
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtCore import QUrl, pyqtSlot, pyqtSignal, pyqtProperty
 
-from pyMarlin import MarlinSerialProtocol
+from .pyMarlin import MarlinSerialProtocol
 
 from UM.i18n import i18nCatalog
 catalog = i18nCatalog("cura")
