@@ -108,6 +108,13 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._error_message = None
         self._error_code = 0
 
+        #Update number of extruders
+        self._num_extruders = Application.getInstance().getGlobalContainerStack().getProperty("machine_extruder_count", "value")
+        self._hotend_temperatures = [0] * self._num_extruders
+        self._target_hotend_temperatures = [0] * self._num_extruders
+        self._material_ids = [""] * self._num_extruders
+        self._hotend_ids = [""] * self._num_extruders
+
     onError = pyqtSignal()
 
     firmwareUpdateComplete = pyqtSignal()
