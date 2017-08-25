@@ -454,6 +454,12 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
         Logger.log("d", "Setting hotend %s temperature to %s", index, temperature)
         self._sendCommand("M104 T%s S%s" % (index, temperature))
 
+    def _setTargetHotendTemperatureAndWait(self, index, temperature):
+        if index == -1:
+            index = self._current_hotend
+        Logger.log("d", "Setting hotend %s temperature to %s", index, temperature)
+        self._sendCommand("M109 T%s S%s" % (index, temperature))
+
     def _setHeadPosition(self, x, y , z, speed):
         self._sendCommand("G0 X%s Y%s Z%s F%s" % (x, y, z, speed))
 
@@ -466,6 +472,12 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
     def _setHeadZ(self, z, speed):
         self._sendCommand("G0 Y%s F%s" % (z, speed))
 
+    def _homeX(self):
+        self._sendCommand("G28 X")
+
+    def _homeY(self):
+        self._sendCommand("G28 Y")
+
     def _homeHead(self):
         self._sendCommand("G28")
 
@@ -476,6 +488,14 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
         self._sendCommand("G91")
         self._sendCommand("G0 X%s Y%s Z%s F%s" % (x, y, z, speed))
         self._sendCommand("G90")
+
+    def _extrude(self, e, speed):
+        self._sendCommand("G91")
+        self._sendCommand("G0 E%s F%s" % (e, speed))
+        self._sendCommand("G90")
+
+    def _setHotend(self, num):
+        self._sendCommand("T%i" % num)
 
     ##  Handler for all requests that have finished.
     def _onRequestFinished(self, reply):
