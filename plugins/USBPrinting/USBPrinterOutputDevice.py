@@ -95,10 +95,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._y_max_endstop_pressed = False
         self._z_max_endstop_pressed = False
 
-        # In order to keep the connection alive we request the temperature every so often from a different extruder.
-        # This index is the extruder we requested data from the last time.
-        self._temperature_requested_extruder_index = 0
-
         self._current_z = 0
 
         self._updating_firmware = False
@@ -109,12 +105,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._error_message = None
         self._error_code = 0
 
-        #Update number of extruders
-        self._num_extruders = Application.getInstance().getGlobalContainerStack().getProperty("machine_extruder_count", "value")
-        self._hotend_temperatures = [0] * self._num_extruders
-        self._target_hotend_temperatures = [0] * self._num_extruders
-        self._material_ids = [""] * self._num_extruders
-        self._hotend_ids = [""] * self._num_extruders
 
     onError = pyqtSignal()
 
@@ -724,11 +714,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                return
 
             if time.time() > temperature_request_timeout and not self._heatup_state:
-                if self._num_extruders > 1:
-                    self._temperature_requested_extruder_index = (self._temperature_requested_extruder_index + 1) % self._num_extruders
-                    serial_proto.sendCmdUnreliable("M105 T%d" % (self._temperature_requested_extruder_index))
-                else:
-                    serial_proto.sendCmdUnreliable("M105")
+                serial_proto.sendCmdUnreliable("M105")
                 temperature_request_timeout = time.time() + 5
 
             if line.startswith(b"Error:"):
@@ -749,20 +735,53 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                     if not self.hasError():
                         self._setErrorState(line[6:])
 
-            elif b" T:" in line or line.startswith(b"T:"):  # Temperature message
-                try:
-                    self._setHotendTemperature(self._temperature_requested_extruder_index, float(re.search(b"T: *([0-9\.]*)", line).group(1)))
-                except:
-                    pass
-                if b"B:" in line:  # Check if it's a bed temperature
-                    try:
-                        self._setBedTemperature(float(re.search(b"B: *([0-9\.]*)", line).group(1)))
-                    except Exception as e:
-                        pass
-                #TODO: temperature changed callback
-            elif b"_min" in line or b"_max" in line:
+            if b"_min" in line or b"_max" in line:
                 tag, value = line.split(b":", 1)
                 self._setEndstopState(tag,(b"H" in value or b"TRIGGERED" in value))
+
+            def parseTemperature(line, label, setter1, setter2):
+                """Marlin reports current and target temperatures as 'T0:100.00 /100.00'.
+                   This extracts the temps and calls setter functions with the values."""
+                m = re.search(b"%s: *([0-9\.]*)(?: */([0-9\.]*))?" % label, line)
+                try:
+                    if m and m.group(1):
+                        setter1(float(m.group(1)))
+                    if m and m.group(2):
+                        setter2(float(m.group(2)))
+                except ValueError:
+                    pass
+
+            if b"T:" in line:
+                # We got a temperature report line. If we have a dual extruder,
+                # Marlin reports temperatures independently as T0: and T1:,
+                # otherwise look for T:. Bed temperatures will be reported as B:
+                if b" T0:" in line and b" T1:" in line:
+                    if self._num_extruders != 2:
+                        self._num_extruders = 2
+                        PrinterOutputDevice._setNumberOfExtruders(self, self._num_extruders)
+                    parseTemperature(line, b"T0",
+                        lambda x: self._setHotendTemperature(0,x),
+                        lambda x: self._emitTargetHotendTemperatureChanged(0,x)
+                    )
+                    parseTemperature(line, b"T1",
+                        lambda x: self._setHotendTemperature(1,x),
+                        lambda x: self._emitTargetHotendTemperatureChanged(1,x)
+                    )
+                else:
+                    if self._num_extruders != 1:
+                        self._num_extruders = 1
+                        PrinterOutputDevice._setNumberOfExtruders(self, self._num_extruders)
+                    parseTemperature(line, b"T",
+                        lambda x: self._setHotendTemperature(0,x),
+                        lambda x: self._emitTargetHotendTemperatureChanged(0,x)
+                    )
+                if b"B:" in line:  # Check if it's a bed temperature
+                    parseTemperature(line, b"B",
+                        lambda x: self._setBedTemperature(x),
+                        lambda x: self._emitTargetBedTemperatureChanged(x)
+                    )
+                #TODO: temperature changed callback
+
             if line not in [b"", b"ok\n"]:
                 #self.messageFromPrinter.emit(line.decode("utf-8").replace("\n", ""))
                 self.messageFromPrinter.emit(line.decode("latin-1").replace("\n", ""))
@@ -778,11 +797,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
             # Request the temperature on comm timeout (every 2 seconds) when we are not printing.)
             if line == b"":
-                if self._num_extruders > 1:
-                    self._temperature_requested_extruder_index = (self._temperature_requested_extruder_index + 1) % self._num_extruders
-                    serial_proto.sendCmdUnreliable("M105 T%d" % self._temperature_requested_extruder_index)
-                else:
-                    serial_proto.sendCmdUnreliable("M105")
+                serial_proto.sendCmdUnreliable("M105")
 
         Logger.log("i", "Printer connection listen thread stopped for %s" % self._serial_port)
 

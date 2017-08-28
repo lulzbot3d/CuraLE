@@ -30,11 +30,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
         self._container_registry = ContainerRegistry.getInstance()
         self._target_bed_temperature = 0
         self._bed_temperature = 0
-        self._num_extruders = 1
-        self._hotend_temperatures = [0] * self._num_extruders
-        self._target_hotend_temperatures = [0] * self._num_extruders
-        self._material_ids = [""] * self._num_extruders
-        self._hotend_ids = [""] * self._num_extruders
+        self._setNumberOfExtruders(1)
         self._progress = 0
         self._head_x = 0
         self._head_y = 0
@@ -215,6 +211,13 @@ class PrinterOutputDevice(QObject, OutputDevice):
     @pyqtSlot(int)
     def setTargetBedTemperature(self, temperature):
         self._setTargetBedTemperature(temperature)
+        self._emitTargetBedTemperatureChanged(temperature)
+
+    ## Emits a signal indicating that the target temperature
+    #  for the bed has changed. This will be called when we
+    #  request a temperature change, or when Marlin reports a
+    #  new target bed temperature.
+    def _emitTargetBedTemperatureChanged(self, temperature):
         if self._target_bed_temperature != temperature:
             self._target_bed_temperature = temperature
             self.targetBedTemperatureChanged.emit()
@@ -351,6 +354,15 @@ class PrinterOutputDevice(QObject, OutputDevice):
     def targetBedTemperature(self):
         return self._target_bed_temperature
 
+    ## Emits a signal indicating that the target temperature
+    #  for a hotend has changed. This will be called when we
+    #  request a temperature change, or when Marlin reports a
+    #  new target hotend temperature.
+    def _emitTargetHotendTemperatureChanged(self, index, temperature):
+        if self._target_hotend_temperatures[index] != temperature:
+            self._target_hotend_temperatures[index] = temperature
+            self.targetHotendTemperaturesChanged.emit()
+
     ##  Set the (target) hotend temperature
     #   This function is "final" (do not re-implement)
     #   /param index the index of the hotend that needs to change temperature
@@ -359,10 +371,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
     @pyqtSlot(int, int)
     def setTargetHotendTemperature(self, index, temperature):
         self._setTargetHotendTemperature(index, temperature)
-
-        if self._target_hotend_temperatures[index] != temperature:
-            self._target_hotend_temperatures[index] = temperature
-            self.targetHotendTemperaturesChanged.emit()
+        self._emitTargetHotendTemperatureChanged(index, temperature)
 
     ##  Implementation function of setTargetHotendTemperature.
     #   /param index Index of the hotend to set the temperature of
@@ -379,10 +388,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
     @pyqtSlot(int, int)
     def setTargetHotendTemperatureAndWait(self, index, temperature):
         self._setTargetHotendTemperatureAndWait(index, temperature)
-
-        if self._target_hotend_temperatures[index] != temperature:
-            self._target_hotend_temperatures[index] = temperature
-            self.targetHotendTemperaturesChanged.emit()
+        self._emitTargetHotendTemperatureChanged(index, temperature)
 
     ##  Implementation function of setTargetHotendTemperatureAndWait.
     #   /param index Index of the hotend to set the temperature of
@@ -721,6 +727,12 @@ class PrinterOutputDevice(QObject, OutputDevice):
             self._progress = progress
             self.progressChanged.emit()
 
+    def _setNumberOfExtruders(self, extruders):
+        self._num_extruders = extruders
+        self._hotend_temperatures = [0] * self._num_extruders
+        self._target_hotend_temperatures = [0] * self._num_extruders
+        self._material_ids = [""] * self._num_extruders
+        self._hotend_ids = [""] * self._num_extruders
 
 ##  The current processing state of the backend.
 class ConnectionState(IntEnum):
