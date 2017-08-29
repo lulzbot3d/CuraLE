@@ -5,10 +5,13 @@ G90        ;absolute positioning
 M107       ;start with the fan off
 G28 X0 Y0  ;move X/Y to min endstops
 G28 Z0     ;move Z to min endstops
-M117 Heating...                     ; progress indicator message on LCD
-M109 R{material_print_temperature}  ; wait for extruder to reach printing temp
-M190 S{material_bed_temperature}    ; wait for bed to reach printing temp
 G1 Z15.0 F{speed_travel} ;move the platform down 15mm
+M117 Heating...                     ; progress indicator message on LCD
+M104 S{material_print_temperature_0} T0 ; set extruder temp
+M104 S{material_print_temperature_1} T1; set extruder temp
+M109 R{material_print_temperature_0} T0 ; set extruder temp and wait
+M109 R{material_print_temperature_1} T1; set extruder temp and wait
+M190 S{material_bed_temperature}    ; wait for bed to reach printing temp
 T1                      ;Switch to the 2nd extruder
 G92 E0                  ;zero the extruded length
 G1 F100 E10             ;extrude 10mm of feed stock
