@@ -114,6 +114,7 @@ class MachineManager(QObject):
     activeVariantChanged = pyqtSignal()
     activeQualityChanged = pyqtSignal()
     activeStackChanged = pyqtSignal()  # Emitted whenever the active stack is changed (ie: when changing between extruders, changing a profile, but not when changing a value)
+    toolheadChanged = pyqtSignal()
 
     globalValueChanged = pyqtSignal()  # Emitted whenever a value inside global container is changed.
     activeStackValueChanged = pyqtSignal()  # Emitted whenever a value inside the active stack is changed.
@@ -276,6 +277,7 @@ class MachineManager(QObject):
         self._auto_hotends_changed = {} #Processed all of them now.
 
     def _onGlobalContainerChanged(self):
+        old_stack_base_machine = None
         if self._global_container_stack:
             try:
                 self._global_container_stack.nameChanged.disconnect(self._onMachineNameChanged)
@@ -300,10 +302,14 @@ class MachineManager(QObject):
                     extruder_stack.propertyChanged.disconnect(self._onPropertyChanged)
                     extruder_stack.containersChanged.disconnect(self._onInstanceContainersChanged)
 
+            old_stack_base_machine = self._global_container_stack.getMetaDataEntry("base_machine", None)
+
         self._global_container_stack = Application.getInstance().getGlobalContainerStack()
         self._active_container_stack = self._global_container_stack
 
         self.globalContainerChanged.emit()
+        if old_stack_base_machine is not None and self._global_container_stack.getMetaDataEntry("base_machine", None) == old_stack_base_machine:
+            self.toolheadChanged.emit()
 
         if self._global_container_stack:
             Preferences.getInstance().setValue("cura/active_machine", self._global_container_stack.getId())

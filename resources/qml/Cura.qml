@@ -931,7 +931,7 @@ UM.MainWindow
     Connections
     {
         target: Cura.MachineManager
-        onGlobalContainerChanged:
+        onToolheadChanged:
         {
             var id = Cura.MachineManager.activeDefinitionId
             machineChangeToolHeadWizard.start(id)
