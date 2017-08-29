@@ -478,6 +478,9 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
     def _homeY(self):
         self._sendCommand("G28 Y")
 
+    def _homeXY(self):
+        self._sendCommand("G28 XY")
+
     def _homeHead(self):
         self._sendCommand("G28")
 

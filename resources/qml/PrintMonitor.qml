@@ -1330,7 +1330,7 @@ ScrollView
 
 	                        onClicked:
 	                        {
-	                            connectedPrinter.homeHead()
+                                connectedPrinter.homeXY()
 	                        }
 	                    }
 	                }
@@ -1438,7 +1438,7 @@ ScrollView
 
 	                Label
 	                {
-	                    text: "Home X:"
+                        text: "Home X:  "
 	                    color: UM.Theme.getColor("setting_control_text")
 	                    font: UM.Theme.getFont("default")
 
@@ -1471,7 +1471,7 @@ ScrollView
 
 	                Label
 	                {
-	                    text: "Home Y:"
+                        text: "Home Y:  "
 	                    color: UM.Theme.getColor("setting_control_text")
 	                    font: UM.Theme.getFont("default")
 	                }
@@ -1490,6 +1490,39 @@ ScrollView
 	                }
 
 	            }
+
+                Row
+                {
+                    id: homeAllRow
+
+                    anchors.leftMargin: UM.Theme.getSize("default_margin").width/2
+                    anchors.top: homeYRow.bottom
+                    anchors.topMargin: UM.Theme.getSize("default_margin").height/4
+
+                    spacing: 4
+                    width: parent.width
+
+                    Label
+                    {
+                        text: "Home All:"
+                        color: UM.Theme.getColor("setting_control_text")
+                        font: UM.Theme.getFont("default")
+                    }
+
+                    Button
+                    {
+                        //text: "Y"
+                        width: UM.Theme.getSize("section").height
+                        height: UM.Theme.getSize("section").height
+                        iconSource: UM.Theme.getIcon("all_home");
+
+                        onClicked:
+                        {
+                            connectedPrinter.homeHead()
+                        }
+                    }
+
+                }
 
 
 	            // Extrusion

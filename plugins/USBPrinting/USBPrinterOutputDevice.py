@@ -153,6 +153,9 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     def _homeBed(self):
         self._sendCommand("G28 Z")
 
+    def _homeXY(self):
+        self._sendCommand("G28 XY")
+
     ##  A name for the device.
     @pyqtProperty(str, constant = True)
     def name(self):

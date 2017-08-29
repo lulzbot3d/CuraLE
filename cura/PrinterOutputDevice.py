@@ -306,6 +306,19 @@ class PrinterOutputDevice(QObject, OutputDevice):
     def _homeY(self):
         Logger.log("w", "_homeY is not implemented by this output device")
 
+    ##  Home the headY of the connected printer
+    #   This function is "final" (do not re-implement)
+    #   /sa _homeHead implementation function
+    @pyqtSlot()
+    def homeXY(self):
+        self._homeXY()
+
+    ##  Home the headY of the connected printer
+    #   This is an implementation function and should be overriden by children.
+    def _homeXY(self):
+        Logger.log("w", "_homeXY is not implemented by this output device")
+
+
     ##  Home the bed of the connected printer
     #   This function is "final" (do not re-implement)
     #   /sa _homeBed implementation function
