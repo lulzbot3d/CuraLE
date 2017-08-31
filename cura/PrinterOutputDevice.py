@@ -10,6 +10,7 @@ from enum import IntEnum  # For the connection state tracking.
 from UM.Settings.ContainerRegistry import ContainerRegistry
 from UM.Logger import Logger
 from UM.Signal import signalemitter
+from UM.Application import Application
 
 i18n_catalog = i18nCatalog("cura")
 
