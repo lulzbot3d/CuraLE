@@ -1592,9 +1592,9 @@
                 },
                 "material_flow_temp_graph":
                 {
-                    "label": "Flow Temperature Graph",
+                    "label": "Flow Temperature Graph [[mm³,°C]]",
                     "description": "Data linking material flow (in mm3 per second) to temperature (degrees Celsius).",
-                    "unit": "[[mm³,°C]]",
+                    "unit": "  ",
                     "type": "str",
                     "default_value": "[[3.5,200],[7.0,240]]",
                     "enabled": "False and machine_nozzle_temp_enabled and material_flow_dependent_temperature",
