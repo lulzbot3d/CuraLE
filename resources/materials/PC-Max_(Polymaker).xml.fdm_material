@@ -17,7 +17,7 @@
     <diameter>2.85</diameter>
   </properties>
   <settings>
-    <setting key="print temperature">235</setting>
+    <setting key="print temperature">255</setting>
     <setting key="heated bed temperature">80</setting>
     <setting key="standby temperature">175</setting>
     <setting key="soften temperature">160</setting>
@@ -25,31 +25,31 @@
     <setting key="wipe temperature">160</setting>
     <setting key="part removal temperature">0</setting>
     <machine>
-      <machine_identifier product="lulzbot_taz6_aero"/>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_mini"/>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_taz6_dual_v2"/>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_taz6_moarstruder"/>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_taz6_dual_v3"/>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_taz6"/>
+      <machine_identifier product="lulzbot_mini_aerostruder"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz5"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_mini_aero"/>
+      <machine_identifier product="lulzbot_taz6_dual_v3"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_dual_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_aerostruder"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz5_moarstruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_moarstruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini"/>
     </machine>
   </settings>
 </fdmmaterial>
