@@ -159,7 +159,8 @@ Rectangle
                             anchors.right: downArrow.left;
                             anchors.rightMargin: control.rightMargin;
                             anchors.verticalCenter: parent.verticalCenter;
-                            font: UM.Theme.getFont("large")
+                            //font: UM.Theme.getFont("large")
+                            font: UM.Theme.getFont("large_printer_button")
                         }
                     }
                     label: Label{}
