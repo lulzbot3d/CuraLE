@@ -409,7 +409,7 @@ Column
         {
             id: globalProfileSelection
             text: {
-                var result = Cura.MachineManager.activeQualityName;
+                var result = Cura.MachineManager.currentQualityName;
                 if (Cura.MachineManager.activeQualityLayerHeight > 0) {
                     result += " <font color=\"" + UM.Theme.getColor("text_detail") + "\">";
                     result += " - ";
@@ -422,7 +422,7 @@ Column
 
             width: parent.width * 0.55 + UM.Theme.getSize("default_margin").width
             height: UM.Theme.getSize("setting_control").height
-            tooltip: Cura.MachineManager.activeQualityName
+            tooltip: Cura.MachineManager.currentQualityName
             style: UM.Theme.styles.sidebar_header_button
             activeFocusOnPress: true;
             property var valueWarning: ! Cura.MachineManager.isActiveQualitySupported
