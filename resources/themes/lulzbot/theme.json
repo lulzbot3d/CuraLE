@@ -1,7 +1,7 @@
 {
     "fonts": {
         "large_printer_button": {
-            "size": 1.0,
+            "size": 0.9,
             "bold": true,
             "family": "Lato"
         },
