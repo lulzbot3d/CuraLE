@@ -59,18 +59,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         # response. If the baudrate is correct, this should make sense, else we get giberish.
         self._required_responses_auto_baud = 3
 
-        # List of gcode lines to be printed
-        self._gcode = []
-
-        ## Queue for commands that need to be send. Used when command is sent when a print is active.
-        self._command_queue = queue.Queue()
-
-        # Lock object for syncronizing accesses to self._gcode and self._command_queue
-        # which are shared between the UI thread and the _listen_thread thread.
-        self._mutex = threading.Lock()
-
-        self._listen_thread = threading.Thread(target=self._listen)
-        self._listen_thread.daemon = True
+        self._listen_thread = ListenThread(self)
 
         self._update_firmware_thread = threading.Thread(target= self._updateFirmware)
         self._update_firmware_thread.daemon = True
@@ -87,9 +76,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._print_start_time = None
         self._print_start_time_100 = None
 
-        ## Keep track where in the provided g-code the print is
-        self._gcode_position = 0
-
         # Check if endstops are ever pressed (used for first run)
         self._x_min_endstop_pressed = False
         self._y_min_endstop_pressed = False
@@ -98,8 +84,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._x_max_endstop_pressed = False
         self._y_max_endstop_pressed = False
         self._z_max_endstop_pressed = False
-
-        self._current_z = 0
 
         self._updating_firmware = False
 
@@ -228,13 +212,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             result = Error.PRINTER_NOT_CONNECTED
             return result
 
-        self._mutex.acquire();
-        self._gcode.clear()
-        for layer in gcode_list:
-            self._gcode.extend(layer.split("\n"))
-        self._mutex.release();
+        self._listen_thread.printGCode(gcode_list)
 
-        self._gcode_position = 0
         self._print_start_time_100 = None
         self._print_start_time = time.time()
         self.setTimeTotal(0)
@@ -592,14 +571,9 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 pass
             self._serial.close()
 
-        self._listen_thread = threading.Thread(target = self._listen)
-        self._listen_thread.daemon = True
+        self._listen_thread = ListenThread(self)
         self._serial = None
         self._serial_port = None
-        self._mutex.acquire()
-        while not self._command_queue.empty():
-            self._command_queue.get()
-        self._mutex.release()
         self._is_printing = False
         self._is_paused = False
 
@@ -648,9 +622,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         if self._isInfiniteWait(cmd):
             cmd = None
         if cmd:
-            self._mutex.acquire()
-            self._command_queue.put(cmd)
-            self._mutex.release()
+            self._listen_thread.send(cmd)
 
     ##  Set the error state with a message.
     #   \param error String with the error message.
@@ -705,171 +677,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     messageFromPrinter = pyqtSignal(str)
     errorFromPrinter = pyqtSignal(str)
 
-    ##  Listen thread function.
-    def _listen(self):
-        Logger.log("i", "Printer connection listen thread started for %s" % self._serial_port)
-
-        # Wrap a MarlinSerialProtocol object around the serial port
-        # for serial error correction.
-        def onResendCallback(line):
-            Logger.log("i", "USBPrinterOutputDevice: Resending from: %d" % (line))
-            self.messageFromPrinter.emit("USBPrinterOutputDevice: Resending from: %d" % (line))
-        serial_proto = MarlinSerialProtocol(self._serial, onResendCallback)
-
-        temperature_request_timeout = time.time()
-        while self._connection_state == ConnectionState.connected:
-            try:
-                if serial_proto.clearToSend():
-                    self._mutex.acquire()
-                    hasQueuedCommands = not self._command_queue.empty()
-                    self._mutex.release()
-                    if hasQueuedCommands:
-                        self._mutex.acquire()
-                        cmd = self._command_queue.get()
-                        self._mutex.release()
-                        serial_proto.sendCmdUnreliable(cmd)
-                        if self._isHeaterCommand(cmd):
-                            self._heatup_wait_start_time = time.time()
-                    elif self._is_printing and not self._is_paused:
-                        self._sendNextGcodeLine(serial_proto)
-
-                line = serial_proto.readline()
-            except Exception as e:
-                Logger.log("e", "Unexpected error while accessing serial port. %s" % e)
-                self._setErrorState("Printer has been disconnected")
-                self.close()
-
-            if line is None:
-                break  # None is only returned when something went wrong. Stop listening
-
-            if b"PROBE FAIL CLEAN NOZZLE" in line:
-               self.errorFromPrinter.emit( "Wipe nozzle failed." )
-               Logger.log("d", "---------------PROBE FAIL CLEAN NOZZLE" )
-               self._error_message = Message(catalog.i18nc("@info:status", "Wipe nozzle failed."))
-               self._error_message.show()
-               return
-
-            if time.time() > temperature_request_timeout and not self._heatup_state:
-                serial_proto.sendCmdUnreliable("M105")
-                temperature_request_timeout = time.time() + 5
-
-            if line.startswith(b"Error:"):
-                #if b"PROBE FAIL CLEAN NOZZLE" in line:
-                #   self._error_message = Message(catalog.i18nc("@info:status", "Wipe nozzle failed."))
-                #   self._error_message.show()
-                #   QMessageBox.critical(None, "Error wiping nozzle", "Probe fail clean nozzle"
-
-                # Oh YEAH, consistency.
-                # Marlin reports a MIN/MAX temp error as "Error:x\n: Extruder switched off. MAXTEMP triggered !\n"
-                # But a bed temp error is reported as "Error: Temperature heated bed switched off. MAXTEMP triggered !!"
-                # So we can have an extra newline in the most common case. Awesome work people.
-                if re.match(b"Error:[0-9]\n", line):
-                    line = line.rstrip() + self._readline()
-
-                # Skip the communication errors, as those get corrected.
-                if b"Extruder switched off" in line or b"Temperature heated bed switched off" in line or b"Something is wrong, please turn off the printer." in line:
-                    if not self.hasError():
-                        self._setErrorState(line[6:])
-
-            if b"_min" in line or b"_max" in line:
-                tag, value = line.split(b":", 1)
-                self._setEndstopState(tag,(b"H" in value or b"TRIGGERED" in value))
-
-            def parseTemperature(line, label, setter1, setter2):
-                """Marlin reports current and target temperatures as 'T0:100.00 /100.00'.
-                   This extracts the temps and calls setter functions with the values."""
-                m = re.search(b"%s: *([0-9\.]*)(?: */([0-9\.]*))?" % label, line)
-                try:
-                    if m and m.group(1):
-                        setter1(float(m.group(1)))
-                    if m and m.group(2):
-                        setter2(float(m.group(2)))
-                except ValueError:
-                    pass
-
-            if b"T:" in line:
-                # We got a temperature report line. If we have a dual extruder,
-                # Marlin reports temperatures independently as T0: and T1:,
-                # otherwise look for T:. Bed temperatures will be reported as B:
-                if b" T0:" in line and b" T1:" in line:
-                    if self._num_extruders != 2:
-                        self._num_extruders = 2
-                        PrinterOutputDevice._setNumberOfExtruders(self, self._num_extruders)
-                    parseTemperature(line, b"T0",
-                        lambda x: self._setHotendTemperature(0,x),
-                        lambda x: self._emitTargetHotendTemperatureChanged(0,x)
-                    )
-                    parseTemperature(line, b"T1",
-                        lambda x: self._setHotendTemperature(1,x),
-                        lambda x: self._emitTargetHotendTemperatureChanged(1,x)
-                    )
-                else:
-                    if self._num_extruders != 1:
-                        self._num_extruders = 1
-                        PrinterOutputDevice._setNumberOfExtruders(self, self._num_extruders)
-                    parseTemperature(line, b"T",
-                        lambda x: self._setHotendTemperature(0,x),
-                        lambda x: self._emitTargetHotendTemperatureChanged(0,x)
-                    )
-                if b"B:" in line:  # Check if it's a bed temperature
-                    parseTemperature(line, b"B",
-                        lambda x: self._setBedTemperature(x),
-                        lambda x: self._emitTargetBedTemperatureChanged(x)
-                    )
-                #TODO: temperature changed callback
-
-            if line not in [b"", b"ok\n"]:
-                #self.messageFromPrinter.emit(line.decode("utf-8").replace("\n", ""))
-                self.messageFromPrinter.emit(line.decode("latin-1").replace("\n", ""))
-
-            # first_cmd = self._printer_buffer[0] if len(self._printer_buffer) > 0 else ""
-            # if (first_cmd.startswith("M109") or first_cmd.startswith("M190")) and time.time() > self._heatup_wait_start_time + 600:
-            #     line = b"ok"
-            # elif line == b"" and time.time() > ok_timeout and len(self._printer_buffer) > 0:
-            #     line = b"ok"  # Force a timeout (basically, send next command)
-
-            # Request the temperature on comm timeout (every 2 seconds) when we are not printing.)
-            if line == b"":
-                serial_proto.sendCmdUnreliable("M105")
-
-        Logger.log("i", "Printer connection listen thread stopped for %s" % self._serial_port)
-
-    ##  Send next Gcode in the gcode list
-    def _sendNextGcodeLine(self, serial):
-        self._mutex.acquire();
-        gcodeLen  = len(self._gcode)
-        line = self._gcode[self._gcode_position]
-        self._mutex.release();
-
-        if self._gcode_position >= gcodeLen:
-            return
-        if self._gcode_position == 100:
-            self._print_start_time_100 = time.time()
-        if self._gcode_position % 100 == 0:
-            elapsed = time.time() - self._print_start_time
-            self.setTimeElapsed(elapsed)
-            progress = self._gcode_position / gcodeLen
-            if progress > 0:
-                self.setTimeTotal(elapsed / progress)
-
-        # Don't send the M0 or M1 to the machine, as M0 and M1 are handled as
-        # an LCD menu pause.
-        try:
-            if line == "M0" or line == "M1":
-                self._setJobState("pause")
-                line = "M105"  # Don't send the M0 or M1 to the machine, as M0 and M1 are handled as an LCD menu pause.
-            if ("G0" in line or "G1" in line) and "Z" in line:
-                self._current_z = float(re.search("Z([-0-9\.]*)", line).group(1))
-        except Exception as e:
-            Logger.log("e", "Unexpected error with printer connection, could not parse current Z: %s: %s" % (e, line))
-            self._setErrorState("Unexpected error: %s" %e)
-        if self._gcode_position == 0:
-            serial.restart()
-        serial.sendCmdReliable(line)
-        self._gcode_position += 1
-        self.setProgress((self._gcode_position / gcodeLen) * 100)
-        self.progressChanged.emit()
-
     ##  Set the state of the print.
     #   Sent from the print monitor
     def _setJobState(self, job_state):
@@ -901,85 +708,17 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         retract_amount = settings.getProperty("retraction_amount", "value")
         moveZ = 10.0
 
+        self._listen_thread.pause(start_gcode_lines, parkX, parkY, maxZ, moveZ, retract_amount)
+
         Logger.log("d", "Pausing print")
-        if self._gcode_position - 5 > start_gcode_lines:  # Substract 5 because of the marlin queue
-            x = None
-            y = None
-            e = None
-            f = None
-            for i in range(self._gcode_position - 1, start_gcode_lines, -1):
-                self._mutex.acquire()
-                line = self._gcode[i]
-                self._mutex.release()
-
-                if ('G0' in line or 'G1' in line) and 'X' in line and x is None:
-                    x = float(re.search('X(-?[0-9\.]*)', line).group(1))
-                if ('G0' in line or 'G1' in line) and 'Y' in line and y is None:
-                    y = float(re.search('Y(-?[0-9\.]*)', line).group(1))
-                if ('G0' in line or 'G1' in line) and 'E' in line and e is None:
-                    e = float(re.search('E(-?[0-9\.]*)', line).group(1))
-                if ('G0' in line or 'G1' in line) and 'F' in line and f is None:
-                    f = float(re.search('F(-?[0-9\.]*)', line).group(1))
-                if x is not None and y is not None and f is not None and e is not None:
-                    break
-            if f is None:
-                f = 1200
-
-            if x is not None and y is not None:
-                # Set E relative positioning
-                self.sendCommand("M83")
-
-                # Retract 1mm
-                retract = ("E-%f" % retract_amount)
-
-                # Move the toolhead up
-                newZ = self._current_z + moveZ
-                if maxZ < newZ:
-                    newZ = maxZ
-
-                if newZ > self._current_z:
-                    move = ("Z%f " % newZ)
-                else:  # No z movement, too close to max height
-                    move = ""
-                retract_and_move = "G1 {} {}F120".format(retract, move)
-                self.sendCommand(retract_and_move)
-
-                # Move the head away
-                self.sendCommand("G1 X%f Y%f F9000" % (parkX, parkY))
-
-                # Disable the E steppers
-                self.sendCommand("M84 E0")
-                # Set E absolute positioning
-                self.sendCommand("M82")
-
-                self._pausePosition = (x, y, self._current_z, f, e)
 
     def _resumePrint(self):
         if not self._is_printing or not self._is_paused:
             return
-        if self._pausePosition:
-            settings = Application.getInstance().getGlobalContainerStack()
-            retract_amount = settings.getProperty("retraction_amount", "value")
-            # Set E relative positioning
-            self.sendCommand("M83")
 
-            # Prime the nozzle when changing filament
-            self.sendCommand("G1 E%f F120" % retract_amount)  # Push the filament out
-            self.sendCommand("G1 E-%f F120" % retract_amount)  # retract again
-
-            # Position the toolhead to the correct position again
-            self.sendCommand("G1 X%f Y%f Z%f F%d" % self._pausePosition[0:4])
-
-            # Prime the nozzle again
-            self.sendCommand("G1 E%f F120" % retract_amount)
-            # Set proper feedrate
-            self.sendCommand("G1 F%d" % (self._pausePosition[3]))
-            # Set E absolute position to cancel out any extrude/retract that occured
-            self.sendCommand("G92 E%f" % (self._pausePosition[4]))
-            # Set E absolute positioning
-            self.sendCommand("M82")
-            Logger.log("d", "Print resumed")
-            self._pausePosition = None
+        settings = Application.getInstance().getGlobalContainerStack()
+        retract_amount = settings.getProperty("retraction_amount", "value")
+        self._listen_thread.resume(retract_amount)
 
 
     ##  Set the progress of the print.
@@ -988,7 +727,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._progress = (progress / max_progress) * 100  # Convert to scale of 0-100
         if self._progress == 100:
             # Printing is done, reset progress
-            self._gcode_position = 0
             self.setProgress(0)
             self._printingStopped()
         self.progressChanged.emit()
@@ -996,13 +734,9 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     ##  Cancel the current print. Printer connection wil continue to listen.
     def cancelPrint(self):
         self._printingStopped()
-        self._gcode_position = 0
+
         self.setProgress(0)
-        self._mutex.acquire();
-        self._gcode = []
-        while not self._command_queue.empty():
-            self._command_queue.get()
-        self._mutex.release();
+        self._listen_thread.cancelPrint()
 
         # Turn off temperatures, fan and steppers
         self._sendCommand("M140 S0")
@@ -1061,3 +795,292 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         Logger.log("i", "Cancelling pre-heating of the bed.")
         self._setTargetBedTemperature(0)
         self.preheatBedRemainingTimeChanged.emit()
+
+class ListenThread:
+    def __init__(self, parent):
+        # Queue for commands that are injected while a
+        # print is active.
+        self._command_queue = queue.Queue()
+
+        # List of gcode lines to be printed
+        self._gcode = []
+        self._gcode_position = 0
+
+        # Information needed to pause a print
+        self._current_z = 0
+        self._pausePosition = None
+
+        # TODO: Any access to the parent object from the ListenThread is probably
+        # not thread-safe and ought to be reviewed at some point.
+        self._parent = parent
+
+        # Lock object for syncronizing accesses to self._gcode and self._command_queue
+        # which are shared between the UI thread and the _listen_thread thread.
+        self._mutex = threading.Lock()
+
+        # Create the thread object
+
+        self._thread = threading.Thread(target=self._entry_point)
+        self._thread.daemon = True
+
+    def start(self):
+        self._thread.start()
+
+    def join(self):
+        self._thread.join()
+
+    def printGCode(self, gcode_list):
+        self._mutex.acquire();
+        self._gcode.clear()
+        for layer in gcode_list:
+            self._gcode.extend(layer.split("\n"))
+        self._gcode_position = 0
+        self._mutex.release();
+
+    def cancelPrint(self):
+        self._mutex.acquire();
+        self._gcode = []
+        while not self._command_queue.empty():
+            self._command_queue.get()
+        self._gcode_position = 0
+        self._mutex.release();
+
+    def sendCommand(self, cmd):
+        self._mutex.acquire()
+        self._command_queue.put(cmd)
+        self._mutex.release()
+
+    def _entry_point(self):
+        Logger.log("i", "Printer connection listen thread started for %s" % self._parent._serial_port)
+
+        # Wrap a MarlinSerialProtocol object around the serial port
+        # for serial error correction.
+        def onResendCallback(line):
+            Logger.log("i", "USBPrinterOutputDevice: Resending from: %d" % (line))
+            self._parent.messageFromPrinter.emit("USBPrinterOutputDevice: Resending from: %d" % (line))
+        serial_proto = MarlinSerialProtocol(self._parent._serial, onResendCallback)
+
+        temperature_request_timeout = time.time()
+        while self._parent._connection_state == ConnectionState.connected:
+            try:
+                if serial_proto.clearToSend():
+                    self._mutex.acquire()
+                    hasQueuedCommands = not self._command_queue.empty()
+                    self._mutex.release()
+                    if hasQueuedCommands:
+                        self._mutex.acquire()
+                        cmd = self._command_queue.get()
+                        self._mutex.release()
+                        serial_proto.sendCmdUnreliable(cmd)
+                        if self._parent._isHeaterCommand(cmd):
+                            self._parent._heatup_wait_start_time = time.time()
+                    elif self._parent._is_printing and not self._parent._is_paused:
+                        self._sendNextGcodeLine(serial_proto)
+
+                line = serial_proto.readline()
+            except Exception as e:
+                Logger.log("e", "Unexpected error while accessing serial port. %s" % e)
+                self._parent._setErrorState("Printer has been disconnected")
+                self._parent.close()
+                line = b""
+
+            if line is None:
+                break  # None is only returned when something went wrong. Stop listening
+
+            if b"PROBE FAIL CLEAN NOZZLE" in line:
+               self._parent.errorFromPrinter.emit( "Wipe nozzle failed." )
+               Logger.log("d", "---------------PROBE FAIL CLEAN NOZZLE" )
+               self._parent._error_message = Message(catalog.i18nc("@info:status", "Wipe nozzle failed."))
+               self._parent._error_message.show()
+               return
+
+            if time.time() > temperature_request_timeout and not self._parent._heatup_state:
+                serial_proto.sendCmdUnreliable("M105")
+                temperature_request_timeout = time.time() + 5
+
+            if line.startswith(b"Error:"):
+                #if b"PROBE FAIL CLEAN NOZZLE" in line:
+                #   self._error_message = Message(catalog.i18nc("@info:status", "Wipe nozzle failed."))
+                #   self._error_message.show()
+                #   QMessageBox.critical(None, "Error wiping nozzle", "Probe fail clean nozzle"
+
+                # Oh YEAH, consistency.
+                # Marlin reports a MIN/MAX temp error as "Error:x\n: Extruder switched off. MAXTEMP triggered !\n"
+                # But a bed temp error is reported as "Error: Temperature heated bed switched off. MAXTEMP triggered !!"
+                # So we can have an extra newline in the most common case. Awesome work people.
+                if re.match(b"Error:[0-9]\n", line):
+                    line = line.rstrip() + self._readline()
+
+                # Skip the communication errors, as those get corrected.
+                if b"Extruder switched off" in line or b"Temperature heated bed switched off" in line or b"Something is wrong, please turn off the printer." in line:
+                    if not self._parent.hasError():
+                        self._parent._setErrorState(line[6:])
+
+            if b"_min" in line or b"_max" in line:
+                tag, value = line.split(b":", 1)
+                self._parent._setEndstopState(tag,(b"H" in value or b"TRIGGERED" in value))
+
+            def parseTemperature(line, label, setter1, setter2):
+                """Marlin reports current and target temperatures as 'T0:100.00 /100.00'.
+                   This extracts the temps and calls setter functions with the values."""
+                m = re.search(b"%s: *([0-9\.]*)(?: */([0-9\.]*))?" % label, line)
+                try:
+                    if m and m.group(1):
+                        setter1(float(m.group(1)))
+                    if m and m.group(2):
+                        setter2(float(m.group(2)))
+                except ValueError:
+                    pass
+
+            if b"T:" in line:
+                # We got a temperature report line. If we have a dual extruder,
+                # Marlin reports temperatures independently as T0: and T1:,
+                # otherwise look for T:. Bed temperatures will be reported as B:
+                if b" T0:" in line and b" T1:" in line:
+                    if self._parent._num_extruders != 2:
+                        self._parent._num_extruders = 2
+                        PrinterOutputDevice._setNumberOfExtruders(self._parent, self._parent._num_extruders)
+                    parseTemperature(line, b"T0",
+                        lambda x: self._parent._setHotendTemperature(0,x),
+                        lambda x: self._parent._emitTargetHotendTemperatureChanged(0,x)
+                    )
+                    parseTemperature(line, b"T1",
+                        lambda x: self._parent._setHotendTemperature(1,x),
+                        lambda x: self._parent._emitTargetHotendTemperatureChanged(1,x)
+                    )
+                else:
+                    if self._parent._num_extruders != 1:
+                        self._parent._num_extruders = 1
+                        PrinterOutputDevice._setNumberOfExtruders(self._parent, self._parent._num_extruders)
+                    parseTemperature(line, b"T",
+                        lambda x: self._parent._setHotendTemperature(0,x),
+                        lambda x: self._parent._emitTargetHotendTemperatureChanged(0,x)
+                    )
+                if b"B:" in line:  # Check if it's a bed temperature
+                    parseTemperature(line, b"B",
+                        lambda x: self._parent._setBedTemperature(x),
+                        lambda x: self._parent._emitTargetBedTemperatureChanged(x)
+                    )
+                #TODO: temperature changed callback
+
+            if line not in [b"", b"ok\n"]:
+                #self._parent.messageFromPrinter.emit(line.decode("utf-8").replace("\n", ""))
+                self._parent.messageFromPrinter.emit(line.decode("latin-1").replace("\n", ""))
+
+            # Request the temperature on comm timeout (every 2 seconds) when we are not printing.)
+            if line == b"":
+                serial_proto.sendCmdUnreliable("M105")
+
+        Logger.log("i", "Printer connection listen thread stopped for %s" % self._parent._serial_port)
+
+    ##  Send next Gcode in the gcode list
+    def _sendNextGcodeLine(self, serial):
+        self._mutex.acquire();
+        gcodeLen  = len(self._gcode)
+        line = self._gcode[self._gcode_position]
+        self._mutex.release();
+
+        if self._gcode_position >= gcodeLen:
+            return
+        if self._gcode_position == 100:
+            self._parent._print_start_time_100 = time.time()
+        if self._gcode_position % 100 == 0:
+            elapsed = time.time() - self._parent._print_start_time
+            self._parent.setTimeElapsed(elapsed)
+            progress = self._gcode_position / gcodeLen
+            if progress > 0:
+                self._parent.setTimeTotal(elapsed / progress)
+
+        # Don't send the M0 or M1 to the machine, as M0 and M1 are handled as
+        # an LCD menu pause.
+        try:
+            if line == "M0" or line == "M1":
+                self._parent._setJobState("pause")
+                line = "M105"  # Don't send the M0 or M1 to the machine, as M0 and M1 are handled as an LCD menu pause.
+            if ("G0" in line or "G1" in line) and "Z" in line:
+                self._parent._current_z = float(re.search("Z([-0-9\.]*)", line).group(1))
+        except Exception as e:
+            Logger.log("e", "Unexpected error with printer connection, could not parse current Z: %s: %s" % (e, line))
+            self._setErrorState("Unexpected error: %s" %e)
+        if self._gcode_position == 0:
+            serial.restart()
+        serial.sendCmdReliable(line)
+        self._gcode_position += 1
+        self._parent.setProgress((self._gcode_position / gcodeLen) * 100)
+        self._parent.progressChanged.emit()
+
+    def pause(self, start_gcode_lines, parkX, parkY, maxZ, moveZ, retract_amount):
+        if self._gcode_position - 5 > start_gcode_lines:  # Substract 5 because of the marlin queue
+            x = None
+            y = None
+            e = None
+            f = None
+            for i in range(self._gcode_position - 1, start_gcode_lines, -1):
+                self._mutex.acquire()
+                line = self._gcode[i]
+                self._mutex.release()
+
+                if ('G0' in line or 'G1' in line) and 'X' in line and x is None:
+                    x = float(re.search('X(-?[0-9\.]*)', line).group(1))
+                if ('G0' in line or 'G1' in line) and 'Y' in line and y is None:
+                    y = float(re.search('Y(-?[0-9\.]*)', line).group(1))
+                if ('G0' in line or 'G1' in line) and 'E' in line and e is None:
+                    e = float(re.search('E(-?[0-9\.]*)', line).group(1))
+                if ('G0' in line or 'G1' in line) and 'F' in line and f is None:
+                    f = float(re.search('F(-?[0-9\.]*)', line).group(1))
+                if x is not None and y is not None and f is not None and e is not None:
+                    break
+            if f is None:
+                f = 1200
+
+            if x is not None and y is not None:
+                # Set E relative positioning
+                self.sendCommand("M83")
+
+                # Retract 1mm
+                retract = ("E-%f" % retract_amount)
+
+                # Move the toolhead up
+                newZ = self._current_z + moveZ
+                if maxZ < newZ:
+                    newZ = maxZ
+
+                if newZ > self._current_z:
+                    move = ("Z%f " % newZ)
+                else:  # No z movement, too close to max height
+                    move = ""
+                retract_and_move = "G1 {} {}F120".format(retract, move)
+                self.sendCommand(retract_and_move)
+
+                # Move the head away
+                self.sendCommand("G1 X%f Y%f F9000" % (parkX, parkY))
+
+                # Disable the E steppers
+                self.sendCommand("M84 E0")
+                # Set E absolute positioning
+                self.sendCommand("M82")
+
+                self._pausePosition = (x, y, self._current_z, f, e)
+
+    def resume(self, retract_amount):
+        if self._pausePosition:
+            # Set E relative positioning
+            self.sendCommand("M83")
+
+            # Prime the nozzle when changing filament
+            self.sendCommand("G1 E%f F120" % retract_amount)  # Push the filament out
+            self.sendCommand("G1 E-%f F120" % retract_amount)  # retract again
+
+            # Position the toolhead to the correct position again
+            self.sendCommand("G1 X%f Y%f Z%f F%d" % self._pausePosition[0:4])
+
+            # Prime the nozzle again
+            self.sendCommand("G1 E%f F120" % retract_amount)
+            # Set proper feedrate
+            self.sendCommand("G1 F%d" % (self._pausePosition[3]))
+            # Set E absolute position to cancel out any extrude/retract that occured
+            self.sendCommand("G92 E%f" % (self._pausePosition[4]))
+            # Set E absolute positioning
+            self.sendCommand("M82")
+            Logger.log("d", "Print resumed")
+            self._pausePosition = None
