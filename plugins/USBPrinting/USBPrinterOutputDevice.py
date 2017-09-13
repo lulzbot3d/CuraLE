@@ -59,6 +59,16 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         # response. If the baudrate is correct, this should make sense, else we get giberish.
         self._required_responses_auto_baud = 3
 
+        # List of gcode lines to be printed
+        self._gcode = []
+
+        ## Queue for commands that need to be send. Used when command is sent when a print is active.
+        self._command_queue = queue.Queue()
+
+        # Lock object for syncronizing accesses to self._gcode and self._command_queue
+        # which are shared between the UI thread and the _listen_thread thread.
+        self._mutex = threading.Lock()
+
         self._listen_thread = threading.Thread(target=self._listen)
         self._listen_thread.daemon = True
 
@@ -68,9 +78,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
         self._heatup_wait_start_time = time.time()
         self._heatup_state = False
-
-        ## Queue for commands that need to be send. Used when command is sent when a print is active.
-        self._command_queue = queue.Queue()
 
         self._write_requested = False
         self._is_printing = False
@@ -82,9 +89,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
         ## Keep track where in the provided g-code the print is
         self._gcode_position = 0
-
-        # List of gcode lines to be printed
-        self._gcode = []
 
         # Check if endstops are ever pressed (used for first run)
         self._x_min_endstop_pressed = False
@@ -224,9 +228,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             result = Error.PRINTER_NOT_CONNECTED
             return result
 
+        self._mutex.acquire();
         self._gcode.clear()
         for layer in gcode_list:
             self._gcode.extend(layer.split("\n"))
+        self._mutex.release();
 
         self._gcode_position = 0
         self._print_start_time_100 = None
@@ -427,7 +433,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
             Logger.log("d", "installed firmware: "+reply.decode())
             tags = ["FIRMWARE_NAME", "SOURCE_CODE_URL", "PROTOCOL_VERSION", "MACHINE_TYPE", "EXTRUDER_COUNT", "UUID"]
-            
+
 
             return True
 
@@ -590,8 +596,10 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._listen_thread.daemon = True
         self._serial = None
         self._serial_port = None
+        self._mutex.acquire()
         while not self._command_queue.empty():
             self._command_queue.get()
+        self._mutex.release()
         self._is_printing = False
         self._is_paused = False
 
@@ -640,7 +648,9 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         if self._isInfiniteWait(cmd):
             cmd = None
         if cmd:
+            self._mutex.acquire()
             self._command_queue.put(cmd)
+            self._mutex.release()
 
     ##  Set the error state with a message.
     #   \param error String with the error message.
@@ -708,16 +718,19 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
         temperature_request_timeout = time.time()
         while self._connection_state == ConnectionState.connected:
-
             try:
                 if serial_proto.clearToSend():
-                    if not self._command_queue.empty():
-                        while not self._command_queue.empty():
-                            cmd = self._command_queue.get()
-                            serial_proto.sendCmdUnreliable(cmd)
-                            if self._isHeaterCommand(cmd):
-                                self._heatup_wait_start_time = time.time()
-                    elif self._is_printing:
+                    self._mutex.acquire()
+                    hasQueuedCommands = not self._command_queue.empty()
+                    self._mutex.release()
+                    if hasQueuedCommands:
+                        self._mutex.acquire()
+                        cmd = self._command_queue.get()
+                        self._mutex.release()
+                        serial_proto.sendCmdUnreliable(cmd)
+                        if self._isHeaterCommand(cmd):
+                            self._heatup_wait_start_time = time.time()
+                    elif self._is_printing and not self._is_paused:
                         self._sendNextGcodeLine(serial_proto)
 
                 line = serial_proto.readline()
@@ -815,9 +828,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             # elif line == b"" and time.time() > ok_timeout and len(self._printer_buffer) > 0:
             #     line = b"ok"  # Force a timeout (basically, send next command)
 
-            if b"ok" in line and self._is_paused:
-                line = b""  # Force getting temperature as keep alive
-
             # Request the temperature on comm timeout (every 2 seconds) when we are not printing.)
             if line == b"":
                 serial_proto.sendCmdUnreliable("M105")
@@ -826,17 +836,21 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     ##  Send next Gcode in the gcode list
     def _sendNextGcodeLine(self, serial):
-        if self._gcode_position >= len(self._gcode):
+        self._mutex.acquire();
+        gcodeLen  = len(self._gcode)
+        line = self._gcode[self._gcode_position]
+        self._mutex.release();
+
+        if self._gcode_position >= gcodeLen:
             return
         if self._gcode_position == 100:
             self._print_start_time_100 = time.time()
         if self._gcode_position % 100 == 0:
             elapsed = time.time() - self._print_start_time
             self.setTimeElapsed(elapsed)
-            progress = self._gcode_position / len(self._gcode)
+            progress = self._gcode_position / gcodeLen
             if progress > 0:
                 self.setTimeTotal(elapsed / progress)
-        line = self._gcode[self._gcode_position]
 
         # Don't send the M0 or M1 to the machine, as M0 and M1 are handled as
         # an LCD menu pause.
@@ -853,7 +867,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             serial.restart()
         serial.sendCmdReliable(line)
         self._gcode_position += 1
-        self.setProgress((self._gcode_position / len(self._gcode)) * 100)
+        self.setProgress((self._gcode_position / gcodeLen) * 100)
         self.progressChanged.emit()
 
     ##  Set the state of the print.
@@ -894,7 +908,10 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             e = None
             f = None
             for i in range(self._gcode_position - 1, start_gcode_lines, -1):
+                self._mutex.acquire()
                 line = self._gcode[i]
+                self._mutex.release()
+
                 if ('G0' in line or 'G1' in line) and 'X' in line and x is None:
                     x = float(re.search('X(-?[0-9\.]*)', line).group(1))
                 if ('G0' in line or 'G1' in line) and 'Y' in line and y is None:
@@ -981,10 +998,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._printingStopped()
         self._gcode_position = 0
         self.setProgress(0)
+        self._mutex.acquire();
         self._gcode = []
-
         while not self._command_queue.empty():
             self._command_queue.get()
+        self._mutex.release();
 
         # Turn off temperatures, fan and steppers
         self._sendCommand("M140 S0")

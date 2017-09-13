@@ -87,7 +87,7 @@ class MarlinSerialProtocol:
     self.marlinBufSize          = 4
     self.marlinReserve          = 1
     self.history                = GCodeHistory()
-    self.asap              = []
+    self.asap                   = []
     self.slow_commands          = re.compile(b"M109|M190|G28|G29")
     self.slow_timeout           = 400
     self.fast_timeout           = 15
