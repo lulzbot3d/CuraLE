@@ -228,8 +228,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         for layer in gcode_list:
             self._gcode.extend(layer.split("\n"))
 
-        # Reset line number. If this is not done, first line is sometimes ignored
-        self._gcode.insert(0, "M110")
         self._gcode_position = 0
         self._print_start_time_100 = None
         self._print_start_time = time.time()

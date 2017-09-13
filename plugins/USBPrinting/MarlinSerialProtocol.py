@@ -111,6 +111,7 @@ class MarlinSerialProtocol:
     return b"N%d%s*%d" % (position, cmd, self._computeChecksum(data))
 
   def _sendImmediate(self, cmd):
+      self._adjustStallWatchdogTimer(cmd)
       self.serial.write(cmd + b'\n')
       self.serial.flush()
       self.pendingOk += 1
@@ -161,15 +162,17 @@ class MarlinSerialProtocol:
        okays are lost in transmission. To recover, we send Marlin an invalid
        command (no line number, with an asterisk). One it requests a resend,
        we will back into a known good state."""
-    if line == b"":
+    if line == b"" and self.pendingOk > 0:
       if self.stallCountdown > 0:
         self.stallCountdown -= 1
       else:
-        self.stallCountdown = 2
+        self.stallCountdown = self.fast_timeout
         self._sendImmediate(b"\nM105*\n")
-    else:
-      estimated_duration = self.slow_timeout if self.slow_commands.search(line) else self.fast_timeout
-      self.stallCountdown = max(estimated_duration, self.stallCountdown-1)
+
+  def _adjustStallWatchdogTimer(self, cmd):
+    """Adjusts the stallWatchdogTimer based on the command which is being sent"""
+    estimated_duration = self.slow_timeout if self.slow_commands.search(cmd) else self.fast_timeout
+    self.stallCountdown = max(estimated_duration, self.stallCountdown-1)
 
   def _resendFrom(self, position):
     """If Marlin requests a resend, we need to backtrack."""
