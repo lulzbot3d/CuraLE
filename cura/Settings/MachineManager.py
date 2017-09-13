@@ -439,8 +439,8 @@ class MachineManager(QObject):
         if self._global_container_stack.getTop().findInstances():
             return True
 
-        stacks = list(ExtruderManager.getInstance().getMachineExtruders(self._global_container_stack.getId()))
-        for stack in stacks:
+        stack = ExtruderManager.getInstance().getActiveExtruderStack()
+        if stack:
             if stack.getTop().findInstances():
                 return True
 

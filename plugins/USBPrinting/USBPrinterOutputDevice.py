@@ -415,6 +415,22 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     ##  Private connect function run by thread. Can be started by calling connect.
     def _connect_thread_function(self):
+        def _checkFirmware():
+            self._sendCommand("M115")
+            timeout = time.time() + 2
+            reply = self._readline()
+            while b"FIRMWARE_NAME" not in reply and time.time() < timeout:
+                reply = self._readline()
+
+            if b"FIRMWARE_NAME" not in reply:
+                return False
+
+            Logger.log("d", "installed firmware: "+reply.decode())
+            tags = ["FIRMWARE_NAME", "SOURCE_CODE_URL", "PROTOCOL_VERSION", "MACHINE_TYPE", "EXTRUDER_COUNT", "UUID"]
+            
+
+            return True
+
         def _onNoResponseReceived():
             Logger.log("d", "No response from serial connection received.")
             # Something went wrong with reading, could be that close was called.
@@ -423,6 +439,12 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self._serial_port = None
 
         def _onConnectionSucceeded():
+            if not _checkFirmware():
+                Logger.log("d", "Wrong firmware installed")
+                # Something went wrong with reading, could be that close was called.
+                self.setConnectionState(ConnectionState.closed)
+                self.setConnectionText(catalog.i18nc("@info:status", "Wrong firmware"))
+                return
             self.setConnectionState(ConnectionState.connected)
             self.setConnectionText(catalog.i18nc("@info:status", "Connected via USB"))
             self._listen_thread.start()  # Start listening
@@ -939,8 +961,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self.sendCommand("G92 E%f" % (self._pausePosition[4]))
             # Set E absolute positioning
             self.sendCommand("M82")
-        Logger.log("d", "Print resumed")
-        self._pausePosition = None
+            Logger.log("d", "Print resumed")
+            self._pausePosition = None
 
 
     ##  Set the progress of the print.

@@ -429,12 +429,17 @@ class ContainerManager(QObject):
 
         self._machine_manager.blurSettings.emit()
 
-        for stack in ExtruderManager.getInstance().getActiveGlobalAndExtruderStacks():
+        stacks = [global_stack]
+        s = ExtruderManager.getInstance().getActiveExtruderStack()
+        if s is not None:
+            stacks.append(s)
+            
+        for stack in stacks:
             # Find the quality_changes container for this stack and merge the contents of the top container into it.
             quality_changes = stack.qualityChanges
             if not quality_changes or quality_changes.isReadOnly():
                 Logger.log("e", "Could not update quality of a nonexistant or read only quality profile in stack %s", stack.getId())
-                continue
+                return False
 
             self._performMerge(quality_changes, stack.getTop())
 
@@ -450,7 +455,8 @@ class ContainerManager(QObject):
         send_emits_containers = []
 
         # Go through global and extruder stacks and clear their topmost container (the user settings).
-        for stack in ExtruderManager.getInstance().getActiveGlobalAndExtruderStacks():
+        stack = ExtruderManager.getInstance().getActiveExtruderStack()
+        if stack:
             container = stack.getTop()
             container.clear()
             send_emits_containers.append(container)
@@ -482,7 +488,15 @@ class ContainerManager(QObject):
         unique_name = self._container_registry.uniqueName(base_name)
 
         # Go through the active stacks and create quality_changes containers from the user containers.
-        for stack in ExtruderManager.getInstance().getActiveGlobalAndExtruderStacks():
+        stacks = [global_stack]
+        s = ExtruderManager.getInstance().getActiveExtruderStack()
+        if s is not None:
+            stacks.append(s)
+
+        new_changes = self._createQualityChanges(global_stack.quality, unique_name,
+                                                 Application.getInstance().getGlobalContainerStack().getBottom(),
+                                                 None)
+        for stack in stacks:
             user_container = stack.getTop()
             quality_container = stack.quality
             quality_changes_container = stack.qualityChanges
@@ -490,15 +504,11 @@ class ContainerManager(QObject):
                 Logger.log("w", "No quality or quality changes container found in stack %s, ignoring it", stack.getId())
                 continue
 
-            extruder_id = None if stack is global_stack else QualityManager.getInstance().getParentMachineDefinition(stack.getBottom()).getId()
-            new_changes = self._createQualityChanges(quality_container, unique_name,
-                                                     Application.getInstance().getGlobalContainerStack().getBottom(),
-                                                     extruder_id)
             self._performMerge(new_changes, quality_changes_container, clear_settings = False)
             self._performMerge(new_changes, user_container)
-
-            self._container_registry.addContainer(new_changes)
             stack.replaceContainer(stack.getContainerIndex(quality_changes_container), new_changes)
+
+        self._container_registry.addContainer(new_changes)
 
         self._machine_manager.activeQualityChanged.emit()
         return True

@@ -37,7 +37,7 @@ UM.MainWindow
         {
             Cura.MachineManager.printerOutputDevices[0].setJobState("abort")
             Printer.exitAllowed = true
-            base.close()
+            CuraApplication.closeApplication();
         }
     }
 
@@ -699,7 +699,7 @@ UM.MainWindow
     Connections
     {
         target: Cura.Actions.quit
-        onTriggered: base.close()
+        onTriggered: CuraApplication.closeApplication();
     }
 
     Connections
