@@ -49,23 +49,16 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._serial_port = serial_port
         self._error_state = None
 
-        self._connect_thread = threading.Thread(target = self._connect_thread_function)
-        self._connect_thread.daemon = True
-
         self._end_stop_thread = None
         self._poll_endstop = False
 
-        # The baud checking is done by sending a number of m105 commands to the printer and waiting for a readable
-        # response. If the baudrate is correct, this should make sense, else we get giberish.
-        self._required_responses_auto_baud = 3
-
+        self._connect_thread         = ConnectThread(self)
         self._listen_thread          = ListenThread(self)
         self._update_firmware_thread = UpdateFirmwareThread(self)
 
         self._heatup_wait_start_time = time.time()
         self._heatup_state = False
 
-        self._write_requested = False
         self._is_printing = False
         self._is_paused = False
 
@@ -85,7 +78,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._error_message = None
         self._error_code = 0
 
-
     onError = pyqtSignal()
 
     firmwareUpdateComplete = pyqtSignal()
@@ -95,46 +87,46 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     def _setTargetBedTemperature(self, temperature):
         Logger.log("d", "Setting bed temperature to %s", temperature)
-        self._sendCommand("M140 S%s" % temperature)
+        self.sendCommand("M140 S%s" % temperature)
 
     def _setTargetHotendTemperature(self, index, temperature):
         if index == -1:
             index = self._current_hotend
         Logger.log("d", "Setting hotend %s temperature to %s", index, temperature)
-        self._sendCommand("M104 T%s S%s" % (index, temperature))
+        self.sendCommand("M104 T%s S%s" % (index, temperature))
 
     def _setTargetHotendTemperatureAndWait(self, index, temperature):
         if index == -1:
             index = self._current_hotend
         Logger.log("d", "Setting hotend %s temperature to %s", index, temperature)
-        self._sendCommand("M109 T%s S%s" % (index, temperature))
+        self.sendCommand("M109 T%s S%s" % (index, temperature))
 
     def _setHeadPosition(self, x, y , z, speed):
-        self._sendCommand("G0 X%s Y%s Z%s F%s" % (x, y, z, speed))
+        self.sendCommand("G0 X%s Y%s Z%s F%s" % (x, y, z, speed))
 
     def _setHeadX(self, x, speed):
-        self._sendCommand("G0 X%s F%s" % (x, speed))
+        self.sendCommand("G0 X%s F%s" % (x, speed))
 
     def _setHeadY(self, y, speed):
-        self._sendCommand("G0 Y%s F%s" % (y, speed))
+        self.sendCommand("G0 Y%s F%s" % (y, speed))
 
     def _setHeadZ(self, z, speed):
-        self._sendCommand("G0 Z%s F%s" % (z, speed))
+        self.sendCommand("G0 Z%s F%s" % (z, speed))
 
     def _homeHead(self):
-        self._sendCommand("G28")
+        self.sendCommand("G28")
 
     def _homeX(self):
-        self._sendCommand("G28 X")
+        self.sendCommand("G28 X")
 
     def _homeY(self):
-        self._sendCommand("G28 Y")
+        self.sendCommand("G28 Y")
 
     def _homeBed(self):
-        self._sendCommand("G28 Z")
+        self.sendCommand("G28 Z")
 
     def _homeXY(self):
-        self._sendCommand("G28 XY")
+        self.sendCommand("G28 XY")
 
     ##  A name for the device.
     @pyqtProperty(str, constant = True)
@@ -170,17 +162,17 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             QMessageBox.critical(None, "Error wiping nozzle", "Printer is not connected  " )
 
     def _moveHead(self, x, y, z, speed):
-        self._sendCommand("G91")
-        self._sendCommand("G0 X%s Y%s Z%s F%s" % (x, y, z, speed))
-        self._sendCommand("G90")
+        self.sendCommand("G91")
+        self.sendCommand("G0 X%s Y%s Z%s F%s" % (x, y, z, speed))
+        self.sendCommand("G90")
 
     def _extrude(self, e, speed):
-        self._sendCommand("G91")
-        self._sendCommand("G0 E%s F%s" % (e, speed))
-        self._sendCommand("G90")
+        self.sendCommand("G91")
+        self.sendCommand("G0 E%s F%s" % (e, speed))
+        self.sendCommand("G90")
 
     def _setHotend(self, num):
-        self._sendCommand("T%i" % num)
+        self.sendCommand("T%i" % num)
 
     ##  Start a print based on a g-code.
     #   \param gcode_list List with gcode (strings).
@@ -292,146 +284,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             except Exception as e:
                 Logger.log("i", "Could not establish connection on %s, unknown reasons.  Device is not arduino based." % port)
 
-    ##  Private connect function run by thread. Can be started by calling connect.
-    def _connect_thread_function(self):
-        def _checkFirmware():
-            self._sendCommand("M115")
-            timeout = time.time() + 2
-            reply = self._readline()
-            while b"FIRMWARE_NAME" not in reply and time.time() < timeout:
-                reply = self._readline()
-
-            if b"FIRMWARE_NAME" not in reply:
-                return False
-
-            Logger.log("d", "installed firmware: "+reply.decode())
-            tags = ["FIRMWARE_NAME", "SOURCE_CODE_URL", "PROTOCOL_VERSION", "MACHINE_TYPE", "EXTRUDER_COUNT", "UUID"]
-
-
-            return True
-
-        def _onNoResponseReceived():
-            Logger.log("d", "No response from serial connection received.")
-            # Something went wrong with reading, could be that close was called.
-            self.setConnectionState(ConnectionState.closed)
-            self.setConnectionText(catalog.i18nc("@info:status", "Connection to USB device failed"))
-            self._serial_port = None
-
-        def _onConnectionSucceeded():
-            if not _checkFirmware():
-                Logger.log("d", "Wrong firmware installed")
-                # Something went wrong with reading, could be that close was called.
-                self.setConnectionState(ConnectionState.closed)
-                self.setConnectionText(catalog.i18nc("@info:status", "Wrong firmware"))
-                return
-            self.setConnectionState(ConnectionState.connected)
-            self.setConnectionText(catalog.i18nc("@info:status", "Connected via USB"))
-            self._listen_thread.start()  # Start listening
-            Logger.log("i", "Established printer connection on port %s" % self._serial_port)
-            if self._write_requested:
-                self.startPrint()
-            self._write_requested = False
-
-        port = Application.getInstance().getGlobalContainerStack().getProperty("machine_port", "value")
-        if port != "AUTO":
-            self._serial_port = port
-            self._autodetect_port = False
-
-        Logger.log("d", "Attempting to connect to %s", self._serial_port)
-        self.setConnectionState(ConnectionState.connecting)
-
-        if self._autodetect_port:
-            self.setConnectionText(catalog.i18nc("@info:status", "Scanning available serial ports for printers"))
-            self._detectSerialPort()
-            if self._serial_port == None:
-                self.setConnectionText(catalog.i18nc("@info:status", "Failed to find a printer via USB"))
-                return
-        else:
-            self.setConnectionText(catalog.i18nc("@info:status", "Connecting to USB device"))
-        programmer = stk500v2.Stk500v2()
-        try:
-            programmer.connect(self._serial_port) # Connect with the serial, if this succeeds, it's an arduino based usb device.
-            self._serial = programmer.leaveISP()
-        except ispBase.IspError as e:
-            programmer.close()
-            Logger.log("i", "Could not establish connection on %s: %s. Device is not arduino based." %(self._serial_port,str(e)))
-        except Exception as e:
-            programmer.close()
-            Logger.log("i", "Could not establish connection on %s, unknown reasons.  Device is not arduino based." % self._serial_port)
-
-        baud_rate = Application.getInstance().getGlobalContainerStack().getProperty("machine_baudrate", "value")
-        if baud_rate != "AUTO":
-            self.setConnectionText(catalog.i18nc("@info:status", "Connecting"))
-            Logger.log("d", "Attempting to connect to printer with serial %s on baud rate %s", self._serial_port, baud_rate)
-            if self._serial is None:
-                try:
-                    self._serial = serial.Serial(str(self._serial_port), baud_rate, timeout=3, writeTimeout=10000)
-                    time.sleep(10)
-                except serial.SerialException:
-                    Logger.log("d", "Could not open port %s" % self._serial_port)
-            else:
-                self.setBaudRate(baud_rate)
-
-            time.sleep(1.5)
-            timeout_time = time.time() + 5
-            self._serial.write(b"\n")
-            self._sendCommand("M105")
-            while timeout_time > time.time():
-                line = self._readline()
-                if line is None:
-                    _onNoResponseReceived()
-                    return
-
-                if b"T:" in line:
-                    Logger.log("d", "Correct response for connection")
-                    self._serial.timeout = 2  # Reset serial timeout
-                    _onConnectionSucceeded()
-                    return
-
-        self.setConnectionText(catalog.i18nc("@info:status", "Autodetecting Baudrate"))
-        # If the programmer connected, we know its an atmega based version.
-        # Not all that useful, but it does give some debugging information.
-        for baud_rate in self._getBaudrateList(): # Cycle all baud rates (auto detect)
-            Logger.log("d", "Attempting to connect to printer with serial %s on baud rate %s", self._serial_port, baud_rate)
-            if self._serial is None:
-                try:
-                    self._serial = serial.Serial(str(self._serial_port), baud_rate, timeout = 3, writeTimeout = 10000)
-                    time.sleep(10)
-                except serial.SerialException:
-                    Logger.log("d", "Could not open port %s" % self._serial_port)
-                    continue
-            else:
-                if not self.setBaudRate(baud_rate):
-                    continue  # Could not set the baud rate, go to the next
-
-            time.sleep(1.5) # Ensure that we are not talking to the bootloader. 1.5 seconds seems to be the magic number
-            sucesfull_responses = 0
-            timeout_time = time.time() + 5
-            self._serial.write(b"\n")
-            self._sendCommand("M105")  # Request temperature, as this should (if baudrate is correct) result in a command with "T:" in it
-            while timeout_time > time.time():
-                line = self._readline()
-                if line is None:
-                    _onNoResponseReceived()
-                    return
-
-                if b"T:" in line:
-                    Logger.log("d", "Correct response for auto-baudrate detection received.")
-                    self._serial.timeout = 0.5
-                    sucesfull_responses += 1
-                    if sucesfull_responses >= self._required_responses_auto_baud:
-                        self._serial.timeout = 2 # Reset serial timeout
-                        _onConnectionSucceeded()
-                        return
-
-                self._sendCommand("M105")  # Send M105 as long as we are listening, otherwise we end up in an undefined state
-
-        Logger.log("e", "Baud rate detection for %s failed", self._serial_port)
-        self.close()  # Unable to connect, wrap up.
-        self.setConnectionState(ConnectionState.closed)
-        self.setConnectionText(catalog.i18nc("@info:status", "Baud rate detection failed"))
-        self._serial_port = None
-
     ##  Set the baud rate of the serial. This can cause exceptions, but we simply want to ignore those.
     def setBaudRate(self, baud_rate):
         try:
@@ -444,17 +296,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     def _close(self):
         Logger.log("d", "Closing the USB printer connection.")
         self._printingStopped()
-        if self._connect_thread.isAlive():
-            try:
-                # TODO: to avoid waiting indefinitely, notify the thread that it needs
-                # to return immediatly.
-                self._connect_thread.join()
-            except Exception as e:
-                Logger.log("d", "PrinterConnection.close: %s (expected)", e)
-                pass # This should work, but it does fail sometimes for some reason
-
-        self._connect_thread = threading.Thread(target = self._connect_thread_function)
-        self._connect_thread.daemon = True
+        self._connect_thread.wrapup()
+        self._connect_thread = ConnectThread(self)
 
         self.setConnectionState(ConnectionState.closed)
         self.setConnectionText(catalog.i18nc("@info:status", "Connection closed"))
@@ -483,36 +326,10 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         else:
             return False
 
-    ##  Directly send the command, withouth checking connection state (eg; printing).
-    #   \param cmd string with g-code
-    def _sendCommand(self, cmd):
-        if self._serial is None:
-            return
-
-        try:
-            command = (cmd + "\n").encode()
-            self._serial.write(b"\n")
-            self._serial.write(command)
-        except serial.SerialTimeoutException:
-            Logger.log("w","Serial timeout while writing to serial port, trying again.")
-            try:
-                time.sleep(0.5)
-                self._serial.write((cmd + "\n").encode())
-            except Exception as e:
-                Logger.log("e","Unexpected error while writing serial port %s " % e)
-                self._setErrorState("Unexpected error while writing serial port %s " % e)
-                self.close()
-        except Exception as e:
-            Logger.log("e","Unexpected error while writing serial port %s" % e)
-            self._setErrorState("Unexpected error while writing serial port %s " % e)
-            self.close()
-
     ##  Send a command to printer.
     #   \param cmd string with g-code
     @pyqtSlot(str)
     def sendCommand(self, cmd):
-        if "M108" in cmd:
-            self._sendCommand(cmd)
         if self._isInfiniteWait(cmd):
             cmd = None
         if cmd:
@@ -548,11 +365,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         if self._connection_state == ConnectionState.connected:
             self.startPrint()
         elif self._connection_state == ConnectionState.closed:
-            self._write_requested = True
             self.close()
+            self._connect_thread.setAutoStartOnConnect(True)
             self.connect()
         else:
-            self._write_requested = True
+            self._connect_thread.setAutoStartOnConnect(True)
 
     def _setEndstopState(self, endstop_key, value):
         if endstop_key == b"x_min":
@@ -633,34 +450,15 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._listen_thread.cancelPrint()
 
         # Turn off temperatures, fan and steppers
-        self._sendCommand("M140 S0")
-        self._sendCommand("M104 S0")
-        self._sendCommand("M107")
-        self._sendCommand("M84")
+        self.sendCommand("M140 S0")
+        self.sendCommand("M104 S0")
+        self.sendCommand("M107")
+        self.sendCommand("M84")
         Application.getInstance().showPrintMonitor.emit(False)
 
     ##  Check if the process did not encounter an error yet.
     def hasError(self):
         return self._error_state is not None
-
-    ##  private read line used by printer connection to listen for data on serial port.
-    def _readline(self):
-        if self._serial is None:
-            return None
-        try:
-            ret = self._serial.readline()
-        except Exception as e:
-            Logger.log("e", "Unexpected error while reading serial port. %s" % e)
-            self._setErrorState("Printer has been disconnected")
-            self.close()
-            return None
-        return ret
-
-    ##  Create a list of baud rates at which we can communicate.
-    #   \return list of int
-    def _getBaudrateList(self):
-        ret = [115200, 250000, 230400, 57600, 38400, 19200, 9600]
-        return ret
 
     ##  Pre-heats the heated bed of the printer, if it has one.
     #
@@ -684,6 +482,226 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self.preheatBedRemainingTimeChanged.emit()
 
 #################################################################################
+#                               ConnectThread                                   #
+#################################################################################
+class ConnectThread:
+    def __init__(self, parent):
+        # TODO: Any access to the parent object from the ConnectThread is
+        # potentially not thread-safe and ought to be reviewed at some point.
+        self._parent = parent
+
+        self._thread = threading.Thread(target = self._connect_func)
+        self._thread.daemon = True
+
+        self._write_requested = False
+
+        # The baud checking is done by sending a number of m105 commands to the printer and waiting for a readable
+        # response. If the baudrate is correct, this should make sense, else we get giberish.
+        self._required_responses_auto_baud = 3
+
+    def start(self):
+        return  self._thread.start()
+
+    def isAlive(self):
+        return  self._thread.isAlive()
+
+    def wrapup(self):
+        if self._thread.isAlive():
+            try:
+                # TODO: to avoid waiting indefinitely, notify the thread that it needs
+                # to return immediatly.
+                self._thread.join()
+            except Exception as e:
+                Logger.log("d", "PrinterConnection.close: %s (expected)", e)
+                pass # This should work, but it does fail sometimes for some reason
+
+    def setAutoStartOnConnect(self, value):
+        self._write_requested = value
+
+    ##  Create a list of baud rates at which we can communicate.
+    #   \return list of int
+    def _getBaudrateList(self):
+        ret = [115200, 250000, 230400, 57600, 38400, 19200, 9600]
+        return ret
+
+    ##  private read line used by ConnectThread to listen for data on serial port.
+    def _readline(self):
+        if self._parent._serial is None:
+            return None
+        try:
+            ret = self._parent._serial.readline()
+        except Exception as e:
+            Logger.log("e", "Unexpected error while reading serial port. %s" % e)
+            self._parent._setErrorState("Printer has been disconnected")
+            self._parent.close()
+            return None
+        return ret
+
+    ##  Directly send the command, withouth checking connection state (eg; printing).
+    #   \param cmd string with g-code
+    def _sendCommand(self, cmd):
+        if self._parent._serial is None:
+            return
+
+        try:
+            command = (cmd + "\n").encode()
+            self._parent._serial.write(b"\n")
+            self._parent._serial.write(command)
+        except serial.SerialTimeoutException:
+            Logger.log("w","Serial timeout while writing to serial port, trying again.")
+            try:
+                time.sleep(0.5)
+                self._parent._serial.write((cmd + "\n").encode())
+            except Exception as e:
+                Logger.log("e","Unexpected error while writing serial port %s " % e)
+                self._parent._setErrorState("Unexpected error while writing serial port %s " % e)
+                self._parent.close()
+        except Exception as e:
+            Logger.log("e","Unexpected error while writing serial port %s" % e)
+            self._parent._setErrorState("Unexpected error while writing serial port %s " % e)
+            self._parent.close()
+
+    ##  Private connect function run by thread. Can be started by calling connect.
+    def _connect_func(self):
+        port = Application.getInstance().getGlobalContainerStack().getProperty("machine_port", "value")
+        if port != "AUTO":
+            self._parent._serial_port = port
+            self._parent._autodetect_port = False
+
+        Logger.log("d", "Attempting to connect to %s", self._parent._serial_port)
+        self._parent.setConnectionState(ConnectionState.connecting)
+
+        if self._parent._autodetect_port:
+            self._parent.setConnectionText(catalog.i18nc("@info:status", "Scanning available serial ports for printers"))
+            self._parent._detectSerialPort()
+            if self._parent._serial_port == None:
+                self._parent.setConnectionText(catalog.i18nc("@info:status", "Failed to find a printer via USB"))
+                return
+        else:
+            self._parent.setConnectionText(catalog.i18nc("@info:status", "Connecting to USB device"))
+        programmer = stk500v2.Stk500v2()
+        try:
+            programmer.connect(self._parent._serial_port) # Connect with the serial, if this succeeds, it's an arduino based usb device.
+            self._parent._serial = programmer.leaveISP()
+        except ispBase.IspError as e:
+            programmer.close()
+            Logger.log("i", "Could not establish connection on %s: %s. Device is not arduino based." %(self._parent._serial_port,str(e)))
+        except Exception as e:
+            programmer.close()
+            Logger.log("i", "Could not establish connection on %s, unknown reasons.  Device is not arduino based." % self._parent._serial_port)
+
+        baud_rate = Application.getInstance().getGlobalContainerStack().getProperty("machine_baudrate", "value")
+        if baud_rate != "AUTO":
+            self._parent.setConnectionText(catalog.i18nc("@info:status", "Connecting"))
+            Logger.log("d", "Attempting to connect to printer with serial %s on baud rate %s", self._parent._serial_port, baud_rate)
+            if self._parent._serial is None:
+                try:
+                    self._parent._serial = serial.Serial(str(self._parent._serial_port), baud_rate, timeout=3, writeTimeout=10000)
+                    time.sleep(10)
+                except serial.SerialException:
+                    Logger.log("d", "Could not open port %s" % self._parent._serial_port)
+            else:
+                self._parent.setBaudRate(baud_rate)
+
+            time.sleep(1.5)
+            timeout_time = time.time() + 5
+            self._parent._serial.write(b"\n")
+            self._sendCommand("M105")
+            while timeout_time > time.time():
+                line = self._readline()
+                if line is None:
+                    self._onNoResponseReceived()
+                    return
+
+                if b"T:" in line:
+                    Logger.log("d", "Correct response for connection")
+                    self._parent._serial.timeout = 2  # Reset serial timeout
+                    self._onConnectionSucceeded()
+                    return
+
+        self._parent.setConnectionText(catalog.i18nc("@info:status", "Autodetecting Baudrate"))
+        # If the programmer connected, we know its an atmega based version.
+        # Not all that useful, but it does give some debugging information.
+        for baud_rate in self._getBaudrateList(): # Cycle all baud rates (auto detect)
+            Logger.log("d", "Attempting to connect to printer with serial %s on baud rate %s", self._parent._serial_port, baud_rate)
+            if self._parent._serial is None:
+                try:
+                    self._parent._serial = serial.Serial(str(self._parent._serial_port), baud_rate, timeout = 3, writeTimeout = 10000)
+                    time.sleep(10)
+                except serial.SerialException:
+                    Logger.log("d", "Could not open port %s" % self._parent._serial_port)
+                    continue
+            else:
+                if not self._parent.setBaudRate(baud_rate):
+                    continue  # Could not set the baud rate, go to the next
+
+            time.sleep(1.5) # Ensure that we are not talking to the bootloader. 1.5 seconds seems to be the magic number
+            sucesfull_responses = 0
+            timeout_time = time.time() + 5
+            self._parent._serial.write(b"\n")
+            self._sendCommand("M105")  # Request temperature, as this should (if baudrate is correct) result in a command with "T:" in it
+            while timeout_time > time.time():
+                line = self._readline()
+                if line is None:
+                    _onNoResponseReceived()
+                    return
+
+                if b"T:" in line:
+                    Logger.log("d", "Correct response for auto-baudrate detection received.")
+                    self._parent._serial.timeout = 0.5
+                    sucesfull_responses += 1
+                    if sucesfull_responses >= self._required_responses_auto_baud:
+                        self._parent._serial.timeout = 2 # Reset serial timeout
+                        self._onConnectionSucceeded()
+                        return
+
+                self._sendCommand("M105")  # Send M105 as long as we are listening, otherwise we end up in an undefined state
+
+        Logger.log("e", "Baud rate detection for %s failed", self._parent._serial_port)
+        self._parent.close()  # Unable to connect, wrap up.
+        self._parent.setConnectionState(ConnectionState.closed)
+        self._patent.setConnectionText(catalog.i18nc("@info:status", "Baud rate detection failed"))
+        self._parent._serial_port = None
+
+    def _checkFirmware(self):
+        self._sendCommand("M115")
+        timeout = time.time() + 2
+        reply = self._readline()
+        while b"FIRMWARE_NAME" not in reply and time.time() < timeout:
+            reply = self._readline()
+
+        if b"FIRMWARE_NAME" not in reply:
+            return False
+
+        Logger.log("d", "installed firmware: "+reply.decode())
+        tags = ["FIRMWARE_NAME", "SOURCE_CODE_URL", "PROTOCOL_VERSION", "MACHINE_TYPE", "EXTRUDER_COUNT", "UUID"]
+
+
+        return True
+
+    def _onNoResponseReceived(self):
+        Logger.log("d", "No response from serial connection received.")
+        # Something went wrong with reading, could be that close was called.
+        self._parent.setConnectionState(ConnectionState.closed)
+        self._parent.setConnectionText(catalog.i18nc("@info:status", "Connection to USB device failed"))
+        self._parent._serial_port = None
+
+    def _onConnectionSucceeded(self):
+        if not self._checkFirmware():
+            Logger.log("d", "Wrong firmware installed")
+            # Something went wrong with reading, could be that close was called.
+            self._parent.setConnectionState(ConnectionState.closed)
+            self._parent.setConnectionText(catalog.i18nc("@info:status", "Wrong firmware"))
+            return
+        self._parent.setConnectionState(ConnectionState.connected)
+        self._parent.setConnectionText(catalog.i18nc("@info:status", "Connected via USB"))
+        self._parent._listen_thread.start()  # Start listening
+        Logger.log("i", "Established printer connection on port %s" % self._parent._serial_port)
+        if self._write_requested:
+            self._parent.startPrint()
+        self._write_requested = False
+
+#################################################################################
 #                            UpdateFirmwareThread                               #
 #################################################################################
 
@@ -693,7 +711,7 @@ class UpdateFirmwareThread:
         # potentially not thread-safe and ought to be reviewed at some point.
         self._parent = parent
 
-        self._thread = threading.Thread(target= self._entry_point)
+        self._thread = threading.Thread(target= self._update_firmware_func)
         self._thread.daemon = True
         self._parent.firmwareUpdateComplete.connect(self._onFirmwareUpdateComplete)
 
@@ -709,13 +727,13 @@ class UpdateFirmwareThread:
 
     def _onFirmwareUpdateComplete(self):
         self._thread.join()
-        self._thread = threading.Thread(target = self._entry_point)
+        self._thread = threading.Thread(target = self._update_firmware_func)
         self._thread.daemon = True
 
         self._parent.connect()
 
     ##  Private function (threaded) that actually uploads the firmware.
-    def _entry_point(self):
+    def _update_firmware_func(self):
         Logger.log("d", "Attempting to update firmware")
         self._parent._error_code = 0
         self._parent.setProgress(0, 100)
@@ -844,7 +862,7 @@ class ListenThread:
 
         # Create the thread object
 
-        self._thread = threading.Thread(target=self._entry_point)
+        self._thread = threading.Thread(target=self._listen_func)
         self._thread.daemon = True
 
     def start(self):
@@ -874,7 +892,7 @@ class ListenThread:
         self._command_queue.put(cmd)
         self._mutex.release()
 
-    def _entry_point(self):
+    def _listen_func(self):
         Logger.log("i", "Printer connection listen thread started for %s" % self._parent._serial_port)
 
         # Wrap a MarlinSerialProtocol object around the serial port
