@@ -59,11 +59,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         # response. If the baudrate is correct, this should make sense, else we get giberish.
         self._required_responses_auto_baud = 3
 
-        self._listen_thread = ListenThread(self)
-
-        self._update_firmware_thread = threading.Thread(target= self._updateFirmware)
-        self._update_firmware_thread.daemon = True
-        self.firmwareUpdateComplete.connect(self._onFirmwareUpdateComplete)
+        self._listen_thread          = ListenThread(self)
+        self._update_firmware_thread = UpdateFirmwareThread(self)
 
         self._heatup_wait_start_time = time.time()
         self._heatup_state = False
@@ -84,11 +81,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._x_max_endstop_pressed = False
         self._y_max_endstop_pressed = False
         self._z_max_endstop_pressed = False
-
-        self._updating_firmware = False
-
-        self._firmware_file_name = None
-        self._firmware_update_finished = False
 
         self._error_message = None
         self._error_code = 0
@@ -246,120 +238,22 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     ##  Try to connect the serial. This simply starts the thread, which runs _connect.
     @pyqtSlot()
     def _connect(self):
-        if not self._updating_firmware and not self._connect_thread.isAlive() and self._connection_state in [ConnectionState.closed, ConnectionState.error]:
+        if not self._update_firmware_thread._updating_firmware and not self._connect_thread.isAlive() and self._connection_state in [ConnectionState.closed, ConnectionState.error]:
             self._connect_thread.start()
-
-    ##  Private function (threaded) that actually uploads the firmware.
-    def _updateFirmware(self):
-        Logger.log("d", "Attempting to update firmware")
-        self._error_code = 0
-        self.setProgress(0, 100)
-        self._firmware_update_finished = False
-
-        if self._connection_state != ConnectionState.closed:
-            self.close()
-        port = Application.getInstance().getGlobalContainerStack().getProperty("machine_port", "value")
-        if port != "AUTO":
-            self._serial_port = port
-        else:
-            self._detectSerialPort()
-        hex_file = intelHex.readHex(self._firmware_file_name)
-
-        if len(hex_file) == 0:
-            Logger.log("e", "Unable to read provided hex file. Could not update firmware")
-            self._updateFirmwareFailedMissingFirmware()
-            return
-
-        programmer = stk500v2.Stk500v2()
-        programmer.progress_callback = self.setProgress
-
-        try:
-            programmer.connect(self._serial_port)
-        except Exception:
-            programmer.close()
-            pass
-
-        # Give programmer some time to connect. Might need more in some cases, but this worked in all tested cases.
-        time.sleep(1)
-
-        if not programmer.isConnected():
-            Logger.log("e", "Unable to connect with serial. Could not update firmware")
-            self._updateFirmwareFailedCommunicationError()
-            return
-
-        self._updating_firmware = True
-
-        try:
-            programmer.programChip(hex_file)
-            self._updating_firmware = False
-        except serial.SerialException as e:
-            Logger.log("e", "SerialException while trying to update firmware: <%s>" %(repr(e)))
-            self._updateFirmwareFailedIOError()
-            return
-        except Exception as e:
-            Logger.log("e", "Exception while trying to update firmware: <%s>" %(repr(e)))
-            self._updateFirmwareFailedUnknown()
-            return
-        programmer.close()
-
-        self._updateFirmwareCompletedSucessfully()
-        self._serial_port = None
-        return
-
-    ##  Private function which makes sure that firmware update process has failed by missing firmware
-    def _updateFirmwareFailedMissingFirmware(self):
-        return self._updateFirmwareFailedCommon(4)
-
-    ##  Private function which makes sure that firmware update process has failed by an IO error
-    def _updateFirmwareFailedIOError(self):
-        return self._updateFirmwareFailedCommon(3)
-
-    ##  Private function which makes sure that firmware update process has failed by a communication problem
-    def _updateFirmwareFailedCommunicationError(self):
-        return self._updateFirmwareFailedCommon(2)
-
-    ##  Private function which makes sure that firmware update process has failed by an unknown error
-    def _updateFirmwareFailedUnknown(self):
-        return self._updateFirmwareFailedCommon(1)
-
-    ##  Private common function which makes sure that firmware update process has completed/ended with a set progress state
-    def _updateFirmwareFailedCommon(self, code):
-        if not code:
-            raise Exception("Error code not set!")
-
-        self._error_code = code
-
-        self._firmware_update_finished = True
-        self.resetFirmwareUpdate(update_has_finished = True)
-        self.progressChanged.emit()
-        self.firmwareUpdateComplete.emit()
-
-        return
-
-    ##  Private function which makes sure that firmware update process has successfully completed
-    def _updateFirmwareCompletedSucessfully(self):
-        self.setProgress(100, 100)
-        self._firmware_update_finished = True
-        self.resetFirmwareUpdate(update_has_finished = True)
-        self.firmwareUpdateComplete.emit()
-
-        return
 
     ##  Upload new firmware to machine
     #   \param filename full path of firmware file to be uploaded
     def updateFirmware(self, file_name):
         if self._autodetect_port:
             self._detectSerialPort()
-        Logger.log("i", "Updating firmware of %s using %s", self._serial_port, file_name)
-        self._firmware_file_name = file_name
-        self._update_firmware_thread.start()
+        self._update_firmware_thread.startFirmwareUpdate(file_name)
 
     @property
     def firmwareUpdateFinished(self):
-        return self._firmware_update_finished
+        return self._update_firmware_thread._firmware_update_finished
 
     def resetFirmwareUpdate(self, update_has_finished = False):
-        self._firmware_update_finished = update_has_finished
+        self._update_firmware_thread._firmware_update_finished = update_has_finished
         self.firmwareUpdateChange.emit()
 
     @pyqtSlot()
@@ -622,7 +516,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         if self._isInfiniteWait(cmd):
             cmd = None
         if cmd:
-            self._listen_thread.send(cmd)
+            self._listen_thread.sendCommand(cmd)
 
     ##  Set the error state with a message.
     #   \param error String with the error message.
@@ -768,13 +662,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         ret = [115200, 250000, 230400, 57600, 38400, 19200, 9600]
         return ret
 
-    def _onFirmwareUpdateComplete(self):
-        self._update_firmware_thread.join()
-        self._update_firmware_thread = threading.Thread(target = self._updateFirmware)
-        self._update_firmware_thread.daemon = True
-
-        self.connect()
-
     ##  Pre-heats the heated bed of the printer, if it has one.
     #
     #   \param temperature The temperature to heat the bed to, in degrees
@@ -796,6 +683,143 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._setTargetBedTemperature(0)
         self.preheatBedRemainingTimeChanged.emit()
 
+#################################################################################
+#                            UpdateFirmwareThread                               #
+#################################################################################
+
+class UpdateFirmwareThread:
+    def __init__(self, parent):
+        # TODO: Any access to the parent object from the UpdateFirmwareThread is
+        # potentially not thread-safe and ought to be reviewed at some point.
+        self._parent = parent
+
+        self._thread = threading.Thread(target= self._entry_point)
+        self._thread.daemon = True
+        self._parent.firmwareUpdateComplete.connect(self._onFirmwareUpdateComplete)
+
+        self._updating_firmware = False
+
+        self._firmware_file_name = None
+        self._firmware_update_finished = False
+
+    def startFirmwareUpdate(self, file_name):
+        Logger.log("i", "Updating firmware of %s using %s", self._parent._serial_port, file_name)
+        self._firmware_file_name = file_name
+        self._thread.start()
+
+    def _onFirmwareUpdateComplete(self):
+        self._thread.join()
+        self._thread = threading.Thread(target = self._entry_point)
+        self._thread.daemon = True
+
+        self._parent.connect()
+
+    ##  Private function (threaded) that actually uploads the firmware.
+    def _entry_point(self):
+        Logger.log("d", "Attempting to update firmware")
+        self._parent._error_code = 0
+        self._parent.setProgress(0, 100)
+        self._firmware_update_finished = False
+
+        if self._parent._connection_state != ConnectionState.closed:
+            self._parent.close()
+        port = Application.getInstance().getGlobalContainerStack().getProperty("machine_port", "value")
+        if port != "AUTO":
+            self._parent._serial_port = port
+        else:
+            self._parent._detectSerialPort()
+
+        try:
+            hex_file = intelHex.readHex(self._firmware_file_name)
+        except FileNotFoundError:
+            Logger.log("e", "Unable to find hex file. Could not update firmware")
+            self._updateFirmwareFailedMissingFirmware()
+            return
+
+        if len(hex_file) == 0:
+            Logger.log("e", "Unable to read provided hex file. Could not update firmware")
+            self._updateFirmwareFailedMissingFirmware()
+            return
+
+        programmer = stk500v2.Stk500v2()
+        programmer.progress_callback = self._parent.setProgress
+
+        try:
+            programmer.connect(self._parent._serial_port)
+        except Exception:
+            programmer.close()
+            pass
+
+        # Give programmer some time to connect. Might need more in some cases, but this worked in all tested cases.
+        time.sleep(1)
+
+        if not programmer.isConnected():
+            Logger.log("e", "Unable to connect with serial. Could not update firmware")
+            self._updateFirmwareFailedCommunicationError()
+            return
+
+        self._updating_firmware = True
+
+        try:
+            programmer.programChip(hex_file)
+            self._updating_firmware = False
+        except serial.SerialException as e:
+            Logger.log("e", "SerialException while trying to update firmware: <%s>" %(repr(e)))
+            self._updateFirmwareFailedIOError()
+            return
+        except Exception as e:
+            Logger.log("e", "Exception while trying to update firmware: <%s>" %(repr(e)))
+            self._updateFirmwareFailedUnknown()
+            return
+        programmer.close()
+
+        self._updateFirmwareCompletedSucessfully()
+        self._parent._serial_port = None
+        return
+
+    ##  Private function which makes sure that firmware update process has failed by missing firmware
+    def _updateFirmwareFailedMissingFirmware(self):
+        return self._updateFirmwareFailedCommon(4)
+
+    ##  Private function which makes sure that firmware update process has failed by an IO error
+    def _updateFirmwareFailedIOError(self):
+        return self._updateFirmwareFailedCommon(3)
+
+    ##  Private function which makes sure that firmware update process has failed by a communication problem
+    def _updateFirmwareFailedCommunicationError(self):
+        return self._updateFirmwareFailedCommon(2)
+
+    ##  Private function which makes sure that firmware update process has failed by an unknown error
+    def _updateFirmwareFailedUnknown(self):
+        return self._updateFirmwareFailedCommon(1)
+
+    ##  Private common function which makes sure that firmware update process has completed/ended with a set progress state
+    def _updateFirmwareFailedCommon(self, code):
+        if not code:
+            raise Exception("Error code not set!")
+
+        self._parent._error_code = code
+
+        self._firmware_update_finished = True
+        self._parent.resetFirmwareUpdate(update_has_finished = True)
+        self._parent.progressChanged.emit()
+        self._parent.firmwareUpdateComplete.emit()
+
+        return
+
+    ##  Private function which makes sure that firmware update process has successfully completed
+    def _updateFirmwareCompletedSucessfully(self):
+        self._parent.setProgress(100, 100)
+        self._firmware_update_finished = True
+        self._parent.resetFirmwareUpdate(update_has_finished = True)
+        self._parent.firmwareUpdateComplete.emit()
+
+        return
+
+#################################################################################
+#                                 ListenThread                                  #
+#################################################################################
+
 class ListenThread:
     def __init__(self, parent):
         # Queue for commands that are injected while a
@@ -810,8 +834,8 @@ class ListenThread:
         self._current_z = 0
         self._pausePosition = None
 
-        # TODO: Any access to the parent object from the ListenThread is probably
-        # not thread-safe and ought to be reviewed at some point.
+        # TODO: Any access to the parent object from the ListenThread is
+        # potentially not thread-safe and ought to be reviewed at some point.
         self._parent = parent
 
         # Lock object for syncronizing accesses to self._gcode and self._command_queue
@@ -909,7 +933,7 @@ class ListenThread:
                 # But a bed temp error is reported as "Error: Temperature heated bed switched off. MAXTEMP triggered !!"
                 # So we can have an extra newline in the most common case. Awesome work people.
                 if re.match(b"Error:[0-9]\n", line):
-                    line = line.rstrip() + self._readline()
+                    line = line.rstrip() + serial_proto.readline()
 
                 # Skip the communication errors, as those get corrected.
                 if b"Extruder switched off" in line or b"Temperature heated bed switched off" in line or b"Something is wrong, please turn off the printer." in line:
