@@ -53,18 +53,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._poll_endstop = False
 
         self._connect_thread         = ConnectThread(self)
-        self._listen_thread          = ListenThread(self)
+        self._print_thread           = PrintThread(self)
         self._update_firmware_thread = UpdateFirmwareThread(self)
-
-        self._heatup_wait_start_time = time.time()
-        self._heatup_state = False
 
         self._is_printing = False
         self._is_paused = False
-
-        ## Set when print is started in order to check running time.
-        self._print_start_time = None
-        self._print_start_time_100 = None
 
         # Check if endstops are ever pressed (used for first run)
         self._x_min_endstop_pressed = False
@@ -196,10 +189,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             result = Error.PRINTER_NOT_CONNECTED
             return result
 
-        self._listen_thread.printGCode(gcode_list)
+        self._print_thread.printGCode(gcode_list)
 
-        self._print_start_time_100 = None
-        self._print_start_time = time.time()
         self.setTimeTotal(0)
         self.setTimeElapsed(0)
         self._printingStarted()
@@ -244,8 +235,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     def firmwareUpdateFinished(self):
         return self._update_firmware_thread._firmware_update_finished
 
-    def resetFirmwareUpdate(self, update_has_finished = False):
-        self._update_firmware_thread._firmware_update_finished = update_has_finished
+    def resetFirmwareUpdate(self):
+        self._update_firmware_thread._firmware_update_finished = False
         self.firmwareUpdateChange.emit()
 
     @pyqtSlot()
@@ -303,37 +294,22 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self.setConnectionText(catalog.i18nc("@info:status", "Connection closed"))
         if self._serial is not None:
             try:
-                self._listen_thread.join()
+                self._print_thread.join()
             except:
                 pass
             self._serial.close()
 
-        self._listen_thread = ListenThread(self)
+        self._print_thread = PrintThread(self)
         self._serial = None
         self._serial_port = None
         self._is_printing = False
         self._is_paused = False
 
-    def _isHeaterCommand(self, cmd):
-        """Checks whether we have a M109 or M190"""
-        return cmd.startswith("M109") or cmd.startswith("M190")
-
-    def _isInfiniteWait(self, cmd):
-        """Sending a heater command with a temperature of zero will lead to an infinite wait"""
-        if self._isHeaterCommand(cmd):
-            search = re.search("[RS](-?[0-9\.]+)", cmd)
-            return True if search and int(search.group(1)) == 0 else False
-        else:
-            return False
-
     ##  Send a command to printer.
     #   \param cmd string with g-code
     @pyqtSlot(str)
     def sendCommand(self, cmd):
-        if self._isInfiniteWait(cmd):
-            cmd = None
-        if cmd:
-            self._listen_thread.sendCommand(cmd)
+        self._print_thread.sendCommand(cmd)
 
     ##  Set the error state with a message.
     #   \param error String with the error message.
@@ -419,7 +395,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         retract_amount = settings.getProperty("retraction_amount", "value")
         moveZ = 10.0
 
-        self._listen_thread.pause(start_gcode_lines, parkX, parkY, maxZ, moveZ, retract_amount)
+        self._print_thread.pause(start_gcode_lines, parkX, parkY, maxZ, moveZ, retract_amount)
 
         Logger.log("d", "Pausing print")
 
@@ -429,7 +405,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
         settings = Application.getInstance().getGlobalContainerStack()
         retract_amount = settings.getProperty("retraction_amount", "value")
-        self._listen_thread.resume(retract_amount)
+        self._print_thread.resume(retract_amount)
 
 
     ##  Set the progress of the print.
@@ -447,7 +423,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._printingStopped()
 
         self.setProgress(0)
-        self._listen_thread.cancelPrint()
+        self._print_thread.cancelPrint()
 
         # Turn off temperatures, fan and steppers
         self.sendCommand("M140 S0")
@@ -682,6 +658,7 @@ class ConnectThread:
     def _onNoResponseReceived(self):
         Logger.log("d", "No response from serial connection received.")
         # Something went wrong with reading, could be that close was called.
+        self._parent.close()  # Unable to connect, wrap up.
         self._parent.setConnectionState(ConnectionState.closed)
         self._parent.setConnectionText(catalog.i18nc("@info:status", "Connection to USB device failed"))
         self._parent._serial_port = None
@@ -690,12 +667,13 @@ class ConnectThread:
         if not self._checkFirmware():
             Logger.log("d", "Wrong firmware installed")
             # Something went wrong with reading, could be that close was called.
+            self._parent.close()  # Unable to connect, wrap up.
             self._parent.setConnectionState(ConnectionState.closed)
             self._parent.setConnectionText(catalog.i18nc("@info:status", "Wrong firmware"))
             return
         self._parent.setConnectionState(ConnectionState.connected)
         self._parent.setConnectionText(catalog.i18nc("@info:status", "Connected via USB"))
-        self._parent._listen_thread.start()  # Start listening
+        self._parent._print_thread.start()  # Start listening
         Logger.log("i", "Established printer connection on port %s" % self._parent._serial_port)
         if self._write_requested:
             self._parent.startPrint()
@@ -819,7 +797,7 @@ class UpdateFirmwareThread:
         self._parent._error_code = code
 
         self._firmware_update_finished = True
-        self._parent.resetFirmwareUpdate(update_has_finished = True)
+        self._parent.firmwareUpdateChange.emit()
         self._parent.progressChanged.emit()
         self._parent.firmwareUpdateComplete.emit()
 
@@ -829,16 +807,16 @@ class UpdateFirmwareThread:
     def _updateFirmwareCompletedSucessfully(self):
         self._parent.setProgress(100, 100)
         self._firmware_update_finished = True
-        self._parent.resetFirmwareUpdate(update_has_finished = True)
+        self._parent.firmwareUpdateChange.emit()
         self._parent.firmwareUpdateComplete.emit()
 
         return
 
 #################################################################################
-#                                 ListenThread                                  #
+#                                 PrintThread                                   #
 #################################################################################
 
-class ListenThread:
+class PrintThread:
     def __init__(self, parent):
         # Queue for commands that are injected while a
         # print is active.
@@ -852,17 +830,22 @@ class ListenThread:
         self._current_z = 0
         self._pausePosition = None
 
-        # TODO: Any access to the parent object from the ListenThread is
+        self._flushBuffers = False
+
+        ## Set when print is started in order to check running time.
+        self._print_start_time = None
+
+        # TODO: Any access to the parent object from the PrintThread is
         # potentially not thread-safe and ought to be reviewed at some point.
         self._parent = parent
 
         # Lock object for syncronizing accesses to self._gcode and self._command_queue
-        # which are shared between the UI thread and the _listen_thread thread.
+        # which are shared between the UI thread and the _print_thread thread.
         self._mutex = threading.Lock()
 
         # Create the thread object
 
-        self._thread = threading.Thread(target=self._listen_func)
+        self._thread = threading.Thread(target=self._print_func)
         self._thread.daemon = True
 
     def start(self):
@@ -877,6 +860,9 @@ class ListenThread:
         for layer in gcode_list:
             self._gcode.extend(layer.split("\n"))
         self._gcode_position = 0
+        self._print_start_time_100 = None
+        self._print_start_time = time.time()
+        self._flushBuffers = True
         self._mutex.release();
 
     def cancelPrint(self):
@@ -885,14 +871,29 @@ class ListenThread:
         while not self._command_queue.empty():
             self._command_queue.get()
         self._gcode_position = 0
+        self._flushBuffers = True
         self._mutex.release();
 
+    def _isHeaterCommand(self, cmd):
+        """Checks whether we have a M109 or M190"""
+        return cmd.startswith("M109") or cmd.startswith("M190")
+
+    def _isInfiniteWait(self, cmd):
+        """Sending a heater command with a temperature of zero will lead to an infinite wait"""
+        if self._isHeaterCommand(cmd):
+            search = re.search("[RS](-?[0-9\.]+)", cmd)
+            return True if search and int(search.group(1)) == 0 else False
+        else:
+            return False
+
     def sendCommand(self, cmd):
+        if self._isInfiniteWait(cmd):
+            return
         self._mutex.acquire()
         self._command_queue.put(cmd)
         self._mutex.release()
 
-    def _listen_func(self):
+    def _print_func(self):
         Logger.log("i", "Printer connection listen thread started for %s" % self._parent._serial_port)
 
         # Wrap a MarlinSerialProtocol object around the serial port
@@ -904,6 +905,12 @@ class ListenThread:
 
         temperature_request_timeout = time.time()
         while self._parent._connection_state == ConnectionState.connected:
+            self._mutex.acquire()
+            if self._flushBuffers:
+                serial_proto.restart()
+                self._flushBuffers = False
+            self._mutex.release()
+
             try:
                 if serial_proto.clearToSend():
                     self._mutex.acquire()
@@ -914,10 +921,10 @@ class ListenThread:
                         cmd = self._command_queue.get()
                         self._mutex.release()
                         serial_proto.sendCmdUnreliable(cmd)
-                        if self._parent._isHeaterCommand(cmd):
-                            self._parent._heatup_wait_start_time = time.time()
                     elif self._parent._is_printing and not self._parent._is_paused:
-                        self._sendNextGcodeLine(serial_proto)
+                        line = self._getNextGcodeLine()
+                        if line:
+                            serial_proto.sendCmdReliable(line)
 
                 line = serial_proto.readline()
             except Exception as e:
@@ -936,7 +943,7 @@ class ListenThread:
                self._parent._error_message.show()
                return
 
-            if time.time() > temperature_request_timeout and not self._parent._heatup_state:
+            if time.time() > temperature_request_timeout:
                 serial_proto.sendCmdUnreliable("M105")
                 temperature_request_timeout = time.time() + 5
 
@@ -1015,8 +1022,8 @@ class ListenThread:
 
         Logger.log("i", "Printer connection listen thread stopped for %s" % self._parent._serial_port)
 
-    ##  Send next Gcode in the gcode list
-    def _sendNextGcodeLine(self, serial):
+    ##  Gets the next Gcode in the gcode list
+    def _getNextGcodeLine(self):
         self._mutex.acquire();
         gcodeLen  = len(self._gcode)
         line = self._gcode[self._gcode_position]
@@ -1024,10 +1031,8 @@ class ListenThread:
 
         if self._gcode_position >= gcodeLen:
             return
-        if self._gcode_position == 100:
-            self._parent._print_start_time_100 = time.time()
         if self._gcode_position % 100 == 0:
-            elapsed = time.time() - self._parent._print_start_time
+            elapsed = time.time() - self._print_start_time
             self._parent.setTimeElapsed(elapsed)
             progress = self._gcode_position / gcodeLen
             if progress > 0:
@@ -1037,19 +1042,18 @@ class ListenThread:
         # an LCD menu pause.
         try:
             if line == "M0" or line == "M1":
+                # Don't send the M0 or M1 to the machine, as M0 and M1 are handled as an LCD menu pause.
                 self._parent._setJobState("pause")
-                line = "M105"  # Don't send the M0 or M1 to the machine, as M0 and M1 are handled as an LCD menu pause.
+                line = False
             if ("G0" in line or "G1" in line) and "Z" in line:
-                self._parent._current_z = float(re.search("Z([-0-9\.]*)", line).group(1))
+                self._current_z = float(re.search("Z([-0-9\.]*)", line).group(1))
         except Exception as e:
             Logger.log("e", "Unexpected error with printer connection, could not parse current Z: %s: %s" % (e, line))
             self._setErrorState("Unexpected error: %s" %e)
-        if self._gcode_position == 0:
-            serial.restart()
-        serial.sendCmdReliable(line)
         self._gcode_position += 1
         self._parent.setProgress((self._gcode_position / gcodeLen) * 100)
         self._parent.progressChanged.emit()
+        return line
 
     def pause(self, start_gcode_lines, parkX, parkY, maxZ, moveZ, retract_amount):
         if self._gcode_position - 5 > start_gcode_lines:  # Substract 5 because of the marlin queue
