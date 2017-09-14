@@ -988,7 +988,8 @@ class MachineManager(QObject):
             return []
         global_machine_definition = quality_manager.getParentMachineDefinition(global_container_stack.getBottom())
 
-        stack = ExtruderManager.getInstance().getActiveExtruderStack()
+        extruder_stack = ExtruderManager.getInstance().getActiveExtruderStack()
+        stack = extruder_stack if extruder_stack else global_container_stack
         if stack:
             material = stack.material
             quality = quality_manager.findQualityByQualityType(quality_type, global_machine_definition, [material])
@@ -996,7 +997,7 @@ class MachineManager(QObject):
                 quality = self._empty_quality_container
             result.append({"stack": stack, "quality": quality, "quality_changes": empty_quality_changes})
 
-        if stack:
+        if extruder_stack:
             # Add an extra entry for the global stack.
             global_quality = quality_manager.findQualityByQualityType(quality_type, global_machine_definition, [], global_quality = "True")
 
@@ -1037,7 +1038,8 @@ class MachineManager(QObject):
         else:
             global_quality = quality_manager.findQualityByQualityType(quality_type, global_machine_definition, [material])
 
-        stack = ExtruderManager.getInstance().getActiveExtruderStack()
+        extruder_stack = ExtruderManager.getInstance().getActiveExtruderStack()
+        stack = extruder_stack if extruder_stack else global_container_stack
         if stack:
             extruder_definition = quality_manager.getParentMachineDefinition(stack.getBottom())
 
@@ -1055,7 +1057,7 @@ class MachineManager(QObject):
 
             result.append({"stack": stack, "quality": quality, "quality_changes": quality_changes})
 
-        if stack:
+        if extruder_stack:
             global_quality = quality_manager.findQualityByQualityType(quality_type, global_machine_definition, [material], global_quality = "True")
             if not global_quality:
                 global_quality = self._empty_quality_container
