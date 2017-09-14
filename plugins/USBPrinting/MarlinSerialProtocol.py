@@ -40,6 +40,7 @@
 
 import functools
 import re
+import time
 
 class GCodeHistory:
   """This class implements a history of GCode commands. Right now, we
@@ -88,9 +89,10 @@ class MarlinSerialProtocol:
     self.marlinReserve          = 1
     self.history                = GCodeHistory()
     self.asap                   = []
-    self.slow_commands          = re.compile(b"M109|M190|G28|G29")
-    self.slow_timeout           = 400
-    self.fast_timeout           = 15
+    self.slowCommands           = re.compile(b"M109|M190|G28|G29")
+    self.slowTimeout            = 800
+    self.fastTimeout            = 30
+    self.watchdogTimeout        = time.time()
     self.onResendCallback       = onResendCallback
     self.restart()
 
@@ -162,17 +164,13 @@ class MarlinSerialProtocol:
        okays are lost in transmission. To recover, we send Marlin an invalid
        command (no line number, with an asterisk). One it requests a resend,
        we will back into a known good state."""
-    if line == b"" and self.pendingOk > 0:
-      if self.stallCountdown > 0:
-        self.stallCountdown -= 1
-      else:
-        self.stallCountdown = self.fast_timeout
+    if line == b"" and self.pendingOk > 0 and time.time() > self.watchdogTimeout:
         self._sendImmediate(b"\nM105*\n")
 
   def _adjustStallWatchdogTimer(self, cmd):
     """Adjusts the stallWatchdogTimer based on the command which is being sent"""
-    estimated_duration = self.slow_timeout if self.slow_commands.search(cmd) else self.fast_timeout
-    self.stallCountdown = max(estimated_duration, self.stallCountdown-1)
+    estimated_duration = self.slowTimeout if self.slowCommands.search(cmd) else self.fastTimeout
+    self.watchdogTimeout = max(self.watchdogTimeout, time.time() + estimated_duration)
 
   def _resendFrom(self, position):
     """If Marlin requests a resend, we need to backtrack."""
@@ -211,12 +209,15 @@ class MarlinSerialProtocol:
     if self.pendingOk > 0:
       self.pendingOk -= 1
 
-  def readline(self):
-    """This reads data from Marlin. If no data is available '' will be returned after
-       the comm timeout."""
+  def readline(self, blocking = True):
+    """This reads data from Marlin. If no data is available '' will be returned"""
 
     self._sendToMarlin()
-    line = self.serial.readline()
+
+    if blocking or self.serial.in_waiting:
+      line = self.serial.readline()
+    else:
+      line = b""
 
     # An okay means Marlin acknowledged a command. This means
     # a slot has been freed in the Marlin buffer for a new
@@ -273,7 +274,7 @@ class MarlinSerialProtocol:
     """Clears all buffers and issues a M110 to Marlin. Call this at the start of every print."""
     self.history.clear()
     self.pendingOk       = 0
-    self.stallCountdown  = self.fast_timeout
+    self.stallCountdown  = self.fastTimeout
     self.gotError        = False
     self._flushReadBuffer()
     self._resetMarlinLineCounter()

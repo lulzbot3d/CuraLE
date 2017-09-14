@@ -843,6 +843,8 @@ class PrintThread:
         # which are shared between the UI thread and the _print_thread thread.
         self._mutex = threading.Lock()
 
+        self._commandAvailable = threading.Event();
+
         # Create the thread object
 
         self._thread = threading.Thread(target=self._print_func)
@@ -892,6 +894,7 @@ class PrintThread:
         self._mutex.acquire()
         self._command_queue.put(cmd)
         self._mutex.release()
+        self._commandAvailable.set()
 
     def _print_func(self):
         Logger.log("i", "Printer connection listen thread started for %s" % self._parent._serial_port)
@@ -912,26 +915,36 @@ class PrintThread:
             self._mutex.release()
 
             try:
-                if serial_proto.clearToSend():
-                    self._mutex.acquire()
-                    hasQueuedCommands = not self._command_queue.empty()
-                    self._mutex.release()
-                    if hasQueuedCommands:
-                        self._mutex.acquire()
-                        cmd = self._command_queue.get()
-                        self._mutex.release()
-                        serial_proto.sendCmdUnreliable(cmd)
-                    elif self._parent._is_printing and not self._parent._is_paused:
-                        line = self._getNextGcodeLine()
-                        if line:
-                            serial_proto.sendCmdReliable(line)
+                isPrinting = self._parent._is_printing and not self._parent._is_paused
 
-                line = serial_proto.readline()
+                # If we are printing, and Marlin can receive data, then send
+                # the next line
+                if serial_proto.clearToSend() and isPrinting:
+                    line = self._getNextGcodeLine()
+                    if line:
+                        serial_proto.sendCmdReliable(line)
+
+                # If we are printing, wait on data from the serial port;
+                # otherwise wait for interactive commands when the serial
+                # port is idle. This allows us to be most responsive to
+                # whatever action is currently taking place
+                line = serial_proto.readline(isPrinting)
+                if ((not isPrinting and line == b"" and self._commandAvailable.wait(2)) or
+                    (    isPrinting and self._commandAvailable.isSet())):
+                    self._mutex.acquire()
+                    cmd = self._command_queue.get()
+                    if self._command_queue.empty():
+                        self._commandAvailable.clear()
+                    self._mutex.release()
+                    serial_proto.sendCmdUnreliable(cmd)
+                    Logger.log("e", "Queuing %s" % cmd)
+
             except Exception as e:
                 Logger.log("e", "Unexpected error while accessing serial port. %s" % e)
                 self._parent._setErrorState("Printer has been disconnected")
                 self._parent.close()
                 line = b""
+
 
             if line is None:
                 break  # None is only returned when something went wrong. Stop listening
@@ -943,9 +956,11 @@ class PrintThread:
                self._parent._error_message.show()
                return
 
+            # Request the temperature on every 2 seconds when we
+            # are not printing, or every 5 seconds otherwise
             if time.time() > temperature_request_timeout:
                 serial_proto.sendCmdUnreliable("M105")
-                temperature_request_timeout = time.time() + 5
+                temperature_request_timeout = time.time() + (5 if self._parent._is_printing else 2)
 
             if line.startswith(b"Error:"):
                 #if b"PROBE FAIL CLEAN NOZZLE" in line:
@@ -1010,15 +1025,9 @@ class PrintThread:
                         lambda x: self._parent._setBedTemperature(x),
                         lambda x: self._parent._emitTargetBedTemperatureChanged(x)
                     )
-                #TODO: temperature changed callback
 
             if line not in [b"", b"ok\n"]:
-                #self._parent.messageFromPrinter.emit(line.decode("utf-8").replace("\n", ""))
                 self._parent.messageFromPrinter.emit(line.decode("latin-1").replace("\n", ""))
-
-            # Request the temperature on comm timeout (every 2 seconds) when we are not printing.)
-            if line == b"":
-                serial_proto.sendCmdUnreliable("M105")
 
         Logger.log("i", "Printer connection listen thread stopped for %s" % self._parent._serial_port)
 
