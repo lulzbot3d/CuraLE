@@ -144,6 +144,8 @@ Item {
         font: UM.Theme.getFont("small")
         //color: UM.Theme.getColor("text_subtext")
         color: UM.Theme.getColor("text_green")
+        style: Text.Raised
+        styleColor: "#336628"
         text: Printer.getSceneBoundingBoxString
     }
 
@@ -153,6 +155,8 @@ Item {
         anchors.top: boundingSpec.bottom
         anchors.right: parent.right
         height: UM.Theme.getSize("jobspecs_line").height
+        color: "#00B000"
+        border.color: "black"
 
         Item
         {
@@ -215,6 +219,8 @@ Item {
                     anchors.top: parent.top
                     font: UM.Theme.getFont("small")
                     color: UM.Theme.getColor("text_green")
+                    style: Text.Raised
+                    styleColor: "#336628"
                     text: (!base.printDuration || !base.printDuration.valid) ? catalog.i18nc("@label", "00h 00min") : base.printDuration.getDisplayString(UM.DurationFormat.Short)
                 }
             }
@@ -240,6 +246,8 @@ Item {
                 font: UM.Theme.getFont("small")
                 //color: UM.Theme.getColor("text_subtext")
                 color: UM.Theme.getColor("text_green")
+                style: Text.Raised
+                styleColor: "#336628"
                 text:
                 {
                     var lengths = [];
