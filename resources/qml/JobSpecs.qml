@@ -94,6 +94,7 @@ Item {
                             sourceSize.height: width;
                             color: control.hovered ? UM.Theme.getColor("setting_control_button_hover") : UM.Theme.getColor("text");
                             source: UM.Theme.getIcon("pencil");
+                            isBorderVisible: true
                         }
                     }
                 }
@@ -126,8 +127,9 @@ Item {
                     textColor: UM.Theme.getColor("text_green");
                     font: UM.Theme.getFont("default_bold");
                     background: Rectangle {
-                        opacity: 0
+                        opacity: 100
                         border.width: 0
+                        color: "#788814"
                     }
                 }
             }
@@ -145,7 +147,7 @@ Item {
         //color: UM.Theme.getColor("text_subtext")
         color: UM.Theme.getColor("text_green")
         style: Text.Raised
-        styleColor: "#336628"
+        styleColor: "#788814"
         text: Printer.getSceneBoundingBoxString
     }
 
@@ -176,6 +178,7 @@ Item {
                 //color: UM.Theme.getColor("text_subtext")
                 color: UM.Theme.getColor("text_green")
                 source: UM.Theme.getIcon("print_time")
+                isBorderVisible: true
             }
             UM.TooltipArea
             {
@@ -220,7 +223,7 @@ Item {
                     font: UM.Theme.getFont("small")
                     color: UM.Theme.getColor("text_green")
                     style: Text.Raised
-                    styleColor: "#336628"
+                    styleColor: "#788814"
                     text: (!base.printDuration || !base.printDuration.valid) ? catalog.i18nc("@label", "00h 00min") : base.printDuration.getDisplayString(UM.DurationFormat.Short)
                 }
             }
@@ -237,6 +240,7 @@ Item {
                 //color: UM.Theme.getColor("text_subtext")
                 color: UM.Theme.getColor("text_green")
                 source: UM.Theme.getIcon("category_material")
+                isBorderVisible: true
             }
             Text
             {
@@ -247,7 +251,7 @@ Item {
                 //color: UM.Theme.getColor("text_subtext")
                 color: UM.Theme.getColor("text_green")
                 style: Text.Raised
-                styleColor: "#336628"
+                styleColor: "#788814"
                 text:
                 {
                     var lengths = [];
