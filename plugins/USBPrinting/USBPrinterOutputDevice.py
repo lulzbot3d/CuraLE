@@ -649,9 +649,32 @@ class ConnectThread:
         if b"FIRMWARE_NAME" not in reply:
             return False
 
-        Logger.log("d", "installed firmware: "+reply.decode())
-        tags = ["FIRMWARE_NAME", "SOURCE_CODE_URL", "PROTOCOL_VERSION", "MACHINE_TYPE", "EXTRUDER_COUNT", "UUID"]
+        firmware_string = reply.decode()
 
+        Logger.log("d", "installed firmware: " + firmware_string)
+
+        return True
+
+        tags_list = ["FIRMWARE_NAME", "SOURCE_CODE_URL", "PROTOCOL_VERSION", "MACHINE_TYPE", "EXTRUDER_COUNT", "UUID"]
+
+        def generate_positions():
+            for tag in tags_list:
+                position = firmware_string.find(tag)
+                if position >= 0:
+                    yield {
+                        "tag": tag,
+                        "position": position,
+                        "start": position + 1 + len(tag)
+                    }
+
+        tags = sorted([tag for tag in generate_positions()], key=lambda pos: pos["position"])
+        tags_count = len(tags)
+        for i in range(tags_count):
+            if i < tags_count - 1:
+                end = tags[i + 1]["start"]
+                tags[i]["value"] = firmware_string[tags[i]["start"]:end]
+            else:
+                tags[i]["value"] = firmware_string[tags[i]["start"]:]
 
         return True
 
