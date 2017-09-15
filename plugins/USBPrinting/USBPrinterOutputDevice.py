@@ -639,6 +639,11 @@ class ConnectThread:
         self._patent.setConnectionText(catalog.i18nc("@info:status", "Baud rate detection failed"))
         self._parent._serial_port = None
 
+    class CheckFirmwareStatus(Enum):
+        OK = 0
+        TIMEOUT = 1
+        WRONG_MACHINE = 2
+
     def _checkFirmware(self):
         self._sendCommand("M115")
         timeout = time.time() + 2
@@ -647,13 +652,9 @@ class ConnectThread:
             reply = self._readline()
 
         if b"FIRMWARE_NAME" not in reply:
-            return False
+            return self.CheckFirmwareStatus.TIMEOUT
 
         firmware_string = reply.decode()
-
-        Logger.log("d", "installed firmware: " + firmware_string)
-
-        return True
 
         tags_list = ["FIRMWARE_NAME", "SOURCE_CODE_URL", "PROTOCOL_VERSION", "MACHINE_TYPE", "EXTRUDER_COUNT", "UUID"]
 
@@ -671,12 +672,21 @@ class ConnectThread:
         tags_count = len(tags)
         for i in range(tags_count):
             if i < tags_count - 1:
-                end = tags[i + 1]["start"]
+                end = tags[i + 1]["position"] - 1
                 tags[i]["value"] = firmware_string[tags[i]["start"]:end]
             else:
-                tags[i]["value"] = firmware_string[tags[i]["start"]:]
+                tags[i]["value"] = firmware_string[tags[i]["start"]:-1]
 
-        return True
+        values = {t["tag"]: t["value"] for t in tags}
+
+        global_container_stack = Application.getInstance().getGlobalContainerStack()
+        selected_machine_type = global_container_stack.getMetaDataEntry("firmware_machine_type", None)
+
+        if selected_machine_type is not None and values["MACHINE_TYPE"] != selected_machine_type:
+            Logger.log("e", "Trying to connect to wrong machine(selected: '%s', connecting to '%s')" % (selected_machine_type, values["MACHINE_TYPE"]))
+            return self.CheckFirmwareStatus.WRONG_MACHINE
+
+        return self.CheckFirmwareStatus.OK
 
     def _onNoResponseReceived(self):
         Logger.log("d", "No response from serial connection received.")
@@ -687,12 +697,19 @@ class ConnectThread:
         self._parent._serial_port = None
 
     def _onConnectionSucceeded(self):
-        if not self._checkFirmware():
-            Logger.log("d", "Wrong firmware installed")
-            # Something went wrong with reading, could be that close was called.
+        check_firmware_status = self._checkFirmware()
+        if check_firmware_status != self.CheckFirmwareStatus.OK:
             self._parent.close()  # Unable to connect, wrap up.
             self._parent.setConnectionState(ConnectionState.closed)
-            self._parent.setConnectionText(catalog.i18nc("@info:status", "Wrong firmware"))
+            if check_firmware_status == self.CheckFirmwareStatus.TIMEOUT:
+                Logger.log("d", "Connection timeout while reading firmware")
+                self._parent.setConnectionText(catalog.i18nc("@info:status", "Connection Timeout"))
+            elif check_firmware_status == self.CheckFirmwareStatus.WRONG_MACHINE:
+                Logger.log("d", "Tried to connect to wrong machine")
+                self._parent.setConnectionText(catalog.i18nc("@info:status", "Wrong Machine"))
+            else:
+                Logger.log("d", "Unexpected error while reading firmware")
+                self._parent.setConnectionText(catalog.i18nc("@info:status", "Wrong Firmware"))
             return
         self._parent.setConnectionState(ConnectionState.connected)
         self._parent.setConnectionText(catalog.i18nc("@info:status", "Connected via USB"))

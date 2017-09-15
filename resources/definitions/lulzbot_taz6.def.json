@@ -15,7 +15,8 @@
         "visible": true,
         "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-taz-6",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-single-extruder-tool-head-v21",
-        "base_machine": "lulzbot_taz_6"
+        "base_machine": "lulzbot_taz_6",
+        "firmware_machine_type": "LulzBot TAZ 6"
     },
     "overrides":
     {
