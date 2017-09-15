@@ -643,6 +643,7 @@ class ConnectThread:
         OK = 0
         TIMEOUT = 1
         WRONG_MACHINE = 2
+        WRONG_TOOLHEAD = 3
 
     def _checkFirmware(self):
         self._sendCommand("M115")
@@ -655,36 +656,31 @@ class ConnectThread:
             return self.CheckFirmwareStatus.TIMEOUT
 
         firmware_string = reply.decode()
-
-        tags_list = ["FIRMWARE_NAME", "SOURCE_CODE_URL", "PROTOCOL_VERSION", "MACHINE_TYPE", "EXTRUDER_COUNT", "UUID"]
-
-        def generate_positions():
-            for tag in tags_list:
-                position = firmware_string.find(tag)
-                if position >= 0:
-                    yield {
-                        "tag": tag,
-                        "position": position,
-                        "start": position + 1 + len(tag)
-                    }
-
-        tags = sorted([tag for tag in generate_positions()], key=lambda pos: pos["position"])
-        tags_count = len(tags)
-        for i in range(tags_count):
-            if i < tags_count - 1:
-                end = tags[i + 1]["position"] - 1
-                tags[i]["value"] = firmware_string[tags[i]["start"]:end]
-            else:
-                tags[i]["value"] = firmware_string[tags[i]["start"]:-1]
-
-        values = {t["tag"]: t["value"] for t in tags}
+        values = {m[0] : m[1] for m in re.findall("([A-Z_]+)\:(.*?)(?= [A-Z_]+\:|$)", firmware_string)}
 
         global_container_stack = Application.getInstance().getGlobalContainerStack()
-        selected_machine_type = global_container_stack.getMetaDataEntry("firmware_machine_type", None)
 
-        if selected_machine_type is not None and values["MACHINE_TYPE"] != selected_machine_type:
-            Logger.log("e", "Trying to connect to wrong machine(selected: '%s', connecting to '%s')" % (selected_machine_type, values["MACHINE_TYPE"]))
+        def checkValue(fw_key, profile_key, exact_match = True):
+            expected_value = global_container_stack.getMetaDataEntry(profile_key, None)
+            if expected_value is None:
+                Logger.log("d", "Missing %s in profile. Skipping check." % profile_key)
+            elif not fw_key in values:
+                Logger.log("d", "Missing %s in firmware string: %s" % (fw_key, firmware_string))
+                return False
+            elif exact_match and values[fw_key] == expected_value:
+                Logger.log("e", "Expected that %s was %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
+                return False
+            elif not exact_match and values[fw_key].search(expected_value):
+                Logger.log("e", "Expected that %s contained %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
+                return False
+            return True
+
+        if not checkValue("MACHINE_TYPE", "firmware_machine_type"):
             return self.CheckFirmwareStatus.WRONG_MACHINE
+
+        # TODO: Add check to see if toolhead matches.
+        if not checkValue("FIRMWARE_NAME", "firmware_toolhead_name", False):
+            return self.CheckFirmwareStatus.WRONG_TOOLHEAD
 
         return self.CheckFirmwareStatus.OK
 
