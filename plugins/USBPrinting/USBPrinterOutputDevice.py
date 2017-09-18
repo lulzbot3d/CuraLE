@@ -1067,10 +1067,10 @@ class PrintThread:
             return
         if self._gcode_position % 100 == 0:
             elapsed = time.time() - self._print_start_time
-            self._parent.setTimeElapsed(elapsed)
             progress = self._gcode_position / gcodeLen
             if progress > 0:
                 self._parent.setTimeTotal(elapsed / progress)
+                self._parent.setTimeElapsed(elapsed)
 
         # Don't send the M0 or M1 to the machine, as M0 and M1 are handled as
         # an LCD menu pause.
