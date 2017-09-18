@@ -192,6 +192,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_taz5_moarstruder": "TAZ5-Moarstruder-LBHexagon-1.0.0.2.hex",
             "lulzbot_taz5_dual_v2": "TAZ4-5-Dual-LBHexagon-1.0.0.1.hex",
             "lulzbot_taz5_flexy_dually_v2": "TAZ4-5-FlexyDually-LBHexagon-1.0.0.1.hex",
+            "lulzbot_taz5_dual_v3": "TAZ5_DualExtruderV3_1.1.5.8_df5f8a5.hex",
 
             "lulzbot_taz6": "TAZ6_Single_Extruder_v1.0.2.22.hex",
             "lulzbot_taz6_flexy_v2": "TAZ6_Flexystruder_v1.0.2.22.hex",
