@@ -656,10 +656,10 @@ class ConnectThread:
             elif not fw_key in values:
                 Logger.log("d", "Missing %s in firmware string: %s" % (fw_key, firmware_string))
                 return False
-            elif exact_match and values[fw_key] == expected_value:
+            elif exact_match and values[fw_key] != expected_value:
                 Logger.log("e", "Expected that %s was %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
                 return False
-            elif not exact_match and values[fw_key].search(expected_value):
+            elif not exact_match and not values[fw_key].search(expected_value):
                 Logger.log("e", "Expected that %s contained %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
                 return False
             return True
