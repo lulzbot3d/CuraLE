@@ -24,10 +24,7 @@
     <setting key="wipe temperature">170</setting>
     <setting key="part removal temperature">0</setting>
     <machine>
-      <machine_identifier product="lulzbot_taz6_aerostruder"/>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_taz6_flexy_v2"/>
+      <machine_identifier product="lulzbot_taz5_flexy_v2"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_mini_aerostruder"/>
@@ -36,7 +33,10 @@
       <machine_identifier product="lulzbot_mini_flexy"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_taz5_flexy_v2"/>
+      <machine_identifier product="lulzbot_taz6_flexy_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_aerostruder"/>
     </machine>
   </settings>
 </fdmmaterial>
