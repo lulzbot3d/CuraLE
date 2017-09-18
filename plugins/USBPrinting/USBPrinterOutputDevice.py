@@ -993,11 +993,14 @@ class PrintThread:
                self._parent._error_message.show()
                break
 
-            # Request the temperature on every 2 seconds when we
-            # are not printing, or every 5 seconds otherwise
+            # If we keep getting a temperature_request_timeout, it likely
+            # means that Marlin does not support AUTO_REPORT_TEMPERATURES,
+            # in which case we must poll.
             if time.time() > temperature_request_timeout:
+                Logger.log("d", "Requesting temperature auto-update")
+                serial_proto.sendCmdUnreliable("M155 S3")
                 serial_proto.sendCmdUnreliable("M105")
-                temperature_request_timeout = time.time() + (5 if self._parent._is_printing else 2)
+                temperature_request_timeout = time.time() + 5
 
             if line.startswith(b"Error:"):
                 #if b"PROBE FAIL CLEAN NOZZLE" in line:
@@ -1022,6 +1025,7 @@ class PrintThread:
                 self._parent._setEndstopState(tag,(b"H" in value or b"TRIGGERED" in value))
 
             if b"T:" in line:
+                temperature_request_timeout = time.time() + 5
                 # We got a temperature report line. If we have a dual extruder,
                 # Marlin reports temperatures independently as T0: and T1:,
                 # otherwise look for T:. Bed temperatures will be reported as B:
