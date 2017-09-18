@@ -117,6 +117,7 @@ class MarlinSerialProtocol:
       self.serial.write(cmd + b'\n')
       self.serial.flush()
       self.pendingOk += 1
+      self.marlinAvailBuffer -= 1;
 
   def _sendToMarlin(self):
     """Sends as many commands as are available and to fill the Marlin buffer.
@@ -205,9 +206,16 @@ class MarlinSerialProtocol:
     if cmd:
       self.asap.append(cmd)
 
-  def _gotOkay(self):
+  def _gotOkay(self, line):
     if self.pendingOk > 0:
       self.pendingOk -= 1
+    self.marlinAvailBuffer += 1
+    # If ADVANCED_OK is enabled in Marlin, we can use that
+    # info to correct our estimate of many free slots are
+    # available in the Marlin command buffer.
+    m = re.search(b" B(\d+)", line)
+    if m:
+      self.marlinAvailBuffer = int(m.group(1))
 
   def readline(self, blocking = True):
     """This reads data from Marlin. If no data is available '' will be returned"""
@@ -223,7 +231,7 @@ class MarlinSerialProtocol:
     # a slot has been freed in the Marlin buffer for a new
     # command.
     if line.startswith(b"ok"):
-      self._gotOkay()
+      self._gotOkay(line)
 
     # Watch for and attempt to recover from complete stalls.
     self._stallWatchdog(line)
@@ -237,7 +245,7 @@ class MarlinSerialProtocol:
       self.gotError = True;
     elif line == b"" and self.gotError:
       self.gotError = False
-      self._gotOkay()
+      self._gotOkay(line)
 
     # Handle resend requests from Marlin. This happens when Marlin
     # detects a command with a checksum or line number error.
@@ -266,18 +274,21 @@ class MarlinSerialProtocol:
     return self.marlinBufferCapacity() > 0
 
   def marlinBufferCapacity(self):
-    """Returns how many buffer positions are open in Marlin. This is the difference between
-       the non-reserved buffer spots and the number of not yet acknowleged commands."""
-    return (self.marlinBufSize - self.marlinReserve) - self.pendingOk
+    """Returns how many buffer positions are open in Marlin, excluding reserved locations."""
+    return self.marlinAvailBuffer - self.marlinReserve
 
   def restart(self):
     """Clears all buffers and issues a M110 to Marlin. Call this at the start of every print."""
     self.history.clear()
-    self.pendingOk       = 0
-    self.stallCountdown  = self.fastTimeout
-    self.gotError        = False
+    self.stallCountdown    = self.fastTimeout
+    self.gotError          = False
+    self.pendingOk         = 0
+    self.marlinAvailBuffer = self.marlinBufSize
     self._flushReadBuffer()
     self._resetMarlinLineCounter()
+    # Reset again, as resetMarlinLineCounter changes these counters.
+    self.pendingOk         = 0
+    self.marlinAvailBuffer = self.marlinBufSize
 
   def close(self):
     self.serial.close()

@@ -863,8 +863,9 @@ class PrintThread:
         # Set when print is started in order to check running time.
         self._print_start_time = None
 
-        # Lock object for syncronizing accesses to self._gcode and self._command_queue
-        # which are shared between the UI thread and the _print_thread thread.
+        # Lock object for syncronizing accesses to self._gcode and other
+        # variables which are shared between the UI thread and the
+        # _print_thread thread.
         self._mutex = threading.Lock()
 
         # Event for when commands are added to self._command_queue
@@ -930,9 +931,7 @@ class PrintThread:
            precedence over commands that are being send via printGCode"""
         if self._isInfiniteWait(cmd):
             return
-        self._mutex.acquire()
         self._command_queue.put(cmd)
-        self._mutex.release()
         self._commandAvailable.set()
 
     def _print_func(self):
@@ -973,11 +972,9 @@ class PrintThread:
                 line = serial_proto.readline(isPrinting)
                 if ((not isPrinting and line == b"" and self._commandAvailable.wait(2)) or
                     (    isPrinting and self._commandAvailable.isSet())):
-                    self._mutex.acquire()
                     cmd = self._command_queue.get()
                     if self._command_queue.empty():
                         self._commandAvailable.clear()
-                    self._mutex.release()
                     serial_proto.sendCmdUnreliable(cmd)
 
             except Exception as e:
@@ -1166,6 +1163,8 @@ class PrintThread:
             pos = self._pauseState
             if pos.f is None:
                 pos.f = 1200
+            if pos.e is None:
+                pos.e = 0
 
             # Set E relative positioning
             self.sendCommand("M83")
