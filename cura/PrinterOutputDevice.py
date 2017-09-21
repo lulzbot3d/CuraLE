@@ -678,7 +678,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
     #   /sa _moveHead implementation function
     @pyqtSlot("long")
     @pyqtSlot("long", "long")
-    def extrude(self, e=0, speed=100):
+    def extrude(self, e=0, speed=75):
         self._extrude(e, speed)
 
     ##  Implementation function of extrude.
