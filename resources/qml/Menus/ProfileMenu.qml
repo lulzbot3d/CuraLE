@@ -11,6 +11,8 @@ Menu
 {
     id: menu
 
+    signal layerHeight( string profileName, string layerHeight )
+
     Instantiator
     {
         model: Cura.ProfilesModel 
@@ -21,7 +23,12 @@ Menu
             checkable: true
             checked: Cura.MachineManager.activeQualityChangesId == "" && Cura.MachineManager.currentQualityType == model.metadata.quality_type
             exclusiveGroup: group
-            onTriggered: Cura.MachineManager.setActiveQuality(model.id)
+            onTriggered:
+            {
+
+                Cura.MachineManager.setActiveQuality(model.id)
+                menu.layerHeight(model.name, model.layer_height)
+            }
         }
 
         onObjectAdded: menu.insertItem(index, object);
@@ -33,6 +40,7 @@ Menu
     Instantiator
     {
         id: customProfileInstantiator
+
         model: Cura.UserProfilesModel
         {
             onModelReset: customSeparator.visible = rowCount() > 0
@@ -44,7 +52,11 @@ Menu
             checkable: true
             checked: Cura.MachineManager.currentQualityId == model.id
             exclusiveGroup: group
-            onTriggered: Cura.MachineManager.setActiveQuality(model.id)
+            onTriggered:
+            {
+                Cura.MachineManager.setActiveQuality(model.id)
+                menu.layerHeight(model.name, model.layer_height)
+            }
         }
 
         onObjectAdded:
