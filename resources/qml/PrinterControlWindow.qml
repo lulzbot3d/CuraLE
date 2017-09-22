@@ -44,7 +44,10 @@ UM.Dialog
 
     onReceive:
     {
-        command_log.append("< [" + new Date().toLocaleTimeString(locale, "hh:mm:ss") + "] " + command)
+        if(filterCheckbox.checked || !(command.indexOf(" T:") >= 0 || command.indexOf("ok ") >= 0))
+        {
+            command_log.append("< [" + new Date().toLocaleTimeString(locale, "hh:mm:ss") + "] " + command)
+        }
     }
 
     TextArea
@@ -119,13 +122,12 @@ UM.Dialog
     }
 
     rightButtons: [
-        Button
+        CheckBox
         {
-            text: catalog.i18nc("@action:button","Close");
-            onClicked: base.visible = false;
-            style: UM.Theme.styles.print_monitor_control_button
+            id: filterCheckbox
+            text: catalog.i18nc("@action:button","Show debug messages ")
+            checked: false
         },
-
         Button
         {
             text: catalog.i18nc("@action:button","Send Command");
@@ -134,6 +136,12 @@ UM.Dialog
             {
                 base.sendCommand();
             }
+            style: UM.Theme.styles.print_monitor_control_button
+        },
+        Button
+        {
+            text: catalog.i18nc("@action:button","Close");
+            onClicked: base.visible = false;
             style: UM.Theme.styles.print_monitor_control_button
         }
     ]
