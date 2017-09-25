@@ -729,7 +729,7 @@ class ConnectThread:
             else:
                 Logger.log("d", "Unexpected error while reading firmware")
                 self._parent.setConnectionText(catalog.i18nc("@info:status", "Wrong Firmware"))
-
+            Application.getInstance().getMachineManager().toolheadChanged.emit()
             return
         self._parent.setConnectionState(ConnectionState.connected)
         self._parent.setConnectionText(catalog.i18nc("@info:status", "Connected via USB"))

@@ -276,8 +276,6 @@ class MachineManager(QObject):
         self._auto_hotends_changed = {} #Processed all of them now.
 
     def _onGlobalContainerChanged(self):
-        old_stack_base_machine = None
-        old_stack_id = None
         if self._global_container_stack:
             try:
                 self._global_container_stack.nameChanged.disconnect(self._onMachineNameChanged)
@@ -302,18 +300,10 @@ class MachineManager(QObject):
                     extruder_stack.propertyChanged.disconnect(self._onPropertyChanged)
                     extruder_stack.containersChanged.disconnect(self._onInstanceContainersChanged)
 
-            old_stack_base_machine = self._global_container_stack.getMetaDataEntry("base_machine", None)
-            old_stack_id = self._global_container_stack.getId()
-
         self._global_container_stack = Application.getInstance().getGlobalContainerStack()
         self._active_container_stack = self._global_container_stack
 
         self.globalContainerChanged.emit()
-        if old_stack_base_machine is not None \
-                and self._global_container_stack.getMetaDataEntry("base_machine", None) == old_stack_base_machine \
-                and old_stack_id is not None \
-                and self._global_container_stack.getId() != old_stack_id:
-            self.toolheadChanged.emit()
 
         if self._global_container_stack:
             Preferences.getInstance().setValue("cura/active_machine", self._global_container_stack.getId())
