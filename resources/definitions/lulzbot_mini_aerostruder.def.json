@@ -6,7 +6,8 @@
     "metadata":
     {
         "type": "machine",
-        "visible": true
+        "visible": true,
+        "firmware_toolhead_name": "Aerostruder"
     },
     "overrides":
     {
