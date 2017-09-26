@@ -186,8 +186,13 @@ Item
         text: catalog.i18ncp("@action:inmenu menubar:edit", "Delete &Selected Model", "Delete &Selected Models", UM.Selection.selectionCount);
         enabled: UM.Controller.toolsEnabled && UM.Selection.hasSelection;
         iconName: "edit-delete";
-        shortcut: StandardKey.Delete;
-        onTriggered: CuraActions.deleteSelection();
+        //shortcut: StandardKey.Delete;
+        shortcut: StandartKey.Backspace
+        onTriggered:
+        {
+            //console.log( "################################################" )
+            CuraActions.deleteSelection();
+        }
     }
 
     Action

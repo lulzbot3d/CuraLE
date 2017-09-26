@@ -76,6 +76,7 @@ UM.MainWindow
         Keys.onPressed: {
             if ( (event.key == Qt.Key_Backspace) || (event.key == Qt.Key_Delete))
             {
+                //console.log( "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! event.key = ", event.key )
                 Cura.Actions.deleteSelection.trigger()
             }
         }
