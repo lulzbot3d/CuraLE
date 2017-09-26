@@ -7,7 +7,8 @@
     {
         "type": "machine",
         "visible": true,
-        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-flexystruder-tool-head-v2"
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-flexystruder-tool-head-v2",
+        "firmware_toolhead_name": "Flexystruder"
     },
     "overrides":
     {

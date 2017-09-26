@@ -633,6 +633,7 @@ class ConnectThread:
         TIMEOUT = 1
         WRONG_MACHINE = 2
         WRONG_TOOLHEAD = 3
+        FIRMWARE_OUTDATED = 4
 
     def _checkFirmware(self):
         self._sendCommand("M115")
@@ -649,27 +650,54 @@ class ConnectThread:
 
         global_container_stack = Application.getInstance().getGlobalContainerStack()
 
+        class CheckValueStatus(Enum):
+            OK = 0
+            MISSING_VALUE_IN_REPLY = 1
+            WRONG_VALUE = 2
+            MISSING_VALUE_IN_DEFINITION = 3
+
         def checkValue(fw_key, profile_key, exact_match = True):
             expected_value = global_container_stack.getMetaDataEntry(profile_key, None)
             if expected_value is None:
                 Logger.log("d", "Missing %s in profile. Skipping check." % profile_key)
+                return CheckValueStatus.MISSING_VALUE_IN_DEFINITION
             elif not fw_key in values:
                 Logger.log("d", "Missing %s in firmware string: %s" % (fw_key, firmware_string))
-                return False
+                return CheckValueStatus.MISSING_VALUE_IN_REPLY
             elif exact_match and values[fw_key] != expected_value:
                 Logger.log("e", "Expected that %s was %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
-                return False
+                return CheckValueStatus.WRONG_VALUE
             elif not exact_match and not values[fw_key].search(expected_value):
                 Logger.log("e", "Expected that %s contained %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
-                return False
-            return True
+                return CheckValueStatus.WRONG_VALUE
+            return CheckValueStatus.OK
 
-        if not checkValue("MACHINE_TYPE", "firmware_machine_type"):
-            return self.CheckFirmwareStatus.WRONG_MACHINE
-
-        # TODO: Add check to see if toolhead matches.
-        if not checkValue("FIRMWARE_NAME", "firmware_toolhead_name", False):
-            return self.CheckFirmwareStatus.WRONG_TOOLHEAD
+        list_to_check = [
+            {
+                "reply_key": "MACHINE_TYPE",
+                "definition_key": "firmware_machine_type",
+                "on_fail": self.CheckFirmwareStatus.WRONG_MACHINE
+            },
+            {
+                "reply_key": "FIRMWARE_VERSION",
+                "definition_key": "firmware_last_version",
+                "on_fail": self.CheckFirmwareStatus.FIRMWARE_OUTDATED
+            },
+            {
+                "reply_key": "EXTRUDER_TYPE",
+                "definition_key": "firmware_toolhead_name",
+                "on_fail": self.CheckFirmwareStatus.WRONG_TOOLHEAD
+            },
+        ]
+        for option in list_to_check:
+            result = checkValue(option["reply_key"], option["definition_key"], option.get("exact_match", True))
+            if result != CheckValueStatus.OK:
+                if result == CheckValueStatus.MISSING_VALUE_IN_DEFINITION:
+                    pass
+                elif result == CheckValueStatus.MISSING_VALUE_IN_REPLY:
+                    return self.CheckFirmwareStatus.FIRMWARE_OUTDATED
+                else:
+                    return option["on_fail"]
 
         return self.CheckFirmwareStatus.OK
 
@@ -692,9 +720,16 @@ class ConnectThread:
             elif check_firmware_status == self.CheckFirmwareStatus.WRONG_MACHINE:
                 Logger.log("d", "Tried to connect to wrong machine")
                 self._parent.setConnectionText(catalog.i18nc("@info:status", "Wrong Machine"))
+            elif check_firmware_status == self.CheckFirmwareStatus.WRONG_TOOLHEAD:
+                Logger.log("d", "Tried to connect to machine with wrong toolhead")
+                self._parent.setConnectionText(catalog.i18nc("@info:status", "Wrong Toolhead"))
+            elif check_firmware_status == self.CheckFirmwareStatus.FIRMWARE_OUTDATED:
+                Logger.log("d", "Installed firmware is outdated")
+                self._parent.setConnectionText(catalog.i18nc("@info:status", "Firmware Outdated"))
             else:
                 Logger.log("d", "Unexpected error while reading firmware")
                 self._parent.setConnectionText(catalog.i18nc("@info:status", "Wrong Firmware"))
+            Application.getInstance().getMachineManager().toolheadChanged.emit()
             return
         self._parent.setConnectionState(ConnectionState.connected)
         self._parent.setConnectionText(catalog.i18nc("@info:status", "Connected via USB"))
