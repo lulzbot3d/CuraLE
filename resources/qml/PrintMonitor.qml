@@ -77,6 +77,7 @@ ScrollView
 	        }
 	    }
 
+
 	    Rectangle
 	    {
 	        color: UM.Theme.getColor("sidebar_lining")
@@ -92,10 +93,29 @@ ScrollView
 	            Repeater
 	            {
 	                id: extrudersRepeater
-	                model: machineExtruderCount.properties.value
+                    model: machineExtruderCount.properties.value
 
 	                delegate: Rectangle
 	                {
+                        Timer
+                        {
+                           interval: 500
+                           running: true
+                           repeat: true
+                           onTriggered:
+                           {
+                              for(  var index = 1; index < machineExtruderCount.properties.value; index++ )
+                              {
+                                   if(connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.hotendTemperatures[index] != null )
+                                   {
+                                       extruderTemperature.text = (connectedPrinter.hotendTemperatures[index] != 0) ? Math.round(connectedPrinter.hotendTemperatures[index]) + "°C" : ""
+                                       //console.log( "extruderTargetTemperature.text =", extruderTemperature.text )
+                                   }
+                              }
+                           }
+
+                        }
+
 	                    id: extruderRectangle
 	                    color: UM.Theme.getColor("sidebar")
 	                    width: index == machineExtruderCount.properties.value - 1 && index % 2 == 0 ? extrudersGrid.width : extrudersGrid.width / 2 - UM.Theme.getSize("sidebar_lining_thin").width / 2
