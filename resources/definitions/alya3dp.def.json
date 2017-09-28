@@ -27,21 +27,6 @@
         "machine_nozzle_size": {
             "default_value": 0.4
         },
-        "machine_head_shape_min_x": {
-            "default_value": 75
-        },
-        "machine_head_shape_min_y": {
-            "default_value": 18
-        },
-        "machine_head_shape_max_x": {
-            "default_value": 18
-        },
-        "machine_head_shape_max_y": {
-            "default_value": 35
-        },
-        "machine_nozzle_gantry_distance": {
-            "default_value": 55
-        },
         "machine_gcode_flavor": {
             "default_value": "RepRap"
         },

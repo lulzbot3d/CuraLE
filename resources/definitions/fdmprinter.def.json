@@ -1501,49 +1501,7 @@
                     "maximum_value_warning": "260",
                     "enabled": "not (material_flow_dependent_temperature) and machine_gcode_flavor != \"UltiGCode\"",
                     "settable_per_mesh": false,
-                    "settable_per_extruder": true,
-                    "children":
-                    {
-                        "material_soften_temperature":
-                        {
-                            "label": "Soften Temperature",
-                            "description": "",
-                            "unit": "°C",
-                            "type": "float",
-                            "default_value": 210,
-                            "minimum_value": "-273.15",
-                            "maximum_value_warning": "260",
-                            "enabled": "False",
-                            "settable_per_mesh": false,
-                            "settable_per_extruder": true
-                        },
-                        "material_wipe_temperature":
-                        {
-                            "label": "Wipe Temperature",
-                            "description": "",
-                            "unit": "°C",
-                            "type": "float",
-                            "default_value": 210,
-                            "minimum_value": "-273.15",
-                            "maximum_value_warning": "260",
-                            "enabled": "False",
-                            "settable_per_mesh": false,
-                            "settable_per_extruder": true
-                        },
-                        "material_probe_temperature":
-                        {
-                            "label": "Probe Temperature",
-                            "description": "",
-                            "unit": "°C",
-                            "type": "float",
-                            "default_value": 210,
-                            "minimum_value": "-273.15",
-                            "maximum_value_warning": "260",
-                            "enabled": "False",
-                            "settable_per_mesh": false,
-                            "settable_per_extruder": true
-                        }
-                    }
+                    "settable_per_extruder": true
                 },
                 "material_print_temperature_layer_0":
                 {
@@ -1629,45 +1587,7 @@
                     "enabled": "machine_heated_bed and machine_gcode_flavor != \"UltiGCode\"",
                     "settable_per_mesh": false,
                     "settable_per_extruder": false,
-                    "settable_per_meshgroup": false,
-                    "children":
-                    {
-                        "material_part_removal_temperature":
-                        {
-                            "label": "Part Removal Temperature",
-                            "description": "",
-                            "unit": "°C",
-                            "type": "float",
-                            "default_value": 210,
-                            "minimum_value": "-273.15",
-                            "maximum_value_warning": "260",
-                            "enabled": "False",
-                            "settable_per_mesh": false,
-                            "settable_per_extruder": true
-                        },
-                        "material_keep_part_removal_temperature":
-                        {
-                            "label": "Keep Heating",
-                            "description": "Keep temperature after print on removal value",
-                            "type": "bool",
-                            "default_value": true,
-                            "enabled": "False",
-                            "settable_per_mesh": false,
-                            "settable_per_extruder": false
-                        },
-                        "material_keep_part_removal_temperature_t":
-                        {
-                            "label": "Temperature After Print",
-                            "description": "",
-                            "unit": "°C",
-                            "type": "float",
-                            "default_value": "material_part_removal_temperature",
-                            "resolve": "material_part_removal_temperature if material_keep_part_removal_temperature else 0",
-                            "enabled": "False",
-                            "settable_per_mesh": false,
-                            "settable_per_extruder": false
-                        }
-                    }
+                    "settable_per_meshgroup": false
                 },
                 "material_bed_temperature_layer_0":
                 {
@@ -2979,19 +2899,6 @@
                     "default_value": 10,
                     "minimum_value": "cool_min_layer_time",
                     "maximum_value_warning": "600",
-                    "settable_per_mesh": false,
-                    "settable_per_extruder": true
-                },
-                "cool_fan_speed_0":
-                {
-                    "label": "Initial Fan Speed",
-                    "description": "The speed at which the fans spin at the start of the print. In subsequent layers the fan speed is gradually increased up to the layer corresponding to Regular Fan Speed at Height.",
-                    "unit": "%",
-                    "type": "float",
-                    "minimum_value": "0",
-                    "maximum_value": "100",
-                    "default_value": 0,
-                    "enabled": "cool_fan_enabled",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 },
