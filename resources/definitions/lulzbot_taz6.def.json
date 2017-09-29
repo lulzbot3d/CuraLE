@@ -48,10 +48,6 @@
         "machine_baudrate":
         {
             "default_value": "250000"
-        },
-        "material_keep_part_removal_temperature":
-        {
-            "enabled": "True"
         }
     }
 }
