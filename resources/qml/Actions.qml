@@ -187,7 +187,7 @@ Item
         enabled: UM.Controller.toolsEnabled && UM.Selection.hasSelection;
         iconName: "edit-delete";
         //shortcut: StandardKey.Delete;
-        shortcut: StandartKey.Backspace
+        shortcut: StandardKey.Backspace
         onTriggered:
         {
             //console.log( "################################################" )
