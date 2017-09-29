@@ -1136,7 +1136,7 @@ class PrintThread:
         """Runs backwards through GCODE lines that were already sent until
         the last complete position is determined, return False otherwise"""
         pos = self.PauseState()
-        axis_re = re.compile('([XYZEF])(-?[0-9\.]*)')
+        axis_re = re.compile('([XYZEF])(-?[0-9\.]+)')
         self._mutex.acquire()
         for i in range(self._gcode_position - 1, 0, -1):
             line = self._gcode[i].upper()
@@ -1194,7 +1194,10 @@ class PrintThread:
             self.sendCommand("G1 X%f Y%f F9000" % (parkX, parkY))
 
             # Disable the E steppers
-            self.sendCommand("M84 E0")
+            self.sendCommand("M18 E")
+
+            # Set the stepper inactivity timeout to one day
+            self.sendCommand("M18 S86400")
 
     def resume(self):
         """Resumes a print that was paused"""
@@ -1223,6 +1226,8 @@ class PrintThread:
             self.sendCommand("G92 E%f" % pos.e)
             # Set E absolute positioning
             self.sendCommand("M82")
+            # Reset the stepper inactivity timeout to the default
+            self.sendCommand("M18 S120")
             Logger.log("d", "Print resumed")
 
             # Release the PrintThread.
