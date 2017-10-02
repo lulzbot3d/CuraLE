@@ -409,10 +409,20 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     ##  Cancel the current print. Printer connection wil continue to listen.
     def cancelPrint(self):
+        Logger.log("i", "Cancelling print")
+
+        # Stop print
         self._printingStopped()
 
         self.setProgress(0)
         self._print_thread.cancelPrint()
+
+        # Lift and park nozzle, the pause routine can do this for us
+        settings = Application.getInstance().getGlobalContainerStack()
+        machine_width  = settings.getProperty("machine_width",     "value")
+        machine_depth  = settings.getProperty("machine_depth",     "value")
+        machine_height = settings.getProperty("machine_height",    "value")
+        self._print_thread.pause(machine_width, machine_depth, machine_height, 0)
 
         # Turn off temperatures, fan and steppers
         self.sendCommand("M140 S0")
@@ -636,7 +646,7 @@ class ConnectThread:
         FIRMWARE_OUTDATED = 4
 
     def _checkFirmware(self):
-        self._sendCommand("M115")
+        self._sendCommand("\nM115")
         timeout = time.time() + 2
         reply = self._readline()
         while b"FIRMWARE_NAME" not in reply and time.time() < timeout:
@@ -926,6 +936,7 @@ class PrintThread:
         self._print_start_time_100 = None
         self._print_start_time = time.time()
         self._flushBuffers = True
+        self._pauseState = None
         self._mutex.release();
 
     def cancelPrint(self):
@@ -935,6 +946,7 @@ class PrintThread:
             self._command_queue.get()
         self._gcode_position = 0
         self._flushBuffers = True
+        self._pauseState = None
         self._mutex.release();
 
     def _isHeaterCommand(self, cmd):
@@ -994,8 +1006,8 @@ class PrintThread:
 
             try:
                 # If we are printing, and Marlin can receive data, then send
-                # the next line
-                if serial_proto.clearToSend() and isPrinting:
+                # the next line (unless there are immediate commands queued up)
+                if serial_proto.clearToSend() and isPrinting and not self._commandAvailable.isSet():
                     line = self._getNextGcodeLine()
                     if line:
                         serial_proto.sendCmdReliable(line)
@@ -1007,9 +1019,11 @@ class PrintThread:
                 line = serial_proto.readline(isPrinting)
                 if ((not isPrinting and line == b"" and self._commandAvailable.wait(2)) or
                     (    isPrinting and self._commandAvailable.isSet())):
+                    self._mutex.acquire()
                     cmd = self._command_queue.get()
                     if self._command_queue.empty():
                         self._commandAvailable.clear()
+                    self._mutex.release()
                     serial_proto.sendCmdUnreliable(cmd)
 
             except Exception as e:
@@ -1164,70 +1178,75 @@ class PrintThread:
         return pos
 
     def pause(self, machine_width, machine_depth, machine_height, retract_amount):
-        """Pauses the print in progress, lifting the head, parking and retracting"""
+        """Pauses the print in progress, lifting the head, parking and retracting.
+           Also used to park the head after a print stops."""
+        parkX  = machine_width  - 10
+        parkY  = machine_depth  - 10
+        maxZ   = machine_height - 10
+        raiseZ = 10.0
+
+        # Prior to enqueuing the head motion commands, set
+        # _pauseState as this will block the PrintThread.
+
         pos = self._findLastPosition()
+        self._mutex.acquire()
         if pos:
-            parkX  = machine_width  - 10
-            parkY  = machine_depth  - 10
-            maxZ   = machine_height - 10
-            raiseZ = 10.0
-
-            # Prior to enqueuing the head motion commands, set
-            # _pauseState as this will block the PrintThread.
-
-            self._mutex.acquire()
             self._pauseState = pos
             self._pauseState.retraction = retract_amount
-            self._mutex.release()
+        else:
+            # Pause with unknown position.
+            self._pauseState = True
+        self._mutex.release()
 
+        if retract_amount > 0:
             # Set E relative positioning
             self.sendCommand("M83")
 
-            # Move the toolhead up and retract
-            parkZ = max(min(pos.z + raiseZ, maxZ), pos.z)
-            self.sendCommand("G1 E%f Z%f F120" % (-retract_amount, parkZ))
+            # Retract the filament
+            self.sendCommand("G1 E%f F120" % (-retract_amount))
 
             # Set E absolute positioning
             self.sendCommand("M82")
 
-            # Move the head away
-            self.sendCommand("G1 X%f Y%f F9000" % (parkX, parkY))
+        # Move the toolhead up, if position is known
+        if pos:
+            parkZ = max(min(pos.z + raiseZ, maxZ), pos.z)
+            self.sendCommand("G1 Z%f F3000" % parkZ)
 
-            # Disable the E steppers
-            self.sendCommand("M18 E")
+        # Move the head away
+        self.sendCommand("G1 X%f Y%f F9000" % (parkX, parkY))
 
-            # Set the stepper inactivity timeout to one day
-            self.sendCommand("M18 S86400")
+        # Disable the E steppers
+        self.sendCommand("M18 E")
 
     def resume(self):
         """Resumes a print that was paused"""
-        if self._pauseState:
+        if isinstance(self._pauseState, self.PauseState):
             pos = self._pauseState
             if pos.f is None:
                 pos.f = 1200
             if pos.e is None:
                 pos.e = 0
 
-            # Set E relative positioning
-            self.sendCommand("M83")
+            if pos.retraction > 0:
+                # Set E relative positioning
+                self.sendCommand("M83")
+                # Prime the nozzle when changing filament
+                self.sendCommand("G1 E%f F120" %  pos.retraction)  # Push the filament out
+                self.sendCommand("G1 E%f F120" % -pos.retraction)  # retract again
+                # Prime the nozzle again
+                self.sendCommand("G1 E%f F120" %  pos.retraction)
+                # Set E absolute positioning
+                self.sendCommand("M82")
+                # Set E absolute position to cancel out any extrude/retract that occured
+                self.sendCommand("G92 E%f" % pos.e)
 
-            # Prime the nozzle when changing filament
-            self.sendCommand("G1 E%f F120" %  pos.retraction)  # Push the filament out
-            self.sendCommand("G1 E%f F120" % -pos.retraction)  # retract again
-
-            # Position the toolhead to the correct position again
-            self.sendCommand("G1 X%f Y%f Z%f F%f" % (pos.x, pos.y, pos.z, pos.f))
-
-            # Prime the nozzle again
-            self.sendCommand("G1 E%f F120" %  pos.retraction)
             # Set proper feedrate
             self.sendCommand("G1 F%f" % pos.f)
-            # Set E absolute position to cancel out any extrude/retract that occured
-            self.sendCommand("G92 E%f" % pos.e)
-            # Set E absolute positioning
-            self.sendCommand("M82")
-            # Reset the stepper inactivity timeout to the default
-            self.sendCommand("M18 S120")
+            # Re-home the nozzle
+            self.sendCommand("G28 X0 Y0")
+            # Position the toolhead to the correct position and feedrate again
+            self.sendCommand("G1 X%f Y%f Z%f F%f" % (pos.x, pos.y, pos.z, pos.f))
             Logger.log("d", "Print resumed")
 
             # Release the PrintThread.
