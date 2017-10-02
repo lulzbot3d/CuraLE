@@ -38,6 +38,16 @@ Item
         }
     }
 
+    MouseArea
+    {
+        anchors.fill: parent
+        onWheel:
+        {
+            wheel.accepted = true
+            slider.activeHandle.setValue(slider.activeHandle.value + wheel.angleDelta.y / 120)
+        }
+    }
+
     MouseArea {
         id: dragArea
         anchors.left: parent.left
