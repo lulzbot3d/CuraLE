@@ -46,6 +46,7 @@ Item
             wheel.accepted = true
             slider.activeHandle.setValue(slider.activeHandle.value + wheel.angleDelta.y / 120)
         }
+        acceptedButtons: Qt.NoButton
     }
 
     MouseArea {
