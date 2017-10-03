@@ -635,7 +635,7 @@ class ConnectThread:
         Logger.log("e", "Baud rate detection for %s failed", self._parent._serial_port)
         self._parent.close()  # Unable to connect, wrap up.
         self._parent.setConnectionState(ConnectionState.closed)
-        self._patent.setConnectionText(catalog.i18nc("@info:status", "Baud rate detection failed"))
+        self._parent.setConnectionText(catalog.i18nc("@info:status", "Baud rate detection failed"))
         self._parent._serial_port = None
 
     class CheckFirmwareStatus(Enum):
