@@ -184,21 +184,21 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
                                    "ultimaker_original_dual"  : "MarlinUltimaker-HBK-{baudrate}-dual.hex",
                                    }
         lulzbot_machines = {
-            "lulzbot_mini": 			"Marlin_Mini_SingleExtruder_1.1.5.14_edcb340.hex",
-            "lulzbot_mini_flexy": 		"Marlin_Mini_Flexystruder_1.1.5.14_edcb340.hex",
+            "lulzbot_mini": 			"Marlin_Mini_SingleExtruder_1.1.5.16_6766c27.hex",
+            "lulzbot_mini_flexy": 		"Marlin_Mini_Flexystruder_1.1.5.16_6766c27.hex",
 
-            "lulzbot_taz5":			"Marlin_TAZ5_SingleExtruder_1.1.5.14_edcb340.hex",
-            "lulzbot_taz5_flexy_v2": 		"Marlin_TAZ5_Flexystruder_1.1.5.14_edcb340.hex",
-            "lulzbot_taz5_moarstruder":		"Marlin_TAZ5_Moarstruder_1.1.5.14_edcb340.hex",
-            "lulzbot_taz5_dual_v2":		"Marlin_TAZ5_DualExtruderV2_1.1.5.14_edcb340.hex",
-            "lulzbot_taz5_flexy_dually_v2": 	"Marlin_TAZ5_FlexyDually_1.1.5.14_edcb340.hex",
-            "lulzbot_taz5_dual_v3": 		"Marlin_TAZ5_DualExtruderV3_1.1.5.14_edcb340.hex",
+            "lulzbot_taz5":			"Marlin_TAZ5_SingleExtruder_1.1.5.16_6766c27.hex",
+            "lulzbot_taz5_flexy_v2": 		"Marlin_TAZ5_Flexystruder_1.1.5.16_6766c27.hex",
+            "lulzbot_taz5_moarstruder":		"Marlin_TAZ5_Moarstruder_1.1.5.16_6766c27.hex",
+            "lulzbot_taz5_dual_v2":		"Marlin_TAZ5_DualExtruderV2_1.1.5.16_6766c27.hex",
+            "lulzbot_taz5_flexy_dually_v2": 	"Marlin_TAZ5_FlexyDually_1.1.5.16_6766c27.hex",
+            "lulzbot_taz5_dual_v3": 		"Marlin_TAZ5_DualExtruderV3_1.1.5.16_6766c27.hex",
 
-            "lulzbot_taz6": 			"Marlin_TAZ6_SingleExtruder_1.1.5.14_edcb340.hex",
-            "lulzbot_taz6_flexy_v2":		"Marlin_TAZ6_Flexystruder_1.1.5.14_edcb340.hex",
-            "lulzbot_taz6_moarstruder": 	"Marlin_TAZ6_Moarstruder_1.1.5.14_edcb340.hex",
-            "lulzbot_taz6_dual_v2": 		"Marlin_TAZ6_DualExtruderV2_1.1.5.14_edcb340.hex",
-            "lulzbot_taz6_flexy_dually_v2": 	"Marlin_TAZ6_FlexyDually_1.1.5.14_edcb340.hex",
+            "lulzbot_taz6": 			"Marlin_TAZ6_SingleExtruder_1.1.5.16_6766c27.hex",
+            "lulzbot_taz6_flexy_v2":		"Marlin_TAZ6_Flexystruder_1.1.5.16_6766c27.hex",
+            "lulzbot_taz6_moarstruder": 	"Marlin_TAZ6_Moarstruder_1.1.5.16_6766c27.hex",
+            "lulzbot_taz6_dual_v2": 		"Marlin_TAZ6_DualExtruderV2_1.1.5.16_6766c27.hex",
+            "lulzbot_taz6_flexy_dually_v2": 	"Marlin_TAZ6_FlexyDually_1.1.5.16_6766c27.hex",
         }
         ##TODO: Add check for multiple extruders
         hex_file = None
