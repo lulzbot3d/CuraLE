@@ -426,7 +426,7 @@ Column
             style: UM.Theme.styles.sidebar_header_button
             activeFocusOnPress: true;
             property var valueWarning: ! Cura.MachineManager.isActiveQualitySupported
-            menu: ProfileMenu { id: profileMenu }
+            menu: ProfileMenu { }
 
             UM.SimpleButton
             {
@@ -454,12 +454,6 @@ Column
                     base.showTooltip(globalProfileRow, Qt.point(0, globalProfileRow.height / 2),  content)
                 }
                 onExited: base.hideTooltip()
-            }
-
-            Connections
-            {
-                target: profileMenu
-                onLayerHeight: globalProfileSelection.text = profileName + " - " + layerHeight
             }
         }
     }
