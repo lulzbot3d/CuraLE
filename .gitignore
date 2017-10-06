@@ -56,4 +56,5 @@ cmake_install.cmake
 #Debug
 run.sh
 CuraEngine
+debug.html
 
