@@ -620,7 +620,7 @@ Item
                     Keys.onDownPressed: slider.activeHandle.setValue(slider.activeHandle.value - ((event.modifiers & Qt.ShiftModifier) ? 10 : 1))
                 }
 
-                BusyIndicator
+                /*BusyIndicator
                 {
                     id: busyIndicator;
                     anchors.left: parent.right;
@@ -632,7 +632,7 @@ Item
 
                     running: UM.LayerView.busy;
                     visible: UM.LayerView.busy;
-                }
+                }*/
             }
         }
     }
