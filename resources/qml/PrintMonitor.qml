@@ -938,7 +938,7 @@ ScrollView
 	        title.sourceComponent = monitorSection
 	        title.label = label
 	        var content = Qt.createQmlObject('import QtQuick 2.2; Loader {}', printMonitor);
-	        content.source = path
+            content.source = "file:///" + path
 	        content.item.width = base.width - 2 * UM.Theme.getSize("default_margin").width
 	    }
 
