@@ -256,25 +256,26 @@ Column
             width: UM.Theme.getSize("setting_control").height
             height: UM.Theme.getSize("setting_control").height
 
-            Button
+            UM.SimpleButton
             {
                 id: infoButton
-                onClicked: Cura.MachineManager.openCurrentMaterialInfo()
-                visible: Cura.MachineManager.currentMaterialHasInfo
+
+                color: hovered ? UM.Theme.getColor("text") : UM.Theme.getColor("info_button");
+                iconSource: UM.Theme.getIcon("notice");
 
                 anchors.fill: parent
+                visible: Cura.MachineManager.currentMaterialHasInfo
 
-                style: UM.Theme.styles.sidebar_header_button
-
-                tooltip: catalog.i18nc("@tooltip", "Material Info")
-
-                UM.RecolorImage
+                onClicked:
                 {
-                    anchors.fill: parent
-
-                    source: UM.Theme.getIcon("notice")
-                    color: UM.Theme.getColor("text")
+                    Cura.MachineManager.openCurrentMaterialInfo()
                 }
+                onEntered:
+                {
+                    var content = catalog.i18nc("@tooltip", "Material Info")
+                    base.showTooltip(parent, Qt.point(0, parent.height / 2),  content)
+                }
+                onExited: base.hideTooltip()
             }
         }
 

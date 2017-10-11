@@ -175,50 +175,54 @@ Rectangle
                     anchors.rightMargin: UM.Theme.getSize("default_margin").width * 3
                     spacing: 2
 
-                    Button
+                    UM.SimpleButton
                     {
                         id: printerInfoButton
-                        onClicked: Cura.MachineManager.openCurrentPrinterInfo()
+
+                        color: hovered ? UM.Theme.getColor("text") : UM.Theme.getColor("info_button");
+                        iconSource: UM.Theme.getIcon("notice");
+
+                        width: UM.Theme.getSize("setting_control").height
+                        height: UM.Theme.getSize("setting_control").height
+                        anchors.verticalCenter: parent.verticalCenter
+
                         visible: Cura.MachineManager.currentPrinterHasInfo
 
-                        width: UM.Theme.getSize("setting_control").height
-                        height: UM.Theme.getSize("setting_control").height
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        style: UM.Theme.styles.sidebar_header_button
-
-                        tooltip: catalog.i18nc("@tooltip", "Printer Info")
-
-                        UM.RecolorImage
+                        onClicked:
                         {
-                            anchors.fill: parent
-
-                            source: UM.Theme.getIcon("notice")
-                            color: UM.Theme.getColor("text")
+                            Cura.MachineManager.openCurrentPrinterInfo()
                         }
+                        onEntered:
+                        {
+                            var content = catalog.i18nc("@tooltip", "Printer Info")
+                            base.showTooltip(parent, Qt.point(0, parent.height / 2),  content)
+                        }
+                        onExited: base.hideTooltip()
                     }
 
-                    Button
+                    UM.SimpleButton
                     {
                         id: toolheadInfoButton
-                        onClicked: Cura.MachineManager.openCurrentToolheadInfo()
-                        visible: Cura.MachineManager.currentToolheadHasInfo
+
+                        color: hovered ? UM.Theme.getColor("text") : UM.Theme.getColor("info_button");
+                        iconSource: UM.Theme.getIcon("notice");
 
                         width: UM.Theme.getSize("setting_control").height
                         height: UM.Theme.getSize("setting_control").height
                         anchors.verticalCenter: parent.verticalCenter
 
-                        style: UM.Theme.styles.sidebar_header_button
+                        visible: Cura.MachineManager.currentToolheadHasInfo
 
-                        tooltip: catalog.i18nc("@tooltip", "Toolhead Info")
-
-                        UM.RecolorImage
+                        onClicked:
                         {
-                            anchors.fill: parent
-
-                            source: UM.Theme.getIcon("notice")
-                            color: UM.Theme.getColor("text")
+                            Cura.MachineManager.openCurrentToolheadInfo()
                         }
+                        onEntered:
+                        {
+                            var content = catalog.i18nc("@tooltip", "Toolhead Info")
+                            base.showTooltip(parent, Qt.point(0, parent.height / 2),  content)
+                        }
+                        onExited: base.hideTooltip()
                     }
                 }
             }
