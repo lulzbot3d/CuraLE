@@ -689,15 +689,15 @@ class ConnectThread:
                 "on_fail": self.CheckFirmwareStatus.WRONG_MACHINE
             },
             {
-                "reply_key": "FIRMWARE_VERSION",
-                "definition_key": "firmware_last_version",
-                "on_fail": self.CheckFirmwareStatus.FIRMWARE_OUTDATED
-            },
-            {
                 "reply_key": "EXTRUDER_TYPE",
                 "definition_key": "firmware_toolhead_name",
                 "on_fail": self.CheckFirmwareStatus.WRONG_TOOLHEAD
             },
+            {
+                "reply_key": "FIRMWARE_VERSION",
+                "definition_key": "firmware_last_version",
+                "on_fail": self.CheckFirmwareStatus.FIRMWARE_OUTDATED
+            }
         ]
         for option in list_to_check:
             result = checkValue(option["reply_key"], option["definition_key"], option.get("exact_match", True))
