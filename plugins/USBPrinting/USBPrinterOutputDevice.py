@@ -735,7 +735,7 @@ class ConnectThread:
                 self._parent.setConnectionText(catalog.i18nc("@info:status", "Wrong Toolhead"))
             elif check_firmware_status == self.CheckFirmwareStatus.FIRMWARE_OUTDATED:
                 Logger.log("d", "Installed firmware is outdated")
-                self._parent._error_message = Message(catalog.i18nc("@info:status", "New printer firmware is available. Use \"Settings -> Printer -> Manage Printer... -> Upgrade Firmare\" to upgrade."))
+                self._parent._error_message = Message(catalog.i18nc("@info:status", "New printer firmware is available. Use \"Settings -> Printer -> Manage Printer... -> Upgrade Firmware\" to upgrade."))
                 self._parent._error_message.show()
                 # Return here since we don't want this to be a forced upgrade.
                 return
