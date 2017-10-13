@@ -689,15 +689,15 @@ class ConnectThread:
                 "on_fail": self.CheckFirmwareStatus.WRONG_MACHINE
             },
             {
-                "reply_key": "FIRMWARE_VERSION",
-                "definition_key": "firmware_last_version",
-                "on_fail": self.CheckFirmwareStatus.FIRMWARE_OUTDATED
-            },
-            {
                 "reply_key": "EXTRUDER_TYPE",
                 "definition_key": "firmware_toolhead_name",
                 "on_fail": self.CheckFirmwareStatus.WRONG_TOOLHEAD
             },
+            {
+                "reply_key": "FIRMWARE_VERSION",
+                "definition_key": "firmware_last_version",
+                "on_fail": self.CheckFirmwareStatus.FIRMWARE_OUTDATED
+            }
         ]
         for option in list_to_check:
             result = checkValue(option["reply_key"], option["definition_key"], option.get("exact_match", True))
@@ -721,7 +721,14 @@ class ConnectThread:
 
     def _onConnectionSucceeded(self):
         check_firmware_status = self._checkFirmware()
-        if check_firmware_status != self.CheckFirmwareStatus.OK:
+        if check_firmware_status == self.CheckFirmwareStatus.FIRMWARE_OUTDATED:
+            # Firmware outdated should not be a critical error, just show
+            # a dialog box encouraging user to update FW.
+            Logger.log("d", "Installed firmware is outdated")
+            self._parent._error_message = Message(catalog.i18nc("@info:status", "New printer firmware is available. Use \"Settings -> Printer -> Manage Printer... -> Upgrade Firmware\" to upgrade."))
+            self._parent._error_message.show()
+        elif check_firmware_status != self.CheckFirmwareStatus.OK:
+            # These errors are all critical.
             self._parent.close()  # Unable to connect, wrap up.
             self._parent.setConnectionState(ConnectionState.closed)
             if check_firmware_status == self.CheckFirmwareStatus.TIMEOUT:
@@ -733,9 +740,6 @@ class ConnectThread:
             elif check_firmware_status == self.CheckFirmwareStatus.WRONG_TOOLHEAD:
                 Logger.log("d", "Tried to connect to machine with wrong toolhead")
                 self._parent.setConnectionText(catalog.i18nc("@info:status", "Wrong Toolhead"))
-            elif check_firmware_status == self.CheckFirmwareStatus.FIRMWARE_OUTDATED:
-                Logger.log("d", "Installed firmware is outdated")
-                self._parent.setConnectionText(catalog.i18nc("@info:status", "Firmware Outdated"))
             else:
                 Logger.log("d", "Unexpected error while reading firmware")
                 self._parent.setConnectionText(catalog.i18nc("@info:status", "Wrong Firmware"))
