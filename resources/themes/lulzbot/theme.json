@@ -69,6 +69,7 @@
         "text_reversed": [255, 255, 255, 255],
         "text_subtext": [102, 102, 102, 255],
         "text_green": [193, 216, 47, 255],
+        "text_dark_green": [0, 0, 0, 255],
 
         "error": [255, 140, 0, 255],
         "sidebar_header_bar": [193, 216, 47, 255],

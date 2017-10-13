@@ -124,7 +124,8 @@ Item {
                 }
                 style: TextFieldStyle{
                     //textColor: UM.Theme.getColor("setting_control_text");
-                    textColor: UM.Theme.getColor("text_green");
+                    //textColor: UM.Theme.getColor("text_green");
+                    textColor: UM.Theme.getColor("text_dark_green");
                     font: UM.Theme.getFont("default_bold");
                     background: Rectangle {
                         opacity: 100
@@ -145,7 +146,8 @@ Item {
         verticalAlignment: Text.AlignVCenter
         font: UM.Theme.getFont("small")
         //color: UM.Theme.getColor("text_subtext")
-        color: UM.Theme.getColor("text_green")
+        //color: UM.Theme.getColor("text_green")
+        color: UM.Theme.getColor("text_dark_green")
         style: Text.Raised
         styleColor: "#788814"
         text: Printer.getSceneBoundingBoxString
@@ -176,7 +178,8 @@ Item {
                 sourceSize.width: width
                 sourceSize.height: width
                 //color: UM.Theme.getColor("text_subtext")
-                color: UM.Theme.getColor("text_green")
+                //color: UM.Theme.getColor("text_green")
+                color: UM.Theme.getColor("text_dark_green")
                 source: UM.Theme.getIcon("print_time")
                 isBorderVisible: true
             }
@@ -221,7 +224,8 @@ Item {
                     anchors.left: parent.left
                     anchors.top: parent.top
                     font: UM.Theme.getFont("small")
-                    color: UM.Theme.getColor("text_green")
+                    //color: UM.Theme.getColor("text_green")
+                    color: UM.Theme.getColor("text_dark_green")
                     style: Text.Raised
                     styleColor: "#788814"
                     text: (!base.printDuration || !base.printDuration.valid) ? catalog.i18nc("@label", "00h 00min") : base.printDuration.getDisplayString(UM.DurationFormat.Short)
@@ -249,7 +253,8 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 font: UM.Theme.getFont("small")
                 //color: UM.Theme.getColor("text_subtext")
-                color: UM.Theme.getColor("text_green")
+                //color: UM.Theme.getColor("text_green")
+                color: UM.Theme.getColor("text_dark_green")
                 style: Text.Raised
                 styleColor: "#788814"
                 text:
