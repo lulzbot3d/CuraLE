@@ -141,15 +141,9 @@ Item
 
             onStatusChanged:
             {
-
                 if (panel.status == Loader.Ready)
                 {
-                    //console.log('---------Loaded: UM.ActiveTool.activeToolPanel = ', UM.ActiveTool.activeToolPanel)
-                    //console.log('---------Loaded: panel,nextItemInFocusChain() = ', panel,nextItemInFocusChain())
-                    //console.log('---------Loaded: panel,nextItemInFocusChain().focus = ', panel,nextItemInFocusChain().focus)
-                    //console.log('---------Loaded: panel,nextItemInFocusChain(false) = ', panel,nextItemInFocusChain(false))
                     panel.nextItemInFocusChain().forceActiveFocus()
-                    //console.log('---------Loaded: panel,nextItemInFocusChain().focus = ', panel,nextItemInFocusChain().focus)
                 }
             }
         }
