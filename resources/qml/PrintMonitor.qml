@@ -104,7 +104,7 @@ ScrollView
                            repeat: true
                            onTriggered:
                            {
-                              for(  var index = 1; index < machineExtruderCount.properties.value; index++ )
+                              for(  var index = 0; index < machineExtruderCount.properties.value; index++ )
                               {
                                    if(connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.hotendTemperatures[index] != null )
                                    {
