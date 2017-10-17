@@ -369,12 +369,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     def _setJobState(self, job_state):
         if job_state == "pause":
             self._pausePrint()
-            self._is_paused = True
-            self._updateJobState("paused")
         elif job_state == "print":
             self._resumePrint()
-            self._is_paused = False
-            self._updateJobState("printing")
         elif job_state == "abort":
             self.cancelPrint()
 
@@ -389,6 +385,10 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         retract_amount = settings.getProperty("retraction_amount", "value")
 
         self._print_thread.pause(machine_width, machine_depth, machine_height, retract_amount)
+
+        self._is_paused = True
+        self._updateJobState("paused")
+
         Logger.log("d", "Pausing print")
 
     def _resumePrint(self):
@@ -396,6 +396,9 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             return
 
         self._print_thread.resume()
+
+        self._is_paused = False
+        self._updateJobState("printing")
 
     ##  Set the progress of the print.
     #   It will be normalized (based on max_progress) to range 0 - 100
