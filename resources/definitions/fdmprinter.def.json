@@ -1470,7 +1470,7 @@
                     "label": "Auto Temperature",
                     "description": "Change the temperature for each layer automatically with the average flow speed of that layer.",
                     "type": "bool",
-                    "default_value": true,
+                    "default_value": false,
                     "enabled": "machine_nozzle_temp_enabled and False",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
