@@ -66,6 +66,22 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true,
                     "enabled": "False"
+                },
+                "machine_has_lcd":
+                {
+                    "type": "bool",
+                    "default_value": false,
+                    "enabled": false,
+                    "label": "LCD",
+                    "description": "LCD"
+                },
+                "firmware_machine_type":
+                {
+                    "type": "str",
+                    "default_value": "",
+                    "enabled": false,
+                    "label": "firmware type",
+                    "description": "firmware type"
                 }
             }
         },

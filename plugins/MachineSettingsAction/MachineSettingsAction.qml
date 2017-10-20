@@ -461,6 +461,13 @@ Cura.MachineAction
                                     machineBaudrateProvider.setPropertyValue("value", model[index]);
                                 }
                             }
+                            CheckBox
+                            {
+                                id: lcdCheckBox
+                                text: catalog.i18nc("@option:check", "LCD")
+                                checked: String(machineLCDProvider.properties.value).toLowerCase() != 'false'
+                                onClicked: machineLCDProvider.setPropertyValue("value", checked)
+                            }
                         }
                     }
 
@@ -764,6 +771,16 @@ Cura.MachineAction
 
         containerStackId: Cura.MachineManager.activeMachineId
         key: "machine_baudrate"
+        watchedProperties: [ "value" ]
+        storeIndex: manager.containerIndex
+    }
+
+    UM.SettingPropertyProvider
+    {
+        id: machineLCDProvider
+
+        containerStackId: Cura.MachineManager.activeMachineId
+        key: "machine_has_lcd"
         watchedProperties: [ "value" ]
         storeIndex: manager.containerIndex
     }

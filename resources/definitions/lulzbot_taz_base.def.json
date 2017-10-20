@@ -154,6 +154,10 @@
         "jerk_skirt_brim":
         {
             "default_value": 12
+        },
+        "machine_has_lcd":
+        {
+            "default_value": true
         }
     }
 }

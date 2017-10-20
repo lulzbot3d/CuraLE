@@ -669,8 +669,9 @@ class ConnectThread:
             WRONG_VALUE = 2
             MISSING_VALUE_IN_DEFINITION = 3
 
-        def checkValue(fw_key, profile_key, exact_match = True):
-            expected_value = global_container_stack.getMetaDataEntry(profile_key, None)
+        def checkValue(fw_key, profile_key, exact_match = True, search_in_properties = False):
+            expected_value = global_container_stack.getProperty(profile_key, "value") if search_in_properties else\
+                global_container_stack.getMetaDataEntry(profile_key, None)
             if expected_value is None:
                 Logger.log("d", "Missing %s in profile. Skipping check." % profile_key)
                 return CheckValueStatus.MISSING_VALUE_IN_DEFINITION
@@ -689,7 +690,8 @@ class ConnectThread:
             {
                 "reply_key": "MACHINE_TYPE",
                 "definition_key": "firmware_machine_type",
-                "on_fail": self.CheckFirmwareStatus.WRONG_MACHINE
+                "on_fail": self.CheckFirmwareStatus.WRONG_MACHINE,
+                "search_in_properties": True
             },
             {
                 "reply_key": "EXTRUDER_TYPE",
@@ -703,7 +705,7 @@ class ConnectThread:
             }
         ]
         for option in list_to_check:
-            result = checkValue(option["reply_key"], option["definition_key"], option.get("exact_match", True))
+            result = checkValue(option["reply_key"], option["definition_key"], option.get("exact_match", True), option.get("search_in_properties", False))
             if result != CheckValueStatus.OK:
                 if result == CheckValueStatus.MISSING_VALUE_IN_DEFINITION:
                     pass

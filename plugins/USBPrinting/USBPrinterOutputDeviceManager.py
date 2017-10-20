@@ -204,6 +204,13 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_taz6_dual_v3":             "Marlin_TAZ6_DualExtruderV3_1.1.5.18_37797ec.hex",
             "lulzbot_taz6_aerostruder":            "Marlin_TAZ6_Aerostruder_1.1.5.18_37797ec.hex",
         }
+
+        lulzbot_lcd_machines = {
+            "lulzbot_mini":                  "Marlin_MiniLCD_SingleExtruder_1.1.5.18_37797ec.hex",
+            "lulzbot_mini_flexy":              "Marlin_MiniLCD_Flexystruder_1.1.5.18_37797ec.hex",
+            "lulzbot_mini_aerostruder":         "Marlin_MiniLCD_Aerostruder_1.1.5.18_37797ec.hex",
+        }
+
         ##TODO: Add check for multiple extruders
         hex_file = None
         if machine_id in machine_without_extras.keys():  # The machine needs to be defined here!
@@ -214,8 +221,13 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
                 Logger.log("d", "Choosing basic firmware for machine %s.", machine_id)
                 hex_file = machine_without_extras[machine_id]  # Return "basic" firmware
         elif machine_id in lulzbot_machines.keys():
-            Logger.log("d", "Found firmware for machine %s.", machine_id)
-            hex_file = lulzbot_machines[machine_id]
+            machine_has_lcd = global_container_stack.getProperty("machine_has_lcd", "value")
+            if machine_id in lulzbot_lcd_machines.keys() and machine_has_lcd:
+                Logger.log("d", "Found firmware with LCD for machine %s.", machine_id)
+                hex_file = lulzbot_lcd_machines[machine_id]
+            else:
+                Logger.log("d", "Found firmware for machine %s.", machine_id)
+                hex_file = lulzbot_machines[machine_id]
         else:
             Logger.log("w", "There is no firmware for machine %s.", machine_id)
 
