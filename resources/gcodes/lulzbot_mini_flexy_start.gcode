@@ -49,4 +49,4 @@ M400                         ; clear buffer
 M109 R{print_temperature}    ; set extruder temp and wait
 G4 S15                       ; wait for bed to temp up
 G1 Z2 E0 F45                 ; extrude filament back into nozzle
-M140 S{print_bed_temperature}; get bed temping up during first layer
+M140 S{material_bed_temperature_layer_0}; get bed temping up during first layer

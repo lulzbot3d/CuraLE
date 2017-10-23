@@ -49,6 +49,6 @@ G4 S1                        ; pause
 M117 Heating...              ; LCD status message
 M140 S{print_bed_temperature}; get bed heating up
 M109 R{print_temperature}    ; set extruder temp and wait
-M190 R{print_bed_temperature}; get bed temping up during first layer
+M190 R{material_bed_temperature_layer_0}; get bed temping up during first layer
 G1 Z2 E0 F75                 ; extrude filament back into nozzle
 M117 TAZ Printing...         ; LCD status message

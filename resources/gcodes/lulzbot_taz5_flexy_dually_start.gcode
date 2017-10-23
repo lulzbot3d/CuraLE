@@ -11,7 +11,7 @@ M104 S{material_print_temperature_0} T0 ; set extruder temp
 M104 S{material_print_temperature_1} T1; set extruder temp
 M109 R{material_print_temperature_0} T0 ; set extruder temp and wait
 M109 R{material_print_temperature_1} T1; set extruder temp and wait
-M190 S{material_bed_temperature}    ; wait for bed to reach printing temp
+M190 S{material_bed_temperature_layer_0}    ; wait for bed to reach printing temp
 T1                      ;Switch to the 2nd extruder
 G92 E0                  ;zero the extruded length
 G1 F100 E10             ;extrude 10mm of feed stock
