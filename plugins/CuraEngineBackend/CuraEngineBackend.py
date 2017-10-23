@@ -7,7 +7,7 @@ from UM.Scene.SceneNode import SceneNode
 from UM.Preferences import Preferences
 from UM.Signal import Signal
 from UM.Logger import Logger
-from UM.Message import Message
+from UM.Message import Message, MessageType
 from UM.PluginRegistry import PluginRegistry
 from UM.Resources import Resources
 from UM.Settings.Validator import ValidatorState #To find if a setting is in an error state. We can't slice then.
@@ -282,7 +282,7 @@ class CuraEngineBackend(QObject, Backend):
         if job.getResult() == StartSliceJob.StartJobResult.MaterialIncompatible:
             if Application.getInstance().platformActivity:
                 self._error_message = Message(catalog.i18nc("@info:status",
-                                            "The selected material is incompatible with the selected machine or configuration."))
+                                            "The selected material is incompatible with the selected machine or configuration."), type = MessageType.Error)
                 self._error_message.show()
                 self.backendStateChange.emit(BackendState.Error)
             else:
@@ -309,7 +309,7 @@ class CuraEngineBackend(QObject, Backend):
                     error_labels.add(definitions[0].label)
 
                 error_labels = ", ".join(error_labels)
-                self._error_message = Message(catalog.i18nc("@info:status", "Unable to slice with the current settings. The following settings have errors: {0}".format(error_labels)))
+                self._error_message = Message(catalog.i18nc("@info:status", "Unable to slice with the current settings. The following settings have errors: {0}".format(error_labels)), type = MessageType.Error)
                 self._error_message.show()
                 self.backendStateChange.emit(BackendState.Error)
             else:
@@ -318,7 +318,7 @@ class CuraEngineBackend(QObject, Backend):
 
         if job.getResult() == StartSliceJob.StartJobResult.BuildPlateError:
             if Application.getInstance().platformActivity:
-                self._error_message = Message(catalog.i18nc("@info:status", "Unable to slice because the prime tower or prime position(s) are invalid."))
+                self._error_message = Message(catalog.i18nc("@info:status", "Unable to slice because the prime tower or prime position(s) are invalid."), type = MessageType.Error)
                 self._error_message.show()
                 self.backendStateChange.emit(BackendState.Error)
             else:
@@ -326,7 +326,7 @@ class CuraEngineBackend(QObject, Backend):
 
         if job.getResult() == StartSliceJob.StartJobResult.NothingToSlice:
             if Application.getInstance().platformActivity:
-                self._error_message = Message(catalog.i18nc("@info:status", "Nothing to slice because none of the models fit the build volume. Please scale or rotate models to fit."))
+                self._error_message = Message(catalog.i18nc("@info:status", "Nothing to slice because none of the models fit the build volume. Please scale or rotate models to fit."), type = MessageType.Error)
                 self._error_message.show()
                 self.backendStateChange.emit(BackendState.Error)
             else:
