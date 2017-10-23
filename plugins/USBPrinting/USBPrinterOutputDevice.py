@@ -1136,8 +1136,9 @@ class PrintThread:
 
         # Don't send the M0 or M1 to the machine, as M0 and M1 are handled as
         # an LCD menu pause.
-        if line == "M0" or line == "M1":
+        if re.match('\s*M[01]\\b', line):
             # Don't send the M0 or M1 to the machine, as M0 and M1 are handled as an LCD menu pause.
+            Logger.log("d", "Encountered M0 or M1, pausing print" )
             self._parent._setJobState("pause")
             line = False
 
