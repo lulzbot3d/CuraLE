@@ -71,7 +71,7 @@ class QualityManager:
         common_quality_types = set(quality_type_dict.keys())
         for material_container in material_containers[1:]:
             next_quality_type_dict = self.__fetchQualityTypeDictForMaterial(machine_definition, material_container)
-            common_quality_types.intersection_update(set(next_quality_type_dict.keys()))
+            common_quality_types.union(set(next_quality_type_dict.keys()))
 
         return list(common_quality_types)
 
