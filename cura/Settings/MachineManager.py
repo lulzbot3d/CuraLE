@@ -1177,25 +1177,27 @@ class MachineManager(QObject):
         containers = ContainerRegistry.getInstance().findContainerStacks(type = "machine", machine = machine_id)
         if containers:
             container = containers[0]
-            c = container.findContainer({'type': 'definition_changes'})
-            if c:
-                ind = container.getContainerIndex(c)
-                variant_instance_container = self._updateVariantContainer(container.getBottom())
-                container.replaceContainer(ind, variant_instance_container)
-                Application.getInstance().setGlobalContainerStack(container)
+            if container:
+                c = container.findContainer({'type': 'definition_changes'})
+                if c:
+                    ind = container.getContainerIndex(c)
+                    variant_instance_container = self._updateVariantContainer(container.getBottom())
+                    container.replaceContainer(ind, variant_instance_container)
+                    Application.getInstance().setGlobalContainerStack(container)
 
     @pyqtSlot(str, result=bool)
     def isMachineChanged(self, machine_id):
         containers = ContainerRegistry.getInstance().findContainerStacks(type = "machine", machine = machine_id)
         if containers:
             container = containers[0]
-            c = container.findContainer({'type': 'definition_changes'})
-            if c:
-                variant_instance_container = self._updateVariantContainer(container.getBottom())
-                for ins in c.getAllKeys():
-                    if c.getInstance(ins) != variant_instance_container.getInstance(ins):
-                        return True
-            return False
+            if container:
+                c = container.findContainer({'type': 'definition_changes'})
+                if c:
+                    variant_instance_container = self._updateVariantContainer(container.getBottom())
+                    for ins in c.getAllKeys():
+                        if c.getInstance(ins) != variant_instance_container.getInstance(ins):
+                            return True
+        return False
 
     @pyqtSlot(str)
     def removeMachine(self, machine_id: str):
@@ -1258,6 +1260,20 @@ class MachineManager(QObject):
     @staticmethod
     def createMachineManager(engine=None, script_engine=None):
         return MachineManager()
+
+    def _updateVariantContainer(self, definition):
+        if not definition.getMetaDataEntry("has_variants"):
+            return self._empty_variant_container
+        machine_definition_id = Application.getInstance().getMachineManager().getQualityDefinitionId(definition)
+        containers = []
+        preferred_variant = definition.getMetaDataEntry("preferred_variant")
+        if preferred_variant:
+            containers = ContainerRegistry.getInstance().findInstanceContainers(type = "variant", definition = machine_definition_id, id = preferred_variant)
+        if not containers:
+            containers = ContainerRegistry.getInstance().findInstanceContainers(type = "variant", definition = machine_definition_id)
+        if containers:
+            return containers[0]
+        return self._empty_variant_container
 
     def _updateMaterialContainer(self, definition: "DefinitionContainer", stack: "ContainerStack", variant_container: Optional["InstanceContainer"] = None, preferred_material_name: Optional[str] = None):
         if not definition.getMetaDataEntry("has_materials"):
