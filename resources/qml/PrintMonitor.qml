@@ -92,30 +92,12 @@ ScrollView
 
 	            Repeater
 	            {
+
 	                id: extrudersRepeater
                     model: machineExtruderCount.properties.value
 
 	                delegate: Rectangle
 	                {
-                        Timer
-                        {
-                           interval: 500
-                           running: true
-                           repeat: true
-                           onTriggered:
-                           {
-                              for(  var index = 0; index < machineExtruderCount.properties.value; index++ )
-                              {
-                                   if(connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.hotendTemperatures[index] != null )
-                                   {
-                                       extruderTemperature.text = (connectedPrinter.hotendTemperatures[index] != 0) ? Math.round(connectedPrinter.hotendTemperatures[index]) + "°C" : ""
-                                       //console.log( "extruderTargetTemperature.text =", extruderTemperature.text )
-                                   }
-                              }
-                           }
-
-                        }
-
 	                    id: extruderRectangle
 	                    color: UM.Theme.getColor("sidebar")
 	                    width: index == machineExtruderCount.properties.value - 1 && index % 2 == 0 ? extrudersGrid.width : extrudersGrid.width / 2 - UM.Theme.getSize("sidebar_lining_thin").width / 2
@@ -134,7 +116,13 @@ ScrollView
                         Label //Extruder target temperature.
                         {
                             id: extruderTargetTemperature
-                            text: (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
+                            text:
+                            {
+                                if( index == 0)
+                                    (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
+                                else
+                                    (connectedPrinter != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
+                            }
                             font: UM.Theme.getFont("small")
                             color: UM.Theme.getColor("text_inactive")
                             anchors.right: parent.right
@@ -167,8 +155,14 @@ ScrollView
 	                    Label //Temperature indication.
 	                    {
 	                        id: extruderTemperature
-                            text: (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.hotendTemperatures[index] != null && connectedPrinter.hotendTemperatures[index] != 0) ? Math.round(connectedPrinter.hotendTemperatures[index]) + "°C" : ""
-	                        color: UM.Theme.getColor("text")
+                            text:
+                            {
+                                if( index == 0)
+                                    (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.hotendTemperatures[index] != null && connectedPrinter.hotendTemperatures[index] != 0) ? Math.round(connectedPrinter.hotendTemperatures[index]) + "°C" : ""
+                                else
+                                    (connectedPrinter != null && connectedPrinter.hotendTemperatures[index] != null && connectedPrinter.hotendTemperatures[index] != 0) ? Math.round(connectedPrinter.hotendTemperatures[index]) + "°C" : ""
+                            }
+                            color: UM.Theme.getColor("text")
 	                        font: UM.Theme.getFont("large")
                             //anchors.right: parent.right
                             anchors.right: extruderTargetTemperature.left
