@@ -1179,10 +1179,8 @@ class MachineManager(QObject):
             container = containers[0]
             c = container.findContainer({'type': 'definition_changes'})
             if c:
-                ind = container.getContainerIndex(c)
-                variant_instance_container = self._updateVariantContainer(container.getBottom())
-                container.replaceContainer(ind, variant_instance_container)
-                Application.getInstance().setGlobalContainerStack(container)
+                c.clear()
+                Application.getInstance().globalContainerStackChanged.emit()
 
     @pyqtSlot(str, result=bool)
     def isMachineChanged(self, machine_id):
@@ -1191,10 +1189,7 @@ class MachineManager(QObject):
             container = containers[0]
             c = container.findContainer({'type': 'definition_changes'})
             if c:
-                variant_instance_container = self._updateVariantContainer(container.getBottom())
-                for ins in c.getAllKeys():
-                    if c.getInstance(ins) != variant_instance_container.getInstance(ins):
-                        return True
+                return len(c.getAllKeys()) > 0
             return False
 
     @pyqtSlot(str)
