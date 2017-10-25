@@ -1169,8 +1169,7 @@
                         "tetrahedral": "Tetrahedral",
                         "concentric": "Concentric",
                         "concentric_3d": "Concentric 3D",
-                        "zigzag": "Zig Zag",
-                        "truncated_octahedron": "Truncated Octahedron"
+                        "zigzag": "Zig Zag"
                     },
                     "default_value": "grid",
                     "enabled": "infill_sparse_density > 0",
