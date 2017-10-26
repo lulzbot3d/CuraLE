@@ -1,9 +1,10 @@
 # Copyright (c) 2017 Ultimaker B.V.
-# Cura is released under the terms of the AGPLv3 or higher.
+# Cura is released under the terms of the LGPLv3 or higher.
 
 from UM.i18n import i18nCatalog
 from UM.OutputDevice.OutputDevice import OutputDevice
-from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QObject, QTimer
+from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QObject, QTimer, pyqtSignal, QUrl
+from PyQt5.QtQml import QQmlComponent, QQmlContext
 from PyQt5.QtWidgets import QMessageBox
 from enum import IntEnum  # For the connection state tracking.
 
@@ -11,6 +12,9 @@ from UM.Settings.ContainerRegistry import ContainerRegistry
 from UM.Logger import Logger
 from UM.Signal import signalemitter
 from UM.Application import Application
+from UM.PluginRegistry import PluginRegistry
+
+import os
 
 i18n_catalog = i18nCatalog("cura")
 
@@ -53,6 +57,19 @@ class PrinterOutputDevice(QObject, OutputDevice):
         self._printer_type = "unknown"
 
         self._camera_active = False
+
+        self._monitor_view_qml_path = ""
+        self._monitor_component = None
+        self._monitor_item = None
+
+        self._control_view_qml_path = ""
+        self._control_component = None
+        self._control_item = None
+
+        self._qml_context = None
+        self._can_pause = True
+        self._can_abort = True
+        self._can_pre_heat_bed = True
 
     def requestWrite(self, nodes, file_name = None, filter_by_machine = False, file_handler = None):
         raise NotImplementedError("requestWrite needs to be implemented")
@@ -107,6 +124,75 @@ class PrinterOutputDevice(QObject, OutputDevice):
 
     # Signal to be emitted when some drastic change occurs in the remaining time (not when the time just passes on normally).
     preheatBedRemainingTimeChanged = pyqtSignal()
+
+    # Does the printer support pre-heating the bed at all
+    @pyqtProperty(bool, constant=True)
+    def canPreHeatBed(self):
+        return self._can_pre_heat_bed
+
+    # Does the printer support pause at all
+    @pyqtProperty(bool,  constant=True)
+    def canPause(self):
+        return self._can_pause
+
+    # Does the printer support abort at all
+    @pyqtProperty(bool, constant=True)
+    def canAbort(self):
+        return self._can_abort
+
+    @pyqtProperty(QObject, constant=True)
+    def monitorItem(self):
+        # Note that we specifically only check if the monitor component is created.
+        # It could be that it failed to actually create the qml item! If we check if the item was created, it will try to
+        # create the item (and fail) every time.
+        if not self._monitor_component:
+            self._createMonitorViewFromQML()
+
+        return self._monitor_item
+
+    @pyqtProperty(QObject, constant=True)
+    def controlItem(self):
+        if not self._control_component:
+            self._createControlViewFromQML()
+
+        return self._control_item
+
+    def _createControlViewFromQML(self):
+        if not self._control_view_qml_path:
+            return
+
+        path = QUrl.fromLocalFile(self._control_view_qml_path)
+
+        # Because of garbage collection we need to keep this referenced by python.
+        self._control_component = QQmlComponent(Application.getInstance()._engine, path)
+
+        # Check if the context was already requested before (Printer output device might have multiple items in the future)
+        if self._qml_context is None:
+            self._qml_context = QQmlContext(Application.getInstance()._engine.rootContext())
+            self._qml_context.setContextProperty("OutputDevice", self)
+
+        self._control_item = self._control_component.create(self._qml_context)
+        if self._control_item is None:
+            Logger.log("e", "QQmlComponent status %s", self._control_component.status())
+            Logger.log("e", "QQmlComponent error string %s", self._control_component.errorString())
+
+    def _createMonitorViewFromQML(self):
+        if not self._monitor_view_qml_path:
+            return
+        path = QUrl.fromLocalFile(self._monitor_view_qml_path)
+
+        # Because of garbage collection we need to keep this referenced by python.
+        self._monitor_component = QQmlComponent(Application.getInstance()._engine, path)
+
+        # Check if the context was already requested before (Printer output device might have multiple items in the future)
+        if self._qml_context is None:
+            self._qml_context = QQmlContext(Application.getInstance()._engine.rootContext())
+            self._qml_context.setContextProperty("OutputDevice", self)
+
+        self._monitor_item = self._monitor_component.create(self._qml_context)
+        if self._monitor_item is None:
+            Logger.log("e", "QQmlComponent status %s", self._monitor_component.status())
+            Logger.log("e", "QQmlComponent error string %s", self._monitor_component.errorString())
 
     @pyqtProperty(str, notify=printerTypeChanged)
     def printerType(self):
@@ -645,7 +731,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
     @pyqtSlot("long")
     @pyqtSlot("long", "long")
     def setHeadZ(self, z, speed = 3000):
-        self._setHeadY(z, speed)
+        self._setHeadZ(z, speed)
 
     ##  Move the head of the printer.
     #   Note that this is a relative move. If you want to move the head to a specific position you can use

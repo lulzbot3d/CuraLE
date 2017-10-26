@@ -1,5 +1,5 @@
 // Copyright (c) 2015 Ultimaker B.V.
-// Cura is released under the terms of the AGPLv3 or higher.
+// Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.2
 import QtQuick.Controls 1.1
@@ -18,8 +18,8 @@ UM.Dialog
     id: base
 
     title: catalog.i18nc("@title:window", "Open project file")
-    width: 450 * Screen.devicePixelRatio
-    height: 150 * Screen.devicePixelRatio
+    width: 450 * screenScaleFactor
+    height: 150 * screenScaleFactor
 
     maximumHeight: height
     maximumWidth: width
@@ -61,10 +61,10 @@ UM.Dialog
     Column
     {
         anchors.fill: parent
-        anchors.leftMargin: 20 * Screen.devicePixelRatio
-        anchors.rightMargin: 20 * Screen.devicePixelRatio
-        anchors.bottomMargin: 20 * Screen.devicePixelRatio
-        spacing: 10 * Screen.devicePixelRatio
+        anchors.leftMargin: 20 * screenScaleFactor
+        anchors.rightMargin: 20 * screenScaleFactor
+        anchors.bottomMargin: 20 * screenScaleFactor
+        spacing: 10 * screenScaleFactor
 
         Label
         {
@@ -94,7 +94,7 @@ UM.Dialog
                 id: openAsProjectButton
                 text: catalog.i18nc("@action:button", "Open as project");
                 anchors.right: importModelsButton.left
-                anchors.rightMargin: UM.Theme.getSize("default_margin").width * Screen.devicePixelRatio
+                anchors.rightMargin: UM.Theme.getSize("default_margin").width
                 isDefault: true
                 onClicked:
                 {

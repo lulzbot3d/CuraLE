@@ -1,9 +1,12 @@
 # Copyright (c) 2017 Ultimaker B.V.
-# Cura is released under the terms of the AGPLv3 or higher.
+# Cura is released under the terms of the LGPLv3 or higher.
 
 import os
 import os.path
 import re
+
+from typing import Optional
+
 from PyQt5.QtWidgets import QMessageBox
 
 from UM.Decorators import override
@@ -107,7 +110,7 @@ class CuraContainerRegistry(ContainerRegistry):
         if not Platform.isWindows():
             if os.path.exists(file_name):
                 result = QMessageBox.question(None, catalog.i18nc("@title:window", "File Already Exists"),
-                                              catalog.i18nc("@label", "The file <filename>{0}</filename> already exists. Are you sure you want to overwrite it?").format(file_name))
+                                              catalog.i18nc("@label Don't translate the XML tag <filename>!", "The file <filename>{0}</filename> already exists. Are you sure you want to overwrite it?").format(file_name))
                 if result == QMessageBox.No:
                     return
         found_containers = []
@@ -137,15 +140,20 @@ class CuraContainerRegistry(ContainerRegistry):
             success = profile_writer.write(file_name, found_containers)
         except Exception as e:
             Logger.log("e", "Failed to export profile to %s: %s", file_name, str(e))
-            m = Message(catalog.i18nc("@info:status", "Failed to export profile to <filename>{0}</filename>: <message>{1}</message>", file_name, str(e)), lifetime = 0)
+            m = Message(catalog.i18nc("@info:status Don't translate the XML tags <filename> or <message>!", "Failed to export profile to <filename>{0}</filename>: <message>{1}</message>", file_name, str(e)),
+                        lifetime = 0,
+                        title = catalog.i18nc("@info:title", "Error"))
             m.show()
             return
         if not success:
             Logger.log("w", "Failed to export profile to %s: Writer plugin reported failure.", file_name)
-            m = Message(catalog.i18nc("@info:status", "Failed to export profile to <filename>{0}</filename>: Writer plugin reported failure.", file_name), lifetime = 0)
+            m = Message(catalog.i18nc("@info:status Don't translate the XML tag <filename>!", "Failed to export profile to <filename>{0}</filename>: Writer plugin reported failure.", file_name),
+                        lifetime = 0,
+                        title = catalog.i18nc("@info:title", "Error"))
             m.show()
             return
-        m = Message(catalog.i18nc("@info:status", "Exported profile to <filename>{0}</filename>", file_name))
+        m = Message(catalog.i18nc("@info:status Don't translate the XML tag <filename>!", "Exported profile to <filename>{0}</filename>", file_name),
+                    title = catalog.i18nc("@info:title", "Export succeeded"))
         m.show()
 
     ##  Gets the plugin object matching the criteria
@@ -171,7 +179,7 @@ class CuraContainerRegistry(ContainerRegistry):
     def importProfile(self, file_name):
         Logger.log("d", "Attempting to import profile %s", file_name)
         if not file_name:
-            return { "status": "error", "message": catalog.i18nc("@info:status", "Failed to import profile from <filename>{0}</filename>: <message>{1}</message>", file_name, "Invalid path")}
+            return { "status": "error", "message": catalog.i18nc("@info:status Don't translate the XML tags <filename> or <message>!", "Failed to import profile from <filename>{0}</filename>: <message>{1}</message>", file_name, "Invalid path")}
 
         plugin_registry = PluginRegistry.getInstance()
         extension = file_name.split(".")[-1]
@@ -193,14 +201,18 @@ class CuraContainerRegistry(ContainerRegistry):
             except Exception as e:
                 # Note that this will fail quickly. That is, if any profile reader throws an exception, it will stop reading. It will only continue reading if the reader returned None.
                 Logger.log("e", "Failed to import profile from %s: %s while using profile reader. Got exception %s", file_name,profile_reader.getPluginId(), str(e))
-                return { "status": "error", "message": catalog.i18nc("@info:status", "Failed to import profile from <filename>{0}</filename>: <message>{1}</message>", file_name, str(e))}
+                return { "status": "error", "message": catalog.i18nc("@info:status Don't translate the XML tags <filename> or <message>!", "Failed to import profile from <filename>{0}</filename>: <message>{1}</message>", file_name, str(e))}
             if profile_or_list: # Success!
                 name_seed = os.path.splitext(os.path.basename(file_name))[0]
                 new_name = self.uniqueName(name_seed)
                 if type(profile_or_list) is not list:
                     profile = profile_or_list
-                    self._configureProfile(profile, name_seed, new_name)
-                    return { "status": "ok", "message": catalog.i18nc("@info:status", "Successfully imported profile {0}", profile.getName()) }
+
+                    result = self._configureProfile(profile, name_seed, new_name)
+                    if result is not None:
+                        return {"status": "error", "message": catalog.i18nc("@info:status Don't translate the XML tags <filename> or <message>!", "Failed to import profile from <filename>{0}</filename>: <message>{1}</message>", file_name, result)}
+
+                    return {"status": "ok", "message": catalog.i18nc("@info:status", "Successfully imported profile {0}", profile.getName())}
                 else:
                     profile_index = -1
                     global_profile = None
@@ -230,7 +242,9 @@ class CuraContainerRegistry(ContainerRegistry):
                             global_profile = profile
                             profile_id = (global_container_stack.getBottom().getId() + "_" + name_seed).lower().replace(" ", "_")
 
-                        self._configureProfile(profile, profile_id, new_name)
+                        result = self._configureProfile(profile, profile_id, new_name)
+                        if result is not None:
+                            return {"status": "error", "message": catalog.i18nc("@info:status Don't translate the XML tags <filename> or <message>!", "Failed to import profile from <filename>{0}</filename>: <message>{1}</message>", file_name, result)}
 
                         profile_index += 1
 
@@ -244,7 +258,14 @@ class CuraContainerRegistry(ContainerRegistry):
         super().load()
         self._fixupExtruders()
 
-    def _configureProfile(self, profile, id_seed, new_name):
+    ##  Update an imported profile to match the current machine configuration.
+    #
+    #   \param profile The profile to configure.
+    #   \param id_seed The base ID for the profile. May be changed so it does not conflict with existing containers.
+    #   \param new_name The new name for the profile.
+    #
+    #   \return None if configuring was successful or an error message if an error occurred.
+    def _configureProfile(self, profile: InstanceContainer, id_seed: str, new_name: str) -> Optional[str]:
         profile.setReadOnly(False)
         profile.setDirty(True)  # Ensure the profiles are correctly saved
 
@@ -257,14 +278,43 @@ class CuraContainerRegistry(ContainerRegistry):
         else:
             profile.addMetaDataEntry("type", "quality_changes")
 
+        quality_type = profile.getMetaDataEntry("quality_type")
+        if not quality_type:
+            return catalog.i18nc("@info:status", "Profile is missing a quality type.")
+
+        quality_type_criteria = {"quality_type": quality_type}
         if self._machineHasOwnQualities():
             profile.setDefinition(self._activeQualityDefinition())
             if self._machineHasOwnMaterials():
-                profile.addMetaDataEntry("material", self._activeMaterialId())
+                active_material_id = self._activeMaterialId()
+                if active_material_id and active_material_id != "empty":  # only update if there is an active material
+                    profile.addMetaDataEntry("material", active_material_id)
+                    quality_type_criteria["material"] = active_material_id
+
+            quality_type_criteria["definition"] = profile.getDefinition().getId()
+
         else:
             profile.setDefinition(ContainerRegistry.getInstance().findDefinitionContainers(id="fdmprinter")[0])
+            quality_type_criteria["definition"] = "fdmprinter"
+
+        machine_definition = Application.getInstance().getGlobalContainerStack().getBottom()
+        del quality_type_criteria["definition"]
+        materials = None
+        if "material" in quality_type_criteria:
+            materials = ContainerRegistry.getInstance().findInstanceContainers(id = quality_type_criteria["material"])
+            del quality_type_criteria["material"]
+
+        # Check to make sure the imported profile actually makes sense in context of the current configuration.
+        # This prevents issues where importing a "draft" profile for a machine without "draft" qualities would report as
+        # successfully imported but then fail to show up.
+        from cura.QualityManager import QualityManager
+        qualities = QualityManager.getInstance()._getFilteredContainersForStack(machine_definition, materials, **quality_type_criteria)
+        if not qualities:
+            return catalog.i18nc("@info:status", "Could not find a quality type {0} for the current configuration.", quality_type)
 
         ContainerRegistry.getInstance().addContainer(profile)
+
+        return None
 
     ##  Gets a list of profile writer plugins
     #   \return List of tuples of (plugin_id, meta_data).
@@ -303,10 +353,8 @@ class CuraContainerRegistry(ContainerRegistry):
     #   \return the ID of the active material or the empty string
     def _activeMaterialId(self):
         global_container_stack = Application.getInstance().getGlobalContainerStack()
-        if global_container_stack:
-            material = global_container_stack.findContainer({"type": "material"})
-            if material:
-                return material.getId()
+        if global_container_stack and global_container_stack.material:
+            return global_container_stack.material.getId()
         return ""
 
     ##  Returns true if the current machien requires its own quality profiles
