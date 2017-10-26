@@ -331,9 +331,9 @@ class CuraApplication(QtApplication):
 
         preferences.setDefault("local_file/last_used_type", "text/x-gcode")
 
-        Preferences.setDefault("info/automatic_update_check", False)
+        preferences.setDefault("info/automatic_update_check", False)
 
-        Preferences.setDefault("general/visible_settings", """
+        preferences.setDefault("general/visible_settings", """
             machine_settings
             resolution
                 layer_height
@@ -1503,7 +1503,7 @@ class CuraApplication(QtApplication):
     def showSplashMessage(self, message):
         splash = self.getSplashScreen()
         if splash:
-            splash.setText(message)
+            # splash.setText(message)
             self.processEvents()
 
     @pyqtSlot(str, result=bool)

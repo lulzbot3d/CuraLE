@@ -328,8 +328,6 @@ Column
 
             anchors.verticalCenter: parent.verticalCenter
             width: parent.width * 0.45 - UM.Theme.getSize("default_margin").width*3 - infoButton.width
-            font: UM.Theme.getFont("default");
-            color: UM.Theme.getColor("text");
             menu: MaterialMenu { extruderIndex: base.currentExtruderIndex }
         }
 
@@ -387,11 +385,7 @@ Column
 
             enabled: !extrudersList.visible || base.currentExtruderIndex  > -1
 
-            height: UM.Theme.getSize("setting_control").height
-            width: parent.width * 0.7 + UM.Theme.getSize("sidebar_margin").width
             anchors.right: parent.right
-            style: UM.Theme.styles.sidebar_header_button
-            activeFocusOnPress: true;
         }
     }
 
