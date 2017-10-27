@@ -18,7 +18,7 @@ import re
 class OctoPrintOutputDevicePlugin(OutputDevicePlugin):
     def __init__(self):
         super().__init__()
-        self._zero_conf = Zeroconf()
+        self._zero_conf = None
         self._browser = None
         self._instances = {}
 
@@ -55,23 +55,31 @@ class OctoPrintOutputDevicePlugin(OutputDevicePlugin):
             self._printers = {}
         self.instanceListChanged.emit()
 
-        self._zero_conf.__init__()
-        self._browser = ServiceBrowser(self._zero_conf, u'_octoprint._tcp.local.', [self._onServiceChanged])
+        try:
+            self._zero_conf = Zeroconf()
+        except Exception:
+            self._zero_conf = None
+            Logger.logException("e", "Failed to create Zeroconf instance. Auto-discovery will not work.")
+
+        if self._zero_conf:
+            self._browser = ServiceBrowser(self._zero_conf, u'_octoprint._tcp.local.', [self._onServiceChanged])
 
         # Add manual instances from preference
         for name, properties in self._manual_instances.items():
             additional_properties = {
                 b"path": properties["path"].encode("utf-8"),
                 b"useHttps": b"true" if properties.get("useHttps", False) else b"false",
+                b'userName': properties["userName"].encode("utf-8"),
+                b'password': properties["password"].encode("utf-8"),
                 b"manual": b"true"
             } # These additional properties use bytearrays to mimick the output of zeroconf
             self.addInstance(name, properties["address"], properties["port"], additional_properties)
 
-    def addManualInstance(self, name, address, port, path, useHttps = False):
-        self._manual_instances[name] = {"address": address, "port": port, "path": path, "useHttps": useHttps}
+    def addManualInstance(self, name, address, port, path, useHttps = False, userName = "", password = ""):
+        self._manual_instances[name] = {"address": address, "port": port, "path": path, "useHttps": useHttps, "userName": userName, "password": password}
         self._preferences.setValue("octoprint/manual_instances", json.dumps(self._manual_instances))
 
-        properties = { b"path": path.encode("utf-8"), b"useHttps": b"true" if useHttps else b"false", b"manual": b"true" }
+        properties = { b"path": path.encode("utf-8"), b"useHttps": b"true" if useHttps else b"false", b'userName': userName.encode("utf-8"), b'password': password.encode("utf-8"), b"manual": b"true" }
 
         if name in self._instances:
             self.removeInstance(name)
@@ -92,7 +100,8 @@ class OctoPrintOutputDevicePlugin(OutputDevicePlugin):
     def stop(self):
         self._browser.cancel()
         self._browser = None
-        self._zero_conf.close()
+        if self._zero_conf:
+            self._zero_conf.close()
 
     def getInstances(self):
         return self._instances
