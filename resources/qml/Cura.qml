@@ -384,9 +384,9 @@ UM.MainWindow
                 anchors.left:parent.left
                 anchors.right: parent.right
                 anchors.top: parent.top
-                monitoringPrint: base.showPrintMonitor
-                onStartMonitoringPrint: base.showPrintMonitor = true
-                onStopMonitoringPrint: base.showPrintMonitor = false
+                monitoringPrint: base.monitoringPrint
+                onStartMonitoringPrint: base.monitoringPrint = true
+                onStopMonitoringPrint: base.monitoringPrint = false
             }
 
             Sidebar
@@ -401,7 +401,7 @@ UM.MainWindow
                 }
                 z: 1
                 width: UM.Theme.getSize("sidebar").width;
-                monitoringPrint: base.showPrintMonitor
+                monitoringPrint: base.monitoringPrint
             }
 
             Button
@@ -438,7 +438,7 @@ UM.MainWindow
                     right: sidebar.left
                 }
                 visible: opacity > 0
-                opacity: base.showPrintMonitor ? 1 : 0
+                opacity: base.monitoringPrint ? 0.5 : 0
 
                 MouseArea {
                     anchors.fill: parent
@@ -451,7 +451,7 @@ UM.MainWindow
             Loader
             {
                 sourceComponent: Cura.MachineManager.printerOutputDevices.length > 0 ? Cura.MachineManager.printerOutputDevices[0].monitorItem: null
-                visible: base.showPrintMonitor
+                visible: base.monitoringPrint
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenterOffset: - UM.Theme.getSize("sidebar").width / 2
