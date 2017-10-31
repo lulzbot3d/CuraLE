@@ -13,15 +13,8 @@ import Cura 1.0 as Cura
 
 Item
 {
-    x: {
-        //return UM.Theme.getSize("layerview_menu_origin").width;
-        return Screen.desktopAvailableHeight/16;
-    }
-    y: {
-        //return UM.Theme.getSize("layerview_menu_origin").height;
-        return -Screen.desktopAvailableHeight/2 - 4*UM.Theme.getSize("default_margin").height;
-    }
     id: base
+
     width: {
         if (UM.LayerView.compatibilityMode) {
             return UM.Theme.getSize("layerview_menu_size_compatibility").width;
@@ -37,17 +30,6 @@ Item
         } else {
             return UM.Theme.getSize("layerview_menu_size").height + UM.LayerView.extruderCount * (UM.Theme.getSize("layerview_row").height + UM.Theme.getSize("layerview_row_spacing").height)
         }
-    }
-
-    MouseArea
-    {
-        anchors.fill: parent
-        onWheel:
-        {
-            wheel.accepted = true
-            slider.activeHandle.setValue(slider.activeHandle.value + wheel.angleDelta.y / 120)
-        }
-        acceptedButtons: Qt.NoButton
     }
 
     MouseArea {
@@ -406,6 +388,17 @@ Item
 
             property var activeHandle: upperHandle
             property bool layersVisible: UM.LayerView.layerActivity && CuraApplication.platformActivity ? true : false
+
+            MouseArea
+            {
+                anchors.fill: parent
+                onWheel:
+                {
+                    wheel.accepted = true
+                    slider.activeHandle.setValue(slider.activeHandle.value + wheel.angleDelta.y / 120)
+                }
+                acceptedButtons: Qt.NoButton
+            }
 
             function getUpperValueFromHandle()
             {

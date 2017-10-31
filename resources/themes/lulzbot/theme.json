@@ -152,6 +152,14 @@
         "action_button_disabled_text": [127, 127, 127, 255],
         "action_button_disabled_border": [245, 245, 245, 255],
 
+        "print_button_ready": [12, 169, 227, 255],
+        "print_button_ready_border": [12, 169, 227, 255],
+        "print_button_ready_text": [255, 255, 255, 255],
+        "print_button_ready_hovered": [30, 186, 245, 243],
+        "print_button_ready_hovered_border": [30, 186, 245, 243],
+        "print_button_ready_pressed": [30, 186, 245, 243],
+        "print_button_ready_pressed_border": [30, 186, 245, 243],
+
         "scrollbar_background": [255, 255, 255, 255],
         "scrollbar_handle": [193, 216, 47, 255],
         "scrollbar_handle_hover": [120, 136, 20, 255],
@@ -360,6 +368,8 @@
         "layerview_row_spacing": [0.0, 0.5],
         "layered_view_scrollbar": [1.0, 0],
 
+        "layerview_menu_size_material_color_mode": [15, 15.5],
+
         "checkbox": [2.0, 2.0],
         "mode_switch": [2.0, 1.0],
 
@@ -378,6 +388,7 @@
         "message_close": [1.25, 1.25],
         "message_button": [6.0, 1.8],
         "message_margin": [0, 1.0],
+        "message_inner_margin": [1.5, 1.5],
 
         "infill_button_margin": [0.5, 0.5],
 
