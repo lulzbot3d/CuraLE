@@ -414,7 +414,9 @@ Column
                 if (Cura.MachineManager.activeQualityLayerHeight > 0) {
                     result += " <font color=\"" + UM.Theme.getColor("text_detail") + "\">";
                     result += " - ";
-                    result += Cura.MachineManager.activeQualityLayerHeight + "mm";
+                    //result += Cura.MachineManager.activeQualityLayerHeight + "mm";
+                    var layers = ExtruderManager.getInstanceExtruderValues("layer_height")
+                    result += layers[ base.currentExtruderIndex ]
                     result += "</font>";
                 }
                 return result;
