@@ -33,7 +33,7 @@ Dependencies
 
 Configuring Cura
 ----------------
-* Link your CuraEngine backend by inserting the following line in ~/.config/cura_lulzbot/config.cfg :
+* Link your CuraEngine backend by inserting the following line in ~/.config/cura-lulzbot/config.cfg :
 [backend]
 location = /[path_to_the..]/CuraEngine/build/CuraEngine
 
