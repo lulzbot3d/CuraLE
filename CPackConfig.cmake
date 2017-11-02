@@ -45,19 +45,19 @@ message("CPACK_PACKAGE_VERSION_MAJOR ${CURA_MAJOR_VERSION}")
 message("CPACK_PACKAGE_VERSION_MINOR ${CURA_MINOR_VERSION}")
 message("CPACK_PACKAGE_VERSION_PATCH ${CURA_PATCH_VERSION}")
 
-set(CPACK_PACKAGE_NAME "Cura2")
+set(CPACK_PACKAGE_NAME "cura-lulzbot")
 set(CPACK_PACKAGE_VENDOR "Ultimaker")
 #set(CPACK_PACKAGE_VERSION_MAJOR ${CURA_MAJOR_VERSION})
 #set(CPACK_PACKAGE_VERSION_MINOR ${CURA_MINOR_VERSION})
 #set(CPACK_PACKAGE_VERSION_PATCH ${CURA_PATCH_VERSION})
-set(CPACK_PACKAGE_VERSION ${CURA_VERSION} CACHE STRING "Cura2 package version")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Cura2 3D Printing Software")
-set(CPACK_PACKAGE_CONTACT "Arjen Hiemstra <a.hiemstra@ultimaker.com>")
+set(CPACK_PACKAGE_VERSION ${CURA_VERSION} CACHE STRING "Cura LulzBot Edition package version")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Cura LulzBot Edition 3D Printing Software")
+set(CPACK_PACKAGE_CONTACT "LulzBot <info@lulzbot.com>")
 if(NOT BUILD_OS_OSX)
     set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE)
 endif()
-set(CPACK_PACKAGE_EXECUTABLES Cura2 "Cura2 ${CURA_MAJOR_VERSION}.${CURA_MINOR_VERSION}.${CURA_PATCH_VERSION}")
-set(CPACK_PACKAGE_INSTALL_DIRECTORY "Cura2 ${CURA_MAJOR_VERSION}.${CURA_MINOR_VERSION}")
+set(CPACK_PACKAGE_EXECUTABLES cura-lulzbot "cura-lulzbot ${CURA_MAJOR_VERSION}.${CURA_MINOR_VERSION}.${CURA_PATCH_VERSION}")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "cura-lulzbot ${CURA_MAJOR_VERSION}.${CURA_MINOR_VERSION}")
 
 set(RPM_REQUIRES
     "python3 >= ${MINIMUM_PYTHON_VERSION}"
@@ -75,7 +75,7 @@ if(DEB_PACKAGE_TARGET_PLATFORM STREQUAL "ubuntu-xenial")
     "python3-numpy"
     "python3-scipy"
     "libgfortran3"
-    "cura2-python3.5-deps (>=0.1.0)"
+    "cura-lulzbot-python3.5-deps (>=0.1.0)"
     "arcus (>= ${MINIMUM_ARCUS_VERSION})"
     "savitar (>= ${MINIMUM_SAVITAR_VERSION})"
     "uranium (>= ${MINIMUM_URANIUM_VERSION})"
@@ -112,7 +112,7 @@ set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE amd64)
 
 set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
 set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
-set(CPACK_NSIS_MUI_FINISHPAGE_RUN "Cura2.exe")
+set(CPACK_NSIS_MUI_FINISHPAGE_RUN "cura-lulzbot.exe")
 set(CPACK_NSIS_MENU_LINKS
     "https://ultimaker.com/en/support/software" "Cura Online Documentation"
     "https://github.com/ultimaker/cura" "Cura Development Resources"
