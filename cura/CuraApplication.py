@@ -199,7 +199,7 @@ class CuraApplication(QtApplication):
              except:
                   try:
                        self._components_version = json.load(open(
-                            os.path.join(QtApplication.getInstallPrefix(), "cura2","version.json"), "r"))
+                            os.path.join(QtApplication.getInstallPrefix(), "cura-lulzbot","version.json"), "r"))
                   except:
                        self._components_version = {"cura_version": "master"}
 
@@ -211,7 +211,7 @@ class CuraApplication(QtApplication):
 
         Preferences.getInstance().addPreference("info/automatic_update_check", False)
 
-        super().__init__(name = "cura2_lulzbot", version = self.getComponentVersion("cura_version"), buildtype = CuraBuildType)
+        super().__init__(name = "cura_lulzbot", version = self.getComponentVersion("cura_version"), buildtype = CuraBuildType)
 
         Logger.log("d", "Trying to Set icon : \"" + str(Resources.getPath(Resources.Images, "cura-icon.png"))  + "\"")
         self.setWindowIcon(QIcon(Resources.getPath(Resources.Images, "cura-icon.png")))
