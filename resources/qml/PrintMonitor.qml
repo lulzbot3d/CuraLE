@@ -1598,7 +1598,15 @@ ScrollView
 	                        id: extruderSelector
 	                        width: parent.width / 2
 
-	                        model: machineExtruderCount.properties.value
+	                        model:
+	                        {
+	                            var l = []
+	                            for(var i=0;i<machineExtruderCount.properties.value;i++)
+	                            {
+	                                l.push(i+1);
+	                            }
+	                            return l
+	                        }
 
 	                        onCurrentIndexChanged:
 	                        {
