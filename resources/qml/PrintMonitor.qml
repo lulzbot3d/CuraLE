@@ -683,6 +683,176 @@ ScrollView
 	        height: UM.Theme.getSize("sidebar_lining_thin").width
 	    }
 
+        ///////////////////////////////////////////
+
+        Rectangle
+        {
+            height: UM.Theme.getSize("default_margin").height
+            width: base.width
+            color: "transparent"
+        }
+
+        Rectangle
+        {
+            color: UM.Theme.getColor("sidebar")
+            height: childrenRect.height
+            anchors.right: parent.right
+            width: base.width - 8 * UM.Theme.getSize("default_margin").width
+
+            anchors.rightMargin: UM.Theme.getSize("default_margin").width*4
+            anchors.leftMargin: UM.Theme.getSize("default_margin").width*4
+
+            Column
+            {
+                width: parent.width
+                height: childrenRect.height
+                spacing: UM.Theme.getSize("button_spacing").width
+
+
+
+                Row
+                {
+                    width: parent.width
+                    height: childrenRect.height
+
+                    Label
+                    {
+                        text: "Select extruder"
+                        color: UM.Theme.getColor("setting_control_text")
+                        font: UM.Theme.getFont("default")
+                        width: parent.width / 2
+                    }
+
+                    ComboBox
+                    {
+                        id: extruderSelector_1
+                        width: parent.width / 2
+
+                        model: machineExtruderCount.properties.value
+
+                        onCurrentIndexChanged:
+                        {
+                            if( connectedPrinter != null )
+                                connectedPrinter.setHotend(currentIndex)
+                        }
+                    }
+                }
+
+                Row
+                {
+                    width: parent.width
+                    height: childrenRect.height
+
+                    Label
+                    {
+                        text: "Select temperature"
+                        color: UM.Theme.getColor("setting_control_text")
+                        font: UM.Theme.getFont("default")
+                        width: parent.width / 2
+                    }
+
+                    TextField
+                    {
+                        text: "1"
+                        id: temperatureTextField_1
+                        width: parent.width / 2
+                        validator: IntValidator
+                        {
+                            bottom: 1
+                            top: 300
+                        }
+                    }
+                }
+
+                Row
+                {
+                    width: parent.width
+                    height: childrenRect.height
+                    spacing: UM.Theme.getSize("button_spacing").width
+
+                    Button
+                    {
+                        text: "Heat extruder"
+                        width: parent.width / 2
+
+                        onClicked:
+                        {
+                            connectedPrinter.setTargetHotendTemperature(extruderSelector_1.currentIndex, parseInt(temperatureTextField_1.text))
+                        }
+
+                        style:   ButtonStyle
+                        {
+                            background: Rectangle
+                            {
+                                radius: 4
+                                border.width: UM.Theme.getSize("default_lining").width
+                                border.color:
+                                {
+                                    if(!control.enabled)
+                                        return UM.Theme.getColor("action_button_disabled_border");
+                                    else if(control.pressed)
+                                        return UM.Theme.getColor("action_button_active_border");
+                                    else if(control.hovered)
+                                        return UM.Theme.getColor("action_button_hovered_border");
+                                    else
+                                        return UM.Theme.getColor("action_button_border");
+                                }
+                                color:
+                                {
+                                    if(!control.enabled)
+                                        //return UM.Theme.getColor("button_disabled");
+                                        return UM.Theme.getColor("button_disabled_lighter");
+                                    else if(control.pressed)
+                                        return UM.Theme.getColor("button_active");
+                                    else if(control.hovered)
+                                        return UM.Theme.getColor("button_hover");
+                                    else
+                                        return UM.Theme.getColor("button");
+                                }
+                                //Behavior on color { ColorAnimation { duration: 50; } }
+
+                                implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
+                                implicitHeight: actualLabel.contentHeight + (UM.Theme.getSize("default_margin").height/2)
+
+                                Label
+                                {
+                                    id: actualLabel
+                                    anchors.centerIn: parent
+                                    color:
+                                    {
+                                        if(!control.enabled)
+                                            return UM.Theme.getColor("button_disabled_text");
+                                        else
+                                            return UM.Theme.getColor("button_text");
+                                    }
+                                    font: UM.Theme.getFont("small")
+                                    text: control.text
+                                }
+                            }
+                            label: Item { }
+                        }
+                    }
+                }
+            }
+        }
+
+        Rectangle
+        {
+            height: UM.Theme.getSize("default_margin").height
+            width: base.width
+            color: "transparent"
+        }
+
+        Rectangle
+        {
+            color: UM.Theme.getColor("sidebar_lining")
+            width: parent.width
+            height: UM.Theme.getSize("sidebar_lining_thin").width
+        }
+
+
+        ///////////////////////////////////////////
+
 	    Rectangle
 	    {
 	        height: UM.Theme.getSize("default_margin").height
@@ -1806,7 +1976,7 @@ ScrollView
 
 	                        onClicked:
 	                        {
-	                            connectedPrinter.setTargetHotendTemperature(extruderSelector.currentIndex, parseInt(temperatureTextField.text))
+                                connectedPrinter.setTargetHotendTemperature(extruderSelector.currentIndex, parseInt(temperatureTextField.text))
 	                        }
 
                             style:   ButtonStyle
