@@ -507,26 +507,6 @@ msgctxt "@info:whatsthis"
 msgid "Automatically saves Preferences, Machines and Profiles after changes."
 msgstr "Salva preferências, máquinas e perfis automaticamente depois de alterações."
 
-#: /home/ruben/Projects/Cura/plugins/SliceInfoPlugin/__init__.py:10
-msgctxt "@label"
-msgid "Slice info"
-msgstr "Informações de fatiamento"
-
-#: /home/ruben/Projects/Cura/plugins/SliceInfoPlugin/__init__.py:13
-msgctxt "@info:whatsthis"
-msgid "Submits anonymous slice info. Can be disabled through preferences."
-msgstr "Submete informações de fatiamento anônimas. Pode ser desabilitado nas preferências."
-
-#: /home/ruben/Projects/Cura/plugins/SliceInfoPlugin/SliceInfo.py:75
-msgctxt "@info"
-msgid "Cura collects anonymised slicing statistics. You can disable this in preferences"
-msgstr "O Cura coleta estatísticas de fatiamento anonimizadas. Pode ser desabilitado nas preferências."
-
-#: /home/ruben/Projects/Cura/plugins/SliceInfoPlugin/SliceInfo.py:76
-msgctxt "@action:button"
-msgid "Dismiss"
-msgstr "Fechar"
-
 #: /home/ruben/Projects/Cura/plugins/XmlMaterialProfile/__init__.py:13
 msgctxt "@label"
 msgid "Material Profiles"

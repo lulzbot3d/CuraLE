@@ -354,7 +354,7 @@ ScrollView
             Label //Current bed temperature.
 	        {
 	            id: bedCurrentTemperature
-	            text: connectedPrinter != null ? connectedPrinter.bedTemperature + "°C" : ""
+	            text: connectedPrinter != null ? Math.round(connectedPrinter.bedTemperature) + "°C" : ""
 	            font: UM.Theme.getFont("large")
 	            color: UM.Theme.getColor("text")
 	            anchors.right: bedTargetTemperature.left
@@ -1768,7 +1768,15 @@ ScrollView
 	                        id: extruderSelector
 	                        width: parent.width / 2
 
-	                        model: machineExtruderCount.properties.value
+	                        model:
+	                        {
+	                            var l = []
+	                            for(var i=0;i<machineExtruderCount.properties.value;i++)
+	                            {
+	                                l.push(i+1);
+	                            }
+	                            return l
+	                        }
 
 	                        onCurrentIndexChanged:
 	                        {
