@@ -416,7 +416,10 @@ Column
                     result += " - ";
                     //result += Cura.MachineManager.activeQualityLayerHeight + "mm";
                     var layers = ExtruderManager.getInstanceExtruderValues("layer_height")
-                    result += layers[ base.currentExtruderIndex ]
+
+                    if( layers[ base.currentExtruderIndex ] )
+                        result += layers[ base.currentExtruderIndex ]
+
                     result += "</font>";
                 }
                 return result;
