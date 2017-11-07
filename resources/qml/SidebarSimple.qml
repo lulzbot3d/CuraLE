@@ -118,8 +118,8 @@ Item
                             }
                             return UM.Theme.getColor("setting_control_selected")
                         }
-                        //return "transparent"
-                        return UM.Theme.getColor("setting_control_icon_disabled_background")
+                        return "transparent"
+                        //return UM.Theme.getColor("setting_control_icon_disabled_background")
                     }
 
                     UM.RecolorImage
