@@ -120,7 +120,6 @@ SettingItem
                         // we have to choose between the resolved value (default) and the global value
                         // (if user has explicitly set this).
                         var num = base.resolve;
-                        console.log("num MEOW = , ", num, " Math.round(num*100)/100 = ", Math.round(num*100)/100 )
                         return Math.round(num*100)/100;
                     } else {
                         return propertyProvider.properties.value;
