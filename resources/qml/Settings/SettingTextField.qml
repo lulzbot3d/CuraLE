@@ -119,7 +119,9 @@ SettingItem
                         // We have a resolve function. Indicates that the setting is not settable per extruder and that
                         // we have to choose between the resolved value (default) and the global value
                         // (if user has explicitly set this).
-                        return base.resolve;
+                        var num = base.resolve;
+                        console.log("num MEOW = , ", num, " Math.round(num*100)/100 = ", Math.round(num*100)/100 )
+                        return Math.round(num*100)/100;
                     } else {
                         return propertyProvider.properties.value;
                     }
