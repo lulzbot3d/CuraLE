@@ -477,7 +477,7 @@ class ContainerManager(QObject):
         if not global_stack:
             return False
 
-        active_quality_name = self._machine_manager.activeQualityName
+        active_quality_name = self._machine_manager.currentQualityName
         if active_quality_name == "":
             Logger.log("w", "No quality container found in stack %s, cannot create profile", global_stack.getId())
             return False
