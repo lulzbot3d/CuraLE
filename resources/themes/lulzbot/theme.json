@@ -151,6 +151,7 @@
 
         "setting_control": [255, 255, 255, 255],
         "setting_control_selected": [230, 235, 145, 255],
+        "setting_control_selected_dark_green": [155, 174, 17, 255],
         "setting_control_highlight": [255, 255, 255, 255],
         "setting_control_border": [127, 127, 127, 255],
         "setting_control_border_highlight": [213, 236, 67, 255],

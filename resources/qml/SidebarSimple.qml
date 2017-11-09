@@ -99,7 +99,7 @@ Item
                         }
                         else if(infillListView.activeIndex == index)
                         {
-                            return UM.Theme.getColor("setting_control_selected")
+                            return UM.Theme.getColor("setting_control_selected_dark_green")
                         }
                         else if(infillMouseArea.containsMouse)
                         {
@@ -132,6 +132,7 @@ Item
                         sourceSize.height: width
                         source: UM.Theme.getIcon(model.icon);
                         color: {
+                            /*
                             if(infillListView.activeIndex == index)
                             {
                                 return UM.Theme.getColor("text_reversed")
@@ -140,6 +141,7 @@ Item
                             {
                                 return UM.Theme.getColor("setting_control_disabled_text")
                             }
+                            */
                             return UM.Theme.getColor("setting_control_disabled_text")
                         }
                     }
