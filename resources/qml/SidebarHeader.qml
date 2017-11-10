@@ -413,12 +413,12 @@ Column
                 var result = Cura.MachineManager.currentQualityName;
                 if (Cura.MachineManager.activeQualityLayerHeight > 0) {
                     result += " <font color=\"" + UM.Theme.getColor("text_detail") + "\">";
-                    result += " - ";
+                    //result += " - ";
                     //result += Cura.MachineManager.activeQualityLayerHeight + "mm";
-                    var layers = ExtruderManager.getInstanceExtruderValues("layer_height")
+                    //var layers = ExtruderManager.getInstanceExtruderValues("layer_height")
 
-                    if( layers[ base.currentExtruderIndex ] )
-                        result += layers[ base.currentExtruderIndex ]
+                    //if( layers[ base.currentExtruderIndex ] )
+                    //    result += layers[ base.currentExtruderIndex ]
 
                     result += "</font>";
                 }
