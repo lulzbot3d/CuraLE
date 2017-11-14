@@ -30,6 +30,15 @@ ScrollView
             message_dialog.open()
         }
 
+        UM.SettingPropertyProvider
+        {
+            id: printTemperatureProvider
+
+            containerStackId: Cura.MachineManager.activeMachineId
+            key: "material_print_temperature"
+            watchedProperties: [ "value" ]
+        }
+
 	    Cura.ExtrudersModel
 	    {
 	        id: extrudersModel
@@ -733,7 +742,10 @@ ScrollView
                         onCurrentIndexChanged:
                         {
                             if( connectedPrinter != null )
+                            {
+                                temperatureTextField_1.text = ""
                                 connectedPrinter.setHotend(currentIndex)
+                            }
                         }
                     }
                 }
@@ -753,8 +765,10 @@ ScrollView
 
                     TextField
                     {
-                        text: "1"
                         id: temperatureTextField_1
+                        readOnly: false
+                        text: ""
+
                         width: parent.width / 2
                         validator: IntValidator
                         {
@@ -772,12 +786,29 @@ ScrollView
 
                     Button
                     {
-                        text: "Heat extruder"
+                        text: "Pre-heat"
                         width: parent.width / 2
 
                         onClicked:
                         {
-                            connectedPrinter.setTargetHotendTemperature(extruderSelector_1.currentIndex, parseInt(temperatureTextField_1.text))
+                            if( connectedPrinter != null )
+                            {
+                                if( temperatureTextField_1.text == "" )
+                                {
+                                    var index = extruderSelector_1.currentIndex
+
+                                    connectedPrinter.preheatHotend( index )
+                                    var index = extruderSelector_1.currentIndex
+                                    if( index == 0)
+                                        temperatureTextField_1.text = (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
+                                    else
+                                        temperatureTextField_1.text = (connectedPrinter != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
+                                }
+                                else
+                                {
+                                    connectedPrinter.setTargetHotendTemperature(extruderSelector_1.currentIndex, parseInt(temperatureTextField_1.text))
+                                }
+                            }
                         }
 
                         style:   ButtonStyle
@@ -1044,6 +1075,17 @@ ScrollView
 
 	        property var resolve: Cura.MachineManager.activeStackId != Cura.MachineManager.activeMachineId ? properties.resolve : "None"
 	    }
+
+        UM.SettingPropertyProvider
+        {
+            id: hotendTemperature
+            containerStackId: Cura.MachineManager.activeMachineId
+            key: "material_bed_temperature"
+            watchedProperties: ["value", "minimum_value", "maximum_value", "resolve"]
+            storeIndex: 0
+
+            property var resolve: Cura.MachineManager.activeStackId != Cura.MachineManager.activeMachineId ? properties.resolve : "None"
+        }
 
 	    UM.SettingPropertyProvider
 	    {
