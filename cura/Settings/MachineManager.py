@@ -799,6 +799,8 @@ class MachineManager(QObject):
 
     @pyqtProperty(bool, notify=activeMaterialChanged)
     def currentPrinterHasInfo(self):
+        if self.activeMachine is None:
+            return False
         link = self.activeMachine.getBottom().getMetaDataEntry("printer_info_link")
         if link is not None:
             return True
@@ -812,6 +814,8 @@ class MachineManager(QObject):
 
     @pyqtProperty(bool, notify=activeMaterialChanged)
     def currentToolheadHasInfo(self):
+        if self.activeMachine is None:
+            return False
         link = self.activeMachine.getBottom().getMetaDataEntry("toolhead_info_link")
         if link is not None:
             return True
