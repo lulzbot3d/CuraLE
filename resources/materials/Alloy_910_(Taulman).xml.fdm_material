@@ -35,6 +35,7 @@
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz5_dual_v3"/>
+      <metadata key="category">Supported</metadata>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz6_moarstruder"/>
@@ -50,6 +51,7 @@
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz6_dual_v3"/>
+      <metadata key="category">Supported</metadata>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz6_dual_v2"/>
