@@ -732,20 +732,30 @@ ScrollView
                         width: parent.width / 2
                     }
 
+                    ListModel
+                    {
+                        id: extruders_1
+
+                        Component.onCompleted:
+                        {
+                            var count = ExtruderManager.extruderCount
+                            for( var i = 0; i < count; i++ )
+                                extruders.insert( i, { "text": ExtruderManager.getExtruderName(i) } )
+                        }
+                    }
+
                     ComboBox
                     {
                         id: extruderSelector_1
                         width: parent.width / 2
 
-                        model: machineExtruderCount.properties.value
+                        //model: machineExtruderCount.properties.value
+                        model: extruders
 
                         onCurrentIndexChanged:
                         {
-                            if( connectedPrinter != null )
-                            {
-                                temperatureTextField_1.text = ""
-                                connectedPrinter.setHotend(currentIndex)
-                            }
+                            temperatureTextField_1.text = ""
+                            connectedPrinter.setHotend(currentIndex)
                         }
                     }
                 }
