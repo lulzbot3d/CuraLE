@@ -732,25 +732,28 @@ ScrollView
                         width: parent.width / 2
                     }
 
-                    ListModel
-                    {
-                        id: extruders_1
-
-                        Component.onCompleted:
-                        {
-                            var count = ExtruderManager.extruderCount
-                            for( var i = 0; i < count; i++ )
-                                extruders.insert( i, { "text": ExtruderManager.getExtruderName(i) } )
-                        }
-                    }
-
                     ComboBox
                     {
                         id: extruderSelector_1
                         width: parent.width / 2
 
-                        //model: machineExtruderCount.properties.value
-                        model: extruders
+                        model:
+                        {
+                            var l = []
+
+                            if ( machineExtruderCount.properties.value == 1)
+                                l.push( "Hotend");
+                            else
+                            {
+                                for(var i=0;i<machineExtruderCount.properties.value;i++)
+                                {
+                                    var j = i+1
+                                    var tmp = "Extruder " + j
+                                    l.push(tmp);
+                                }
+                            }
+                            return l
+                        }
 
                         onCurrentIndexChanged:
                         {
