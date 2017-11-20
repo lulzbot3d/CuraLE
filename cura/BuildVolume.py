@@ -433,6 +433,7 @@ class BuildVolume(SceneNode):
                 disallowed_area_size = max(size, disallowed_area_size)
 
             self._disallowed_area_mesh = mb.build()
+            pass
         else:
             self._disallowed_area_mesh = None
 
@@ -463,9 +464,21 @@ class BuildVolume(SceneNode):
         # As this works better for UM machines, we only add the disallowed_area_size for the z direction.
         # This is probably wrong in all other cases. TODO!
         # The +1 and -1 is added as there is always a bit of extra room required to work properly.
+
+        if len(self._disallowed_areas) > 0:
+            minx = max([x[0] for x in self._disallowed_area_mesh.getVertices() if x[0] <= 0]) + 1
+            maxx = min([x[0] for x in self._disallowed_area_mesh.getVertices() if x[0] >= 0]) - 1
+            miny = max([x[2] for x in self._disallowed_area_mesh.getVertices() if x[2] <= 0]) + 1
+            maxy = min([x[2] for x in self._disallowed_area_mesh.getVertices() if x[2] >= 0]) - 1
+        else:
+            minx = min_w + bed_adhesion_size + 1
+            maxx = max_w - bed_adhesion_size - 1
+            miny = min_d + bed_adhesion_size + 1
+            maxy = max_d - bed_adhesion_size - 1
+
         scale_to_max_bounds = AxisAlignedBox(
-            minimum = Vector(min_w + bed_adhesion_size + 1, min_h, min_d + bed_adhesion_size + 1),
-            maximum = Vector(max_w - bed_adhesion_size - 1, max_h - self._raft_thickness - self._extra_z_clearance, max_d - bed_adhesion_size - 1)
+            minimum = Vector(minx, min_h, miny),
+            maximum = Vector(maxx, max_h - self._raft_thickness - self._extra_z_clearance, maxy)
         )
 
         Application.getInstance().getController().getScene()._maximum_bounds = scale_to_max_bounds

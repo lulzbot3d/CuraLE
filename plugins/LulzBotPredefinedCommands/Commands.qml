@@ -373,6 +373,18 @@ Item
                 Layout.column: 3
                 Layout.preferredWidth: parent.width/3 - predefinedButtons.columnSpacing*7
                 Layout.preferredHeight: UM.Theme.getSize("section").height
+                enabled:
+                {
+                     var name = Cura.MachineManager.activeMachineName
+                     if(name.includes("Aerostruder"))
+                    {
+                         return connectedPrinter && false;
+                    }
+                    else
+                    {
+                        return connectedPrinter && true
+                    }
+                }
 
                 onClicked:
                 {

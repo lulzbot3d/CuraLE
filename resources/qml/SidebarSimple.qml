@@ -146,6 +146,7 @@ Item
                         if(Cura.ProfilesModel.rowCount() != 0)
                         {
                             qualityModel.totalTicks = Cura.ProfilesModel.rowCount() - 1  // minus one, because slider starts from 0
+
                         }
                         else
                         {
@@ -226,6 +227,7 @@ Item
                         color: UM.Theme.getColor("quality_slider_unavailable")
                         anchors.verticalCenter: qualitySlider.verticalCenter
                         x: 0
+
                     }
 
                     // Draw ticks

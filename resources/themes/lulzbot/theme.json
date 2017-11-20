@@ -179,6 +179,7 @@
 
         "setting_control": [255, 255, 255, 255],
         "setting_control_selected": [230, 235, 145, 255],
+        "setting_control_selected_dark_green": [155, 174, 17, 255],
         "setting_control_highlight": [255, 255, 255, 255],
         "setting_control_border": [127, 127, 127, 255],
         "setting_control_border_highlight": [213, 236, 67, 255],
@@ -189,6 +190,7 @@
         "setting_control_disabled": [245, 245, 245, 255],
         "setting_control_disabled_text": [127, 127, 127, 255],
         "setting_control_disabled_border": [127, 127, 127, 255],
+        "setting_control_icon_disabled_background": [102,102,102, 255],
         "setting_unit": [127, 127, 127, 255],
         "setting_validation_error": [255, 57, 14, 255],
         "setting_validation_warning": [255, 186, 15, 255],
@@ -224,8 +226,8 @@
         "mode_switch_border": [127, 127, 127, 255],
         "mode_switch_border_hover": [12, 169, 227, 255],
         "mode_switch_handle": [24, 41, 77, 255],
-        "mode_switch_text": [24, 41, 77, 255],
-        "mode_switch_text_hover": [24, 41, 77, 255],
+        "mode_switch_text": [102, 102, 102, 255],
+        "mode_switch_text_hover": [12, 169, 227, 255],
         "mode_switch_text_checked": [12, 169, 227, 255],
 
         "tooltip": [120, 136, 20, 255],

@@ -805,7 +805,7 @@ class MachineManager(QObject):
     def currentMaterialHasInfo(self):
         containers = ContainerRegistry.getInstance().findInstanceContainers(id=self.activeMaterialId)
         if not containers or not self._active_container_stack:
-            return
+            return False
         material_container = containers[0]
         link = material_container.getMetaDataEntry("info_link")
         if link is not None:
@@ -820,6 +820,8 @@ class MachineManager(QObject):
 
     @pyqtProperty(bool, notify=activeMaterialChanged)
     def currentPrinterHasInfo(self):
+        if self.activeMachine is None:
+            return False
         link = self.activeMachine.getBottom().getMetaDataEntry("printer_info_link")
         if link is not None:
             return True
@@ -833,6 +835,8 @@ class MachineManager(QObject):
 
     @pyqtProperty(bool, notify=activeMaterialChanged)
     def currentToolheadHasInfo(self):
+        if self.activeMachine is None:
+            return False
         link = self.activeMachine.getBottom().getMetaDataEntry("toolhead_info_link")
         if link is not None:
             return True

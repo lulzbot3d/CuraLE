@@ -553,7 +553,7 @@ class ContainerManager(QObject):
         if not global_stack:
             return False
 
-        active_quality_name = self._machine_manager.activeQualityName
+        active_quality_name = self._machine_manager.currentQualityName
         if active_quality_name == "":
             Logger.log("w", "No quality container found in stack %s, cannot create profile", global_stack.getId())
             return False
@@ -1006,7 +1006,7 @@ class ContainerManager(QObject):
         quality_changes = InstanceContainer(self._createUniqueId(base_id, new_name))
         quality_changes.setName(new_name)
         quality_changes.addMetaDataEntry("type", "quality_changes")
-        quality_changes.addMetaDataEntry("quality_type", quality_container.getMetaDataEntry("quality_type"))
+        quality_changes.addMetaDataEntry("quality_type", self._machine_manager.currentQualityType)
 
         # If we are creating a container for an extruder, ensure we add that to the container
         if extruder_id is not None:

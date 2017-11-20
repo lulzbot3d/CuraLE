@@ -26,7 +26,7 @@ endif()
 
 set(CURA_VERSION "master" CACHE STRING "Version name of Cura")
 set(CURA_BUILDTYPE "" CACHE STRING "Build type of Cura, eg. 'PPA'")
-configure_file(${CMAKE_SOURCE_DIR}/cura2.desktop.in ${CMAKE_BINARY_DIR}/cura2.desktop @ONLY)
+configure_file(${CMAKE_SOURCE_DIR}/cura-lulzbot.desktop.in ${CMAKE_BINARY_DIR}/cura-lulzbot.desktop @ONLY)
 configure_file(cura/CuraVersion.py.in CuraVersion.py @ONLY)
 
 if(NOT ${URANIUM_DIR} STREQUAL "")
@@ -67,15 +67,15 @@ if(NOT APPLE AND NOT WIN32)
       install(FILES cura_app.py
               DESTINATION ${CMAKE_INSTALL_BINDIR}
               PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
-      install(FILES run_cura2.sh
+      install(FILES run_cura-lulzbot.sh
               DESTINATION ${CMAKE_INSTALL_BINDIR}
               PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
-            RENAME cura2)
+            RENAME cura-lulzbot)
     else()
       install(FILES cura_app.py
               DESTINATION ${CMAKE_INSTALL_BINDIR}
               PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
-              RENAME cura2)
+              RENAME cura-lulzbot)
     endif()
 
     install(DIRECTORY cura
@@ -83,7 +83,7 @@ if(NOT APPLE AND NOT WIN32)
             FILES_MATCHING PATTERN *.py)
     install(FILES ${CMAKE_BINARY_DIR}/CuraVersion.py
             DESTINATION ${PYTHON_SITE_PACKAGES_DIR}/cura)
-    install(FILES ${CMAKE_BINARY_DIR}/cura2.desktop
+    install(FILES ${CMAKE_BINARY_DIR}/cura-lulzbot.desktop
             DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
     install(FILES ${CMAKE_SOURCE_DIR}/resources/images/cura-icon.png
             DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/128x128/apps/)

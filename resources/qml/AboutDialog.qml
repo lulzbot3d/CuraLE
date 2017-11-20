@@ -116,7 +116,7 @@ UM.Dialog
             }
             Component.onCompleted:
             {
-                projectsModel.append({ name:"Cura", description: catalog.i18nc("@label", "Graphical user interface"), license: "AGPLv3", url: "https://code.alephobjects.com/source/Cura2/" });
+                projectsModel.append({ name:"Cura", description: catalog.i18nc("@label", "Graphical user interface"), license: "AGPLv3", url: "https://code.alephobjects.com/source/cura-lulzbot/" });
                 projectsModel.append({ name:"Uranium", description: catalog.i18nc("@label", "Application framework"), license: "AGPLv3", url: "https://code.alephobjects.com/diffusion/U/" });
                 projectsModel.append({ name:"CuraEngine", description: catalog.i18nc("@label", "GCode generator"), license: "AGPLv3", url: "https://code.alephobjects.com/diffusion/CTE/" });
                 projectsModel.append({ name:"libArcus", description: catalog.i18nc("@label", "Interprocess communication library"), license: "AGPLv3", url: "https://code.alephobjects.com/source/arcus/" });

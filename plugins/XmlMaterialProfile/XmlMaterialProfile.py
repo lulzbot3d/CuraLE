@@ -574,7 +574,10 @@ class XmlMaterialProfile(InstanceContainer):
                     # Don't use setMetadata, as that overrides it for all materials with same base file
                     new_material.getMetaData()["compatible"] = machine_compatibility
                     new_material.getMetaData()["machine_manufacturer"] = machine_manufacturer
-
+                    metadata = machine.iterfind("./um:metadata", self.__namespaces)
+                    for entry in metadata:
+                        key = entry.get("key")
+                        new_material.getMetaData()[key] = entry.text
 
                     new_material.setCachedValues(cached_machine_setting_properties)
 

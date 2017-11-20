@@ -30,6 +30,15 @@ ScrollView
             message_dialog.open()
         }
 
+        UM.SettingPropertyProvider
+        {
+            id: printTemperatureProvider
+
+            containerStackId: Cura.MachineManager.activeMachineId
+            key: "material_print_temperature"
+            watchedProperties: [ "value" ]
+        }
+
 	    Cura.ExtrudersModel
 	    {
 	        id: extrudersModel
@@ -354,7 +363,7 @@ ScrollView
             Label //Current bed temperature.
 	        {
 	            id: bedCurrentTemperature
-	            text: connectedPrinter != null ? connectedPrinter.bedTemperature + "°C" : ""
+	            text: connectedPrinter != null ? Math.round(connectedPrinter.bedTemperature) + "°C" : ""
 	            font: UM.Theme.getFont("large")
 	            color: UM.Theme.getColor("text")
 	            anchors.right: bedTargetTemperature.left
@@ -391,6 +400,211 @@ ScrollView
 	        width: parent.width
 	        height: UM.Theme.getSize("sidebar_lining_thin").width
 	    }
+
+        ///////////////////////////////////////////
+
+        Rectangle
+        {
+            height: UM.Theme.getSize("default_margin").height
+            width: base.width
+            color: "transparent"
+        }
+
+        Rectangle
+        {
+            color: UM.Theme.getColor("sidebar")
+            height: childrenRect.height
+            anchors.right: parent.right
+            width: base.width - 8 * UM.Theme.getSize("default_margin").width
+
+            anchors.rightMargin: UM.Theme.getSize("default_margin").width*4
+            anchors.leftMargin: UM.Theme.getSize("default_margin").width*4
+
+            Column
+            {
+                width: parent.width
+                height: childrenRect.height
+                spacing: UM.Theme.getSize("button_spacing").width
+
+
+
+                Row
+                {
+                    width: parent.width
+                    height: childrenRect.height
+
+                    Label
+                    {
+                        text: "Select extruder"
+                        color: UM.Theme.getColor("setting_control_text")
+                        font: UM.Theme.getFont("default")
+                        width: parent.width / 2
+                    }
+
+                    ComboBox
+                    {
+                        id: extruderSelector_1
+                        width: parent.width / 2
+
+                        model:
+                        {
+                            var l = []
+
+                            if ( machineExtruderCount.properties.value == 1)
+                                l.push( "Hotend");
+                            else
+                            {
+                                for(var i=0;i<machineExtruderCount.properties.value;i++)
+                                {
+                                    var j = i+1
+                                    var tmp = "Extruder " + j
+                                    l.push(tmp);
+                                }
+                            }
+                            return l
+                        }
+
+                        onCurrentIndexChanged:
+                        {
+                            temperatureTextField_1.text = ""
+                            connectedPrinter.setHotend(currentIndex)
+                        }
+                    }
+                }
+
+                Row
+                {
+                    width: parent.width
+                    height: childrenRect.height
+
+                    Label
+                    {
+                        text: "Select temperature"
+                        color: UM.Theme.getColor("setting_control_text")
+                        font: UM.Theme.getFont("default")
+                        width: parent.width / 2
+                    }
+
+                    TextField
+                    {
+                        id: temperatureTextField_1
+                        readOnly: false
+                        text: ""
+
+                        width: parent.width / 2
+                        validator: IntValidator
+                        {
+                            bottom: 1
+                            top: 300
+                        }
+                    }
+                }
+
+                Row
+                {
+                    width: parent.width
+                    height: childrenRect.height
+                    spacing: UM.Theme.getSize("button_spacing").width
+
+                    Button
+                    {
+                        text: "Pre-heat"
+                        width: parent.width / 2
+
+                        onClicked:
+                        {
+                            if( connectedPrinter != null )
+                            {
+                                if( temperatureTextField_1.text == "" )
+                                {
+                                    var index = extruderSelector_1.currentIndex
+
+                                    connectedPrinter.preheatHotend( index )
+                                    var index = extruderSelector_1.currentIndex
+                                    if( index == 0)
+                                        temperatureTextField_1.text = (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
+                                    else
+                                        temperatureTextField_1.text = (connectedPrinter != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
+                                }
+                                else
+                                {
+                                    connectedPrinter.setTargetHotendTemperature(extruderSelector_1.currentIndex, parseInt(temperatureTextField_1.text))
+                                }
+                            }
+                        }
+
+                        style:   ButtonStyle
+                        {
+                            background: Rectangle
+                            {
+                                radius: 4
+                                border.width: UM.Theme.getSize("default_lining").width
+                                border.color:
+                                {
+                                    if(!control.enabled)
+                                        return UM.Theme.getColor("action_button_disabled_border");
+                                    else if(control.pressed)
+                                        return UM.Theme.getColor("action_button_active_border");
+                                    else if(control.hovered)
+                                        return UM.Theme.getColor("action_button_hovered_border");
+                                    else
+                                        return UM.Theme.getColor("action_button_border");
+                                }
+                                color:
+                                {
+                                    if(!control.enabled)
+                                        //return UM.Theme.getColor("button_disabled");
+                                        return UM.Theme.getColor("button_disabled_lighter");
+                                    else if(control.pressed)
+                                        return UM.Theme.getColor("button_active");
+                                    else if(control.hovered)
+                                        return UM.Theme.getColor("button_hover");
+                                    else
+                                        return UM.Theme.getColor("button");
+                                }
+                                //Behavior on color { ColorAnimation { duration: 50; } }
+
+                                implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
+                                implicitHeight: actualLabel.contentHeight + (UM.Theme.getSize("default_margin").height/2)
+
+                                Label
+                                {
+                                    id: actualLabel
+                                    anchors.centerIn: parent
+                                    color:
+                                    {
+                                        if(!control.enabled)
+                                            return UM.Theme.getColor("button_disabled_text");
+                                        else
+                                            return UM.Theme.getColor("button_text");
+                                    }
+                                    font: UM.Theme.getFont("small")
+                                    text: control.text
+                                }
+                            }
+                            label: Item { }
+                        }
+                    }
+                }
+            }
+        }
+
+        Rectangle
+        {
+            height: UM.Theme.getSize("default_margin").height
+            width: base.width
+            color: "transparent"
+        }
+
+        Rectangle
+        {
+            color: UM.Theme.getColor("sidebar_lining")
+            width: parent.width
+            height: UM.Theme.getSize("sidebar_lining_thin").width
+        }
+
+
+        ///////////////////////////////////////////
 
 	    Rectangle
 	    {
@@ -583,6 +797,17 @@ ScrollView
 
 	        property var resolve: Cura.MachineManager.activeStackId != Cura.MachineManager.activeMachineId ? properties.resolve : "None"
 	    }
+
+        UM.SettingPropertyProvider
+        {
+            id: hotendTemperature
+            containerStackId: Cura.MachineManager.activeMachineId
+            key: "material_bed_temperature"
+            watchedProperties: ["value", "minimum_value", "maximum_value", "resolve"]
+            storeIndex: 0
+
+            property var resolve: Cura.MachineManager.activeStackId != Cura.MachineManager.activeMachineId ? properties.resolve : "None"
+        }
 
 	    UM.SettingPropertyProvider
 	    {
@@ -1307,7 +1532,15 @@ ScrollView
 	                        id: extruderSelector
 	                        width: parent.width / 2
 
-	                        model: machineExtruderCount.properties.value
+	                        model:
+	                        {
+	                            var l = []
+	                            for(var i=0;i<machineExtruderCount.properties.value;i++)
+	                            {
+	                                l.push(i+1);
+	                            }
+	                            return l
+	                        }
 
 	                        onCurrentIndexChanged:
 	                        {
@@ -1515,7 +1748,7 @@ ScrollView
 
 	                        onClicked:
 	                        {
-	                            connectedPrinter.setTargetHotendTemperature(extruderSelector.currentIndex, parseInt(temperatureTextField.text))
+                                connectedPrinter.setTargetHotendTemperature(extruderSelector.currentIndex, parseInt(temperatureTextField.text))
 	                        }
 
                             style:   ButtonStyle

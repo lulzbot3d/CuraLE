@@ -11,7 +11,7 @@ def getMetaData():
         "profile_writer": [
             {
                 "extension": "curaprofile",
-                "description": catalog.i18nc("@item:inlistbox", "Cura 2 Profile")
+                "description": catalog.i18nc("@item:inlistbox", "Cura LulzBot Edition Profile")
             }
         ]
     }

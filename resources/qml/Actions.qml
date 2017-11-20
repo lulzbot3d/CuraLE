@@ -151,7 +151,7 @@ Item
         onTriggered:
         {
             forceActiveFocus();
-            Cura.ContainerManager.clearUserContainers();
+            CuraApplication.discardOrKeepProfileChangesClosed("discard")
         }
     }
 
