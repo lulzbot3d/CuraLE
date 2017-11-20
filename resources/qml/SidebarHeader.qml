@@ -293,8 +293,7 @@ Column
             visible: Cura.MachineManager.hasMaterials
             enabled: !extrudersList.visible || base.currentExtruderIndex  > -1
             height: UM.Theme.getSize("setting_control").height
-            width: parent.width * 0.7 + UM.Theme.getSize("sidebar_margin").width
-            anchors.right: parent.right
+            width: parent.width * 0.55 + UM.Theme.getSize("sidebar_margin").width
             style: UM.Theme.styles.sidebar_header_button
             activeFocusOnPress: true;
             menu: MaterialMenu {
@@ -307,6 +306,21 @@ Column
             function isMaterialSupported () {
                 return Cura.ContainerManager.getContainerMetaDataEntry(Cura.MachineManager.activeMaterialId, "compatible") == "True"
             }
+        }
+    }
+    Row
+    {
+        id: adhesionRow
+
+        height: UM.Theme.getSize("sidebar_setup").height*4
+        visible: (Cura.MachineManager.hasVariants || Cura.MachineManager.hasMaterials) && !sidebar.monitoringPrint && !sidebar.hideSettings
+
+        anchors
+        {
+            left: parent.left
+            leftMargin: UM.Theme.getSize("sidebar_margin").width
+            right: parent.right
+            rightMargin: UM.Theme.getSize("sidebar_margin").width
         }
 
         Label
@@ -337,7 +351,6 @@ Column
             // TODO: need fill and data to/from somewhere???
             //onEditingFinished: base.setMetaDataEntry("adhesion_info", properties.adhesion_info, text)
         }
-
     }
     //Variant row
     Item
