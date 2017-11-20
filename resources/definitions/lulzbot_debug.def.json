@@ -1,136 +1,1009 @@
 {
+    "name": "lulzbot_debug",
+    "inherits": "fdmprinter",
     "version": 2,
+    "metadata": {
+        "visible": false
+    },
+    "id": "lulzbot_debug",
     "overrides": {
-        "cool_fan_speed_min": {
+        "acceleration_print_layer_0": {
             "enabled": "True"
         },
-        "infill_extruder_nr": {
+        "draft_shield_dist": {
             "enabled": "True"
         },
-        "mesh_rotation_matrix": {
+        "support_bottom_pattern": {
+            "enabled": "True"
+        },
+        "retract_at_layer_change": {
+            "enabled": "True"
+        },
+        "prime_tower_min_volume": {
+            "enabled": "True"
+        },
+        "material_print_temp_wait": {
+            "enabled": "True"
+        },
+        "infill_sparse_density": {
+            "enabled": "True"
+        },
+        "machine_filament_park_distance": {
             "enabled": "True"
         },
         "top_bottom_extruder_nr": {
             "enabled": "True"
         },
-        "speed_support_infill": {
+        "cool_fan_full_layer": {
             "enabled": "True"
         },
-        "wireframe_printspeed_up": {
+        "wireframe_enabled": {
+            "enabled": "True"
+        },
+        "machine_nozzle_size": {
             "enabled": "True"
         },
         "roofing_pattern": {
             "enabled": "True"
         },
-        "top_bottom_thickness": {
+        "switch_extruder_prime_speed": {
             "enabled": "True"
         },
-        "spaghetti_infill_extra_volume": {
+        "machine_nozzle_temp_enabled": {
+            "enabled": "True"
+        },
+        "min_skin_width_for_expansion": {
+            "enabled": "True"
+        },
+        "acceleration_wall_x": {
+            "enabled": "True"
+        },
+        "cross_infill_pocket_size": {
+            "enabled": "True"
+        },
+        "machine_heat_zone_length": {
+            "enabled": "True"
+        },
+        "support_bottom_stair_step_width": {
+            "enabled": "True"
+        },
+        "speed_infill": {
             "enabled": "True"
         },
         "material_bed_temperature": {
             "enabled": "True"
         },
-        "speed_travel_layer_0": {
+        "infill_angles": {
             "enabled": "True"
         },
-        "ooze_shield_enabled": {
+        "magic_fuzzy_skin_point_dist": {
             "enabled": "True"
         },
-        "wall_line_count": {
+        "support_angle": {
             "enabled": "True"
         },
-        "layer_0_z_overlap": {
+        "machine_heated_bed": {
             "enabled": "True"
         },
-        "xy_offset_layer_0": {
+        "coasting_min_volume": {
             "enabled": "True"
         },
-        "sub_div_rad_add": {
+        "skin_overlap": {
             "enabled": "True"
         },
-        "acceleration_travel": {
+        "jerk_support_roof": {
             "enabled": "True"
         },
-        "machine_disallowed_areas": {
+        "acceleration_skirt_brim": {
             "enabled": "True"
         },
-        "jerk_ironing": {
+        "support_mesh": {
             "enabled": "True"
         },
-        "cool_min_speed": {
+        "speed_equalize_flow_max": {
             "enabled": "True"
         },
-        "cutting_mesh": {
-            "enabled": "True"
-        },
-        "gradual_infill_step_height": {
-            "enabled": "True"
-        },
-        "cool_min_layer_time": {
-            "enabled": "True"
-        },
-        "top_bottom_pattern": {
-            "enabled": "True"
-        },
-        "support_bottom_line_distance": {
-            "enabled": "True"
-        },
-        "gradual_infill_steps": {
-            "enabled": "True"
-        },
-        "spaghetti_max_infill_angle": {
-            "enabled": "True"
-        },
-        "draft_shield_enabled": {
-            "enabled": "True"
-        },
-        "support_tower_roof_angle": {
-            "enabled": "True"
-        },
-        "prime_tower_wipe_enabled": {
-            "enabled": "True"
-        },
-        "relative_extrusion": {
-            "enabled": "True"
-        },
-        "gradual_support_infill_steps": {
-            "enabled": "True"
-        },
-        "spaghetti_infill_stepped": {
-            "enabled": "True"
-        },
-        "wireframe_printspeed_down": {
-            "enabled": "True"
-        },
-        "retraction_retract_speed": {
-            "enabled": "True"
-        },
-        "machine_max_feedrate_y": {
-            "enabled": "True"
-        },
-        "dual_pre_wipe": {
-            "enabled": "True"
-        },
-        "machine_max_feedrate_e": {
-            "enabled": "True"
-        },
-        "bottom_layers": {
+        "cool_min_layer_time_fan_speed_max": {
             "enabled": "True"
         },
         "magic_fuzzy_skin_thickness": {
             "enabled": "True"
         },
-        "skin_line_width": {
+        "support_bottom_line_distance": {
+            "enabled": "True"
+        },
+        "jerk_infill": {
+            "enabled": "True"
+        },
+        "raft_base_thickness": {
+            "enabled": "True"
+        },
+        "travel_avoid_other_parts": {
+            "enabled": "True"
+        },
+        "wireframe_drag_along": {
+            "enabled": "True"
+        },
+        "xy_offset_layer_0": {
+            "enabled": "True"
+        },
+        "material_initial_print_temperature": {
+            "enabled": "True"
+        },
+        "wireframe_up_half_speed": {
+            "enabled": "True"
+        },
+        "machine_max_acceleration_z": {
+            "enabled": "True"
+        },
+        "machine_baudrate": {
+            "enabled": "True"
+        },
+        "z_seam_relative": {
+            "enabled": "True"
+        },
+        "speed_wall": {
+            "enabled": "True"
+        },
+        "raft_surface_layers": {
+            "enabled": "True"
+        },
+        "support_minimal_diameter": {
+            "enabled": "True"
+        },
+        "wall_line_width_x": {
+            "enabled": "True"
+        },
+        "mold_enabled": {
+            "enabled": "True"
+        },
+        "initial_layer_line_width_factor": {
+            "enabled": "True"
+        },
+        "support_roof_pattern": {
+            "enabled": "True"
+        },
+        "acceleration_travel_layer_0": {
+            "enabled": "True"
+        },
+        "max_feedrate_z_override": {
+            "enabled": "True"
+        },
+        "machine_max_acceleration_x": {
+            "enabled": "True"
+        },
+        "bottom_thickness": {
+            "enabled": "True"
+        },
+        "anti_overhang_mesh": {
+            "enabled": "True"
+        },
+        "jerk_travel_layer_0": {
+            "enabled": "True"
+        },
+        "meshfix_union_all_remove_holes": {
+            "enabled": "True"
+        },
+        "layer_height_0": {
+            "enabled": "True"
+        },
+        "skin_outline_count": {
+            "enabled": "True"
+        },
+        "wireframe_printspeed_bottom": {
+            "enabled": "True"
+        },
+        "gradual_infill_step_height": {
+            "enabled": "True"
+        },
+        "retraction_speed": {
+            "enabled": "True"
+        },
+        "jerk_layer_0": {
+            "enabled": "True"
+        },
+        "infill_line_width": {
+            "enabled": "True"
+        },
+        "wall_extruder_nr": {
+            "enabled": "True"
+        },
+        "meshfix_extensive_stitching": {
+            "enabled": "True"
+        },
+        "spaghetti_infill_stepped": {
+            "enabled": "True"
+        },
+        "prime_tower_wall_thickness": {
+            "enabled": "True"
+        },
+        "ooze_shield_dist": {
+            "enabled": "True"
+        },
+        "top_bottom_pattern": {
+            "enabled": "True"
+        },
+        "meshfix_keep_open_polygons": {
+            "enabled": "True"
+        },
+        "support_xy_overrides_z": {
+            "enabled": "True"
+        },
+        "mesh_rotation_matrix": {
+            "enabled": "True"
+        },
+        "prime_tower_purge_volume": {
+            "enabled": "True"
+        },
+        "infill_pattern": {
+            "enabled": "True"
+        },
+        "material_adhesion_tendency": {
+            "enabled": "True"
+        },
+        "wall_line_width_0": {
+            "enabled": "True"
+        },
+        "support_z_distance": {
+            "enabled": "True"
+        },
+        "prime_blob_enable": {
+            "enabled": "True"
+        },
+        "prime_tower_wipe_enabled": {
+            "enabled": "True"
+        },
+        "speed_prime_tower": {
+            "enabled": "True"
+        },
+        "infill_line_distance": {
+            "enabled": "True"
+        },
+        "raft_interface_line_width": {
+            "enabled": "True"
+        },
+        "zig_zaggify_infill": {
+            "enabled": "True"
+        },
+        "gradual_support_infill_steps": {
+            "enabled": "True"
+        },
+        "infill_wipe_dist": {
+            "enabled": "True"
+        },
+        "support_bottom_line_width": {
+            "enabled": "True"
+        },
+        "magic_fuzzy_skin_enabled": {
+            "enabled": "True"
+        },
+        "adhesion_extruder_nr": {
+            "enabled": "True"
+        },
+        "center_object": {
+            "enabled": "True"
+        },
+        "acceleration_topbottom": {
+            "enabled": "True"
+        },
+        "mold_roof_height": {
+            "enabled": "True"
+        },
+        "switch_extruder_retraction_speed": {
+            "enabled": "True"
+        },
+        "magic_mesh_surface_mode": {
+            "enabled": "True"
+        },
+        "prime_tower_size": {
+            "enabled": "True"
+        },
+        "ironing_pattern": {
+            "enabled": "True"
+        },
+        "wireframe_printspeed_down": {
+            "enabled": "True"
+        },
+        "support_bottom_stair_step_height": {
+            "enabled": "True"
+        },
+        "wireframe_roof_fall_down": {
+            "enabled": "True"
+        },
+        "prime_tower_flow": {
+            "enabled": "True"
+        },
+        "infill_hollow": {
+            "enabled": "True"
+        },
+        "acceleration_travel": {
+            "enabled": "True"
+        },
+        "raft_base_jerk": {
+            "enabled": "True"
+        },
+        "mold_angle": {
+            "enabled": "True"
+        },
+        "infill_mesh": {
+            "enabled": "True"
+        },
+        "support_interface_density": {
+            "enabled": "True"
+        },
+        "infill_offset_y": {
+            "enabled": "True"
+        },
+        "optimize_wall_printing_order": {
+            "enabled": "True"
+        },
+        "top_thickness": {
+            "enabled": "True"
+        },
+        "jerk_topbottom": {
+            "enabled": "True"
+        },
+        "wireframe_top_delay": {
+            "enabled": "True"
+        },
+        "brim_width": {
+            "enabled": "True"
+        },
+        "coasting_speed": {
+            "enabled": "True"
+        },
+        "raft_surface_fan_speed": {
+            "enabled": "True"
+        },
+        "raft_interface_speed": {
+            "enabled": "True"
+        },
+        "machine_use_extruder_offset_to_offset_coords": {
+            "enabled": "True"
+        },
+        "machine_nozzle_cool_down_speed": {
+            "enabled": "True"
+        },
+        "ooze_shield_angle": {
+            "enabled": "True"
+        },
+        "support_line_width": {
+            "enabled": "True"
+        },
+        "speed_support_infill": {
+            "enabled": "True"
+        },
+        "support_xy_distance_overhang": {
+            "enabled": "True"
+        },
+        "jerk_enabled": {
+            "enabled": "True"
+        },
+        "acceleration_wall_0": {
+            "enabled": "True"
+        },
+        "carve_multiple_volumes": {
             "enabled": "True"
         },
         "raft_surface_line_width": {
             "enabled": "True"
         },
+        "jerk_ironing": {
+            "enabled": "True"
+        },
+        "layer_0_z_overlap": {
+            "enabled": "True"
+        },
+        "gradual_infill_steps": {
+            "enabled": "True"
+        },
+        "material_standby_temperature": {
+            "enabled": "True"
+        },
+        "jerk_roofing": {
+            "enabled": "True"
+        },
+        "material_print_temperature": {
+            "enabled": "True"
+        },
+        "infill_mesh_order": {
+            "enabled": "True"
+        },
+        "machine_nozzle_tip_outer_diameter": {
+            "enabled": "True"
+        },
+        "roofing_line_width": {
+            "enabled": "True"
+        },
+        "smooth_spiralized_contours": {
+            "enabled": "True"
+        },
+        "infill_overlap": {
+            "enabled": "True"
+        },
+        "bottom_skin_expand_distance": {
+            "enabled": "True"
+        },
+        "machine_center_is_zero": {
+            "enabled": "True"
+        },
+        "draft_shield_enabled": {
+            "enabled": "True"
+        },
+        "support_interface_height": {
+            "enabled": "True"
+        },
+        "prime_tower_line_width": {
+            "enabled": "True"
+        },
+        "jerk_support_infill": {
+            "enabled": "True"
+        },
+        "support_conical_enabled": {
+            "enabled": "True"
+        },
+        "magic_fuzzy_skin_point_density": {
+            "enabled": "True"
+        },
+        "support_conical_min_width": {
+            "enabled": "True"
+        },
+        "speed_topbottom": {
+            "enabled": "True"
+        },
+        "support_infill_extruder_nr": {
+            "enabled": "True"
+        },
+        "outer_inset_first": {
+            "enabled": "True"
+        },
+        "support_roof_density": {
+            "enabled": "True"
+        },
+        "adhesion_type": {
+            "enabled": "True"
+        },
+        "travel_compensate_overlapping_walls_x_enabled": {
+            "enabled": "True"
+        },
+        "skirt_gap": {
+            "enabled": "True"
+        },
+        "skirt_brim_minimal_length": {
+            "enabled": "True"
+        },
+        "draft_shield_height_limitation": {
+            "enabled": "True"
+        },
+        "material_flow_temp_graph": {
+            "enabled": "True"
+        },
+        "support_infill_sparse_thickness": {
+            "enabled": "True"
+        },
+        "support_roof_enable": {
+            "enabled": "True"
+        },
+        "support_conical_angle": {
+            "enabled": "True"
+        },
+        "wireframe_straight_before_down": {
+            "enabled": "True"
+        },
+        "extruder_prime_pos_y": {
+            "enabled": "True"
+        },
+        "layer_start_x": {
+            "enabled": "True"
+        },
         "travel_compensate_overlapping_walls_enabled": {
             "enabled": "True"
         },
-        "infill_mesh": {
+        "prime_tower_enable": {
+            "enabled": "True"
+        },
+        "material_bed_temp_wait": {
+            "enabled": "True"
+        },
+        "machine_min_cool_heat_time_window": {
+            "enabled": "True"
+        },
+        "raft_base_fan_speed": {
+            "enabled": "True"
+        },
+        "machine_acceleration": {
+            "enabled": "True"
+        },
+        "infill_sparse_thickness": {
+            "enabled": "True"
+        },
+        "bottom_layers": {
+            "enabled": "True"
+        },
+        "retraction_hop_after_extruder_switch": {
+            "enabled": "True"
+        },
+        "support_enable": {
+            "enabled": "True"
+        },
+        "support_mesh_drop_down": {
+            "enabled": "True"
+        },
+        "raft_interface_line_spacing": {
+            "enabled": "True"
+        },
+        "ironing_line_spacing": {
+            "enabled": "True"
+        },
+        "wireframe_flat_delay": {
+            "enabled": "True"
+        },
+        "cool_min_speed": {
+            "enabled": "True"
+        },
+        "prime_tower_position_y": {
+            "enabled": "True"
+        },
+        "raft_interface_fan_speed": {
+            "enabled": "True"
+        },
+        "support_interface_pattern": {
+            "enabled": "True"
+        },
+        "spaghetti_flow": {
+            "enabled": "True"
+        },
+        "wireframe_flow_flat": {
+            "enabled": "True"
+        },
+        "wireframe_flow": {
+            "enabled": "True"
+        },
+        "start_layers_at_same_position": {
+            "enabled": "True"
+        },
+        "speed_print_layer_0": {
+            "enabled": "True"
+        },
+        "support_interface_skip_height": {
+            "enabled": "True"
+        },
+        "raft_base_line_spacing": {
+            "enabled": "True"
+        },
+        "wall_line_width": {
+            "enabled": "True"
+        },
+        "raft_surface_jerk": {
+            "enabled": "True"
+        },
+        "spaghetti_max_height": {
+            "enabled": "True"
+        },
+        "draft_shield_height": {
+            "enabled": "True"
+        },
+        "skirt_line_count": {
+            "enabled": "True"
+        },
+        "machine_nozzle_expansion_angle": {
+            "enabled": "True"
+        },
+        "acceleration_ironing": {
+            "enabled": "True"
+        },
+        "expand_skins_expand_distance": {
+            "enabled": "True"
+        },
+        "cool_min_layer_time": {
+            "enabled": "True"
+        },
+        "jerk_wall": {
+            "enabled": "True"
+        },
+        "raft_surface_line_spacing": {
+            "enabled": "True"
+        },
+        "retraction_min_travel": {
+            "enabled": "True"
+        },
+        "raft_margin": {
+            "enabled": "True"
+        },
+        "machine_minimum_feedrate": {
+            "enabled": "True"
+        },
+        "speed_layer_0": {
+            "enabled": "True"
+        },
+        "raft_base_speed": {
+            "enabled": "True"
+        },
+        "ooze_shield_enabled": {
+            "enabled": "True"
+        },
+        "wireframe_flow_connection": {
+            "enabled": "True"
+        },
+        "meshfix_union_all": {
+            "enabled": "True"
+        },
+        "z_seam_x": {
+            "enabled": "True"
+        },
+        "cutting_mesh": {
+            "enabled": "True"
+        },
+        "acceleration_support_interface": {
+            "enabled": "True"
+        },
+        "default_material_print_temperature": {
+            "enabled": "True"
+        },
+        "wireframe_bottom_delay": {
+            "enabled": "True"
+        },
+        "material_bed_temperature_layer_0": {
+            "enabled": "True"
+        },
+        "machine_height": {
+            "enabled": "True"
+        },
+        "spaghetti_inset": {
+            "enabled": "True"
+        },
+        "jerk_support": {
+            "enabled": "True"
+        },
+        "prime_tower_position_x": {
+            "enabled": "True"
+        },
+        "skirt_brim_line_width": {
+            "enabled": "True"
+        },
+        "z_seam_y": {
+            "enabled": "True"
+        },
+        "raft_base_acceleration": {
+            "enabled": "True"
+        },
+        "z_seam_type": {
+            "enabled": "True"
+        },
+        "machine_max_feedrate_e": {
+            "enabled": "True"
+        },
+        "support_offset": {
+            "enabled": "True"
+        },
+        "speed_support_interface": {
+            "enabled": "True"
+        },
+        "machine_max_jerk_e": {
+            "enabled": "True"
+        },
+        "travel_retract_before_outer_wall": {
+            "enabled": "True"
+        },
+        "wireframe_fall_down": {
+            "enabled": "True"
+        },
+        "wireframe_top_jump": {
+            "enabled": "True"
+        },
+        "raft_speed": {
+            "enabled": "True"
+        },
+        "wall_0_extruder_nr": {
+            "enabled": "True"
+        },
+        "support_bottom_enable": {
+            "enabled": "True"
+        },
+        "support_interface_line_width": {
+            "enabled": "True"
+        },
+        "wireframe_strategy": {
+            "enabled": "True"
+        },
+        "support_type": {
+            "enabled": "True"
+        },
+        "acceleration_infill": {
+            "enabled": "True"
+        },
+        "extruder_prime_pos_z": {
+            "enabled": "True"
+        },
+        "wireframe_printspeed_up": {
+            "enabled": "True"
+        },
+        "top_skin_expand_distance": {
+            "enabled": "True"
+        },
+        "machine_name": {
+            "enabled": "True"
+        },
+        "speed_support_bottom": {
+            "enabled": "True"
+        },
+        "wall_thickness": {
+            "enabled": "True"
+        },
+        "support_tower_roof_angle": {
+            "enabled": "True"
+        },
+        "wireframe_printspeed": {
+            "enabled": "True"
+        },
+        "jerk_wall_0": {
+            "enabled": "True"
+        },
+        "switch_extruder_retraction_amount": {
+            "enabled": "True"
+        },
+        "support_extruder_nr_layer_0": {
+            "enabled": "True"
+        },
+        "skin_preshrink": {
+            "enabled": "True"
+        },
+        "machine_show_variants": {
+            "enabled": "True"
+        },
+        "jerk_skirt_brim": {
+            "enabled": "True"
+        },
+        "slicing_tolerance": {
+            "enabled": "True"
+        },
+        "machine_max_acceleration_y": {
+            "enabled": "True"
+        },
+        "machine_shape": {
+            "enabled": "True"
+        },
+        "machine_nozzle_id": {
+            "enabled": "True"
+        },
+        "acceleration_support": {
+            "enabled": "True"
+        },
+        "skin_no_small_gaps_heuristic": {
+            "enabled": "True"
+        },
+        "raft_smoothing": {
+            "enabled": "True"
+        },
+        "material_flow": {
+            "enabled": "True"
+        },
+        "infill_extruder_nr": {
+            "enabled": "True"
+        },
+        "raft_fan_speed": {
+            "enabled": "True"
+        },
+        "travel_avoid_distance": {
+            "enabled": "True"
+        },
+        "brim_outside_only": {
+            "enabled": "True"
+        },
+        "material_extrusion_cool_down_speed": {
+            "enabled": "True"
+        },
+        "raft_surface_thickness": {
+            "enabled": "True"
+        },
+        "wall_line_count": {
+            "enabled": "True"
+        },
+        "speed_roofing": {
+            "enabled": "True"
+        },
+        "nozzle_disallowed_areas": {
+            "enabled": "True"
+        },
+        "support_roof_height": {
+            "enabled": "True"
+        },
+        "cool_fan_speed_max": {
+            "enabled": "True"
+        },
+        "skin_alternate_rotation": {
+            "enabled": "True"
+        },
+        "infill_offset_x": {
+            "enabled": "True"
+        },
+        "acceleration_prime_tower": {
+            "enabled": "True"
+        },
+        "cool_fan_enabled": {
+            "enabled": "True"
+        },
+        "machine_gcode_flavor": {
+            "enabled": "True"
+        },
+        "machine_wipe_gcode": {
+            "enabled": "True"
+        },
+        "speed_travel_layer_0": {
+            "enabled": "True"
+        },
+        "roofing_extruder_nr": {
+            "enabled": "True"
+        },
+        "wireframe_printspeed_flat": {
+            "enabled": "True"
+        },
+        "skin_angles": {
+            "enabled": "True"
+        },
+        "min_infill_area": {
+            "enabled": "True"
+        },
+        "machine_depth": {
+            "enabled": "True"
+        },
+        "support_roof_line_distance": {
+            "enabled": "True"
+        },
+        "raft_surface_speed": {
+            "enabled": "True"
+        },
+        "layer_start_y": {
+            "enabled": "True"
+        },
+        "jerk_print_layer_0": {
+            "enabled": "True"
+        },
+        "material_diameter": {
+            "enabled": "True"
+        },
+        "max_skin_angle_for_expansion": {
+            "enabled": "True"
+        },
+        "raft_interface_thickness": {
+            "enabled": "True"
+        },
+        "acceleration_enabled": {
+            "enabled": "True"
+        },
+        "spaghetti_max_infill_angle": {
+            "enabled": "True"
+        },
+        "material_surface_energy": {
+            "enabled": "True"
+        },
+        "support_bottom_extruder_nr": {
+            "enabled": "True"
+        },
+        "material_flow_dependent_temperature": {
+            "enabled": "True"
+        },
+        "speed_travel": {
+            "enabled": "True"
+        },
+        "gradual_support_infill_step_height": {
+            "enabled": "True"
+        },
+        "machine_start_gcode": {
+            "enabled": "True"
+        },
+        "acceleration_layer_0": {
+            "enabled": "True"
+        },
+        "raft_surface_acceleration": {
+            "enabled": "True"
+        },
+        "machine_width": {
+            "enabled": "True"
+        },
+        "acceleration_print": {
+            "enabled": "True"
+        },
+        "skin_overlap_mm": {
+            "enabled": "True"
+        },
+        "remove_empty_first_layers": {
+            "enabled": "True"
+        },
+        "jerk_support_bottom": {
+            "enabled": "True"
+        },
+        "support_connect_zigzags": {
+            "enabled": "True"
+        },
+        "retraction_amount": {
+            "enabled": "True"
+        },
+        "speed_wall_x": {
+            "enabled": "True"
+        },
+        "conical_overhang_enabled": {
+            "enabled": "True"
+        },
+        "coasting_volume": {
+            "enabled": "True"
+        },
+        "top_bottom_pattern_0": {
+            "enabled": "True"
+        },
+        "support_use_towers": {
+            "enabled": "True"
+        },
+        "machine_max_feedrate_y": {
+            "enabled": "True"
+        },
+        "machine_max_jerk_xy": {
+            "enabled": "True"
+        },
+        "conical_overhang_angle": {
+            "enabled": "True"
+        },
+        "cool_fan_speed_0": {
+            "enabled": "True"
+        },
+        "xy_offset": {
+            "enabled": "True"
+        },
+        "jerk_wall_x": {
+            "enabled": "True"
+        },
+        "retraction_hop_only_when_collides": {
+            "enabled": "True"
+        },
+        "wireframe_nozzle_clearance": {
+            "enabled": "True"
+        },
+        "travel_compensate_overlapping_walls_0_enabled": {
+            "enabled": "True"
+        },
+        "extruder_prime_pos_abs": {
+            "enabled": "True"
+        },
+        "machine_max_jerk_z": {
+            "enabled": "True"
+        },
+        "alternate_extra_perimeter": {
+            "enabled": "True"
+        },
+        "support_line_distance": {
+            "enabled": "True"
+        },
+        "ironing_only_highest_layer": {
+            "enabled": "True"
+        },
+        "support_interface_extruder_nr": {
+            "enabled": "True"
+        },
+        "machine_nozzle_heat_up_speed": {
+            "enabled": "True"
+        },
+        "gantry_height": {
+            "enabled": "True"
+        },
+        "machine_max_feedrate_x": {
+            "enabled": "True"
+        },
+        "machine_max_feedrate_z": {
+            "enabled": "True"
+        },
+        "support_roof_extruder_nr": {
+            "enabled": "True"
+        },
+        "speed_ironing": {
+            "enabled": "True"
+        },
+        "wall_0_inset": {
+            "enabled": "True"
+        },
+        "magic_spiralize": {
+            "enabled": "True"
+        },
+        "brim_line_count": {
             "enabled": "True"
         },
         "switch_extruder_retraction_speeds": {
@@ -139,1163 +1012,305 @@
         "raft_base_line_width": {
             "enabled": "True"
         },
-        "travel_avoid_other_parts": {
-            "enabled": "True"
-        },
-        "raft_interface_fan_speed": {
-            "enabled": "True"
-        },
-        "z_seam_y": {
-            "enabled": "True"
-        },
-        "infill_mesh_order": {
-            "enabled": "True"
-        },
-        "raft_surface_jerk": {
-            "enabled": "True"
-        },
-        "wireframe_roof_drag_along": {
-            "enabled": "True"
-        },
-        "meshfix_union_all": {
-            "enabled": "True"
-        },
-        "ironing_flow": {
-            "enabled": "True"
-        },
-        "wall_0_wipe_dist": {
-            "enabled": "True"
-        },
-        "skin_overlap": {
-            "enabled": "True"
-        },
-        "start_layers_at_same_position": {
-            "enabled": "True"
-        },
-        "support_skip_zag_per_mm": {
-            "enabled": "True"
-        },
-        "acceleration_support_interface": {
-            "enabled": "True"
-        },
-        "alternate_extra_perimeter": {
-            "enabled": "True"
-        },
-        "infill_before_walls": {
-            "enabled": "True"
-        },
-        "skin_outline_count": {
-            "enabled": "True"
-        },
-        "jerk_wall_0": {
-            "enabled": "True"
-        },
-        "material_flow_dependent_temperature": {
-            "enabled": "True"
-        },
-        "xy_offset": {
-            "enabled": "True"
-        },
-        "draft_shield_height_limitation": {
-            "enabled": "True"
-        },
-        "speed_wall": {
-            "enabled": "True"
-        },
-        "jerk_travel": {
-            "enabled": "True"
-        },
-        "mold_width": {
-            "enabled": "True"
-        },
-        "draft_shield_height": {
-            "enabled": "True"
-        },
-        "support_conical_enabled": {
-            "enabled": "True"
-        },
-        "support_mesh": {
-            "enabled": "True"
-        },
-        "support_join_distance": {
-            "enabled": "True"
-        },
-        "skirt_line_count": {
-            "enabled": "True"
-        },
-        "jerk_wall": {
-            "enabled": "True"
-        },
-        "switch_extruder_retraction_amount": {
-            "enabled": "True"
-        },
-        "machine_end_gcode": {
-            "enabled": "True"
-        },
-        "acceleration_layer_0": {
-            "enabled": "True"
-        },
-        "support_extruder_nr_layer_0": {
-            "enabled": "True"
-        },
-        "speed_wall_x": {
-            "enabled": "True"
-        },
-        "support_offset": {
-            "enabled": "True"
-        },
-        "support_bottom_extruder_nr": {
-            "enabled": "True"
-        },
-        "support_connect_zigzags": {
-            "enabled": "True"
-        },
-        "meshfix_extensive_stitching": {
-            "enabled": "True"
-        },
-        "support_infill_rate": {
-            "enabled": "True"
-        },
-        "fill_perimeter_gaps": {
-            "enabled": "True"
-        },
-        "magic_fuzzy_skin_point_density": {
-            "enabled": "True"
-        },
-        "machine_extruder_count": {
-            "enabled": "True"
-        },
-        "ironing_inset": {
-            "enabled": "True"
-        },
-        "z_seam_x": {
-            "enabled": "True"
-        },
-        "wall_line_width": {
-            "enabled": "True"
-        },
-        "coasting_enable": {
-            "enabled": "True"
-        },
-        "meshfix_keep_open_polygons": {
-            "enabled": "True"
-        },
-        "machine_head_with_fans_polygon": {
-            "enabled": "True"
-        },
-        "machine_max_acceleration_y": {
-            "enabled": "True"
-        },
-        "machine_max_acceleration_z": {
-            "enabled": "True"
-        },
-        "machine_minimum_feedrate": {
-            "enabled": "True"
-        },
-        "spaghetti_flow": {
-            "enabled": "True"
-        },
-        "conical_overhang_enabled": {
-            "enabled": "True"
-        },
-        "roofing_line_width": {
-            "enabled": "True"
-        },
-        "z_offset_taper_layers": {
-            "enabled": "True"
-        },
-        "raft_jerk": {
-            "enabled": "True"
-        },
-        "retraction_hop_enabled": {
-            "enabled": "True"
-        },
-        "support_roof_line_distance": {
-            "enabled": "True"
-        },
-        "zig_zaggify_infill": {
-            "enabled": "True"
-        },
-        "machine_min_cool_heat_time_window": {
-            "enabled": "True"
-        },
-        "support_minimal_diameter": {
-            "enabled": "True"
-        },
-        "wireframe_roof_inset": {
-            "enabled": "True"
-        },
-        "material_guid": {
-            "enabled": "True"
-        },
-        "meshfix_union_all_remove_holes": {
-            "enabled": "True"
-        },
-        "raft_interface_line_width": {
-            "enabled": "True"
-        },
-        "travel_avoid_distance": {
-            "enabled": "True"
-        },
-        "print_sequence": {
-            "enabled": "True"
-        },
-        "top_bottom_pattern_0": {
-            "enabled": "True"
-        },
-        "roofing_extruder_nr": {
-            "enabled": "True"
-        },
-        "support_bottom_stair_step_width": {
-            "enabled": "True"
-        },
-        "layer_start_x": {
-            "enabled": "True"
-        },
-        "prime_tower_line_width": {
-            "enabled": "True"
-        },
-        "retraction_combing": {
-            "enabled": "True"
-        },
-        "top_skin_preshrink": {
-            "enabled": "True"
-        },
-        "retraction_hop_after_extruder_switch": {
-            "enabled": "True"
-        },
-        "cool_fan_full_at_height": {
-            "enabled": "True"
-        },
-        "support_roof_line_width": {
-            "enabled": "True"
-        },
-        "wireframe_roof_outer_delay": {
-            "enabled": "True"
-        },
-        "wireframe_fall_down": {
-            "enabled": "True"
-        },
-        "retraction_amount": {
-            "enabled": "True"
-        },
-        "support_interface_line_width": {
-            "enabled": "True"
-        },
-        "raft_surface_layers": {
-            "enabled": "True"
-        },
-        "bottom_thickness": {
-            "enabled": "True"
-        },
-        "raft_interface_jerk": {
-            "enabled": "True"
-        },
-        "spaghetti_inset": {
-            "enabled": "True"
-        },
-        "cross_infill_apply_pockets_alternatingly": {
-            "enabled": "True"
-        },
-        "smooth_spiralized_contours": {
-            "enabled": "True"
-        },
-        "initial_layer_line_width_factor": {
-            "enabled": "True"
-        },
-        "acceleration_ironing": {
-            "enabled": "True"
-        },
-        "raft_interface_speed": {
-            "enabled": "True"
-        },
-        "infill_pattern": {
-            "enabled": "True"
-        },
-        "raft_base_thickness": {
-            "enabled": "True"
-        },
-        "gantry_height": {
-            "enabled": "True"
-        },
-        "material_print_temp_wait": {
-            "enabled": "True"
-        },
-        "wireframe_printspeed_flat": {
-            "enabled": "True"
-        },
-        "acceleration_print_layer_0": {
-            "enabled": "True"
-        },
-        "jerk_topbottom": {
-            "enabled": "True"
-        },
-        "spaghetti_max_height": {
-            "enabled": "True"
-        },
-        "machine_port": {
-            "enabled": "True"
-        },
-        "wireframe_flat_delay": {
-            "enabled": "True"
-        },
-        "support_xy_overrides_z": {
-            "enabled": "True"
-        },
-        "acceleration_wall_x": {
-            "enabled": "True"
-        },
-        "raft_surface_thickness": {
-            "enabled": "True"
-        },
-        "skin_overlap_mm": {
-            "enabled": "True"
-        },
-        "raft_surface_acceleration": {
-            "enabled": "True"
-        },
-        "acceleration_support": {
-            "enabled": "True"
-        },
-        "mesh_position_x": {
-            "enabled": "True"
-        },
-        "material_print_temperature": {
-            "enabled": "True"
-        },
-        "brim_line_count": {
-            "enabled": "True"
-        },
-        "wireframe_up_half_speed": {
-            "enabled": "True"
-        },
-        "ironing_only_highest_layer": {
-            "enabled": "True"
-        },
-        "bottom_skin_expand_distance": {
-            "enabled": "True"
-        },
-        "adhesion_type": {
-            "enabled": "True"
-        },
-        "support_roof_height": {
-            "enabled": "True"
-        },
-        "raft_surface_speed": {
-            "enabled": "True"
-        },
-        "top_thickness": {
-            "enabled": "True"
-        },
-        "support_line_distance": {
-            "enabled": "True"
-        },
-        "cool_fan_full_layer": {
-            "enabled": "True"
-        },
-        "roofing_angles": {
-            "enabled": "True"
-        },
-        "retraction_hop_only_when_collides": {
-            "enabled": "True"
-        },
-        "machine_head_polygon": {
-            "enabled": "True"
-        },
-        "ooze_shield_angle": {
-            "enabled": "True"
-        },
-        "wireframe_printspeed": {
-            "enabled": "True"
-        },
-        "wireframe_enabled": {
-            "enabled": "True"
-        },
-        "support_interface_enable": {
-            "enabled": "True"
-        },
-        "prime_tower_wall_thickness": {
-            "enabled": "True"
-        },
-        "support_roof_pattern": {
-            "enabled": "True"
-        },
-        "max_skin_angle_for_expansion": {
-            "enabled": "True"
-        },
-        "cool_fan_enabled": {
-            "enabled": "True"
-        },
-        "support_bottom_density": {
-            "enabled": "True"
-        },
-        "jerk_prime_tower": {
-            "enabled": "True"
-        },
-        "fill_outline_gaps": {
-            "enabled": "True"
-        },
-        "speed_equalize_flow_max": {
-            "enabled": "True"
-        },
-        "default_material_print_temperature": {
-            "enabled": "True"
-        },
-        "acceleration_print": {
-            "enabled": "True"
-        },
-        "raft_surface_fan_speed": {
-            "enabled": "True"
-        },
-        "coasting_speed": {
-            "enabled": "True"
-        },
-        "support_type": {
-            "enabled": "True"
-        },
-        "retraction_enable": {
-            "enabled": "True"
-        },
-        "machine_max_jerk_e": {
-            "enabled": "True"
-        },
-        "roofing_layer_count": {
-            "enabled": "True"
-        },
-        "material_print_temp_prepend": {
-            "enabled": "True"
-        },
-        "support_interface_skip_height": {
-            "enabled": "True"
-        },
-        "speed_support": {
-            "enabled": "True"
-        },
-        "skirt_gap": {
-            "enabled": "True"
-        },
-        "skin_alternate_rotation": {
-            "enabled": "True"
-        },
-        "raft_speed": {
-            "enabled": "True"
-        },
-        "machine_start_gcode": {
-            "enabled": "True"
-        },
-        "retraction_hop": {
-            "enabled": "True"
-        },
-        "retraction_prime_speed": {
-            "enabled": "True"
-        },
-        "speed_equalize_flow_enabled": {
-            "enabled": "True"
-        },
-        "extruder_prime_pos_y": {
-            "enabled": "True"
-        },
-        "gradual_support_infill_step_height": {
-            "enabled": "True"
-        },
-        "infill_angles": {
-            "enabled": "True"
-        },
-        "prime_tower_position_x": {
-            "enabled": "True"
-        },
-        "material_initial_print_temperature": {
-            "enabled": "True"
-        },
-        "skirt_brim_speed": {
-            "enabled": "True"
-        },
-        "raft_airgap": {
-            "enabled": "True"
-        },
-        "jerk_support_infill": {
-            "enabled": "True"
-        },
-        "travel_compensate_overlapping_walls_0_enabled": {
-            "enabled": "True"
-        },
-        "acceleration_travel_layer_0": {
-            "enabled": "True"
-        },
-        "jerk_skirt_brim": {
-            "enabled": "True"
-        },
-        "prime_tower_purge_volume": {
-            "enabled": "True"
-        },
-        "support_bottom_stair_step_height": {
-            "enabled": "True"
-        },
-        "ironing_line_spacing": {
-            "enabled": "True"
-        },
-        "material_print_temperature_layer_0": {
-            "enabled": "True"
-        },
-        "raft_surface_line_spacing": {
-            "enabled": "True"
-        },
-        "acceleration_support_roof": {
-            "enabled": "True"
-        },
-        "support_z_distance": {
-            "enabled": "True"
-        },
-        "jerk_layer_0": {
-            "enabled": "True"
-        },
-        "support_bottom_enable": {
-            "enabled": "True"
-        },
-        "prime_tower_position_y": {
-            "enabled": "True"
-        },
-        "speed_print": {
-            "enabled": "True"
-        },
-        "travel_retract_before_outer_wall": {
-            "enabled": "True"
-        },
-        "acceleration_infill": {
-            "enabled": "True"
-        },
-        "coasting_min_volume": {
-            "enabled": "True"
-        },
-        "material_diameter": {
-            "enabled": "True"
-        },
-        "mesh_position_y": {
-            "enabled": "True"
-        },
-        "wall_line_width_0": {
-            "enabled": "True"
-        },
-        "raft_base_acceleration": {
-            "enabled": "True"
-        },
-        "machine_gcode_flavor": {
-            "enabled": "True"
-        },
-        "machine_nozzle_head_distance": {
-            "enabled": "True"
-        },
-        "material_bed_temp_wait": {
-            "enabled": "True"
-        },
-        "machine_heat_zone_length": {
-            "enabled": "True"
-        },
-        "wireframe_drag_along": {
-            "enabled": "True"
-        },
-        "layer_start_y": {
-            "enabled": "True"
-        },
         "support_extruder_nr": {
-            "enabled": "True"
-        },
-        "acceleration_enabled": {
-            "enabled": "True"
-        },
-        "support_bottom_line_width": {
-            "enabled": "True"
-        },
-        "switch_extruder_retraction_speed": {
-            "enabled": "True"
-        },
-        "wall_x_extruder_nr": {
-            "enabled": "True"
-        },
-        "acceleration_skirt_brim": {
-            "enabled": "True"
-        },
-        "speed_wall_0": {
-            "enabled": "True"
-        },
-        "wireframe_strategy": {
-            "enabled": "True"
-        },
-        "machine_height": {
-            "enabled": "True"
-        },
-        "support_bottom_height": {
-            "enabled": "True"
-        },
-        "support_roof_enable": {
-            "enabled": "True"
-        },
-        "raft_base_speed": {
-            "enabled": "True"
-        },
-        "cool_lift_head": {
-            "enabled": "True"
-        },
-        "speed_topbottom": {
-            "enabled": "True"
-        },
-        "cross_infill_pocket_size": {
-            "enabled": "True"
-        },
-        "machine_show_variants": {
-            "enabled": "True"
-        },
-        "machine_max_jerk_xy": {
-            "enabled": "True"
-        },
-        "acceleration_support_bottom": {
-            "enabled": "True"
-        },
-        "mold_roof_height": {
-            "enabled": "True"
-        },
-        "expand_skins_expand_distance": {
-            "enabled": "True"
-        },
-        "magic_mesh_surface_mode": {
-            "enabled": "True"
-        },
-        "z_seam_type": {
-            "enabled": "True"
-        },
-        "support_infill_extruder_nr": {
-            "enabled": "True"
-        },
-        "nozzle_disallowed_areas": {
-            "enabled": "True"
-        },
-        "z_seam_corner": {
-            "enabled": "True"
-        },
-        "prime_blob_enable": {
-            "enabled": "True"
-        },
-        "raft_interface_line_spacing": {
-            "enabled": "True"
-        },
-        "travel_compensate_overlapping_walls_x_enabled": {
-            "enabled": "True"
-        },
-        "raft_fan_speed": {
-            "enabled": "True"
-        },
-        "support_line_width": {
-            "enabled": "True"
-        },
-        "raft_acceleration": {
-            "enabled": "True"
-        },
-        "skirt_brim_minimal_length": {
-            "enabled": "True"
-        },
-        "skin_preshrink": {
-            "enabled": "True"
-        },
-        "machine_filament_park_distance": {
-            "enabled": "True"
-        },
-        "wireframe_bottom_delay": {
-            "enabled": "True"
-        },
-        "mold_angle": {
-            "enabled": "True"
-        },
-        "cool_fan_speed_0": {
-            "enabled": "True"
-        },
-        "machine_shape": {
-            "enabled": "True"
-        },
-        "raft_interface_thickness": {
-            "enabled": "True"
-        },
-        "wireframe_printspeed_bottom": {
-            "enabled": "True"
-        },
-        "wireframe_top_delay": {
-            "enabled": "True"
-        },
-        "machine_nozzle_tip_outer_diameter": {
-            "enabled": "True"
-        },
-        "conical_overhang_angle": {
-            "enabled": "True"
-        },
-        "max_feedrate_z_override": {
-            "enabled": "True"
-        },
-        "cool_fan_speed_max": {
-            "enabled": "True"
-        },
-        "jerk_support_bottom": {
-            "enabled": "True"
-        },
-        "prime_tower_size": {
-            "enabled": "True"
-        },
-        "support_angle": {
-            "enabled": "True"
-        },
-        "infill_sparse_density": {
-            "enabled": "True"
-        },
-        "raft_base_jerk": {
-            "enabled": "True"
-        },
-        "line_width": {
-            "enabled": "True"
-        },
-        "material_bed_temperature_layer_0": {
-            "enabled": "True"
-        },
-        "material_flow": {
-            "enabled": "True"
-        },
-        "machine_name": {
-            "enabled": "True"
-        },
-        "retraction_min_travel": {
-            "enabled": "True"
-        },
-        "speed_support_bottom": {
-            "enabled": "True"
-        },
-        "machine_max_acceleration_x": {
-            "enabled": "True"
-        },
-        "support_use_towers": {
             "enabled": "True"
         },
         "speed_slowdown_layers": {
             "enabled": "True"
         },
-        "acceleration_topbottom": {
+        "machine_head_with_fans_polygon": {
             "enabled": "True"
         },
-        "magic_spiralize": {
+        "ironing_inset": {
             "enabled": "True"
         },
-        "support_xy_distance_overhang": {
+        "speed_wall_0": {
             "enabled": "True"
         },
-        "alternate_carve_order": {
+        "relative_extrusion": {
             "enabled": "True"
         },
-        "layer_height": {
+        "support_skip_zag_per_mm": {
             "enabled": "True"
         },
-        "min_infill_area": {
-            "enabled": "True"
-        },
-        "speed_roofing": {
-            "enabled": "True"
-        },
-        "raft_base_fan_speed": {
-            "enabled": "True"
-        },
-        "ooze_shield_dist": {
-            "enabled": "True"
-        },
-        "support_infill_sparse_thickness": {
-            "enabled": "True"
-        },
-        "support_tower_diameter": {
-            "enabled": "True"
-        },
-        "wireframe_top_jump": {
-            "enabled": "True"
-        },
-        "prime_tower_enable": {
-            "enabled": "True"
-        },
-        "machine_depth": {
-            "enabled": "True"
-        },
-        "retraction_extra_prime_amount": {
-            "enabled": "True"
-        },
-        "min_skin_width_for_expansion": {
-            "enabled": "True"
-        },
-        "wall_thickness": {
-            "enabled": "True"
-        },
-        "switch_extruder_prime_speed": {
-            "enabled": "True"
-        },
-        "support_bottom_distance": {
-            "enabled": "True"
-        },
-        "machine_nozzle_temp_enabled": {
-            "enabled": "True"
-        },
-        "speed_prime_tower": {
-            "enabled": "True"
-        },
-        "infill_overlap_mm": {
-            "enabled": "True"
-        },
-        "raft_smoothing": {
-            "enabled": "True"
-        },
-        "wireframe_flow_connection": {
-            "enabled": "True"
-        },
-        "speed_infill": {
-            "enabled": "True"
-        },
-        "support_xy_distance": {
-            "enabled": "True"
-        },
-        "support_roof_extruder_nr": {
-            "enabled": "True"
-        },
-        "material_standby_temperature": {
-            "enabled": "True"
-        },
-        "jerk_travel_layer_0": {
-            "enabled": "True"
-        },
-        "wireframe_roof_fall_down": {
-            "enabled": "True"
-        },
-        "brim_width": {
-            "enabled": "True"
-        },
-        "machine_wipe_gcode": {
-            "enabled": "True"
-        },
-        "outer_inset_first": {
-            "enabled": "True"
-        },
-        "machine_nozzle_heat_up_speed": {
-            "enabled": "True"
-        },
-        "support_interface_height": {
-            "enabled": "True"
-        },
-        "jerk_enabled": {
-            "enabled": "True"
-        },
-        "retraction_speed": {
-            "enabled": "True"
-        },
-        "machine_heated_bed": {
-            "enabled": "True"
-        },
-        "coasting_volume": {
-            "enabled": "True"
-        },
-        "acceleration_roofing": {
-            "enabled": "True"
-        },
-        "top_layers": {
-            "enabled": "True"
-        },
-        "center_object": {
-            "enabled": "True"
-        },
-        "machine_use_extruder_offset_to_offset_coords": {
-            "enabled": "True"
-        },
-        "infill_line_width": {
-            "enabled": "True"
-        },
-        "support_pattern": {
-            "enabled": "True"
-        },
-        "magic_fuzzy_skin_point_dist": {
-            "enabled": "True"
-        },
-        "machine_max_jerk_z": {
-            "enabled": "True"
-        },
-        "acceleration_wall": {
-            "enabled": "True"
-        },
-        "z_offset_layer_0": {
-            "enabled": "True"
-        },
-        "skirt_brim_line_width": {
-            "enabled": "True"
-        },
-        "optimize_wall_printing_order": {
-            "enabled": "True"
-        },
-        "material_flow_temp_graph": {
-            "enabled": "True"
-        },
-        "speed_support_roof": {
-            "enabled": "True"
-        },
-        "machine_max_feedrate_x": {
-            "enabled": "True"
-        },
-        "infill_hollow": {
-            "enabled": "True"
-        },
-        "cool_min_layer_time_fan_speed_max": {
-            "enabled": "True"
-        },
-        "infill_overlap": {
-            "enabled": "True"
-        },
-        "adhesion_extruder_nr": {
-            "enabled": "True"
-        },
-        "layer_height_0": {
-            "enabled": "True"
-        },
-        "mold_enabled": {
-            "enabled": "True"
-        },
-        "jerk_infill": {
-            "enabled": "True"
-        },
-        "infill_sparse_thickness": {
-            "enabled": "True"
-        },
-        "machine_center_is_zero": {
-            "enabled": "True"
-        },
-        "extruder_prime_pos_abs": {
-            "enabled": "True"
-        },
-        "mesh_position_z": {
-            "enabled": "True"
-        },
-        "support_interface_density": {
-            "enabled": "True"
-        },
-        "prime_tower_flow": {
-            "enabled": "True"
-        },
-        "acceleration_prime_tower": {
-            "enabled": "True"
-        },
-        "extruder_prime_pos_z": {
-            "enabled": "True"
-        },
-        "machine_max_acceleration_e": {
-            "enabled": "True"
-        },
-        "wall_0_inset": {
-            "enabled": "True"
-        },
-        "wall_0_extruder_nr": {
-            "enabled": "True"
-        },
-        "machine_nozzle_cool_down_speed": {
-            "enabled": "True"
-        },
-        "material_extrusion_cool_down_speed": {
-            "enabled": "True"
-        },
-        "top_skin_expand_distance": {
-            "enabled": "True"
-        },
-        "wall_line_width_x": {
-            "enabled": "True"
-        },
-        "infill_line_distance": {
-            "enabled": "True"
-        },
-        "speed_travel": {
-            "enabled": "True"
-        },
-        "wireframe_nozzle_clearance": {
-            "enabled": "True"
-        },
-        "support_enable": {
-            "enabled": "True"
-        },
-        "retraction_extrusion_window": {
-            "enabled": "True"
-        },
-        "brim_outside_only": {
-            "enabled": "True"
-        },
-        "carve_multiple_volumes": {
-            "enabled": "True"
-        },
-        "machine_nozzle_id": {
-            "enabled": "True"
-        },
-        "machine_acceleration": {
-            "enabled": "True"
-        },
-        "jerk_wall_x": {
-            "enabled": "True"
-        },
-        "infill_wipe_dist": {
-            "enabled": "True"
-        },
-        "retraction_count_max": {
-            "enabled": "True"
-        },
-        "wireframe_straight_before_down": {
-            "enabled": "True"
-        },
-        "retract_at_layer_change": {
-            "enabled": "True"
-        },
-        "wireframe_flow": {
-            "enabled": "True"
-        },
-        "raft_interface_acceleration": {
-            "enabled": "True"
-        },
-        "skin_angles": {
-            "enabled": "True"
-        },
-        "material_final_print_temperature": {
-            "enabled": "True"
-        },
-        "raft_base_line_spacing": {
-            "enabled": "True"
-        },
-        "speed_print_layer_0": {
-            "enabled": "True"
-        },
-        "jerk_support_interface": {
-            "enabled": "True"
-        },
-        "machine_nozzle_size": {
-            "enabled": "True"
-        },
-        "cool_fan_speed": {
-            "enabled": "True"
-        },
-        "spaghetti_infill_enabled": {
-            "enabled": "True"
-        },
-        "support_mesh_drop_down": {
-            "enabled": "True"
-        },
-        "bottom_skin_preshrink": {
-            "enabled": "True"
-        },
-        "draft_shield_dist": {
-            "enabled": "True"
-        },
-        "support_interface_pattern": {
-            "enabled": "True"
-        },
-        "speed_layer_0": {
-            "enabled": "True"
-        },
-        "wireframe_height": {
-            "enabled": "True"
-        },
-        "raft_margin": {
-            "enabled": "True"
-        },
-        "support_skip_some_zags": {
-            "enabled": "True"
-        },
-        "machine_nozzle_expansion_angle": {
-            "enabled": "True"
-        },
-        "jerk_print_layer_0": {
-            "enabled": "True"
-        },
-        "support_bottom_pattern": {
-            "enabled": "True"
-        },
-        "speed_ironing": {
-            "enabled": "True"
-        },
-        "support_conical_angle": {
-            "enabled": "True"
-        },
-        "prime_tower_min_volume": {
-            "enabled": "True"
-        },
-        "ironing_enabled": {
-            "enabled": "True"
-        },
-        "multiple_mesh_overlap": {
-            "enabled": "True"
-        },
-        "z_seam_relative": {
-            "enabled": "True"
-        },
-        "support_interface_extruder_nr": {
+        "raft_airgap": {
             "enabled": "True"
         },
         "support_top_distance": {
             "enabled": "True"
         },
-        "jerk_roofing": {
+        "wall_0_wipe_dist": {
             "enabled": "True"
         },
-        "speed_support_interface": {
+        "speed_print": {
             "enabled": "True"
         },
-        "jerk_print": {
+        "material_print_temp_prepend": {
             "enabled": "True"
         },
-        "wireframe_flow_flat": {
+        "wireframe_height": {
             "enabled": "True"
         },
-        "material_bed_temp_prepend": {
+        "mold_width": {
             "enabled": "True"
         },
-        "extruder_prime_pos_x": {
+        "machine_end_gcode": {
             "enabled": "True"
         },
-        "machine_max_feedrate_z": {
+        "cool_lift_head": {
             "enabled": "True"
         },
-        "jerk_support": {
+        "material_print_temperature_layer_0": {
             "enabled": "True"
         },
-        "anti_overhang_mesh": {
+        "support_roof_line_width": {
             "enabled": "True"
         },
-        "acceleration_wall_0": {
+        "mesh_position_y": {
+            "enabled": "True"
+        },
+        "retraction_count_max": {
+            "enabled": "True"
+        },
+        "cross_infill_apply_pockets_alternatingly": {
+            "enabled": "True"
+        },
+        "acceleration_support_bottom": {
+            "enabled": "True"
+        },
+        "skirt_brim_speed": {
+            "enabled": "True"
+        },
+        "support_join_distance": {
+            "enabled": "True"
+        },
+        "roofing_layer_count": {
+            "enabled": "True"
+        },
+        "line_width": {
+            "enabled": "True"
+        },
+        "alternate_carve_order": {
             "enabled": "True"
         },
         "support_zag_skip_count": {
             "enabled": "True"
         },
+        "spaghetti_infill_enabled": {
+            "enabled": "True"
+        },
+        "fill_outline_gaps": {
+            "enabled": "True"
+        },
+        "jerk_travel": {
+            "enabled": "True"
+        },
+        "cool_fan_speed_min": {
+            "enabled": "True"
+        },
+        "infill_overlap_mm": {
+            "enabled": "True"
+        },
+        "ironing_enabled": {
+            "enabled": "True"
+        },
+        "support_infill_rate": {
+            "enabled": "True"
+        },
+        "wireframe_roof_inset": {
+            "enabled": "True"
+        },
+        "acceleration_roofing": {
+            "enabled": "True"
+        },
+        "jerk_prime_tower": {
+            "enabled": "True"
+        },
+        "acceleration_wall": {
+            "enabled": "True"
+        },
+        "material_guid": {
+            "enabled": "True"
+        },
+        "support_tower_diameter": {
+            "enabled": "True"
+        },
+        "sub_div_rad_add": {
+            "enabled": "True"
+        },
+        "fill_perimeter_gaps": {
+            "enabled": "True"
+        },
+        "top_bottom_thickness": {
+            "enabled": "True"
+        },
+        "support_skip_some_zags": {
+            "enabled": "True"
+        },
+        "cool_fan_speed": {
+            "enabled": "True"
+        },
+        "extruder_prime_pos_x": {
+            "enabled": "True"
+        },
+        "retraction_extra_prime_amount": {
+            "enabled": "True"
+        },
+        "cool_fan_full_at_height": {
+            "enabled": "True"
+        },
+        "print_sequence": {
+            "enabled": "True"
+        },
+        "retraction_hop_enabled": {
+            "enabled": "True"
+        },
+        "skin_line_width": {
+            "enabled": "True"
+        },
         "acceleration_support_infill": {
             "enabled": "True"
         },
-        "magic_fuzzy_skin_enabled": {
+        "support_bottom_density": {
             "enabled": "True"
         },
-        "machine_baudrate": {
+        "support_bottom_height": {
             "enabled": "True"
         },
-        "support_roof_density": {
+        "retraction_retract_speed": {
             "enabled": "True"
         },
-        "ironing_pattern": {
+        "wireframe_roof_outer_delay": {
             "enabled": "True"
         },
-        "machine_width": {
+        "retraction_combing": {
             "enabled": "True"
         },
-        "jerk_support_roof": {
+        "retraction_enable": {
             "enabled": "True"
         },
-        "skin_no_small_gaps_heuristic": {
+        "wall_x_extruder_nr": {
             "enabled": "True"
         },
-        "support_conical_min_width": {
+        "material_bed_temp_prepend": {
+            "enabled": "True"
+        },
+        "acceleration_support_roof": {
+            "enabled": "True"
+        },
+        "wireframe_roof_drag_along": {
+            "enabled": "True"
+        },
+        "machine_port": {
+            "enabled": "True"
+        },
+        "bottom_skin_preshrink": {
+            "enabled": "True"
+        },
+        "dual_pre_wipe": {
+            "enabled": "True"
+        },
+        "raft_acceleration": {
+            "enabled": "True"
+        },
+        "retraction_prime_speed": {
+            "enabled": "True"
+        },
+        "top_skin_preshrink": {
+            "enabled": "True"
+        },
+        "layer_height": {
+            "enabled": "True"
+        },
+        "raft_interface_acceleration": {
+            "enabled": "True"
+        },
+        "speed_support_roof": {
+            "enabled": "True"
+        },
+        "support_pattern": {
+            "enabled": "True"
+        },
+        "spaghetti_infill_extra_volume": {
+            "enabled": "True"
+        },
+        "raft_interface_jerk": {
+            "enabled": "True"
+        },
+        "machine_disallowed_areas": {
+            "enabled": "True"
+        },
+        "multiple_mesh_overlap": {
+            "enabled": "True"
+        },
+        "infill_before_walls": {
+            "enabled": "True"
+        },
+        "coasting_enable": {
+            "enabled": "True"
+        },
+        "machine_nozzle_head_distance": {
+            "enabled": "True"
+        },
+        "retraction_extrusion_window": {
+            "enabled": "True"
+        },
+        "support_interface_enable": {
+            "enabled": "True"
+        },
+        "mesh_position_z": {
+            "enabled": "True"
+        },
+        "roofing_angles": {
+            "enabled": "True"
+        },
+        "jerk_print": {
+            "enabled": "True"
+        },
+        "support_xy_distance": {
+            "enabled": "True"
+        },
+        "speed_support": {
+            "enabled": "True"
+        },
+        "z_seam_corner": {
+            "enabled": "True"
+        },
+        "speed_equalize_flow_enabled": {
+            "enabled": "True"
+        },
+        "raft_jerk": {
+            "enabled": "True"
+        },
+        "mesh_position_x": {
+            "enabled": "True"
+        },
+        "material_final_print_temperature": {
+            "enabled": "True"
+        },
+        "ironing_flow": {
+            "enabled": "True"
+        },
+        "top_layers": {
+            "enabled": "True"
+        },
+        "machine_head_polygon": {
+            "enabled": "True"
+        },
+        "jerk_support_interface": {
+            "enabled": "True"
+        },
+        "machine_max_acceleration_e": {
+            "enabled": "True"
+        },
+        "retraction_hop": {
+            "enabled": "True"
+        },
+        "machine_extruder_count": {
+            "enabled": "True"
+        },
+        "support_bottom_distance": {
             "enabled": "True"
         }
-    },
-    "inherits": "fdmprinter",
-    "id": "lulzbot_debug",
-    "name": "lulzbot_debug",
-    "metadata": {
-        "visible": false
     }
 }
