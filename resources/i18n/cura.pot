@@ -2515,7 +2515,7 @@ msgstr ""
 #: /home/ruben/Projects/Cura/resources/qml/AboutDialog.qml:69
 msgctxt "@info:credit"
 msgid ""
-"Cura is developed by Ultimaker B.V. in cooperation with the community.\n"
+"Cura LulzBot Edition is maintained by Aleph Objects, Inc. for use with LulzBot 3D printers. It is derived from Cura, which is developed by Ultimaker B.V.\n"
 "Cura proudly uses the following open source projects:"
 msgstr ""
 

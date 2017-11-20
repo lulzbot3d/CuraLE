@@ -66,7 +66,7 @@ UM.Dialog
         width: parent.width
 
         //: About dialog application author note
-        text: catalog.i18nc("@info:credit","Cura LulzBot Edition is maintained by Aleph Objects, Inc. for use with LulzBot 3D printer. It is derived from Cura, which is developed by Ultimaker B.V. in cooperation with the community.\nCura proudly uses the following open source projects:")
+        text: catalog.i18nc("@info:credit","Cura LulzBot Edition is maintained by Aleph Objects, Inc. for use with LulzBot 3D printers. It is derived from Cura, which is developed by Ultimaker B.V. in cooperation with the community.\nCura proudly uses the following open source projects:")
         font: UM.Theme.getFont("system")
         wrapMode: Text.WordWrap
         anchors.top: description.bottom
