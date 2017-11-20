@@ -67,7 +67,7 @@ class CuraSplashScreen(QSplashScreen):
         #painter.drawText(0, 0, 330 * self._scale, 230 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, version[0])
         painter.drawText(380, 200, 330 * self._scale, 230 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, version[0])
         if len(version) > 1:
-            font.setPointSize(12)
+            font.setPixelSize(16)
             painter.setFont(font)
             painter.drawText(380, 220, 330 * self._scale, 265 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, self._current_message)
             #painter.drawText(0, 0, 330 * self._scale, 265 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, version[1])

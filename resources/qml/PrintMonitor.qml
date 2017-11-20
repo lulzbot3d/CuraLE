@@ -1808,7 +1808,6 @@ ScrollView
 	                    {
 	                        text: "Heat bed"
 	                        width: parent.width / 2
-
 	                        onClicked:
 	                        {
 	                            connectedPrinter.setTargetBedTemperature(parseInt(temperatureTextField.text))
@@ -1891,3 +1890,4 @@ ScrollView
         }
 	}
 }
+

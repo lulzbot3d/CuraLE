@@ -70,6 +70,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
         self._can_pause = True
         self._can_abort = True
         self._can_pre_heat_bed = True
+        self._can_control_manually = True
 
     def requestWrite(self, nodes, file_name = None, filter_by_machine = False, file_handler = None):
         raise NotImplementedError("requestWrite needs to be implemented")
@@ -139,6 +140,11 @@ class PrinterOutputDevice(QObject, OutputDevice):
     @pyqtProperty(bool, constant=True)
     def canAbort(self):
         return self._can_abort
+
+    # Does the printer support manual control at all
+    @pyqtProperty(bool, constant=True)
+    def canControlManually(self):
+        return self._can_control_manually
 
     @pyqtProperty(QObject, constant=True)
     def monitorItem(self):

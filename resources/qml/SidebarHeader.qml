@@ -37,20 +37,6 @@ Column
 
     Item
     {
-        anchors
-        {
-            left: parent.left
-            leftMargin: UM.Theme.getSize("sidebar_margin").width
-            right: parent.right
-            rightMargin: UM.Theme.getSize("sidebar_margin").width
-        }
-        visible: extruderSelectionRow.visible
-        height: UM.Theme.getSize("default_lining").hieght
-        width: height
-    }
-
-    Item
-    {
         id: extruderSelectionRow
         width: parent.width
         height: Math.floor(UM.Theme.getSize("sidebar_tabs").height * 2 / 3)
@@ -298,45 +284,29 @@ Column
             color: UM.Theme.getColor("text");
         }
 
-        ToolButton {
+        ToolButton
+        {
             id: materialSelection
+
             text: Cura.MachineManager.activeMaterialName
             tooltip: Cura.MachineManager.activeMaterialName
             visible: Cura.MachineManager.hasMaterials
-            property var valueError:
-            {
-                var data = Cura.ContainerManager.getContainerMetaDataEntry(Cura.MachineManager.activeMaterialId, "compatible")
-                if(data == "False")
-                {
-                    return true
-                }
-                else
-                {
-                    return false
-                }
-                return "%1:".arg(label)
-            }
+            enabled: !extrudersList.visible || base.currentExtruderIndex  > -1
+            height: UM.Theme.getSize("setting_control").height
+            width: parent.width * 0.7 + UM.Theme.getSize("sidebar_margin").width
+            anchors.right: parent.right
             style: UM.Theme.styles.sidebar_header_button
-            anchors.verticalCenter: parent.verticalCenter
-            width: parent.width * 0.55 + UM.Theme.getSize("sidebar_margin").width
-            menu: MaterialMenu { extruderIndex: base.currentExtruderIndex }
-        }
-    }
+            activeFocusOnPress: true;
+            menu: MaterialMenu {
+                extruderIndex: base.currentExtruderIndex
+            }
 
-    Row
-    {
-        id: adhesionRow
+            property var valueError: !isMaterialSupported()
+            property var valueWarning: ! Cura.MachineManager.isActiveQualitySupported
 
-        height: UM.Theme.getSize("sidebar_setup").height*4
-        visible: (Cura.MachineManager.hasVariants || Cura.MachineManager.hasMaterials) && !sidebar.monitoringPrint && !sidebar.hideSettings
-
-
-        anchors
-        {
-            left: parent.left
-            leftMargin: UM.Theme.getSize("sidebar_margin").width
-            right: parent.right
-            rightMargin: UM.Theme.getSize("sidebar_margin").width
+            function isMaterialSupported () {
+                return Cura.ContainerManager.getContainerMetaDataEntry(Cura.MachineManager.activeMaterialId, "compatible") == "True"
+            }
         }
 
         Label
@@ -369,10 +339,10 @@ Column
         }
 
     }
-
-    Row
+    //Variant row
+    Item
     {
-        id: printCoreRow
+        id: variantRow
         height: UM.Theme.getSize("sidebar_setup").height
         visible: Cura.MachineManager.hasVariants && !sidebar.monitoringPrint && !sidebar.hideSettings
 
@@ -386,7 +356,7 @@ Column
 
         Label
         {
-            id: printCoreLabel
+            id: variantLabel
             text: Cura.MachineManager.activeDefinitionVariantsName;
             width: parent.width * 0.45 - UM.Theme.getSize("sidebar_margin").width
             font: UM.Theme.getFont("default");
@@ -394,7 +364,7 @@ Column
         }
 
         ToolButton {
-            id: printCoreSelection
+            id: variantSelection
             text: Cura.MachineManager.activeVariantName
             tooltip: Cura.MachineManager.activeVariantName;
             visible: Cura.MachineManager.hasVariants
