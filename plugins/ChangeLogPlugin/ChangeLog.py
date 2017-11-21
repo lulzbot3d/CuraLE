@@ -21,6 +21,7 @@ class ChangeLog(Extension, QObject,):
     def __init__(self, parent = None):
         QObject.__init__(self, parent)
         Extension.__init__(self)
+        return
         self._changelog_window = None
         self._changelog_context = None
         version_string = Application.getInstance().getVersion()
