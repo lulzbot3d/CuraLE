@@ -340,7 +340,7 @@ Column
         id: adhesionRow
 
         height: UM.Theme.getSize("sidebar_setup").height*4
-        visible: (Cura.MachineManager.hasVariants || Cura.MachineManager.hasMaterials) && !sidebar.monitoringPrint && !sidebar.hideSettings
+        visible: (Cura.MachineManager.hasVariants || Cura.MachineManager.hasMaterials) && !sidebar.monitoringPrint && !sidebar.hideSettings && Cura.ContainerManager.getContainerMetaDataEntry(Cura.MachineManager.activeMaterialId ,"adhesion_info") != ""
 
 
         anchors
@@ -363,21 +363,18 @@ Column
             color: UM.Theme.getColor("text");
         }
 
-        ReadOnlyTextArea
+        TextArea
         {
-            //text: properties.adhesion_info;
-            // TODO: need fill and data to/from somewhere???
-            text: ""
+            text: Cura.ContainerManager.getContainerMetaDataEntry(Cura.MachineManager.activeMaterialId ,"adhesion_info")
             wrapMode: Text.WordWrap;
-            readOnly: false;
-            visible: true;
+            readOnly: true;
+            selectByKeyboard: false
+            selectByMouse: false
+            menu: null
 
             width: parent.width * 0.55 + UM.Theme.getSize("default_margin").width
             height: parent.height;
-            txtFont: UM.Theme.getFont("default");
-
-            // TODO: need fill and data to/from somewhere???
-            //onEditingFinished: base.setMetaDataEntry("adhesion_info", properties.adhesion_info, text)
+            font: UM.Theme.getFont("default");
         }
 
     }
