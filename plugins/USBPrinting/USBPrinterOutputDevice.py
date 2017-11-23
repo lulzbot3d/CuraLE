@@ -916,6 +916,7 @@ class PrintThread:
 
         # Set when print is started in order to check running time.
         self._print_start_time = None
+        self._backend_print_time = None
 
         # Lock object for syncronizing accesses to self._gcode and other
         # variables which are shared between the UI thread and the
@@ -992,6 +993,8 @@ class PrintThread:
 
     def _print_func(self):
         Logger.log("i", "Printer connection listen thread started for %s" % self._parent._serial_port)
+
+        self._backend_print_time = Application.getInstance().getPrintInformation().currentPrintTime.totalSeconds
 
         # Wrap a MarlinSerialProtocol object around the serial port
         # for serial error correction.
@@ -1137,7 +1140,8 @@ class PrintThread:
             elapsed = time.time() - self._print_start_time
             progress = self._gcode_position / gcodeLen
             if progress > 0:
-                self._parent.setTimeTotal(elapsed / progress)
+                total = elapsed + self._backend_print_time * (1 - progress)
+                self._parent.setTimeTotal(total)
                 self._parent.setTimeElapsed(elapsed)
 
         # Don't send the M0 or M1 to the machine, as M0 and M1 are handled as
