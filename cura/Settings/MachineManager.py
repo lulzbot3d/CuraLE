@@ -150,6 +150,14 @@ class MachineManager(QObject):
         self._current_category = category
         self.currentCategoryChanged.emit()
 
+    @pyqtProperty(str, notify=globalContainerChanged)
+    def defaultCategory(self):
+        if self._global_container_stack:
+            default = self._global_container_stack.getMetaDataEntry("default_category", None)
+            if default is not None:
+                return default
+        return "All"
+
     @pyqtProperty("QVariantList", notify=globalContainerChanged)
     def categories(self):
         categories_list = ["All"]

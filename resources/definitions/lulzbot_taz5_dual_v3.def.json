@@ -14,7 +14,8 @@
         },
         "supported_actions": ["MachineSettingsAction"],
         "firmware_toolhead_name": "DualExtruder v3",
-        "preferred_material": "*PolyLite_PLA*"
+        "preferred_material": "*PolyLite_PLA*",
+        "default_category": "Supported"
     },
     "overrides":
     {
