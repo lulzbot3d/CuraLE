@@ -213,6 +213,38 @@
         "firmware_machine_type":
         {
             "resolve": "'LulzBot Mini LCD' if machine_has_lcd else 'LulzBot Mini'"
+        },
+        "machine_max_feedrate_x":
+        {
+            "default_value": 800
+        },
+        "machine_max_feedrate_y":
+        {
+            "default_value": 800
+        },
+        "machine_max_feedrate_z":
+        {
+            "default_value": 8
+        },
+        "machine_max_feedrate_e":
+        {
+            "default_value": 40
+        },
+        "machine_max_acceleration_x":
+        {
+            "default_value": 9000
+        },
+        "machine_max_acceleration_y":
+        {
+            "default_value": 9000
+        },
+        "machine_max_acceleration_z":
+        {
+            "default_value": 100
+        },
+        "machine_max_acceleration_e":
+        {
+            "default_value": 10000
         }
     }
 }
