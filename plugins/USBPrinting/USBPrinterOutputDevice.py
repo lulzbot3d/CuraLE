@@ -725,38 +725,32 @@ class ConnectThread:
         self._parent._serial_port = None
 
     def _onConnectionSucceeded(self):
+        def showWarning(self, shortMsg, longMsg):
+            Logger.log("d", shortMsg)
+            self._parent._error_message = Message(catalog.i18nc("@info:status", longMsg))
+            self._parent._error_message.show()
         check_firmware_status = self._checkFirmware()
         if check_firmware_status == self.CheckFirmwareStatus.FIRMWARE_OUTDATED:
-            # Firmware outdated should not be a critical error, just show
-            # a dialog box encouraging user to update FW.
-            Logger.log("d", "Installed firmware is outdated")
-            self._parent._error_message = Message(catalog.i18nc("@info:status", "New printer firmware is available. Use \"Settings -> Printer -> Manage Printer... -> Upgrade Firmware\" to upgrade."))
-            self._parent._error_message.show()
-        elif check_firmware_status != self.CheckFirmwareStatus.OK:
-            # These errors are all critical.
-            self._parent.close()  # Unable to connect, wrap up.
-            self._parent.setConnectionState(ConnectionState.closed)
-            if check_firmware_status == self.CheckFirmwareStatus.TIMEOUT:
-                Logger.log("d", "Connection timeout while reading firmware")
-                self._parent.setConnectionText(catalog.i18nc("@info:status", "Connection Timeout"))
-            elif check_firmware_status == self.CheckFirmwareStatus.WRONG_MACHINE:
-                Logger.log("d", "Tried to connect to wrong machine")
-                self._parent.setConnectionText(catalog.i18nc("@info:status", "Wrong Machine"))
-            elif check_firmware_status == self.CheckFirmwareStatus.WRONG_TOOLHEAD:
-                Logger.log("d", "Tried to connect to machine with wrong toolhead")
-                self._parent.setConnectionText(catalog.i18nc("@info:status", "Wrong Toolhead"))
-            else:
-                Logger.log("d", "Unexpected error while reading firmware")
-                self._parent.setConnectionText(catalog.i18nc("@info:status", "Wrong Firmware"))
+            showWarning(self, "Installed firmware is outdated", "New printer firmware is available. Use \"Settings -> Printer -> Manage Printer... -> Upgrade Firmware\" to upgrade.")
+        elif check_firmware_status == self.CheckFirmwareStatus.WRONG_MACHINE:
+            showWarning(self, "Wrong machine detected.", "Wrong printer detected, starting a print with the incorrect printer selected may damage your printer.")
+        elif check_firmware_status == self.CheckFirmwareStatus.WRONG_TOOLHEAD:
+            Logger.log("d", "Tried to connect to machine with wrong toolhead")
+            showWarning(self, "Wrong toolhead detected.", "Wrong toolhead detected. Please change this if it is not what you want.")
+            #self._parent.close()  # Unable to connect, wrap up.
+            #self._parent.setConnectionState(ConnectionState.closed)
             Application.getInstance().getMachineManager().toolheadChanged.emit()
-            return
-        self._parent.setConnectionState(ConnectionState.connected)
+            #return
+        elif check_firmware_status == self.CheckFirmwareStatus.TIMEOUT:
+            showWarning(self, "Connection timeout.", "Failed to determine installed firmware version.")
         self._parent.setConnectionText(catalog.i18nc("@info:status", "Connected via USB"))
+        self._parent.setConnectionState(ConnectionState.connected)
         self._parent._print_thread.start()  # Start listening
         Logger.log("i", "Established printer connection on port %s" % self._parent._serial_port)
-        if self._write_requested:
-            self._parent.startPrint()
-        self._write_requested = False
+        if check_firmware_status == self.CheckFirmwareStatus.OK:
+            if self._write_requested:
+                self._parent.startPrint()
+            self._write_requested = False
 
 #################################################################################
 #                            UpdateFirmwareThread                               #
