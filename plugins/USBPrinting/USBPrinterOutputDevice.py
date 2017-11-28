@@ -1002,6 +1002,7 @@ class PrintThread:
 
             self._mutex.acquire()
             if self._flushBuffers:
+                serial_proto.sendCmdEmergency("M108")
                 serial_proto.restart()
                 self._flushBuffers = False
 
