@@ -206,6 +206,15 @@ class MarlinSerialProtocol:
     if cmd:
       self.asap.append(cmd)
 
+  def sendCmdEmergency(self, line):
+      """Sends an command (can contain comments or blanks) without regards for Marlin buffer.
+        This command assumes there are reserved locations in the Marlin buffer for such commands."""
+      if isinstance(line, str):
+        line = line.encode()
+      cmd = self._stripCommentsAndWhitespace(line)
+      if cmd:
+        self._sendImmediate(cmd)
+
   def _gotOkay(self, line):
     if self.pendingOk > 0:
       self.pendingOk -= 1
