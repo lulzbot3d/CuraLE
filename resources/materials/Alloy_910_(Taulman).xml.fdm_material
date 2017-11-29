@@ -60,5 +60,8 @@
     <machine>
       <machine_identifier product="lulzbot_mini"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5"/>
+    </machine>
   </settings>
 </fdmmaterial>
