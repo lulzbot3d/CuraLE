@@ -112,194 +112,330 @@ ScrollView
 	                    width: index == machineExtruderCount.properties.value - 1 && index % 2 == 0 ? extrudersGrid.width : extrudersGrid.width / 2 - UM.Theme.getSize("sidebar_lining_thin").width / 2
 	                    height: UM.Theme.getSize("sidebar_extruder_box").height
 
-	                    Label //Extruder name.
-	                    {
-	                        text: ExtruderManager.getExtruderName(index) != "" ? ExtruderManager.getExtruderName(index) : catalog.i18nc("@label", "Hotend")
-	                        color: UM.Theme.getColor("text")
-	                        font: UM.Theme.getFont("default")
-	                        anchors.left: parent.left
-	                        anchors.top: parent.top
-	                        anchors.margins: UM.Theme.getSize("default_margin").width
-	                    }
-
-                        Label //Extruder target temperature.
+                        GridLayout
                         {
-                            id: extruderTargetTemperature
-                            text:
-                            {
-                                if( index == 0)
-                                    (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
-                                else
-                                    (connectedPrinter != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
-                            }
-                            font: UM.Theme.getFont("small")
-                            color: UM.Theme.getColor("text_inactive")
-                            anchors.right: parent.right
-                            anchors.top: parent.top
-                            anchors.margins: UM.Theme.getSize("default_margin").width
+                            id: gridLayout
+                            columns: 5
+                            rows: 2
+                            rowSpacing: UM.Theme.getSize("button_spacing").width
+                            columnSpacing: UM.Theme.getSize("button_spacing").width
+                            anchors.fill: parent
+                            anchors.centerIn: parent
+                            anchors.leftMargin: UM.Theme.getSize("button_spacing").width
+                            anchors.rightMargin: UM.Theme.getSize("button_spacing").width
 
-                            MouseArea //For tooltip.
+
+                            Label //Extruder name.
                             {
-                                id: extruderTargetTemperatureTooltipArea
-                                hoverEnabled: true
-                                anchors.fill: parent
-                                onHoveredChanged:
+                                id: extruderName
+                                Layout.row: 1
+                                Layout.column: 1
+
+                                text: ExtruderManager.getExtruderName(index) != "" ? ExtruderManager.getExtruderName(index) : catalog.i18nc("@label", "Hotend")
+                                color: UM.Theme.getColor("text")
+                                font: UM.Theme.getFont("default")
+                                anchors.margins: UM.Theme.getSize("default_margin").width
+                            }
+
+
+                            Label //Temperature indication.
+                            {
+                                id: extruderTemperature
+                                Layout.row: 1
+                                Layout.column: 2
+
+                                text:
                                 {
-                                    if (containsMouse)
-                                    {
-                                        base.showTooltip(
-                                            base,
-                                            {x: 0, y: parent.mapToItem(base, 0, -parent.height / 4).y},
-                                            catalog.i18nc("@tooltip", "The target hot end temperature of this extruder.")
-                                        );
-                                    }
+                                    if( index == 0)
+                                        (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.hotendTemperatures[index] != null && connectedPrinter.hotendTemperatures[index] != 0) ? Math.round(connectedPrinter.hotendTemperatures[index]) + "°C" : ""
                                     else
+                                        (connectedPrinter != null && connectedPrinter.hotendTemperatures[index] != null && connectedPrinter.hotendTemperatures[index] != 0) ? Math.round(connectedPrinter.hotendTemperatures[index]) + "°C" : ""
+                                }
+                                color: UM.Theme.getColor("text")
+                                font: UM.Theme.getFont("large")
+                                anchors.left: extruderName.right
+                                anchors.margins: UM.Theme.getSize("default_margin").width
+
+                                MouseArea //For tooltip.
+                                {
+                                    id: extruderTemperatureTooltipArea
+                                    hoverEnabled: true
+                                    anchors.fill: parent
+                                    onHoveredChanged:
                                     {
-                                        base.hideTooltip();
+                                        if (containsMouse)
+                                        {
+                                            base.showTooltip(
+                                                base,
+                                                {x: 0, y: parent.mapToItem(base, 0, -parent.height / 4).y},
+                                                catalog.i18nc("@tooltip", "The current temperature of this extruder.")
+                                            );
+                                        }
+                                        else
+                                        {
+                                            base.hideTooltip();
+                                        }
                                     }
                                 }
                             }
-                        }
 
-	                    Label //Temperature indication.
-	                    {
-	                        id: extruderTemperature
-                            text:
+
+
+                            Label //Extruder target temperature.
                             {
-                                if( index == 0)
-                                    (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.hotendTemperatures[index] != null && connectedPrinter.hotendTemperatures[index] != 0) ? Math.round(connectedPrinter.hotendTemperatures[index]) + "°C" : ""
-                                else
-                                    (connectedPrinter != null && connectedPrinter.hotendTemperatures[index] != null && connectedPrinter.hotendTemperatures[index] != 0) ? Math.round(connectedPrinter.hotendTemperatures[index]) + "°C" : ""
+                                id: extruderTargetTemperature
+                                Layout.row: 1
+                                Layout.column: 3
+
+                                text:
+                                {
+                                    if( index == 0)
+                                        (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
+                                    else
+                                        (connectedPrinter != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
+                                }
+                                font: UM.Theme.getFont("small")
+                                color: UM.Theme.getColor("text_inactive")
+                                anchors.left: extruderTemperature.right
+                                anchors.margins: UM.Theme.getSize("default_margin").width
+
+                                MouseArea //For tooltip.
+                                {
+                                    id: extruderTargetTemperatureTooltipArea
+                                    hoverEnabled: true
+                                    anchors.fill: parent
+                                    onHoveredChanged:
+                                    {
+                                        if (containsMouse)
+                                        {
+                                            base.showTooltip(
+                                                base,
+                                                {x: 0, y: parent.mapToItem(base, 0, -parent.height / 4).y},
+                                                catalog.i18nc("@tooltip", "The target hot end temperature of this extruder.")
+                                            );
+                                        }
+                                        else
+                                        {
+                                            base.hideTooltip();
+                                        }
+                                    }
+                                }
                             }
-                            color: UM.Theme.getColor("text")
-	                        font: UM.Theme.getFont("large")
-                            //anchors.right: parent.right
-                            anchors.right: extruderTargetTemperature.left
-	                        anchors.top: parent.top
-	                        anchors.margins: UM.Theme.getSize("default_margin").width
 
-	                        MouseArea //For tooltip.
-	                        {
-	                            id: extruderTemperatureTooltipArea
-	                            hoverEnabled: true
-	                            anchors.fill: parent
-	                            onHoveredChanged:
-	                            {
-	                                if (containsMouse)
-	                                {
-	                                    base.showTooltip(
-	                                        base,
-	                                        {x: 0, y: parent.mapToItem(base, 0, -parent.height / 4).y},
-	                                        catalog.i18nc("@tooltip", "The current temperature of this extruder.")
-	                                    );
-	                                }
-	                                else
-	                                {
-	                                    base.hideTooltip();
-	                                }
-	                            }
-	                        }
-	                    }
+                            Rectangle //Material colour indication.
+                            {
+                                id: materialColor
+                                Layout.row: 1
+                                Layout.column: 3
 
-	                    Rectangle //Material colour indication.
-	                    {
-	                        id: materialColor
-	                        width: materialName.height * 0.75
-	                        height: materialName.height * 0.75
-	                        color: (connectedPrinter != null && connectedPrinter.materialColors[index] != null && connectedPrinter.materialIds[index] != "") ? connectedPrinter.materialColors[index] : "#00000000"
-	                        border.width: UM.Theme.getSize("default_lining").width
-	                        border.color: UM.Theme.getColor("lining")
-	                        visible: connectedPrinter != null && connectedPrinter.materialColors[index] != null && connectedPrinter.materialIds[index] != ""
-	                        anchors.left: parent.left
-	                        anchors.leftMargin: UM.Theme.getSize("default_margin").width
-	                        anchors.verticalCenter: materialName.verticalCenter
+                                width: materialName.height * 0.75
+                                height: materialName.height * 0.75
+                                color: (connectedPrinter != null && connectedPrinter.materialColors[index] != null && connectedPrinter.materialIds[index] != "") ? connectedPrinter.materialColors[index] : "#00000000"
+                                border.width: UM.Theme.getSize("default_lining").width
+                                border.color: UM.Theme.getColor("lining")
+                                visible: connectedPrinter != null && connectedPrinter.materialColors[index] != null && connectedPrinter.materialIds[index] != ""
+                                //anchors.left: parent.left
+                                //anchors.leftMargin: UM.Theme.getSize("default_margin").width
+                                //anchors.verticalCenter: materialName.verticalCenter
+                                anchors.left: extruderTargetTemperature.right
+                                anchors.margins: UM.Theme.getSize("default_margin").width
 
-	                        MouseArea //For tooltip.
-	                        {
-	                            id: materialColorTooltipArea
-	                            hoverEnabled: true
-	                            anchors.fill: parent
-	                            onHoveredChanged:
-	                            {
-	                                if (containsMouse)
-	                                {
-	                                    base.showTooltip(
-	                                        base,
-	                                        {x: 0, y: parent.mapToItem(base, 0, -parent.height / 2).y},
-	                                        catalog.i18nc("@tooltip", "The colour of the material in this extruder.")
-	                                    );
-	                                }
-	                                else
-	                                {
-	                                    base.hideTooltip();
-	                                }
-	                            }
-	                        }
-	                    }
-	                    Label //Material name.
-	                    {
-	                        id: materialName
-	                        text: (connectedPrinter != null && connectedPrinter.materialNames[index] != null && connectedPrinter.materialIds[index] != "") ? connectedPrinter.materialNames[index] : ""
-	                        font: UM.Theme.getFont("default")
-	                        color: UM.Theme.getColor("text")
-	                        anchors.left: materialColor.right
-	                        anchors.bottom: parent.bottom
-	                        anchors.margins: UM.Theme.getSize("default_margin").width
+                                MouseArea //For tooltip.
+                                {
+                                    id: materialColorTooltipArea
+                                    hoverEnabled: true
+                                    anchors.fill: parent
+                                    onHoveredChanged:
+                                    {
+                                        if (containsMouse)
+                                        {
+                                            base.showTooltip(
+                                                base,
+                                                {x: 0, y: parent.mapToItem(base, 0, -parent.height / 2).y},
+                                                catalog.i18nc("@tooltip", "The colour of the material in this extruder.")
+                                            );
+                                        }
+                                        else
+                                        {
+                                            base.hideTooltip();
+                                        }
+                                    }
+                                }
+                            }
+                            Label //Material name.
+                            {
+                                id: materialName
+                                Layout.row: 1
+                                Layout.column: 4
 
-	                        MouseArea //For tooltip.
-	                        {
-	                            id: materialNameTooltipArea
-	                            hoverEnabled: true
-	                            anchors.fill: parent
-	                            onHoveredChanged:
-	                            {
-	                                if (containsMouse)
-	                                {
-	                                    base.showTooltip(
-	                                        base,
-	                                        {x: 0, y: parent.mapToItem(base, 0, 0).y},
-	                                        catalog.i18nc("@tooltip", "The material in this extruder.")
-	                                    );
-	                                }
-	                                else
-	                                {
-	                                    base.hideTooltip();
-	                                }
-	                            }
-	                        }
-	                    }
-	                    Label //Variant name.
-	                    {
-	                        id: variantName
-	                        text: (connectedPrinter != null && connectedPrinter.hotendIds[index] != null) ? connectedPrinter.hotendIds[index] : ""
-	                        font: UM.Theme.getFont("default")
-	                        color: UM.Theme.getColor("text")
-	                        anchors.right: parent.right
-	                        anchors.bottom: parent.bottom
-	                        anchors.margins: UM.Theme.getSize("default_margin").width
+                                text: (connectedPrinter != null && connectedPrinter.materialNames[index] != null && connectedPrinter.materialIds[index] != "") ? connectedPrinter.materialNames[index] : ""
+                                font: UM.Theme.getFont("default")
+                                color: UM.Theme.getColor("text")
+                                anchors.left: materialColor.right
+                                anchors.margins: UM.Theme.getSize("default_margin").width
 
-	                        MouseArea //For tooltip.
-	                        {
-	                            id: variantNameTooltipArea
-	                            hoverEnabled: true
-	                            anchors.fill: parent
-	                            onHoveredChanged:
-	                            {
-	                                if (containsMouse)
-	                                {
-	                                    base.showTooltip(
-	                                        base,
-	                                        {x: 0, y: parent.mapToItem(base, 0, -parent.height / 4).y},
-	                                        catalog.i18nc("@tooltip", "The nozzle inserted in this extruder.")
-	                                    );
-	                                }
-	                                else
-	                                {
-	                                    base.hideTooltip();
-	                                }
-	                            }
-	                        }
-	                    }
+                                MouseArea //For tooltip.
+                                {
+                                    id: materialNameTooltipArea
+                                    hoverEnabled: true
+                                    anchors.fill: parent
+                                    onHoveredChanged:
+                                    {
+                                        if (containsMouse)
+                                        {
+                                            base.showTooltip(
+                                                base,
+                                                {x: 0, y: parent.mapToItem(base, 0, 0).y},
+                                                catalog.i18nc("@tooltip", "The material in this extruder.")
+                                            );
+                                        }
+                                        else
+                                        {
+                                            base.hideTooltip();
+                                        }
+                                    }
+                                }
+                            }
+                            Label //Variant name.
+                            {
+                                id: variantName
+                                Layout.row: 1
+                                Layout.column: 5
+
+                                text: (connectedPrinter != null && connectedPrinter.hotendIds[index] != null) ? connectedPrinter.hotendIds[index] : ""
+                                font: UM.Theme.getFont("default")
+                                color: UM.Theme.getColor("text")
+                                anchors.left: materialName.right
+                                anchors.margins: UM.Theme.getSize("default_margin").width
+
+                                MouseArea //For tooltip.
+                                {
+                                    id: variantNameTooltipArea
+                                    hoverEnabled: true
+                                    anchors.fill: parent
+                                    onHoveredChanged:
+                                    {
+                                        if (containsMouse)
+                                        {
+                                            base.showTooltip(
+                                                base,
+                                                {x: 0, y: parent.mapToItem(base, 0, -parent.height / 4).y},
+                                                catalog.i18nc("@tooltip", "The nozzle inserted in this extruder.")
+                                            );
+                                        }
+                                        else
+                                        {
+                                            base.hideTooltip();
+                                        }
+                                    }
+                                }
+                            }
+
+                            // ROW 2
+
+                            TextField
+                            {
+                                id: temperatureTextField_1
+                                Layout.row: 2
+                                Layout.column: 1
+
+                                readOnly: false
+                                text: ""
+
+                                width: parent.width / 2
+                                validator: IntValidator
+                                {
+                                    bottom: 1
+                                    top: 300
+                                }
+                            }
+
+                            Button
+                            {
+                                Layout.row: 2
+                                Layout.column: 2
+
+                                text: "Pre-heat"
+                                width: parent.width / 2
+
+                                onClicked:
+                                {
+                                    if( connectedPrinter != null )
+                                    {
+                                        if( temperatureTextField_1.text == "" )
+                                        {
+                                             connectedPrinter.preheatHotend( index )
+
+                                            if( index == 0)
+                                                temperatureTextField_1.text = (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
+                                            else
+                                                temperatureTextField_1.text = (connectedPrinter != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
+                                        }
+                                        else
+                                        {
+                                            connectedPrinter.setTargetHotendTemperature(index, parseInt(temperatureTextField_1.text))
+
+                                            if( temperatureTextField_1.text.indexOf("°C") == -1 )
+                                                temperatureTextField_1.text += "°C"
+                                        }
+                                    }
+                                }
+
+                                style:   ButtonStyle
+                                {
+                                    background: Rectangle
+                                    {
+                                        radius: 4
+                                        border.width: UM.Theme.getSize("default_lining").width
+                                        border.color:
+                                        {
+                                            if(!control.enabled)
+                                                return UM.Theme.getColor("action_button_disabled_border");
+                                            else if(control.pressed)
+                                                return UM.Theme.getColor("action_button_active_border");
+                                            else if(control.hovered)
+                                                return UM.Theme.getColor("action_button_hovered_border");
+                                            else
+                                                return UM.Theme.getColor("action_button_border");
+                                        }
+                                        color:
+                                        {
+                                            if(!control.enabled)
+                                                //return UM.Theme.getColor("button_disabled");
+                                                return UM.Theme.getColor("button_disabled_lighter");
+                                            else if(control.pressed)
+                                                return UM.Theme.getColor("button_active");
+                                            else if(control.hovered)
+                                                return UM.Theme.getColor("button_hover");
+                                            else
+                                                return UM.Theme.getColor("button");
+                                        }
+                                        //Behavior on color { ColorAnimation { duration: 50; } }
+
+                                        implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
+                                        implicitHeight: actualLabel.contentHeight + (UM.Theme.getSize("default_margin").height/2)
+
+                                        Label
+                                        {
+                                            id: actualLabel
+                                            anchors.centerIn: parent
+                                            color:
+                                            {
+                                                if(!control.enabled)
+                                                    return UM.Theme.getColor("button_disabled_text");
+                                                else
+                                                    return UM.Theme.getColor("button_text");
+                                            }
+                                            font: UM.Theme.getFont("small")
+                                            text: control.text
+                                        }
+                                    }
+                                    label: Item { }
+                                }
+                            }
+
+                        } // GridLayout
+
                     }//delegate
 	            }
 	        }
@@ -572,85 +708,60 @@ ScrollView
 	            anchors.right: parent.right
 	            anchors.bottom: parent.bottom
 	            anchors.margins: UM.Theme.getSize("default_margin").width
-	            style: ButtonStyle {
-	                background: Rectangle
-	                {
-	                    border.width: UM.Theme.getSize("default_lining").width
-	                    implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
-	                    border.color:
-	                    {
-	                        if(!control.enabled)
-	                        {
-	                            return UM.Theme.getColor("action_button_disabled_border");
-	                        }
-	                        else if(control.pressed)
-	                        {
-	                            return UM.Theme.getColor("action_button_active_border");
-	                        }
-	                        else if(control.hovered)
-	                        {
-	                            return UM.Theme.getColor("action_button_hovered_border");
-	                        }
-	                        else
-	                        {
-	                            return UM.Theme.getColor("action_button_border");
-	                        }
-	                    }
-	                    color:
-	                    {
-	                        if(!control.enabled)
-	                        {
-	                            return UM.Theme.getColor("action_button_disabled");
-	                        }
-	                        else if(control.pressed)
-	                        {
-	                            return UM.Theme.getColor("action_button_active");
-	                        }
-	                        else if(control.hovered)
-	                        {
-	                            return UM.Theme.getColor("action_button_hovered");
-	                        }
-	                        else
-	                        {
-	                            return UM.Theme.getColor("action_button");
-	                        }
-	                    }
-	                    Behavior on color
-	                    {
-	                        ColorAnimation
-	                        {
-	                            duration: 50
-	                        }
-	                    }
 
-	                    Label
-	                    {
-	                        id: actualLabel
-	                        anchors.centerIn: parent
-	                        color:
-	                        {
-	                            if(!control.enabled)
-	                            {
-	                                return UM.Theme.getColor("action_button_disabled_text");
-	                            }
-	                            else if(control.pressed)
-	                            {
-	                                return UM.Theme.getColor("action_button_active_text");
-	                            }
-	                            else if(control.hovered)
-	                            {
-	                                return UM.Theme.getColor("action_button_hovered_text");
-	                            }
-	                            else
-	                            {
-	                                return UM.Theme.getColor("action_button_text");
-	                            }
-	                        }
-	                        font: UM.Theme.getFont("action_button")
-	                        text: preheatUpdateTimer.running ? catalog.i18nc("@button Cancel pre-heating", "Cancel") : catalog.i18nc("@button", "Pre-heat")
-	                    }
-	                }
-	            }
+                style:   ButtonStyle
+                {
+                    background: Rectangle
+                    {
+                        radius: 4
+                        border.width: UM.Theme.getSize("default_lining").width
+                        border.color:
+                        {
+                            if(!control.enabled)
+                                return UM.Theme.getColor("action_button_disabled_border");
+                            else if(control.pressed)
+                                return UM.Theme.getColor("action_button_active_border");
+                            else if(control.hovered)
+                                return UM.Theme.getColor("action_button_hovered_border");
+                            else
+                                return UM.Theme.getColor("action_button_border");
+                        }
+                        color:
+                        {
+                            if(!control.enabled)
+                                //return UM.Theme.getColor("button_disabled");
+                                return UM.Theme.getColor("button_disabled_lighter");
+                            else if(control.pressed)
+                                return UM.Theme.getColor("button_active");
+                            else if(control.hovered)
+                                return UM.Theme.getColor("button_hover");
+                            else
+                                return UM.Theme.getColor("button");
+                        }
+                        //Behavior on color { ColorAnimation { duration: 50; } }
+
+                        implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
+                        implicitHeight: actualLabel.contentHeight + (UM.Theme.getSize("default_margin").height/2)
+
+                        Label
+                        {
+                            id: actualLabel
+                            anchors.centerIn: parent
+                            color:
+                            {
+                                if(!control.enabled)
+                                    return UM.Theme.getColor("button_disabled_text");
+                                else
+                                    return UM.Theme.getColor("button_text");
+                            }
+                            font: UM.Theme.getFont("small")
+                            text: preheatUpdateTimer.running ? catalog.i18nc("@button Cancel pre-heating", "Cancel") : catalog.i18nc("@button", "Pre-heat")
+
+                        }
+                    }
+                    label: Item { }
+                }
+
 
 	            onClicked:
 	            {
@@ -691,211 +802,6 @@ ScrollView
 	        width: parent.width
 	        height: UM.Theme.getSize("sidebar_lining_thin").width
 	    }
-
-        ///////////////////////////////////////////
-
-        Rectangle
-        {
-            height: UM.Theme.getSize("default_margin").height
-            width: base.width
-            color: "transparent"
-        }
-
-        Rectangle
-        {
-            color: UM.Theme.getColor("sidebar")
-            height: childrenRect.height
-            anchors.right: parent.right
-            width: base.width - 8 * UM.Theme.getSize("default_margin").width
-
-            anchors.rightMargin: UM.Theme.getSize("default_margin").width*4
-            anchors.leftMargin: UM.Theme.getSize("default_margin").width*4
-
-            Column
-            {
-                width: parent.width
-                height: childrenRect.height
-                spacing: UM.Theme.getSize("button_spacing").width
-
-
-
-                Row
-                {
-                    width: parent.width
-                    height: childrenRect.height
-
-                    Label
-                    {
-                        text: "Select extruder"
-                        color: UM.Theme.getColor("setting_control_text")
-                        font: UM.Theme.getFont("default")
-                        width: parent.width / 2
-                    }
-
-                    ComboBox
-                    {
-                        id: extruderSelector_1
-                        width: parent.width / 2
-
-                        model:
-                        {
-                            var l = []
-
-                            if ( machineExtruderCount.properties.value == 1)
-                                l.push( "Hotend");
-                            else
-                            {
-                                for(var i=0;i<machineExtruderCount.properties.value;i++)
-                                {
-                                    var j = i+1
-                                    var tmp = "Extruder " + j
-                                    l.push(tmp);
-                                }
-                            }
-                            return l
-                        }
-
-                        onCurrentIndexChanged:
-                        {
-                            temperatureTextField_1.text = ""
-                            connectedPrinter.setHotend(currentIndex)
-                        }
-                    }
-                }
-
-                Row
-                {
-                    width: parent.width
-                    height: childrenRect.height
-
-                    Label
-                    {
-                        text: "Select temperature"
-                        color: UM.Theme.getColor("setting_control_text")
-                        font: UM.Theme.getFont("default")
-                        width: parent.width / 2
-                    }
-
-                    TextField
-                    {
-                        id: temperatureTextField_1
-                        readOnly: false
-                        text: ""
-
-                        width: parent.width / 2
-                        validator: IntValidator
-                        {
-                            bottom: 1
-                            top: 300
-                        }
-                    }
-                }
-
-                Row
-                {
-                    width: parent.width
-                    height: childrenRect.height
-                    spacing: UM.Theme.getSize("button_spacing").width
-
-                    Button
-                    {
-                        text: "Pre-heat"
-                        width: parent.width / 2
-
-                        onClicked:
-                        {
-                            if( connectedPrinter != null )
-                            {
-                                if( temperatureTextField_1.text == "" )
-                                {
-                                    var index = extruderSelector_1.currentIndex
-
-                                    connectedPrinter.preheatHotend( index )
-                                    var index = extruderSelector_1.currentIndex
-                                    if( index == 0)
-                                        temperatureTextField_1.text = (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
-                                    else
-                                        temperatureTextField_1.text = (connectedPrinter != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
-                                }
-                                else
-                                {
-                                    connectedPrinter.setTargetHotendTemperature(extruderSelector_1.currentIndex, parseInt(temperatureTextField_1.text))
-                                }
-                            }
-                        }
-
-                        style:   ButtonStyle
-                        {
-                            background: Rectangle
-                            {
-                                radius: 4
-                                border.width: UM.Theme.getSize("default_lining").width
-                                border.color:
-                                {
-                                    if(!control.enabled)
-                                        return UM.Theme.getColor("action_button_disabled_border");
-                                    else if(control.pressed)
-                                        return UM.Theme.getColor("action_button_active_border");
-                                    else if(control.hovered)
-                                        return UM.Theme.getColor("action_button_hovered_border");
-                                    else
-                                        return UM.Theme.getColor("action_button_border");
-                                }
-                                color:
-                                {
-                                    if(!control.enabled)
-                                        //return UM.Theme.getColor("button_disabled");
-                                        return UM.Theme.getColor("button_disabled_lighter");
-                                    else if(control.pressed)
-                                        return UM.Theme.getColor("button_active");
-                                    else if(control.hovered)
-                                        return UM.Theme.getColor("button_hover");
-                                    else
-                                        return UM.Theme.getColor("button");
-                                }
-                                //Behavior on color { ColorAnimation { duration: 50; } }
-
-                                implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
-                                implicitHeight: actualLabel.contentHeight + (UM.Theme.getSize("default_margin").height/2)
-
-                                Label
-                                {
-                                    id: actualLabel
-                                    anchors.centerIn: parent
-                                    color:
-                                    {
-                                        if(!control.enabled)
-                                            return UM.Theme.getColor("button_disabled_text");
-                                        else
-                                            return UM.Theme.getColor("button_text");
-                                    }
-                                    font: UM.Theme.getFont("small")
-                                    text: control.text
-                                }
-                            }
-                            label: Item { }
-                        }
-                    }
-                }
-            }
-        }
-
-        Rectangle
-        {
-            height: UM.Theme.getSize("default_margin").height
-            width: base.width
-            color: "transparent"
-        }
-
-        Rectangle
-        {
-            color: UM.Theme.getColor("sidebar_lining")
-            width: parent.width
-            height: UM.Theme.getSize("sidebar_lining_thin").width
-        }
-
-
-        ///////////////////////////////////////////
 
 	    Rectangle
 	    {
