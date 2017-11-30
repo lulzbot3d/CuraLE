@@ -5,6 +5,7 @@ M82                          ; set extruder to absolute mode
 M107                         ; start with the fan off
 G92 E0                       ; set extruder position to 0
 M140 S{print_bed_temperature}; get bed heating up
+M109 R{material_soften_temperature} ; soften filament before homing Z
 G28                          ; home all
 M907 X675                    ; reduce extruder torque for safety
 M109 R{material_wipe_temperature}                    ; set to cleaning temp and wait

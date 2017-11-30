@@ -68,10 +68,6 @@
         {
             "default_value_from_file": "lulzbot_mini_wipe"
         },
-        "material_soften_temperature":
-        {
-            "enabled": "False"
-        },
         "machine_acceleration":
         {
             "default_value": 2000

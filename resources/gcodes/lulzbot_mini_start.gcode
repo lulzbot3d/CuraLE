@@ -6,6 +6,7 @@ G90                                ; absolute positioning
 M82                                ; set extruder to absolute mode
 G92 E0                             ; set extruder position to 0
 M140 S{material_bed_temperature}   ; start bed heating up
+M109 R{material_soften_temperature} ; soften filament before homing Z
 G28                                ; home all axes
 M109 R{material_wipe_temperature}  ; wait for extruder to reach wiping temp
 G1 Z150 E-30 F75                   ; retract filament
