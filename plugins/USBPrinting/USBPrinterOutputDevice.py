@@ -935,7 +935,7 @@ class PrintThread:
         self._mutex.acquire();
         self._gcode.clear()
         for layer in gcode_list:
-            self._gcode.extend(layer.split("\n"))
+            self._gcode.extend(layer.strip("\n").split("\n"))
         self._gcode_position = 0
         self._print_start_time_100 = None
         self._print_start_time = time.time()
