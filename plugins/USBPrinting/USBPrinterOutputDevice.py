@@ -15,6 +15,7 @@ from UM.Application import Application
 from UM.Logger import Logger
 from cura.PrinterOutputDevice import PrinterOutputDevice, ConnectionState
 from UM.Message import Message
+from UM.Preferences import Preferences
 
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtCore import QUrl, pyqtSlot, pyqtSignal, pyqtProperty
@@ -727,13 +728,21 @@ class ConnectThread:
     def _onConnectionSucceeded(self):
         def showWarning(self, shortMsg, longMsg):
             Logger.log("d", shortMsg)
-            self._parent._error_message = Message(catalog.i18nc("@info:status", longMsg))
+            self._parent._error_message = Message(catalog.i18nc("@info:status", longMsg), dismissable=True, lifetime=None)
             self._parent._error_message.show()
         check_firmware_status = self._checkFirmware()
         if check_firmware_status == self.CheckFirmwareStatus.FIRMWARE_OUTDATED:
             showWarning(self, "Installed firmware is outdated", "New printer firmware is available. Use \"Settings -> Printer -> Manage Printer... -> Upgrade Firmware\" to upgrade.")
         elif check_firmware_status == self.CheckFirmwareStatus.WRONG_MACHINE:
-            showWarning(self, "Wrong machine detected.", "Wrong printer detected, starting a print with the incorrect printer selected may damage your printer.")
+            allow_connecction = Preferences.getInstance().getValue("cura/allow_connection_to_wrong_machine")
+            if not allow_connecction:
+                showWarning(self, "Wrong machine detected.", "Wrong printer detected, starting a print with the incorrect printer selected may damage your printer. You can disable this check in application settings")
+                self._parent.close()  # Unable to connect, wrap up.
+                self._parent.setConnectionState(ConnectionState.closed)
+                return
+            else:
+                showWarning(self, "Wrong machine detected.",
+                            "Wrong printer detected, starting a print with the incorrect printer selected may damage your printer.")
         elif check_firmware_status == self.CheckFirmwareStatus.WRONG_TOOLHEAD:
             Logger.log("d", "Tried to connect to machine with wrong toolhead")
             showWarning(self, "Wrong toolhead detected.", "Wrong toolhead detected. Please change this if it is not what you want.")

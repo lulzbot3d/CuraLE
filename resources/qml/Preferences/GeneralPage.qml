@@ -589,6 +589,36 @@ UM.PreferencesPage
                 height: UM.Theme.getSize("default_margin").height
                 width: UM.Theme.getSize("default_margin").height
             }
+
+            Label
+            {
+                font.bold: true
+                text: catalog.i18nc("@label","Developer settings")
+            }
+
+            UM.TooltipArea {
+                width: childrenRect.width
+                height: childrenRect.height
+                text: catalog.i18nc("@info:tooltip","Should cura allow connection to wrong/custom printer?")
+
+                CheckBox
+                {
+                    id: wrongPrinterConnectionCheckbox
+                    text: catalog.i18nc("@option:check","Allow connection to wrong printers")
+                    checked: boolCheck(UM.Preferences.getValue("cura/allow_connection_to_wrong_machine"))
+                    onCheckedChanged:
+                    {
+                        if(checked)
+                        {
+                            UM.Preferences.setValue("cura/allow_connection_to_wrong_machine", checked)
+                        }
+                        else
+                        {
+                            UM.Preferences.setValue("cura/allow_connection_to_wrong_machine", checked)
+                        }
+                    }
+                }
+            }
         }
     }
 }
