@@ -605,6 +605,21 @@ UM.PreferencesPage
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip","Should cura allow connection to wrong/custom printer?")
 
+                MessageDialog
+                {
+                    id: wrongPrinterDialog
+                    title: catalog.i18nc("@label","Warning")
+                    text: catalog.i18nc("@label","Do you really sure to allow connection to wrong/custom printers? It may harm your machine.")
+                    standardButtons: StandardButton.Yes | StandardButton.No
+                    function resetValue()
+                    {
+                        wrongPrinterConnectionCheckbox.checked = false
+                        UM.Preferences.setValue("cura/allow_connection_to_wrong_machine", false)
+                    }
+                    onRejected: resetValue()
+                    onNo: resetValue()
+                }
+
                 CheckBox
                 {
                     id: wrongPrinterConnectionCheckbox
@@ -612,13 +627,13 @@ UM.PreferencesPage
                     checked: boolCheck(UM.Preferences.getValue("cura/allow_connection_to_wrong_machine"))
                     onCheckedChanged:
                     {
+                        UM.Preferences.setValue("cura/allow_connection_to_wrong_machine", checked)
+                    }
+                    onClicked:
+                    {
                         if(checked)
                         {
-                            UM.Preferences.setValue("cura/allow_connection_to_wrong_machine", checked)
-                        }
-                        else
-                        {
-                            UM.Preferences.setValue("cura/allow_connection_to_wrong_machine", checked)
+                            wrongPrinterDialog.visible = true
                         }
                     }
                 }
