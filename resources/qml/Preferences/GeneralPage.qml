@@ -5,6 +5,7 @@ import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.1
+import QtQuick.Dialogs 1.2
 
 import UM 1.1 as UM
 
@@ -94,6 +95,9 @@ UM.PreferencesPage
 
         UM.Preferences.resetPreference("cura/choice_on_open_project")
         setDefaultOpenProjectOption(UM.Preferences.getValue("cura/choice_on_open_project"))
+
+        UM.Preferences.resetPreference("cura/allow_connection_to_wrong_machine")
+        invertZoomCheckbox.checked = boolCheck(UM.Preferences.getValue("cura/allow_connection_to_wrong_machine"))
     }
 
     ScrollView
