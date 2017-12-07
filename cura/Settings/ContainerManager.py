@@ -742,13 +742,19 @@ class ContainerManager(QObject):
         # Instead of duplicating we load the data from the basefile again.
         # This ensures that the inheritance goes well and all "cut up" subclasses of the xmlMaterial profile
         # are also correctly created.
-        with open(containers[0].getPath(), encoding="utf-8") as f:
-            duplicated_container.deserialize(f.read())
+        # with open(containers[0].getPath(), encoding="utf-8") as f:
+        #     duplicated_container.deserialize(f.read())
 
-        duplicated_container.setMetaDataEntry("GUID", str(uuid.uuid4()))
-        duplicated_container.setMetaDataEntry("brand", catalog.i18nc("@label", "Custom"))
-        duplicated_container.setMetaDataEntry("material", catalog.i18nc("@label", "Custom"))
-        duplicated_container.setName(catalog.i18nc("@label", "Custom Material"))
+        duplicated_container.addMetaDataEntry("GUID", str(uuid.uuid4()))
+        duplicated_container.addMetaDataEntry("brand", catalog.i18nc("@label", "Custom"))
+        duplicated_container.addMetaDataEntry("material", catalog.i18nc("@label", "Custom"))
+        duplicated_container.addMetaDataEntry("version", "1")
+        duplicated_container.addMetaDataEntry("setting_version", 1)
+        duplicated_container.addMetaDataEntry("type", "material")
+        duplicated_container.addMetaDataEntry("color_code", "#ffffff")
+        duplicated_container.addMetaDataEntry("approximate_diameter", approximate_diameter)
+        duplicated_container.setName(str(new_id))
+        duplicated_container.addMetaDataEntry("base_file", new_id)
         if global_stack.getMetaDataEntry("has_machine_materials", False):
             duplicated_container.setDefinition(global_stack.getBottom())
 
