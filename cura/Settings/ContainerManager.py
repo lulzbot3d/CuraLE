@@ -723,20 +723,10 @@ class ContainerManager(QObject):
             return ""
 
         approximate_diameter = round(global_stack.getProperty("material_diameter", "value"))
-        containers = self._container_registry.findInstanceContainers(id = "*pla*", approximate_diameter = approximate_diameter)
-        if not containers:
-            Logger.log("d", "Unable to create a new material by cloning  PLA, because it cannot be found for the material diameter for this machine.")
-            return ""
-
-        base_file = containers[0].getMetaDataEntry("base_file")
-        containers = self._container_registry.findInstanceContainers(id = base_file)
-        if not containers:
-            Logger.log("d", "Unable to create a new material by cloning  PLA, because the base file for PLA for this machine can not be found.")
-            return ""
 
         # Create a new ID & container to hold the data.
         new_id = self._container_registry.uniqueName("custom_material")
-        container_type = type(containers[0])  # Always XMLMaterialProfile, since we specifically clone the base_file
+        container_type = type(global_stack.material)  # Always XMLMaterialProfile, since we specifically clone the base_file
         duplicated_container = container_type(new_id)
 
         # Instead of duplicating we load the data from the basefile again.
