@@ -439,6 +439,7 @@ Item
                 anchors.fill: parent
                 hoverEnabled: true
                 enabled: base.settingsEnabled
+                /*
                 onClicked:
                 {
                     var adhesionType = "none";
@@ -453,6 +454,34 @@ Item
                             adhesionType = "skirt";
                         }
                     }
+                    platformAdhesionType.setPropertyValue("value", adhesionType);
+                }
+                */
+                onClicked:
+                {
+                    var adhesionType = "none";
+
+                    // Remove the "user" setting to see if the rest of the stack prescribes a brim or a raft
+                    platformAdhesionType.removeFromContainer(0);
+                    adhesionType = platformAdhesionType.properties.value;
+
+                    if(parent.checked)
+                    {
+                        if(adhesionType == "none")
+                        {
+                            // If the rest of the stack doesn't prescribe an adhesion-type, default to a brim
+                            adhesionType = "skirt";
+                        }
+                    }
+                    else
+                    {
+                        if(adhesionType == "none")
+                        {
+                            // If the rest of the stack doesn't prescribe an adhesion-type, default to a brim
+                            adhesionType = "brim";
+                        }
+                    }
+
                     platformAdhesionType.setPropertyValue("value", adhesionType);
                 }
                 onEntered:
