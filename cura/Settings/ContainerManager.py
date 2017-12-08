@@ -723,36 +723,63 @@ class ContainerManager(QObject):
             return ""
 
         approximate_diameter = round(global_stack.getProperty("material_diameter", "value"))
-        containers = self._container_registry.findInstanceContainers(id = "*pla*", approximate_diameter = approximate_diameter)
-        if not containers:
-            Logger.log("d", "Unable to create a new material by cloning  PLA, because it cannot be found for the material diameter for this machine.")
-            return ""
-
-        base_file = containers[0].getMetaDataEntry("base_file")
-        containers = self._container_registry.findInstanceContainers(id = base_file)
-        if not containers:
-            Logger.log("d", "Unable to create a new material by cloning  PLA, because the base file for PLA for this machine can not be found.")
-            return ""
 
         # Create a new ID & container to hold the data.
         new_id = self._container_registry.uniqueName("custom_material")
-        container_type = type(containers[0])  # Always XMLMaterialProfile, since we specifically clone the base_file
+        container_type = type(global_stack.material)  # Always XMLMaterialProfile, since we specifically clone the base_file
         duplicated_container = container_type(new_id)
 
         # Instead of duplicating we load the data from the basefile again.
         # This ensures that the inheritance goes well and all "cut up" subclasses of the xmlMaterial profile
         # are also correctly created.
-        with open(containers[0].getPath(), encoding="utf-8") as f:
-            duplicated_container.deserialize(f.read())
+        # with open(containers[0].getPath(), encoding="utf-8") as f:
+        #     duplicated_container.deserialize(f.read())
 
-        duplicated_container.setMetaDataEntry("GUID", str(uuid.uuid4()))
-        duplicated_container.setMetaDataEntry("brand", catalog.i18nc("@label", "Custom"))
-        duplicated_container.setMetaDataEntry("material", catalog.i18nc("@label", "Custom"))
-        duplicated_container.setName(catalog.i18nc("@label", "Custom Material"))
-        if global_stack.getMetaDataEntry("has_machine_materials", False):
-            duplicated_container.setDefinition(global_stack.getBottom())
+        machine_materials = global_stack.getMetaDataEntry("has_machine_materials", False)
 
-        self._container_registry.addContainer(duplicated_container)
+        machine = """<machine>
+      <machine_identifier product="%s" />
+    </machine>""" % global_stack.getBottom().getId()
+
+        base = """<?xml version='1.0' encoding='utf-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Custom</brand>
+      <material>Custom</material>
+      <color />
+      <label>%s</label>
+      <category />
+    </name>
+    <color_code>#ffffff</color_code>
+    <version>1</version>
+    <GUID>%s</GUID>
+  </metadata>
+  <properties />
+  <settings>
+    %s
+  </settings>
+</fdmmaterial>""" % (new_id, str(uuid.uuid4()), machine if machine_materials else "")
+
+        new_material = container_type(new_id)
+        new_material.deserialize(base)
+        new_material.setDirty(True)
+
+        if machine_materials:
+            new_quality = InstanceContainer("%s_default_%s" % (new_id, global_stack.getBottom().getId()))
+            new_quality.setDefinition(global_stack.getBottom())
+            metadata = {
+                "material": new_id+"_"+global_stack.getBottom().getId(),
+                "quality_type": "custom",
+                "setting_version": 1,
+                "type": "quality"
+            }
+            new_quality.setMetaData(metadata)
+            new_quality.setName("Default")
+            self._container_registry.addContainer(new_quality)
+
+        self._container_registry.addContainer(new_material)
+
         return self._getMaterialContainerIdForActiveMachine(new_id)
 
     ##  Find the id of a material container based on the new material

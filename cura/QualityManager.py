@@ -95,7 +95,7 @@ class QualityManager:
     #   \param material_containers (Optional) \type{List[InstanceContainer]} If nothing is specified then
     #                               the current set of selected materials is used.
     #   \return the matching quality container \type{InstanceContainer}
-    def findQualityByQualityType(self, quality_type: str, machine_definition: Optional["DefinitionContainerInterface"] = None, material_containers: List[InstanceContainer] = None, **kwargs) -> InstanceContainer:
+    def findQualityByQualityType(self, quality_type, machine_definition: Optional["DefinitionContainerInterface"] = None, material_containers: List[InstanceContainer] = None, **kwargs) -> InstanceContainer:
         criteria = kwargs
         criteria["type"] = "quality"
         if quality_type:
@@ -106,6 +106,7 @@ class QualityManager:
         if not result and material_containers and len(material_containers) == 1:
             basic_materials = self._getBasicMaterials(material_containers[0])
             result = self._getFilteredContainersForStack(machine_definition, basic_materials, **criteria)
+
 
         return result[0] if result else None
 
@@ -118,8 +119,9 @@ class QualityManager:
         criteria = {"type": "quality" }
         result = self._getFilteredContainersForStack(machine_definition, [material_container], **criteria)
         if not result:
-            basic_materials = self._getBasicMaterials(material_container)
-            result = self._getFilteredContainersForStack(machine_definition, basic_materials, **criteria)
+            # basic_materials = self._getBasicMaterials(material_container)
+            # result = self._getFilteredContainersForStack(machine_definition, basic_materials, **criteria)
+            return []
 
         return result
 

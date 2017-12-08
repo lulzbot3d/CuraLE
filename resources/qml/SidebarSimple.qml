@@ -410,13 +410,68 @@ Item
             id: adhesionHelperLabel
             anchors.left: parent.left
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
-            anchors.verticalCenter: adhesionCheckBox.verticalCenter
+            anchors.verticalCenter: adhesionComboBox.verticalCenter
             width: parent.width * .45 - 3 * UM.Theme.getSize("default_margin").width
             text: catalog.i18nc("@label", "Build Plate Adhesion");
             font: UM.Theme.getFont("default");
             color: UM.Theme.getColor("text");
         }
 
+        ComboBox
+        {
+            id: adhesionComboBox
+
+            anchors.top: supportExtruderCombobox.bottom
+            anchors.topMargin: UM.Theme.getSize("default_margin").height * 2
+            anchors.left: adhesionHelperLabel.right
+            anchors.leftMargin: UM.Theme.getSize("default_margin").width
+
+            style: UM.Theme.styles.combobox;
+            enabled: base.settingsEnabled
+
+            model: ListModel {
+                    id: cbItems
+                    ListElement { text: "Skirt" }
+                    ListElement { text: "Brim" }
+                    ListElement { text: "Raft" }
+                    ListElement { text: "None" }
+                }
+
+            onCurrentIndexChanged:
+            {
+                var adhesionType = cbItems.get(currentIndex).text.toLowerCase();
+                platformAdhesionType.setPropertyValue("value", adhesionType);
+                //console.log( "----------------------- cbItems.get(" ,currentIndex, ").text", cbItems.get(currentIndex).text, adhesionType )
+            }
+
+            Component.onCompleted:
+            {
+                var adhesionType = cbItems.get(currentIndex).text.toLowerCase();
+                platformAdhesionType.setPropertyValue("value", adhesionType);
+                console.log( "----------------------- cbItems.get(" ,currentIndex, ").text", cbItems.get(currentIndex).text, adhesionType )
+            }
+
+            MouseArea
+            {
+                id: adhesionMouseArea
+                anchors.fill: parent
+                hoverEnabled: true
+                enabled: base.settingsEnabled
+                acceptedButtons: Qt.NoButton
+
+                onEntered:
+                {
+                    base.showTooltip(adhesionComboBox, Qt.point(-adhesionComboBox.x, 0),
+                        catalog.i18nc("@label", "Enable printing a brim or raft. This will add a flat area around or under your object which is easy to cut off afterwards."));
+                }
+                onExited:
+                {
+                    base.hideTooltip();
+                }
+            }
+
+}
+/*
         CheckBox
         {
             id: adhesionCheckBox
@@ -431,7 +486,13 @@ Item
             style: UM.Theme.styles.checkbox;
             enabled: base.settingsEnabled
 
-            checked: platformAdhesionType.properties.value != "none"
+            //checked: platformAdhesionType.properties.value != "none"
+            checked:
+            {
+                platformAdhesionType.properties.value == "brim"
+                console.log( "------------ platformAdhesionType.properties.value = ", platformAdhesionType.properties.value)
+                console.log( "------------ checked = ", platformAdhesionType.properties.value == "brim" )
+            }
 
             MouseArea
             {
@@ -439,6 +500,7 @@ Item
                 anchors.fill: parent
                 hoverEnabled: true
                 enabled: base.settingsEnabled
+
                 onClicked:
                 {
                     var adhesionType = "none";
@@ -455,6 +517,8 @@ Item
                     }
                     platformAdhesionType.setPropertyValue("value", adhesionType);
                 }
+
+
                 onEntered:
                 {
                     base.showTooltip(adhesionCheckBox, Qt.point(-adhesionCheckBox.x, 0),
@@ -466,6 +530,7 @@ Item
                 }
             }
         }
+        */
 
         ListModel
         {
