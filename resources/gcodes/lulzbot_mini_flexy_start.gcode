@@ -7,9 +7,10 @@ G92 E0                       ; set extruder position to 0
 M140 S{print_bed_temperature}; get bed heating up
 M109 R{material_soften_temperature} ; soften filament before homing Z
 G28                          ; home all
+G0 X3 Y188 Z156 F200         ; move away from endstops
 M907 X675                    ; reduce extruder torque for safety
 M109 R{material_wipe_temperature}                    ; set to cleaning temp and wait
-G1 Z150 E-30 F45             ; suck up XXmm of filament
+G1 E-30 F45                  ; suck up XXmm of filament
 G1 X45 Y174 F11520           ; move behind scraper
 G1 Z0  F1200                 ; CRITICAL: set Z to height of top of scraper
 G1 X45 Y174 Z-.5 F4000       ; wiping ; plunge into wipe pad
