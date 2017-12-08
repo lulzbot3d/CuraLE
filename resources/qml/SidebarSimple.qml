@@ -410,13 +410,41 @@ Item
             id: adhesionHelperLabel
             anchors.left: parent.left
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
-            anchors.verticalCenter: adhesionCheckBox.verticalCenter
+            anchors.verticalCenter: adhesionComboBox.verticalCenter
             width: parent.width * .45 - 3 * UM.Theme.getSize("default_margin").width
             text: catalog.i18nc("@label", "Build Plate Adhesion");
             font: UM.Theme.getFont("default");
             color: UM.Theme.getColor("text");
         }
 
+        ComboBox
+        {
+            id: adhesionComboBox
+
+            anchors.top: supportExtruderCombobox.bottom
+            anchors.topMargin: UM.Theme.getSize("default_margin").height * 2
+            anchors.left: adhesionHelperLabel.right
+            anchors.leftMargin: UM.Theme.getSize("default_margin").width
+
+            style: UM.Theme.styles.combobox;
+            enabled: base.settingsEnabled
+
+            model: ListModel {
+                    id: cbItems
+                    ListElement { text: "None" }
+                    ListElement { text: "Skirt" }
+                    ListElement { text: "Brim" }
+                    ListElement { text: "Raft" }
+                }
+
+            onCurrentIndexChanged:
+            {
+                var adhesionType = cbItems.get(currentIndex).text.toLowerCase();
+                platformAdhesionType.setPropertyValue("value", adhesionType);
+                //console.log( "----------------------- cbItems.get(" ,currentIndex, ").text", cbItems.get(currentIndex).text, adhesionType )
+            }
+}
+/*
         CheckBox
         {
             id: adhesionCheckBox
@@ -431,7 +459,13 @@ Item
             style: UM.Theme.styles.checkbox;
             enabled: base.settingsEnabled
 
-            checked: platformAdhesionType.properties.value != "none"
+            //checked: platformAdhesionType.properties.value != "none"
+            checked:
+            {
+                platformAdhesionType.properties.value == "brim"
+                console.log( "------------ platformAdhesionType.properties.value = ", platformAdhesionType.properties.value)
+                console.log( "------------ checked = ", platformAdhesionType.properties.value == "brim" )
+            }
 
             MouseArea
             {
@@ -439,7 +473,7 @@ Item
                 anchors.fill: parent
                 hoverEnabled: true
                 enabled: base.settingsEnabled
-                /*
+
                 onClicked:
                 {
                     var adhesionType = "none";
@@ -456,34 +490,8 @@ Item
                     }
                     platformAdhesionType.setPropertyValue("value", adhesionType);
                 }
-                */
-                onClicked:
-                {
-                    var adhesionType = "none";
 
-                    // Remove the "user" setting to see if the rest of the stack prescribes a brim or a raft
-                    platformAdhesionType.removeFromContainer(0);
-                    adhesionType = platformAdhesionType.properties.value;
 
-                    if(parent.checked)
-                    {
-                        if(adhesionType == "none")
-                        {
-                            // If the rest of the stack doesn't prescribe an adhesion-type, default to a brim
-                            adhesionType = "skirt";
-                        }
-                    }
-                    else
-                    {
-                        if(adhesionType == "none")
-                        {
-                            // If the rest of the stack doesn't prescribe an adhesion-type, default to a brim
-                            adhesionType = "brim";
-                        }
-                    }
-
-                    platformAdhesionType.setPropertyValue("value", adhesionType);
-                }
                 onEntered:
                 {
                     base.showTooltip(adhesionCheckBox, Qt.point(-adhesionCheckBox.x, 0),
@@ -495,6 +503,7 @@ Item
                 }
             }
         }
+        */
 
         ListModel
         {
