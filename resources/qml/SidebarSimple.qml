@@ -431,10 +431,10 @@ Item
 
             model: ListModel {
                     id: cbItems
-                    ListElement { text: "None" }
                     ListElement { text: "Skirt" }
                     ListElement { text: "Brim" }
                     ListElement { text: "Raft" }
+                    ListElement { text: "None" }
                 }
 
             onCurrentIndexChanged:
