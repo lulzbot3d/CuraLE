@@ -879,7 +879,7 @@ class MachineManager(QObject):
             quality_manager = QualityManager.getInstance()
             candidate_quality = None
             if quality_type:
-                candidate_quality = quality_manager.findQualityByQualityType(quality_type,
+                candidate_quality = quality_manager.findQualityByQualityType(None,
                                         quality_manager.getWholeMachineDefinition(machine_definition),
                                         [material_container])
             if not candidate_quality or isinstance(candidate_quality, type(self._empty_quality_changes_container)):
