@@ -443,6 +443,33 @@ Item
                 platformAdhesionType.setPropertyValue("value", adhesionType);
                 //console.log( "----------------------- cbItems.get(" ,currentIndex, ").text", cbItems.get(currentIndex).text, adhesionType )
             }
+
+            Component.onCompleted:
+            {
+                var adhesionType = cbItems.get(currentIndex).text.toLowerCase();
+                platformAdhesionType.setPropertyValue("value", adhesionType);
+                console.log( "----------------------- cbItems.get(" ,currentIndex, ").text", cbItems.get(currentIndex).text, adhesionType )
+            }
+
+            MouseArea
+            {
+                id: adhesionMouseArea
+                anchors.fill: parent
+                hoverEnabled: true
+                enabled: base.settingsEnabled
+                acceptedButtons: Qt.NoButton
+
+                onEntered:
+                {
+                    base.showTooltip(adhesionComboBox, Qt.point(-adhesionComboBox.x, 0),
+                        catalog.i18nc("@label", "Enable printing a brim or raft. This will add a flat area around or under your object which is easy to cut off afterwards."));
+                }
+                onExited:
+                {
+                    base.hideTooltip();
+                }
+            }
+
 }
 /*
         CheckBox
