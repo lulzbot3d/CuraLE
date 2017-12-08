@@ -124,7 +124,7 @@ class XmlMaterialProfile(InstanceContainer):
 
         builder = ET.TreeBuilder()
 
-        root = builder.start("fdmmaterial", { "xmlns": "http://www.ultimaker.com/material"})
+        root = builder.start("fdmmaterial", { "xmlns": "http://www.ultimaker.com/material", "version": "1.3"})
 
         ## Begin Metadata Block
         builder.start("metadata")
