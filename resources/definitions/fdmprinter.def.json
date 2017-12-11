@@ -1632,6 +1632,23 @@
                     "enabled": "machine_gcode_flavor != \"UltiGCode\"",
                     "settable_per_mesh": true
                 },
+                "material_flow_layer_0":
+                {
+                    "label": "Flow Initial Layer",
+                    "description": "The flow rate used at the first layer.",
+                    "unit": "%",
+                    "type": "float",
+                    "resolve": "max(extruderValues('material_flow_layer_0'))",
+                    "default_value": 100,
+                    "value": "resolveOrValue('material_flow')",
+                    "minimum_value": "5",
+                    "minimum_value_warning": "50",
+                    "maximum_value_warning": "150",
+                    "enabled": "machine_gcode_flavor != \"UltiGCode\"",
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": false,
+                    "settable_per_meshgroup": false
+                },
                 "retraction_enable":
                 {
                     "label": "Enable Retraction",
