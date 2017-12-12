@@ -1630,7 +1630,26 @@
                     "minimum_value_warning": "50",
                     "maximum_value_warning": "150",
                     "enabled": "machine_gcode_flavor != \"UltiGCode\"",
-                    "settable_per_mesh": true
+                    "settable_per_mesh": true,
+                    "children":
+                    {
+                        "material_flow_layer_0":
+                        {
+                            "label": "Initial Layer Flow Rate",
+                            "description": "Changes the flow rate for the first layer only. Used to compensate for filament die swell.",
+                            "unit": "% of Flow",
+                            "type": "float",
+                            "resolve": "max(extruderValues('material_flow_layer_0'))",
+                            "default_value": 100,
+                            "minimum_value": "5",
+                            "minimum_value_warning": "50",
+                            "maximum_value_warning": "150",
+                            "enabled": "machine_gcode_flavor != \"UltiGCode\"",
+                            "settable_per_mesh": false,
+                            "settable_per_extruder": false,
+                            "settable_per_meshgroup": false
+                        }
+                    }
                 },
                 "retraction_enable":
                 {
