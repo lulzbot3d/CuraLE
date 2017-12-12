@@ -7,9 +7,9 @@ M104 S{material_soften_temperature_0} T0               ; soften filament
 M104 S{material_soften_temperature_1} T1               ; soften filament
 M140 S{material_bed_temperature}; get bed heating up
 G28 X Y                      ; home X and Y
-G1 X-20 F3000                ; clear X endstop
-G1 Y260 F3000                ; move over the Z_MIN switch
-G1 X-22 F3000                ; move left as far as possible
+G1 X-17 F3000                ; clear X endstop
+G1 Y258 F3000                ; move over the Z_MIN switch
+G1 X-19 F3000                ; move left as far as possible
 M117 Heating...              ; LCD status message
 M109 R{material_soften_temperature_0} T0               ; wait for temp
 M109 R{material_soften_temperature_1} T1               ; wait for temp
@@ -26,7 +26,7 @@ G1  E-15 F100                ; suck up XXmm of filament
 M104 S{material_wipe_temperature_0} T0                 ; set to wipe temp
 M104 S{material_wipe_temperature_1} T1                 ; set to wipe temp
 M106                         ; Turn on fans to speed cooling
-G1 X-20 Y100 F3000           ; move above wiper pad
+G1 X-17 Y100 F3000           ; move above wiper pad
 M104
 M117 Cooling...              ; LCD status message
 M109 R{material_wipe_temperature_0} T0                 ; wait for T0 to reach temp
@@ -34,37 +34,37 @@ M109 R{material_wipe_temperature_1} T1                 ; wait for T1 to reach te
 M107                         ; Turn off fan
 T0                           ; switch extruders
 G1 Z1                        ; push nozzle into wiper
-G1 X -21 Y95 F1000                   ; slow wipe
-G1 X -21 Y90 F1000                   ; slow wipe
-G1 X -21 Y85 F1000                   ; slow wipe
-G1 X -20 Y90 F1000                   ; slow wipe
-G1 X -21 Y80 F1000                   ; slow wipe
-G1 X -20 Y95 F1000                   ; slow wipe
-G1 X -21 Y75 F2000                   ; fast wipe
-G1 X -20 Y65 F2000                   ; fast wipe
-G1 X -21 Y70 F2000                   ; fast wipe
-G1 X -20 Y60 F2000                   ; fast wipe
-G1 X -21 Y55 F2000                   ; fast wipe
-G1 X -20 Y50 F2000                   ; fast wipe
-G1 X -21 Y40 F2000                   ; fast wipe
-G1 X -20 Y45 F2000                   ; fast wipe
-G1 X -21 Y35 F2000                   ; fast wipe
-G1 X -20 Y40 F2000                   ; fast wipe
-G1 X -21 Y70 F2000                   ; fast wipe
-G1 X -20 Y30 Z2 F2000                ; fast wipe
-G1 X -21 Y35 F2000                   ; fast wipe
-G1 X -20 Y25 F2000                   ; fast wipe
-G1 X -21 Y30 F2000                   ; fast wipe
-G1 X -20 Y25 Z1.5 F1000              ; slow wipe
-G1 X -21 Y23 F1000                   ; slow wipe
-G1 X -20 Z15                         ; raise extruder
+G1 X -18 Y95 F1000                   ; slow wipe
+G1 X -18 Y90 F1000                   ; slow wipe
+G1 X -18 Y85 F1000                   ; slow wipe
+G1 X -17 Y90 F1000                   ; slow wipe
+G1 X -18 Y80 F1000                   ; slow wipe
+G1 X -17 Y95 F1000                   ; slow wipe
+G1 X -18 Y75 F2000                   ; fast wipe
+G1 X -17 Y65 F2000                   ; fast wipe
+G1 X -18 Y70 F2000                   ; fast wipe
+G1 X -17 Y60 F2000                   ; fast wipe
+G1 X -18 Y55 F2000                   ; fast wipe
+G1 X -17 Y50 F2000                   ; fast wipe
+G1 X -18 Y40 F2000                   ; fast wipe
+G1 X -17 Y45 F2000                   ; fast wipe
+G1 X -18 Y35 F2000                   ; fast wipe
+G1 X -17 Y40 F2000                   ; fast wipe
+G1 X -18 Y70 F2000                   ; fast wipe
+G1 X -17 Y30 Z2 F2000                ; fast wipe
+G1 X -18 Y35 F2000                   ; fast wipe
+G1 X -17 Y25 F2000                   ; fast wipe
+G1 X -18 Y30 F2000                   ; fast wipe
+G1 X -17 Y25 Z1.5 F1000              ; slow wipe
+G1 X -18 Y23 F1000                   ; slow wipe
+G1 X -17 Z15                         ; raise extruder
 M109 R{material_probe_temperature_0}                   ; heat to probe temp
 M204 S100                    ; set accel for probing
 G29                          ; probe sequence (for auto-leveling)
 M204 S500                    ; set accel back to normal
 M104 S{material_print_temperature_0} T0 ; set extruder temp
 M104 S{material_print_temperature_1} T1; set extruder temp
-G1 X98 Y-18 Z0.5 F3000       ; move to open space
+G1 X100 Y-25 Z0.5 F3000      ; move to open space
 M400                         ; clear buffer
 M117 Heating...              ; LCD status message
 M109 R{material_print_temperature_0} T0 ; set extruder temp and wait
@@ -79,7 +79,7 @@ G1  E0 F100                  ; undo retraction
 G92 E-15                     ; set extruder negative amount to purge
 G1  E0 F100                  ; purge XXmm of filament
 G1 Z0.5                      ; clear bed (barely)
-G1 X98 Y0 F5000              ; move above bed to shear off filament
+G1 X100 Y0 F5000             ; move above bed to shear off filament
 T0                           ; switch to first extruder
 M190 S{material_bed_temperature_layer_0}; get bed temping up during first layer
 G1 Z2 E0 F75
