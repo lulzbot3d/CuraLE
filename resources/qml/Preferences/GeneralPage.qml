@@ -98,6 +98,9 @@ UM.PreferencesPage
 
         UM.Preferences.resetPreference("cura/allow_connection_to_wrong_machine")
         invertZoomCheckbox.checked = boolCheck(UM.Preferences.getValue("cura/allow_connection_to_wrong_machine"))
+
+        UM.Preferences.resetPreference("general/zoffsetSaveToFlashEnabled", checked)
+        zOffsetCheckbox.checked = boolCheck(UM.Preferences.getValue("general/zoffsetSaveToFlashEnabled"))
     }
 
     ScrollView
@@ -586,6 +589,34 @@ UM.PreferencesPage
                     }
                 }
             }
+
+            Item
+            {
+                //: Spacer
+                height: UM.Theme.getSize("default_margin").height
+                width: UM.Theme.getSize("default_margin").height
+            }
+
+            Label
+            {
+                font.bold: true
+                text: catalog.i18nc("@label","Enable save Z-offset to flash memory checkbox")
+            }
+
+            UM.TooltipArea {
+                width: childrenRect.width
+                height: childrenRect.height
+                text: catalog.i18nc("@info:tooltip","Enable save Z-offset to flash memory checkbox")
+
+                CheckBox
+                {
+                    id: zOffsetCheckbox
+                    text: catalog.i18nc("@option:check","Enable save Z-offset to flash memory checkbox")
+                    checked: boolCheck(UM.Preferences.getValue("general/zoffsetSaveToFlashEnabled"))
+                    onCheckedChanged: UM.Preferences.setValue("general/zoffsetSaveToFlashEnabled", zOffsetCheckbox.checked)
+                }
+            }
+
 
             Item
             {

@@ -306,6 +306,8 @@ class CuraApplication(QtApplication):
 
         Preferences.getInstance().addPreference("cura/recent_files", "")
 
+        Preferences.getInstance().addPreference("general/zoffsetSaveToFlashEnabled", False)
+
         for key in [
             "dialog_load_path",  # dialog_save_path is in LocalFileOutputDevicePlugin
             "dialog_profile_path",

@@ -1044,7 +1044,7 @@ ScrollView
 		    running: true
 		    repeat: true
 
-		    onTriggered: temperatureGraph.updateValues()
+            onTriggered: temperatureGraph.updateValues()
 		}
 
 		Loader
