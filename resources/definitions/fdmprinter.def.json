@@ -1637,9 +1637,10 @@
                         {
                             "label": "Initial Layer Flow Rate",
                             "description": "Changes the flow rate for the first layer only. Used to compensate for filament die swell.",
-                            "unit": "% of Flow",
+                            "unit": "%",
                             "type": "float",
                             "resolve": "max(extruderValues('material_flow_layer_0'))",
+                            "value": "resolveOrValue('material_flow')*0+100",
                             "default_value": 100,
                             "minimum_value": "5",
                             "minimum_value_warning": "50",
