@@ -38,7 +38,8 @@ G1 X100 Y172 F4000                 ; wiping
 G1 X110 Y174 F4000                 ; wiping
 G1 X115 Y172 Z-0.5 F1000           ; wiping
 G1 Z10                             ; raise extruder
-G28                                ; home
+G28 X0 Y0                          ; re-home to account for build variance of earlier mini builds
+G0 X3 Y188 F200                    ; move away from endstops
 G4 S1                              ; pause
 M400                               ; wait for moves to finish
 G1 E0 F75                          ; prime tiny bit of filment into the nozzle

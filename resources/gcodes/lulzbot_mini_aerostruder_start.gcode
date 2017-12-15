@@ -41,11 +41,13 @@ G1 X110 Y174 F4000 ; wiping
 G1 X115 Y172 Z-0.5 F1000 ; wiping
 G1 Z10 ; raise extruder
 G28 X0 Y0 ; home X and Y
+G0 X3 Y188 F200 ; move away from endstops
 M109 R{material_probe_temperature} ; wait for extruder to reach probe temp
 M204 S300 ; set probing acceleration
 G29 ; start auto-leveling sequence
 M204 S2000 ; restore standard acceleration
-G1 X5 Y15 Z10 F5000 ; move up off last probe point
+G28 X0 Y0 ; re-home to account for build variance of earlier mini builds
+G0 X3 Y188 F200 ; move away from endstops
 G4 S1 ; pause
 M400 ; wait for moves to finish
 M117 Heating... ; progress indicator message on LCD
