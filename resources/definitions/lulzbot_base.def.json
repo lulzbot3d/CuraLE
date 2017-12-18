@@ -1,7 +1,7 @@
 {
     "id": "lulzbot_base",
     "name": "LulzBot",
-    "inherits": "lulzbot_debug",
+    "inherits": "fdmprinter",
     "version": 2,
     "metadata":
     {
