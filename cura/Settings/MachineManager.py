@@ -892,8 +892,8 @@ class MachineManager(QObject):
                 else:
                     Logger.log("w", "No quality profile found that matches the current machine and extruders.")
             else:
-                if not old_quality_changes:
-                    new_quality_id = candidate_quality.getId()
+                #if not old_quality_changes:
+                new_quality_id = candidate_quality.getId()
 
             self.setActiveQuality(new_quality_id)
 
