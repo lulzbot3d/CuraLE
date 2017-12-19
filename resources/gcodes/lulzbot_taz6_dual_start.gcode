@@ -66,7 +66,7 @@ M109 R{material_print_temperature_1} T1; set extruder temp and wait
 T1                           ; switch to second extruder
 G1 E0 F100                   ; prime nozzle from previous print
 G1 F100 E-{retraction_amount} ;retract second nozzle before print
-;G92 E-30                     ; adjust to 1st nozzle e value
+G92 E-30                     ; adjust to 1st nozzle e value
 T0                           ; switch back to back
 M190 R{material_bed_temperature_layer_0}; get bed temping up during first layer
 G1 Z2 E0 F75                 ; extrude filament back into nozzle
