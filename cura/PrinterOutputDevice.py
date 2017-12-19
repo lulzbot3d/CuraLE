@@ -54,6 +54,8 @@ class PrinterOutputDevice(QObject, OutputDevice):
 
         self._camera_active = False
 
+        self._ZOffset = 0.0
+
     def requestWrite(self, nodes, file_name = None, filter_by_machine = False, file_handler = None):
         raise NotImplementedError("requestWrite needs to be implemented")
 
@@ -410,6 +412,21 @@ class PrinterOutputDevice(QObject, OutputDevice):
     #   /sa setTargetHotendTemperatureAndWait
     def _setTargetHotendTemperatureAndWait(self, index, temperature):
         Logger.log("w", "_setTargetHotendTemperatureAndWait is not implemented by this output device")
+
+    @pyqtSlot(float)
+    def setZOffset(self, zOffset):
+        self._setZOffset(zOffset)
+
+    def _setZOffset(self, zOffset):
+        Logger.log("w", "_setZOffset is not implemented by this output device")
+
+    @pyqtSlot(result=float)
+    def getZOffset(self):
+        self._getZOffset()
+        return self._ZOffset
+
+    def _getZOffset(self):
+        Logger.log("w", "_getZOffset is not implemented by this output device")
 
     @pyqtSlot(int)
     def preheatHotend(self, index):

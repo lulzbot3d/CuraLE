@@ -18,9 +18,9 @@ Item
     {
         id: gridLayout
         columns: 2
-        rows: 2
+        rows: 3
         rowSpacing: 1
-        columnSpacing: 1
+        columnSpacing: 10
         anchors.fill: parent
         anchors.centerIn: parent
         anchors.leftMargin: 65
@@ -29,49 +29,52 @@ Item
 
         Label
         {
-            text: "Z-Offset value"
+            text: "Current Z-Offset value:"
             color: UM.Theme.getColor("setting_control_text")
             font: UM.Theme.getFont("default")
-            //width: parent.width / 2
             Layout.row: 1
             Layout.column: 1
             Layout.preferredWidth: parent.width/3 - gridLayout.rowSpacing*3
+            Layout.preferredHeight: UM.Theme.getSize("section").height
+        }
+
+        Label
+        {
+            text: ""
+            id: zOffsetLabel
+            color: UM.Theme.getColor("setting_control_text")
+            font: UM.Theme.getFont("default")
+            Layout.row: 1
+            Layout.column: 2
+            Layout.preferredWidth: parent.width/3 - gridLayout.columnSpacing*3
+            Layout.preferredHeight: UM.Theme.getSize("section").height
+        }
+
+        Label
+        {
+            text: "Set new Z-Offset value:"
+            color: UM.Theme.getColor("setting_control_text")
+            font: UM.Theme.getFont("default")
+            Layout.row: 2
+            Layout.column: 1
+            Layout.preferredWidth: parent.width/3 - gridLayout.columnSpacing*3
             Layout.preferredHeight: UM.Theme.getSize("section").height
         }
 
         TextField
         {
-            text: "1"
+            text: ""
             id: zOffsetTextField
-            Layout.row: 1
+            Layout.row: 2
             Layout.column: 2
-            Layout.preferredWidth: parent.width/3 - gridLayout.rowSpacing*3
+            Layout.preferredWidth: parent.width/3 - gridLayout.columnSpacing*3
             Layout.preferredHeight: UM.Theme.getSize("section").height
+            readOnly: !( UM.Preferences.getValue( "general/zoffsetSaveToFlashEnabled" ))
 
             validator: DoubleValidator
             {
-                bottom: 0
+                bottom: -100
                 top: 100
-            }
-        }
-
-
-        CheckBox
-        {
-            id: check
-
-            text: "Save to flash memory"
-            checked: false
-            enabled: UM.Preferences.getValue( "general/zoffsetSaveToFlashEnabled" )
-
-            Layout.row: 2
-            Layout.column: 1
-            Layout.preferredWidth: parent.width/3 - gridLayout.rowSpacing*3
-            Layout.preferredHeight: UM.Theme.getSize("section").height
-
-            onClicked:
-            {
-                // TODO
             }
         }
 
@@ -79,15 +82,15 @@ Item
         Button
         {
             text: "Save"
-            Layout.row: 2
+            id: saveButton
+            Layout.row: 3
             Layout.column: 2
-            Layout.preferredWidth: parent.width/3 - gridLayout.rowSpacing*3
+            Layout.preferredWidth: parent.width/3 - gridLayout.columnSpacing*3
             Layout.preferredHeight: UM.Theme.getSize("section").height
+            enabled: UM.Preferences.getValue( "general/zoffsetSaveToFlashEnabled" )
 
-            onClicked:
-            {
-                // TODO connectedPrinter.preheatHotend(-1)
-            }
+            onClicked: connectedPrinter.setZOffset( parseFloat( zOffsetTextField.text ) )
+
             style: ButtonStyle
             {
                 background: Rectangle
@@ -108,7 +111,6 @@ Item
                     color:
                     {
                         if(!control.enabled)
-                            //return UM.Theme.getColor("button_disabled");
                             return UM.Theme.getColor("button_disabled_lighter");
                         else if(control.pressed)
                             return UM.Theme.getColor("button_active");
@@ -147,10 +149,18 @@ Item
 
     Timer
     {
+        id: timerValuesUpdates
         interval: 500
         running: true
         repeat: true
 
-        onTriggered: check.enabled = UM.Preferences.getValue( "general/zoffsetSaveToFlashEnabled" )
+        onTriggered:
+        {
+            zOffsetTextField.readOnly =  (!( UM.Preferences.getValue( "general/zoffsetSaveToFlashEnabled" )))
+            saveButton.enabled = UM.Preferences.getValue( "general/zoffsetSaveToFlashEnabled" )
+
+            if( (connectedPrinter != null) && (connectedPrinter.getZOffset() != undefined) )
+                zOffsetLabel.text = connectedPrinter.getZOffset()
+        }
     }
 }

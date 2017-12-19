@@ -600,18 +600,18 @@ UM.PreferencesPage
             Label
             {
                 font.bold: true
-                text: catalog.i18nc("@label","Enable save Z-offset to flash memory checkbox")
+                text: catalog.i18nc("@label","Enable save Z-offset to flash memory button")
             }
 
             UM.TooltipArea {
                 width: childrenRect.width
                 height: childrenRect.height
-                text: catalog.i18nc("@info:tooltip","Enable save Z-offset to flash memory checkbox")
+                text: catalog.i18nc("@info:tooltip","Enable save Z-offset to flash memory button")
 
                 CheckBox
                 {
                     id: zOffsetCheckbox
-                    text: catalog.i18nc("@option:check","Enable save Z-offset to flash memory checkbox")
+                    text: catalog.i18nc("@option:check","Enable save Z-offset to flash memory button")
                     checked: boolCheck(UM.Preferences.getValue("general/zoffsetSaveToFlashEnabled"))
                     onCheckedChanged: UM.Preferences.setValue("general/zoffsetSaveToFlashEnabled", zOffsetCheckbox.checked)
                 }

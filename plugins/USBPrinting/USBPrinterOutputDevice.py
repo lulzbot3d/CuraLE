@@ -168,6 +168,15 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     def _setHotend(self, num):
         self.sendCommand("T%i" % num)
 
+    def _setZOffset(self, zOffset):
+        self.sendCommand("M851 Z%s" % (zOffset))
+        self.sendCommand("M500")
+
+
+    def _getZOffset(self):
+        self.sendCommand("M851")
+        return self._ZOffset
+
     ##  Start a print based on a g-code.
     #   \param gcode_list List with gcode (strings).
     def printGCode(self, gcode_list):
@@ -1063,6 +1072,11 @@ class PrintThread:
                self._parent._error_message = Message(catalog.i18nc("@info:status", "Wipe nozzle failed."))
                self._parent._error_message.show()
                break
+
+            if b"Z Offset " in line:
+                value = line.split(b":")
+                if len(value) == 3:
+                    self._parent._ZOffset = float( value[2] )
 
             # If we keep getting a temperature_request_timeout, it likely
             # means that Marlin does not support AUTO_REPORT_TEMPERATURES,

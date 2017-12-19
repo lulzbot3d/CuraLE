@@ -9,4 +9,4 @@ from UM.Application import Application
 class ZOffset(Extension):
     def __init__(self):
         super().__init__()
-        Application.getInstance().registerPrintMonitorAdditionalCategory("Z-Offset",os.path.join(os.path.dirname(__file__), "ZOffset.qml"))
+        Application.getInstance().registerPrintMonitorAdditionalCategory("Firmware Settings",os.path.join(os.path.dirname(__file__), "ZOffset.qml"))
