@@ -24,7 +24,7 @@
     <setting key="soften temperature">160</setting>
     <setting key="probe temperature">160</setting>
     <setting key="wipe temperature">160</setting>
-    <setting key="part removal temperature">0</setting>
+    <setting key="part removal temperature">60</setting>
     <machine>
       <machine_identifier product="lulzbot_taz6_dual_v3"/>
       <metadata key="category">Experimental</metadata>

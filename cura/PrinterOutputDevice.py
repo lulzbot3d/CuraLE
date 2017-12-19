@@ -673,8 +673,8 @@ class PrinterOutputDevice(QObject, OutputDevice):
     #   /param z distance in z to move
     #   /param speed Speed by which it needs to move (in mm/minute)
     #   /sa _moveHead implementation function
-    @pyqtSlot("long", "long", "long")
-    @pyqtSlot("long", "long", "long", "long")
+    @pyqtSlot("float", "float", "float")
+    @pyqtSlot("float", "float", "float", "long")
     def moveHead(self, x = 0, y = 0, z = 0, speed = 3000):
         self._moveHead(x, y, z, speed)
 

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Generic</brand>
+      <material>PC + PBT</material>
+      <color>Generic</color>
+      <category>Intermediate</category>
+    </name>
+    <GUID>506c9f0d-e3aa-4bd4-b2d2-23e2425b1aa9</GUID>
+    <version>1</version>
+    <color_code>#a6acff</color_code>
+    <adhesion_info>Glue stick is recommended if you are not using an enclosure</adhesion_info>
+  </metadata>
+  <properties>
+    <density>1.2</density>
+    <diameter>2.85</diameter>
+  </properties>
+  <settings>
+    <setting key="print temperature">250</setting>
+    <setting key="heated bed temperature">115</setting>
+    <setting key="standby temperature">200</setting>
+    <setting key="soften temperature">170</setting>
+    <setting key="probe temperature">170</setting>
+    <setting key="wipe temperature">170</setting>
+    <setting key="part removal temperature">60</setting>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_aerostruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini_aerostruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini"/>
+    </machine>
+  </settings>
+</fdmmaterial>

@@ -33,6 +33,8 @@
         },
         "machine_extruder_count": {
             "default_value": 2
-        }
+        },
+        "layer_start_x": { "value": "100" },
+        "layer_start_y": { "value": "100" }
     }
 }
