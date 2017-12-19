@@ -1,0 +1,27 @@
+{
+    "id": "LulzBot_TAZ5_aerostruder",
+    "name": "LulzBot TAZ 5 Aerostruder",
+    "inherits": "lulzbot_taz5",
+    "version": 2,
+    "metadata":
+    {
+        "type": "machine",
+        "visible": true,
+        "firmware_toolhead_name": "Aerostruder"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "LulzBot TAZ 5 Aerostruder"
+        },
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_taz5_aerostruder_start"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_taz5_end"
+        }
+    }
+}

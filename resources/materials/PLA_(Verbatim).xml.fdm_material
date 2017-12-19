@@ -65,5 +65,8 @@
     <machine>
       <machine_identifier product="lulzbot_taz6"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_aerostruder"/>
+    </machine>
   </settings>
 </fdmmaterial>
