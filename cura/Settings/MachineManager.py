@@ -1064,8 +1064,8 @@ class MachineManager(QObject):
             if not global_quality:
                 global_quality = self._empty_quality_container
             result.append({"stack": global_container_stack, "quality": global_quality, "quality_changes": global_quality_changes})
-        else:
-            result.append({"stack": global_container_stack, "quality": global_quality, "quality_changes": global_quality_changes})
+        # else:
+        #     result.append({"stack": global_container_stack, "quality": global_quality, "quality_changes": global_quality_changes})
 
         return result
 
