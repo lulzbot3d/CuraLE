@@ -40,7 +40,7 @@ Item
 
         Label
         {
-            text: ""
+            text: "0"
             id: zOffsetLabel
             color: UM.Theme.getColor("setting_control_text")
             font: UM.Theme.getFont("default")
@@ -61,20 +61,31 @@ Item
             Layout.preferredHeight: UM.Theme.getSize("section").height
         }
 
-        TextField
-        {
-            text: ""
-            id: zOffsetTextField
+        UM.TooltipArea {
             Layout.row: 2
             Layout.column: 2
-            Layout.preferredWidth: parent.width/3 - gridLayout.columnSpacing*3
-            Layout.preferredHeight: UM.Theme.getSize("section").height
-            readOnly: !( UM.Preferences.getValue( "general/zoffsetSaveToFlashEnabled" ))
+            height: childrenRect.height
+            text: catalog.i18nc("@info:tooltip","Valid values are between -1.00 to -1.30 for Taz, and -1.18 to -1.48 for Mini")
 
-            validator: DoubleValidator
+            TextField
             {
-                bottom: -100
-                top: 100
+                text: ""
+                id: zOffsetTextField
+                Layout.preferredWidth: parent.width/3 - gridLayout.columnSpacing*3
+                Layout.preferredHeight: UM.Theme.getSize("section").height
+                readOnly: !( UM.Preferences.getValue( "general/zoffsetSaveToFlashEnabled" ))
+                textColor:
+                {
+                    if( activeFocus )
+                        return "black"
+                }
+
+                validator: DoubleValidator
+                {   bottom: -1.48;
+                    top: -1.00;
+                    decimals: 2;
+                    notation: DoubleValidator.StandardNotation
+                }
             }
         }
 
@@ -89,7 +100,22 @@ Item
             Layout.preferredHeight: UM.Theme.getSize("section").height
             enabled: UM.Preferences.getValue( "general/zoffsetSaveToFlashEnabled" )
 
-            onClicked: connectedPrinter.setZOffset( parseFloat( zOffsetTextField.text ) )
+            onClicked:
+            {
+                console.log("zOffsetTextField.acceptableInput = ", zOffsetTextField.acceptableInput);
+                console.log("zOffsetTextField.activeFocus = ", zOffsetTextField.activeFocus);
+
+                if( zOffsetTextField.acceptableInput )
+                {
+                    connectedPrinter.setZOffset( parseFloat( zOffsetTextField.text ) )
+                    zOffsetLabel.text = zOffsetTextField.text
+                    zOffsetTextField.textColor = "black"
+                }
+                else
+                {
+                    zOffsetTextField.textColor = "red"
+                }
+            }
 
             style: ButtonStyle
             {
@@ -159,8 +185,11 @@ Item
             zOffsetTextField.readOnly =  (!( UM.Preferences.getValue( "general/zoffsetSaveToFlashEnabled" )))
             saveButton.enabled = UM.Preferences.getValue( "general/zoffsetSaveToFlashEnabled" )
 
-            if( (connectedPrinter != null) && (connectedPrinter.getZOffset() != undefined) )
+            if( (connectedPrinter != null) && (connectedPrinter.getZOffset() != undefined) && (zOffsetLabel.text == "0") )
+             {
                 zOffsetLabel.text = connectedPrinter.getZOffset()
+                console.log( "--------------- getZOffset" )
+             }
         }
     }
 }
