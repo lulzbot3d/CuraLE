@@ -24,6 +24,12 @@
     },
     "overrides":
     {
+        "machine_disallowed_areas": { "default_value": [
+            [[85,85],[85,77],[77,85]],
+            [[-85,85],[-85,77],[-77,85]],
+            [[85,-85],[85,-77],[77,-85]],
+            [[-85,-85],[-85,-77],[-77,-85]]
+        ]},
         "machine_name":
         {
             "default_value": "LulzBot Mini"
@@ -34,11 +40,11 @@
         },
         "machine_width":
         {
-            "default_value": 152
+            "default_value": 160
         },
         "machine_depth":
         {
-            "default_value": 152
+            "default_value": 160
         },
         "machine_height":
         {

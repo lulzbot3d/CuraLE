@@ -1071,6 +1071,7 @@ class PrintThread:
                Logger.log("d", "---------------PROBE FAIL CLEAN NOZZLE" )
                self._parent._error_message = Message(catalog.i18nc("@info:status", "Wipe nozzle failed."))
                self._parent._error_message.show()
+               self._parent.close()
                break
 
             if b"Z Offset " in line:
