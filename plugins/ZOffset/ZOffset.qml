@@ -78,6 +78,8 @@ Item
                 {
                     if( activeFocus )
                         return "black"
+                    else
+                        return "blue"
                 }
 
                 validator: DoubleValidator
