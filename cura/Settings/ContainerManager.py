@@ -688,6 +688,10 @@ class ContainerManager(QObject):
     #   \return \type{str} the id of the newly created container.
     @pyqtSlot(str, result = str)
     def duplicateMaterial(self, material_id: str) -> str:
+        global_stack = Application.getInstance().getGlobalContainerStack()
+        if not global_stack:
+            return ""
+
         containers = self._container_registry.findInstanceContainers(id=material_id)
         if not containers:
             Logger.log("d", "Unable to duplicate the material with id %s, because it doesn't exist.", material_id)
@@ -706,7 +710,26 @@ class ContainerManager(QObject):
         # are also correctly created.
         with open(containers[0].getPath(), encoding="utf-8") as f:
             duplicated_container.deserialize(f.read())
+        duplicated_container.setMetaDataEntry("GUID", str(uuid.uuid4()))
         duplicated_container.setDirty(True)
+        duplicated_container.setMetaDataEntry("material", "Custom")
+        duplicated_container.setMetaDataEntry("brand", "Custom")
+
+        machine_materials = global_stack.getMetaDataEntry("has_machine_materials", False)
+        if machine_materials:
+            new_quality = InstanceContainer("%s_default_%s" % (new_id, global_stack.getBottom().getId()))
+            new_quality.setDefinition(global_stack.getBottom())
+            metadata = {
+                "material": new_id+"_"+global_stack.getBottom().getId(),
+                "quality_type": "custom",
+                "setting_version": 1,
+                "type": "quality"
+            }
+            new_quality.setMetaData(metadata)
+            new_quality.setName("Default")
+            self._container_registry.addContainer(new_quality)
+
+
         self._container_registry.addContainer(duplicated_container)
         return self._getMaterialContainerIdForActiveMachine(new_id)
 
