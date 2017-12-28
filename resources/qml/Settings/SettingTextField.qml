@@ -98,9 +98,9 @@ SettingItem
 
             selectByMouse: true;
 
-            maximumLength: (definition.type == "[int]") ? 20 : 10;
+            maximumLength: (definition.type == "[int]") ? 20 : (definition.type == "str") ? -1 : 10;
 
-            validator: RegExpValidator { regExp: (definition.type == "[int]") ? /^\[?(\s*-?[0-9]{0,9}\s*,)*(\s*-?[0-9]{0,9})\s*\]?$/ : (definition.type == "int") ? /^-?[0-9]{0,10}$/ : /^-?[0-9]{0,9}[.,]?[0-9]{0,10}$/ } // definition.type property from parent loader used to disallow fractional number entry
+            validator: RegExpValidator { regExp: (definition.type == "[int]") ? /^\[?(\s*-?[0-9]{0,9}\s*,)*(\s*-?[0-9]{0,9})\s*\]?$/ : (definition.type == "int") ? /^-?[0-9]{0,10}$/ : (definition.type == "float") ? /^-?[0-9]{0,9}[.,]?[0-9]{0,10}$/ : /^.*$/ } // definition.type property from parent loader used to disallow fractional number entry
 
             Binding
             {
@@ -119,7 +119,8 @@ SettingItem
                         // We have a resolve function. Indicates that the setting is not settable per extruder and that
                         // we have to choose between the resolved value (default) and the global value
                         // (if user has explicitly set this).
-                        return base.resolve;
+                        var num = base.resolve;
+                        return Math.round(num*100)/100;
                     } else {
                         return propertyProvider.properties.value;
                     }

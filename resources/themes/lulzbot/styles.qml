@@ -4,10 +4,56 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
+// For Screen availability
+import QtQuick.Window 2.1
 
 import UM 1.1 as UM
 
 QtObject {
+    property Component mode_switch: Component {
+        SwitchStyle {
+            groove: Rectangle {
+                implicitWidth: UM.Theme.getSize("mode_switch").width
+                implicitHeight: UM.Theme.getSize("mode_switch").height
+                radius: implicitHeight / 2
+                color: {
+                    if(control.hovered || control._hovered) {
+                        return UM.Theme.getColor("mode_switch_hover");
+                    } else {
+                        return UM.Theme.getColor("mode_switch");
+                    }
+                }
+                Behavior on color { ColorAnimation { duration: 50; } }
+                border.color: {
+                    if(control.hovered || control._hovered) {
+                        return UM.Theme.getColor("mode_switch_border_hover");
+                    } else {
+                        return UM.Theme.getColor("mode_switch_border");
+                    }
+                }
+                Behavior on border.color { ColorAnimation { duration: 50; } }
+                border.width: 1
+            }
+
+            handle: Rectangle {
+                implicitWidth: implicitHeight
+                implicitHeight: UM.Theme.getSize("mode_switch").height
+                radius: implicitHeight / 2
+
+                color: {
+                    if (control.pressed || (control.checkable && control.checked)) {
+                        return UM.Theme.getColor("sidebar_header_active");
+                    } else if(control.hovered) {
+                        return UM.Theme.getColor("sidebar_header_hover");
+                    } else {
+                        return UM.Theme.getColor("sidebar_header_bar");
+                    }
+                }
+                Behavior on color { ColorAnimation { duration: 50; } }
+            }
+        }
+    }
+
     property Component sidebar_header_button: Component {
         ButtonStyle {
             background: Rectangle {
@@ -116,8 +162,10 @@ QtObject {
     property Component tool_button: Component {
         ButtonStyle {
             background: Item {
-                implicitWidth: Theme.getSize("button").width;
-                implicitHeight: Theme.getSize("button").height;
+                //implicitWidth: Theme.getSize("button").width;
+                //implicitHeight: Theme.getSize("button").height;
+                implicitWidth: Screen.desktopAvailableHeight/16;
+                implicitHeight: Screen.desktopAvailableHeight/16;
 
                 UM.PointingRectangle {
                     id: button_tooltip

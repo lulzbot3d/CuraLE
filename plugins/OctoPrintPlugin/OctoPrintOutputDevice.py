@@ -274,7 +274,7 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
 
         self._stopCamera()
 
-    def requestWrite(self, node, file_name = None, filter_by_machine = False, file_handler = None):
+    def requestWrite(self, node, file_name = None, filter_by_machine = False, file_handler = None, **kwargs):
         self.writeStarted.emit(self)
         self._gcode = getattr(Application.getInstance().getController().getScene(), "gcode_list")
 
@@ -327,7 +327,7 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
             command = "pause"
 
         if command:
-            self._sendCommand(command)
+            self._sendJobCommand(command)
 
     def startPrint(self):
         global_container_stack = Application.getInstance().getGlobalContainerStack()
@@ -358,7 +358,10 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
                     QCoreApplication.processEvents()
                     last_process_events = time()
 
-            file_name = "%s.gcode" % Application.getInstance().getPrintInformation().jobName
+            job_name = Application.getInstance().getPrintInformation().jobName.strip()
+            if job_name is "":
+                job_name = "untitled_print"
+            file_name = "%s.gcode" % job_name
 
             ##  Create multi_part request
             self._post_multi_part = QHttpMultiPart(QHttpMultiPart.FormDataType)
@@ -405,14 +408,21 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
             Logger.log("e", "An exception occurred in network connection: %s" % str(e))
 
     def _sendCommand(self, command):
-        url = QUrl(self._api_url + "printer/command")
+        self._sendCommandToApi("printer/command", command)
+        Logger.log("d", "Sent gcode command to OctoPrint instance: %s", command)
+
+    def _sendJobCommand(self, command):
+        self._sendCommandToApi("job", command)
+        Logger.log("d", "Sent job command to OctoPrint instance: %s", command)
+
+    def _sendCommandToApi(self, endpoint, command):
+        url = QUrl(self._api_url + endpoint)
         self._command_request = QNetworkRequest(url)
         self._command_request.setRawHeader(self._api_header.encode(), self._api_key.encode())
         self._command_request.setHeader(QNetworkRequest.ContentTypeHeader, "application/json")
 
         data = "{\"command\": \"%s\"}" % command
         self._command_reply = self._manager.post(self._command_request, data.encode())
-        Logger.log("d", "Sent command to OctoPrint instance: %s", data)
 
     ##  Pre-heats the heated bed of the printer.
     #
@@ -444,6 +454,12 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
         Logger.log("d", "Setting hotend %s temperature to %s", index, temperature)
         self._sendCommand("M104 T%s S%s" % (index, temperature))
 
+    def _setTargetHotendTemperatureAndWait(self, index, temperature):
+        if index == -1:
+            index = self._current_hotend
+        Logger.log("d", "Setting hotend %s temperature to %s", index, temperature)
+        self._sendCommand("M109 T%s S%s" % (index, temperature))
+
     def _setHeadPosition(self, x, y , z, speed):
         self._sendCommand("G0 X%s Y%s Z%s F%s" % (x, y, z, speed))
 
@@ -456,6 +472,15 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
     def _setHeadZ(self, z, speed):
         self._sendCommand("G0 Y%s F%s" % (z, speed))
 
+    def _homeX(self):
+        self._sendCommand("G28 X")
+
+    def _homeY(self):
+        self._sendCommand("G28 Y")
+
+    def _homeXY(self):
+        self._sendCommand("G28 XY")
+
     def _homeHead(self):
         self._sendCommand("G28")
 
@@ -466,6 +491,14 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
         self._sendCommand("G91")
         self._sendCommand("G0 X%s Y%s Z%s F%s" % (x, y, z, speed))
         self._sendCommand("G90")
+
+    def _extrude(self, e, speed):
+        self._sendCommand("G91")
+        self._sendCommand("G0 E%s F%s" % (e, speed))
+        self._sendCommand("G90")
+
+    def _setHotend(self, num):
+        self._sendCommand("T%i" % num)
 
     ##  Handler for all requests that have finished.
     def _onRequestFinished(self, reply):

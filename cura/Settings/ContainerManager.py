@@ -1,13 +1,15 @@
-# Copyright (c) 2016 Ultimaker B.V.
+# Copyright (c) 2017 Ultimaker B.V.
 # Cura is released under the terms of the AGPLv3 or higher.
 
 import os.path
 import urllib
+import uuid
 from typing import Dict, Union
 
 from PyQt5.QtCore import QObject, QUrl, QVariant
 from UM.FlameProfiler import pyqtSlot
 from PyQt5.QtWidgets import QMessageBox
+from UM.Util import parseBool
 
 from UM.PluginRegistry import PluginRegistry
 from UM.SaveFile import SaveFile
@@ -427,12 +429,17 @@ class ContainerManager(QObject):
 
         self._machine_manager.blurSettings.emit()
 
-        for stack in ExtruderManager.getInstance().getActiveGlobalAndExtruderStacks():
+        stacks = [global_stack]
+        s = ExtruderManager.getInstance().getActiveExtruderStack()
+        if s is not None:
+            stacks.append(s)
+            
+        for stack in stacks:
             # Find the quality_changes container for this stack and merge the contents of the top container into it.
-            quality_changes = stack.findContainer(type = "quality_changes")
+            quality_changes = stack.qualityChanges
             if not quality_changes or quality_changes.isReadOnly():
                 Logger.log("e", "Could not update quality of a nonexistant or read only quality profile in stack %s", stack.getId())
-                continue
+                return False
 
             self._performMerge(quality_changes, stack.getTop())
 
@@ -448,7 +455,8 @@ class ContainerManager(QObject):
         send_emits_containers = []
 
         # Go through global and extruder stacks and clear their topmost container (the user settings).
-        for stack in ExtruderManager.getInstance().getActiveGlobalAndExtruderStacks():
+        stack = ExtruderManager.getInstance().getActiveExtruderStack()
+        if stack:
             container = stack.getTop()
             container.clear()
             send_emits_containers.append(container)
@@ -469,7 +477,7 @@ class ContainerManager(QObject):
         if not global_stack:
             return False
 
-        active_quality_name = self._machine_manager.activeQualityName
+        active_quality_name = self._machine_manager.currentQualityName
         if active_quality_name == "":
             Logger.log("w", "No quality container found in stack %s, cannot create profile", global_stack.getId())
             return False
@@ -480,23 +488,27 @@ class ContainerManager(QObject):
         unique_name = self._container_registry.uniqueName(base_name)
 
         # Go through the active stacks and create quality_changes containers from the user containers.
-        for stack in ExtruderManager.getInstance().getActiveGlobalAndExtruderStacks():
+        stacks = [global_stack]
+        s = ExtruderManager.getInstance().getActiveExtruderStack()
+        if s is not None:
+            stacks.append(s)
+
+        new_changes = self._createQualityChanges(global_stack.quality, unique_name,
+                                                 Application.getInstance().getGlobalContainerStack().getBottom(),
+                                                 None)
+        for stack in stacks:
             user_container = stack.getTop()
-            quality_container = stack.findContainer(type = "quality")
-            quality_changes_container = stack.findContainer(type = "quality_changes")
+            quality_container = stack.quality
+            quality_changes_container = stack.qualityChanges
             if not quality_container or not quality_changes_container:
                 Logger.log("w", "No quality or quality changes container found in stack %s, ignoring it", stack.getId())
                 continue
 
-            extruder_id = None if stack is global_stack else QualityManager.getInstance().getParentMachineDefinition(stack.getBottom()).getId()
-            new_changes = self._createQualityChanges(quality_container, unique_name,
-                                                     Application.getInstance().getGlobalContainerStack().getBottom(),
-                                                     extruder_id)
             self._performMerge(new_changes, quality_changes_container, clear_settings = False)
             self._performMerge(new_changes, user_container)
-
-            self._container_registry.addContainer(new_changes)
             stack.replaceContainer(stack.getContainerIndex(quality_changes_container), new_changes)
+
+        self._container_registry.addContainer(new_changes)
 
         self._machine_manager.activeQualityChanged.emit()
         return True
@@ -604,7 +616,7 @@ class ContainerManager(QObject):
         machine_definition = global_stack.getBottom()
 
         active_stacks = ExtruderManager.getInstance().getActiveGlobalAndExtruderStacks()
-        material_containers = [stack.findContainer(type="material") for stack in active_stacks]
+        material_containers = [stack.material for stack in active_stacks]
 
         result = self._duplicateQualityOrQualityChangesForMachineType(quality_name, base_name,
                     QualityManager.getInstance().getParentMachineDefinition(machine_definition),
@@ -671,8 +683,15 @@ class ContainerManager(QObject):
 
         return new_change_instances
 
+    ##  Create a duplicate of a material, which has the same GUID and base_file metadata
+    #
+    #   \return \type{str} the id of the newly created container.
     @pyqtSlot(str, result = str)
     def duplicateMaterial(self, material_id: str) -> str:
+        global_stack = Application.getInstance().getGlobalContainerStack()
+        if not global_stack:
+            return ""
+
         containers = self._container_registry.findInstanceContainers(id=material_id)
         if not containers:
             Logger.log("d", "Unable to duplicate the material with id %s, because it doesn't exist.", material_id)
@@ -691,8 +710,165 @@ class ContainerManager(QObject):
         # are also correctly created.
         with open(containers[0].getPath(), encoding="utf-8") as f:
             duplicated_container.deserialize(f.read())
+        duplicated_container.setMetaDataEntry("GUID", str(uuid.uuid4()))
         duplicated_container.setDirty(True)
+        duplicated_container.setMetaDataEntry("material", "Custom")
+        duplicated_container.setMetaDataEntry("brand", "Custom")
+
+        machine_materials = global_stack.getMetaDataEntry("has_machine_materials", False)
+        if machine_materials:
+            new_quality = InstanceContainer("%s_default_%s" % (new_id, global_stack.getBottom().getId()))
+            new_quality.setDefinition(global_stack.getBottom())
+            metadata = {
+                "material": new_id+"_"+global_stack.getBottom().getId(),
+                "quality_type": "custom",
+                "setting_version": 1,
+                "type": "quality"
+            }
+            new_quality.setMetaData(metadata)
+            new_quality.setName("Default")
+            self._container_registry.addContainer(new_quality)
+
+
         self._container_registry.addContainer(duplicated_container)
+        return self._getMaterialContainerIdForActiveMachine(new_id)
+
+    ##  Create a new material by cloning Generic PLA for the current material diameter and setting the GUID to something unqiue
+    #
+    #   \return \type{str} the id of the newly created container.
+    @pyqtSlot(result = str)
+    def createMaterial(self) -> str:
+        # Ensure all settings are saved.
+        Application.getInstance().saveSettings()
+
+        global_stack = Application.getInstance().getGlobalContainerStack()
+        if not global_stack:
+            return ""
+
+        approximate_diameter = round(global_stack.getProperty("material_diameter", "value"))
+
+        # Create a new ID & container to hold the data.
+        new_id = self._container_registry.uniqueName("custom_material")
+        container_type = type(global_stack.material)  # Always XMLMaterialProfile, since we specifically clone the base_file
+        duplicated_container = container_type(new_id)
+
+        # Instead of duplicating we load the data from the basefile again.
+        # This ensures that the inheritance goes well and all "cut up" subclasses of the xmlMaterial profile
+        # are also correctly created.
+        # with open(containers[0].getPath(), encoding="utf-8") as f:
+        #     duplicated_container.deserialize(f.read())
+
+        machine_materials = global_stack.getMetaDataEntry("has_machine_materials", False)
+
+        machine = """<machine>
+      <machine_identifier product="%s" />
+    </machine>""" % global_stack.getBottom().getId()
+
+        base = """<?xml version='1.0' encoding='utf-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Custom</brand>
+      <material>Custom</material>
+      <color />
+      <label>%s</label>
+      <category />
+    </name>
+    <color_code>#ffffff</color_code>
+    <version>1</version>
+    <GUID>%s</GUID>
+  </metadata>
+  <properties />
+  <settings>
+    %s
+  </settings>
+</fdmmaterial>""" % (new_id, str(uuid.uuid4()), machine if machine_materials else "")
+
+        new_material = container_type(new_id)
+        new_material.deserialize(base)
+        new_material.setDirty(True)
+
+        if machine_materials:
+            new_quality = InstanceContainer("%s_default_%s" % (new_id, global_stack.getBottom().getId()))
+            new_quality.setDefinition(global_stack.getBottom())
+            metadata = {
+                "material": new_id+"_"+global_stack.getBottom().getId(),
+                "quality_type": "custom",
+                "setting_version": 1,
+                "type": "quality"
+            }
+            new_quality.setMetaData(metadata)
+            new_quality.setName("Default")
+            self._container_registry.addContainer(new_quality)
+
+        self._container_registry.addContainer(new_material)
+
+        return self._getMaterialContainerIdForActiveMachine(new_id)
+
+    ##  Find the id of a material container based on the new material
+    #   Utilty function that is shared between duplicateMaterial and createMaterial
+    #
+    #   \param base_file \type{str} the id of the created container.
+    def _getMaterialContainerIdForActiveMachine(self, base_file):
+        global_stack = Application.getInstance().getGlobalContainerStack()
+        if not global_stack:
+            return base_file
+
+        has_machine_materials = parseBool(global_stack.getMetaDataEntry("has_machine_materials", default = False))
+        has_variant_materials = parseBool(global_stack.getMetaDataEntry("has_variant_materials", default = False))
+        has_variants = parseBool(global_stack.getMetaDataEntry("has_variants", default = False))
+        if has_machine_materials or has_variant_materials:
+            if has_variants:
+                materials = self._container_registry.findInstanceContainers(type = "material", base_file = base_file, definition = global_stack.getBottom().getId(), variant = self._machine_manager.activeVariantId)
+            else:
+                materials = self._container_registry.findInstanceContainers(type = "material", base_file = base_file, definition = global_stack.getBottom().getId())
+
+            if materials:
+                return materials[0].getId()
+
+            Logger.log("w", "Unable to find a suitable container based on %s for the current machine .", base_file)
+            return "" # do not activate a new material if a container can not be found
+
+        return base_file
+
+    ##  Get a list of materials that have the same GUID as the reference material
+    #
+    #   \param material_id \type{str} the id of the material for which to get the linked materials.
+    #   \return \type{list} a list of names of materials with the same GUID
+    @pyqtSlot(str, result = "QStringList")
+    def getLinkedMaterials(self, material_id: str):
+        containers = self._container_registry.findInstanceContainers(id=material_id)
+        if not containers:
+            Logger.log("d", "Unable to find materials linked to material with id %s, because it doesn't exist.", material_id)
+            return []
+
+        material_container = containers[0]
+        material_base_file = material_container.getMetaDataEntry("base_file", "")
+        material_guid = material_container.getMetaDataEntry("GUID", "")
+        if not material_guid:
+            Logger.log("d", "Unable to find materials linked to material with id %s, because it doesn't have a GUID.", material_id)
+            return []
+
+        containers = self._container_registry.findInstanceContainers(type = "material", GUID = material_guid)
+        linked_material_names = []
+        for container in containers:
+            if container.getId() in [material_id, material_base_file] or container.getMetaDataEntry("base_file") != container.getId():
+                continue
+
+            linked_material_names.append(container.getName())
+        return linked_material_names
+
+    ##  Unlink a material from all other materials by creating a new GUID
+    #   \param material_id \type{str} the id of the material to create a new GUID for.
+    @pyqtSlot(str)
+    def unlinkMaterial(self, material_id: str):
+        containers = self._container_registry.findInstanceContainers(id=material_id)
+        if not containers:
+            Logger.log("d", "Unable to make the material with id %s unique, because it doesn't exist.", material_id)
+            return ""
+
+        containers[0].setMetaDataEntry("GUID", str(uuid.uuid4()))
+
 
     ##  Get the singleton instance for this class.
     @classmethod
@@ -804,7 +980,7 @@ class ContainerManager(QObject):
         quality_changes = InstanceContainer(self._createUniqueId(base_id, new_name))
         quality_changes.setName(new_name)
         quality_changes.addMetaDataEntry("type", "quality_changes")
-        quality_changes.addMetaDataEntry("quality_type", quality_container.getMetaDataEntry("quality_type"))
+        quality_changes.addMetaDataEntry("quality_type", self._machine_manager.currentQualityType)
 
         # If we are creating a container for an extruder, ensure we add that to the container
         if extruder_id is not None:
@@ -815,6 +991,8 @@ class ContainerManager(QObject):
             quality_changes.setDefinition(self._container_registry.findContainers(id = "fdmprinter")[0])
         else:
             quality_changes.setDefinition(QualityManager.getInstance().getParentMachineDefinition(machine_definition))
+        from cura.CuraApplication import CuraApplication
+        quality_changes.addMetaDataEntry("setting_version", CuraApplication.SettingVersion)
         return quality_changes
 
 

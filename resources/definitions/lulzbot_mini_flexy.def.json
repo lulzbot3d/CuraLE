@@ -6,7 +6,9 @@
     "metadata":
     {
         "type": "machine",
-        "visible": true
+        "visible": true,
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-mini-flexystruder-tool-head-v2",
+        "firmware_toolhead_name": "Flexystruder"
     },
     "overrides":
     {
@@ -21,6 +23,10 @@
         "machine_end_gcode":
         {
             "default_value_from_file": "lulzbot_mini_flexy_end"
+        },
+        "machine_nozzle_size":
+        {
+            "default_value": 0.6
         }
     }
 }

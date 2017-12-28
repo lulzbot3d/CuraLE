@@ -19,7 +19,7 @@ Item
     property Action configureSettings;
     property variant minimumPrintTime: PrintInformation.minimumPrintTime;
     property variant maximumPrintTime: PrintInformation.maximumPrintTime;
-    property bool settingsEnabled: ExtruderManager.activeExtruderStackId || ExtruderManager.extruderCount == 0
+    property bool settingsEnabled: ExtruderManager.activeExtruderStackId || machineExtruderCount.properties.value == 1
 
     Component.onCompleted: PrintInformation.enabled = true
     Component.onDestruction: PrintInformation.enabled = false
@@ -30,10 +30,11 @@ Item
         id: infillCellLeft
         anchors.top: parent.top
         anchors.left: parent.left
+        anchors.topMargin: UM.Theme.getSize("default_margin").height
         width: base.width * .45 - UM.Theme.getSize("default_margin").width
         height: childrenRect.height
 
-        Label
+        Text
         {
             id: infillLabel
             //: Infill selection label
@@ -47,12 +48,13 @@ Item
         }
     }
 
-    Flow
+    Row
     {
         id: infillCellRight
 
         height: childrenRect.height;
-        width: base.width * .55
+        width: base.width * .5
+
         spacing: UM.Theme.getSize("default_margin").width
 
         anchors.left: infillCellLeft.right
@@ -63,10 +65,11 @@ Item
             id: infillListView
             property int activeIndex:
             {
-                var density = parseInt(infillDensity.properties.value)
+                var density = parseInt(infillDensity.properties.value);
+                var steps = parseInt(infillSteps.properties.value);
                 for(var i = 0; i < infillModel.count; ++i)
                 {
-                    if(density > infillModel.get(i).percentageMin && density <= infillModel.get(i).percentageMax )
+                    if(density > infillModel.get(i).percentageMin && density <= infillModel.get(i).percentageMax && steps > infillModel.get(i).stepsMin && steps <= infillModel.get(i).stepsMax)
                     {
                         return i;
                     }
@@ -85,7 +88,7 @@ Item
                 {
                     id: infillIconLining
 
-                    width: (infillCellRight.width - 3 * UM.Theme.getSize("default_margin").width) / 4;
+                    width: (infillCellRight.width - ((infillModel.count - 1)  * UM.Theme.getSize("default_margin").width)) / (infillModel.count);
                     height: width
 
                     border.color:
@@ -96,7 +99,7 @@ Item
                         }
                         else if(infillListView.activeIndex == index)
                         {
-                            return UM.Theme.getColor("setting_control_selected")
+                            return UM.Theme.getColor("setting_control_selected_dark_green")
                         }
                         else if(infillMouseArea.containsMouse)
                         {
@@ -116,18 +119,20 @@ Item
                             return UM.Theme.getColor("setting_control_selected")
                         }
                         return "transparent"
+                        //return UM.Theme.getColor("setting_control_icon_disabled_background")
                     }
 
                     UM.RecolorImage
                     {
                         id: infillIcon
                         anchors.fill: parent;
-                        anchors.margins: UM.Theme.getSize("infill_button_margin").width
+                        anchors.margins: 2
 
                         sourceSize.width: width
                         sourceSize.height: width
                         source: UM.Theme.getIcon(model.icon);
                         color: {
+                            /*
                             if(infillListView.activeIndex == index)
                             {
                                 return UM.Theme.getColor("text_reversed")
@@ -136,6 +141,7 @@ Item
                             {
                                 return UM.Theme.getColor("setting_control_disabled_text")
                             }
+                            */
                             return UM.Theme.getColor("setting_control_disabled_text")
                         }
                     }
@@ -150,6 +156,7 @@ Item
                             if (infillListView.activeIndex != index)
                             {
                                 infillDensity.setPropertyValue("value", model.percentage)
+                                infillSteps.setPropertyValue("value", model.steps)
                             }
                         }
                         onEntered:
@@ -162,7 +169,7 @@ Item
                         }
                     }
                 }
-                Label
+                Text
                 {
                     id: infillLabel
                     font: UM.Theme.getFont("default")
@@ -181,36 +188,60 @@ Item
             Component.onCompleted:
             {
                 infillModel.append({
-                    name: catalog.i18nc("@label", "Hollow"),
+                    name: catalog.i18nc("@label", "0%"),
                     percentage: 0,
+                    steps: 0,
                     percentageMin: -1,
                     percentageMax: 0,
-                    text: catalog.i18nc("@label", "No (0%) infill will leave your model hollow at the cost of low strength"),
+                    stepsMin: -1,
+                    stepsMax: 0,
+                    text: catalog.i18nc("@label", "Empty infill will leave your model hollow with low strength."),
                     icon: "hollow"
                 })
                 infillModel.append({
-                    name: catalog.i18nc("@label", "Light"),
+                    name: catalog.i18nc("@label", "20%"),
                     percentage: 20,
+                    steps: 0,
                     percentageMin: 0,
                     percentageMax: 30,
-                    text: catalog.i18nc("@label", "Light (20%) infill will give your model an average strength"),
+                    stepsMin: -1,
+                    stepsMax: 0,
+                    text: catalog.i18nc("@label", "Light (20%) infill will give your model an average strength."),
                     icon: "sparse"
                 })
                 infillModel.append({
-                    name: catalog.i18nc("@label", "Dense"),
+                    name: catalog.i18nc("@label", "50%"),
                     percentage: 50,
+                    steps: 0,
                     percentageMin: 30,
                     percentageMax: 70,
-                    text: catalog.i18nc("@label", "Dense (50%) infill will give your model an above average strength"),
+                    stepsMin: -1,
+                    stepsMax: 0,
+                    text: catalog.i18nc("@label", "Dense (50%) infill will give your model an above average strength."),
                     icon: "dense"
                 })
                 infillModel.append({
-                    name: catalog.i18nc("@label", "Solid"),
+                    name: catalog.i18nc("@label", "100%"),
                     percentage: 100,
+                    steps: 0,
                     percentageMin: 70,
-                    percentageMax: 100,
-                    text: catalog.i18nc("@label", "Solid (100%) infill will make your model completely solid"),
+                    percentageMax: 9999999999,
+                    stepsMin: -1,
+                    stepsMax: 0,
+                    text: catalog.i18nc("@label", "Solid (100%) infill will make your model completely solid."),
                     icon: "solid"
+                })
+                infillModel.append({
+                    name: catalog.i18nc("@label", "Gradual"),
+                    percentage: 90,
+                    steps: 5,
+                    percentageMin: 0,
+                    percentageMax: 9999999999,
+                    stepsMin: 0,
+                    stepsMax: 9999999999,
+                    infill_layer_height: 1.5,
+                    text: catalog.i18nc("@label", "Gradual infill will gradually increase the amount of infill towards the top."),
+                    icon: "gradual"
                 })
             }
         }
@@ -220,19 +251,19 @@ Item
     {
         id: helpersCell
         anchors.top: infillCellRight.bottom
-        anchors.topMargin: UM.Theme.getSize("default_margin").height
+        anchors.topMargin: UM.Theme.getSize("default_margin").height * 2
         anchors.left: parent.left
         anchors.right: parent.right
         height: childrenRect.height
 
-        Label
+        Text
         {
             id: enableSupportLabel
             anchors.left: parent.left
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
             anchors.verticalCenter: enableSupportCheckBox.verticalCenter
             width: parent.width * .45 - 3 * UM.Theme.getSize("default_margin").width
-            text: catalog.i18nc("@label", "Enable Support");
+            text: catalog.i18nc("@label", "Generate Support");
             font: UM.Theme.getFont("default");
             color: UM.Theme.getColor("text");
         }
@@ -240,6 +271,8 @@ Item
         CheckBox
         {
             id: enableSupportCheckBox
+            property alias _hovered: enableSupportMouseArea.containsMouse
+
             anchors.top: parent.top
             anchors.left: enableSupportLabel.right
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
@@ -263,7 +296,7 @@ Item
                 onEntered:
                 {
                     base.showTooltip(enableSupportCheckBox, Qt.point(-enableSupportCheckBox.x, 0),
-                        catalog.i18nc("@label", "Enable support structures. These structures support parts of the model with severe overhangs."));
+                        catalog.i18nc("@label", "Generate structures to support parts of the model which have overhangs. Without these structures, such parts would collapse during printing."));
                 }
                 onExited:
                 {
@@ -272,7 +305,7 @@ Item
             }
         }
 
-        Label
+        Text
         {
             id: supportExtruderLabel
             visible: (supportEnabled.properties.value == "True") && (machineExtruderCount.properties.value > 1)
@@ -372,33 +405,51 @@ Item
 
         }
 
-        Label
+        Text
         {
             id: adhesionHelperLabel
             anchors.left: parent.left
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
-            anchors.verticalCenter: adhesionCheckBox.verticalCenter
+            anchors.verticalCenter: adhesionComboBox.verticalCenter
             width: parent.width * .45 - 3 * UM.Theme.getSize("default_margin").width
             text: catalog.i18nc("@label", "Build Plate Adhesion");
             font: UM.Theme.getFont("default");
             color: UM.Theme.getColor("text");
         }
 
-        CheckBox
+        ComboBox
         {
-            id: adhesionCheckBox
-            property alias _hovered: adhesionMouseArea.containsMouse
+            id: adhesionComboBox
 
             anchors.top: supportExtruderCombobox.bottom
-            anchors.topMargin: UM.Theme.getSize("default_margin").height
+            anchors.topMargin: UM.Theme.getSize("default_margin").height * 2
             anchors.left: adhesionHelperLabel.right
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
 
-            //: Setting enable printing build-plate adhesion helper checkbox
-            style: UM.Theme.styles.checkbox;
+            style: UM.Theme.styles.combobox;
             enabled: base.settingsEnabled
 
-            checked: platformAdhesionType.properties.value != "none"
+            model: ListModel {
+                    id: cbItems
+                    ListElement { text: "Skirt" }
+                    ListElement { text: "Brim" }
+                    ListElement { text: "Raft" }
+                    ListElement { text: "None" }
+                }
+
+            onCurrentIndexChanged:
+            {
+                var adhesionType = cbItems.get(currentIndex).text.toLowerCase();
+                platformAdhesionType.setPropertyValue("value", adhesionType);
+                //console.log( "----------------------- cbItems.get(" ,currentIndex, ").text", cbItems.get(currentIndex).text, adhesionType )
+            }
+
+            Component.onCompleted:
+            {
+                var adhesionType = cbItems.get(currentIndex).text.toLowerCase();
+                platformAdhesionType.setPropertyValue("value", adhesionType);
+                console.log( "----------------------- cbItems.get(" ,currentIndex, ").text", cbItems.get(currentIndex).text, adhesionType )
+            }
 
             MouseArea
             {
@@ -406,6 +457,50 @@ Item
                 anchors.fill: parent
                 hoverEnabled: true
                 enabled: base.settingsEnabled
+                acceptedButtons: Qt.NoButton
+
+                onEntered:
+                {
+                    base.showTooltip(adhesionComboBox, Qt.point(-adhesionComboBox.x, 0),
+                        catalog.i18nc("@label", "Enable printing a brim or raft. This will add a flat area around or under your object which is easy to cut off afterwards."));
+                }
+                onExited:
+                {
+                    base.hideTooltip();
+                }
+            }
+
+}
+/*
+        CheckBox
+        {
+            id: adhesionCheckBox
+            property alias _hovered: adhesionMouseArea.containsMouse
+
+            anchors.top: supportExtruderCombobox.bottom
+            anchors.topMargin: UM.Theme.getSize("default_margin").height * 2
+            anchors.left: adhesionHelperLabel.right
+            anchors.leftMargin: UM.Theme.getSize("default_margin").width
+
+            //: Setting enable printing build-plate adhesion helper checkbox
+            style: UM.Theme.styles.checkbox;
+            enabled: base.settingsEnabled
+
+            //checked: platformAdhesionType.properties.value != "none"
+            checked:
+            {
+                platformAdhesionType.properties.value == "brim"
+                console.log( "------------ platformAdhesionType.properties.value = ", platformAdhesionType.properties.value)
+                console.log( "------------ checked = ", platformAdhesionType.properties.value == "brim" )
+            }
+
+            MouseArea
+            {
+                id: adhesionMouseArea
+                anchors.fill: parent
+                hoverEnabled: true
+                enabled: base.settingsEnabled
+
                 onClicked:
                 {
                     var adhesionType = "none";
@@ -422,6 +517,8 @@ Item
                     }
                     platformAdhesionType.setPropertyValue("value", adhesionType);
                 }
+
+
                 onEntered:
                 {
                     base.showTooltip(adhesionCheckBox, Qt.point(-adhesionCheckBox.x, 0),
@@ -433,6 +530,7 @@ Item
                 }
             }
         }
+        */
 
         ListModel
         {
@@ -461,17 +559,17 @@ Item
         supportExtruderCombobox.updateCurrentColor();
     }
 
-
+/*
     Item
     {
         id: tipsCell
         anchors.top: helpersCell.bottom
-        anchors.topMargin: UM.Theme.getSize("default_margin").height
+        anchors.topMargin: UM.Theme.getSize("default_margin").height * 2
         anchors.left: parent.left
         width: parent.width
         height: childrenRect.height
 
-        Label
+        Text
         {
             anchors.left: parent.left
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
@@ -479,13 +577,14 @@ Item
             anchors.rightMargin: UM.Theme.getSize("default_margin").width
             wrapMode: Text.WordWrap
             //: Tips label
-            text: catalog.i18nc("@label", "Need help improving your prints? Read the <a href='%1'>Ultimaker Troubleshooting Guides</a>").arg("https://ultimaker.com/en/troubleshooting");
+            text: catalog.i18nc("@label", "Need help improving your prints?<br>Read the <a href='%1'>Ultimaker Troubleshooting Guides</a>").arg("https://ultimaker.com/en/troubleshooting");
             font: UM.Theme.getFont("default");
             color: UM.Theme.getColor("text");
             linkColor: UM.Theme.getColor("text_link")
             onLinkActivated: Qt.openUrlExternally(link)
         }
     }
+*/
 
     UM.SettingPropertyProvider
     {
@@ -493,6 +592,16 @@ Item
 
         containerStackId: Cura.MachineManager.activeStackId
         key: "infill_sparse_density"
+        watchedProperties: [ "value" ]
+        storeIndex: 0
+    }
+
+    UM.SettingPropertyProvider
+    {
+        id: infillSteps
+
+        containerStackId: Cura.MachineManager.activeStackId
+        key: "gradual_infill_steps"
         watchedProperties: [ "value" ]
         storeIndex: 0
     }

@@ -39,7 +39,7 @@ Menu
                 name: categories[i]
             });
         }
-        Cura.MachineManager.setCurrentCategory("All");
+        Cura.MachineManager.setCurrentCategory(Cura.MachineManager.defaultCategory);
     }
 
     ListModel

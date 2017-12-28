@@ -184,21 +184,33 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
                                    "ultimaker_original_dual"  : "MarlinUltimaker-HBK-{baudrate}-dual.hex",
                                    }
         lulzbot_machines = {
-            "lulzbot_mini": "Mini-Single-or-Flexystruder-LBHexagon-v1.1.0.11.hex",
-            "lulzbot_mini_flexy": "Mini-Single-or-Flexystruder-LBHexagon-v1.1.0.11.hex",
+            "lulzbot_mini":                     "Marlin_Mini_SingleExtruder_1.1.5.64_6353ccb.hex",
+            "lulzbot_mini_flexy":                 "Marlin_Mini_Flexystruder_1.1.5.64_6353ccb.hex",
+            "lulzbot_mini_aerostruder":            "Marlin_Mini_Aerostruder_1.1.5.64_6353ccb.hex",
 
-            "lulzbot_taz5": "TAZ4-5-Standard-LBHexagon-1.0.0.1.hex",
-            "lulzbot_taz5_flexy_v2": "TAZ4-5-Flexystruder-LBHexagon-1.0.0.2.hex",
-            "lulzbot_taz5_moarstruder": "TAZ5-Moarstruder-LBHexagon-1.0.0.2.hex",
-            "lulzbot_taz5_dual_v2": "TAZ4-5-Dual-LBHexagon-1.0.0.1.hex",
-            "lulzbot_taz5_flexy_dually_v2": "TAZ4-5-FlexyDually-LBHexagon-1.0.0.1.hex",
+            "lulzbot_taz5":                     "Marlin_TAZ5_SingleExtruder_1.1.5.64_6353ccb.hex",
+            "lulzbot_taz5_flexy_v2":              "Marlin_TAZ5_Flexystruder_1.1.5.64_6353ccb.hex",
+            "lulzbot_taz5_moarstruder":            "Marlin_TAZ5_Moarstruder_1.1.5.64_6353ccb.hex",
+            "lulzbot_taz5_dual_v2":             "Marlin_TAZ5_DualExtruderV2_1.1.5.64_6353ccb.hex",
+            "lulzbot_taz5_flexy_dually_v2":        "Marlin_TAZ5_FlexyDually_1.1.5.64_6353ccb.hex",
+            "lulzbot_taz5_dual_v3":             "Marlin_TAZ5_DualExtruderV3_1.1.5.64_6353ccb.hex",
+            "lulzbot_taz5_aerostruder":            "Marlin_TAZ5_Aerostruder_1.1.5.64_6353ccb.hex",
 
-            "lulzbot_taz6": "TAZ6_Single_Extruder_v1.0.2.21.hex",
-            "lulzbot_taz6_flexy_v2": "TAZ6_Flexystruder_v1.0.2.21.hex",
-            "lulzbot_taz6_moarstruder": "TAZ6_Moarstruder_v1.0.2.21.hex",
-            "lulzbot_taz6_dual_v2": "TAZ6_Dual_v1.0.2.21.hex",
-            "lulzbot_taz6_flexy_dually_v2": "TAZ6_Dual_v1.0.2.21.hex",
+            "lulzbot_taz6":                     "Marlin_TAZ6_SingleExtruder_1.1.5.64_6353ccb.hex",
+            "lulzbot_taz6_flexy_v2":              "Marlin_TAZ6_Flexystruder_1.1.5.64_6353ccb.hex",
+            "lulzbot_taz6_moarstruder":            "Marlin_TAZ6_Moarstruder_1.1.5.64_6353ccb.hex",
+            "lulzbot_taz6_dual_v2":             "Marlin_TAZ6_DualExtruderV2_1.1.5.64_6353ccb.hex",
+            "lulzbot_taz6_flexy_dually_v2":        "Marlin_TAZ6_FlexyDually_1.1.5.64_6353ccb.hex",
+            "lulzbot_taz6_dual_v3":             "Marlin_TAZ6_DualExtruderV3_1.1.5.64_6353ccb.hex",
+            "lulzbot_taz6_aerostruder":            "Marlin_TAZ6_Aerostruder_1.1.5.64_6353ccb.hex",
         }
+
+        lulzbot_lcd_machines = {
+            "lulzbot_mini":                  "Marlin_MiniLCD_SingleExtruder_1.1.5.64_6353ccb.hex",
+            "lulzbot_mini_flexy":              "Marlin_MiniLCD_Flexystruder_1.1.5.64_6353ccb.hex",
+            "lulzbot_mini_aerostruder":         "Marlin_MiniLCD_Aerostruder_1.1.5.64_6353ccb.hex",
+        }
+
         ##TODO: Add check for multiple extruders
         hex_file = None
         if machine_id in machine_without_extras.keys():  # The machine needs to be defined here!
@@ -209,8 +221,13 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
                 Logger.log("d", "Choosing basic firmware for machine %s.", machine_id)
                 hex_file = machine_without_extras[machine_id]  # Return "basic" firmware
         elif machine_id in lulzbot_machines.keys():
-            Logger.log("d", "Found firmware for machine %s.", machine_id)
-            hex_file = lulzbot_machines[machine_id]
+            machine_has_lcd = global_container_stack.getProperty("machine_has_lcd", "value")
+            if machine_id in lulzbot_lcd_machines.keys() and machine_has_lcd:
+                Logger.log("d", "Found firmware with LCD for machine %s.", machine_id)
+                hex_file = lulzbot_lcd_machines[machine_id]
+            else:
+                Logger.log("d", "Found firmware for machine %s.", machine_id)
+                hex_file = lulzbot_machines[machine_id]
         else:
             Logger.log("w", "There is no firmware for machine %s.", machine_id)
 
@@ -247,8 +264,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
         try:
             self.connectionStateChanged.emit()
         except KeyError:
-            pass  # no output device by this device_id found in connection list.
-
+            Logger.log("w", "Connection state of %s changed, but it was not found in the list")
 
     @pyqtProperty(QObject , notify = connectionStateChanged)
     def connectedPrinterList(self):
@@ -271,7 +287,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
                 i = 0
                 while True:
                     values = winreg.EnumValue(key, i)
-                    if not only_list_usb or "USBSER" in values[0]:
+                    if not only_list_usb or "USBSER" or "VCP" in values[0]:
                         base_list += [values[1]]
                     i += 1
             except Exception as e:

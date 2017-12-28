@@ -118,12 +118,22 @@ class SolidView(View):
                         #    shade_factor * int(material_color[5:7], 16) / 255,
                         #   1.0
                         #]
-                        uniforms["diffuse_color"] = [
-                            shade_factor * 0.75,
-                            shade_factor * 0.84,
-                            shade_factor * 0.18,
-                            1.0
-                        ]
+
+                        if not multi_extrusion:
+                            uniforms["diffuse_color"] = [
+                                shade_factor * 0.75,
+                                shade_factor * 0.84,
+                                shade_factor * 0.18,
+                                1.0
+                            ]
+                        else:
+                            uniforms["diffuse_color"] = [
+                                shade_factor * int(material_color[1:3], 16) / 255,
+                                shade_factor * int(material_color[3:5], 16) / 255,
+                                shade_factor * int(material_color[5:7], 16) / 255,
+                                1.0
+                            ]
+
                     except ValueError:
                         pass
 

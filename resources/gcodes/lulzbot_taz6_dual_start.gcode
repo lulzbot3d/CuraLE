@@ -8,19 +8,24 @@ T0                           ; select this extruder first
 M82                          ; set extruder to absolute mode
 G92 E0                       ; set extruder position to 0
 M140 S{material_bed_temperature}; get bed heating up
+M104 R{material_soften_temperature_0} T0                 ; soften filament
+M104 R{material_soften_temperature_1} T1                 ; soften filament
 M109 R{material_soften_temperature_0} T0                 ; soften filament
 M109 R{material_soften_temperature_1} T1                 ; soften filament
 G28 X Y                      ; home X and Y
 G1 X-19 Y258                 ; move over the Z_MIN switch
+M104 R{material_wipe_temperature_0} T0                 ; wait for T0 to reach temp
+M104 R{material_wipe_temperature_1} T1                 ; wait for T1 to reach temp
 M109 R{material_wipe_temperature_0} T0                 ; wait for T0 to reach temp
 M109 R{material_wipe_temperature_1} T1                 ; wait for T1 to reach temp
 G28 Z                        ; home Z
-G1 E-30 F100                 ; suck up XXmm of filament
+G1 E-15 F100                 ; suck up XXmm of filament
 T1                           ; switch extruders
+M82                          ; set extruder to absolute mode
 G92 E0                       ; set E to 0
 G1 E-15 F100                 ; suck up filament
 T0                           ; switch extruders
-G92 E-60                     ; adjust E value
+;G92 E-60                     ; adjust E value
 G1 X-17 Y100 F3000           ; move above wiper pad
 G1 Z1                        ; push nozzle into wiper
 G1 X-19 Y95 F1000            ; slow wipe
@@ -63,6 +68,6 @@ G1 E0 F100                   ; prime nozzle from previous print
 G1 F100 E-{retraction_amount} ;retract second nozzle before print
 G92 E-30                     ; adjust to 1st nozzle e value
 T0                           ; switch back to back
-M190 R{print_bed_temperature}; get bed temping up during first layer
+M190 R{material_bed_temperature_layer_0}; get bed temping up during first layer
 G1 Z2 E0 F75                 ; extrude filament back into nozzle
 M117 TAZ Printing...         ; LCD status message

@@ -16,6 +16,15 @@ Menu
     property bool printerConnected: Cura.MachineManager.printerOutputDevices.length != 0
     property string category: Cura.MachineManager.currentCategory
 
+    UM.SettingPropertyProvider
+    {
+        id: materialDiameterProvider
+
+        containerStackId: Cura.MachineManager.activeMachineId
+        key: "material_diameter"
+        watchedProperties: [ "value" ]
+    }
+
     MenuItem
     {
         id: automaticMaterial
@@ -142,7 +151,7 @@ Menu
 
     function materialFilter()
     {
-        var result = { "type": "material" };
+        var result = { "type": "material", "approximate_diameter": Math.round(materialDiameterProvider.properties.value) };
         if(Cura.MachineManager.filterMaterialsByMachine)
         {
             result.definition = Cura.MachineManager.activeQualityDefinitionId;

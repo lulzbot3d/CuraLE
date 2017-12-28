@@ -127,7 +127,7 @@ Column
                             border.color: UM.Theme.getColor("setting_control_border")
                         }
 
-                        Label
+                        Text
                         {
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.left: swatch.visible ? swatch.right : parent.left
@@ -222,7 +222,9 @@ Column
             rightMargin: UM.Theme.getSize("default_margin").width
         }
 
-        Label
+        spacing: UM.Theme.getSize("default_margin").width
+
+        Text
         {
             id: variantLabel
             text:
@@ -240,13 +242,41 @@ Column
                 {
                     label = catalog.i18nc("@label","Material");
                 }
-                return "%1:".arg(label);
+                return "%1:".arg(label)
             }
 
             anchors.verticalCenter: parent.verticalCenter
-            width: parent.width * 0.45 - UM.Theme.getSize("default_margin").width
+            width: parent.width * 0.45 - UM.Theme.getSize("default_margin").width*3 - infoButton.width
             font: UM.Theme.getFont("default");
             color: UM.Theme.getColor("text");
+        }
+
+        Item
+        {
+            width: UM.Theme.getSize("setting_control").height
+            height: UM.Theme.getSize("setting_control").height
+
+            UM.SimpleButton
+            {
+                id: infoButton
+
+                color: hovered ? UM.Theme.getColor("text") : UM.Theme.getColor("info_button");
+                iconSource: UM.Theme.getIcon("notice");
+
+                anchors.fill: parent
+                visible: Cura.MachineManager.currentMaterialHasInfo
+
+                onClicked:
+                {
+                    Cura.MachineManager.openCurrentMaterialInfo()
+                }
+                onEntered:
+                {
+                    var content = catalog.i18nc("@tooltip", "Material Info")
+                    base.showTooltip(variantRow, Qt.point(-UM.Theme.getSize("default_margin").width, parent.height/2),  content)
+                }
+                onExited: base.hideTooltip()
+            }
         }
 
         Item
@@ -310,7 +340,7 @@ Column
         id: adhesionRow
 
         height: UM.Theme.getSize("sidebar_setup").height*4
-        visible: (Cura.MachineManager.hasVariants || Cura.MachineManager.hasMaterials) && !sidebar.monitoringPrint && !sidebar.hideSettings
+        visible: (Cura.MachineManager.hasVariants || Cura.MachineManager.hasMaterials) && !sidebar.monitoringPrint && !sidebar.hideSettings && Cura.ContainerManager.getContainerMetaDataEntry(Cura.MachineManager.activeMaterialId ,"adhesion_info") != ""
 
 
         anchors
@@ -333,21 +363,18 @@ Column
             color: UM.Theme.getColor("text");
         }
 
-        ReadOnlyTextArea
+        TextArea
         {
-            //text: properties.adhesion_info;
-            // TODO: need fill and data to/from somewhere???
-            text: ""
+            text: Cura.ContainerManager.getContainerMetaDataEntry(Cura.MachineManager.activeMaterialId ,"adhesion_info")
             wrapMode: Text.WordWrap;
-            readOnly: false;
-            visible: true;
+            readOnly: true;
+            selectByKeyboard: false
+            selectByMouse: false
+            menu: null
 
             width: parent.width * 0.55 + UM.Theme.getSize("default_margin").width
             height: parent.height;
-            txtFont: UM.Theme.getFont("default");
-
-            // TODO: need fill and data to/from somewhere???
-            //onEditingFinished: base.setMetaDataEntry("adhesion_info", properties.adhesion_info, text)
+            font: UM.Theme.getFont("default");
         }
 
     }
@@ -367,7 +394,7 @@ Column
         }
 
 
-        Label
+        Text
         {
             id: globalProfileLabel
             text: catalog.i18nc("@label","Profile:");
@@ -380,11 +407,16 @@ Column
         {
             id: globalProfileSelection
             text: {
-                var result = Cura.MachineManager.activeQualityName;
+                var result = Cura.MachineManager.currentQualityName;
                 if (Cura.MachineManager.activeQualityLayerHeight > 0) {
                     result += " <font color=\"" + UM.Theme.getColor("text_detail") + "\">";
-                    result += " - ";
-                    result += Cura.MachineManager.activeQualityLayerHeight + "mm";
+                    //result += " - ";
+                    //result += Cura.MachineManager.activeQualityLayerHeight + "mm";
+                    //var layers = ExtruderManager.getInstanceExtruderValues("layer_height")
+
+                    //if( layers[ base.currentExtruderIndex ] )
+                    //    result += layers[ base.currentExtruderIndex ]
+
                     result += "</font>";
                 }
                 return result;
@@ -393,7 +425,7 @@ Column
 
             width: parent.width * 0.55 + UM.Theme.getSize("default_margin").width
             height: UM.Theme.getSize("setting_control").height
-            tooltip: Cura.MachineManager.activeQualityName
+            tooltip: Cura.MachineManager.currentQualityName
             style: UM.Theme.styles.sidebar_header_button
             activeFocusOnPress: true;
             property var valueWarning: ! Cura.MachineManager.isActiveQualitySupported

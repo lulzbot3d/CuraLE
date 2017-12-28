@@ -16,7 +16,6 @@ from UM.Scene.Iterator.DepthFirstIterator import DepthFirstIterator
 from UM.Mesh.ReadMeshJob import ReadMeshJob
 from UM.Logger import Logger
 from UM.Preferences import Preferences
-from UM.JobQueue import JobQueue
 from UM.SaveFile import SaveFile
 from UM.Scene.Selection import Selection
 from UM.Scene.GroupDecorator import GroupDecorator
@@ -25,15 +24,23 @@ from UM.Settings.InstanceContainer import InstanceContainer
 from UM.Settings.Validator import Validator
 from UM.Message import Message
 from UM.i18n import i18nCatalog
+from UM.Workspace.WorkspaceReader import WorkspaceReader
 from UM.Platform import Platform
+from UM.Decorators import deprecated
 
 from UM.Operations.AddSceneNodeOperation import AddSceneNodeOperation
 from UM.Operations.RemoveSceneNodeOperation import RemoveSceneNodeOperation
 from UM.Operations.GroupedOperation import GroupedOperation
 from UM.Operations.SetTransformOperation import SetTransformOperation
+from cura.Arrange import Arrange
+from cura.ShapeArray import ShapeArray
+from cura.ConvexHullDecorator import ConvexHullDecorator
 from cura.SetParentOperation import SetParentOperation
 from cura.SliceableObjectDecorator import SliceableObjectDecorator
 from cura.BlockSlicingDecorator import BlockSlicingDecorator
+
+from cura.ArrangeObjectsJob import ArrangeObjectsJob
+from cura.MultiplyObjectsJob import MultiplyObjectsJob
 
 from UM.Settings.SettingDefinition import SettingDefinition, DefinitionPropertyType
 from UM.Settings.ContainerRegistry import ContainerRegistry
@@ -64,6 +71,8 @@ from cura.Settings.ContainerSettingsModel import ContainerSettingsModel
 from cura.Settings.MaterialSettingsVisibilityHandler import MaterialSettingsVisibilityHandler
 from cura.Settings.QualitySettingsModel import QualitySettingsModel
 from cura.Settings.ContainerManager import ContainerManager
+from cura.Settings.GlobalStack import GlobalStack
+from cura.Settings.ExtruderStack import ExtruderStack
 
 from PyQt5.QtCore import QUrl, pyqtSignal, pyqtProperty, QEvent, Q_ENUMS
 from UM.FlameProfiler import pyqtSlot
@@ -91,7 +100,13 @@ if not MYPY:
         CuraVersion = "master"  # [CodeStyle: Reflecting imported value]
         CuraBuildType = ""
 
+
 class CuraApplication(QtApplication):
+    # SettingVersion represents the set of settings available in the machine/extruder definitions.
+    # You need to make sure that this version number needs to be increased if there is any non-backwards-compatible
+    # changes of the settings.
+    SettingVersion = 1
+
     class ResourceTypes:
         QmlFiles = Resources.UserType + 1
         Firmware = Resources.UserType + 2
@@ -101,10 +116,14 @@ class CuraApplication(QtApplication):
         UserInstanceContainer = Resources.UserType + 6
         MachineStack = Resources.UserType + 7
         ExtruderStack = Resources.UserType + 8
+        DefinitionChangesContainer = Resources.UserType + 9
 
     Q_ENUMS(ResourceTypes)
 
     def __init__(self):
+        # this list of dir names will be used by UM to detect an old cura directory
+        for dir_name in ["extruders", "machine_instances", "materials", "plugins", "quality", "user", "variants"]:
+            Resources.addExpectedDirNameInData(dir_name)
 
         Resources.addSearchPath(os.path.join(QtApplication.getInstallPrefix(), "share", "cura", "resources"))
         if not hasattr(sys, "frozen"):
@@ -122,7 +141,7 @@ class CuraApplication(QtApplication):
         # From which stack the setting would inherit if not defined per object (handled in the engine)
         # AND for settings which are not settable_per_mesh:
         # which extruder is the only extruder this setting is obtained from
-        SettingDefinition.addSupportedProperty("limit_to_extruder", DefinitionPropertyType.Function, default = "-1")
+        SettingDefinition.addSupportedProperty("limit_to_extruder", DefinitionPropertyType.Function, default = "-1", depends_on = "value")
 
         # For settings which are not settable_per_mesh and not settable_per_extruder:
         # A function which determines the glabel/meshgroup value by looking at the values of the setting in all (used) extruders
@@ -143,6 +162,7 @@ class CuraApplication(QtApplication):
         Resources.addStorageType(self.ResourceTypes.UserInstanceContainer, "user")
         Resources.addStorageType(self.ResourceTypes.ExtruderStack, "extruders")
         Resources.addStorageType(self.ResourceTypes.MachineStack, "machine_instances")
+        Resources.addStorageType(self.ResourceTypes.DefinitionChangesContainer, "definition_changes")
 
         ContainerRegistry.getInstance().addResourceType(self.ResourceTypes.QualityInstanceContainer)
         ContainerRegistry.getInstance().addResourceType(self.ResourceTypes.VariantInstanceContainer)
@@ -150,17 +170,19 @@ class CuraApplication(QtApplication):
         ContainerRegistry.getInstance().addResourceType(self.ResourceTypes.UserInstanceContainer)
         ContainerRegistry.getInstance().addResourceType(self.ResourceTypes.ExtruderStack)
         ContainerRegistry.getInstance().addResourceType(self.ResourceTypes.MachineStack)
+        ContainerRegistry.getInstance().addResourceType(self.ResourceTypes.DefinitionChangesContainer)
 
         ##  Initialise the version upgrade manager with Cura's storage paths.
         import UM.VersionUpgradeManager #Needs to be here to prevent circular dependencies.
 
         UM.VersionUpgradeManager.VersionUpgradeManager.getInstance().setCurrentVersions(
             {
-                ("quality", InstanceContainer.Version):    (self.ResourceTypes.QualityInstanceContainer, "application/x-uranium-instancecontainer"),
+                ("quality_changes", InstanceContainer.Version * 1000000 + self.SettingVersion):    (self.ResourceTypes.QualityInstanceContainer, "application/x-uranium-instancecontainer"),
                 ("machine_stack", ContainerStack.Version): (self.ResourceTypes.MachineStack, "application/x-uranium-containerstack"),
                 ("extruder_train", ContainerStack.Version): (self.ResourceTypes.ExtruderStack, "application/x-uranium-extruderstack"),
                 ("preferences", Preferences.Version):               (Resources.Preferences, "application/x-uranium-preferences"),
-                ("user", InstanceContainer.Version):       (self.ResourceTypes.UserInstanceContainer, "application/x-uranium-instancecontainer")
+                ("user", InstanceContainer.Version * 1000000 + self.SettingVersion):       (self.ResourceTypes.UserInstanceContainer, "application/x-uranium-instancecontainer"),
+                ("definition_changes", InstanceContainer.Version * 1000000 + self.SettingVersion): (self.ResourceTypes.DefinitionChangesContainer, "application/x-uranium-instancecontainer"),
             }
         )
 
@@ -177,7 +199,7 @@ class CuraApplication(QtApplication):
              except:
                   try:
                        self._components_version = json.load(open(
-                            os.path.join(QtApplication.getInstallPrefix(), "cura2","version.json"), "r"))
+                            os.path.join(QtApplication.getInstallPrefix(), "cura-lulzbot","version.json"), "r"))
                   except:
                        self._components_version = {"cura_version": "master"}
 
@@ -189,7 +211,7 @@ class CuraApplication(QtApplication):
 
         Preferences.getInstance().addPreference("info/automatic_update_check", False)
 
-        super().__init__(name = "cura2_lulzbot", version = self.getComponentVersion("cura_version"), buildtype = CuraBuildType)
+        super().__init__(name = "cura-lulzbot", version = self.getComponentVersion("cura_version"), buildtype = CuraBuildType)
 
         Logger.log("d", "Trying to Set icon : \"" + str(Resources.getPath(Resources.Images, "cura-icon.png"))  + "\"")
         self.setWindowIcon(QIcon(Resources.getPath(Resources.Images, "cura-icon.png")))
@@ -203,7 +225,10 @@ class CuraApplication(QtApplication):
             "CameraTool",
             "GCodeWriter",
             "LocalFileOutputDevice",
-            "SolidView"
+            "SolidView",
+            "TranslateTool",
+            "FileLogger",
+            "XmlMaterialProfile"
         ])
         self._physics = None
         self._volume = None
@@ -222,11 +247,12 @@ class CuraApplication(QtApplication):
 
         self._message_box_callback = None
         self._message_box_callback_arguments = []
-
+        self._preferred_mimetype = ""
         self._i18n_catalog = i18nCatalog("cura")
 
         self.getController().getScene().sceneChanged.connect(self.updatePlatformActivity)
         self.getController().toolOperationStopped.connect(self._onToolOperationStopped)
+        self.getController().contextMenuRequested.connect(self._onContextMenuRequested)
 
         Resources.addType(self.ResourceTypes.QmlFiles, "qml")
         Resources.addType(self.ResourceTypes.Firmware, "firmware")
@@ -260,7 +286,9 @@ class CuraApplication(QtApplication):
             ContainerRegistry.getInstance().load()
 
         Preferences.getInstance().addPreference("cura/active_mode", "simple")
-        Preferences.getInstance().addPreference("cura/recent_files", "")
+
+        Preferences.getInstance().addPreference("cura/allow_connection_to_wrong_machine", False)
+
         Preferences.getInstance().addPreference("cura/categories_expanded", "")
         Preferences.getInstance().addPreference("cura/jobname_prefix", True)
         Preferences.getInstance().addPreference("view/center_on_select", False)
@@ -269,9 +297,16 @@ class CuraApplication(QtApplication):
         Preferences.getInstance().addPreference("cura/dialog_on_project_save", True)
         Preferences.getInstance().addPreference("cura/asked_dialog_on_project_save", False)
         Preferences.getInstance().addPreference("cura/choice_on_profile_override", "always_ask")
+        Preferences.getInstance().addPreference("cura/choice_on_open_project", "always_ask")
 
         Preferences.getInstance().addPreference("cura/currency", "€")
         Preferences.getInstance().addPreference("cura/material_settings", "{}")
+
+        Preferences.getInstance().addPreference("view/invert_zoom", False)
+
+        Preferences.getInstance().addPreference("cura/recent_files", "")
+
+        Preferences.getInstance().addPreference("general/zoffsetSaveToFlashEnabled", False)
 
         for key in [
             "dialog_load_path",  # dialog_save_path is in LocalFileOutputDevicePlugin
@@ -288,7 +323,6 @@ class CuraApplication(QtApplication):
             machine_settings
             resolution
                 layer_height
-                machine_nozzle_size_for_extruder
             shell
                 wall_thickness
                 top_bottom_thickness
@@ -296,6 +330,7 @@ class CuraApplication(QtApplication):
                 z_seam_y
             infill
                 infill_sparse_density
+                gradual_infill_steps
             material
                 material_print_temperature
                     material_soften_temperature
@@ -303,6 +338,7 @@ class CuraApplication(QtApplication):
                     material_wipe_temperature
                 material_bed_temperature
                     material_part_removal_temperature
+                    material_keep_part_removal_temperature
                 material_diameter
                 material_flow
                 retraction_enable
@@ -337,14 +373,16 @@ class CuraApplication(QtApplication):
             blackmagic
                 print_sequence
                 infill_mesh
+                cutting_mesh
             experimental
-            support_xy_distance_overhang;support_interface_density;support_interface_line_distance;support_bottom_stair_step_height;support_xy_overrides_z;support_area_smoothing;support_infill_rate;support_line_distance;support_enable;support_pattern;support_interface_height;support_bottom_height;support_roof_height;support_interface_enable;support_type;support_z_distance;support_bottom_distance;support_top_distance;support_interface_pattern;support_angle;support_tower_roof_angle;support_xy_distance;support_join_distance;support_use_towers;support_offset;support_minimal_diameter;support_tower_diameter;support_connect_zigzags;retraction_enable;material_diameter;retraction_extra_prime_amount;material_standby_temperature;retraction_extrusion_window;retraction_count_max;retraction_amount;material_print_temperature;material_soften_temperature;material_probe_temperature;material_wipe_temperature;material_flow_temp_graph;material_flow;switch_extruder_retraction_amount;retraction_min_travel;retraction_hop_only_when_collides;material_bed_temperature;material_part_removal_temperature;retraction_speed;retraction_prime_speed;retraction_retract_speed;material_extrusion_cool_down_speed;switch_extruder_retraction_speeds;switch_extruder_retraction_speed;switch_extruder_prime_speed;retraction_hop;retraction_hop_enabled;retraction_hop_after_extruder_switch;material_flow_dependent_temperature;acceleration_travel;skirt_brim_speed;speed_layer_0;speed_print_layer_0;speed_travel_layer_0;speed_print;speed_topbottom;speed_prime_tower;speed_support;speed_support_infill;speed_support_interface;speed_infill;speed_wall;speed_wall_0;speed_wall_x;acceleration_enabled;jerk_print;jerk_infill;jerk_wall;jerk_wall_0;jerk_wall_x;jerk_topbottom;jerk_support;jerk_support_infill;jerk_support_interface;jerk_prime_tower;jerk_enabled;speed_slowdown_layers;jerk_travel;speed_travel;speed_equalize_flow_max;acceleration_print;acceleration_infill;acceleration_prime_tower;acceleration_support;acceleration_support_interface;acceleration_support_infill;acceleration_topbottom;acceleration_wall;acceleration_wall_x;acceleration_wall_0;jerk_skirt_brim;acceleration_skirt_brim;speed_equalize_flow_enabled;acceleration_layer_0;acceleration_travel_layer_0;acceleration_print_layer_0;jerk_layer_0;jerk_print_layer_0;jerk_travel_layer_0;max_feedrate_z_override;ooze_shield_enabled;prime_tower_size;ooze_shield_dist;adhesion_extruder_nr;multiple_mesh_overlap;prime_tower_wipe_enabled;prime_tower_position_x;prime_tower_flow;ooze_shield_angle;prime_tower_position_y;prime_tower_enable;support_extruder_nr;support_interface_extruder_nr;support_infill_extruder_nr;support_extruder_nr_layer_0;skirt_brim_minimal_length;raft_base_line_spacing;skirt_line_count;layer_0_z_overlap;raft_interface_thickness;raft_interface_line_spacing;raft_surface_layers;raft_acceleration;raft_surface_acceleration;raft_interface_acceleration;raft_base_acceleration;raft_airgap;raft_base_thickness;brim_width;brim_line_count;raft_surface_line_spacing;raft_base_line_width;extruder_prime_pos_x;raft_fan_speed;raft_surface_fan_speed;raft_base_fan_speed;raft_interface_fan_speed;raft_jerk;raft_base_jerk;raft_surface_jerk;raft_interface_jerk;raft_margin;extruder_prime_pos_y;brim_outside_only;adhesion_type;raft_interface_line_width;raft_surface_thickness;skirt_gap;raft_speed;raft_surface_speed;raft_base_speed;raft_interface_speed;raft_surface_line_width;retraction_combing;travel_avoid_distance;travel_avoid_other_parts;magic_fuzzy_skin_point_density;magic_fuzzy_skin_point_dist;draft_shield_dist;conical_overhang_angle;wireframe_nozzle_clearance;wireframe_flat_delay;wireframe_flow;wireframe_flow_flat;wireframe_flow_connection;wireframe_printspeed;wireframe_printspeed_bottom;wireframe_printspeed_up;wireframe_printspeed_flat;wireframe_printspeed_down;coasting_speed;conical_overhang_enabled;support_conical_angle;draft_shield_enabled;wireframe_roof_inset;magic_fuzzy_skin_thickness;wireframe_roof_outer_delay;magic_fuzzy_skin_enabled;wireframe_drag_along;wireframe_straight_before_down;wireframe_roof_drag_along;support_conical_min_width;wireframe_top_jump;wireframe_roof_fall_down;skin_outline_count;wireframe_up_half_speed;coasting_min_volume;wireframe_strategy;coasting_volume;wireframe_fall_down;coasting_enable;wireframe_top_delay;wireframe_bottom_delay;support_conical_enabled;wireframe_enabled;skin_alternate_rotation;draft_shield_height_limitation;draft_shield_height;wireframe_height;infill_sparse_thickness;infill_overlap;infill_overlap_mm;gradual_infill_step_height;infill_sparse_density;infill_line_distance;infill_before_walls;skin_overlap;skin_overlap_mm;infill_wipe_dist;infill_pattern;gradual_infill_steps;machine_end_gcode;machine_nozzle_tip_outer_diameter;machine_acceleration;machine_extruder_count;machine_max_feedrate_y;extruder_prime_pos_z;machine_max_jerk_e;machine_nozzle_size;machine_max_acceleration_e;machine_max_jerk_xy;machine_width;machine_max_feedrate_x;machine_max_acceleration_z;material_bed_temp_wait;material_bed_temp_prepend;machine_disallowed_areas;material_guid;machine_max_feedrate_z;machine_heated_bed;machine_minimum_feedrate;extruder_prime_pos_abs;machine_start_gcode;machine_use_extruder_offset_to_offset_coords;machine_show_variants;machine_max_acceleration_x;machine_height;material_print_temp_prepend;machine_center_is_zero;machine_gcode_flavor;machine_nozzle_head_distance;machine_heat_zone_length;machine_max_jerk_z;machine_max_acceleration_y;machine_head_polygon;machine_nozzle_expansion_angle;machine_depth;gantry_height;material_print_temp_wait;machine_max_feedrate_e;machine_nozzle_heat_up_speed;machine_min_cool_heat_time_window;machine_head_with_fans_polygon;machine_nozzle_cool_down_speed;infill_mesh;infill_mesh_order;print_sequence;magic_spiralize;magic_mesh_surface_mode;layer_height_0;line_width;support_interface_line_width;skirt_brim_line_width;support_line_width;skin_line_width;prime_tower_line_width;wall_line_width;wall_line_width_x;wall_line_width_0;infill_line_width;layer_height;skin_no_small_gaps_heuristic;travel_compensate_overlapping_walls_enabled;travel_compensate_overlapping_walls_x_enabled;travel_compensate_overlapping_walls_0_enabled;xy_offset;alternate_extra_perimeter;z_seam_type;top_bottom_pattern;wall_thickness;wall_line_count;top_bottom_thickness;bottom_thickness;bottom_layers;top_thickness;top_layers;wall_0_inset;cool_lift_head;cool_fan_speed;cool_fan_speed_max;cool_fan_speed_min;cool_fan_full_at_height;cool_fan_full_layer;cool_min_layer_time;cool_fan_enabled;cool_min_layer_time_fan_speed_max;cool_min_speed;meshfix_keep_open_polygons;meshfix_extensive_stitching;meshfix_union_all;meshfix_union_all_remove_holes
+            material_flow_layer_0;cool_fan_speed;cool_fan_speed_min;cool_fan_speed_max;cool_min_layer_time_fan_speed_max;cool_fan_enabled;cool_min_speed;cool_lift_head;cool_min_layer_time;cool_fan_full_at_height;cool_fan_full_layer;cool_fan_speed_0;support_interface_skip_height;support_bottom_stair_step_width;support_type;support_xy_overrides_z;support_angle;support_xy_distance_overhang;support_infill_rate;support_line_distance;support_z_distance;support_bottom_distance;support_top_distance;support_interface_density;support_roof_density;support_roof_line_distance;support_bottom_density;support_bottom_line_distance;support_interface_height;support_roof_height;support_bottom_height;support_minimal_diameter;support_use_towers;support_bottom_stair_step_height;support_pattern;support_tower_diameter;support_xy_distance;support_connect_zigzags;support_offset;support_join_distance;support_extruder_nr;support_infill_extruder_nr;support_extruder_nr_layer_0;support_interface_extruder_nr;support_bottom_extruder_nr;support_roof_extruder_nr;support_tower_roof_angle;support_enable;support_interface_enable;support_bottom_enable;support_roof_enable;support_interface_pattern;support_roof_pattern;support_bottom_pattern;material_flow_dependent_temperature;material_flow_temp_graph;material_diameter;switch_extruder_retraction_speeds;switch_extruder_prime_speed;switch_extruder_retraction_speed;material_print_temperature_layer_0;default_material_print_temperature;retract_at_layer_change;retraction_extrusion_window;material_final_print_temperature;material_flow;retraction_min_travel;switch_extruder_retraction_amount;retraction_count_max;material_standby_temperature;material_extrusion_cool_down_speed;retraction_amount;material_initial_print_temperature;retraction_enable;material_bed_temperature;retraction_extra_prime_amount;material_print_temperature;retraction_speed;retraction_retract_speed;retraction_prime_speed;material_bed_temperature_layer_0;alternate_carve_order;meshfix_union_all;meshfix_extensive_stitching;multiple_mesh_overlap;meshfix_keep_open_polygons;meshfix_union_all_remove_holes;carve_multiple_volumes;machine_use_extruder_offset_to_offset_coords;machine_max_jerk_xy;material_print_temp_wait;machine_max_feedrate_y;machine_port;machine_disallowed_areas;machine_max_jerk_e;machine_max_feedrate_x;material_bed_temp_wait;machine_max_feedrate_e;machine_nozzle_tip_outer_diameter;machine_head_polygon;material_bed_temp_prepend;machine_nozzle_size;machine_min_cool_heat_time_window;machine_nozzle_cool_down_speed;machine_minimum_feedrate;machine_width;extruder_prime_pos_z;machine_show_variants;machine_baudrate;machine_height;material_guid;machine_max_acceleration_e;machine_max_feedrate_z;machine_heated_bed;machine_max_acceleration_x;machine_gcode_flavor;gantry_height;machine_acceleration;machine_nozzle_heat_up_speed;machine_depth;machine_max_jerk_z;machine_extruder_count;machine_name;machine_heat_zone_length;machine_end_gcode;machine_max_acceleration_z;machine_nozzle_temp_enabled;extruder_prime_pos_abs;machine_filament_park_distance;machine_head_with_fans_polygon;machine_center_is_zero;machine_nozzle_head_distance;material_print_temp_prepend;machine_wipe_gcode;machine_start_gcode;nozzle_disallowed_areas;machine_nozzle_expansion_angle;machine_shape;machine_max_acceleration_y;travel_compensate_overlapping_walls_enabled;travel_compensate_overlapping_walls_0_enabled;travel_compensate_overlapping_walls_x_enabled;skin_angles;top_bottom_thickness;bottom_thickness;bottom_layers;top_thickness;top_layers;z_seam_x;fill_perimeter_gaps;z_seam_type;wall_0_inset;wall_0_wipe_dist;xy_offset;z_seam_y;top_bottom_pattern_0;top_bottom_pattern;skin_no_small_gaps_heuristic;wall_thickness;wall_line_count;alternate_extra_perimeter;outer_inset_first;retraction_combing;retraction_hop_only_when_collides;layer_start_y;travel_avoid_distance;retraction_hop;retraction_hop_after_extruder_switch;travel_retract_before_outer_wall;start_layers_at_same_position;travel_avoid_other_parts;layer_start_x;retraction_hop_enabled;layer_height;line_width;skirt_brim_line_width;wall_line_width;wall_line_width_0;wall_line_width_x;skin_line_width;infill_line_width;prime_tower_line_width;support_line_width;support_interface_line_width;support_bottom_line_width;support_roof_line_width;layer_height_0;acceleration_enabled;acceleration_print;acceleration_topbottom;acceleration_support;acceleration_support_infill;acceleration_support_interface;acceleration_support_bottom;acceleration_support_roof;acceleration_infill;acceleration_wall;acceleration_wall_x;acceleration_wall_0;acceleration_prime_tower;speed_print;speed_topbottom;speed_prime_tower;speed_support;speed_support_infill;speed_support_interface;speed_support_bottom;speed_support_roof;speed_wall;speed_wall_0;speed_wall_x;speed_infill;jerk_enabled;acceleration_travel;max_feedrate_z_override;speed_equalize_flow_enabled;jerk_travel;speed_layer_0;speed_print_layer_0;speed_travel_layer_0;jerk_layer_0;jerk_travel_layer_0;jerk_print_layer_0;speed_slowdown_layers;acceleration_skirt_brim;acceleration_layer_0;acceleration_travel_layer_0;acceleration_print_layer_0;speed_equalize_flow_max;jerk_print;jerk_support;jerk_support_interface;jerk_support_bottom;jerk_support_roof;jerk_support_infill;jerk_wall;jerk_wall_x;jerk_wall_0;jerk_topbottom;jerk_infill;jerk_prime_tower;skirt_brim_speed;jerk_skirt_brim;speed_travel;infill_mesh_order;mold_angle;cutting_mesh;smooth_spiralized_contours;magic_mesh_surface_mode;mold_roof_height;magic_spiralize;print_sequence;support_mesh_drop_down;mold_enabled;support_mesh;anti_overhang_mesh;mold_width;infill_mesh;mesh_position_z;center_object;mesh_position_y;mesh_position_x;mesh_rotation_matrix;spaghetti_max_height;spaghetti_infill_enabled;max_skin_angle_for_expansion;min_skin_width_for_expansion;skin_overlap;skin_overlap_mm;infill_sparse_density;infill_line_distance;infill_angles;gradual_infill_step_height;infill_pattern;spaghetti_flow;sub_div_rad_add;infill_wipe_dist;infill_before_walls;spaghetti_max_infill_angle;infill_sparse_thickness;gradual_infill_steps;expand_skins_expand_distance;infill_overlap;infill_overlap_mm;spaghetti_inset;expand_skins_into_infill;expand_lower_skins;expand_upper_skins;min_infill_area;raft_acceleration;raft_base_acceleration;raft_surface_acceleration;raft_interface_acceleration;raft_interface_line_width;prime_blob_enable;raft_base_line_width;raft_surface_thickness;brim_width;brim_line_count;extruder_prime_pos_y;raft_surface_layers;raft_base_line_spacing;raft_margin;raft_base_thickness;brim_outside_only;raft_surface_line_spacing;raft_speed;raft_surface_speed;raft_interface_speed;raft_base_speed;skirt_line_count;raft_airgap;skirt_brim_minimal_length;raft_fan_speed;raft_surface_fan_speed;raft_interface_fan_speed;raft_base_fan_speed;raft_surface_line_width;skirt_gap;raft_interface_line_spacing;raft_jerk;raft_interface_jerk;raft_base_jerk;raft_surface_jerk;adhesion_type;raft_interface_thickness;layer_0_z_overlap;extruder_prime_pos_x;adhesion_extruder_nr;coasting_volume;wireframe_roof_inset;support_conical_angle;magic_fuzzy_skin_thickness;coasting_enable;conical_overhang_angle;wireframe_fall_down;draft_shield_enabled;support_conical_enabled;magic_fuzzy_skin_point_density;magic_fuzzy_skin_point_dist;wireframe_drag_along;conical_overhang_enabled;wireframe_up_half_speed;draft_shield_height_limitation;wireframe_roof_drag_along;wireframe_printspeed;wireframe_printspeed_down;wireframe_printspeed_bottom;wireframe_printspeed_up;wireframe_printspeed_flat;wireframe_top_delay;support_conical_min_width;wireframe_nozzle_clearance;skin_alternate_rotation;wireframe_flow;wireframe_flow_flat;wireframe_flow_connection;skin_outline_count;wireframe_straight_before_down;wireframe_top_jump;coasting_min_volume;wireframe_roof_outer_delay;coasting_speed;wireframe_roof_fall_down;wireframe_height;draft_shield_height;wireframe_strategy;wireframe_enabled;wireframe_flat_delay;draft_shield_dist;infill_hollow;magic_fuzzy_skin_enabled;wireframe_bottom_delay;ooze_shield_dist;ooze_shield_angle;prime_tower_flow;prime_tower_position_y;prime_tower_wipe_enabled;ooze_shield_enabled;prime_tower_enable;dual_pre_wipe;prime_tower_size;prime_tower_min_volume;prime_tower_wall_thickness;prime_tower_position_x
         """.replace("\n", ";").replace(" ", ""))
 
-        JobQueue.getInstance().jobFinished.connect(self._onJobFinished)
+
 
         self.applicationShuttingDown.connect(self.saveSettings)
         self.engineCreatedSignal.connect(self._onEngineCreated)
+
         self._recent_files = []
         files = Preferences.getInstance().getValue("cura/recent_files").split(";")
         for f in files:
@@ -352,9 +390,12 @@ class CuraApplication(QtApplication):
                 continue
 
             self._recent_files.append(QUrl.fromLocalFile(f))
+
         self._exit_allowed = False
         self._original_sigint = signal.getsignal(signal.SIGINT)
         signal.signal(signal.SIGINT, self.consoleExit)
+        self.globalContainerStackChanged.connect(self._onGlobalContainerChanged)
+        self._onGlobalContainerChanged()
 
     @pyqtSlot(str, result=str)
     def getComponentVersion(self, component):
@@ -362,6 +403,12 @@ class CuraApplication(QtApplication):
 
     def _onEngineCreated(self):
         self._engine.addImageProvider("camera", CameraImageProvider.CameraImageProvider())
+
+    ## The "Quit" button click event handler.
+    @pyqtSlot()
+    def closeApplication(self):
+        Logger.log("i", "Close application")
+        self._main_window.close()
 
     ## A reusable dialogbox
     #
@@ -448,7 +495,7 @@ class CuraApplication(QtApplication):
                 elif instance_type == "variant":
                     path = Resources.getStoragePath(self.ResourceTypes.VariantInstanceContainer, file_name)
                 elif instance_type == "definition_changes":
-                    path = Resources.getStoragePath(self.ResourceTypes.MachineStack, file_name)
+                    path = Resources.getStoragePath(self.ResourceTypes.DefinitionChangesContainer, file_name)
 
                 if path:
                     instance.setPath(path)
@@ -471,16 +518,18 @@ class CuraApplication(QtApplication):
 
         mime_type = ContainerRegistry.getMimeTypeForContainer(type(stack))
         file_name = urllib.parse.quote_plus(stack.getId()) + "." + mime_type.preferredSuffix
-        stack_type = stack.getMetaDataEntry("type", None)
+
         path = None
-        if not stack_type or stack_type == "machine":
+        if isinstance(stack, GlobalStack):
             path = Resources.getStoragePath(self.ResourceTypes.MachineStack, file_name)
-        elif stack_type == "extruder_train":
+        elif isinstance(stack, ExtruderStack):
             path = Resources.getStoragePath(self.ResourceTypes.ExtruderStack, file_name)
-        if path:
-            stack.setPath(path)
-            with SaveFile(path, "wt") as f:
-                f.write(data)
+        else:
+            path = Resources.getStoragePath(Resources.ContainerStacks, file_name)
+
+        stack.setPath(path)
+        with SaveFile(path, "wt") as f:
+            f.write(data)
 
 
     @pyqtSlot(str, result = QUrl)
@@ -510,7 +559,7 @@ class CuraApplication(QtApplication):
 
         self._plugin_registry.loadPlugins()
 
-        if self.getBackend() == None:
+        if self.getBackend() is None:
             raise RuntimeError("Could not load the backend plugin!")
 
         self._plugins_loaded = True
@@ -634,6 +683,9 @@ class CuraApplication(QtApplication):
         # The platform is a child of BuildVolume
         self._volume = BuildVolume.BuildVolume(root)
 
+        # Set the build volume of the arranger to the used build volume
+        Arrange.build_volume = self._volume
+
         self.getRenderer().setBackgroundColor(QColor(245, 245, 245))
 
         self._physics = PlatformPhysics.PlatformPhysics(controller, self._volume)
@@ -644,7 +696,9 @@ class CuraApplication(QtApplication):
         camera.lookAt(Vector(0, 0, 0))
         controller.getScene().setActiveCamera("3d")
 
-        self.getController().getTool("CameraTool").setOrigin(Vector(0, 100, 0))
+        camera_tool = self.getController().getTool("CameraTool")
+        camera_tool.setOrigin(Vector(0, 100, 0))
+        camera_tool.setZoomRange(0.1, 200000)
 
         self._camera_animation = CameraAnimation.CameraAnimation()
         self._camera_animation.setCameraTool(self.getController().getTool("CameraTool"))
@@ -739,6 +793,7 @@ class CuraApplication(QtApplication):
     #
     #   \param engine The QML engine.
     def registerObjects(self, engine):
+        super().registerObjects(engine)
         engine.rootContext().setContextProperty("Printer", self)
         engine.rootContext().setContextProperty("CuraApplication", self)
         self._print_information = PrintInformation.PrintInformation()
@@ -772,14 +827,11 @@ class CuraApplication(QtApplication):
             if type_name in ("Cura", "Actions"):
                 continue
 
-            qmlRegisterType(QUrl.fromLocalFile(path), "Cura", 1, 0, type_name)
+            # Ignore anything that is not a QML file.
+            if not path.endswith(".qml"):
+                continue
 
-    ##  Get the backend of the application (the program that does the heavy lifting).
-    #   The backend is also a QObject, which can be used from qml.
-    #   \returns Backend \type{Backend}
-    @pyqtSlot(result = "QObject*")
-    def getBackend(self):
-        return self._backend
+            qmlRegisterType(QUrl.fromLocalFile(path), "Cura", 1, 0, type_name)
 
     def onSelectionChanged(self):
         if Selection.hasSelection():
@@ -816,13 +868,29 @@ class CuraApplication(QtApplication):
             self._camera_animation.setTarget(Selection.getSelectedObject(0).getWorldPosition())
             self._camera_animation.start()
 
+    def _onGlobalContainerChanged(self):
+        if self._global_container_stack is not None:
+            machine_file_formats = [file_type.strip() for file_type in self._global_container_stack.getMetaDataEntry("file_formats").split(";")]
+            new_preferred_mimetype = ""
+            if machine_file_formats:
+                new_preferred_mimetype =  machine_file_formats[0]
+
+            if new_preferred_mimetype != self._preferred_mimetype:
+                self._preferred_mimetype = new_preferred_mimetype
+                self.preferredOutputMimetypeChanged.emit()
+
     requestAddPrinter = pyqtSignal()
     activityChanged = pyqtSignal()
     sceneBoundingBoxChanged = pyqtSignal()
+    preferredOutputMimetypeChanged = pyqtSignal()
 
     @pyqtProperty(bool, notify = activityChanged)
     def platformActivity(self):
         return self._platform_activity
+
+    @pyqtProperty(str, notify=preferredOutputMimetypeChanged)
+    def preferredOutputMimetype(self):
+        return self._preferred_mimetype
 
     @pyqtProperty(str, notify = sceneBoundingBoxChanged)
     def getSceneBoundingBoxString(self):
@@ -868,6 +936,7 @@ class CuraApplication(QtApplication):
 
     # Remove all selected objects from the scene.
     @pyqtSlot()
+    @deprecated("Moved to CuraActions", "2.6")
     def deleteSelection(self):
         if not self.getController().getToolsEnabled():
             return
@@ -888,6 +957,7 @@ class CuraApplication(QtApplication):
     ##  Remove an object from the scene.
     #   Note that this only removes an object if it is selected.
     @pyqtSlot("quint64")
+    @deprecated("Use deleteSelection instead", "2.6")
     def deleteObject(self, object_id):
         if not self.getController().getToolsEnabled():
             return
@@ -911,27 +981,26 @@ class CuraApplication(QtApplication):
             op.push()
 
     ##  Create a number of copies of existing object.
+    #   \param object_id
+    #   \param count number of copies
+    #   \param min_offset minimum offset to other objects.
     @pyqtSlot("quint64", int)
-    def multiplyObject(self, object_id, count):
+    @deprecated("Use CuraActions::multiplySelection", "2.6")
+    def multiplyObject(self, object_id, count, min_offset = 8):
         node = self.getController().getScene().findObject(object_id)
-
-        if not node and object_id != 0:  # Workaround for tool handles overlapping the selected object
+        if not node:
             node = Selection.getSelectedObject(0)
 
-        if node:
-            current_node = node
-            # Find the topmost group
-            while current_node.getParent() and current_node.getParent().callDecoration("isGroup"):
-                current_node = current_node.getParent()
+        while node.getParent() and node.getParent().callDecoration("isGroup"):
+            node = node.getParent()
 
-            op = GroupedOperation()
-            for _ in range(count):
-                new_node = copy.deepcopy(current_node)
-                op.addOperation(AddSceneNodeOperation(new_node, current_node.getParent()))
-            op.push()
+        job = MultiplyObjectsJob([node], count, min_offset)
+        job.start()
+        return
 
     ##  Center object on platform.
     @pyqtSlot("quint64")
+    @deprecated("Use CuraActions::centerSelection", "2.6")
     def centerObject(self, object_id):
         node = self.getController().getScene().findObject(object_id)
         if not node and object_id != 0:  # Workaround for tool handles overlapping the selected object
@@ -1046,6 +1115,52 @@ class CuraApplication(QtApplication):
                 op.addOperation(SetTransformOperation(node, Vector(0, center_y, 0), Quaternion(), Vector(1, 1, 1)))
             op.push()
 
+    ##  Arrange all objects.
+    @pyqtSlot()
+    def arrangeAll(self):
+        nodes = []
+        for node in DepthFirstIterator(self.getController().getScene().getRoot()):
+            if type(node) is not SceneNode:
+                continue
+            if not node.getMeshData() and not node.callDecoration("isGroup"):
+                continue  # Node that doesnt have a mesh and is not a group.
+            if node.getParent() and node.getParent().callDecoration("isGroup"):
+                continue  # Grouped nodes don't need resetting as their parent (the group) is resetted)
+            if not node.isSelectable():
+                continue  # i.e. node with layer data
+            # Skip nodes that are too big
+            if node.getBoundingBox().width < self._volume.getBoundingBox().width or node.getBoundingBox().depth < self._volume.getBoundingBox().depth:
+                nodes.append(node)
+        self.arrange(nodes, fixed_nodes = [])
+
+    ##  Arrange Selection
+    @pyqtSlot()
+    def arrangeSelection(self):
+        nodes = Selection.getAllSelectedObjects()
+
+        # What nodes are on the build plate and are not being moved
+        fixed_nodes = []
+        for node in DepthFirstIterator(self.getController().getScene().getRoot()):
+            if type(node) is not SceneNode:
+                continue
+            if not node.getMeshData() and not node.callDecoration("isGroup"):
+                continue  # Node that doesnt have a mesh and is not a group.
+            if node.getParent() and node.getParent().callDecoration("isGroup"):
+                continue  # Grouped nodes don't need resetting as their parent (the group) is resetted)
+            if not node.isSelectable():
+                continue  # i.e. node with layer data
+            if node in nodes:  # exclude selected node from fixed_nodes
+                continue
+            fixed_nodes.append(node)
+        self.arrange(nodes, fixed_nodes)
+
+    ##  Arrange a set of nodes given a set of fixed nodes
+    #   \param nodes nodes that we have to place
+    #   \param fixed_nodes nodes that are placed in the arranger before finding spots for nodes
+    def arrange(self, nodes, fixed_nodes):
+        job = ArrangeObjectsJob(nodes, fixed_nodes)
+        job.start()
+
     ##  Reload all mesh data on the screen from file.
     @pyqtSlot()
     def reloadAll(self):
@@ -1080,12 +1195,6 @@ class CuraApplication(QtApplication):
             log += entry.decode()
 
         return log
-
-    recentFilesChanged = pyqtSignal()
-
-    @pyqtProperty("QVariantList", notify = recentFilesChanged)
-    def recentFiles(self):
-        return self._recent_files
 
     @pyqtSlot("QStringList")
     def setExpandedCategories(self, categories):
@@ -1318,6 +1427,12 @@ class CuraApplication(QtApplication):
         filename = job.getFileName()
         self._currently_loading_files.remove(filename)
 
+        root = self.getController().getScene().getRoot()
+        arranger = Arrange.create(scene_root = root)
+        min_offset = 8
+
+        self.fileLoaded.emit(filename)
+
         for node in nodes:
             node.setSelectable(True)
             node.setName(os.path.basename(filename))
@@ -1338,10 +1453,59 @@ class CuraApplication(QtApplication):
 
             scene = self.getController().getScene()
 
+            # If there is no convex hull for the node, start calculating it and continue.
+            if not node.getDecorator(ConvexHullDecorator):
+                node.addDecorator(ConvexHullDecorator())
+            for child in node.getAllChildren():
+                if not child.getDecorator(ConvexHullDecorator):
+                    child.addDecorator(ConvexHullDecorator())
+
+            if node.callDecoration("isSliceable"):
+                # Only check position if it's not already blatantly obvious that it won't fit.
+                if node.getBoundingBox().width < self._volume.getBoundingBox().width or node.getBoundingBox().depth < self._volume.getBoundingBox().depth:
+                    # Find node location
+                    offset_shape_arr, hull_shape_arr = ShapeArray.fromNode(node, min_offset = min_offset)
+
+                    # Step is for skipping tests to make it a lot faster. it also makes the outcome somewhat rougher
+                    node, _ = arranger.findNodePlacement(node, offset_shape_arr, hull_shape_arr, step = 10)
+
             op = AddSceneNodeOperation(node, scene.getRoot())
             op.push()
-
             scene.sceneChanged.emit(node)
 
     def addNonSliceableExtension(self, extension):
         self._non_sliceable_extensions.append(extension)
+
+    ##  Display text on the splash screen.
+    def showSplashMessage(self, message):
+        splash = self.getSplashScreen()
+        if splash:
+            splash.setText(message)
+            self.processEvents()
+
+    @pyqtSlot(str, result=bool)
+    def checkIsValidProjectFile(self, file_url):
+        """
+        Checks if the given file URL is a valid project file.
+        """
+        try:
+            file_path = QUrl(file_url).toLocalFile()
+            workspace_reader = self.getWorkspaceFileHandler().getReaderForFile(file_path)
+            if workspace_reader is None:
+                return False  # non-project files won't get a reader
+
+            result = workspace_reader.preRead(file_path, show_dialog=False)
+            return result == WorkspaceReader.PreReadResult.accepted
+        except Exception as e:
+            Logger.log("e", "Could not check file %s: %s", file_url, e)
+            return False
+
+    def _onContextMenuRequested(self, x: float, y: float) -> None:
+        # Ensure we select the object if we request a context menu over an object without having a selection.
+        if not Selection.hasSelection():
+            node = self.getController().getScene().findObject(self.getRenderer().getRenderPass("selection").getIdAtPosition(x, y))
+            if node:
+                while(node.getParent() and node.getParent().callDecoration("isGroup")):
+                    node = node.getParent()
+
+                Selection.add(node)

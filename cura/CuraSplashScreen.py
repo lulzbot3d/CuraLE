@@ -15,6 +15,12 @@ class CuraSplashScreen(QSplashScreen):
 
         splash_image = QPixmap(Resources.getPath(Resources.Images, "cura.png"))
         self.setPixmap(splash_image.scaled(splash_image.size() * self._scale))
+        self._text = "Meow"
+
+
+    def setText(self, text):
+        self._text = text
+        self.repaint()
 
     def drawContents(self, painter):
         painter.save()
@@ -32,11 +38,15 @@ class CuraSplashScreen(QSplashScreen):
         font = QFont() # Using system-default font here
         font.setPointSize(8)
         painter.setFont(font)
-        painter.drawText(0, 0, 330 * self._scale, 230 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, version[0])
+        painter.drawText(380, 220, 330 * self._scale, 230 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, self._text)
+        #painter.drawText(0, 0, 330 * self._scale, 230 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, version[0])
+        painter.drawText(380, 200, 330 * self._scale, 230 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, version[0])
         if len(version) > 1:
             font.setPointSize(12)
             painter.setFont(font)
-            painter.drawText(0, 0, 330 * self._scale, 265 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, version[1])
+            painter.drawText(380, 220, 330 * self._scale, 265 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, self._text)
+            #painter.drawText(0, 0, 330 * self._scale, 265 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, version[1])
+            painter.drawText(380, 200, 330 * self._scale, 265 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, version[1])
 
         painter.restore()
         super().drawContents(painter)

@@ -5,6 +5,7 @@ import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.1
+import QtQuick.Dialogs 1.2
 
 import UM 1.1 as UM
 
@@ -48,6 +49,18 @@ UM.PreferencesPage
         }
     }
 
+    function setDefaultOpenProjectOption(code)
+    {
+        for (var i = 0; i < choiceOnOpenProjectDropDownButton.model.count; ++i)
+        {
+            if (choiceOnOpenProjectDropDownButton.model.get(i).code == code)
+            {
+                choiceOnOpenProjectDropDownButton.currentIndex = i
+                break;
+            }
+        }
+    }
+
     function reset()
     {
         UM.Preferences.resetPreference("general/language")
@@ -72,26 +85,30 @@ UM.PreferencesPage
         showOverhangCheckbox.checked = boolCheck(UM.Preferences.getValue("view/show_overhang"))
         UM.Preferences.resetPreference("view/center_on_select");
         centerOnSelectCheckbox.checked = boolCheck(UM.Preferences.getValue("view/center_on_select"))
+        UM.Preferences.resetPreference("view/invert_zoom");
+        invertZoomCheckbox.checked = boolCheck(UM.Preferences.getValue("view/invert_zoom"))
         UM.Preferences.resetPreference("view/top_layer_count");
         topLayerCountCheckbox.checked = boolCheck(UM.Preferences.getValue("view/top_layer_count"))
 
         UM.Preferences.resetPreference("cura/choice_on_profile_override")
         setDefaultDiscardOrKeepProfile(UM.Preferences.getValue("cura/choice_on_profile_override"))
 
-        if (plugins.find("id", "SliceInfoPlugin") > -1) {
-            UM.Preferences.resetPreference("info/send_slice_info")
-            sendDataCheckbox.checked = boolCheck(UM.Preferences.getValue("info/send_slice_info"))
-        }
-        if (plugins.find("id", "UpdateChecker") > -1) {
-            UM.Preferences.resetPreference("info/automatic_update_check")
-            checkUpdatesCheckbox.checked = boolCheck(UM.Preferences.getValue("info/automatic_update_check"))
-        }
+        UM.Preferences.resetPreference("cura/choice_on_open_project")
+        setDefaultOpenProjectOption(UM.Preferences.getValue("cura/choice_on_open_project"))
+
+        UM.Preferences.resetPreference("cura/allow_connection_to_wrong_machine")
+        invertZoomCheckbox.checked = boolCheck(UM.Preferences.getValue("cura/allow_connection_to_wrong_machine"))
+
+        UM.Preferences.resetPreference("general/zoffsetSaveToFlashEnabled", checked)
+        zOffsetCheckbox.checked = boolCheck(UM.Preferences.getValue("general/zoffsetSaveToFlashEnabled"))
     }
 
     ScrollView
     {
         width: parent.width
         height: parent.height
+
+        flickableItem.flickableDirection: Flickable.VerticalFlick;
 
         Column
         {
@@ -107,9 +124,11 @@ UM.PreferencesPage
                 text: catalog.i18nc("@label","Interface")
             }
 
-            Row
+            GridLayout
             {
-                spacing: UM.Theme.getSize("default_margin").width
+                id: interfaceGrid
+                columns: 4
+
                 Label
                 {
                     id: languageLabel
@@ -131,6 +150,7 @@ UM.PreferencesPage
                             append({ text: "Suomi", code: "fi" })
                             append({ text: "Français", code: "fr" })
                             append({ text: "Italiano", code: "it" })
+                            append({ text: "日本語", code: "jp" })
                             append({ text: "Nederlands", code: "nl" })
                             append({ text: "Português do Brasil", code: "ptbr" })
                             append({ text: "Русский", code: "ru" })
@@ -170,36 +190,16 @@ UM.PreferencesPage
                 {
                     id: currencyLabel
                     text: catalog.i18nc("@label","Currency:")
-                    anchors.verticalCenter: languageComboBox.verticalCenter
+                    anchors.verticalCenter: currencyField.verticalCenter
                 }
+
                 TextField
                 {
                     id: currencyField
                     text: UM.Preferences.getValue("cura/currency")
                     onTextChanged: UM.Preferences.setValue("cura/currency", text)
                 }
-            }
 
-            Label
-            {
-                id: languageCaption
-
-                //: Language change warning
-                text: catalog.i18nc("@label", "You will need to restart the application for language changes to have effect.")
-                wrapMode: Text.WordWrap
-                font.italic: true
-            }
-
-            Item
-            {
-                //: Spacer
-                height: UM.Theme.getSize("default_margin").height
-                width: UM.Theme.getSize("default_margin").width
-            }
-
-            Row
-            {
-                spacing: UM.Theme.getSize("default_margin").width
                 Label
                 {
                     id: themeLabel
@@ -210,6 +210,7 @@ UM.PreferencesPage
                 ComboBox
                 {
                     id: themeComboBox
+
                     model: ListModel
                     {
                         id: themeList
@@ -246,15 +247,19 @@ UM.PreferencesPage
                         currentIndex += 1;
                         currentIndex -= 1;
                     }
+
                 }
             }
 
-            Label
-            {
-                id: themeCaption
 
-                //: Theme change warning
-                text: catalog.i18nc("@label", "You will need to restart the application for theme changes to have effect.")
+
+
+	        Label
+            {
+                id: languageCaption
+
+                //: Language change warning
+                text: catalog.i18nc("@label", "You will need to restart the application for these changes to have effect.")
                 wrapMode: Text.WordWrap
                 font.italic: true
             }
@@ -282,14 +287,13 @@ UM.PreferencesPage
                 CheckBox
                 {
                     id: autoSliceCheckbox
-
                     checked: boolCheck(UM.Preferences.getValue("general/auto_slice"))
                     onClicked: UM.Preferences.setValue("general/auto_slice", checked)
 
                     text: catalog.i18nc("@option:check","Slice automatically");
                 }
             }
-
+            
             Item
             {
                 //: Spacer
@@ -324,7 +328,7 @@ UM.PreferencesPage
             UM.TooltipArea {
                 width: childrenRect.width;
                 height: childrenRect.height;
-                text: catalog.i18nc("@info:tooltip","Moves the camera so the model is in the center of the view when an model is selected")
+                text: catalog.i18nc("@info:tooltip","Moves the camera so the model is in the center of the view when a model is selected")
 
                 CheckBox
                 {
@@ -333,6 +337,20 @@ UM.PreferencesPage
                     checked: boolCheck(UM.Preferences.getValue("view/center_on_select"))
                     onClicked: UM.Preferences.setValue("view/center_on_select",  checked)
                     enabled: Qt.platform.os != "windows" // Hack: disable the feature on windows as it's broken for pyqt 5.7.1.
+                }
+            }
+
+            UM.TooltipArea {
+                width: childrenRect.width;
+                height: childrenRect.height;
+                text: catalog.i18nc("@info:tooltip","Should the default zoom behavior of cura be inverted?")
+
+                CheckBox
+                {
+                    id: invertZoomCheckbox
+                    text: catalog.i18nc("@action:button","Invert the direction of camera zoom.");
+                    checked: boolCheck(UM.Preferences.getValue("view/invert_zoom"))
+                    onClicked: UM.Preferences.setValue("view/invert_zoom",  checked)
                 }
             }
 
@@ -464,6 +482,56 @@ UM.PreferencesPage
                 }
             }
 
+            UM.TooltipArea {
+                width: childrenRect.width
+                height: childrenRect.height
+                text: catalog.i18nc("@info:tooltip", "Default behavior when opening a project file")
+
+                Column
+                {
+                    spacing: 4
+
+                    Label
+                    {
+                        text: catalog.i18nc("@window:text", "Default behavior when opening a project file: ")
+                    }
+
+                    ComboBox
+                    {
+                        id: choiceOnOpenProjectDropDownButton
+                        width: 200
+
+                        model: ListModel
+                        {
+                            id: openProjectOptionModel
+
+                            Component.onCompleted: {
+                                append({ text: catalog.i18nc("@option:openProject", "Always ask"), code: "always_ask" })
+                                append({ text: catalog.i18nc("@option:openProject", "Always open as a project"), code: "open_as_project" })
+                                append({ text: catalog.i18nc("@option:openProject", "Always import models"), code: "open_as_model" })
+                            }
+                        }
+
+                        currentIndex:
+                        {
+                            var index = 0;
+                            var currentChoice = UM.Preferences.getValue("cura/choice_on_open_project");
+                            for (var i = 0; i < model.count; ++i)
+                            {
+                                if (model.get(i).code == currentChoice)
+                                {
+                                    index = i;
+                                    break;
+                                }
+                            }
+                            return index;
+                        }
+
+                        onActivated: UM.Preferences.setValue("cura/choice_on_open_project", model.get(index).code)
+                    }
+                }
+            }
+
             Item
             {
                 //: Spacer
@@ -521,6 +589,35 @@ UM.PreferencesPage
                     }
                 }
             }
+// T1372 temporary removed
+/*
+            Item
+            {
+                //: Spacer
+                height: UM.Theme.getSize("default_margin").height
+                width: UM.Theme.getSize("default_margin").height
+            }
+
+            Label
+            {
+                font.bold: true
+                text: catalog.i18nc("@label","Enable save Z-offset to flash memory button")
+            }
+
+            UM.TooltipArea {
+                width: childrenRect.width
+                height: childrenRect.height
+                text: catalog.i18nc("@info:tooltip","Enable save Z-offset to flash memory button")
+
+                CheckBox
+                {
+                    id: zOffsetCheckbox
+                    text: catalog.i18nc("@option:check","Enable save Z-offset to flash memory button")
+                    checked: boolCheck(UM.Preferences.getValue("general/zoffsetSaveToFlashEnabled"))
+                    onCheckedChanged: UM.Preferences.setValue("general/zoffsetSaveToFlashEnabled", zOffsetCheckbox.checked)
+                }
+            }
+*/
 
             Item
             {
@@ -532,37 +629,45 @@ UM.PreferencesPage
             Label
             {
                 font.bold: true
-                visible: checkUpdatesCheckbox.visible || sendDataCheckbox.visible
-                text: catalog.i18nc("@label","Privacy")
+                text: catalog.i18nc("@label","Developer settings")
             }
 
             UM.TooltipArea {
-                visible: plugins.find("id", "UpdateChecker") > -1
                 width: childrenRect.width
-                height: visible ? childrenRect.height : 0
-                text: catalog.i18nc("@info:tooltip","Should Cura check for updates when the program is started?")
+                height: childrenRect.height
+                text: catalog.i18nc("@info:tooltip","Should cura allow connection to wrong/custom printer?")
 
-                CheckBox
+                MessageDialog
                 {
-                    id: checkUpdatesCheckbox
-                    text: catalog.i18nc("@option:check","Check for updates on start")
-                    checked: boolCheck(UM.Preferences.getValue("info/automatic_update_check"))
-                    onCheckedChanged: UM.Preferences.setValue("info/automatic_update_check", checked)
+                    id: wrongPrinterDialog
+                    title: catalog.i18nc("@label","Warning")
+                    text: catalog.i18nc("@label","Do you really sure to allow connection to wrong/custom printers? It may harm your machine.")
+                    standardButtons: StandardButton.Yes | StandardButton.No
+                    function resetValue()
+                    {
+                        wrongPrinterConnectionCheckbox.checked = false
+                        UM.Preferences.setValue("cura/allow_connection_to_wrong_machine", false)
+                    }
+                    onRejected: resetValue()
+                    onNo: resetValue()
                 }
-            }
-
-            UM.TooltipArea {
-                visible: plugins.find("id", "SliceInfoPlugin") > -1
-                width: childrenRect.width
-                height: visible ? childrenRect.height : 0
-                text: catalog.i18nc("@info:tooltip","Should anonymous data about your print be sent to Ultimaker? Note, no models, IP addresses or other personally identifiable information is sent or stored.")
 
                 CheckBox
                 {
-                    id: sendDataCheckbox
-                    text: catalog.i18nc("@option:check","Send (anonymous) print information")
-                    checked: boolCheck(UM.Preferences.getValue("info/send_slice_info"))
-                    onCheckedChanged: UM.Preferences.setValue("info/send_slice_info", checked)
+                    id: wrongPrinterConnectionCheckbox
+                    text: catalog.i18nc("@option:check","Allow connection to wrong printers")
+                    checked: boolCheck(UM.Preferences.getValue("cura/allow_connection_to_wrong_machine"))
+                    onCheckedChanged:
+                    {
+                        UM.Preferences.setValue("cura/allow_connection_to_wrong_machine", checked)
+                    }
+                    onClicked:
+                    {
+                        if(checked)
+                        {
+                            wrongPrinterDialog.visible = true
+                        }
+                    }
                 }
             }
         }

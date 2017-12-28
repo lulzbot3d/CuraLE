@@ -1,5 +1,10 @@
 {
     "fonts": {
+        "large_printer_button": {
+            "size": 0.9,
+            "bold": true,
+            "family": "Lato"
+        },
         "large": {
             "size": 1.25,
             "bold": true,
@@ -64,6 +69,7 @@
         "text_reversed": [255, 255, 255, 255],
         "text_subtext": [102, 102, 102, 255],
         "text_green": [193, 216, 47, 255],
+        "text_dark_green": [0, 0, 0, 255],
 
         "error": [255, 140, 0, 255],
         "sidebar_header_bar": [193, 216, 47, 255],
@@ -145,6 +151,7 @@
 
         "setting_control": [255, 255, 255, 255],
         "setting_control_selected": [230, 235, 145, 255],
+        "setting_control_selected_dark_green": [155, 174, 17, 255],
         "setting_control_highlight": [255, 255, 255, 255],
         "setting_control_border": [127, 127, 127, 255],
         "setting_control_border_highlight": [213, 236, 67, 255],
@@ -155,6 +162,7 @@
         "setting_control_disabled": [245, 245, 245, 255],
         "setting_control_disabled_text": [127, 127, 127, 255],
         "setting_control_disabled_border": [127, 127, 127, 255],
+        "setting_control_icon_disabled_background": [102,102,102, 255],
         "setting_unit": [127, 127, 127, 255],
         "setting_validation_error": [255, 57, 14, 255],
         "setting_validation_warning": [255, 186, 15, 255],
@@ -177,10 +185,20 @@
         "checkbox_mark": [120, 136, 20, 255],
         "checkbox_text": [193, 216, 47, 255],
 
+        "mode_switch": [255, 255, 255, 255],
+        "mode_switch_hover": [255, 255, 255, 255],
+        "mode_switch_border": [127, 127, 127, 255],
+        "mode_switch_border_hover": [12, 169, 227, 255],
+        "mode_switch_handle": [24, 41, 77, 255],
+        "mode_switch_text": [102, 102, 102, 255],
+        "mode_switch_text_hover": [12, 169, 227, 255],
+        "mode_switch_text_checked": [12, 169, 227, 255],
+
         "tooltip": [120, 136, 20, 255],
         "tooltip_text": [255, 255, 255, 255],
 
         "message_background": [120, 136, 20, 255],
+        "message_background_error": [255, 0, 0, 255],
         "message_text": [255, 255, 255, 255],
         "message_border": [120, 136, 20, 255],
         "message_button": [255, 255, 255, 255],
@@ -240,7 +258,9 @@
         "layerview_support_infill": [0,  255,  255, 255],
         "layerview_move_combing": [0,  0,  255, 255],
         "layerview_move_retraction": [128,  128,  255, 255],
-        "layerview_support_interface": [64, 192, 255, 255]
+        "layerview_support_interface": [64, 192, 255, 255],
+
+        "info_button": [127, 127, 127, 255]
     },
 
     "sizes": {
@@ -294,14 +314,13 @@
 
         "scrollbar": [0.75, 0.5],
 
-        "scrollbar": [0.75, 0.5],
-
         "slider_groove": [0.5, 0.5],
         "slider_handle": [1.5, 1.5],
         "slider_layerview_size": [1.0, 22.0],
         "slider_layerview_background": [4.0, 0.0],
         "slider_layerview_margin": [1.0, 1.0],
 
+        "layerview_menu_origin": [5.0, -44.0],
         "layerview_menu_size": [16.5, 21.0],
         "layerview_menu_size_compatibility": [22, 23.0],
         "layerview_legend_size": [1.0, 1.0],
@@ -310,6 +329,7 @@
         "layered_view_scrollbar": [1.0, 0],
 
         "checkbox": [2.0, 2.0],
+        "mode_switch": [2.0, 1.0],
 
         "tooltip": [20.0, 10.0],
         "tooltip_margins": [1.0, 1.0],
@@ -319,7 +339,7 @@
         "save_button_save_to_button": [0.3, 2.7],
         "save_button_specs_icons": [1.4, 1.4],
 
-        "modal_window_minimum": [60.0, 45],
+        "modal_window_minimum": [90.0, 30],
         "wizard_progress": [10.0, 0.0],
 
         "message": [30.0, 5.0],

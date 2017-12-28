@@ -10,6 +10,7 @@ from enum import IntEnum  # For the connection state tracking.
 from UM.Settings.ContainerRegistry import ContainerRegistry
 from UM.Logger import Logger
 from UM.Signal import signalemitter
+from UM.Application import Application
 
 i18n_catalog = i18nCatalog("cura")
 
@@ -30,11 +31,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
         self._container_registry = ContainerRegistry.getInstance()
         self._target_bed_temperature = 0
         self._bed_temperature = 0
-        self._num_extruders = 1
-        self._hotend_temperatures = [0] * self._num_extruders
-        self._target_hotend_temperatures = [0] * self._num_extruders
-        self._material_ids = [""] * self._num_extruders
-        self._hotend_ids = [""] * self._num_extruders
+        self._setNumberOfExtruders(1)
         self._progress = 0
         self._head_x = 0
         self._head_y = 0
@@ -56,6 +53,8 @@ class PrinterOutputDevice(QObject, OutputDevice):
         self._printer_type = "unknown"
 
         self._camera_active = False
+
+        self._ZOffset = 0.0
 
     def requestWrite(self, nodes, file_name = None, filter_by_machine = False, file_handler = None):
         raise NotImplementedError("requestWrite needs to be implemented")
@@ -215,6 +214,13 @@ class PrinterOutputDevice(QObject, OutputDevice):
     @pyqtSlot(int)
     def setTargetBedTemperature(self, temperature):
         self._setTargetBedTemperature(temperature)
+        self._emitTargetBedTemperatureChanged(temperature)
+
+    ## Emits a signal indicating that the target temperature
+    #  for the bed has changed. This will be called when we
+    #  request a temperature change, or when Marlin reports a
+    #  new target bed temperature.
+    def _emitTargetBedTemperatureChanged(self, temperature):
         if self._target_bed_temperature != temperature:
             self._target_bed_temperature = temperature
             self.targetBedTemperatureChanged.emit()
@@ -303,6 +309,19 @@ class PrinterOutputDevice(QObject, OutputDevice):
     def _homeY(self):
         Logger.log("w", "_homeY is not implemented by this output device")
 
+    ##  Home the headY of the connected printer
+    #   This function is "final" (do not re-implement)
+    #   /sa _homeHead implementation function
+    @pyqtSlot()
+    def homeXY(self):
+        self._homeXY()
+
+    ##  Home the headY of the connected printer
+    #   This is an implementation function and should be overriden by children.
+    def _homeXY(self):
+        Logger.log("w", "_homeXY is not implemented by this output device")
+
+
     ##  Home the bed of the connected printer
     #   This function is "final" (do not re-implement)
     #   /sa _homeBed implementation function
@@ -351,6 +370,15 @@ class PrinterOutputDevice(QObject, OutputDevice):
     def targetBedTemperature(self):
         return self._target_bed_temperature
 
+    ## Emits a signal indicating that the target temperature
+    #  for a hotend has changed. This will be called when we
+    #  request a temperature change, or when Marlin reports a
+    #  new target hotend temperature.
+    def _emitTargetHotendTemperatureChanged(self, index, temperature):
+        if self._target_hotend_temperatures[index] != temperature:
+            self._target_hotend_temperatures[index] = temperature
+            self.targetHotendTemperaturesChanged.emit()
+
     ##  Set the (target) hotend temperature
     #   This function is "final" (do not re-implement)
     #   /param index the index of the hotend that needs to change temperature
@@ -359,10 +387,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
     @pyqtSlot(int, int)
     def setTargetHotendTemperature(self, index, temperature):
         self._setTargetHotendTemperature(index, temperature)
-
-        if self._target_hotend_temperatures[index] != temperature:
-            self._target_hotend_temperatures[index] = temperature
-            self.targetHotendTemperaturesChanged.emit()
+        self._emitTargetHotendTemperatureChanged(index, temperature)
 
     ##  Implementation function of setTargetHotendTemperature.
     #   /param index Index of the hotend to set the temperature of
@@ -379,10 +404,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
     @pyqtSlot(int, int)
     def setTargetHotendTemperatureAndWait(self, index, temperature):
         self._setTargetHotendTemperatureAndWait(index, temperature)
-
-        if self._target_hotend_temperatures[index] != temperature:
-            self._target_hotend_temperatures[index] = temperature
-            self.targetHotendTemperaturesChanged.emit()
+        self._emitTargetHotendTemperatureChanged(index, temperature)
 
     ##  Implementation function of setTargetHotendTemperatureAndWait.
     #   /param index Index of the hotend to set the temperature of
@@ -390,6 +412,21 @@ class PrinterOutputDevice(QObject, OutputDevice):
     #   /sa setTargetHotendTemperatureAndWait
     def _setTargetHotendTemperatureAndWait(self, index, temperature):
         Logger.log("w", "_setTargetHotendTemperatureAndWait is not implemented by this output device")
+
+    @pyqtSlot(float)
+    def setZOffset(self, zOffset):
+        self._setZOffset(zOffset)
+
+    def _setZOffset(self, zOffset):
+        Logger.log("w", "_setZOffset is not implemented by this output device")
+
+    @pyqtSlot(result=float)
+    def getZOffset(self):
+        self._getZOffset()
+        return self._ZOffset
+
+    def _getZOffset(self):
+        Logger.log("w", "_getZOffset is not implemented by this output device")
 
     @pyqtSlot(int)
     def preheatHotend(self, index):
@@ -636,8 +673,8 @@ class PrinterOutputDevice(QObject, OutputDevice):
     #   /param z distance in z to move
     #   /param speed Speed by which it needs to move (in mm/minute)
     #   /sa _moveHead implementation function
-    @pyqtSlot("long", "long", "long")
-    @pyqtSlot("long", "long", "long", "long")
+    @pyqtSlot("float", "float", "float")
+    @pyqtSlot("float", "float", "float", "long")
     def moveHead(self, x = 0, y = 0, z = 0, speed = 3000):
         self._moveHead(x, y, z, speed)
 
@@ -658,7 +695,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
     #   /sa _moveHead implementation function
     @pyqtSlot("long")
     @pyqtSlot("long", "long")
-    def extrude(self, e=0, speed=100):
+    def extrude(self, e=0, speed=75):
         self._extrude(e, speed)
 
     ##  Implementation function of extrude.
@@ -721,6 +758,12 @@ class PrinterOutputDevice(QObject, OutputDevice):
             self._progress = progress
             self.progressChanged.emit()
 
+    def _setNumberOfExtruders(self, extruders):
+        self._num_extruders = extruders
+        self._hotend_temperatures = [0] * self._num_extruders
+        self._target_hotend_temperatures = [0] * self._num_extruders
+        self._material_ids = [""] * self._num_extruders
+        self._hotend_ids = [""] * self._num_extruders
 
 ##  The current processing state of the backend.
 class ConnectionState(IntEnum):

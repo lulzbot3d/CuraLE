@@ -4,7 +4,7 @@ M104 S0                                   ; disable hotend
 M107                                      ; disable fans
 G91                                       ; relative positioning
 G1 E-1 F300                               ; filament retraction to release pressure
-G1 Z+20 E-5 X-20 Y-20 F3000               ; lift up and retract even more filament
+G1 Z20 E-5 X-20 Y-20 F3000                ; lift up and retract even more filament
 M117 Cooling please wait                  ; progress indicator message on LCD
 G90                                       ; absolute positioning
 G1 Y0 F3000                               ; move to cooling position
