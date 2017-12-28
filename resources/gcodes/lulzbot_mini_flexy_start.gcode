@@ -11,7 +11,7 @@ G0 X3 Y188 Z156 F200         ; move away from endstops
 M907 X675                    ; reduce extruder torque for safety
 M109 R{material_wipe_temperature}                    ; set to cleaning temp and wait
 G1 E-30 F45                  ; suck up XXmm of filament
-G1 X45 Y174 F11520           ; move behind scraper
+G1 X45 Y173 F11520           ; move behind scraper
 G1 Z0  F1200                 ; CRITICAL: set Z to height of top of scraper
 G1 X45 Y173 Z-.5 F4000       ; wiping ; plunge into wipe pad
 G1 X55 Y171 Z-.5 F4000       ; wiping
