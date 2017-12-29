@@ -589,8 +589,7 @@ UM.PreferencesPage
                     }
                 }
             }
-// T1372 temporary removed
-/*
+
             Item
             {
                 //: Spacer
@@ -617,7 +616,7 @@ UM.PreferencesPage
                     onCheckedChanged: UM.Preferences.setValue("general/zoffsetSaveToFlashEnabled", zOffsetCheckbox.checked)
                 }
             }
-*/
+
 
             Item
             {
