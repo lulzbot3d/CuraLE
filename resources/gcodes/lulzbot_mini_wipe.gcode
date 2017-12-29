@@ -42,6 +42,6 @@ G28 X0 Y0                          ; re-home to account for build variance of ea
 G0 X3 Y188 F200                    ; move away from endstops
 G4 S1                              ; pause
 M400                               ; wait for moves to finish
-G1 E0 F75                          ; prime tiny bit of filment into the nozzle
+G1 E0 F75                          ; prime tiny bit of filament into the nozzle
 M400                               ; wait for moves to finish
 
