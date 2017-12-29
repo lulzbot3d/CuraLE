@@ -11,34 +11,34 @@ G0 X3 Y188 Z156 F200         ; move away from endstops
 M907 X675                    ; reduce extruder torque for safety
 M109 R{material_wipe_temperature}                    ; set to cleaning temp and wait
 G1 E-30 F45                  ; suck up XXmm of filament
-G1 X45 Y174 F11520           ; move behind scraper
+G1 X45 Y173 F11520           ; move behind scraper
 G1 Z0  F1200                 ; CRITICAL: set Z to height of top of scraper
-G1 X45 Y174 Z-.5 F4000       ; wiping ; plunge into wipe pad
-G1 X55 Y172 Z-.5 F4000       ; wiping
-G1 X45 Y174 Z0 F4000         ; wiping
-G1 X55 Y172 F4000            ; wiping
-G1 X45 Y174 F4000            ; wiping
-G1 X55 Y172 F4000            ; wiping
-G1 X45 Y174 F4000            ; wiping
-G1 X55 Y172 F4000            ; wiping
-G1 X60 Y174 F4000            ; wiping
-G1 X80 Y172 F4000            ; wiping
-G1 X60 Y174 F4000            ; wiping
-G1 X80 Y172 F4000            ; wiping
-G1 X60 Y174 F4000            ; wiping
-G1 X90 Y172 F4000            ; wiping
-G1 X80 Y174 F4000            ; wiping
-G1 X100 Y172 F4000           ; wiping
-G1 X80 Y174 F4000            ; wiping
-G1 X100 Y172 F4000           ; wiping
-G1 X80 Y174 F4000            ; wiping
-G1 X100 Y172 F4000           ; wiping
-G1 X110 Y174 F4000           ; wiping
-G1 X100 Y172 F4000           ; wiping
-G1 X110 Y174 F4000           ; wiping
-G1 X100 Y172 F4000           ; wiping
-G1 X110 Y174 F4000           ; wiping
-G1 X115 Y172 Z-0.5 F1000     ; wipe slower and bury noz in cleanish area
+G1 X45 Y173 Z-.5 F4000       ; wiping ; plunge into wipe pad
+G1 X55 Y171 Z-.5 F4000       ; wiping
+G1 X45 Y173 Z0 F4000         ; wiping
+G1 X55 Y171 F4000            ; wiping
+G1 X45 Y173 F4000            ; wiping
+G1 X55 Y171 F4000            ; wiping
+G1 X45 Y173 F4000            ; wiping
+G1 X55 Y171 F4000            ; wiping
+G1 X60 Y173 F4000            ; wiping
+G1 X80 Y171 F4000            ; wiping
+G1 X60 Y173 F4000            ; wiping
+G1 X80 Y171 F4000            ; wiping
+G1 X60 Y173 F4000            ; wiping
+G1 X90 Y171 F4000            ; wiping
+G1 X80 Y173 F4000            ; wiping
+G1 X100 Y171 F4000           ; wiping
+G1 X80 Y173 F4000            ; wiping
+G1 X100 Y171 F4000           ; wiping
+G1 X80 Y173 F4000            ; wiping
+G1 X100 Y171 F4000           ; wiping
+G1 X110 Y173 F4000           ; wiping
+G1 X100 Y171 F4000           ; wiping
+G1 X110 Y173 F4000           ; wiping
+G1 X100 Y171 F4000           ; wiping
+G1 X110 Y173 F4000           ; wiping
+G1 X115 Y171 Z-0.5 F1000     ; wipe slower and bury noz in cleanish area
 G1 Z10                       ; raise z
 G28 X0 Y0                    ; home x and y
 G0 X3 Y188 F200 ; move away from endstops
