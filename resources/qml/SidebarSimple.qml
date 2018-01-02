@@ -448,7 +448,7 @@ Item
             {
                 var adhesionType = cbItems.get(currentIndex).text.toLowerCase();
                 platformAdhesionType.setPropertyValue("value", adhesionType);
-                console.log( "----------------------- cbItems.get(" ,currentIndex, ").text", cbItems.get(currentIndex).text, adhesionType )
+                //console.log( "----------------------- cbItems.get(" ,currentIndex, ").text", cbItems.get(currentIndex).text, adhesionType )
             }
 
             MouseArea
