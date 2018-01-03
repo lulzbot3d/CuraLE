@@ -40,11 +40,11 @@
         },
         "machine_width":
         {
-            "default_value": 160
+            "default_value": 154
         },
         "machine_depth":
         {
-            "default_value": 160
+            "default_value": 154
         },
         "machine_height":
         {
