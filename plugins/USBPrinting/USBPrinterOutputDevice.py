@@ -1042,10 +1042,14 @@ class PrintThread:
                 # port is idle. This allows us to be most responsive to
                 # whatever action is currently taking place
                 line = serial_proto.readline(isPrinting)
-                if isPrinting and line == b"\x00start\n":
-                    Logger.log("e", "Printer restarted during print. Aborting.")
-                    self._parent._setErrorState("Printer has been disconnected")
+                if isPrinting and self._gcode_position > 1 and re.search(b"start\n",line):
+                    Logger.log("e", "The printer has restarted or lost power.")
+                    self.cancelPrint()
+                    self._parent._printingStopped()
+                    self._parent.setProgress(0)
                     self._parent.close()
+                    self._parent._error_message = Message(catalog.i18nc("@info:status", "The printer has restarted or lost power."), 0, True, None, 2)
+                    self._parent._error_message.show()
                     break
 
                 if ((not isPrinting and line == b"" and self._commandAvailable.wait(2)) or
