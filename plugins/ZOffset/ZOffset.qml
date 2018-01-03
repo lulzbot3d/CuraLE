@@ -65,11 +65,12 @@ Item
             Layout.row: 2
             Layout.column: 2
             height: childrenRect.height
-            text: catalog.i18nc("@info:tooltip","Valid values are between -1.00 to -1.30 for Taz, and -1.18 to -1.48 for Mini")
+            text: catalog.i18nc("@info:tooltip","Valid values are between -1.55 and -0.80")
 
             TextField
             {
                 text: ""
+                property color backgroundColor: "white"
                 id: zOffsetTextField
                 Layout.preferredWidth: parent.width/3 - gridLayout.columnSpacing*3
                 Layout.preferredHeight: UM.Theme.getSize("section").height
@@ -82,15 +83,30 @@ Item
                         return "blue"
                 }
 
+                style: TextFieldStyle
+                {
+                    id: styleTF
+                    textColor: "black"
+                    background: Rectangle
+                    {
+                        id: rect
+                        radius: 2
+                        color: zOffsetTextField.backgroundColor
+                        implicitWidth: 100
+                        implicitHeight: UM.Theme.getSize("section").height*0.88
+                        border.width: UM.Theme.getSize("default_lining").width
+                        border.color: !enabled ? UM.Theme.getColor("setting_control_disabled_border") : UM.Theme.getColor("setting_control_border")
+                    }
+                }
+
                 validator: DoubleValidator
-                {   bottom: -1.48;
-                    top: -1.00;
+                {   bottom: -1.55;
+                    top: -0.80;
                     decimals: 2;
                     notation: DoubleValidator.StandardNotation
                 }
             }
         }
-
 
         Button
         {
@@ -104,18 +120,29 @@ Item
 
             onClicked:
             {
-                console.log("zOffsetTextField.acceptableInput = ", zOffsetTextField.acceptableInput);
-                console.log("zOffsetTextField.activeFocus = ", zOffsetTextField.activeFocus);
-
                 if( zOffsetTextField.acceptableInput )
                 {
-                    connectedPrinter.setZOffset( parseFloat( zOffsetTextField.text ) )
-                    zOffsetLabel.text = zOffsetTextField.text
-                    zOffsetTextField.textColor = "black"
+                    var value = parseFloat( zOffsetTextField.text )
+
+                    if( (value >= -1.40) && (value <= -1.05) )
+                    {
+                        zOffsetTextField.backgroundColor = "white"
+                        zOffsetLabel.text = zOffsetTextField.text
+                        connectedPrinter.setZOffset( value )
+                    }
+                    else if(  ((value <=-0.80) && (value >= -1.049) ) || ((value >= -1.55) && (value <= -1.401)) )
+                    {
+                        zOffsetTextField.backgroundColor = "yellow"
+                        zOffsetLabel.text = zOffsetTextField.text
+                        connectedPrinter.setZOffset( value )
+                    }
+                    else
+                        zOffsetTextField.backgroundColor = "red"
+
                 }
                 else
                 {
-                    zOffsetTextField.textColor = "red"
+                    zOffsetTextField.backgroundColor = "red"
                 }
             }
 
@@ -188,10 +215,7 @@ Item
             saveButton.enabled = UM.Preferences.getValue( "general/zoffsetSaveToFlashEnabled" )
 
             if( (connectedPrinter != null) && (connectedPrinter.getZOffset() != undefined) && (zOffsetLabel.text == "0") )
-             {
                 zOffsetLabel.text = connectedPrinter.getZOffset()
-                console.log( "--------------- getZOffset" )
-             }
         }
     }
 }

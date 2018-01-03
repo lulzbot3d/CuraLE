@@ -500,6 +500,16 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
     def _setHotend(self, num):
         self._sendCommand("T%i" % num)
 
+
+    def _setZOffset(self, zOffset):
+        self.sendCommand("M851 Z%s" % (zOffset))
+        self.sendCommand("M500")
+
+
+    def _getZOffset(self):
+        self.sendCommand("M851")
+        return self._ZOffset
+
     ##  Handler for all requests that have finished.
     def _onRequestFinished(self, reply):
         if reply.error() == QNetworkReply.TimeoutError:
