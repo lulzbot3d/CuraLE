@@ -741,7 +741,7 @@ class ConnectThread:
             self._parent._error_message.show()
         check_firmware_status = self._checkFirmware()
         if check_firmware_status == self.CheckFirmwareStatus.FIRMWARE_OUTDATED:
-            showWarning(self, "Installed firmware is outdated", "New printer firmware is available. Use \"Settings -> Printer -> Manage Printer... -> Upgrade Firmware\" to upgrade.")
+            showWarning(self, "Installed firmware is outdated", "New printer firmware is available. Use \"Settings -> Printer -> Manage Printers... -> Upgrade Firmware\" to upgrade.")
         elif check_firmware_status == self.CheckFirmwareStatus.WRONG_MACHINE:
             allow_connecction = Preferences.getInstance().getValue("cura/allow_connection_to_wrong_machine")
             if not allow_connecction:
