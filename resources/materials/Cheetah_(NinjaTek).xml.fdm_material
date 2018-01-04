@@ -5,7 +5,6 @@
       <brand>Generic</brand>
       <material>Cheetah (NinjaTek)</material>
       <color>Generic</color>
-      <category>Expert</category>
     </name>
     <GUID>506c9f0d-e3aa-4bd4-b2d2-23e2425b1aa9</GUID>
     <version>1</version>
@@ -35,7 +34,6 @@
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz5_dual_v3"/>
-      <metadata key="category">Experimental</metadata>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz6_aerostruder"/>
@@ -48,7 +46,6 @@
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz6_dual_v3"/>
-      <metadata key="category">Experimental</metadata>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_mini_aerostruder"/>

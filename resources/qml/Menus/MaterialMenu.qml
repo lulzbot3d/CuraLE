@@ -135,7 +135,7 @@ Menu
     }
 
     //: Model used to populate the brandModel
-    UM.InstanceContainersModel
+    Cura.MaterialsModel
     {
         id: materialsModel
         filter: materialFilter()

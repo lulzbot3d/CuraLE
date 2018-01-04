@@ -454,7 +454,7 @@ class XmlMaterialProfile(InstanceContainer):
                 meta_data["brand"] = brand.text
                 meta_data["material"] = material.text
                 meta_data["color_name"] = color.text
-                meta_data["category"] = category.text if category is not None else "Other"
+                meta_data["category"] = category.text if category is not None else "Experimental"
                 continue
             meta_data[tag_name] = entry.text
 
