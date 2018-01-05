@@ -140,7 +140,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     def _wipeNozzle(self):
         code = Application.getInstance().getGlobalContainerStack().getProperty("machine_wipe_gcode", "value")
-        if not code:
+        if not code or len(code) == 0:
             Logger.log("w", "This device doesn't support wiping")
             QMessageBox.critical(None, "Error wiping nozzle", "This device doesn't support wiping" )
             return
@@ -742,7 +742,7 @@ class ConnectThread:
             self._parent._error_message.show()
         check_firmware_status = self._checkFirmware()
         if check_firmware_status == self.CheckFirmwareStatus.FIRMWARE_OUTDATED:
-            showWarning(self, "Installed firmware is outdated", "New printer firmware is available. Use \"Settings -> Printer -> Manage Printer... -> Upgrade Firmware\" to upgrade.")
+            showWarning(self, "Installed firmware is outdated", "New printer firmware is available. Use \"Settings -> Printer -> Manage Printers... -> Upgrade Firmware\" to upgrade.")
         elif check_firmware_status == self.CheckFirmwareStatus.WRONG_MACHINE:
             allow_connecction = Preferences.getInstance().getValue("cura/allow_connection_to_wrong_machine")
             if not allow_connecction:
@@ -1043,10 +1043,14 @@ class PrintThread:
                 # port is idle. This allows us to be most responsive to
                 # whatever action is currently taking place
                 line = serial_proto.readline(isPrinting)
-                if isPrinting and line == b"\x00start\n":
-                    Logger.log("e", "Printer restarted during print. Aborting.")
-                    self._parent._setErrorState("Printer has been disconnected")
+                if isPrinting and self._gcode_position > 1 and re.search(b"start\n",line):
+                    Logger.log("e", "The printer has restarted or lost power.")
+                    self.cancelPrint()
+                    self._parent._printingStopped()
+                    self._parent.setProgress(0)
                     self._parent.close()
+                    self._parent._error_message = Message(catalog.i18nc("@info:status", "The printer has restarted or lost power."), 0, True, None, 2)
+                    self._parent._error_message.show()
                     break
 
                 if ((not isPrinting and line == b"" and self._commandAvailable.wait(2)) or

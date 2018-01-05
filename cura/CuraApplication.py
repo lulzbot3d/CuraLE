@@ -38,6 +38,7 @@ from cura.ConvexHullDecorator import ConvexHullDecorator
 from cura.SetParentOperation import SetParentOperation
 from cura.SliceableObjectDecorator import SliceableObjectDecorator
 from cura.BlockSlicingDecorator import BlockSlicingDecorator
+from cura.Settings.MaterialsModel import MaterialsModel
 
 from cura.ArrangeObjectsJob import ArrangeObjectsJob
 from cura.MultiplyObjectsJob import MultiplyObjectsJob
@@ -704,6 +705,8 @@ class CuraApplication(QtApplication):
         self._camera_animation.setCameraTool(self.getController().getTool("CameraTool"))
 
         self.showSplashMessage(self._i18n_catalog.i18nc("@info:progress", "Loading interface..."))
+
+        qmlRegisterType(MaterialsModel, "Cura", 1, 0, "MaterialsModel")
 
         # Initialise extruder so as to listen to global container stack changes before the first global container stack is set.
         qmlRegisterSingletonType(ExtruderManager, "Cura", 1, 0, "ExtruderManager", self.getExtruderManager)
