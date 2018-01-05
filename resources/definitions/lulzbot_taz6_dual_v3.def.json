@@ -34,6 +34,10 @@
         "machine_extruder_count": {
             "default_value": 2
         },
+        "machine_wipe_gcode":
+        {
+            "default_value": ""
+        },
         "layer_start_x": { "value": "100" },
         "layer_start_y": { "value": "100" }
     }

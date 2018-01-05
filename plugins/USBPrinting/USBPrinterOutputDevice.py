@@ -140,7 +140,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     def _wipeNozzle(self):
         code = Application.getInstance().getGlobalContainerStack().getProperty("machine_wipe_gcode", "value")
-        if not code:
+        if not code or len(code) == 0:
             Logger.log("w", "This device doesn't support wiping")
             QMessageBox.critical(None, "Error wiping nozzle", "This device doesn't support wiping" )
             return
