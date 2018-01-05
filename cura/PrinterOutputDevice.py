@@ -413,11 +413,11 @@ class PrinterOutputDevice(QObject, OutputDevice):
     def _setTargetHotendTemperatureAndWait(self, index, temperature):
         Logger.log("w", "_setTargetHotendTemperatureAndWait is not implemented by this output device")
 
-    @pyqtSlot(float)
-    def setZOffset(self, zOffset):
-        self._setZOffset(zOffset)
+    @pyqtSlot(float, bool)
+    def setZOffset(self, zOffset, saveEEPROM):
+        self._setZOffset(zOffset, saveEEPROM)
 
-    def _setZOffset(self, zOffset):
+    def _setZOffset(self, zOffset, saveEEPROM):
         Logger.log("w", "_setZOffset is not implemented by this output device")
 
     @pyqtSlot(result=float)

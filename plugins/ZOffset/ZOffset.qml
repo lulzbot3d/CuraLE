@@ -10,7 +10,7 @@ Item
 {
     property var connectedPrinter: printerConnected ? Cura.MachineManager.printerOutputDevices[0] : null
     width: 410
-    height: 90
+    height: 120
     enabled: connectedPrinter
 
 
@@ -18,7 +18,7 @@ Item
     {
         id: gridLayout
         columns: 2
-        rows: 3
+        rows: 4
         rowSpacing: 1
         columnSpacing: 10
         anchors.fill: parent
@@ -26,10 +26,9 @@ Item
         anchors.leftMargin: 65
         anchors.rightMargin: 65
 
-
         Label
         {
-            text: "Current Z-Offset value:"
+            text: "Z-Offset value on EEPROM:"
             color: UM.Theme.getColor("setting_control_text")
             font: UM.Theme.getFont("default")
             Layout.row: 1
@@ -41,10 +40,34 @@ Item
         Label
         {
             text: "0"
-            id: zOffsetLabel
+            id: zOffsetValueEEPROM
             color: UM.Theme.getColor("setting_control_text")
             font: UM.Theme.getFont("default")
             Layout.row: 1
+            Layout.column: 2
+            Layout.preferredWidth: parent.width/3 - gridLayout.columnSpacing*3
+            Layout.preferredHeight: UM.Theme.getSize("section").height
+        }
+
+
+        Label
+        {
+            text: "Current Z-Offset value:"
+            color: UM.Theme.getColor("setting_control_text")
+            font: UM.Theme.getFont("default")
+            Layout.row: 2
+            Layout.column: 1
+            Layout.preferredWidth: parent.width/3 - gridLayout.rowSpacing*3
+            Layout.preferredHeight: UM.Theme.getSize("section").height
+        }
+
+        Label
+        {
+            text: "0"
+            id: zOffsetValueMemory
+            color: UM.Theme.getColor("setting_control_text")
+            font: UM.Theme.getFont("default")
+            Layout.row: 2
             Layout.column: 2
             Layout.preferredWidth: parent.width/3 - gridLayout.columnSpacing*3
             Layout.preferredHeight: UM.Theme.getSize("section").height
@@ -55,14 +78,14 @@ Item
             text: "Set new Z-Offset value:"
             color: UM.Theme.getColor("setting_control_text")
             font: UM.Theme.getFont("default")
-            Layout.row: 2
+            Layout.row: 3
             Layout.column: 1
             Layout.preferredWidth: parent.width/3 - gridLayout.columnSpacing*3
             Layout.preferredHeight: UM.Theme.getSize("section").height
         }
 
         UM.TooltipArea {
-            Layout.row: 2
+            Layout.row: 3
             Layout.column: 2
             height: childrenRect.height
             text: catalog.i18nc("@info:tooltip","Valid values are between -1.55 and -0.80")
@@ -74,14 +97,6 @@ Item
                 id: zOffsetTextField
                 Layout.preferredWidth: parent.width/3 - gridLayout.columnSpacing*3
                 Layout.preferredHeight: UM.Theme.getSize("section").height
-                readOnly: !( UM.Preferences.getValue( "general/zoffsetSaveToFlashEnabled" ))
-                textColor:
-                {
-                    if( activeFocus )
-                        return "black"
-                    else
-                        return "blue"
-                }
 
                 style: TextFieldStyle
                 {
@@ -108,15 +123,34 @@ Item
             }
         }
 
+        CheckBox {
+            id: saveToFlashMemory
+            Layout.row: 4
+            Layout.column: 1
+            checked: false
+            style:
+            CheckBoxStyle
+            {
+                label:
+                    Text
+                    {
+                        color: UM.Theme.getColor("setting_control_text")
+                        text: "Save Z-Offset to EEPROM"
+                    }
+            }
+            visible: true
+            enabled: UM.Preferences.getValue( "general/zoffsetSaveToFlashEnabled" )
+        }
+
         Button
         {
             text: "Save"
             id: saveButton
-            Layout.row: 3
+            Layout.row: 4
             Layout.column: 2
             Layout.preferredWidth: parent.width/3 - gridLayout.columnSpacing*3
             Layout.preferredHeight: UM.Theme.getSize("section").height
-            enabled: UM.Preferences.getValue( "general/zoffsetSaveToFlashEnabled" )
+
 
             onClicked:
             {
@@ -127,14 +161,18 @@ Item
                     if( (value >= -1.40) && (value <= -1.05) )
                     {
                         zOffsetTextField.backgroundColor = "white"
-                        zOffsetLabel.text = zOffsetTextField.text
-                        connectedPrinter.setZOffset( value )
+                        zOffsetValueMemory.text = zOffsetTextField.text
+                        connectedPrinter.setZOffset( value, saveToFlashMemory.checked )
+                        if( saveToFlashMemory.checked == true )
+                            zOffsetValueEEPROM.text = zOffsetTextField.text
                     }
                     else if(  ((value <=-0.80) && (value >= -1.049) ) || ((value >= -1.55) && (value <= -1.401)) )
                     {
                         zOffsetTextField.backgroundColor = "yellow"
-                        zOffsetLabel.text = zOffsetTextField.text
-                        connectedPrinter.setZOffset( value )
+                        zOffsetValueMemory.text = zOffsetTextField.text
+                        connectedPrinter.setZOffset( value, saveToFlashMemory.checked )
+                        if( saveToFlashMemory.checked == true )
+                            zOffsetValueEEPROM.text = zOffsetTextField.text
                     }
                     else
                         zOffsetTextField.backgroundColor = "red"
@@ -211,11 +249,16 @@ Item
 
         onTriggered:
         {
-            zOffsetTextField.readOnly =  (!( UM.Preferences.getValue( "general/zoffsetSaveToFlashEnabled" )))
-            saveButton.enabled = UM.Preferences.getValue( "general/zoffsetSaveToFlashEnabled" )
+            saveToFlashMemory.enabled = UM.Preferences.getValue( "general/zoffsetSaveToFlashEnabled" )
 
-            if( (connectedPrinter != null) && (connectedPrinter.getZOffset() != undefined) && (zOffsetLabel.text == "0") )
-                zOffsetLabel.text = connectedPrinter.getZOffset()
+            if( saveToFlashMemory.enabled == false )
+                saveToFlashMemory.checked = false
+
+            if( (connectedPrinter != null) && (connectedPrinter.getZOffset() != undefined) && (zOffsetValueMemory.text == "0") )
+            {
+                zOffsetValueMemory.text = connectedPrinter.getZOffset()
+                zOffsetValueEEPROM.text = connectedPrinter.getZOffset()
+            }
         }
     }
 }

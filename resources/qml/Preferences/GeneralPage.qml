@@ -611,7 +611,7 @@ UM.PreferencesPage
                 CheckBox
                 {
                     id: zOffsetCheckbox
-                    text: catalog.i18nc("@option:check","Enable save Z-offset to flash memory button")
+                    text: catalog.i18nc("@option:check","Enable save Z-offset to EEPROM checkbox")
                     checked: boolCheck(UM.Preferences.getValue("general/zoffsetSaveToFlashEnabled"))
                     onCheckedChanged: UM.Preferences.setValue("general/zoffsetSaveToFlashEnabled", zOffsetCheckbox.checked)
                 }

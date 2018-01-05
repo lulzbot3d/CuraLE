@@ -501,9 +501,10 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
         self._sendCommand("T%i" % num)
 
 
-    def _setZOffset(self, zOffset):
+    def _setZOffset(self, zOffset, saveEEPROM):
         self.sendCommand("M851 Z%s" % (zOffset))
-        self.sendCommand("M500")
+        if saveEEPROM == True:
+            self.sendCommand("M500")
 
 
     def _getZOffset(self):
