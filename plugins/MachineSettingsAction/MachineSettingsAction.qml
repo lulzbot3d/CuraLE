@@ -47,8 +47,34 @@ Cura.MachineAction
         Item
         {
             id: bedLevelMachineAction
-            implicitHeight: base.height > UM.Theme.getSize("modal_window_minimum").height *1.5? base.height : UM.Theme.getSize("modal_window_minimum").height *1.5
-            implicitWidth: base.width > UM.Theme.getSize("modal_window_minimum").width *1.5? base.width : UM.Theme.getSize("modal_window_minimum").width *1.5
+            implicitHeight:
+            {
+                var theme_height = UM.Theme.getSize("modal_window_minimum").height * 1.5
+                if(base.height > theme_height)
+                {
+                    scrollView.verticalScrollBarPolicy = Qt.ScrollBarAlwaysOff
+                    return base.height
+                }
+                else
+                {
+                    scrollView.verticalScrollBarPolicy = Qt.ScrollBarAsNeeded
+                    return theme_height
+                }
+            }
+            implicitWidth:
+            {
+                var theme_width = UM.Theme.getSize("modal_window_minimum").width * 1.5
+                if(base.width > theme_width)
+                {
+                    scrollView.horizontalScrollBarPolicy = Qt.ScrollBarAlwaysOff
+                    return base.width
+                }
+                else
+                {
+                    scrollView.horizontalScrollBarPolicy = Qt.ScrollBarAsNeeded
+                    return theme_width
+                }
+            }
 
             UM.I18nCatalog { id: catalog; name: "cura"; }
 

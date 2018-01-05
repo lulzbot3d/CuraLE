@@ -107,6 +107,11 @@ UM.ManagementPage
                             actionDialog.content = machineActionRepeater.model[index].displayItem;
                             machineActionRepeater.model[index].displayItem.reset();
                             actionDialog.title = machineActionRepeater.model[index].label;
+                            if (machineActionRepeater.model[index].preferredSize)
+                            {
+                                actionDialog.width = machineActionRepeater.model[index].preferredSize.width
+                                actionDialog.height = machineActionRepeater.model[index].preferredSize.height
+                            }
                             actionDialog.show();
                         }
                     }

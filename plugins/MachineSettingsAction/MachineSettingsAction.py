@@ -17,6 +17,8 @@ from UM.Logger import Logger
 from cura.CuraApplication import CuraApplication
 from cura.Settings.ExtruderManager import ExtruderManager
 
+from UM.Qt.Bindings.Theme import Theme
+
 import UM.i18n
 catalog = UM.i18n.i18nCatalog("cura")
 
@@ -38,6 +40,10 @@ class MachineSettingsAction(MachineAction):
         ExtruderManager.getInstance().activeExtruderChanged.connect(self._onActiveExtruderStackChanged)
 
         self._backend = Application.getInstance().getBackend()
+
+    @pyqtProperty("QSizeF")
+    def preferredSize(self):
+        return Theme.getInstance().getSize("modal_window_minimum")*1.5
 
     def _onContainerAdded(self, container):
         # Add this action as a supported action to all machine definitions
