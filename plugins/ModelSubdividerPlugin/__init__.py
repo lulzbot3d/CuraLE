@@ -9,7 +9,7 @@ i18n_catalog = i18nCatalog("cura")
 def getMetaData():
     return {
         "plugin": {
-            "name": i18n_catalog.i18nc("@label", "Model Subdivider Plugin"),
+            "name": i18n_catalog.i18nc("@label", "Model Subdivider Plugin (Experimental)"),
             "author": "Victor Larchenko",
             "version": "1.0",
             "description": i18n_catalog.i18nc("@info:whatsthis", "Allows subdividing meshes in cura."),

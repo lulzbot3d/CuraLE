@@ -25,6 +25,8 @@ class IntersectionType:
 
 
 class ModelSubdividerPlugin(Extension):
+    epsilon = 1e-2
+
     def __init__(self):
         super().__init__()
         self.addMenuItem(i18n_catalog.i18n("Create plane"), self.createPlane)
@@ -73,13 +75,19 @@ class ModelSubdividerPlugin(Extension):
         vertices = mesh_data.getVertices()
         indices = mesh_data.getIndices()
         faces = []
-        for index_array in indices:
-            faces.append([vertices[index_array[0]], vertices[index_array[1]], vertices[index_array[2]]])
+        if indices:
+            for index_array in indices:
+                faces.append([vertices[index_array[0]], vertices[index_array[1]], vertices[index_array[2]]])
+        else:
+            for i in range(0, len(vertices), 3):
+                faces.append([vertices[i], vertices[i+1], vertices[i+2]])
         intersected_faces = []
         for f in faces:
             intersection_type = self.check_intersection_with_triangle(plane_face, f)
-            if (intersection_type is not None and intersection_type[0] == IntersectionType.Point) \
-                    or intersection_type is None:
+            if intersection_type is None:
+                side = self.check_plane_side(plane_face, f)
+                self.add_face_to_builder(builders[side], f)
+            elif intersection_type is not None and intersection_type[0] == IntersectionType.Point:
                 side = self.check_plane_side(plane_face, f)
                 self.add_face_to_builder(builders[side], f)
             else:
@@ -128,14 +136,28 @@ class ModelSubdividerPlugin(Extension):
                                 face[2][0], face[2][1], face[2][2])
 
     def check_plane_side(self, plane_face, face):
-        epsilon = 1e-4
         n = numpy.cross(plane_face[1] - plane_face[0], plane_face[2] - plane_face[0])
         v = [plane_face[0] - face[0], plane_face[0] - face[1], plane_face[0] - face[2]]
         d = [numpy.inner(n, v[0]), numpy.inner(n, v[1]), numpy.inner(n, v[2])]
-        if d[0] > epsilon or d[1] > epsilon or d[2] > epsilon:
+        num_greater = 0
+        for k in d:
+            if k > self.epsilon:
+                num_greater += 1
+        if num_greater > 1:
             return 0
         else:
             return 1
+
+    def distance_between_points(self, point1, point2):
+        return math.sqrt((point1[0]-point2[0])**2+(point1[1]-point2[1])**2+(point1[2]-point2[2])**2)
+
+    def is_point_in_plane(self, plane_face, point):
+        n = numpy.cross(plane_face[1] - plane_face[0], plane_face[2] - plane_face[0])
+        v = plane_face[0] - point
+        d = numpy.inner(n, v)
+        if math.fabs(d) <= self.epsilon:
+            return True
+        return False
 
     def check_intersection_with_triangle(self, plane_face, face):
         intersection_points = []
@@ -148,19 +170,20 @@ class ModelSubdividerPlugin(Extension):
         if len(intersection_points) == 1:
             return IntersectionType.Point, intersection_points[0][0]
         elif len(intersection_points) == 2:
+            if self.distance_between_points(intersection_points[0][0], intersection_points[1][0]) < self.epsilon:
+                return IntersectionType.Point, intersection_points[0][0]
             return IntersectionType.Segment, intersection_points
         elif len(intersection_points) == 3:
             return IntersectionType.Face, face
         return None
 
     def check_intersection_with_segment(self, plane_face, segment):
-        epsilon = 1e-4
         n = numpy.cross(plane_face[1] - plane_face[0], plane_face[2] - plane_face[0])
         v = plane_face[0] - segment[0]
         d = numpy.inner(n, v)
         w = segment[1] - segment[0]
         e = numpy.inner(n, w)
-        if math.fabs(e) > epsilon:
+        if math.fabs(e) > self.epsilon:
             o = segment[0] + w * d / e
             if numpy.inner(segment[0] - o, segment[1] - o) <= 0:
                 return o
