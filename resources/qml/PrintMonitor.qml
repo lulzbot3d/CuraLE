@@ -1037,6 +1037,12 @@ ScrollView
 	        property string label: catalog.i18nc("@label", "Estimated time left")
 	        property string value: connectedPrinter != null ? getPrettyTime(connectedPrinter.timeTotal - connectedPrinter.timeElapsed) : ""
 	    }
+	    Loader
+	    {
+	        sourceComponent: monitorItem
+	        property string label: catalog.i18nc("@label", "Final print time")
+	        property string value: connectedPrinter != null ? getPrettyTime(connectedPrinter.timeElapsed) : ""
+	    }
 
 		Timer
 		{
