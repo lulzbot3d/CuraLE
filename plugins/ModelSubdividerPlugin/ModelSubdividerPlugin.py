@@ -137,12 +137,16 @@ class ModelSubdividerPlugin(Extension):
         n = numpy.cross(plane_face[1] - plane_face[0], plane_face[2] - plane_face[0])
         v = [plane_face[0] - face[0], plane_face[0] - face[1], plane_face[0] - face[2]]
         d = [numpy.inner(n, v[0]), numpy.inner(n, v[1]), numpy.inner(n, v[2])]
+        points_front = 0
+        points_back = 0
         for i in range(3):
             if self.is_point_in_plane(plane_face, face[i]):
                 continue
             if d[i] > self.epsilon:
-                return 0
-        return 1
+                points_front += 1
+            elif d[i] < -self.epsilon:
+                points_back += 1
+        return 0 if points_front > points_back else 1
 
     def distance_between_points(self, point1, point2):
         return math.sqrt((point1[0]-point2[0])**2+(point1[1]-point2[1])**2+(point1[2]-point2[2])**2)
