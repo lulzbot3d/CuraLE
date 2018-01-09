@@ -21,7 +21,8 @@ i18n_catalog = i18nCatalog("ModelSubdividerPlugin")
 class IntersectionType:
     Point = 0
     Segment = 1
-    Face = 2
+    Edge = 2
+    Face = 3
 
 
 class ModelSubdividerPlugin(Extension):
@@ -84,10 +85,7 @@ class ModelSubdividerPlugin(Extension):
         intersected_faces = []
         for f in faces:
             intersection_type = self.check_intersection_with_triangle(plane_face, f)
-            if intersection_type is None:
-                side = self.check_plane_side(plane_face, f)
-                self.add_face_to_builder(builders[side], f)
-            elif intersection_type is not None and intersection_type[0] == IntersectionType.Point:
+            if intersection_type is None or (intersection_type is not None and intersection_type[0] in [IntersectionType.Point, IntersectionType.Edge]):
                 side = self.check_plane_side(plane_face, f)
                 self.add_face_to_builder(builders[side], f)
             else:
@@ -139,14 +137,12 @@ class ModelSubdividerPlugin(Extension):
         n = numpy.cross(plane_face[1] - plane_face[0], plane_face[2] - plane_face[0])
         v = [plane_face[0] - face[0], plane_face[0] - face[1], plane_face[0] - face[2]]
         d = [numpy.inner(n, v[0]), numpy.inner(n, v[1]), numpy.inner(n, v[2])]
-        num_greater = 0
-        for k in d:
-            if k > self.epsilon:
-                num_greater += 1
-        if num_greater > 1:
-            return 0
-        else:
-            return 1
+        for i in range(3):
+            if self.is_point_in_plane(plane_face, face[i]):
+                continue
+            if d[i] > self.epsilon:
+                return 0
+        return 1
 
     def distance_between_points(self, point1, point2):
         return math.sqrt((point1[0]-point2[0])**2+(point1[1]-point2[1])**2+(point1[2]-point2[2])**2)
@@ -162,19 +158,23 @@ class ModelSubdividerPlugin(Extension):
     def check_intersection_with_triangle(self, plane_face, face):
         intersection_points = []
         for i in range(3):
+            if self.is_point_in_plane(plane_face, face[i]):
+                intersection_points.append(face[i])
+        if len(intersection_points) == 1:
+            return IntersectionType.Point,
+        elif len(intersection_points) == 2:
+            return IntersectionType.Edge,
+        elif len(intersection_points) == 3:
+            return IntersectionType.Face, face
+
+        for i in range(3):
             i2 = i + 1 if i < 2 else 0
             segment = [face[i], face[i2]]
             point = self.check_intersection_with_segment(plane_face, segment)
             if point is not None:
                 intersection_points.append([point, [i, i2]])
-        if len(intersection_points) == 1:
-            return IntersectionType.Point, intersection_points[0][0]
-        elif len(intersection_points) == 2:
-            if self.distance_between_points(intersection_points[0][0], intersection_points[1][0]) < self.epsilon:
-                return IntersectionType.Point, intersection_points[0][0]
+        if len(intersection_points) == 2:
             return IntersectionType.Segment, intersection_points
-        elif len(intersection_points) == 3:
-            return IntersectionType.Face, face
         return None
 
     def check_intersection_with_segment(self, plane_face, segment):
