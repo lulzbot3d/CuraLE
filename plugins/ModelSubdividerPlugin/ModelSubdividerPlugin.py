@@ -11,6 +11,7 @@ from UM.Logger import Logger
 from UM.Scene.SceneNode import SceneNode
 from UM.Operations.GroupedOperation import GroupedOperation
 from UM.Operations.RemoveSceneNodeOperation import RemoveSceneNodeOperation
+from UM.Operations.TranslateOperation import TranslateOperation
 from UM.Mesh.MeshBuilder import MeshBuilder
 import numpy
 import math
@@ -62,8 +63,10 @@ class ModelSubdividerPlugin(Extension):
             operation.addOperation(RemoveSceneNodeOperation(plane))
             operation.addOperation(RemoveSceneNodeOperation(obj))
             operation.addOperation(AddSceneNodeOperation(result[0], obj.getParent()))
+            operation.addOperation(TranslateOperation(result[0], obj.getPosition()))
             if len(result) == 2:
                 operation.addOperation(AddSceneNodeOperation(result[1], obj.getParent()))
+                operation.addOperation(TranslateOperation(result[1], obj.getPosition()))
             operation.push()
         else:
             Logger.log("w", i18n_catalog.i18n("Cannot subdivide"))
