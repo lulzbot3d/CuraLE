@@ -23,6 +23,7 @@ class IntersectionType:
     Segment = 1
     Edge = 2
     Face = 3
+    PointAndSegment = 4
 
 
 class ModelSubdividerPlugin(Extension):
@@ -87,7 +88,10 @@ class ModelSubdividerPlugin(Extension):
             intersection_type = self.check_intersection_with_triangle(plane_face, f)
             if intersection_type is None or (intersection_type is not None and intersection_type[0] in [IntersectionType.Point, IntersectionType.Edge]):
                 side = self.check_plane_side(plane_face, f)
-                self.add_face_to_builder(builders[side], f)
+                if side is not None:
+                    self.add_face_to_builder(builders[side], f)
+                else:
+                    Logger.log("w", "Invalid face detected: " + str(f))
             else:
                 intersected_faces.append([f, intersection_type])
         for f in intersected_faces:
@@ -96,6 +100,10 @@ class ModelSubdividerPlugin(Extension):
                 self.add_face_to_builder(builders[1], f[0])
             elif f[1][0] == IntersectionType.Segment:
                 new_faces = self.split_triangle(f[0], f[1][1])
+                for new_face in new_faces:
+                    self.add_face_to_builder(builders[self.check_plane_side(plane_face, new_face)], new_face)
+            elif f[1][0] == IntersectionType.PointAndSegment:
+                new_faces = self.split_triangle_in_one_segment(f[0], f[1][1])
                 for new_face in new_faces:
                     self.add_face_to_builder(builders[self.check_plane_side(plane_face, new_face)], new_face)
         nodes = [SceneNode(), SceneNode()]
@@ -128,6 +136,15 @@ class ModelSubdividerPlugin(Extension):
         new_faces.append([face[other_index], face[third_index], third_point])
         return new_faces
 
+    def split_triangle_in_one_segment(self, face, intersection):
+        point = intersection[0]
+        intersection_point = intersection[1][0]
+        intersection_indices = [intersection[1][1][0], intersection[1][1][1]]
+        new_faces = []
+        new_faces.append([point, intersection_point, face[intersection_indices[0]]])
+        new_faces.append([point, face[intersection_indices[1]], intersection_point])
+        return new_faces
+
     def add_face_to_builder(self, builder, face):
         builder.addFaceByPoints(face[0][0], face[0][1], face[0][2],
                                 face[1][0], face[1][1], face[1][2],
@@ -146,6 +163,8 @@ class ModelSubdividerPlugin(Extension):
                 points_front += 1
             elif d[i] < -self.epsilon:
                 points_back += 1
+        if points_front > 0 and points_back > 0:
+            return None
         return 0 if points_front > points_back else 1
 
     def distance_between_points(self, point1, point2):
@@ -163,9 +182,19 @@ class ModelSubdividerPlugin(Extension):
         intersection_points = []
         for i in range(3):
             if self.is_point_in_plane(plane_face, face[i]):
-                intersection_points.append(face[i])
+                intersection_points.append(i)
         if len(intersection_points) == 1:
-            return IntersectionType.Point,
+            if self.check_plane_side(plane_face, face) is not None:
+                return IntersectionType.Point,
+            else:
+                ind = list(range(3))
+                ind.remove(intersection_points[0])
+                segment = [face[ind[0]], face[ind[1]]]
+                point = self.check_intersection_with_segment(plane_face, segment)
+                if point is not None:
+                    intersection_points.append([point, [ind[0], ind[1]]])
+                    intersection_points[0] = face[intersection_points[0]]
+                    return IntersectionType.PointAndSegment, intersection_points
         elif len(intersection_points) == 2:
             return IntersectionType.Edge,
         elif len(intersection_points) == 3:
