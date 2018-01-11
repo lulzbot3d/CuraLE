@@ -43,7 +43,7 @@ class ModelSubdividerPlugin(Extension):
 
     def subdivide(self):
         if Selection.getCount() != 2:
-            Logger.log("w", i18n_catalog.i18n("Cannot subdivide: objects != 2"))
+            Logger.log("w", i18n_catalog.i18n("Cannot subdivide: number of selected objects is not equal 2. Plane and object need to be selected. Current selected objects: %i") % Selection.getCount())
             return
         object1 = Selection.getSelectedObject(0)
         object2 = Selection.getSelectedObject(1)
@@ -54,7 +54,7 @@ class ModelSubdividerPlugin(Extension):
             obj = object2
             plane = object1
         else:
-            Logger.log("w", i18n_catalog.i18n("Cannot subdivide: object and plane need to be selected"))
+            Logger.log("w", i18n_catalog.i18n("Cannot subdivide: object and plane need to be selected. Current selection: %s and %s") % (str(object1), str(object2)))
             return
 
         result = self._subdivide(obj, plane)
@@ -69,7 +69,7 @@ class ModelSubdividerPlugin(Extension):
                 operation.addOperation(TranslateOperation(result[1], obj.getPosition()))
             operation.push()
         else:
-            Logger.log("w", i18n_catalog.i18n("Cannot subdivide"))
+            Logger.log("w", i18n_catalog.i18n("Cannot subdivide: Internal error"))
 
     def _subdivide(self, mesh, plane):
         plane_mesh_data = plane.getMeshData()
