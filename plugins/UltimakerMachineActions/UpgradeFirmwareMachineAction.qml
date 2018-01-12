@@ -50,6 +50,7 @@ Cura.MachineAction
 
         Row
         {
+            id: buttonRow
             anchors.top: upgradeText1.bottom
             anchors.topMargin: UM.Theme.getSize("default_margin").height
             anchors.horizontalCenter: parent.horizontalCenter
@@ -76,6 +77,21 @@ Cura.MachineAction
                 }
             }
         }
+        Row
+        {
+            anchors.topMargin: UM.Theme.getSize("default_margin").height
+            anchors.top: buttonRow.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            CheckBox
+            {
+                id: updateEepromCheckbox
+                text: qsTr("Update EEPROM")
+                checked: true
+
+            }
+        }
+
+
 
         FileDialog
         {
@@ -83,7 +99,7 @@ Cura.MachineAction
             title: catalog.i18nc("@title:window", "Select custom firmware")
             nameFilters:  "Firmware image files (*.hex)"
             selectExisting: true
-            onAccepted: Cura.USBPrinterManager.updateAllFirmware(fileUrl)
+            onAccepted: Cura.USBPrinterManager.updateAllFirmware(fileUrl, updateEepromCheckbox.checked)
         }
     }
 }

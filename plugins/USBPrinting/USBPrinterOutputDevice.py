@@ -39,6 +39,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self.setShortDescription(catalog.i18nc("@action:button Preceded by 'Ready to'.", "Print via USB"))
         self.setDescription(catalog.i18nc("@info:tooltip", "Print via USB"))
         self.setIconName("print")
+        self.eeprom_update = False
         self._autodetect_port = (serial_port == USBPrinterOutputDevice.SERIAL_AUTODETECT_PORT)
         if self._autodetect_port:
             serial_port = None
@@ -237,10 +238,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     ##  Upload new firmware to machine
     #   \param filename full path of firmware file to be uploaded
-    def updateFirmware(self, file_name):
+    def updateFirmware(self, file_name, eeprom_upd):
         if self._autodetect_port:
             self._detectSerialPort()
         self._update_firmware_thread.startFirmwareUpdate(file_name)
+        self.eeprom_update = eeprom_upd
 
     @property
     def firmwareUpdateFinished(self):
@@ -764,6 +766,13 @@ class ConnectThread:
             showWarning(self, "Connection timeout.", "Failed to determine installed firmware version.")
         self._parent.setConnectionText(catalog.i18nc("@info:status", "Connected via USB"))
         self._parent.setConnectionState(ConnectionState.connected)
+
+        if self._parent.eeprom_update:
+            self._sendCommand("M502")
+            self._sendCommand("M500")
+            Logger.log("d", "Tried to update eeprom")
+            self.eprom_update = False
+
         self._parent._print_thread.start()  # Start listening
         Logger.log("i", "Established printer connection on port %s" % self._parent._serial_port)
         if check_firmware_status == self.CheckFirmwareStatus.OK:
@@ -801,6 +810,7 @@ class UpdateFirmwareThread:
         self._thread.daemon = True
 
         self._parent.connect()
+
 
     ##  Private function (threaded) that actually uploads the firmware.
     def _update_firmware_func(self):

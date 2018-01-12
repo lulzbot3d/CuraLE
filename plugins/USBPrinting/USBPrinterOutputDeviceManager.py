@@ -100,8 +100,8 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
 
         self._firmware_view.show()
 
-    @pyqtSlot(str)
-    def updateAllFirmware(self, file_name):
+    @pyqtSlot(str, bool)
+    def updateAllFirmware(self, file_name, update_eeprom):
         if file_name.startswith("file://"):
             file_name = QUrl(file_name).toLocalFile() # File dialogs prepend the path with file://, which we don't need / want
         if not self._usb_output_devices:
@@ -113,7 +113,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
         self.spawnFirmwareInterface("")
         for printer_connection in self._usb_output_devices:
             try:
-                self._usb_output_devices[printer_connection].updateFirmware(file_name)
+                self._usb_output_devices[printer_connection].updateFirmware(file_name, update_eeprom)
             except FileNotFoundError:
                 # Should only happen in dev environments where the resources/firmware folder is absent.
                 self._usb_output_devices[printer_connection].setProgress(100, 100)
