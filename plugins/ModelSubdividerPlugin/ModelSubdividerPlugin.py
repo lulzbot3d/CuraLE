@@ -15,6 +15,7 @@ from UM.Operations.TranslateOperation import TranslateOperation
 from UM.Mesh.MeshBuilder import MeshBuilder
 import numpy
 import math
+import time
 
 i18n_catalog = i18nCatalog("ModelSubdividerPlugin")
 
@@ -72,6 +73,7 @@ class ModelSubdividerPlugin(Extension):
             Logger.log("w", i18n_catalog.i18n("Cannot subdivide: Internal error"))
 
     def _subdivide(self, mesh, plane):
+        start_time = time.time()
         plane_mesh_data = plane.getMeshData()
         plane_vertices = plane_mesh_data.getVertices()
         plane_face = [plane_vertices[0], plane_vertices[1], plane_vertices[2]]
@@ -86,7 +88,6 @@ class ModelSubdividerPlugin(Extension):
         else:
             for i in range(0, len(vertices), 3):
                 faces.append([vertices[i], vertices[i+1], vertices[i+2]])
-        intersected_faces = []
         for f in faces:
             intersection_type = self.check_intersection_with_triangle(plane_face, f)
             if intersection_type is None or (intersection_type is not None and intersection_type[0] in [IntersectionType.Point, IntersectionType.Edge]):
@@ -95,18 +96,15 @@ class ModelSubdividerPlugin(Extension):
                     self.add_face_to_builder(builders[side], f)
                 else:
                     Logger.log("w", "Invalid face detected: " + str(f))
-            else:
-                intersected_faces.append([f, intersection_type])
-        for f in intersected_faces:
-            if f[1][0] == IntersectionType.Face:
-                self.add_face_to_builder(builders[0], f[0])
-                self.add_face_to_builder(builders[1], f[0])
-            elif f[1][0] == IntersectionType.Segment:
-                new_faces = self.split_triangle(f[0], f[1][1])
+            elif intersection_type[0] == IntersectionType.Face:
+                self.add_face_to_builder(builders[0], f)
+                self.add_face_to_builder(builders[1], f)
+            elif intersection_type[0] == IntersectionType.Segment:
+                new_faces = self.split_triangle(f, intersection_type[1])
                 for new_face in new_faces:
                     self.add_face_to_builder(builders[self.check_plane_side(plane_face, new_face)], new_face)
-            elif f[1][0] == IntersectionType.PointAndSegment:
-                new_faces = self.split_triangle_in_one_segment(f[0], f[1][1])
+            elif intersection_type[0] == IntersectionType.PointAndSegment:
+                new_faces = self.split_triangle_in_one_segment(f, intersection_type[1])
                 for new_face in new_faces:
                     self.add_face_to_builder(builders[self.check_plane_side(plane_face, new_face)], new_face)
         nodes = [SceneNode(), SceneNode()]
@@ -115,6 +113,7 @@ class ModelSubdividerPlugin(Extension):
             nodes[n].setMeshData(builders[n].build())
             nodes[n].setSelectable(True)
             nodes[n].setScale(mesh.getScale())
+        Logger.log("w", i18n_catalog.i18n("Subdivision took %f seconds") % (time.time()-start_time))
         return nodes[0], nodes[1]
 
     def split_triangle(self, face, intersection):
