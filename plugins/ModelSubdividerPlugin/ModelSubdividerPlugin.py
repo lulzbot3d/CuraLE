@@ -29,7 +29,7 @@ class IntersectionType:
 
 
 class ModelSubdividerPlugin(Extension):
-    epsilon = 1e-2
+    epsilon = 1e-4
 
     def __init__(self):
         super().__init__()
@@ -152,10 +152,16 @@ class ModelSubdividerPlugin(Extension):
                                 face[1][0], face[1][1], face[1][2],
                                 face[2][0], face[2][1], face[2][2])
 
+    def vector_length(self, vector):
+        return math.sqrt(vector[0]**2+vector[1]**2+vector[2]**2)
+
     def check_plane_side(self, plane_face, face):
         n = numpy.cross(plane_face[1] - plane_face[0], plane_face[2] - plane_face[0])
-        v = [plane_face[0] - face[0], plane_face[0] - face[1], plane_face[0] - face[2]]
-        d = [numpy.inner(n, v[0]), numpy.inner(n, v[1]), numpy.inner(n, v[2])]
+        n /= numpy.linalg.norm(n)
+        vn = [plane_face[0] - face[0], plane_face[0] - face[1], plane_face[0] - face[2]]
+        dn = [(1 if numpy.inner(n, vn[0]) >= 0 else -1), (1 if numpy.inner(n, vn[1]) >= 0 else -1), (1 if numpy.inner(n, vn[2]) >= 0 else -1)]
+        v = [face[0] - plane_face[0], face[1] - plane_face[0], face[2] - plane_face[0]]
+        d = [self.vector_length(numpy.multiply(n, v[0])) * dn[0], self.vector_length(numpy.multiply(n, v[1])) * dn[1], self.vector_length(numpy.multiply(n, v[2])) * dn[2]]
         points_front = 0
         points_back = 0
         for i in range(3):
@@ -174,8 +180,9 @@ class ModelSubdividerPlugin(Extension):
 
     def is_point_in_plane(self, plane_face, point):
         n = numpy.cross(plane_face[1] - plane_face[0], plane_face[2] - plane_face[0])
-        v = plane_face[0] - point
-        d = numpy.inner(n, v)
+        n /= numpy.linalg.norm(n)
+        v = point - plane_face[0]
+        d = self.vector_length(numpy.multiply(n, v))
         if math.fabs(d) <= self.epsilon:
             return True
         return False
