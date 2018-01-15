@@ -165,8 +165,6 @@ class ModelSubdividerPlugin(Extension):
         points_front = 0
         points_back = 0
         for i in range(3):
-            if self.is_point_in_plane(plane_face, face[i]):
-                continue
             if d[i] > self.epsilon:
                 points_front += 1
             elif d[i] < -self.epsilon:
