@@ -43,7 +43,7 @@ Cura.MachineAction
     {
         id: scrollView
         anchors.fill: parent;
-
+        frameVisible : true
         Item
         {
             id: bedLevelMachineAction
