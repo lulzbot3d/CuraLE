@@ -64,7 +64,7 @@ Cura.MachineAction
                 enabled: parent.firmwareName != ""
                 onClicked:
                 {
-                    Cura.USBPrinterManager.updateAllFirmware(parent.firmwareName)
+                    Cura.USBPrinterManager.updateAllFirmware(parent.firmwareName, updateEepromCheckbox.checked)
                 }
             }
             Button
