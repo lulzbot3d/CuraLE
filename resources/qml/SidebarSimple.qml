@@ -853,18 +853,6 @@ Item
             }
         }
 
-        Text
-        {
-            id: adhesionHelperLabel
-            anchors.left: parent.left
-            anchors.leftMargin: UM.Theme.getSize("default_margin").width
-            anchors.verticalCenter: adhesionComboBox.verticalCenter
-            width: parent.width * .45 - 3 * UM.Theme.getSize("default_margin").width
-            text: catalog.i18nc("@label", "Build Plate Adhesion");
-            font: UM.Theme.getFont("default");
-            color: UM.Theme.getColor("text");
-        }
-
         ComboBox
         {
             id: adhesionComboBox
