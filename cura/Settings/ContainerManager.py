@@ -1,5 +1,5 @@
 # Copyright (c) 2017 Ultimaker B.V.
-# Cura is released under the terms of the AGPLv3 or higher.
+# Cura is released under the terms of the LGPLv3 or higher.
 
 import os.path
 import urllib
@@ -218,22 +218,84 @@ class ContainerManager(QObject):
         entries = entry_name.split("/")
         entry_name = entries.pop()
 
+        sub_item_changed = False
         if entries:
             root_name = entries.pop(0)
             root = container.getMetaDataEntry(root_name)
 
             item = root
-            for entry in entries:
+            for _ in range(len(entries)):
                 item = item.get(entries.pop(0), { })
 
+            if item[entry_name] != entry_value:
+                sub_item_changed = True
             item[entry_name] = entry_value
 
             entry_name = root_name
             entry_value = root
 
         container.setMetaDataEntry(entry_name, entry_value)
+        if sub_item_changed: #If it was only a sub-item that has changed then the setMetaDataEntry won't correctly notice that something changed, and we must manually signal that the metadata changed.
+            container.metaDataChanged.emit(container)
 
         return True
+
+    ##  Set a setting property of the specified container.
+    #
+    #   This will set the specified property of the specified setting of the container
+    #   and all containers that share the same base_file (if any). The latter only
+    #   happens for material containers.
+    #
+    #   \param container_id \type{str} The ID of the container to change.
+    #   \param setting_key \type{str} The key of the setting.
+    #   \param property_name \type{str} The name of the property, eg "value".
+    #   \param property_value \type{str} The new value of the property.
+    #
+    #   \return True if successful, False if not.
+    @pyqtSlot(str, str, str, str, result = bool)
+    def setContainerProperty(self, container_id, setting_key, property_name, property_value):
+        containers = self._container_registry.findContainers(None, id = container_id)
+        if not containers:
+            Logger.log("w", "Could not set properties of container %s because it was not found.", container_id)
+            return False
+
+        container = containers[0]
+
+        if container.isReadOnly():
+            Logger.log("w", "Cannot set properties of read-only container %s.", container_id)
+            return False
+
+        container.setProperty(setting_key, property_name, property_value)
+
+        basefile = container.getMetaDataEntry("base_file", container_id)
+        for sibbling_container in ContainerRegistry.getInstance().findInstanceContainers(base_file = basefile):
+            if sibbling_container != container:
+                sibbling_container.setProperty(setting_key, property_name, property_value)
+
+        return True
+
+    ##  Get a setting property of the specified container.
+    #
+    #   This will get the specified property of the specified setting of the
+    #   specified container.
+    #
+    #   \param container_id The ID of the container to get the setting property
+    #   of.
+    #   \param setting_key The key of the setting to get the property of.
+    #   \param property_name The property to obtain.
+    #   \return The value of the specified property. The type of this property
+    #   value depends on the type of the property. For instance, the "value"
+    #   property of an integer setting will be a Python int, but the "value"
+    #   property of an enum setting will be a Python str.
+    @pyqtSlot(str, str, str, result = QVariant)
+    def getContainerProperty(self, container_id: str, setting_key: str, property_name: str):
+        containers = self._container_registry.findContainers(id = container_id)
+        if not containers:
+            Logger.log("w", "Could not get properties of container %s because it was not found.", container_id)
+            return ""
+        container = containers[0]
+
+        return container.getProperty(setting_key, property_name)
 
     ##  Set the name of the specified container.
     @pyqtSlot(str, str, result = bool)
@@ -271,11 +333,25 @@ class ContainerManager(QObject):
     @pyqtSlot(str, result = bool)
     def isContainerUsed(self, container_id):
         Logger.log("d", "Checking if container %s is currently used", container_id)
-        containers = self._container_registry.findContainerStacks()
-        for stack in containers:
-            if container_id in [child.getId() for child in stack.getContainers()]:
-                Logger.log("d", "The container is in use by %s", stack.getId())
-                return True
+        # check if this is a material container. If so, check if any material with the same base is being used by any
+        # stacks.
+        container_ids_to_check = [container_id]
+        container_results = self._container_registry.findInstanceContainers(id = container_id, type = "material")
+        if container_results:
+            this_container = container_results[0]
+            material_base_file = this_container.getMetaDataEntry("base_file", this_container.getId())
+            # check all material container IDs with the same base
+            material_containers = self._container_registry.findInstanceContainers(base_file = material_base_file,
+                                                                                  type = "material")
+            if material_containers:
+                container_ids_to_check = [container.getId() for container in material_containers]
+
+        all_stacks = self._container_registry.findContainerStacks()
+        for stack in all_stacks:
+            for used_container_id in container_ids_to_check:
+                if used_container_id in [child.getId() for child in stack.getContainers()]:
+                    Logger.log("d", "The container is in use by %s", stack.getId())
+                    return True
         return False
 
     @pyqtSlot(str, result = str)
@@ -353,7 +429,7 @@ class ContainerManager(QObject):
         if not Platform.isWindows():
             if os.path.exists(file_url):
                 result = QMessageBox.question(None, catalog.i18nc("@title:window", "File Already Exists"),
-                                              catalog.i18nc("@label", "The file <filename>{0}</filename> already exists. Are you sure you want to overwrite it?").format(file_url))
+                                              catalog.i18nc("@label Don't translate the XML tag <filename>!", "The file <filename>{0}</filename> already exists. Are you sure you want to overwrite it?").format(file_url))
                 if result == QMessageBox.No:
                     return { "status": "cancelled", "message": "User cancelled"}
 
@@ -537,7 +613,7 @@ class ContainerManager(QObject):
         global_stack = Application.getInstance().getGlobalContainerStack()
         if not global_stack or not quality_name:
             return ""
-        machine_definition = global_stack.getBottom()
+        machine_definition = QualityManager.getInstance().getParentMachineDefinition(global_stack.getBottom())
 
         for container in QualityManager.getInstance().findQualityChangesByName(quality_name, machine_definition):
             containers_found = True
@@ -747,6 +823,7 @@ class ContainerManager(QObject):
 
         approximate_diameter = round(global_stack.getProperty("material_diameter", "value"))
 
+
         # Create a new ID & container to hold the data.
         new_id = self._container_registry.uniqueName("custom_material")
         container_type = type(global_stack.material)  # Always XMLMaterialProfile, since we specifically clone the base_file
@@ -802,6 +879,7 @@ class ContainerManager(QObject):
             self._container_registry.addContainer(new_quality)
 
         self._container_registry.addContainer(new_material)
+
 
         return self._getMaterialContainerIdForActiveMachine(new_id)
 
@@ -991,6 +1069,7 @@ class ContainerManager(QObject):
             quality_changes.setDefinition(self._container_registry.findContainers(id = "fdmprinter")[0])
         else:
             quality_changes.setDefinition(QualityManager.getInstance().getParentMachineDefinition(machine_definition))
+
         from cura.CuraApplication import CuraApplication
         quality_changes.addMetaDataEntry("setting_version", CuraApplication.SettingVersion)
         return quality_changes

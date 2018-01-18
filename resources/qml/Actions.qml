@@ -1,5 +1,5 @@
 // Copyright (c) 2015 Ultimaker B.V.
-// Cura is released under the terms of the AGPLv3 or higher.
+// Cura is released under the terms of the LGPLv3 or higher.
 
 pragma Singleton
 
@@ -16,6 +16,8 @@ Item
 
     property alias undo: undoAction;
     property alias redo: redoAction;
+
+    property alias homeCamera: homeCameraAction;
 
     property alias deleteSelection: deleteSelectionAction;
     property alias centerSelection: centerSelectionAction;
@@ -59,6 +61,9 @@ Item
 
     property alias configureSettingVisibility: configureSettingVisibilityAction
 
+    property alias browsePlugins: browsePluginsAction
+    property alias configurePlugins: configurePluginsAction
+
     UM.I18nCatalog{id: catalog; name:"cura"}
 
     Action
@@ -94,6 +99,13 @@ Item
         text: catalog.i18nc("@action:inmenu menubar:file","&Quit");
         iconName: "application-exit";
         shortcut: StandardKey.Quit;
+    }
+
+    Action
+    {
+        id: homeCameraAction;
+        text: catalog.i18nc("@action:inmenu menubar:view","&Reset camera position");
+        onTriggered: CuraActions.homeCamera();
     }
 
     Action
@@ -361,46 +373,15 @@ Item
 
     Action
     {
-        id: buyFilamentAction;
-        text: catalog.i18nc("@action:inmenu menubar:help","&Filament");
-        onTriggered: CuraActions.openFilamentsPage();
+        id: browsePluginsAction
+        text: catalog.i18nc("@action:menu", "Browse plugins...")
+        iconName: "plugins_browse"
     }
-
-    property alias buyFilament: buyFilamentAction
 
     Action
     {
-        id: buyPrintersAction;
-        text: catalog.i18nc("@action:inmenu menubar:help","&Printers");
-        onTriggered: CuraActions.openPrintersPage();
+        id: configurePluginsAction
+        text: catalog.i18nc("@action:menu", "Installed plugins...");
+        iconName: "plugins_configure"
     }
-
-    property alias buyPrinters: buyPrintersAction
-
-    Action
-    {
-        id: buyToolheadsAction;
-        text: catalog.i18nc("@action:inmenu menubar:help","&Toolheads");
-        onTriggered: CuraActions.openToolheadsPage();
-    }
-
-    property alias buyToolheads: buyToolheadsAction
-
-    Action
-    {
-        id: buyPartsAction;
-        text: catalog.i18nc("@action:inmenu menubar:help","P&arts");
-        onTriggered: CuraActions.openPartsPage();
-    }
-
-    property alias buyParts: buyPartsAction
-
-    Action
-    {
-        id: buyMerchandiseAction;
-        text: catalog.i18nc("@action:inmenu menubar:help","&Merchandise");
-        onTriggered: CuraActions.openMerchandisePage();
-    }
-
-    property alias buyMerchandise: buyMerchandiseAction
 }

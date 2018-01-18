@@ -1,15 +1,17 @@
 # Copyright (c) 2017 Ultimaker B.V.
-# Cura is released under the terms of the AGPLv3 or higher.
+# Cura is released under the terms of the LGPLv3 or higher.
 
 from PyQt5.QtCore import Qt, pyqtSignal, pyqtProperty, QTimer
 from typing import Iterable
 
+from UM.i18n import i18nCatalog
 import UM.Qt.ListModel
 from UM.Application import Application
 import UM.FlameProfiler
 from cura.Settings.ExtruderManager import ExtruderManager
 from cura.Settings.ExtruderStack import ExtruderStack #To listen to changes on the extruders.
-from cura.Settings.MachineManager import MachineManager #To listen to changes on the extruders of the currently active machine.
+
+catalog = i18nCatalog("cura")
 
 ##  Model that holds extruders.
 #
@@ -70,6 +72,7 @@ class ExtrudersModel(UM.Qt.ListModel.ListModel):
         self._simple_names = False
 
         self._active_machine_extruders = [] # type: Iterable[ExtruderStack]
+        self._add_optional_extruder = False
 
         #Listen to changes.
         Application.getInstance().globalContainerStackChanged.connect(self._extrudersChanged) #When the machine is swapped we must update the active machine extruders.
@@ -87,6 +90,18 @@ class ExtrudersModel(UM.Qt.ListModel.ListModel):
     @pyqtProperty(bool, fset = setAddGlobal, notify = addGlobalChanged)
     def addGlobal(self):
         return self._add_global
+
+    addOptionalExtruderChanged = pyqtSignal()
+
+    def setAddOptionalExtruder(self, add_optional_extruder):
+        if add_optional_extruder != self._add_optional_extruder:
+            self._add_optional_extruder = add_optional_extruder
+            self.addOptionalExtruderChanged.emit()
+            self._updateExtruders()
+
+    @pyqtProperty(bool, fset = setAddOptionalExtruder, notify = addOptionalExtruderChanged)
+    def addOptionalExtruder(self):
+        return self._add_optional_extruder
 
     ##  Set the simpleNames property.
     def setSimpleNames(self, simple_names):
@@ -159,7 +174,7 @@ class ExtrudersModel(UM.Qt.ListModel.ListModel):
                 color = material.getMetaDataEntry("color_code", default = self.defaultColors[0]) if material else self.defaultColors[0]
                 item = {
                     "id": global_container_stack.getId(),
-                    "name": "Global",
+                    "name": catalog.i18nc("@menuitem", "Global"),
                     "color": color,
                     "index": -1,
                     "definition": ""
@@ -197,5 +212,16 @@ class ExtrudersModel(UM.Qt.ListModel.ListModel):
 
         if changed:
             items.sort(key = lambda i: i["index"])
+            # We need optional extruder to be last, so add it after we do sorting.
+            # This way we can simply intrepret the -1 of the index as the last item (which it now always is)
+            if self._add_optional_extruder:
+                item = {
+                    "id": "",
+                    "name": catalog.i18nc("@menuitem", "Not overridden"),
+                    "color": "#ffffff",
+                    "index": -1,
+                    "definition": ""
+                }
+                items.append(item)
             self.setItems(items)
             self.modelChanged.emit()

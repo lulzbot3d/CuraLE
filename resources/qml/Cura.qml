@@ -1,5 +1,5 @@
-// Copyright (c) 2015 Ultimaker B.V.
-// Cura is released under the terms of the AGPLv3 or higher.
+// Copyright (c) 2017 Ultimaker B.V.
+// Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.2
 import QtQuick.Controls 1.1
@@ -38,6 +38,18 @@ UM.MainWindow
             Cura.MachineManager.printerOutputDevices[0].setJobState("abort")
             Printer.exitAllowed = true
             CuraApplication.closeApplication();
+        }
+    }
+
+    Connections
+    {
+        target: Printer
+        onShowPrintMonitor: {
+            if (show) {
+                topbar.startMonitoringPrint()
+            } else {
+                topbar.stopMonitoringPrint()
+            }
         }
     }
 
@@ -219,7 +231,7 @@ UM.MainWindow
                         id: sub_menu
                         title: model.name;
                         visible: actions != null
-                        enabled:actions != null
+                        enabled: actions != null
                         Instantiator
                         {
                             model: actions
@@ -240,6 +252,15 @@ UM.MainWindow
 
             Menu
             {
+                id: plugin_menu
+                title: catalog.i18nc("@title:menu menubar:toplevel", "P&lugins")
+
+                MenuItem { action: Cura.Actions.browsePlugins }
+                MenuItem { action: Cura.Actions.configurePlugins }
+            }
+
+            Menu
+            {
                 title: catalog.i18nc("@title:menu menubar:toplevel","P&references");
 
                 MenuItem { action: Cura.Actions.preferences; }
@@ -256,19 +277,6 @@ UM.MainWindow
                 MenuSeparator { }
                 MenuItem { action: Cura.Actions.about; }
             }
-// Commenting out Buy Now menu for now...
-/*
-            Menu
-            {
-                title: catalog.i18nc("@title:menu menubar:toplevel","&Buy now");
-
-                MenuItem { action: Cura.Actions.buyFilament; }
-                MenuItem { action: Cura.Actions.buyPrinters; }
-                MenuItem { action: Cura.Actions.buyToolheads; }
-                MenuItem { action: Cura.Actions.buyParts; }
-                MenuItem { action: Cura.Actions.buyMerchandise; }
-            }
-*/
         }
 
         UM.SettingPropertyProvider
@@ -298,6 +306,31 @@ UM.MainWindow
                 {
                     if (drop.urls.length > 0)
                     {
+                        // As the drop area also supports plugins, first check if it's a plugin that was dropped.
+                        if (drop.urls.length == 1)
+                        {
+                            if (PluginRegistry.isPluginFile(drop.urls[0]))
+                            {
+                                // Try to install plugin & close.
+                                var result = PluginRegistry.installPlugin(drop.urls[0]);
+                                pluginInstallDialog.text = result.message;
+                                if (result.status == "ok")
+                                {
+                                    pluginInstallDialog.icon = StandardIcon.Information;
+                                }
+                                else if (result.status == "duplicate")
+                                {
+                                    pluginInstallDialog.icon = StandardIcon.Warning;
+                                }
+                                else
+                                {
+                                    pluginInstallDialog.icon = StandardIcon.Critical;
+                                }
+                                pluginInstallDialog.open();
+                                return;
+                            }
+                        }
+
                         openDialog.handleOpenFileUrls(drop.urls);
                     }
                 }
@@ -315,57 +348,6 @@ UM.MainWindow
                 }
             }
 
-            Label
-            {
-                id: selectionName
-                anchors
-                {
-                    bottom: jobSpecs.top;
-                    right: sidebar.left;
-                    bottomMargin: UM.Theme.getSize("default_margin").height;
-                    rightMargin: UM.Theme.getSize("default_margin").width;
-                }
-
-                text: ""
-                font: UM.Theme.getFont("small")
-                color: UM.Theme.getColor("text_subtext")
-
-                function changed()
-                {
-                    var count = UM.Selection.count
-                    if(count == 1)
-                    {
-                        selectionName.text = "Current selection: " + UM.Selection.selectionName
-                    }
-                    else if(count > 1)
-                    {
-                        selectionName.text = "Multiple objects selected"
-                    }
-                    else
-                    {
-                        selectionName.text = ""
-                    }
-                }
-
-                Component.onCompleted:
-                {
-                    UM.Selection.selectionChanged.connect(changed)
-                }
-            }
-
-            Loader
-            {
-                id: view_panel
-
-                anchors.top: viewModeButton.bottom
-                anchors.topMargin: UM.Theme.getSize("default_margin").height;
-                anchors.left: viewModeButton.left;
-
-                height: childrenRect.height;
-
-                source: UM.ActiveView.valid ? UM.ActiveView.activeViewPanel : "";
-            }
-
             Button
             {
                 id: openFileButton;
@@ -375,33 +357,12 @@ UM.MainWindow
                 tooltip: '';
                 anchors
                 {
-                    top: parent.top;
+                    top: topbar.bottom;
+                    topMargin: UM.Theme.getSize("default_margin").height;
                     left: parent.left;
                 }
                 action: Cura.Actions.open;
             }
-
-            Image
-            {
-                id: logo
-                anchors
-                {
-                    left: parent.left
-                    leftMargin: UM.Theme.getSize("default_margin").width;
-                    bottom: parent.bottom
-                    bottomMargin: UM.Theme.getSize("default_margin").height;
-                }
-
-                source: UM.Theme.getImage("logo");
-                width: UM.Theme.getSize("logo").width;
-                height: UM.Theme.getSize("logo").height;
-                z: -1;
-
-                sourceSize.width: width;
-                sourceSize.height: height;
-            }
-
-
 
             Toolbar
             {
@@ -417,19 +378,30 @@ UM.MainWindow
                 }
             }
 
+            Topbar
+            {
+                id: topbar
+                anchors.left:parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                monitoringPrint: base.monitoringPrint
+                onStartMonitoringPrint: base.monitoringPrint = true
+                onStopMonitoringPrint: base.monitoringPrint = false
+            }
+
             Sidebar
             {
                 id: sidebar;
 
                 anchors
                 {
-                    top: parent.top;
+                    top: topbar.bottom;
                     bottom: parent.bottom;
                     right: parent.right;
                 }
                 z: 1
-                onMonitoringPrintChanged: base.monitoringPrint = monitoringPrint
                 width: UM.Theme.getSize("sidebar").width;
+                monitoringPrint: base.monitoringPrint
             }
 
             Button
@@ -453,25 +425,6 @@ UM.MainWindow
                 onClicked: Cura.Actions.multiplySelection.trigger();
             }
 
-            Button
-            {
-                id: viewModeButton
-
-                anchors
-                {
-                    top: multiplyObjectButton.bottom;
-                    topMargin: UM.Theme.getSize("window_margin").height;
-                    left: parent.left;
-                }
-                text: catalog.i18nc("@action:button","View Mode");
-                iconSource: UM.Theme.getIcon("viewmode");
-
-                style: UM.Theme.styles.tool_button;
-                tooltip: "";
-                enabled: !PrintInformation.preSliced
-                menu: ViewMenu { }
-            }
-
             Rectangle
             {
                 id: viewportOverlay
@@ -479,15 +432,13 @@ UM.MainWindow
                 color: UM.Theme.getColor("viewport_overlay")
                 anchors
                 {
-                    top: parent.top
+                    top: topbar.bottom
                     bottom: parent.bottom
                     left:parent.left
                     right: sidebar.left
                 }
                 visible: opacity > 0
-                opacity: base.monitoringPrint ? 0.75 : 0
-
-                Behavior on opacity { NumberAnimation { duration: 100; } }
+                opacity: base.monitoringPrint ? 0.5 : 0
 
                 MouseArea {
                     anchors.fill: parent
@@ -497,41 +448,16 @@ UM.MainWindow
                 }
             }
 
-            Image
+            Loader
             {
-                id: cameraImage
-                width: Math.min(viewportOverlay.width, sourceSize.width)
-                height: sourceSize.height * width / sourceSize.width
+                sourceComponent: Cura.MachineManager.printerOutputDevices.length > 0 ? Cura.MachineManager.printerOutputDevices[0].monitorItem: null
+                visible: base.monitoringPrint
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenterOffset: - UM.Theme.getSize("sidebar").width / 2
-                visible: base.monitoringPrint
-                onVisibleChanged:
-                {
-                    if(Cura.MachineManager.printerOutputDevices.length == 0 )
-                    {
-                        return;
-                    }
-                    if(visible)
-                    {
-                        Cura.MachineManager.printerOutputDevices[0].startCamera()
-                    } else
-                    {
-                        Cura.MachineManager.printerOutputDevices[0].stopCamera()
-                    }
-                }
-                source:
-                {
-                    if(!base.monitoringPrint)
-                    {
-                        return "";
-                    }
-                    if(Cura.MachineManager.printerOutputDevices.length > 0 && Cura.MachineManager.printerOutputDevices[0].cameraImage)
-                    {
-                        return Cura.MachineManager.printerOutputDevices[0].cameraImage;
-                    }
-                    return "";
-                }
+                anchors.verticalCenterOffset: UM.Theme.getSize("sidebar_header").height / 2
+                property real maximumWidth: viewportOverlay.width
+                property real maximumHeight: viewportOverlay.height
             }
 
             UM.MessageStack
@@ -673,6 +599,30 @@ UM.MainWindow
         }
     }
 
+    // show the installed plugins page in the preferences dialog
+    Connections
+    {
+        target: Cura.Actions.configurePlugins
+        onTriggered:
+        {
+            preferences.visible = true
+            preferences.setPage(5)
+        }
+    }
+
+    UM.ExtensionModel {
+        id: curaExtensions
+    }
+
+    // show the plugin browser dialog
+    Connections
+    {
+        target: Cura.Actions.browsePlugins
+        onTriggered: {
+            curaExtensions.callExtensionMethod("Plugin Browser", "browsePlugins")
+        }
+    }
+
     Timer
     {
         id: createProfileTimer
@@ -810,6 +760,14 @@ UM.MainWindow
                 openFilesIncludingProjectsDialog.loadModelFiles(fileUrlList.slice());
             }
         }
+    }
+
+    MessageDialog
+    {
+        id: pluginInstallDialog
+        title: catalog.i18nc("@window:title", "Install Plugin");
+        standardButtons: StandardButton.Ok
+        modality: Qt.ApplicationModal
     }
 
     MessageDialog {
@@ -975,7 +933,7 @@ UM.MainWindow
 
     Connections
     {
-        target: Printer
+        target: CuraApplication
         onShowDiscardOrKeepProfileChanges:
         {
             discardOrKeepProfileChangesDialog.show()
@@ -1020,6 +978,11 @@ UM.MainWindow
             if(!base.visible)
             {
                 base.visible = true;
+            }
+
+            // check later if the user agreement dialog has been closed
+            if (CuraApplication.needToShowUserAgreement)
+            {
                 restart();
             }
             else if(Cura.MachineManager.activeMachineId == null || Cura.MachineManager.activeMachineId == "")
