@@ -832,25 +832,6 @@ Item
                 }
 
             }
-
-            Label
-            {
-                id: adhesionHelperLabel
-                visible: adhesionCheckBox.visible
-
-                text: catalog.i18nc("@label", "Build Plate Adhesion")
-                font: UM.Theme.getFont("default")
-                color: UM.Theme.getColor("text")
-                elide: Text.ElideRight
-
-                anchors {
-                    left: parent.left
-                    leftMargin: UM.Theme.getSize("sidebar_margin").width
-                    right: infillCellLeft.right
-                    rightMargin: UM.Theme.getSize("sidebar_margin").width
-                    verticalCenter: adhesionCheckBox.verticalCenter
-                }
-            }
         }
 
         ComboBox
@@ -905,95 +886,6 @@ Item
                     base.hideTooltip();
                 }
             }
-/*
-}
-
-        CheckBox
-        {
-            id: adhesionCheckBox
-            property alias _hovered: adhesionMouseArea.containsMouse
-=======
-            CheckBox
-            {
-                id: adhesionCheckBox
-                property alias _hovered: adhesionMouseArea.containsMouse
-
-                anchors.top: enableSupportCheckBox.visible ? supportExtruderCombobox.bottom : infillCellRight.bottom
-                anchors.topMargin: UM.Theme.getSize("sidebar_margin").height
-                anchors.left: infillCellRight.left
->>>>>>> upstream3.1
-
-                //: Setting enable printing build-plate adhesion helper checkbox
-                style: UM.Theme.styles.checkbox;
-                enabled: base.settingsEnabled
-
-
-<<<<<<< HEAD
-            //checked: platformAdhesionType.properties.value != "none"
-            checked:
-            {
-                platformAdhesionType.properties.value == "brim"
-                console.log( "------------ platformAdhesionType.properties.value = ", platformAdhesionType.properties.value)
-                console.log( "------------ checked = ", platformAdhesionType.properties.value == "brim" )
-            }
-
-            MouseArea
-            {
-                id: adhesionMouseArea
-                anchors.fill: parent
-                hoverEnabled: true
-                enabled: base.settingsEnabled
-
-                onClicked:
-=======
-                visible: platformAdhesionType.properties.enabled == "True"
-                checked: platformAdhesionType.properties.value != "skirt" && platformAdhesionType.properties.value != "none"
-
-                MouseArea
->>>>>>> upstream3.1
-                {
-                    id: adhesionMouseArea
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    enabled: base.settingsEnabled
-                    onClicked:
-                    {
-                        var adhesionType = "skirt";
-                        if(!parent.checked)
-                        {
-                            // Remove the "user" setting to see if the rest of the stack prescribes a brim or a raft
-                            platformAdhesionType.removeFromContainer(0);
-                            adhesionType = platformAdhesionType.properties.value;
-                            if(adhesionType == "skirt" || adhesionType == "none")
-                            {
-                                // If the rest of the stack doesn't prescribe an adhesion-type, default to a brim
-                                adhesionType = "brim";
-                            }
-                        }
-                        platformAdhesionType.setPropertyValue("value", adhesionType);
-                    }
-                    onEntered:
-                    {
-                        base.showTooltip(adhesionCheckBox, Qt.point(-adhesionCheckBox.x, 0),
-                            catalog.i18nc("@label", "Enable printing a brim or raft. This will add a flat area around or under your object which is easy to cut off afterwards."));
-                    }
-                    onExited:
-                    {
-                        base.hideTooltip();
-                    }
-<<<<<<< HEAD
-                    platformAdhesionType.setPropertyValue("value", adhesionType);
-                }
-
-
-                onEntered:
-                {
-                    base.showTooltip(adhesionCheckBox, Qt.point(-adhesionCheckBox.x, 0),
-                        catalog.i18nc("@label", "Enable printing a brim or raft. This will add a flat area around or under your object which is easy to cut off afterwards."));
-=======
->>>>>>> upstream3.1
-                }
-            }
 
             ListModel
             {
@@ -1001,41 +893,11 @@ Item
                 Component.onCompleted: populateExtruderModel()
             }
 
-            //: Model used to populate the extrudelModel
             Cura.ExtrudersModel
             {
                 id: extruders
                 onModelChanged: populateExtruderModel()
             }
-
-            Item
-            {
-                id: tipsCell
-                anchors.top: adhesionCheckBox.visible ? adhesionCheckBox.bottom : (enableSupportCheckBox.visible ? supportExtruderCombobox.bottom : infillCellRight.bottom)
-                anchors.topMargin: parseInt(UM.Theme.getSize("sidebar_margin").height * 2)
-                anchors.left: parent.left
-                width: parent.width
-                height: tipsText.contentHeight * tipsText.lineCount
-
-                Label
-                {
-                    id: tipsText
-                    anchors.left: parent.left
-                    anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width
-                    anchors.right: parent.right
-                    anchors.rightMargin: UM.Theme.getSize("sidebar_margin").width
-                    anchors.top: parent.top
-                    wrapMode: Text.WordWrap
-                    text: catalog.i18nc("@label", "Need help improving your prints?<br>Read the <a href='%1'>Ultimaker Troubleshooting Guides</a>").arg("https://ultimaker.com/en/troubleshooting")
-                    font: UM.Theme.getFont("default");
-                    color: UM.Theme.getColor("text");
-                    linkColor: UM.Theme.getColor("text_link")
-                    onLinkActivated: Qt.openUrlExternally(link)
-                }
-            }
-<<<<<<< HEAD
-        }
-        */
 
             UM.SettingPropertyProvider
             {
