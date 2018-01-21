@@ -356,7 +356,6 @@ Cura.MachineAction
                                 {
                                     machineBaudrateProvider.setPropertyValue("value", model[index]);
                                 }
-                            }
                             CheckBox
                             {
                                 id: lcdCheckBox
