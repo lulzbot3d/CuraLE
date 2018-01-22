@@ -267,7 +267,8 @@ QtObject {
                 {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter;
-                    width: childrenRect.width
+                    // width: childrenRect.width
+		    width: Theme.getSize("topbar_button").width + Theme.getSize("topbar_button_icon").width
                     height: Theme.getSize("topbar_button_icon").height
                     Label
                     {
