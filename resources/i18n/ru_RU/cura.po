@@ -533,7 +533,6 @@ msgctxt "@info:status"
 msgid "Sending new jobs (temporarily) blocked, still sending the previous print job."
 msgstr "Отправка новых заданий (временно) заблокирована, идёт отправка предыдущего задания."
 
-<<<<<<< HEAD:resources/i18n/ru_RU/cura.po
 #: /home/ruben/Projects/Cura/plugins/CuraPrintClusterUpload/NetworkClusterPrinterOutputDevice.py:212
 =======
 #: /home/ruben/Projects/Cura/plugins/UM3NetworkPrinting/NetworkClusterPrinterOutputDevice.py:278
@@ -563,12 +562,11 @@ msgstr "Показать задания на печать"
 msgctxt "@info:tooltip"
 msgid "Opens the print jobs interface in your browser."
 msgstr "Открыть интерфейс с заданиями печати в вашем браузере."
-=======
+
 #: /home/ruben/Projects/Cura/plugins/XmlMaterialProfile/__init__.py:13
 msgctxt "@label"
 msgid "Material Profiles"
 msgstr "Профили материалов"
->>>>>>> master:resources/i18n/ru/cura.po
 
 #: /home/ruben/Projects/Cura/plugins/UM3NetworkPrinting/NetworkClusterPrinterOutputDevice.py:489
 #: /home/ruben/Projects/Cura/plugins/UM3NetworkPrinting/DiscoverUM3Action.qml:239
@@ -4864,10 +4862,6 @@ msgstr "Просмотр слоёв"
 #~ msgctxt "@info"
 #~ msgid "Cura collects anonymised slicing statistics. You can disable this in preferences"
 #~ msgstr "Cura собирает анонимную статистику о нарезке модели. Вы можете отключить это в настройках"
-
-#~ msgctxt "@label"
-#~ msgid "Material Profiles"
-#~ msgstr "Профили материалов"
 
 #~ msgctxt "@info:whatsthis"
 #~ msgid "Provides capabilities to read and write XML-based material profiles."

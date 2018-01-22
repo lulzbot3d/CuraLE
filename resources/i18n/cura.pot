@@ -558,7 +558,6 @@ msgid ""
 "Sending new jobs (temporarily) blocked, still sending the previous print job."
 msgstr ""
 
-<<<<<<< HEAD
 #: /home/ruben/Projects/Cura/plugins/CuraPrintClusterUpload/NetworkClusterPrinterOutputDevice.py:212
 =======
 #: /home/ruben/Projects/Cura/plugins/UM3NetworkPrinting/NetworkClusterPrinterOutputDevice.py:278
@@ -589,11 +588,11 @@ msgstr ""
 #: /home/ruben/Projects/Cura/plugins/UM3NetworkPrinting/NetworkClusterPrinterOutputDevice.py:424
 msgctxt "@info:tooltip"
 msgid "Opens the print jobs interface in your browser."
-=======
+msgstr ""
+
 #: /home/ruben/Projects/Cura/plugins/XmlMaterialProfile/__init__.py:13
 msgctxt "@label"
 msgid "Material Profiles"
->>>>>>> master
 msgstr ""
 
 #: /home/ruben/Projects/Cura/plugins/UM3NetworkPrinting/NetworkClusterPrinterOutputDevice.py:489
