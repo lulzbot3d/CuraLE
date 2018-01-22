@@ -632,7 +632,6 @@ msgctxt "@info:status"
 msgid "Sending new jobs (temporarily) blocked, still sending the previous print job."
 msgstr "Отправка новых заданий (временно) заблокирована, идёт отправка предыдущего задания."
 
-<<<<<<< HEAD:resources/i18n/ru_RU/cura.po
 #: /home/ruben/Projects/Cura/plugins/CuraPrintClusterUpload/NetworkClusterPrinterOutputDevice.py:212
 msgctxt "@info:status"
 msgid "Unable to send new print job: this 3D printer is not (yet) set up to host a group of connected Ultimaker 3 printers."
@@ -659,12 +658,11 @@ msgstr "Показать задания на печать"
 msgctxt "@info:tooltip"
 msgid "Opens the print jobs interface in your browser."
 msgstr "Открыть интерфейс с заданиями печати в вашем браузере."
-=======
+
 #: /home/ruben/Projects/Cura/plugins/XmlMaterialProfile/__init__.py:13
 msgctxt "@label"
 msgid "Material Profiles"
 msgstr "Профили материалов"
->>>>>>> master:resources/i18n/ru/cura.po
 
 #: /home/ruben/Projects/Cura/plugins/CuraPrintClusterUpload/NetworkClusterPrinterOutputDevice.py:520
 #, python-brace-format
