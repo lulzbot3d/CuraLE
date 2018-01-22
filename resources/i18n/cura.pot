@@ -551,7 +551,6 @@ msgid ""
 "printer's configuration to match the job, for it to start printing."
 msgstr ""
 
-<<<<<<< HEAD
 #: /home/ruben/Projects/Cura/plugins/CuraPrintClusterUpload/NetworkClusterPrinterOutputDevice.py:196
 msgctxt "@info:status"
 msgid ""
@@ -559,9 +558,6 @@ msgid ""
 msgstr ""
 
 #: /home/ruben/Projects/Cura/plugins/CuraPrintClusterUpload/NetworkClusterPrinterOutputDevice.py:212
-=======
-#: /home/ruben/Projects/Cura/plugins/UM3NetworkPrinting/NetworkClusterPrinterOutputDevice.py:278
->>>>>>> um/3.1
 msgctxt "@info:status"
 msgid ""
 "Unable to send new print job: this 3D printer is not (yet) set up to host a "

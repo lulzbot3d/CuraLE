@@ -527,16 +527,12 @@ msgstr "{printer_name} завершил печать '{job_name}'. Пожалу�
 msgid "{printer_name} is reserved to print '{job_name}'. Please change the printer's configuration to match the job, for it to start printing."
 msgstr "{printer_name} назначен для печати '{job_name}'. Пожалуйста, измените конфигурацию принтера, чтобы она соответствовала заданию."
 
-<<<<<<< HEAD
 #: /home/ruben/Projects/Cura/plugins/CuraPrintClusterUpload/NetworkClusterPrinterOutputDevice.py:196
 msgctxt "@info:status"
 msgid "Sending new jobs (temporarily) blocked, still sending the previous print job."
 msgstr "Отправка новых заданий (временно) заблокирована, идёт отправка предыдущего задания."
 
 #: /home/ruben/Projects/Cura/plugins/CuraPrintClusterUpload/NetworkClusterPrinterOutputDevice.py:212
-=======
-#: /home/ruben/Projects/Cura/plugins/UM3NetworkPrinting/NetworkClusterPrinterOutputDevice.py:278
->>>>>>> um/3.1
 msgctxt "@info:status"
 msgid "Unable to send new print job: this 3D printer is not (yet) set up to host a group of connected Ultimaker 3 printers."
 msgstr "Невозможно отправить новое задание: данный 3D принтер (ещё) не настроен на управление группой подключенных принтеров Ultimaker 3."
