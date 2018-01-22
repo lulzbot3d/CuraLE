@@ -449,12 +449,6 @@ msgctxt "@window:title"
 msgid "Mismatched configuration"
 msgstr "Несовпадение конфигурации"
 
-#: /home/ruben/Projects/Cura/plugins/UM3NetworkPrinting/NetworkPrinterOutputDevice.py:864
-#: /home/ruben/Projects/Cura/plugins/UM3NetworkPrinting/NetworkClusterPrinterOutputDevice.py:262
-msgctxt "@info:status"
-msgid "Sending new jobs (temporarily) blocked, still sending the previous print job."
-msgstr "Отправка новых заданий (временно) заблокирована, идёт отправка предыдущего задания."
-
 #: /home/ruben/Projects/Cura/plugins/UM3NetworkPrinting/NetworkPrinterOutputDevice.py:873
 msgctxt "@info:status"
 msgid "Sending data to printer"
