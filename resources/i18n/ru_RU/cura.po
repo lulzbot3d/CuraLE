@@ -4582,10 +4582,6 @@ msgstr "Чтение профиля Cura"
 #~ msgid "Cura collects anonymised slicing statistics. You can disable this in preferences"
 #~ msgstr "Cura собирает анонимную статистику о нарезке модели. Вы можете отключить это в настройках"
 
-#~ msgctxt "@label"
-#~ msgid "Material Profiles"
-#~ msgstr "Профили материалов"
-
 #~ msgctxt "@info:whatsthis"
 #~ msgid "Provides capabilities to read and write XML-based material profiles."
 #~ msgstr "Предоставляет возможности по чтению и записи профилей материалов в виде XML."
