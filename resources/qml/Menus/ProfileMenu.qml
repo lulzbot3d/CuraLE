@@ -41,7 +41,7 @@ Menu
 
         MenuItem
         {
-            text: model.name + " - " + model.layer_height
+            text: model.name
             checkable: true
             checked: Cura.MachineManager.currentQualityId == model.id
             exclusiveGroup: group

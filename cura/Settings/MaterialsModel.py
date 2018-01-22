@@ -18,6 +18,7 @@ class MaterialsModel(InstanceContainersModel):
         if container.getMetaDataEntry("type") == "material": #Only need to update if a material was changed.
             self._update()
 
+
     def _fetchInstanceContainers(self):
         results = super()._fetchInstanceContainers()
         if Application.getInstance().getMachineManager().currentCategory != "Experimental":
@@ -25,3 +26,8 @@ class MaterialsModel(InstanceContainersModel):
                 if material.getMetaDataEntry("category", None) == "Experimental":
                     results.remove(material)
         return results
+
+    def _onContainerChanged(self, container):
+        if container.getMetaDataEntry("type", "") == "material":
+            super()._onContainerChanged(container)
+

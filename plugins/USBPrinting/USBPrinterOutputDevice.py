@@ -310,7 +310,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 self._print_thread.join()
             except:
                 pass
-            self._serial.close()
+            if self._serial is not None:    # Avoid a race condition when a thread can change the value of self._serial to None
+                self._serial.close()
 
         self._print_thread = PrintThread(self)
         self._serial = None

@@ -61,21 +61,25 @@ endif()
 install(DIRECTORY resources
         DESTINATION ${CMAKE_INSTALL_DATADIR}/cura)
 install(DIRECTORY plugins
-        DESTINATION ${CURA_INSTALL_PLUGINS_PATH})
+
+        DESTINATION lib${LIB_SUFFIX}/cura)
 if(NOT APPLE AND NOT WIN32)
-    if(DEB_PACKAGE_TARGET_PLATFORM STREQUAL "ubuntu-xenial")
-      install(FILES cura_app.py
-              DESTINATION ${CMAKE_INSTALL_BINDIR}
-              PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
-      install(FILES run_cura-lulzbot.sh
-              DESTINATION ${CMAKE_INSTALL_BINDIR}
-              PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
-            RENAME cura-lulzbot)
+    install(FILES cura_app.py
+            DESTINATION ${CMAKE_INSTALL_BINDIR}
+            PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+            RENAME cura)
+    if(EXISTS /etc/debian_version)
+        install(DIRECTORY cura
+            DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}/dist-packages
+            FILES_MATCHING PATTERN *.py)
+        install(FILES ${CMAKE_BINARY_DIR}/CuraVersion.py
+            DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}/dist-packages/cura)
     else()
-      install(FILES cura_app.py
-              DESTINATION ${CMAKE_INSTALL_BINDIR}
-              PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
-              RENAME cura-lulzbot)
+        install(DIRECTORY cura
+            DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages
+            FILES_MATCHING PATTERN *.py)
+        install(FILES ${CMAKE_BINARY_DIR}/CuraVersion.py
+            DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages/cura)
     endif()
 
     install(DIRECTORY cura
@@ -97,10 +101,10 @@ else()
             DESTINATION ${CMAKE_INSTALL_BINDIR}
             PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
     install(DIRECTORY cura
-            DESTINATION ${PYTHON_SITE_PACKAGES_DIR}
+            DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages
             FILES_MATCHING PATTERN *.py)
     install(FILES ${CMAKE_BINARY_DIR}/CuraVersion.py
-            DESTINATION ${PYTHON_SITE_PACKAGES_DIR}/cura)
+            DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages/cura)
 endif()
 
 include(CPackConfig.cmake)
