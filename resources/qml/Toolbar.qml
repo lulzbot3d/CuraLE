@@ -19,6 +19,8 @@ Item
     height: buttons.height
     property int activeY
 
+    Keys.forwardTo: parent
+
     Column
     {
         id: buttons;
@@ -130,6 +132,20 @@ Item
 
             source: UM.ActiveTool.valid ? UM.ActiveTool.activeToolPanel : "";
             enabled: UM.Controller.toolsEnabled;
+
+            Keys.forwardTo: backgroundItem
+            focus: true
+
+            onStatusChanged:
+            {
+                if (panel.status == Loader.Ready)
+                {
+                    forceActiveFocus()
+                }
+
+            }
+
+            /*
             focus: false
 
             onStatusChanged:
@@ -139,6 +155,7 @@ Item
                     panel.nextItemInFocusChain().forceActiveFocus()
                 }
             }
+            */
         }
     }
 
