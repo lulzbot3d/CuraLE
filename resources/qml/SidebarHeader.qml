@@ -427,6 +427,7 @@ Column
                 id: materialInfoLabel
                 wrapMode: Text.WordWrap
                 text: catalog.i18nc("@label", "<a href='%1'>Material info</a>")
+
                 font: UM.Theme.getFont("default")
                 color: UM.Theme.getColor("text")
                 linkColor: UM.Theme.getColor("text_link")
