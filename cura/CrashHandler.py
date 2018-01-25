@@ -37,7 +37,7 @@ else:
 # List of exceptions that should be considered "fatal" and abort the program.
 # These are primarily some exception types that we simply cannot really recover from
 # (MemoryError and SystemError) and exceptions that indicate grave errors in the
-# code that cause the Python interpreter to fail (SyntaxError, ImportError). 
+# code that cause the Python interpreter to fail (SyntaxError, ImportError).
 fatal_exception_types = [
     MemoryError,
     SyntaxError,
@@ -52,13 +52,13 @@ class CrashHandler:
         self.exception_type = exception_type
         self.value = value
         self.traceback = tb
-        self.dialog = QDialog()
+        self.dialog = None # Don't create a QDialog before there is a QApplication
 
         # While we create the GUI, the information will be stored for sending afterwards
         self.data = dict()
         self.data["time_stamp"] = time.time()
 
-        Logger.log("c", "An uncaught exception has occurred!")
+        Logger.log("c", "An uncaught error has occurred!")
         for line in traceback.format_exception(exception_type, value, tb):
             for part in line.rstrip("\n").split("\n"):
                 Logger.log("c", part)
@@ -70,6 +70,7 @@ class CrashHandler:
         if not application:
             sys.exit(1)
 
+        self.dialog = QDialog()
         self._createDialog()
 
     ##  Creates a modal dialog.
@@ -89,7 +90,7 @@ class CrashHandler:
 
     def _messageWidget(self):
         label = QLabel()
-        label.setText(catalog.i18nc("@label crash message", """<p><b>A fatal exception has occurred. Please send us this Crash Report to fix the problem</p></b>
+        label.setText(catalog.i18nc("@label crash message", """<p><b>A fatal error has occurred. Please send us this Crash Report to fix the problem</p></b>
             <p>Please use the "Send report" button to post a bug report automatically to our servers</p>
         """))
 
@@ -107,11 +108,11 @@ class CrashHandler:
         except:
             self.cura_version = catalog.i18nc("@label unknown version of Cura", "Unknown")
 
-        crash_info = catalog.i18nc("@label Cura version", "<b>Cura version:</b> {version}<br/>").format(version = self.cura_version)
-        crash_info += catalog.i18nc("@label Platform", "<b>Platform:</b> {platform}<br/>").format(platform = platform.platform())
-        crash_info += catalog.i18nc("@label Qt version", "<b>Qt version:</b> {qt}<br/>").format(qt = QT_VERSION_STR)
-        crash_info += catalog.i18nc("@label PyQt version", "<b>PyQt version:</b> {pyqt}<br/>").format(pyqt = PYQT_VERSION_STR)
-        crash_info += catalog.i18nc("@label OpenGL", "<b>OpenGL:</b> {opengl}<br/>").format(opengl = self._getOpenGLInfo())
+        crash_info = "<b>" + catalog.i18nc("@label Cura version number", "Cura version") + ":</b> " + str(self.cura_version) + "<br/>"
+        crash_info += "<b>" + catalog.i18nc("@label Type of platform", "Platform") + ":</b> " + str(platform.platform()) + "<br/>"
+        crash_info += "<b>" + catalog.i18nc("@label", "Qt version") + ":</b> " + str(QT_VERSION_STR) + "<br/>"
+        crash_info += "<b>" + catalog.i18nc("@label", "PyQt version") + ":</b> " + str(PYQT_VERSION_STR) + "<br/>"
+        crash_info += "<b>" + catalog.i18nc("@label OpenGL version", "OpenGL") + ":</b> " + str(self._getOpenGLInfo()) + "<br/>"
         label.setText(crash_info)
 
         layout.addWidget(label)
@@ -142,7 +143,7 @@ class CrashHandler:
 
     def _exceptionInfoWidget(self):
         group = QGroupBox()
-        group.setTitle(catalog.i18nc("@title:groupbox", "Exception traceback"))
+        group.setTitle(catalog.i18nc("@title:groupbox", "Error traceback"))
         layout = QVBoxLayout()
 
         text_area = QTextEdit()
@@ -284,5 +285,7 @@ class CrashHandler:
         Application.getInstance().callLater(self._show)
 
     def _show(self):
-        self.dialog.exec_()
+        # When the exception is not in the fatal_exception_types list, the dialog is not created, so we don't need to show it
+        if self.dialog:
+            self.dialog.exec_()
         os._exit(1)

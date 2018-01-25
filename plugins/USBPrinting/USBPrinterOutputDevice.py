@@ -58,8 +58,10 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._print_thread           = PrintThread(self)
         self._update_firmware_thread = UpdateFirmwareThread(self)
 
+
         self._is_printing = False
         self._is_paused = False
+
 
         # Check if endstops are ever pressed (used for first run)
         self._x_min_endstop_pressed = False
@@ -123,6 +125,29 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     def _homeXY(self):
         self.sendCommand("G28 XY")
 
+    ##  Updates the target bed temperature from the printer, and emit a signal if it was changed.
+    #
+    #   /param temperature The new target temperature of the bed.
+    #   /return boolean, True if the temperature was changed, false if the new temperature has the same value as the already stored temperature
+    def _updateTargetBedTemperature(self, temperature):
+        if self._target_bed_temperature == temperature:
+            return False
+        self._target_bed_temperature = temperature
+        self.targetBedTemperatureChanged.emit()
+        return True
+
+    ##  Updates the target hotend temperature from the printer, and emit a signal if it was changed.
+    #
+    #   /param index The index of the hotend.
+    #   /param temperature The new target temperature of the hotend.
+    #   /return boolean, True if the temperature was changed, false if the new temperature has the same value as the already stored temperature
+    def _updateTargetHotendTemperature(self, index, temperature):
+        if self._target_hotend_temperatures[index] == temperature:
+            return False
+        self._target_hotend_temperatures[index] = temperature
+        self.targetHotendTemperaturesChanged.emit()
+        return True
+
     ##  A name for the device.
     @pyqtProperty(str, constant = True)
     def name(self):
@@ -135,7 +160,10 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     def startPrint(self):
         self.writeStarted.emit(self)
-        gcode_list = getattr( Application.getInstance().getController().getScene(), "gcode_list")
+        active_build_plate_id = Application.getInstance().getBuildPlateModel().activeBuildPlate
+        gcode_dict = getattr(Application.getInstance().getController().getScene(), "gcode_dict")
+        gcode_list = gcode_dict[active_build_plate_id]
+
         self._updateJobState("printing")
         self.printGCode(gcode_list)
 
@@ -202,6 +230,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             return result
 
         self._print_thread.printGCode(gcode_list)
+
 
         self.setTimeTotal(0)
         self.setTimeElapsed(0)
@@ -336,7 +365,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     #
     #   \param nodes A collection of scene nodes to send. This is ignored.
     #   \param file_name \type{string} A suggestion for a file name to write.
-    #   This is ignored.
     #   \param filter_by_machine Whether to filter MIME types by machine. This
     #   is ignored.
     #   \param kwargs Keyword arguments.
@@ -361,6 +389,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         else:
             self._connect_thread.setAutoStartOnConnect(True)
 
+
     def _setEndstopState(self, endstop_key, value):
         if endstop_key == b"x_min":
             if self._x_min_endstop_pressed != value:
@@ -377,6 +406,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     messageFromPrinter = pyqtSignal(str)
     errorFromPrinter = pyqtSignal(str)
+
 
     ##  Set the state of the print.
     #   Sent from the print monitor
@@ -414,6 +444,13 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._is_paused = False
         self._updateJobState("printing")
 
+    def _onJobStateChanged(self):
+        # clear the job name & times when printing is done or aborted
+        if self._job_state == "ready":
+            self.setJobName("")
+            self.setTimeElapsed(0)
+            self.setTimeTotal(0)
+
     ##  Set the progress of the print.
     #   It will be normalized (based on max_progress) to range 0 - 100
     def setProgress(self, progress, max_progress = 100):
@@ -447,6 +484,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self.sendCommand("M107")
         self.sendCommand("M84")
         Application.getInstance().showPrintMonitor.emit(False)
+
 
     ##  Check if the process did not encounter an error yet.
     def hasError(self):

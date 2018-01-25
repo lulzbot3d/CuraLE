@@ -145,39 +145,31 @@ UM.ManagementPage
     }
 
     buttons: [
-        Button
-        {
-            text: catalog.i18nc("@action:button", "Activate");
+
+        // Activate button
+        Button {
+            text: catalog.i18nc("@action:button", "Activate")
             iconName: "list-activate";
             enabled: base.currentItem != null && base.currentItem.id != Cura.MachineManager.activeMaterialId && Cura.MachineManager.hasMaterials
-            onClicked:
-            {
-                forceActiveFocus();
+            onClicked: {
+                forceActiveFocus()
                 Cura.MachineManager.setActiveMaterial(base.currentItem.id)
                 currentItem = base.model.getItem(base.objectList.currentIndex) // Refresh the current item.
             }
         },
-        Button
-        {
+
+        // Create button
+        Button {
             text: catalog.i18nc("@action:button", "Create")
             iconName: "list-add"
-            onClicked:
-            {
-                forceActiveFocus();
-                var material_id = Cura.ContainerManager.createMaterial()
-                if(material_id == "")
-                {
-                    return
-                }
-                if(Cura.MachineManager.hasMaterials)
-                {
-                    Cura.MachineManager.setActiveMaterial(material_id)
-                }
-                base.objectList.currentIndex = base.getIndexById(material_id);
+            onClicked: {
+                forceActiveFocus()
+                Cura.ContainerManager.createMaterial()
             }
         },
-        Button
-        {
+
+        // Duplicate button
+        Button {
             text: catalog.i18nc("@action:button", "Duplicate");
             iconName: "list-add";
             enabled: base.currentItem != null
@@ -186,7 +178,7 @@ UM.ManagementPage
                 forceActiveFocus();
                 var base_file = Cura.ContainerManager.getContainerMetaDataEntry(base.currentItem.id, "base_file")
                 // We need to copy the base container instead of the specific variant.
-                var material_id = base_file == "" ? Cura.ContainerManager.duplicateMaterial(base.currentItem.id): Cura.ContainerManager.duplicateMaterial(base_file)
+                var material_id = Cura.ContainerManager.duplicateOriginalMaterial(base.currentItem.id)
 
                 if(material_id == "")
                 {
@@ -200,39 +192,40 @@ UM.ManagementPage
                 base.objectList.currentIndex = base.getIndexById(material_id);
             }
         },
-        Button
-        {
-            text: catalog.i18nc("@action:button", "Remove");
-            iconName: "list-remove";
+
+        // Remove button
+        Button {
+            text: catalog.i18nc("@action:button", "Remove")
+            iconName: "list-remove"
             enabled: base.currentItem != null && !base.currentItem.readOnly && !Cura.ContainerManager.isContainerUsed(base.currentItem.id)
-            onClicked:
-            {
-                forceActiveFocus();
-                confirmDialog.open();
+            onClicked: {
+                forceActiveFocus()
+                confirmDialog.open()
             }
         },
-        Button
-        {
-            text: catalog.i18nc("@action:button", "Import");
-            iconName: "document-import";
-            onClicked:
-            {
-                forceActiveFocus();
-                importDialog.open();
+
+        // Import button
+        Button {
+            text: catalog.i18nc("@action:button", "Import")
+            iconName: "document-import"
+            onClicked: {
+                forceActiveFocus()
+                importDialog.open()
             }
-            visible: true;
+            visible: true
         },
-        Button
-        {
+
+        // Export button
+        Button {
             text: catalog.i18nc("@action:button", "Export")
             iconName: "document-export"
-            onClicked:
-            {
-                forceActiveFocus();
-                exportDialog.open();
+            onClicked: {
+                forceActiveFocus()
+                exportDialog.open()
             }
             enabled: currentItem != null
         }
+
     ]
 
     Item {
@@ -307,10 +300,16 @@ UM.ManagementPage
                     base_file = base.currentItem.id
                 }
                 var guid = Cura.ContainerManager.getContainerMetaDataEntry(base.currentItem.id, "GUID")
+                // remove base container first, it otherwise triggers loading the base file while removing other containers
+                var base_containers = Cura.ContainerManager.findInstanceContainers({"GUID": guid, "id": base_file, "base_file": base_file, "type": "material"})
+                for(var i in base_containers)
+                {
+                    Cura.ContainerManager.removeContainer(base_containers[i]);
+                }
                 var containers = Cura.ContainerManager.findInstanceContainers({"GUID": guid, "base_file": base_file, "type": "material"})
                 for(var i in containers)
                 {
-                    Cura.ContainerManager.removeContainer(containers[i])
+                    Cura.ContainerManager.removeContainer(containers[i]);
                 }
                 if(base.objectList.currentIndex > 0)
                 {
@@ -397,9 +396,10 @@ UM.ManagementPage
         {
             id: materialDiameterProvider
 
-            containerStackId: Cura.MachineManager.activeMachineId
+            containerStackId: Cura.ExtruderManager.activeExtruderStackId
             key: "material_diameter"
             watchedProperties: [ "value" ]
+            storeIndex: 5
         }
 
         UM.I18nCatalog { id: catalog; name: "cura"; }

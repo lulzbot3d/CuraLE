@@ -1,19 +1,13 @@
 # Copyright (c) 2017 Aleph Objects, Inc.
 # Cura is released under the terms of the LGPLv3 or higher.
 
-from UM.Application import Application
-from UM.Backend import Backend
-from UM.Job import Job
-from UM.Logger import Logger
-from UM.Math.AxisAlignedBox import AxisAlignedBox
-from UM.Math.Vector import Vector
+from UM.FileHandler.FileReader import FileReader
 from UM.Mesh.MeshReader import MeshReader
-from UM.Message import Message
-from UM.Scene.SceneNode import SceneNode
 from UM.i18n import i18nCatalog
 from UM.Preferences import Preferences
 
 catalog = i18nCatalog("cura")
+<<<<<<< HEAD
 
 
 from cura import LayerDataBuilder
@@ -28,12 +22,22 @@ import math
 import re
 from collections import namedtuple
 
+=======
+from . import MarlinFlavorParser, RepRapFlavorParser
+>>>>>>> um/3.2
 
 # Class for loading and parsing G-code files
 class GCodeReader(MeshReader):
+
+    _flavor_default = "Marlin"
+    _flavor_keyword = ";FLAVOR:"
+    _flavor_readers_dict = {"RepRap" : RepRapFlavorParser.RepRapFlavorParser(),
+                            "Marlin" : MarlinFlavorParser.MarlinFlavorParser()}
+
     def __init__(self):
         super(GCodeReader, self).__init__()
         self._supported_extensions = [".gcode", ".g"]
+<<<<<<< HEAD
         Application.getInstance().hideMessageSignal.connect(self._onHideMessage)
         self._cancelled = False
         self._message = None
@@ -326,89 +330,22 @@ class GCodeReader(MeshReader):
         self._extruder_offsets = self._extruderOffsets()  # dict with index the extruder number. can be empty
 
         last_z = 0
+=======
+        self._flavor_reader = None
+
+        Preferences.getInstance().addPreference("gcodereader/show_caution", True)
+
+    # PreRead is used to get the correct flavor. If not, Marlin is set by default
+    def preRead(self, file_name, *args, **kwargs):
+>>>>>>> um/3.2
         with open(file_name, "r") as file:
-            file_lines = 0
-            current_line = 0
             for line in file:
-                file_lines += 1
-                gcode_list.append(line)
-                if not self._is_layers_in_file and line[:len(self._layer_keyword)] == self._layer_keyword:
-                    self._is_layers_in_file = True
-            file.seek(0)
-
-            file_step = max(math.floor(file_lines / 100), 1)
-
-            self._clearValues()
-
-            self._message = Message(catalog.i18nc("@info:status", "Parsing G-code"),
-                                    lifetime=0,
-                                    title = catalog.i18nc("@info:title", "G-code Details"))
-
-            self._message.setProgress(0)
-            self._message.show()
-
-            Logger.log("d", "Parsing %s..." % file_name)
-
-            current_position = self._position(0, 0, 0, 0, [0])
-            current_path = []
-            min_layer_number = 0
-            negative_layers = 0
-            previous_layer = 0
-
-            for line in file:
-                if self._cancelled:
-                    Logger.log("d", "Parsing %s cancelled" % file_name)
-                    return None
-                current_line += 1
-                last_z = current_position.z
-
-                if current_line % file_step == 0:
-                    self._message.setProgress(math.floor(current_line / file_lines * 100))
-                    Job.yieldThread()
-                if len(line) == 0:
-                    continue
-
-                if line.find(self._type_keyword) == 0:
-                    type = line[len(self._type_keyword):].strip()
-                    if type == "WALL-INNER":
-                        self._layer_type = LayerPolygon.InsetXType
-                    elif type == "WALL-OUTER":
-                        self._layer_type = LayerPolygon.Inset0Type
-                    elif type == "SKIN":
-                        self._layer_type = LayerPolygon.SkinType
-                    elif type == "SKIRT":
-                        self._layer_type = LayerPolygon.SkirtType
-                    elif type == "SUPPORT":
-                        self._layer_type = LayerPolygon.SupportType
-                    elif type == "FILL":
-                        self._layer_type = LayerPolygon.InfillType
-                    else:
-                        Logger.log("w", "Encountered a unknown type (%s) while parsing g-code.", type)
-
-                # When the layer change is reached, the polygon is computed so we have just one layer per layer per extruder
-                if self._is_layers_in_file and line[:len(self._layer_keyword)] == self._layer_keyword:
+                if line[:len(self._flavor_keyword)] == self._flavor_keyword:
                     try:
-                        layer_number = int(line[len(self._layer_keyword):])
-                        self._createPolygon(self._current_layer_thickness, current_path, self._extruder_offsets.get(self._extruder_number, [0, 0]))
-                        current_path.clear()
-
-                        # When using a raft, the raft layers are stored as layers < 0, it mimics the same behavior
-                        # as in ProcessSlicedLayersJob
-                        if layer_number < min_layer_number:
-                            min_layer_number = layer_number
-                        if layer_number < 0:
-                            layer_number += abs(min_layer_number)
-                            negative_layers += 1
-                        else:
-                            layer_number += negative_layers
-
-                        # In case there is a gap in the layer count, empty layers are created
-                        for empty_layer in range(previous_layer + 1, layer_number):
-                            self._createEmptyLayer(empty_layer)
-
-                        self._layer_number = layer_number
-                        previous_layer = layer_number
+                        self._flavor_reader = self._flavor_readers_dict[line[len(self._flavor_keyword):].rstrip()]
+                        return FileReader.PreReadResult.accepted
                     except:
+<<<<<<< HEAD
                         pass
 
                 # This line is a comment. Ignore it (except for the layer_keyword)
@@ -460,9 +397,16 @@ class GCodeReader(MeshReader):
         gcode_list_decorator = GCodeListDecorator()
         gcode_list_decorator.setGCodeList(gcode_list)
         scene_node.addDecorator(gcode_list_decorator)
+=======
+                        # If there is no entry in the dictionary for this flavor, just skip and select the by-default flavor
+                        break
+>>>>>>> um/3.2
 
-        Application.getInstance().getController().getScene().gcode_list = gcode_list
+            # If no flavor is found in the GCode, then we use the by-default
+            self._flavor_reader = self._flavor_readers_dict[self._flavor_default]
+            return FileReader.PreReadResult.accepted
 
+<<<<<<< HEAD
         Logger.log("d", "Finished parsing %s" % file_name)
         self._message.hide()
 
@@ -504,3 +448,7 @@ class GCodeReader(MeshReader):
         backend.backendStateChange.emit(Backend.BackendState.Disabled)
 
         return scene_node
+=======
+    def read(self, file_name):
+        return self._flavor_reader.processGCodeFile(file_name)
+>>>>>>> um/3.2
