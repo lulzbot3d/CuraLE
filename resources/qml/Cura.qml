@@ -446,7 +446,6 @@ UM.MainWindow
                     bottom: parent.bottom
                 }
 
-                width: initialWidth
                 x: base.width - sidebar.width
                 source: UM.Controller.activeStage.sidebarComponent
 
@@ -479,7 +478,6 @@ UM.MainWindow
                 }
                 z: 1
                 width: UM.Theme.getSize("sidebar").width;
-                monitoringPrint: base.monitoringPrint
             }
 
             Button

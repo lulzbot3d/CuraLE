@@ -32,11 +32,11 @@ from UM.Operations.RemoveSceneNodeOperation import RemoveSceneNodeOperation
 from UM.Operations.GroupedOperation import GroupedOperation
 from UM.Operations.SetTransformOperation import SetTransformOperation
 
-from cura.ShapeArray import ShapeArray
-from cura.ConvexHullDecorator import ConvexHullDecorator
-from cura.SetParentOperation import SetParentOperation
-from cura.SliceableObjectDecorator import SliceableObjectDecorator
-from cura.BlockSlicingDecorator import BlockSlicingDecorator
+# from cura.ShapeArray import ShapeArray
+# from cura.ConvexHullDecorator import ConvexHullDecorator
+# from cura.SetParentOperation import SetParentOperation
+# from cura.SliceableObjectDecorator import SliceableObjectDecorator
+# from cura.BlockSlicingDecorator import BlockSlicingDecorator
 from cura.Settings.MaterialsModel import MaterialsModel
 
 from cura.Arranging.Arrange import Arrange
