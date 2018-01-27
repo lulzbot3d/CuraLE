@@ -8,6 +8,7 @@ from typing import Any, Dict, List, Optional, TYPE_CHECKING
 from UM.Application import Application
 from UM.Settings.ContainerRegistry import ContainerRegistry
 from UM.Settings.InstanceContainer import InstanceContainer
+from UM.Logger import Logger
 from cura.Settings.ExtruderManager import ExtruderManager
 
 if TYPE_CHECKING:
@@ -210,30 +211,39 @@ class QualityManager:
     #   \return \type{List[Dict[str, Any]]} A list of the metadata of basic
     #   materials, or an empty list if none could be found.
     def _getBasicMaterialMetadatas(self, material_container: Dict[str, Any]) -> List[Dict[str, Any]]:
-        if "definition" not in material_container:
-            definition_id = "fdmprinter"
-        else:
-            material_container_definition = ContainerRegistry.getInstance().findDefinitionContainersMetadata(id = material_container["definition"])
-            if not material_container_definition:
+        try:
+            if "definition" not in material_container:
                 definition_id = "fdmprinter"
             else:
-                material_container_definition = material_container_definition[0]
-                if "has_machine_quality" not in material_container_definition:
+                material_container_definition = ContainerRegistry.getInstance().findDefinitionContainersMetadata(id = material_container["definition"])
+                if not material_container_definition:
                     definition_id = "fdmprinter"
                 else:
-                    definition_id = material_container_definition.get("quality_definition", material_container_definition["id"])
+                    material_container_definition = material_container_definition[0]
+                    if "has_machine_quality" not in material_container_definition:
+                        definition_id = "fdmprinter"
+                    else:
+                        definition_id = material_container_definition.get("quality_definition", material_container_definition["id"])
+        except:
+            definition_id = "fdmprinter"
+            Logger.log("w", "FIX ME: Can't get definition from material container.")
+            pass
 
-        base_material = material_container.get("material")
-        if base_material:
-            # There is a basic material specified
-            criteria = {
-                "type": "material",
-                "name": base_material,
-                "definition": definition_id,
-                "variant": material_container.get("variant")
-            }
-            containers = ContainerRegistry.getInstance().findInstanceContainersMetadata(**criteria)
-            return containers
+        try:
+            base_material = material_container.get("material")
+            if base_material:
+                # There is a basic material specified
+                criteria = {
+                    "type": "material",
+                    "name": base_material,
+                    "definition": definition_id,
+                    "variant": material_container.get("variant")
+                }
+                containers = ContainerRegistry.getInstance().findInstanceContainersMetadata(**criteria)
+                return containers
+        except:
+            Logger.log("w", "FIX ME: Can't get container for material.")
+            pass
 
         return []
 
@@ -277,7 +287,11 @@ class QualityManager:
                 # Add the parent material too.
                 for basic_material in self._getBasicMaterialMetadatas(material_instance):
                     material_ids.add(basic_material["id"])
-                material_ids.add(material_instance["id"])
+                try:
+                    material_ids.add(material_instance["id"])
+                except:
+                    Logger.log("w", "FIX ME: Can't add material instance.")
+                    pass
         containers = ContainerRegistry.getInstance().findInstanceContainers(**criteria)
 
         result = []
