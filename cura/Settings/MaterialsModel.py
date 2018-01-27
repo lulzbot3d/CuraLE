@@ -1,7 +1,7 @@
 from UM.Settings.Models.InstanceContainersModel import InstanceContainersModel
 from UM.Application import Application
 from UM.Settings.ContainerRegistry import ContainerRegistry
-
+from UM.Logger import Logger
 from typing import Any, List
 
 
