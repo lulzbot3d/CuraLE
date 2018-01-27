@@ -26,8 +26,12 @@ class MaterialsModel(InstanceContainersModel):
         results = super()._fetchInstanceContainers()
         if Application.getInstance().getMachineManager().currentCategory != "Experimental":
             for material in results:
-                if material.getMetaDataEntry("category", None) == "Experimental":
-                    results.remove(material)
+                try:
+                    if material.getMetaDataEntry("category", None) == "Experimental":
+                        results.remove(material)
+                except:
+                    Logger.log("w", "FIX ME: Bad material in results")
+                    pass
         return results
 
     def _onContainerChanged(self, container):
