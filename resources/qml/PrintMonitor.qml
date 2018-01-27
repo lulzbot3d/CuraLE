@@ -131,7 +131,7 @@ ScrollView
                                 Layout.row: 1
                                 Layout.column: 1
 
-                                text: ExtruderManager.getExtruderName(index) != "" ? ExtruderManager.getExtruderName(index) : catalog.i18nc("@label", "Hotend")
+                                text: ExtruderManager.getExtruderName(index) != "" ? ExtruderManager.getExtruderName(index) : catalog.i18nc("@label", "Extruder")
                                 color: UM.Theme.getColor("text")
                                 font: UM.Theme.getFont("default")
                                 anchors.margins: UM.Theme.getSize("default_margin").width
