@@ -39,11 +39,14 @@ catalog = i18nCatalog("cura")
 from cura.Settings.ProfilesModel import ProfilesModel
 from typing import TYPE_CHECKING, Optional
 
+from UM.Resources import Resources
+
 if TYPE_CHECKING:
     from UM.Settings.DefinitionContainer import DefinitionContainer
     from cura.Settings.CuraContainerStack import CuraContainerStack
     from cura.Settings.GlobalStack import GlobalStack
 
+import os
 
 class MachineManager(QObject):
     def __init__(self, parent = None):
@@ -429,6 +432,11 @@ class MachineManager(QObject):
         if new_stack:
             # Instead of setting the global container stack here, we set the active machine and so the signals are emitted
             self.setActiveMachine(new_stack.getId())
+
+            Application.getInstance().setGlobalContainerStack(new_stack)
+            if Preferences.getInstance().getValue("general/is_first_run"):
+                Application.getInstance().openFile(os.path.join(Resources.getPath(Resources.Meshes), "rocktopus.stl"))
+                Preferences.getInstance().setValue("general/is_first_run", False)
         else:
             Logger.log("w", "Failed creating a new machine!")
 
