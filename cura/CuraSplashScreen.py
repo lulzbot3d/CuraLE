@@ -47,7 +47,7 @@ class CuraSplashScreen(QSplashScreen):
             return
 
         painter.save()
-        painter.setPen(QColor(255, 255, 255, 255))
+        painter.setPen(QColor(0, 0, 0, 255))
         painter.setRenderHint(QPainter.Antialiasing)
         painter.setRenderHint(QPainter.Antialiasing, True)
 
@@ -63,15 +63,13 @@ class CuraSplashScreen(QSplashScreen):
         font = QFont() # Using system-default font here
         font.setPointSize(8)
         painter.setFont(font)
-        painter.drawText(380, 220, 330 * self._scale, 230 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, self._current_message)
-        #painter.drawText(0, 0, 330 * self._scale, 230 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, version[0])
-        painter.drawText(380, 200, 330 * self._scale, 230 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, version[0])
+        painter.drawText(380 * self._scale, 220 * self._scale, 330 * self._scale, 230 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, self._current_message)
+        painter.drawText(380 * self._scale, 200 * self._scale, 330 * self._scale, 230 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, version[0])
         if len(version) > 1:
             font.setPixelSize(16)
             painter.setFont(font)
-            painter.drawText(380, 220, 330 * self._scale, 265 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, self._current_message)
-            #painter.drawText(0, 0, 330 * self._scale, 265 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, version[1])
-            painter.drawText(380, 200, 330 * self._scale, 265 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, version[1])
+            painter.drawText(380 * self._scale, 220 * self._scale, 330 * self._scale, 265 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, self._current_message)
+            painter.drawText(380 * self._scale, 200 * self._scale, 330 * self._scale, 265 * self._scale, Qt.AlignHCenter | Qt.AlignBottom, version[1])
 
 
         # draw the loading image
@@ -92,6 +90,7 @@ class CuraSplashScreen(QSplashScreen):
             painter.drawText(100, 128, 170, 64,
                              Qt.AlignLeft | Qt.AlignVCenter | Qt.TextWordWrap,
                              self._current_message)
+
 
         painter.restore()
         super().drawContents(painter)
