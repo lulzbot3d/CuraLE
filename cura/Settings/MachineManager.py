@@ -1313,7 +1313,7 @@ class MachineManager(QObject):
             c = container.findContainer({'type': 'definition_changes'})
             if c:
                 return len(c.getAllKeys()) > 0
-            return False
+        return False
 
     @pyqtSlot(str)
     def removeMachine(self, machine_id: str):
