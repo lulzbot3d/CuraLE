@@ -1,18 +1,19 @@
 # Copyright (c) 2017 Aleph Objects, Inc.
 # Cura is released under the terms of the LGPLv3 or higher.
 
-from UM.Application import Application
 from UM.FileHandler.FileReader import FileReader
 from UM.Mesh.MeshReader import MeshReader
 from UM.i18n import i18nCatalog
 from UM.Preferences import Preferences
-from . import MarlinFlavorParser, RepRapFlavorParser
 
 catalog = i18nCatalog("cura")
+<<<<<<< HEAD
+
+
 from cura import LayerDataBuilder
 from cura import LayerDataDecorator
 from cura.LayerPolygon import LayerPolygon
-# from cura.GCodeListDecorator import GCodeListDecorator
+from cura.GCodeListDecorator import GCodeListDecorator
 from cura.PrintStatisticsDecorator import PrintStatisticsDecorator
 from cura.Settings.ExtruderManager import ExtruderManager
 
@@ -20,6 +21,10 @@ import numpy
 import math
 import re
 from collections import namedtuple
+
+=======
+from . import MarlinFlavorParser, RepRapFlavorParser
+>>>>>>> um/3.2
 
 # Class for loading and parsing G-code files
 class GCodeReader(MeshReader):
@@ -32,6 +37,7 @@ class GCodeReader(MeshReader):
     def __init__(self):
         super(GCodeReader, self).__init__()
         self._supported_extensions = [".gcode", ".g"]
+<<<<<<< HEAD
         Application.getInstance().hideMessageSignal.connect(self._onHideMessage)
         self._cancelled = False
         self._message = None
@@ -324,11 +330,14 @@ class GCodeReader(MeshReader):
         self._extruder_offsets = self._extruderOffsets()  # dict with index the extruder number. can be empty
 
         last_z = 0
-
+=======
         self._flavor_reader = None
 
         Preferences.getInstance().addPreference("gcodereader/show_caution", True)
 
+    # PreRead is used to get the correct flavor. If not, Marlin is set by default
+    def preRead(self, file_name, *args, **kwargs):
+>>>>>>> um/3.2
         with open(file_name, "r") as file:
             for line in file:
                 if line[:len(self._flavor_keyword)] == self._flavor_keyword:
@@ -336,6 +345,7 @@ class GCodeReader(MeshReader):
                         self._flavor_reader = self._flavor_readers_dict[line[len(self._flavor_keyword):].rstrip()]
                         return FileReader.PreReadResult.accepted
                     except:
+<<<<<<< HEAD
                         pass
 
                 # This line is a comment. Ignore it (except for the layer_keyword)
@@ -387,10 +397,16 @@ class GCodeReader(MeshReader):
         gcode_list_decorator = GCodeListDecorator()
         gcode_list_decorator.setGCodeList(gcode_list)
         scene_node.addDecorator(gcode_list_decorator)
+=======
+                        # If there is no entry in the dictionary for this flavor, just skip and select the by-default flavor
+                        break
+>>>>>>> um/3.2
 
-        # If no flavor is found in the GCode, then we use the by-default
-        self._flavor_reader = self._flavor_readers_dict[self._flavor_default]
+            # If no flavor is found in the GCode, then we use the by-default
+            self._flavor_reader = self._flavor_readers_dict[self._flavor_default]
+            return FileReader.PreReadResult.accepted
 
+<<<<<<< HEAD
         Logger.log("d", "Finished parsing %s" % file_name)
         self._message.hide()
 
@@ -432,3 +448,7 @@ class GCodeReader(MeshReader):
         backend.backendStateChange.emit(Backend.BackendState.Disabled)
 
         return scene_node
+=======
+    def read(self, file_name):
+        return self._flavor_reader.processGCodeFile(file_name)
+>>>>>>> um/3.2
