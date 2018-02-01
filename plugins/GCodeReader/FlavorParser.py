@@ -16,6 +16,7 @@ catalog = i18nCatalog("cura")
 
 from cura import LayerDataBuilder
 from cura.LayerDataDecorator import LayerDataDecorator
+from cura.PrintStatisticsDecorator import PrintStatisticsDecorator
 from cura.LayerPolygon import LayerPolygon
 from cura.Scene.GCodeListDecorator import GCodeListDecorator
 from cura.Settings.ExtruderManager import ExtruderManager
@@ -42,6 +43,11 @@ class FlavorParser:
         self._extruder_offsets = {}  # Offsets for multi extruders. key is index, value is [x-offset, y-offset]
         self._current_layer_thickness = 0.2  # default
 
+        self._total_move_length = 0
+        self._extrusion_retraction_length = 0
+        self._extrusion_max_amounts = [0]
+        self._extrusion_saved_value = [0]
+
         Preferences.getInstance().addPreference("gcodereader/show_caution", True)
 
     def _clearValues(self):
@@ -55,6 +61,10 @@ class FlavorParser:
         self._center_is_zero = False
         self._is_absolute_positioning = True    # It can be absolute (G90) or relative (G91)
         self._is_absolute_extrusion = True  # It can become absolute (M82, default) or relative (M83)
+        self._total_move_length = 0
+        self._extrusion_retraction_length = 0
+        self._extrusion_max_amounts = [0]
+        self._extrusion_saved_value = [0]
 
     @staticmethod
     def _getValue(line, code):
@@ -180,8 +190,11 @@ class FlavorParser:
             z += params.z if params.z is not None else 0
 
         f = params.f if params.f is not None else f
+        self._total_move_length += math.sqrt(math.pow(x - position.x, 2) + math.pow(y - position.y, 2) + math.pow(z - position.z, 2))
 
         if params.e is not None:
+            self._extrusion_retraction_length += math.sqrt(math.pow(x - position.x, 2) + math.pow(y - position.y, 2) + math.pow(z - position.z, 2))
+
             new_extrusion_value = params.e if self._is_absolute_extrusion else e[self._extruder_number] + params.e
             if new_extrusion_value > e[self._extruder_number]:
                 path.append([x, y, z, f, new_extrusion_value + self._extrusion_length_offset[self._extruder_number], self._layer_type])  # extrusion
@@ -269,6 +282,8 @@ class FlavorParser:
         if self._extruder_number + 1 > len(position.e):
             self._extrusion_length_offset.extend([0] * (self._extruder_number - len(position.e) + 1))
             position.e.extend([0] * (self._extruder_number - len(position.e) + 1))
+            elf._extrusion_max_amounts.extend([0] * (self._extruder_number - len(position.e) + 1))
+            self._extrusion_saved_value.extend([0] * (self._extruder_number - len(position.e) + 1))
         return position
 
     def processMCode(self, M, line, position, path):
@@ -450,6 +465,19 @@ class FlavorParser:
         settings = Application.getInstance().getGlobalContainerStack()
         machine_width = settings.getProperty("machine_width", "value")
         machine_depth = settings.getProperty("machine_depth", "value")
+        print_speed = settings.getProperty("speed_wall_0", "value")
+        travel_speed = settings.getProperty("speed_travel", "value")
+        time = (self._total_move_length - self._extrusion_retraction_length) / travel_speed + self._extrusion_retraction_length / print_speed
+        radius = Application.getInstance().getGlobalContainerStack().getProperty("material_diameter", "value") / 2
+
+        for i in range(len(self._extrusion_max_amounts)):
+            self._extrusion_max_amounts[i] *= (math.pi * (radius ** 2))
+        total_extrusion = self._extrusion_max_amounts
+
+        print_statistics_decorator = PrintStatisticsDecorator()
+        print_statistics_decorator.setPrintTime(time)
+        print_statistics_decorator.setMaterialAmounts(total_extrusion)
+        scene_node.addDecorator(print_statistics_decorator)
 
         if not self._center_is_zero:
             scene_node.setPosition(Vector(-machine_width / 2, 0, machine_depth / 2))
