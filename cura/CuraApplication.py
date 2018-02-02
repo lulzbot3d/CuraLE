@@ -1014,7 +1014,7 @@ class CuraApplication(QtApplication):
                 amounts = node.callDecoration("getMaterialAmounts")
                 if type(amounts) is not list:
                     amounts = [0]
-                self.getBackend().printDurationMessage.emit(node.callDecoration("getPrintTime"), amounts)
+                self.getBackend().setPrintTime(node.callDecoration("getPrintTime"), amounts)
 
             count += 1
             if not scene_bounding_box:

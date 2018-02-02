@@ -170,6 +170,9 @@ class CuraEngineBackend(QObject, Backend):
     ##  Emitted when the slicing process is aborted forcefully.
     slicingCancelled = Signal()
 
+    def setPrintTime(self, times, amounts):
+        self.printDurationMessage.emit(self._start_slice_job_build_plate, times, amounts)
+
     @pyqtSlot()
     def stopSlicing(self):
         self.backendStateChange.emit(BackendState.NotStarted)
