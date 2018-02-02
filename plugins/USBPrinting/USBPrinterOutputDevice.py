@@ -455,9 +455,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     #   It will be normalized (based on max_progress) to range 0 - 100
     def setProgress(self, progress, max_progress = 100):
         self._progress = (progress / max_progress) * 100  # Convert to scale of 0-100
+        self.sendCommand("M73 P" + str(int(self._progress)))
         if self._progress == 100:
             # Printing is done, reset progress
             self.setProgress(0)
+            self.sendCommand("M73 P0")
             self._printingStopped()
         self.progressChanged.emit()
 
