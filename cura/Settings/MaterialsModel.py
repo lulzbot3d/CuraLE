@@ -23,16 +23,15 @@ class MaterialsModel(InstanceContainersModel):
 
 
     def _fetchInstanceContainers(self):
-        results = super()._fetchInstanceContainers()
+        containers, metadatas = super()._fetchInstanceContainers()
         if Application.getInstance().getMachineManager().currentCategory != "Experimental":
-            for material in results:
-                try:
-                    if material.getMetaDataEntry("category", None) == "Experimental":
-                        results.remove(material)
-                except:
-                    Logger.log("w", "FIX ME: Bad material in results")
-                    pass
-        return results
+            to_remove = []
+            for material in containers.keys():
+                if containers[material].getMetaDataEntry("category", None) == "Experimental":
+                    to_remove.append(material)
+            for material in to_remove:
+                containers.pop(material)
+        return containers, metadatas
 
     def _onContainerChanged(self, container):
         if container.getMetaDataEntry("type", "") == "material":
