@@ -58,12 +58,12 @@ Cura.MachineAction
                 var theme_height = UM.Theme.getSize("modal_window_minimum").height * 1.5
                 if(base.height > theme_height)
                 {
-                    scrollView.verticalScrollBarPolicy = Qt.ScrollBarAlwaysOff
+                    machineSettingsAction.verticalScrollBarPolicy = Qt.ScrollBarAlwaysOff
                     return base.height
                 }
                 else
                 {
-                    scrollView.verticalScrollBarPolicy = Qt.ScrollBarAsNeeded
+                    machineSettingsAction.verticalScrollBarPolicy = Qt.ScrollBarAsNeeded
                     return theme_height
                 }
             }
@@ -72,12 +72,12 @@ Cura.MachineAction
                 var theme_width = UM.Theme.getSize("modal_window_minimum").width * 1.5
                 if(base.width > theme_width)
                 {
-                    scrollView.horizontalScrollBarPolicy = Qt.ScrollBarAlwaysOff
+                    machineSettingsAction.horizontalScrollBarPolicy = Qt.ScrollBarAlwaysOff
                     return base.width
                 }
                 else
                 {
-                    scrollView.horizontalScrollBarPolicy = Qt.ScrollBarAsNeeded
+                    machineSettingsAction.horizontalScrollBarPolicy = Qt.ScrollBarAsNeeded
                     return theme_width
                 }
             }
@@ -87,6 +87,15 @@ Cura.MachineAction
             property real columnWidth: Math.floor((width - 3 * UM.Theme.getSize("default_margin").width) / 3)
             property real gcodeColumnWidth: Math.floor((width - 3 * UM.Theme.getSize("default_margin").width) / 2)
             property real labelColumnWidth: columnWidth * 0.5
+
+            Label
+            {
+                id: pageTitle
+                width: parent.width
+                text: catalog.i18nc("@title", "Machine Settings")
+                wrapMode: Text.WordWrap
+                font.pointSize: 18;
+            }
 
 
             TabView
@@ -108,218 +117,222 @@ Cura.MachineAction
 
                     Column
                     {
-                        spacing: UM.Theme.getSize("default_margin").height
+                        anchors.fill: parent
 
                         Row
                         {
-                            width: settingsTabs.columnWidth
-                            spacing: UM.Theme.getSize("default_lining").height
+                            spacing: UM.Theme.getSize("default_margin").height
 
-                            Label
+                            Column
                             {
-                                text: catalog.i18nc("@label", "Printer Settings")
-                                font.bold: true
-                            }
+                                width: settingsTabs.columnWidth
+                                spacing: UM.Theme.getSize("default_lining").height
 
-                            Item { width: UM.Theme.getSize("default_margin").width; height: UM.Theme.getSize("default_margin").height }
-
-                            Loader
-                            {
-                                id: buildAreaWidthField
-                                sourceComponent: numericTextFieldWithUnit
-                                property string settingKey: "machine_width"
-                                property string label: catalog.i18nc("@label", "X (Width)")
-                                property string unit: catalog.i18nc("@label", "mm")
-                                property bool forceUpdateOnChange: true
-                            }
-
-                            Loader
-                            {
-                                id: buildAreaDepthField
-                                sourceComponent: numericTextFieldWithUnit
-                                property string settingKey: "machine_depth"
-                                property string label: catalog.i18nc("@label", "Y (Depth)")
-                                property string unit: catalog.i18nc("@label", "mm")
-                                property bool forceUpdateOnChange: true
-                            }
-
-                            Loader
-                            {
-                                id: buildAreaHeightField
-                                sourceComponent: numericTextFieldWithUnit
-                                property string settingKey: "machine_height"
-                                property string label: catalog.i18nc("@label", "Z (Height)")
-                                property string unit: catalog.i18nc("@label", "mm")
-                                property bool forceUpdateOnChange: true
-                            }
-
-                            Item { width: UM.Theme.getSize("default_margin").width; height: UM.Theme.getSize("default_margin").height }
-
-                            Loader
-                            {
-                                id: shapeComboBox
-                                sourceComponent: comboBoxWithOptions
-                                property string settingKey: "machine_shape"
-                                property string label: catalog.i18nc("@label", "Build plate shape")
-                                property bool forceUpdateOnChange: true
-                            }
-
-                            Loader
-                            {
-                                id: centerIsZeroCheckBox
-                                sourceComponent: simpleCheckBox
-                                property string settingKey: "machine_center_is_zero"
-                                property string label: catalog.i18nc("@option:check", "Origin at center")
-                                property bool forceUpdateOnChange: true
-                            }
-                            Loader
-                            {
-                                id: heatedBedCheckBox
-                                sourceComponent: simpleCheckBox
-                                property var settingKey: "machine_heated_bed"
-                                property string label: catalog.i18nc("@option:check", "Heated bed")
-                                property bool forceUpdateOnChange: true
-                            }
-
-                            Item { width: UM.Theme.getSize("default_margin").width; height: UM.Theme.getSize("default_margin").height }
-
-                            Loader
-                            {
-                                id: gcodeFlavorComboBox
-                                sourceComponent: comboBoxWithOptions
-                                property string settingKey: "machine_gcode_flavor"
-                                property string label: catalog.i18nc("@label", "Gcode flavor")
-                                property bool forceUpdateOnChange: true
-                                property var afterOnActivate: manager.updateHasMaterialsMetadata
-                            }
-                        }
-
-                        Column
-                        {
-                            width: settingsTabs.columnWidth
-                            spacing: UM.Theme.getSize("default_lining").height
-
-                            Label
-                            {
-                                text: catalog.i18nc("@label", "Printhead Settings")
-                                font.bold: true
-                            }
-
-                            Item { width: UM.Theme.getSize("default_margin").width; height: UM.Theme.getSize("default_margin").height }
-
-                            Loader
-                            {
-                                id: printheadXMinField
-                                sourceComponent: headPolygonTextField
-                                property string label: catalog.i18nc("@label", "X min")
-                                property string tooltip: catalog.i18nc("@tooltip", "Distance from the left of the printhead to the center of the nozzle. Used to prevent colissions between previous prints and the printhead when printing \"One at a Time\".")
-                                property string axis: "x"
-                                property string side: "min"
-                            }
-
-                            Loader
-                            {
-                                id: printheadYMinField
-                                sourceComponent: headPolygonTextField
-                                property string label: catalog.i18nc("@label", "Y min")
-                                property string tooltip: catalog.i18nc("@tooltip", "Distance from the front of the printhead to the center of the nozzle. Used to prevent colissions between previous prints and the printhead when printing \"One at a Time\".")
-                                property string axis: "y"
-                                property string side: "min"
-                            }
-
-                            Loader
-                            {
-                                id: printheadXMaxField
-                                sourceComponent: headPolygonTextField
-                                property string label: catalog.i18nc("@label", "X max")
-                                property string tooltip: catalog.i18nc("@tooltip", "Distance from the right of the printhead to the center of the nozzle. Used to prevent colissions between previous prints and the printhead when printing \"One at a Time\".")
-                                property string axis: "x"
-                                property string side: "max"
-                            }
-
-                            Loader
-                            {
-                                id: printheadYMaxField
-                                sourceComponent: headPolygonTextField
-                                property string label: catalog.i18nc("@label", "Y max")
-                                property string tooltip: catalog.i18nc("@tooltip", "Distance from the rear of the printhead to the center of the nozzle. Used to prevent colissions between previous prints and the printhead when printing \"One at a Time\".")
-                                property string axis: "y"
-                                property string side: "max"
-                            }
-
-                            Item { width: UM.Theme.getSize("default_margin").width; height: UM.Theme.getSize("default_margin").height }
-
-                            Loader
-                            {
-                                id: gantryHeightField
-                                sourceComponent: numericTextFieldWithUnit
-                                property string settingKey: "gantry_height"
-                                property string label: catalog.i18nc("@label", "Gantry height")
-                                property string unit: catalog.i18nc("@label", "mm")
-                                property string tooltip: catalog.i18nc("@tooltip", "The height difference between the tip of the nozzle and the gantry system (X and Y axes). Used to prevent collisions between previous prints and the gantry when printing \"One at a Time\".")
-                                property bool forceUpdateOnChange: true
-                            }
-
-                            Item { width: UM.Theme.getSize("default_margin").width; height: UM.Theme.getSize("default_margin").height }
-
-                            UM.TooltipArea
-                            {
-                                height: childrenRect.height
-                                width: childrenRect.width
-                                text: machineExtruderCountProvider.properties.description
-
-                                Row
+                                Label
                                 {
-                                    spacing: UM.Theme.getSize("default_margin").width
+                                    text: catalog.i18nc("@label", "Printer Settings")
+                                    font.bold: true
+                                }
 
-                                    Label
+                                Item { width: UM.Theme.getSize("default_margin").width; height: UM.Theme.getSize("default_margin").height }
+
+                                Loader
+                                {
+                                    id: buildAreaWidthField
+                                    sourceComponent: numericTextFieldWithUnit
+                                    property string settingKey: "machine_width"
+                                    property string label: catalog.i18nc("@label", "X (Width)")
+                                    property string unit: catalog.i18nc("@label", "mm")
+                                    property bool forceUpdateOnChange: true
+                                }
+
+                                Loader
+                                {
+                                    id: buildAreaDepthField
+                                    sourceComponent: numericTextFieldWithUnit
+                                    property string settingKey: "machine_depth"
+                                    property string label: catalog.i18nc("@label", "Y (Depth)")
+                                    property string unit: catalog.i18nc("@label", "mm")
+                                    property bool forceUpdateOnChange: true
+                                }
+
+                                Loader
+                                {
+                                    id: buildAreaHeightField
+                                    sourceComponent: numericTextFieldWithUnit
+                                    property string settingKey: "machine_height"
+                                    property string label: catalog.i18nc("@label", "Z (Height)")
+                                    property string unit: catalog.i18nc("@label", "mm")
+                                    property bool forceUpdateOnChange: true
+                                }
+
+                                Item { width: UM.Theme.getSize("default_margin").width; height: UM.Theme.getSize("default_margin").height }
+
+                                Loader
+                                {
+                                    id: shapeComboBox
+                                    sourceComponent: comboBoxWithOptions
+                                    property string settingKey: "machine_shape"
+                                    property string label: catalog.i18nc("@label", "Build plate shape")
+                                    property bool forceUpdateOnChange: true
+                                }
+
+                                Loader
+                                {
+                                    id: centerIsZeroCheckBox
+                                    sourceComponent: simpleCheckBox
+                                    property string settingKey: "machine_center_is_zero"
+                                    property string label: catalog.i18nc("@option:check", "Origin at center")
+                                    property bool forceUpdateOnChange: true
+                                }
+                                Loader
+                                {
+                                    id: heatedBedCheckBox
+                                    sourceComponent: simpleCheckBox
+                                    property var settingKey: "machine_heated_bed"
+                                    property string label: catalog.i18nc("@option:check", "Heated bed")
+                                    property bool forceUpdateOnChange: true
+                                }
+
+                                Item { width: UM.Theme.getSize("default_margin").width; height: UM.Theme.getSize("default_margin").height }
+
+                                Loader
+                                {
+                                    id: gcodeFlavorComboBox
+                                    sourceComponent: comboBoxWithOptions
+                                    property string settingKey: "machine_gcode_flavor"
+                                    property string label: catalog.i18nc("@label", "Gcode flavor")
+                                    property bool forceUpdateOnChange: true
+                                    property var afterOnActivate: manager.updateHasMaterialsMetadata
+                                }
+                            }
+
+                            Column
+                            {
+                                width: settingsTabs.columnWidth
+                                spacing: UM.Theme.getSize("default_lining").height
+
+                                Label
+                                {
+                                    text: catalog.i18nc("@label", "Printhead Settings")
+                                    font.bold: true
+                                }
+
+                                Item { width: UM.Theme.getSize("default_margin").width; height: UM.Theme.getSize("default_margin").height }
+
+                                Loader
+                                {
+                                    id: printheadXMinField
+                                    sourceComponent: headPolygonTextField
+                                    property string label: catalog.i18nc("@label", "X min")
+                                    property string tooltip: catalog.i18nc("@tooltip", "Distance from the left of the printhead to the center of the nozzle. Used to prevent colissions between previous prints and the printhead when printing \"One at a Time\".")
+                                    property string axis: "x"
+                                    property string side: "min"
+                                }
+
+                                Loader
+                                {
+                                    id: printheadYMinField
+                                    sourceComponent: headPolygonTextField
+                                    property string label: catalog.i18nc("@label", "Y min")
+                                    property string tooltip: catalog.i18nc("@tooltip", "Distance from the front of the printhead to the center of the nozzle. Used to prevent colissions between previous prints and the printhead when printing \"One at a Time\".")
+                                    property string axis: "y"
+                                    property string side: "min"
+                                }
+
+                                Loader
+                                {
+                                    id: printheadXMaxField
+                                    sourceComponent: headPolygonTextField
+                                    property string label: catalog.i18nc("@label", "X max")
+                                    property string tooltip: catalog.i18nc("@tooltip", "Distance from the right of the printhead to the center of the nozzle. Used to prevent colissions between previous prints and the printhead when printing \"One at a Time\".")
+                                    property string axis: "x"
+                                    property string side: "max"
+                                }
+
+                                Loader
+                                {
+                                    id: printheadYMaxField
+                                    sourceComponent: headPolygonTextField
+                                    property string label: catalog.i18nc("@label", "Y max")
+                                    property string tooltip: catalog.i18nc("@tooltip", "Distance from the rear of the printhead to the center of the nozzle. Used to prevent colissions between previous prints and the printhead when printing \"One at a Time\".")
+                                    property string axis: "y"
+                                    property string side: "max"
+                                }
+
+                                Item { width: UM.Theme.getSize("default_margin").width; height: UM.Theme.getSize("default_margin").height }
+
+                                Loader
+                                {
+                                    id: gantryHeightField
+                                    sourceComponent: numericTextFieldWithUnit
+                                    property string settingKey: "gantry_height"
+                                    property string label: catalog.i18nc("@label", "Gantry height")
+                                    property string unit: catalog.i18nc("@label", "mm")
+                                    property string tooltip: catalog.i18nc("@tooltip", "The height difference between the tip of the nozzle and the gantry system (X and Y axes). Used to prevent collisions between previous prints and the gantry when printing \"One at a Time\".")
+                                    property bool forceUpdateOnChange: true
+                                }
+
+                                Item { width: UM.Theme.getSize("default_margin").width; height: UM.Theme.getSize("default_margin").height }
+
+                                UM.TooltipArea
+                                {
+                                    height: childrenRect.height
+                                    width: childrenRect.width
+                                    text: machineExtruderCountProvider.properties.description
+
+                                    Row
                                     {
-                                        text: catalog.i18nc("@label", "Number of Extruders")
-                                        elide: Text.ElideRight
-                                        width: Math.max(0, settingsTabs.labelColumnWidth)
-                                        anchors.verticalCenter: extruderCountComboBox.verticalCenter
-                                    }
-                                    ComboBox
-                                    {
-                                        id: extruderCountComboBox
-                                        model: ListModel
+                                        spacing: UM.Theme.getSize("default_margin").width
+
+                                        Label
                                         {
-                                            id: extruderCountModel
-                                            Component.onCompleted:
+                                            text: catalog.i18nc("@label", "Number of Extruders")
+                                            elide: Text.ElideRight
+                                            width: Math.max(0, settingsTabs.labelColumnWidth)
+                                            anchors.verticalCenter: extruderCountComboBox.verticalCenter
+                                        }
+                                        ComboBox
+                                        {
+                                            id: extruderCountComboBox
+                                            model: ListModel
                                             {
-                                                for(var i = 0; i < manager.definedExtruderCount; i++)
+                                                id: extruderCountModel
+                                                Component.onCompleted:
                                                 {
-                                                    extruderCountModel.append({text: String(i + 1), value: i});
+                                                    for(var i = 0; i < manager.definedExtruderCount; i++)
+                                                    {
+                                                        extruderCountModel.append({text: String(i + 1), value: i});
+                                                    }
                                                 }
                                             }
-                                        }
 
-                                        Connections
-                                        {
-                                            target: manager
-                                            onDefinedExtruderCountChanged:
+                                            Connections
                                             {
-                                                extruderCountModel.clear();
-                                                for(var i = 0; i < manager.definedExtruderCount; ++i)
+                                                target: manager
+                                                onDefinedExtruderCountChanged:
                                                 {
-                                                    extruderCountModel.append({text: String(i + 1), value: i});
+                                                    extruderCountModel.clear();
+                                                    for(var i = 0; i < manager.definedExtruderCount; ++i)
+                                                    {
+                                                        extruderCountModel.append({text: String(i + 1), value: i});
+                                                    }
                                                 }
                                             }
-                                        }
 
-                                        currentIndex: machineExtruderCountProvider.properties.value - 1
-                                        onActivated:
-                                        {
-                                            manager.setMachineExtruderCount(index + 1);
+                                            currentIndex: machineExtruderCountProvider.properties.value - 1
+                                            onActivated:
+                                            {
+                                                manager.setMachineExtruderCount(index + 1);
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                        Column
-                        {
-                            width: parent.width / 3
-                            spacing: UM.Theme.getSize("default_margin").height
+                            Column
+                            {
+                                width: settingsTabs.columnWidth
+                                spacing: UM.Theme.getSize("default_margin").height
 
                                 Label
                                 {
@@ -344,156 +357,23 @@ Cura.MachineAction
                                         }
                                         return index
                                     }
+
+                                    onActivated:
+                                    {
+                                        machineBaudrateProvider.setPropertyValue("value", model[index]);
+                                    }
                                 }
-                                onActivated:
+
+
+                                CheckBox
                                 {
-                                    machineBaudrateProvider.setPropertyValue("value", model[index]);
-                                }
-                            CheckBox
-                            {
-                                id: lcdCheckBox
-                                text: catalog.i18nc("@option:check", "LCD")
-                                checked: String(machineLCDProvider.properties.value).toLowerCase() != 'false'
-                                onClicked: machineLCDProvider.setPropertyValue("value", checked)
-                            }
-                        }
-                    }
-
-                    Row
-                    {
-                        spacing: UM.Theme.getSize("default_margin").width
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        height: parent.height - y
-
-                        Column
-                        {
-                            height: parent.height
-                            width: settingsTabs.gcodeColumnWidth
-                            Label
-                            {
-                                text: catalog.i18nc("@label", "Start Gcode")
-                                font.bold: true
-                            }
-                            Loader
-                            {
-                                id: machineStartGcodeField
-                                sourceComponent: gcodeTextArea
-                                property int areaWidth: parent.width
-                                property int areaHeight: parent.height - y
-                                property string settingKey: "machine_start_gcode"
-                                property string tooltip: catalog.i18nc("@tooltip", "Gcode commands to be executed at the very start.")
-                            }
-                        }
-
-                        Column {
-                            height: parent.height
-                            width: settingsTabs.gcodeColumnWidth
-                            Label
-                            {
-                                text: catalog.i18nc("@label", "End Gcode")
-                                font.bold: true
-                            }
-                            Loader
-                            {
-                                id: machineEndGcodeField
-
-                                sourceComponent: gcodeTextArea
-                                property int areaWidth: parent.width
-                                property int areaHeight: parent.height - y
-                                property string settingKey: "machine_end_gcode"
-                                property string tooltip: catalog.i18nc("@tooltip", "Gcode commands to be executed at the very end.")
-                            }
-                        }
-                    }
-                }
-            }
-
-            onCurrentIndexChanged:
-            {
-                if(currentIndex > 0)
-                {
-                    contentItem.forceActiveFocus();
-                }
-            }
-
-            Repeater
-            {
-                id: extruderTabsRepeater
-                model: base.extruderTabsCount
-
-                Tab
-                {
-                    title: base.extrudersModel.getItem(index).name
-                    anchors.margins: UM.Theme.getSize("default_margin").width
-
-                    Column
-                    {
-                        spacing: UM.Theme.getSize("default_lining").width
-
-                        Label
-                        {
-                            text: catalog.i18nc("@label", "Nozzle Settings")
-                            font.bold: true
-                        }
-
-                        Item { width: UM.Theme.getSize("default_margin").width; height: UM.Theme.getSize("default_margin").height }
-
-                        Loader
-                        {
-                            id: extruderNozzleSizeField
-                            visible: !Cura.MachineManager.hasVariants
-                            sourceComponent: numericTextFieldWithUnit
-                            property string settingKey: "machine_nozzle_size"
-                            property string label: catalog.i18nc("@label", "Nozzle size")
-                            property string unit: catalog.i18nc("@label", "mm")
-                            property bool isExtruderSetting: true
-                        }
-
-                        Loader
-                        {
-                            id: materialDiameterField
-                            visible: Cura.MachineManager.hasMaterials
-                            sourceComponent: numericTextFieldWithUnit
-                            property string settingKey: "material_diameter"
-                            property string label: catalog.i18nc("@label", "Compatible material diameter")
-                            property string unit: catalog.i18nc("@label", "mm")
-                            property string tooltip: catalog.i18nc("@tooltip", "The nominal diameter of filament supported by the printer. The exact diameter will be overridden by the material and/or the profile.")
-                            function afterOnEditingFinished()
-                            {
-                                if (settingsTabs.currentIndex > 0)
-                                {
-                                    manager.updateMaterialForDiameter(settingsTabs.currentIndex - 1);
+                                    id: lcdCheckBox
+                                    text: catalog.i18nc("@option:check", "LCD")
+                                    checked: String(machineLCDProvider.properties.value).toLowerCase() != 'false'
+                                    onClicked: machineLCDProvider.setPropertyValue("value", checked)
                                 }
                             }
-                            property bool isExtruderSetting: true
                         }
-
-                        Loader
-                        {
-                            id: extruderOffsetXField
-                            sourceComponent: numericTextFieldWithUnit
-                            property string settingKey: "machine_nozzle_offset_x"
-                            property string label: catalog.i18nc("@label", "Nozzle offset X")
-                            property string unit: catalog.i18nc("@label", "mm")
-                            property bool isExtruderSetting: true
-                            property bool forceUpdateOnChange: true
-                            property bool allowNegative: true
-                        }
-
-                        Loader
-                        {
-                            id: extruderOffsetYField
-                            sourceComponent: numericTextFieldWithUnit
-                            property string settingKey: "machine_nozzle_offset_y"
-                            property string label: catalog.i18nc("@label", "Nozzle offset Y")
-                            property string unit: catalog.i18nc("@label", "mm")
-                            property bool isExtruderSetting: true
-                            property bool forceUpdateOnChange: true
-                            property bool allowNegative: true
-                        }
-
-                        Item { width: UM.Theme.getSize("default_margin").width; height: UM.Theme.getSize("default_margin").height }
 
                         Row
                         {
@@ -513,14 +393,15 @@ Cura.MachineAction
                                 }
                                 Loader
                                 {
-                                    id: extruderStartGcodeField
+                                    id: machineStartGcodeField
                                     sourceComponent: gcodeTextArea
                                     property int areaWidth: parent.width
                                     property int areaHeight: parent.height - y
-                                    property string settingKey: "machine_extruder_start_code"
-                                    property bool isExtruderSetting: true
+                                    property string settingKey: "machine_start_gcode"
+                                    property string tooltip: catalog.i18nc("@tooltip", "Gcode commands to be executed at the very start.")
                                 }
                             }
+
                             Column {
                                 height: parent.height
                                 width: settingsTabs.gcodeColumnWidth
@@ -531,53 +412,25 @@ Cura.MachineAction
                                 }
                                 Loader
                                 {
-                                    id: extruderEndGcodeField
+                                    id: machineEndGcodeField
+
                                     sourceComponent: gcodeTextArea
                                     property int areaWidth: parent.width
                                     property int areaHeight: parent.height - y
-                                    property string settingKey: "machine_extruder_end_code"
-                                    property bool isExtruderSetting: true
+                                    property string settingKey: "machine_end_gcode"
+                                    property string tooltip: catalog.i18nc("@tooltip", "Gcode commands to be executed at the very end.")
                                 }
-                            }
-                        }
-                        function getHeadPolygonCoord(axis, minMax)
-                        {
-                            var polygon = JSON.parse(machineHeadPolygonProvider.properties.value);
-                            var item = (axis == "x") ? 0 : 1
-                            var result = polygon[0][item];
-                            for(var i = 1; i < polygon.length; i++) {
-                                if (minMax == "min") {
-                                    result = Math.min(result, polygon[i][item]);
-                                } else {
-                                    result = Math.max(result, polygon[i][item]);
-                                }
-                            }
-                            return Math.abs(result);
-                        }
-
-                        function setHeadPolygon()
-                        {
-                            var polygon = [];
-                            polygon.push([-parseFloat(printheadXMinField.text), parseFloat(printheadYMaxField.text)]);
-                            polygon.push([-parseFloat(printheadXMinField.text),-parseFloat(printheadYMinField.text)]);
-                            polygon.push([ parseFloat(printheadXMaxField.text), parseFloat(printheadYMaxField.text)]);
-                            polygon.push([ parseFloat(printheadXMaxField.text),-parseFloat(printheadYMinField.text)]);
-                            var polygon_string = JSON.stringify(polygon);
-                            if(polygon != machineHeadPolygonProvider.properties.value)
-                            {
-                                machineHeadPolygonProvider.setPropertyValue("value", polygon_string);
-                                manager.forceUpdate();
                             }
                         }
                     }
                 }
+
 
                 onCurrentIndexChanged:
                 {
                     if(currentIndex > 0)
                     {
                         contentItem.forceActiveFocus();
-                        ExtruderManager.setActiveExtruderIndex(currentIndex - 1);
                     }
                 }
 
@@ -593,7 +446,7 @@ Cura.MachineAction
 
                         Column
                         {
-                            spacing: UM.Theme.getSize("default_margin").width
+                            spacing: UM.Theme.getSize("default_lining").width
 
                             Label
                             {
@@ -601,52 +454,66 @@ Cura.MachineAction
                                 font.bold: true
                             }
 
-                            Grid
+                            Item { width: UM.Theme.getSize("default_margin").width; height: UM.Theme.getSize("default_margin").height }
+
+                            Loader
                             {
-                                columns: 2
-                                columnSpacing: UM.Theme.getSize("default_margin").width
-                                rowSpacing: UM.Theme.getSize("default_lining").width
+                                id: extruderNozzleSizeField
+                                visible: !Cura.MachineManager.hasVariants
+                                sourceComponent: numericTextFieldWithUnit
+                                property string settingKey: "machine_nozzle_size"
+                                property string label: catalog.i18nc("@label", "Nozzle size")
+                                property string unit: catalog.i18nc("@label", "mm")
+                                property bool isExtruderSetting: true
+                            }
 
-                                Label
+                            Loader
+                            {
+                                id: materialDiameterField
+                                visible: Cura.MachineManager.hasMaterials
+                                sourceComponent: numericTextFieldWithUnit
+                                property string settingKey: "material_diameter"
+                                property string label: catalog.i18nc("@label", "Compatible material diameter")
+                                property string unit: catalog.i18nc("@label", "mm")
+                                property string tooltip: catalog.i18nc("@tooltip", "The nominal diameter of filament supported by the printer. The exact diameter will be overridden by the material and/or the profile.")
+                                function afterOnEditingFinished()
                                 {
-                                    text: catalog.i18nc("@label", "Nozzle size")
-                                    visible: extruderNozzleSizeField.visible
+                                    if (settingsTabs.currentIndex > 0)
+                                    {
+                                        manager.updateMaterialForDiameter(settingsTabs.currentIndex - 1);
+                                    }
                                 }
-                                Loader
-                                {
-                                    id: extruderNozzleSizeField
-                                    visible: !Cura.MachineManager.hasVariants
-                                    sourceComponent: numericTextFieldWithUnit
-                                    property var propertyProvider: extruderNozzleSizeProvider
-                                    property string unit: catalog.i18nc("@label", "mm")
-                                }
-                                Label
-                                {
-                                    text: catalog.i18nc("@label", "Nozzle offset X")
-                                }
-                                Loader
-                                {
-                                    id: extruderOffsetXField
-                                    sourceComponent: numericTextFieldWithUnit
-                                    property var propertyProvider: extruderOffsetXProvider
-                                    property string unit: catalog.i18nc("@label", "mm")
-                                    property bool forceUpdateOnChange: true
-                                    property bool allowNegative: true
-                                }
-                                Label
-                                {
-                                    text: catalog.i18nc("@label", "Nozzle offset Y")
-                                }
-                                Loader
-                                {
-                                    id: extruderOffsetYField
-                                    sourceComponent: numericTextFieldWithUnit
-                                    property var propertyProvider: extruderOffsetYProvider
-                                    property string unit: catalog.i18nc("@label", "mm")
-                                    property bool forceUpdateOnChange: true
-                                    property bool allowNegative: true
-                                }
+                                property bool isExtruderSetting: true
+                            }
 
+                            Loader
+                            {
+                                id: extruderOffsetXField
+                                sourceComponent: numericTextFieldWithUnit
+                                property string settingKey: "machine_nozzle_offset_x"
+                                property string label: catalog.i18nc("@label", "Nozzle offset X")
+                                property string unit: catalog.i18nc("@label", "mm")
+                                property bool isExtruderSetting: true
+                                property bool forceUpdateOnChange: true
+                                property bool allowNegative: true
+                            }
+
+                            Loader
+                            {
+                                id: extruderOffsetYField
+                                sourceComponent: numericTextFieldWithUnit
+                                property string settingKey: "machine_nozzle_offset_y"
+                                property string label: catalog.i18nc("@label", "Nozzle offset Y")
+                                property string unit: catalog.i18nc("@label", "mm")
+                                property bool isExtruderSetting: true
+                                property bool forceUpdateOnChange: true
+                                property bool allowNegative: true
+                            }
+
+                            Item { width: UM.Theme.getSize("default_margin").width; height: UM.Theme.getSize("default_margin").height }
+
+                            Row
+                            {
                                 spacing: UM.Theme.getSize("default_margin").width
                                 anchors.left: parent.left
                                 anchors.right: parent.right
@@ -654,58 +521,38 @@ Cura.MachineAction
                                 Column
                                 {
                                     height: parent.height
-                                    width: settingsTabs.gcodeColumnWidth
+                                    width: settingsTabs.columnWidth
                                     Label
                                     {
                                         text: catalog.i18nc("@label", "Extruder Start Gcode")
                                         font.bold: true
                                     }
-                                    TextArea
+                                    Loader
                                     {
                                         id: extruderStartGcodeField
-                                        width: parent.width
-                                        height: parent.height - y
-                                        font: UM.Theme.getFont("fixed")
-                                        text: (extruderStartGcodeProvider.properties.value) ? extruderStartGcodeProvider.properties.value : ""
-                                        onActiveFocusChanged:
-                                        {
-                                            if(!activeFocus)
-                                            {
-                                                extruderStartGcodeProvider.setPropertyValue("value", extruderStartGcodeField.text)
-                                            }
-                                        }
-                                        Component.onCompleted:
-                                        {
-                                            wrapMode = TextEdit.NoWrap;
-                                        }
+                                        sourceComponent: gcodeTextArea
+                                        property int areaWidth: parent.width
+                                        property int areaHeight: parent.height - y
+                                        property string settingKey: "machine_extruder_start_code"
+                                        property bool isExtruderSetting: true
                                     }
                                 }
                                 Column {
                                     height: parent.height
-                                    width: settingsTabs.gcodeColumnWidth
+                                    width: settingsTabs.columnWidth
                                     Label
                                     {
                                         text: catalog.i18nc("@label", "Extruder End Gcode")
                                         font.bold: true
                                     }
-                                    TextArea
+                                    Loader
                                     {
                                         id: extruderEndGcodeField
-                                        width: parent.width
-                                        height: parent.height - y
-                                        font: UM.Theme.getFont("fixed")
-                                        text: (extruderEndGcodeProvider.properties.value) ? extruderEndGcodeProvider.properties.value : ""
-                                        onActiveFocusChanged:
-                                        {
-                                            if(!activeFocus)
-                                            {
-                                                extruderEndGcodeProvider.setPropertyValue("value", extruderEndGcodeField.text)
-                                            }
-                                        }
-                                        Component.onCompleted:
-                                        {
-                                            wrapMode = TextEdit.NoWrap;
-                                        }
+                                        sourceComponent: gcodeTextArea
+                                        property int areaWidth: parent.width
+                                        property int areaHeight: parent.height - y
+                                        property string settingKey: "machine_extruder_end_code"
+                                        property bool isExtruderSetting: true
                                     }
                                 }
                             }
