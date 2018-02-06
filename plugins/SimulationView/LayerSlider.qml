@@ -67,6 +67,17 @@ Item {
         activeHandle = handle
     }
 
+    MouseArea
+    {
+        anchors.fill: parent
+        onWheel:
+        {
+            wheel.accepted = true
+            activeHandle.setValue(activeHandle.getValue() + wheel.angleDelta.y / 120)
+        }
+        acceptedButtons: Qt.NoButton
+    }
+
     // slider track
     Rectangle {
         id: track
@@ -112,6 +123,10 @@ Item {
 
             UM.SimulationView.setCurrentLayer(value)
             UM.SimulationView.setMinimumLayer(value - range)
+        }
+
+        function getValue () {
+            return upperHandle.getValue()
         }
 
         Rectangle {
