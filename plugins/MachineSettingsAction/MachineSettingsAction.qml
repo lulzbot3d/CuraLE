@@ -58,12 +58,12 @@ Cura.MachineAction
                 var theme_height = UM.Theme.getSize("modal_window_minimum").height * 1.5
                 if(base.height > theme_height)
                 {
-                    scrollView.verticalScrollBarPolicy = Qt.ScrollBarAlwaysOff
+                    machineSettingsAction.verticalScrollBarPolicy = Qt.ScrollBarAlwaysOff
                     return base.height
                 }
                 else
                 {
-                    scrollView.verticalScrollBarPolicy = Qt.ScrollBarAsNeeded
+                    machineSettingsAction.verticalScrollBarPolicy = Qt.ScrollBarAsNeeded
                     return theme_height
                 }
             }
@@ -72,12 +72,12 @@ Cura.MachineAction
                 var theme_width = UM.Theme.getSize("modal_window_minimum").width * 1.5
                 if(base.width > theme_width)
                 {
-                    scrollView.horizontalScrollBarPolicy = Qt.ScrollBarAlwaysOff
+                    machineSettingsAction.horizontalScrollBarPolicy = Qt.ScrollBarAlwaysOff
                     return base.width
                 }
                 else
                 {
-                    scrollView.horizontalScrollBarPolicy = Qt.ScrollBarAsNeeded
+                    machineSettingsAction.horizontalScrollBarPolicy = Qt.ScrollBarAsNeeded
                     return theme_width
                 }
             }
@@ -95,7 +95,7 @@ Cura.MachineAction
                 height: parent.height - y
                 width: parent.width
                 anchors.left: parent.left
-                anchors.top: pageTitle.bottom
+                anchors.top: parent.top
                 anchors.topMargin: UM.Theme.getSize("default_margin").height
 
                 property real columnWidth: Math.floor((width - 3 * UM.Theme.getSize("default_margin").width) / 3)
@@ -321,34 +321,37 @@ Cura.MachineAction
                             width: parent.width / 3
                             spacing: UM.Theme.getSize("default_margin").height
 
-                                Label
+                            Label
+                            {
+                                text: catalog.i18nc("@label", "Port:")
+                            }
+                            ComboBox
+                            {
+                                model:
                                 {
-                                    text: catalog.i18nc("@label", "Port:")
+                                    var port_list = Cura.USBPrinterManager.portList
+                                    var ind = port_list.indexOf(machinePortProvider.properties.value)
+                                    port_list.push("AUTO")
+                                    return port_list
                                 }
-                                ComboBox
-                                {
-                                    model:
-                                    {
-                                        var port_list = Cura.USBPrinterManager.portList
-                                        var ind = port_list.indexOf(machinePortProvider.properties.value)
-                                        port_list.push("AUTO")
-                                        return port_list
-                                    }
 
-                                    currentIndex:
+                                currentIndex:
+                                {
+                                    var index = model.indexOf(machinePortProvider.properties.value);
+                                    if(index == -1)
                                     {
-                                        var index = model.indexOf(machinePortProvider.properties.value);
-                                        if(index == -1)
-                                        {
-                                            index = 0;
-                                        }
-                                        return index
+                                        index = 0;
                                     }
+                                    return index
                                 }
+
                                 onActivated:
                                 {
                                     machineBaudrateProvider.setPropertyValue("value", model[index]);
                                 }
+                            }
+
+
                             CheckBox
                             {
                                 id: lcdCheckBox
@@ -406,14 +409,6 @@ Cura.MachineAction
                             }
                         }
                     }
-                }
-            }
-
-            onCurrentIndexChanged:
-            {
-                if(currentIndex > 0)
-                {
-                    contentItem.forceActiveFocus();
                 }
             }
 
@@ -569,15 +564,6 @@ Cura.MachineAction
                                 manager.forceUpdate();
                             }
                         }
-                    }
-                }
-
-                onCurrentIndexChanged:
-                {
-                    if(currentIndex > 0)
-                    {
-                        contentItem.forceActiveFocus();
-                        ExtruderManager.setActiveExtruderIndex(currentIndex - 1);
                     }
                 }
 
