@@ -68,4 +68,62 @@ ToolButton
     }
 
     menu: PrinterMenu { }
+
+    Row
+    {
+        anchors.fill: parent
+        layoutDirection: Qt.RightToLeft
+        anchors.rightMargin: UM.Theme.getSize("default_margin").width * 3
+        spacing: 2
+
+        UM.SimpleButton
+        {
+            id: printerInfoButton
+
+            color: hovered ? UM.Theme.getColor("text") : UM.Theme.getColor("info_button");
+            iconSource: UM.Theme.getIcon("notice");
+
+            width: UM.Theme.getSize("setting_control").height
+            height: UM.Theme.getSize("setting_control").height
+            anchors.verticalCenter: parent.verticalCenter
+
+            visible: Cura.MachineManager.currentPrinterHasInfo
+
+            onClicked:
+            {
+                Cura.MachineManager.openCurrentPrinterInfo()
+            }
+            onEntered:
+            {
+                var content = catalog.i18nc("@tooltip", "Printer Info")
+                base.showTooltip(parent, Qt.point(0, parent.height / 2),  content)
+            }
+            onExited: base.hideTooltip()
+        }
+
+        UM.SimpleButton
+        {
+            id: toolheadInfoButton
+
+            color: hovered ? UM.Theme.getColor("text") : UM.Theme.getColor("info_button");
+            iconSource: UM.Theme.getIcon("notice");
+
+            width: UM.Theme.getSize("setting_control").height
+            height: UM.Theme.getSize("setting_control").height
+            anchors.verticalCenter: parent.verticalCenter
+
+            visible: Cura.MachineManager.currentToolheadHasInfo
+
+            onClicked:
+            {
+                Cura.MachineManager.openCurrentToolheadInfo()
+            }
+            onEntered:
+            {
+                var content = catalog.i18nc("@tooltip", "Toolhead Info")
+                base.showTooltip(parent, Qt.point(0, parent.height / 2),  content)
+            }
+            onExited: base.hideTooltip()
+        }
+    }
 }

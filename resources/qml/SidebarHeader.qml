@@ -282,9 +282,37 @@ Column
         {
             id: materialLabel
             text: catalog.i18nc("@label","Material");
-            width: parent.width * 0.45 - UM.Theme.getSize("sidebar_margin").width
+            width: parent.width * 0.45 - UM.Theme.getSize("sidebar_margin").width - infoButton.width
             font: UM.Theme.getFont("default");
             color: UM.Theme.getColor("text");
+        }
+
+        Item
+        {
+            width: UM.Theme.getSize("setting_control").height
+            height: UM.Theme.getSize("setting_control").height
+
+            UM.SimpleButton
+            {
+                id: infoButton
+
+                color: hovered ? UM.Theme.getColor("text") : UM.Theme.getColor("info_button");
+                iconSource: UM.Theme.getIcon("notice");
+
+                anchors.fill: parent
+                visible: Cura.MachineManager.currentMaterialHasInfo
+
+                onClicked:
+                {
+                    Cura.MachineManager.openCurrentMaterialInfo()
+                }
+                onEntered:
+                {
+                    var content = catalog.i18nc("@tooltip", "Material Info")
+                    base.showTooltip(variantRow, Qt.point(-UM.Theme.getSize("default_margin").width, parent.height/2),  content)
+                }
+                onExited: base.hideTooltip()
+            }
         }
 
         ToolButton
@@ -396,7 +424,7 @@ Column
     {
         id: materialInfoRow
         height: Math.floor(UM.Theme.getSize("sidebar_setup").height / 2)
-        visible: (Cura.MachineManager.hasVariants || Cura.MachineManager.hasMaterials) && !sidebar.monitoringPrint && !sidebar.hideSettings && Cura.MachineManager.currentMaterialHasInfo
+        visible: (Cura.MachineManager.hasVariants || Cura.MachineManager.hasMaterials) && !sidebar.monitoringPrint && !sidebar.hideSettings && !Cura.MachineManager.isCurrentSetupSupported
 
         anchors
         {
@@ -413,36 +441,13 @@ Column
 
             UM.RecolorImage {
                 id: warningImage
-                anchors.right: materialInfoLabel.left
+                anchors.right: parent.right
                 anchors.rightMargin: UM.Theme.getSize("default_margin").width
                 anchors.verticalCenter: parent.Bottom
                 source: UM.Theme.getIcon("warning")
                 width: UM.Theme.getSize("section_icon").width
                 height: UM.Theme.getSize("section_icon").height
                 color: UM.Theme.getColor("material_compatibility_warning")
-                visible: !Cura.MachineManager.isCurrentSetupSupported
-            }
-
-            Label {
-                id: materialInfoLabel
-                wrapMode: Text.WordWrap
-                text: catalog.i18nc("@label", "<a href='%1'>Material info</a>")
-
-                font: UM.Theme.getFont("default")
-                color: UM.Theme.getColor("text")
-                linkColor: UM.Theme.getColor("text_link")
-                verticalAlignment: Text.AlignTop
-                anchors.top: parent.top
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-
-                MouseArea {
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onClicked: {
-                        Cura.MachineManager.openCurrentMaterialInfo()
-                    }
-                }
             }
         }
     }
