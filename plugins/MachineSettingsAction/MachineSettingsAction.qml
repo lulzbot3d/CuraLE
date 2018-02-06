@@ -88,6 +88,15 @@ Cura.MachineAction
             property real gcodeColumnWidth: Math.floor((width - 3 * UM.Theme.getSize("default_margin").width) / 2)
             property real labelColumnWidth: columnWidth * 0.5
 
+            Label
+            {
+                id: pageTitle
+                width: parent.width
+                text: catalog.i18nc("@title", "Machine Settings")
+                wrapMode: Text.WordWrap
+                font.pointSize: 18;
+            }
+
 
             TabView
             {
@@ -95,7 +104,7 @@ Cura.MachineAction
                 height: parent.height - y
                 width: parent.width
                 anchors.left: parent.left
-                anchors.top: parent.top
+                anchors.top: pageTitle.bottom
                 anchors.topMargin: UM.Theme.getSize("default_margin").height
 
                 property real columnWidth: Math.floor((width - 3 * UM.Theme.getSize("default_margin").width) / 3)
@@ -415,133 +424,135 @@ Cura.MachineAction
                         }
                     }
                 }
-            }
 
-            Repeater
-            {
-                id: extruderTabsRepeater
-                model: base.extruderTabsCount
 
-                Tab
+                onCurrentIndexChanged:
                 {
-                    title: base.extrudersModel.getItem(index).name
-                    anchors.margins: UM.Theme.getSize("default_margin").width
-
-                    Column
+                    if(currentIndex > 0)
                     {
-                        spacing: UM.Theme.getSize("default_margin").width
+                        contentItem.forceActiveFocus();
+                    }
+                }
 
-                        Label
-                        {
-                            text: catalog.i18nc("@label", "Nozzle Settings")
-                            font.bold: true
-                        }
+                Repeater
+                {
+                    id: extruderTabsRepeater
+                    model: base.extruderTabsCount
 
-                        Grid
+                    Tab
+                    {
+                        title: base.extrudersModel.getItem(index).name
+                        anchors.margins: UM.Theme.getSize("default_margin").width
+
+                        Column
                         {
-                            columns: 2
-                            columnSpacing: UM.Theme.getSize("default_margin").width
-                            rowSpacing: UM.Theme.getSize("default_lining").width
+                            spacing: UM.Theme.getSize("default_lining").width
 
                             Label
                             {
-                                text: catalog.i18nc("@label", "Nozzle size")
-                                visible: extruderNozzleSizeField.visible
+                                text: catalog.i18nc("@label", "Nozzle Settings")
+                                font.bold: true
                             }
+
+                            Item { width: UM.Theme.getSize("default_margin").width; height: UM.Theme.getSize("default_margin").height }
+
                             Loader
                             {
                                 id: extruderNozzleSizeField
                                 visible: !Cura.MachineManager.hasVariants
                                 sourceComponent: numericTextFieldWithUnit
-                                property var propertyProvider: extruderNozzleSizeProvider
+                                property string settingKey: "machine_nozzle_size"
+                                property string label: catalog.i18nc("@label", "Nozzle size")
                                 property string unit: catalog.i18nc("@label", "mm")
+                                property bool isExtruderSetting: true
                             }
-                            Label
+
+                            Loader
                             {
-                                text: catalog.i18nc("@label", "Nozzle offset X")
+                                id: materialDiameterField
+                                visible: Cura.MachineManager.hasMaterials
+                                sourceComponent: numericTextFieldWithUnit
+                                property string settingKey: "material_diameter"
+                                property string label: catalog.i18nc("@label", "Compatible material diameter")
+                                property string unit: catalog.i18nc("@label", "mm")
+                                property string tooltip: catalog.i18nc("@tooltip", "The nominal diameter of filament supported by the printer. The exact diameter will be overridden by the material and/or the profile.")
+                                function afterOnEditingFinished()
+                                {
+                                    if (settingsTabs.currentIndex > 0)
+                                    {
+                                        manager.updateMaterialForDiameter(settingsTabs.currentIndex - 1);
+                                    }
+                                }
+                                property bool isExtruderSetting: true
                             }
+
                             Loader
                             {
                                 id: extruderOffsetXField
                                 sourceComponent: numericTextFieldWithUnit
-                                property var propertyProvider: extruderOffsetXProvider
+                                property string settingKey: "machine_nozzle_offset_x"
+                                property string label: catalog.i18nc("@label", "Nozzle offset X")
                                 property string unit: catalog.i18nc("@label", "mm")
-                                property bool forceUpdateOnChange: true
-                                property bool allowNegative: true
-                            }
-                            Label
-                            {
-                                text: catalog.i18nc("@label", "Nozzle offset Y")
-                            }
-                            Loader
-                            {
-                                id: extruderOffsetYField
-                                sourceComponent: numericTextFieldWithUnit
-                                property var propertyProvider: extruderOffsetYProvider
-                                property string unit: catalog.i18nc("@label", "mm")
+                                property bool isExtruderSetting: true
                                 property bool forceUpdateOnChange: true
                                 property bool allowNegative: true
                             }
 
-                            spacing: UM.Theme.getSize("default_margin").width
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            height: parent.height - y
-                            Column
+                            Loader
                             {
-                                height: parent.height
-                                width: settingsTabs.gcodeColumnWidth
-                                Label
-                                {
-                                    text: catalog.i18nc("@label", "Extruder Start Gcode")
-                                    font.bold: true
-                                }
-                                TextArea
-                                {
-                                    id: extruderStartGcodeField
-                                    width: parent.width
-                                    height: parent.height - y
-                                    font: UM.Theme.getFont("fixed")
-                                    text: (extruderStartGcodeProvider.properties.value) ? extruderStartGcodeProvider.properties.value : ""
-                                    onActiveFocusChanged:
-                                    {
-                                        if(!activeFocus)
-                                        {
-                                            extruderStartGcodeProvider.setPropertyValue("value", extruderStartGcodeField.text)
-                                        }
-                                    }
-                                    Component.onCompleted:
-                                    {
-                                        wrapMode = TextEdit.NoWrap;
-                                    }
-                                }
+                                id: extruderOffsetYField
+                                sourceComponent: numericTextFieldWithUnit
+                                property string settingKey: "machine_nozzle_offset_y"
+                                property string label: catalog.i18nc("@label", "Nozzle offset Y")
+                                property string unit: catalog.i18nc("@label", "mm")
+                                property bool isExtruderSetting: true
+                                property bool forceUpdateOnChange: true
+                                property bool allowNegative: true
                             }
-                            Column
+
+                            Item { width: UM.Theme.getSize("default_margin").width; height: UM.Theme.getSize("default_margin").height }
+
+                            Row
                             {
-                                height: parent.height
-                                width: settingsTabs.gcodeColumnWidth
-                                Label
+                                spacing: UM.Theme.getSize("default_margin").width
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                height: parent.height - y
+                                Column
                                 {
-                                    text: catalog.i18nc("@label", "Extruder End Gcode")
-                                    font.bold: true
-                                }
-                                TextArea
-                                {
-                                    id: extruderEndGcodeField
-                                    width: parent.width
-                                    height: parent.height - y
-                                    font: UM.Theme.getFont("fixed")
-                                    text: (extruderEndGcodeProvider.properties.value) ? extruderEndGcodeProvider.properties.value : ""
-                                    onActiveFocusChanged:
+                                    height: parent.height
+                                    width: settingsTabs.columnWidth
+                                    Label
                                     {
-                                        if(!activeFocus)
-                                        {
-                                            extruderEndGcodeProvider.setPropertyValue("value", extruderEndGcodeField.text)
-                                        }
+                                        text: catalog.i18nc("@label", "Extruder Start Gcode")
+                                        font.bold: true
                                     }
-                                    Component.onCompleted:
+                                    Loader
                                     {
-                                        wrapMode = TextEdit.NoWrap;
+                                        id: extruderStartGcodeField
+                                        sourceComponent: gcodeTextArea
+                                        property int areaWidth: parent.width
+                                        property int areaHeight: parent.height - y
+                                        property string settingKey: "machine_extruder_start_code"
+                                        property bool isExtruderSetting: true
+                                    }
+                                }
+                                Column {
+                                    height: parent.height
+                                    width: settingsTabs.columnWidth
+                                    Label
+                                    {
+                                        text: catalog.i18nc("@label", "Extruder End Gcode")
+                                        font.bold: true
+                                    }
+                                    Loader
+                                    {
+                                        id: extruderEndGcodeField
+                                        sourceComponent: gcodeTextArea
+                                        property int areaWidth: parent.width
+                                        property int areaHeight: parent.height - y
+                                        property string settingKey: "machine_extruder_end_code"
+                                        property bool isExtruderSetting: true
                                     }
                                 }
                             }
@@ -549,7 +560,6 @@ Cura.MachineAction
                     }
                 }
             }
-
         }
 
     }
