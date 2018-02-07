@@ -12,7 +12,8 @@ from UM.Application import Application
 class CuraSplashScreen(QSplashScreen):
     def __init__(self):
         super().__init__()
-        self._scale = 0.7
+        #self._scale = 0.7 #Ultimaker original value
+        self._scale = 1.0
 
         splash_image = QPixmap(Resources.getPath(Resources.Images, "cura.png"))
         self.setPixmap(splash_image.scaled(splash_image.size() * self._scale))
