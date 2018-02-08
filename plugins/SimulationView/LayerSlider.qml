@@ -203,7 +203,10 @@ Item {
 
         // set the slider position based on the upper value
         function setValue (value) {
-
+            if(value > sliderRoot.maximumValue || value < sliderRoot.minimumValue)
+            {
+                return
+            }
             UM.SimulationView.setCurrentLayer(value)
 
             var diff = (value - sliderRoot.maximumValue) / (sliderRoot.minimumValue - sliderRoot.maximumValue)
@@ -289,7 +292,10 @@ Item {
 
         // set the slider position based on the lower value
         function setValue (value) {
-
+            if(value > sliderRoot.maximumValue || value < sliderRoot.minimumValue)
+            {
+                return
+            }
             UM.SimulationView.setMinimumLayer(value)
 
             var diff = (value - sliderRoot.maximumValue) / (sliderRoot.minimumValue - sliderRoot.maximumValue)
