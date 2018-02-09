@@ -144,6 +144,8 @@ class ProfilesModel(InstanceContainersModel):
                 if item not in containers:
                     containers.append(item)
 
+        result = []
+
         # Now all the containers are set
         for item in containers:
             profile = container_registry.findContainers(id = item["id"])
@@ -152,7 +154,7 @@ class ProfilesModel(InstanceContainersModel):
             if not profile:
                 self._setItemLayerHeight(item, "", "")
                 item["available"] = False
-                yield item
+                result.append(item)
                 continue
 
             profile = profile[0]
@@ -161,7 +163,7 @@ class ProfilesModel(InstanceContainersModel):
             if profile.getId() == "empty_quality":
                 self._setItemLayerHeight(item, "", "")
                 item["available"] = True
-                yield item
+                result.append(item)
                 continue
 
             item["available"] = profile in qualities
@@ -169,7 +171,7 @@ class ProfilesModel(InstanceContainersModel):
             # Easy case: This profile defines its own layer height.
             if profile.hasProperty("layer_height", "value"):
                 self._setItemLayerHeight(item, profile.getProperty("layer_height", "value"), unit)
-                yield item
+                result.append(item)
                 continue
 
             machine_manager = Application.getInstance().getMachineManager()
@@ -191,7 +193,7 @@ class ProfilesModel(InstanceContainersModel):
                         quality = None
                 if quality and quality.hasProperty("layer_height", "value"):
                     self._setItemLayerHeight(item, quality.getProperty("layer_height", "value"), unit)
-                    yield item
+                    result.append(item)
                     continue
 
             # Quality has no value for layer height either. Get the layer height from somewhere lower in the stack.
@@ -201,6 +203,10 @@ class ProfilesModel(InstanceContainersModel):
                 if not skip_until_container or skip_until_container == ContainerRegistry.getInstance().getEmptyInstanceContainer():  # No variant in stack.
                     skip_until_container = global_container_stack.getBottom()
             self._setItemLayerHeight(item, global_container_stack.getRawProperty("layer_height", "value", skip_until_container = skip_until_container.getId()), unit)  # Fall through to the currently loaded material.
+            result.append(item)
+
+        result = sorted(result, key=lambda x: x["layer_height"])
+        for item in result:
             yield item
 
     ## Get a list of extruder stacks with the active extruder at the front of the list.
