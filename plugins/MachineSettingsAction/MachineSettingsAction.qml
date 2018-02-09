@@ -45,42 +45,22 @@ Cura.MachineAction
         manager.onFinishAction();
     }
 
-    ScrollView
+
+    Flickable
     {
-        id: machineSettingsAction
-        anchors.fill: parent;
-        frameVisible : true
+        id: flick
+        width: base.width;
+        height: base.height
+        contentWidth: bedLevelMachineAction.width;
+        contentHeight: bedLevelMachineAction.height;
+        clip: true
+
+
         Item
         {
             id: bedLevelMachineAction
-            implicitHeight:
-            {
-                var theme_height = UM.Theme.getSize("modal_window_minimum").height * 1.5
-                if(base.height > theme_height)
-                {
-                    machineSettingsAction.verticalScrollBarPolicy = Qt.ScrollBarAlwaysOff
-                    return base.height
-                }
-                else
-                {
-                    machineSettingsAction.verticalScrollBarPolicy = Qt.ScrollBarAsNeeded
-                    return theme_height
-                }
-            }
-            implicitWidth:
-            {
-                var theme_width = UM.Theme.getSize("modal_window_minimum").width * 1.5
-                if(base.width > theme_width)
-                {
-                    machineSettingsAction.horizontalScrollBarPolicy = Qt.ScrollBarAlwaysOff
-                    return base.width
-                }
-                else
-                {
-                    machineSettingsAction.horizontalScrollBarPolicy = Qt.ScrollBarAsNeeded
-                    return theme_width
-                }
-            }
+            width: UM.Theme.getSize("modal_window_minimum").width * 1.5
+            height: UM.Theme.getSize("modal_window_minimum").height * 1.5
 
             UM.I18nCatalog { id: catalog; name: "cura"; }
 
@@ -96,7 +76,6 @@ Cura.MachineAction
                 wrapMode: Text.WordWrap
                 font.pointSize: 18;
             }
-
 
             TabView
             {

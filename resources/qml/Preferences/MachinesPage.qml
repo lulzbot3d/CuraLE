@@ -107,11 +107,13 @@ UM.ManagementPage
                             actionDialog.content = machineActionRepeater.model[index].displayItem;
                             machineActionRepeater.model[index].displayItem.reset();
                             actionDialog.title = machineActionRepeater.model[index].label;
+                            /*
                             if (machineActionRepeater.model[index].preferredSize)
                             {
                                 actionDialog.width = machineActionRepeater.model[index].preferredSize.width
                                 actionDialog.height = machineActionRepeater.model[index].preferredSize.height
                             }
+                            */
                             actionDialog.show();
                         }
                     }
@@ -125,8 +127,10 @@ UM.ManagementPage
             property var content
             //minimumWidth: 350 * Screen.devicePixelRatio;
             //minimumHeight: 350 * Screen.devicePixelRatio;
-            minimumWidth: UM.Theme.getSize("modal_window_minimum").width
-            minimumHeight: UM.Theme.getSize("modal_window_minimum").height
+            minimumWidth: UM.Theme.getSize("modal_window_minimum").width*0.5
+            minimumHeight: UM.Theme.getSize("modal_window_minimum").height*0.5
+            maximumWidth: UM.Theme.getSize("modal_window_minimum").width*1.5 + screenScaleFactor * 16
+            maximumHeight: UM.Theme.getSize("modal_window_minimum").height*1.5 + screenScaleFactor * 16 + 2*machineName.height
             width: minimumWidth
             height: minimumHeight
             onContentChanged:
