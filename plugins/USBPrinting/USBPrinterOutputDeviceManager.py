@@ -198,6 +198,8 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_taz6_flexy_dually_v2":        "Marlin_TAZ6_FlexyDually_1.1.8.2_63552a11c.hex",
             "lulzbot_taz6_dual_v3":             "Marlin_TAZ6_DualExtruderV3_1.1.8.2_63552a11c.hex",
             "lulzbot_taz6_aerostruder":            "Marlin_TAZ6_Aerostruder_1.1.8.2_63552a11c.hex",
+
+            "lulzbot_mini":                     "Marlin_Mini2_AerostruderV2_1.1.8.2_63552a11c.hex",
         }
 
         lulzbot_lcd_machines = {

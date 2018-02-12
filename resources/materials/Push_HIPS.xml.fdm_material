@@ -39,5 +39,8 @@
     <machine>
       <machine_identifier product="lulzbot_taz5_aerostruder"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_hibiscus"/>
+    </machine>
   </settings>
 </fdmmaterial>

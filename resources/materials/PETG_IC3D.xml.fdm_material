@@ -49,5 +49,8 @@
     <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_mini" />
     </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_hibiscus" />
+    </machine>
   </settings>
 </fdmmaterial>
