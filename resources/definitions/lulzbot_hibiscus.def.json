@@ -5,6 +5,10 @@
     "version": 2,
     "metadata":
     {
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_hibiscus_extruder"
+        },
         "type": "machine",
         "platform": "lulzbot_hibiscus.stl",
         "platform_offset":

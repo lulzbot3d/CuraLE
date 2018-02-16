@@ -1,7 +1,7 @@
 {
     "id": "lulzbot_taz6_dual_v2_1st",
     "version": 2,
-    "name": "Extruder 1",
+    "name": "Hot End 1",
     "inherits": "fdmextruder",
     "metadata": {
         "machine": "lulzbot_taz6_dual_v2",

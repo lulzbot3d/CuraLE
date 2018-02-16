@@ -5,6 +5,10 @@
     "version": 2,
     "metadata":
     {
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_mini_flexy_extruder"
+        },
         "type": "machine",
         "visible": true,
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-mini-flexystruder-tool-head-v2",

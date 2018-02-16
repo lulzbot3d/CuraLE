@@ -5,6 +5,10 @@
     "version": 2,
     "metadata":
     {
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_mini_extruder"
+        },
         "type": "machine",
         "platform": "lulzbot_mini.stl",
         "platform_offset":

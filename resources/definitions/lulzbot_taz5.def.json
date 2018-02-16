@@ -5,6 +5,10 @@
     "version": 2,
     "metadata":
     {
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_taz5_extruder"
+        },
         "platform": "lulzbot_taz5.stl",
         "platform_offset":
         [
