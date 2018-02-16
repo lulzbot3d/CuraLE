@@ -282,7 +282,7 @@ class FlavorParser:
         if self._extruder_number + 1 > len(position.e):
             self._extrusion_length_offset.extend([0] * (self._extruder_number - len(position.e) + 1))
             position.e.extend([0] * (self._extruder_number - len(position.e) + 1))
-            elf._extrusion_max_amounts.extend([0] * (self._extruder_number - len(position.e) + 1))
+            self._extrusion_max_amounts.extend([0] * (self._extruder_number - len(position.e) + 1))
             self._extrusion_saved_value.extend([0] * (self._extruder_number - len(position.e) + 1))
         return position
 
