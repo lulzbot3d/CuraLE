@@ -15,105 +15,92 @@ Cura.MachineAction
 {
     anchors.fill: parent;
 
-    Flickable
+    Item
     {
-        id: flick
-        width: parent.width;
-        height: parent.height
-        contentWidth: upgradeFirmwareMachineAction.width;
-        contentHeight: upgradeFirmwareMachineAction.height;
-        clip: true
+        id: upgradeFirmwareMachineAction
+        anchors.fill: parent
+        UM.I18nCatalog { id: catalog; name:"cura"}
 
-        Item
+        Label
         {
-            id: upgradeFirmwareMachineAction
-            //anchors.fill: parent;
-            width: UM.Theme.getSize("modal_window_minimum").width * 1.5
-            height: UM.Theme.getSize("modal_window_minimum").height * 1.5
+            id: pageTitle
+            width: parent.width
+            text: catalog.i18nc("@title", "Upgrade Firmware")
+            wrapMode: Text.WordWrap
+            font.pointSize: 18
+        }
+        Label
+        {
+            id: pageDescription
+            anchors.top: pageTitle.bottom
+            anchors.topMargin: UM.Theme.getSize("default_margin").height
+            width: parent.width
+            wrapMode: Text.WordWrap
+            text: catalog.i18nc("@label", "Firmware is the piece of software running directly on your 3D printer. This firmware controls the step motors, regulates the temperature and ultimately makes your printer work.")
+        }
 
-            UM.I18nCatalog { id: catalog; name:"cura"}
+        Label
+        {
+            id: upgradeText1
+            anchors.top: pageDescription.bottom
+            anchors.topMargin: UM.Theme.getSize("default_margin").height
+            width: parent.width
+            wrapMode: Text.WordWrap
+            text: catalog.i18nc("@label", "The firmware shipping with new printers works, but new versions tend to have more features and improvements.");
+        }
 
-            Label
+        Row
+        {
+            id: buttonRow
+            anchors.top: upgradeText1.bottom
+            anchors.topMargin: UM.Theme.getSize("default_margin").height
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: childrenRect.width
+            spacing: UM.Theme.getSize("default_margin").width
+            property var firmwareName: Cura.USBPrinterManager.getDefaultFirmwareName()
+            Button
             {
-                id: pageTitle
-                width: parent.width
-                text: catalog.i18nc("@title", "Upgrade Firmware")
-                wrapMode: Text.WordWrap
-                font.pointSize: 18
-            }
-            Label
-            {
-                id: pageDescription
-                anchors.top: pageTitle.bottom
-                anchors.topMargin: UM.Theme.getSize("default_margin").height
-                width: parent.width
-                wrapMode: Text.WordWrap
-                text: catalog.i18nc("@label", "Firmware is the piece of software running directly on your 3D printer. This firmware controls the step motors, regulates the temperature and ultimately makes your printer work.")
-            }
-
-            Label
-            {
-                id: upgradeText1
-                anchors.top: pageDescription.bottom
-                anchors.topMargin: UM.Theme.getSize("default_margin").height
-                width: parent.width
-                wrapMode: Text.WordWrap
-                text: catalog.i18nc("@label", "The firmware shipping with new printers works, but new versions tend to have more features and improvements.");
-            }
-
-            Row
-            {
-                id: buttonRow
-                anchors.top: upgradeText1.bottom
-                anchors.topMargin: UM.Theme.getSize("default_margin").height
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: childrenRect.width
-                spacing: UM.Theme.getSize("default_margin").width
-                property var firmwareName: Cura.USBPrinterManager.getDefaultFirmwareName()
-                Button
+                id: autoUpgradeButton
+                text: catalog.i18nc("@action:button", "Automatically upgrade Firmware");
+                enabled: parent.firmwareName != ""
+                onClicked:
                 {
-                    id: autoUpgradeButton
-                    text: catalog.i18nc("@action:button", "Automatically upgrade Firmware");
-                    enabled: parent.firmwareName != ""
-                    onClicked:
-                    {
-                        Cura.USBPrinterManager.updateAllFirmware(parent.firmwareName, updateEepromCheckbox.checked)
-                    }
-                }
-                Button
-                {
-                    id: manualUpgradeButton
-                    text: catalog.i18nc("@action:button", "Upload custom Firmware");
-                    onClicked:
-                    {
-                        customFirmwareDialog.open()
-                    }
+                    Cura.USBPrinterManager.updateAllFirmware(parent.firmwareName, updateEepromCheckbox.checked)
                 }
             }
-            Row
+            Button
             {
-                anchors.topMargin: UM.Theme.getSize("default_margin").height
-                anchors.top: buttonRow.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
-                CheckBox
+                id: manualUpgradeButton
+                text: catalog.i18nc("@action:button", "Upload custom Firmware");
+                onClicked:
                 {
-                    id: updateEepromCheckbox
-                    text: qsTr("Update EEPROM")
-                    checked: true
-
+                    customFirmwareDialog.open()
                 }
             }
-
-
-
-            FileDialog
+        }
+        Row
+        {
+            anchors.topMargin: UM.Theme.getSize("default_margin").height
+            anchors.top: buttonRow.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            CheckBox
             {
-                id: customFirmwareDialog
-                title: catalog.i18nc("@title:window", "Select custom firmware")
-                nameFilters:  "Firmware image files (*.hex)"
-                selectExisting: true
-                onAccepted: Cura.USBPrinterManager.updateAllFirmware(fileUrl, updateEepromCheckbox.checked)
+                id: updateEepromCheckbox
+                text: qsTr("Update EEPROM")
+                checked: true
+
             }
+        }
+
+
+
+        FileDialog
+        {
+            id: customFirmwareDialog
+            title: catalog.i18nc("@title:window", "Select custom firmware")
+            nameFilters:  "Firmware image files (*.hex)"
+            selectExisting: true
+            onAccepted: Cura.USBPrinterManager.updateAllFirmware(fileUrl, updateEepromCheckbox.checked)
         }
     }
 }

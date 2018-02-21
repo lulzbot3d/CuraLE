@@ -229,10 +229,12 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             Logger.log("w", "There is no firmware for machine %s.", machine_id)
 
         if hex_file:
-            return Resources.getPath(CuraApplication.ResourceTypes.Firmware, hex_file.format(baudrate=baudrate))
-        else:
-            Logger.log("w", "Could not find any firmware for machine %s.", machine_id)
-            return ""
+            try:
+                return Resources.getPath(CuraApplication.ResourceTypes.Firmware, hex_file.format(baudrate=baudrate))
+            except FileNotFoundError:
+                pass
+        Logger.log("w", "Could not find any firmware for machine %s.", machine_id)
+        return ""
 
     ##  Helper to identify serial ports (and scan for them)
     def _addRemovePorts(self, serial_ports):

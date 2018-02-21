@@ -425,7 +425,7 @@
         "save_button_save_to_button": [0.3, 2.7],
         "save_button_specs_icons": [1.4, 1.4],
 
-        "modal_window_minimum": [90.0, 30],
+        "modal_window_minimum": [100, 65],
         "license_window_minimum": [45, 45],
         "wizard_progress": [10.0, 0.0],
 
