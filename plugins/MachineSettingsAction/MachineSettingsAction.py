@@ -42,10 +42,6 @@ class MachineSettingsAction(MachineAction):
 
         self._backend = Application.getInstance().getBackend()
 
-    @pyqtProperty("QSizeF")
-    def preferredSize(self):
-        return Theme.getInstance().getSize("modal_window_minimum")*0.3
-
     def _onContainerAdded(self, container):
         # Add this action as a supported action to all machine definitions
         if isinstance(container, DefinitionContainer) and container.getMetaDataEntry("type") == "machine":
