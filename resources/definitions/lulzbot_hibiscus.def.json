@@ -10,7 +10,7 @@
             "0": "lulzbot_hibiscus_extruder"
         },
         "type": "machine",
-        "platform": "lulzbot_hibiscus.stl",
+        "platform": "lulzbot_mini.stl",
         "platform_offset":
         [
             -100,
