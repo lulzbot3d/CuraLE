@@ -174,7 +174,7 @@
         "print_button_ready": [193, 216, 47, 255],
         "print_button_ready_border": [0, 0, 0, 255],
         "print_button_ready_text": [0, 0, 0, 255],
-        "print_button_ready_hovered": [193, 216, 47, 255],
+        "print_button_ready_hovered": [120, 136, 20, 255],
         "print_button_ready_hovered_border": [0, 0, 0, 255],
         "print_button_ready_pressed": [120, 136, 20, 255],
         "print_button_ready_pressed_border": [120, 136, 20, 255],
