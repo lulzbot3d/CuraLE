@@ -210,6 +210,8 @@ class QualityManager:
     #   \return \type{List[Dict[str, Any]]} A list of the metadata of basic
     #   materials, or an empty list if none could be found.
     def _getBasicMaterialMetadatas(self, material_container: Dict[str, Any]) -> List[Dict[str, Any]]:
+        if type(material_container) != dict:
+            x=1
         if "definition" not in material_container:
             definition_id = "fdmprinter"
         else:
