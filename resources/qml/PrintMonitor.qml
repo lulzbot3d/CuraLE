@@ -114,7 +114,7 @@ ScrollView
 
                         GridLayout
                         {
-                            id: gridLayout
+                            id: extrudersGridLayout
                             columns: 5
                             rows: 2
                             rowSpacing: UM.Theme.getSize("button_spacing").width
@@ -134,6 +134,8 @@ ScrollView
                                 text: Cura.ExtruderManager.getExtruderName(index) != "" ? Cura.ExtruderManager.getExtruderName(index) : catalog.i18nc("@label", "Hotend")
                                 color: UM.Theme.getColor("text")
                                 font: UM.Theme.getFont("default")
+                                anchors.left: parent.left
+                                anchors.top: parent.top
                                 anchors.margins: UM.Theme.getSize("default_margin").width
                             }
 
@@ -153,7 +155,8 @@ ScrollView
                                 }
                                 color: UM.Theme.getColor("text")
                                 font: UM.Theme.getFont("large")
-                                anchors.left: extruderName.right
+                                anchors.right: extruderTargetTemperature.left
+                                anchors.top: parent.top
                                 anchors.margins: UM.Theme.getSize("default_margin").width
 
                                 MouseArea //For tooltip.
@@ -196,8 +199,10 @@ ScrollView
                                 }
                                 font: UM.Theme.getFont("small")
                                 color: UM.Theme.getColor("text_inactive")
-                                anchors.left: extruderTemperature.right
-                                anchors.margins: UM.Theme.getSize("default_margin").width
+                                anchors.right: parent.right
+                                anchors.rightMargin: UM.Theme.getSize("default_margin").width
+                                anchors.bottom: extruderTemperature.bottom
+
 
                                 MouseArea //For tooltip.
                                 {
@@ -332,32 +337,107 @@ ScrollView
                             }
 
                             // ROW 2
-
-                            TextField
+                            Rectangle
                             {
-                                id: temperatureTextField_1
+                                id: preheatExtruderTemperature
                                 Layout.row: 2
                                 Layout.column: 1
-
-                                readOnly: false
-                                text: ""
-
-                                width: parent.width / 2
-                                validator: IntValidator
+                                color: !enabled ? UM.Theme.getColor("setting_control_disabled") : UM.Theme.getColor("setting_validation_ok")
+                                enabled:
                                 {
-                                    bottom: 1
-                                    top: 300
+                                    if (connectedPrinter == null)
+                                    {
+                                        return false; //Can't preheat if not connected.
+                                    }
+                                    if (!connectedPrinter.acceptsCommands)
+                                    {
+                                        return false; //Not allowed to do anything.
+                                    }
+                                    if (connectedPrinter.jobState == "printing" || connectedPrinter.jobState == "pre_print" || connectedPrinter.jobState == "resuming" || connectedPrinter.jobState == "pausing" || connectedPrinter.jobState == "paused" || connectedPrinter.jobState == "error" || connectedPrinter.jobState == "offline")
+                                    {
+                                        return false; //Printer is in a state where it can't react to pre-heating.
+                                    }
+                                    return true;
+                                }
+                                border.width: UM.Theme.getSize("default_lining").width
+                                border.color: !enabled ? UM.Theme.getColor("setting_control_disabled_border") : preheatExtruderTemperatureInputMouseArea.containsMouse ? UM.Theme.getColor("setting_control_border_highlight") : UM.Theme.getColor("setting_control_border")
+                                anchors.left: parent.left
+                                anchors.leftMargin: UM.Theme.getSize("default_margin").width
+                                anchors.bottom: parent.bottom
+                                anchors.bottomMargin: UM.Theme.getSize("default_margin").height
+                                width: UM.Theme.getSize("setting_control").width
+                                height: UM.Theme.getSize("setting_control").height
+
+                                Rectangle //Highlight of input field.
+                                {
+                                    anchors.fill: parent
+                                    anchors.margins: UM.Theme.getSize("default_lining").width
+                                    color: UM.Theme.getColor("setting_control_highlight")
+                                    opacity: preheatExtruderTemperature.hovered ? 1.0 : 0
+                                }
+                                Label //Maximum temperature indication.
+                                {
+                                    text: "°C"
+                                    color: UM.Theme.getColor("setting_unit")
+                                    font: UM.Theme.getFont("default")
+                                    anchors.right: parent.right
+                                    anchors.rightMargin: UM.Theme.getSize("setting_unit_margin").width
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+                                MouseArea //Change cursor on hovering.
+                                {
+                                    id: preheatExtruderTemperatureInputMouseArea
+                                    hoverEnabled: true
+                                    anchors.fill: parent
+                                    cursorShape: Qt.IBeamCursor
+
+                                    onHoveredChanged:
+                                    {
+                                        if (containsMouse)
+                                        {
+                                            base.showTooltip(
+                                                base,
+                                                {x: 0, y: preheatExtruderTemperatureInputMouseArea.mapToItem(base, 0, 0).y},
+                                                catalog.i18nc("@tooltip of temperature input", "The temperature to pre-heat the hot end to.")
+                                            );
+                                        }
+                                        else
+                                        {
+                                            base.hideTooltip();
+                                        }
+                                    }
+                                }
+                                TextInput
+                                {
+                                    id: temperatureTextField_1
+                                    font: UM.Theme.getFont("default")
+                                    color: !enabled ? UM.Theme.getColor("setting_control_disabled_text") : UM.Theme.getColor("setting_control_text")
+                                    selectByMouse: true
+                                    maximumLength: 10
+                                    enabled: parent.enabled
+                                    width: parent.width
+                                    height: parent.height
+                                    anchors.fill: parent
+                                    validator: IntValidator
+                                    {
+                                        bottom: 1
+                                        top: 300
+                                    }
                                 }
                             }
-
                             Button
                             {
                                 Layout.row: 2
-                                Layout.column: 2
+                                Layout.column: 5
 
                                 text: "Pre-heat"
+                                anchors.top: preheatExtruderTemperature.top
                                 width: parent.width / 2
-
+                                style:   UM.Theme.styles.print_monitor_control_button
+                                anchors.right: parent.right
+                                anchors.rightMargin: UM.Theme.getSize("default_margin").width
+                                anchors.bottom: parent.bottom
+                                anchors.bottomMargin: UM.Theme.getSize("default_margin").height
                                 onClicked:
                                 {
                                     if( connectedPrinter != null )
@@ -367,71 +447,19 @@ ScrollView
                                              connectedPrinter.preheatHotend( index )
 
                                             if( index == 0)
-                                                temperatureTextField_1.text = (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
+                                                temperatureTextField_1.text = (connectedPrinter != null && connectedPrinter.hotendIds[index] != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) : ""
                                             else
-                                                temperatureTextField_1.text = (connectedPrinter != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) + "°C" : ""
+                                                temperatureTextField_1.text = (connectedPrinter != null && connectedPrinter.targetHotendTemperatures[index] != null && connectedPrinter.targetHotendTemperatures[index] != 0 ) ? Math.round(connectedPrinter.targetHotendTemperatures[index]) : ""
                                         }
                                         else
                                         {
                                             connectedPrinter.setTargetHotendTemperature(index, parseInt(temperatureTextField_1.text))
 
-                                            if( temperatureTextField_1.text.indexOf("°C") == -1 )
-                                                temperatureTextField_1.text += "°C"
                                         }
                                     }
                                 }
 
-                                style:   ButtonStyle
-                                {
-                                    background: Rectangle
-                                    {
-                                        radius: 4
-                                        border.width: UM.Theme.getSize("default_lining").width
-                                        border.color:
-                                        {
-                                            if(!control.enabled)
-                                                return UM.Theme.getColor("action_button_disabled_border");
-                                            else if(control.pressed)
-                                                return UM.Theme.getColor("action_button_active_border");
-                                            else if(control.hovered)
-                                                return UM.Theme.getColor("action_button_hovered_border");
-                                            else
-                                                return UM.Theme.getColor("action_button_border");
-                                        }
-                                        color:
-                                        {
-                                            if(!control.enabled)
-                                                //return UM.Theme.getColor("button_disabled");
-                                                return UM.Theme.getColor("button_disabled_lighter");
-                                            else if(control.pressed)
-                                                return UM.Theme.getColor("button_active");
-                                            else if(control.hovered)
-                                                return UM.Theme.getColor("button_hover");
-                                            else
-                                                return UM.Theme.getColor("button");
-                                        }
-                                        //Behavior on color { ColorAnimation { duration: 50; } }
 
-                                        implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
-                                        implicitHeight: actualLabel.contentHeight + (UM.Theme.getSize("default_margin").height/2)
-
-                                        Label
-                                        {
-                                            id: actualLabel
-                                            anchors.centerIn: parent
-                                            color:
-                                            {
-                                                if(!control.enabled)
-                                                    return UM.Theme.getColor("button_disabled_text");
-                                                else
-                                                    return UM.Theme.getColor("button_text");
-                                            }
-                                            font: UM.Theme.getFont("small")
-                                            text: control.text
-                                        }
-                                    }
-                                    label: Item { }
-                                }
                             }
 
                         } // GridLayout
@@ -447,353 +475,307 @@ ScrollView
 	        width: parent.width
 	        height: UM.Theme.getSize("sidebar_lining_thin").width
 	    }
+        Rectangle
+        {
+            id: bedRectangle
+            width: parent.width
+            color: UM.Theme.getColor("sidebar")
+            height: machineHeatedBed.properties.value == "True" ? UM.Theme.getSize("sidebar_extruder_box").height : 0
+            visible: machineHeatedBed.properties.value == "True"
 
-	    Rectangle
-	    {
-	        color: UM.Theme.getColor("sidebar")
-	        width: parent.width
-	        height: machineHeatedBed.properties.value == "True" ? UM.Theme.getSize("sidebar_extruder_box").height : 0
-	        visible: machineHeatedBed.properties.value == "True"
+            GridLayout
+            {
+                id: bedTemperatureGridLayout
+                columns: 5
+                rows: 2
+                rowSpacing: UM.Theme.getSize("button_spacing").width
+                columnSpacing: UM.Theme.getSize("button_spacing").width
+                anchors.fill: parent
+                anchors.centerIn: parent
+                anchors.leftMargin: UM.Theme.getSize("button_spacing").width
+                anchors.rightMargin: UM.Theme.getSize("button_spacing").width
 
-	        Label //Build plate label.
-	        {
-	            text: catalog.i18nc("@label", "Build plate")
-	            font: UM.Theme.getFont("default")
-	            color: UM.Theme.getColor("text")
-	            anchors.left: parent.left
-	            anchors.top: parent.top
-	            anchors.margins: UM.Theme.getSize("default_margin").width
-	        }
-            Label //Bed target temperature.
-	        {
-	            id: bedTargetTemperature
-                text: (connectedPrinter != null && connectedPrinter.targetBedTemperature != 0) ? connectedPrinter.targetBedTemperature + "°C" : ""
-	            font: UM.Theme.getFont("small")
-	            color: UM.Theme.getColor("text_inactive")
-	            anchors.right: parent.right
-	            anchors.rightMargin: UM.Theme.getSize("default_margin").width
-	            anchors.bottom: bedCurrentTemperature.bottom
 
-	            MouseArea //For tooltip.
-	            {
-	                id: bedTargetTemperatureTooltipArea
-	                hoverEnabled: true
-	                anchors.fill: parent
-	                onHoveredChanged:
-	                {
-	                    if (containsMouse)
-	                    {
-	                        base.showTooltip(
-	                            base,
-	                            {x: 0, y: bedTargetTemperature.mapToItem(base, 0, -parent.height / 4).y},
-	                            catalog.i18nc("@tooltip", "The target temperature of the heated bed. The bed will heat up or cool down towards this temperature. If this is 0, the bed heating is turned off.")
-	                        );
-	                    }
-	                    else
-	                    {
-	                        base.hideTooltip();
-	                    }
-	                }
-	            }
-	        }
-            Label //Current bed temperature.
-	        {
-	            id: bedCurrentTemperature
-	            text: connectedPrinter != null ? Math.round(connectedPrinter.bedTemperature) + "°C" : ""
-	            font: UM.Theme.getFont("large")
-	            color: UM.Theme.getColor("text")
-	            anchors.right: bedTargetTemperature.left
-	            anchors.top: parent.top
-	            anchors.margins: UM.Theme.getSize("default_margin").width
-
-	            MouseArea //For tooltip.
-	            {
-	                id: bedTemperatureTooltipArea
-	                hoverEnabled: true
-	                anchors.fill: parent
-	                onHoveredChanged:
-	                {
-	                    if (containsMouse)
-	                    {
-	                        base.showTooltip(
-	                            base,
-	                            {x: 0, y: bedCurrentTemperature.mapToItem(base, 0, -parent.height / 4).y},
-	                            catalog.i18nc("@tooltip", "The current temperature of the heated bed.")
-	                        );
-	                    }
-	                    else
-	                    {
-	                        base.hideTooltip();
-	                    }
-	                }
-	            }
-	        }
-	        Rectangle //Input field for pre-heat temperature.
-	        {
-	            id: preheatTemperatureControl
-	            color: !enabled ? UM.Theme.getColor("setting_control_disabled") : UM.Theme.getColor("setting_validation_ok")
-	            enabled:
-	            {
-	                if (connectedPrinter == null)
-	                {
-	                    return false; //Can't preheat if not connected.
-	                }
-	                if (!connectedPrinter.acceptsCommands)
-	                {
-	                    return false; //Not allowed to do anything.
-	                }
-	                if (connectedPrinter.jobState == "printing" || connectedPrinter.jobState == "pre_print" || connectedPrinter.jobState == "resuming" || connectedPrinter.jobState == "pausing" || connectedPrinter.jobState == "paused" || connectedPrinter.jobState == "error" || connectedPrinter.jobState == "offline")
-	                {
-	                    return false; //Printer is in a state where it can't react to pre-heating.
-	                }
-	                return true;
-	            }
-	            border.width: UM.Theme.getSize("default_lining").width
-	            border.color: !enabled ? UM.Theme.getColor("setting_control_disabled_border") : preheatTemperatureInputMouseArea.containsMouse ? UM.Theme.getColor("setting_control_border_highlight") : UM.Theme.getColor("setting_control_border")
-	            anchors.left: parent.left
-	            anchors.leftMargin: UM.Theme.getSize("default_margin").width
-	            anchors.bottom: parent.bottom
-	            anchors.bottomMargin: UM.Theme.getSize("default_margin").height
-	            width: UM.Theme.getSize("setting_control").width
-	            height: UM.Theme.getSize("setting_control").height
-
-	            Rectangle //Highlight of input field.
-	            {
-	                anchors.fill: parent
-	                anchors.margins: UM.Theme.getSize("default_lining").width
-	                color: UM.Theme.getColor("setting_control_highlight")
-	                opacity: preheatTemperatureControl.hovered ? 1.0 : 0
-	            }
-	            Label //Maximum temperature indication.
-	            {
-                    text: (bedTemperature.properties.maximum_value != "None" ? bedTemperature.properties.maximum_value : "") + "°C"
-	                color: UM.Theme.getColor("setting_unit")
-	                font: UM.Theme.getFont("default")
-	                anchors.right: parent.right
-	                anchors.rightMargin: UM.Theme.getSize("setting_unit_margin").width
-	                anchors.verticalCenter: parent.verticalCenter
-	            }
-	            MouseArea //Change cursor on hovering.
-	            {
-	                id: preheatTemperatureInputMouseArea
-	                hoverEnabled: true
-	                anchors.fill: parent
-	                cursorShape: Qt.IBeamCursor
-
-	                onHoveredChanged:
-	                {
-	                    if (containsMouse)
-	                    {
-	                        base.showTooltip(
-	                            base,
-	                            {x: 0, y: preheatTemperatureInputMouseArea.mapToItem(base, 0, 0).y},
-	                            catalog.i18nc("@tooltip of temperature input", "The temperature to pre-heat the bed to.")
-	                        );
-	                    }
-	                    else
-	                    {
-	                        base.hideTooltip();
-	                    }
-	                }
-	            }
-	            TextInput
-	            {
-	                id: preheatTemperatureInput
-	                font: UM.Theme.getFont("default")
-	                color: !enabled ? UM.Theme.getColor("setting_control_disabled_text") : UM.Theme.getColor("setting_control_text")
-	                selectByMouse: true
-	                maximumLength: 10
-	                enabled: parent.enabled
-	                validator: RegExpValidator { regExp: /^-?[0-9]{0,9}[.,]?[0-9]{0,10}$/ } //Floating point regex.
-	                anchors.left: parent.left
-	                anchors.leftMargin: UM.Theme.getSize("setting_unit_margin").width
-	                anchors.right: parent.right
-	                anchors.verticalCenter: parent.verticalCenter
-
-	                Component.onCompleted:
-	                {
-	                    if ((bedTemperature.resolve != "None" && bedTemperature.resolve) && (bedTemperature.stackLevels[0] != 0) && (bedTemperature.stackLevels[0] != 1))
-	                    {
-	                        // We have a resolve function. Indicates that the setting is not settable per extruder and that
-	                        // we have to choose between the resolved value (default) and the global value
-	                        // (if user has explicitly set this).
-                            //text = bedTemperature.resolve;
-                            text = "";
-	                    }
-	                    else
-                        {
-                            //text = bedTemperature.properties.value;
-                            text = "";
-	                    }
-	                }
-	            }
-	        }
-
-	        UM.RecolorImage
-	        {
-	            id: preheatCountdownIcon
-	            width: UM.Theme.getSize("save_button_specs_icons").width
-	            height: UM.Theme.getSize("save_button_specs_icons").height
-	            sourceSize.width: width
-	            sourceSize.height: height
-	            color: UM.Theme.getColor("text")
-	            visible: preheatCountdown.visible
-	            source: UM.Theme.getIcon("print_time")
-	            anchors.right: preheatCountdown.left
-	            anchors.rightMargin: UM.Theme.getSize("default_margin").width / 2
-	            anchors.verticalCenter: preheatCountdown.verticalCenter
-	        }
-
-	        Timer
-	        {
-	            id: preheatUpdateTimer
-	            interval: 100 //Update every 100ms. You want to update every 1s, but then you have one timer for the updating running out of sync with the actual date timer and you might skip seconds.
-	            running: connectedPrinter != null && connectedPrinter.preheatBedRemainingTime != ""
-	            repeat: true
-	            onTriggered: update()
-	            property var endTime: new Date() //Set initial endTime to be the current date, so that the endTime has initially already passed and the timer text becomes invisible if you were to update.
-	            function update()
-	            {
-	                preheatCountdown.text = ""
-	                if (connectedPrinter != null)
-	                {
-	                    preheatCountdown.text = connectedPrinter.preheatBedRemainingTime;
-	                }
-	                if (preheatCountdown.text == "") //Either time elapsed or not connected.
-	                {
-	                    stop();
-	                }
-	            }
-	        }
-	        Label
-	        {
-	            id: preheatCountdown
-	            text: connectedPrinter != null ? connectedPrinter.preheatBedRemainingTime : ""
-	            visible: text != "" //Has no direct effect, but just so that we can link visibility of clock icon to visibility of the countdown text.
-	            font: UM.Theme.getFont("default")
-	            color: UM.Theme.getColor("text")
-	            anchors.right: preheatButton.left
-	            anchors.rightMargin: UM.Theme.getSize("default_margin").width
-	            anchors.verticalCenter: preheatButton.verticalCenter
-	        }
-
-	        Button //The pre-heat button.
-	        {
-	            id: preheatButton
-	            height: UM.Theme.getSize("setting_control").height
-	            enabled:
-	            {
-	                if (!preheatTemperatureControl.enabled)
-	                {
-	                    return false; //Not connected, not authenticated or printer is busy.
-	                }
-	                if (preheatUpdateTimer.running)
-	                {
-	                    return true; //Can always cancel if the timer is running.
-	                }
-	                if (bedTemperature.properties.minimum_value != "None" && parseInt(preheatTemperatureInput.text) < parseInt(bedTemperature.properties.minimum_value))
-	                {
-	                    return false; //Target temperature too low.
-	                }
-	                if (bedTemperature.properties.maximum_value != "None" && parseInt(preheatTemperatureInput.text) > parseInt(bedTemperature.properties.maximum_value))
-	                {
-	                    return false; //Target temperature too high.
-	                }
-	                if (parseInt(preheatTemperatureInput.text) == 0)
-	                {
-	                    return false; //Setting the temperature to 0 is not allowed (since that cancels the pre-heating).
-	                }
-	                return true; //Preconditions are met.
-	            }
-	            anchors.right: parent.right
-	            anchors.bottom: parent.bottom
-	            anchors.margins: UM.Theme.getSize("default_margin").width
-
-                style:   ButtonStyle
+                Label //Build plate label.
                 {
-                    background: Rectangle
+                    Layout.row: 1
+                    Layout.column: 1
+                    text: catalog.i18nc("@label", "Build plate")
+                    font: UM.Theme.getFont("default")
+                    color: UM.Theme.getColor("text")
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    anchors.margins: UM.Theme.getSize("default_margin").width
+                }
+                Label //Bed target temperature.
+                {
+
+                    Layout.row: 1
+                    Layout.column: 2
+                    id: bedTargetTemperature
+                    text: (connectedPrinter != null && connectedPrinter.targetBedTemperature != 0) ? connectedPrinter.targetBedTemperature + "°C" : ""
+                    font: UM.Theme.getFont("small")
+                    color: UM.Theme.getColor("text_inactive")
+                    anchors.right: parent.right
+                    anchors.rightMargin: UM.Theme.getSize("default_margin").width
+                    anchors.bottom: bedCurrentTemperature.bottom
+
+                    MouseArea //For tooltip.
                     {
-                        radius: 4
-                        border.width: UM.Theme.getSize("default_lining").width
-                        border.color:
+                        id: bedTargetTemperatureTooltipArea
+                        hoverEnabled: true
+                        anchors.fill: parent
+                        onHoveredChanged:
                         {
-                            if(!control.enabled)
-                                return UM.Theme.getColor("action_button_disabled_border");
-                            else if(control.pressed)
-                                return UM.Theme.getColor("action_button_active_border");
-                            else if(control.hovered)
-                                return UM.Theme.getColor("action_button_hovered_border");
-                            else
-                                return UM.Theme.getColor("action_button_border");
-                        }
-                        color:
-                        {
-                            if(!control.enabled)
-                                //return UM.Theme.getColor("button_disabled");
-                                return UM.Theme.getColor("button_disabled_lighter");
-                            else if(control.pressed)
-                                return UM.Theme.getColor("button_active");
-                            else if(control.hovered)
-                                return UM.Theme.getColor("button_hover");
-                            else
-                                return UM.Theme.getColor("button");
-                        }
-                        //Behavior on color { ColorAnimation { duration: 50; } }
-
-                        implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
-                        implicitHeight: actualLabel.contentHeight + (UM.Theme.getSize("default_margin").height/2)
-
-                        Label
-                        {
-                            id: actualLabel
-                            anchors.centerIn: parent
-                            color:
+                            if (containsMouse)
                             {
-                                if(!control.enabled)
-                                    return UM.Theme.getColor("button_disabled_text");
-                                else
-                                    return UM.Theme.getColor("button_text");
+                                base.showTooltip(
+                                    base,
+                                    {x: 0, y: bedTargetTemperature.mapToItem(base, 0, -parent.height / 4).y},
+                                    catalog.i18nc("@tooltip", "The target temperature of the heated bed. The bed will heat up or cool down towards this temperature. If this is 0, the bed heating is turned off.")
+                                );
                             }
-                            font: UM.Theme.getFont("small")
-                            text: preheatUpdateTimer.running ? catalog.i18nc("@button Cancel pre-heating", "Cancel") : catalog.i18nc("@button", "Pre-heat")
-
+                            else
+                            {
+                                base.hideTooltip();
+                            }
                         }
                     }
-                    label: Item { }
+                }
+                Label //Current bed temperature.
+                {
+
+                    Layout.row: 1
+                    Layout.column: 3
+                    id: bedCurrentTemperature
+                    text: connectedPrinter != null && connectedPrinter.bedTemperature != 0 ? Math.round(connectedPrinter.bedTemperature) + "°C" : ""
+                    font: UM.Theme.getFont("large")
+                    color: UM.Theme.getColor("text")
+                    anchors.right: bedTargetTemperature.left
+                    anchors.top: parent.top
+                    anchors.margins: UM.Theme.getSize("default_margin").width
+
+                    MouseArea //For tooltip.
+                    {
+                        id: bedTemperatureTooltipArea
+                        hoverEnabled: true
+                        anchors.fill: parent
+                        onHoveredChanged:
+                        {
+                            if (containsMouse)
+                            {
+                                base.showTooltip(
+                                    base,
+                                    {x: 0, y: bedCurrentTemperature.mapToItem(base, 0, -parent.height / 4).y},
+                                    catalog.i18nc("@tooltip", "The current temperature of the heated bed.")
+                                );
+                            }
+                            else
+                            {
+                                base.hideTooltip();
+                            }
+                        }
+                    }
+                }
+                Rectangle //Input field for pre-heat temperature.
+                {
+
+                    Layout.row: 2
+                    Layout.column: 1
+                    id: preheatTemperatureControl
+                    color: !enabled ? UM.Theme.getColor("setting_control_disabled") : UM.Theme.getColor("setting_validation_ok")
+                    enabled:
+                    {
+                        if (connectedPrinter == null)
+                        {
+                            return false; //Can't preheat if not connected.
+                        }
+                        if (!connectedPrinter.acceptsCommands)
+                        {
+                            return false; //Not allowed to do anything.
+                        }
+                        if (connectedPrinter.jobState == "printing" || connectedPrinter.jobState == "pre_print" || connectedPrinter.jobState == "resuming" || connectedPrinter.jobState == "pausing" || connectedPrinter.jobState == "paused" || connectedPrinter.jobState == "error" || connectedPrinter.jobState == "offline")
+                        {
+                            return false; //Printer is in a state where it can't react to pre-heating.
+                        }
+                        return true;
+                    }
+                    border.width: UM.Theme.getSize("default_lining").width
+                    border.color: !enabled ? UM.Theme.getColor("setting_control_disabled_border") : preheatTemperatureInputMouseArea.containsMouse ? UM.Theme.getColor("setting_control_border_highlight") : UM.Theme.getColor("setting_control_border")
+                    anchors.left: parent.left
+                    anchors.leftMargin: UM.Theme.getSize("default_margin").width
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: UM.Theme.getSize("default_margin").height
+                    width: UM.Theme.getSize("setting_control").width
+                    height: UM.Theme.getSize("setting_control").height
+
+                    Rectangle //Highlight of input field.
+                    {
+                        anchors.fill: parent
+                        anchors.margins: UM.Theme.getSize("default_lining").width
+                        color: UM.Theme.getColor("setting_control_highlight")
+                        opacity: preheatTemperatureControl.hovered ? 1.0 : 0
+                    }
+                    Label //Maximum temperature indication.
+                    {
+                        text: (bedTemperature.properties.maximum_value != "None" ? bedTemperature.properties.maximum_value : "") + "°C"
+                        color: UM.Theme.getColor("setting_unit")
+                        font: UM.Theme.getFont("default")
+                        anchors.right: parent.right
+                        anchors.rightMargin: UM.Theme.getSize("setting_unit_margin").width
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                    MouseArea //Change cursor on hovering.
+                    {
+                        id: preheatTemperatureInputMouseArea
+                        hoverEnabled: true
+                        anchors.fill: parent
+                        cursorShape: Qt.IBeamCursor
+
+                        onHoveredChanged:
+                        {
+                            if (containsMouse)
+                            {
+                                base.showTooltip(
+                                    base,
+                                    {x: 0, y: preheatTemperatureInputMouseArea.mapToItem(base, 0, 0).y},
+                                    catalog.i18nc("@tooltip of temperature input", "The temperature to pre-heat the bed to.")
+                                );
+                            }
+                            else
+                            {
+                                base.hideTooltip();
+                            }
+                        }
+                    }
+                    TextInput
+                    {
+                        id: preheatTemperatureInput
+                        font: UM.Theme.getFont("default")
+                        color: !enabled ? UM.Theme.getColor("setting_control_disabled_text") : UM.Theme.getColor("setting_control_text")
+                        selectByMouse: true
+                        maximumLength: 10
+                        enabled: parent.enabled
+                        validator: RegExpValidator { regExp: /^-?[0-9]{0,9}[.,]?[0-9]{0,10}$/ } //Floating point regex.
+                        width: parent.width
+                        height: parent.height
+                        anchors.fill: parent
+
+                        Component.onCompleted:
+                        {
+                            if ((bedTemperature.resolve != "None" && bedTemperature.resolve) && (bedTemperature.stackLevels[0] != 0) && (bedTemperature.stackLevels[0] != 1))
+                            {
+                                // We have a resolve function. Indicates that the setting is not settable per extruder and that
+                                // we have to choose between the resolved value (default) and the global value
+                                // (if user has explicitly set this).
+                                //text = bedTemperature.resolve;
+                                text = "";
+                            }
+                            else
+                            {
+                                //text = bedTemperature.properties.value;
+                                text = "";
+                            }
+                        }
+                    }
                 }
 
+                UM.RecolorImage
+                {
+                    id: preheatCountdownIcon
+                    width: UM.Theme.getSize("save_button_specs_icons").width
+                    height: UM.Theme.getSize("save_button_specs_icons").height
+                    sourceSize.width: width
+                    sourceSize.height: height
+                    color: UM.Theme.getColor("text")
+                    visible: preheatCountdown.visible
+                    source: UM.Theme.getIcon("print_time")
+                    anchors.right: preheatCountdown.left
+                    anchors.rightMargin: UM.Theme.getSize("default_margin").width / 2
+                    anchors.verticalCenter: preheatCountdown.verticalCenter
+                }
 
-	            onClicked:
-	            {
-	                if (!preheatUpdateTimer.running)
-	                {
-	                    connectedPrinter.preheatBed(preheatTemperatureInput.text, connectedPrinter.preheatBedTimeout);
-	                    preheatUpdateTimer.start();
-	                    preheatUpdateTimer.update(); //Update once before the first timer is triggered.
-	                }
-	                else
-	                {
-	                    connectedPrinter.cancelPreheatBed();
-	                    preheatUpdateTimer.update();
-	                }
-	            }
+                Timer
+                {
+                    id: preheatUpdateTimer
+                    interval: 100 //Update every 100ms. You want to update every 1s, but then you have one timer for the updating running out of sync with the actual date timer and you might skip seconds.
+                    running: connectedPrinter != null && connectedPrinter.preheatBedRemainingTime != ""
+                    repeat: true
+                    onTriggered: update()
+                    property var endTime: new Date() //Set initial endTime to be the current date, so that the endTime has initially already passed and the timer text becomes invisible if you were to update.
+                    function update()
+                    {
+                        preheatCountdown.text = ""
+                        if (connectedPrinter != null)
+                        {
+                            preheatCountdown.text = connectedPrinter.preheatBedRemainingTime;
+                        }
+                        if (preheatCountdown.text == "") //Either time elapsed or not connected.
+                        {
+                            stop();
+                        }
+                    }
+                }
+                Label
+                {
+                    id: preheatCountdown
+                    text: connectedPrinter != null ? connectedPrinter.preheatBedRemainingTime : ""
+                    visible: text != "" //Has no direct effect, but just so that we can link visibility of clock icon to visibility of the countdown text.
+                    font: UM.Theme.getFont("default")
+                    color: UM.Theme.getColor("text")
+                    anchors.right: preheatButton.left
+                    anchors.rightMargin: UM.Theme.getSize("default_margin").width
+                    anchors.verticalCenter: preheatButton.verticalCenter
+                }
 
-	            onHoveredChanged:
-	            {
-	                if (hovered)
-	                {
-	                    base.showTooltip(
-	                        base,
-	                        {x: 0, y: preheatButton.mapToItem(base, 0, 0).y},
-	                        catalog.i18nc("@tooltip of pre-heat", "Heat the bed in advance before printing. You can continue adjusting your print while it is heating, and you won't have to wait for the bed to heat up when you're ready to print.")
-	                    );
-	                }
-	                else
-	                {
-	                    base.hideTooltip();
-	                }
-	            }
-	        }
+                Button //The pre-heat button.
+                {
+
+                    Layout.row: 2
+                    Layout.column: 5
+                    id: preheatButton
+                    text: "Pre-heat"
+                    width: parent.width/2
+                    style:  UM.Theme.styles.print_monitor_control_button
+                    anchors.top: preheatTemperatureControl.top
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: UM.Theme.getSize("default_margin").height
+                    anchors.right: parent.right
+                    anchors.rightMargin: UM.Theme.getSize("default_margin").width
+
+                    onClicked:
+                    {
+                        if (!preheatUpdateTimer.running)
+                        {
+                            connectedPrinter.preheatBed(preheatTemperatureInput.text, connectedPrinter.preheatBedTimeout);
+                            preheatUpdateTimer.start();
+                            preheatUpdateTimer.update(); //Update once before the first timer is triggered.
+                        }
+                        else
+                        {
+                            connectedPrinter.cancelPreheatBed();
+                            preheatUpdateTimer.update();
+                        }
+                    }
+
+                    onHoveredChanged:
+                    {
+                        if (hovered)
+                        {
+                            base.showTooltip(
+                                base,
+                                {x: 0, y: preheatButton.mapToItem(base, 0, 0).y},
+                                catalog.i18nc("@tooltip of pre-heat", "Heat the bed in advance before printing. You can continue adjusting your print while it is heating, and you won't have to wait for the bed to heat up when you're ready to print.")
+                            );
+                        }
+                        else
+                        {
+                            base.hideTooltip();
+                        }
+                    }
+                }
+
+            }
 	    }
 
 	 	Rectangle
@@ -1167,57 +1149,7 @@ ScrollView
                             connectedPrinter.errorFromPrinter.connect(printMonitor.receive)
 	                    }
 
-                        style:   ButtonStyle
-                        {
-                            background: Rectangle
-                            {
-                                radius: 4
-                                border.width: UM.Theme.getSize("default_lining").width
-                                border.color:
-                                {
-                                    if(!control.enabled)
-                                        return UM.Theme.getColor("action_button_disabled_border");
-                                    else if(control.pressed)
-                                        return UM.Theme.getColor("action_button_active_border");
-                                    else if(control.hovered)
-                                        return UM.Theme.getColor("action_button_hovered_border");
-                                    else
-                                        return UM.Theme.getColor("action_button_border");
-                                }
-                                color:
-                                {
-                                    if(!control.enabled)
-                                        //return UM.Theme.getColor("button_disabled");
-                                        return UM.Theme.getColor("button_disabled_lighter");
-                                    else if(control.pressed)
-                                        return UM.Theme.getColor("button_active");
-                                    else if(control.hovered)
-                                        return UM.Theme.getColor("button_hover");
-                                    else
-                                        return UM.Theme.getColor("button");
-                                }
-                                //Behavior on color { ColorAnimation { duration: 50; } }
-
-                                implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
-                                implicitHeight: actualLabel.contentHeight + (UM.Theme.getSize("default_margin").height/2)
-
-                                Label
-                                {
-                                    id: actualLabel
-                                    anchors.centerIn: parent
-                                    color:
-                                    {
-                                        if(!control.enabled)
-                                            return UM.Theme.getColor("button_disabled_text");
-                                        else
-                                            return UM.Theme.getColor("button_text");
-                                    }
-                                    font: UM.Theme.getFont("small")
-                                    text: control.text
-                                }
-                            }
-                            label: Item { }
-                        }
+                        style: UM.Theme.styles.print_monitor_control_button
 	                }
 
 	                Button
@@ -1227,57 +1159,7 @@ ScrollView
 	                    {
 	                        connectedPrinter.close()
 	                    }
-                        style:   ButtonStyle
-                        {
-                            background: Rectangle
-                            {
-                                radius: 4
-                                border.width: UM.Theme.getSize("default_lining").width
-                                border.color:
-                                {
-                                    if(!control.enabled)
-                                        return UM.Theme.getColor("action_button_disabled_border");
-                                    else if(control.pressed)
-                                        return UM.Theme.getColor("action_button_active_border");
-                                    else if(control.hovered)
-                                        return UM.Theme.getColor("action_button_hovered_border");
-                                    else
-                                        return UM.Theme.getColor("action_button_border");
-                                }
-                                color:
-                                {
-                                    if(!control.enabled)
-                                        //return UM.Theme.getColor("button_disabled");
-                                        return UM.Theme.getColor("button_disabled_lighter");
-                                    else if(control.pressed)
-                                        return UM.Theme.getColor("button_active");
-                                    else if(control.hovered)
-                                        return UM.Theme.getColor("button_hover");
-                                    else
-                                        return UM.Theme.getColor("button");
-                                }
-                                //Behavior on color { ColorAnimation { duration: 50; } }
-
-                                implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
-                                implicitHeight: actualLabel.contentHeight + (UM.Theme.getSize("default_margin").height/2)
-
-                                Label
-                                {
-                                    id: actualLabel
-                                    anchors.centerIn: parent
-                                    color:
-                                    {
-                                        if(!control.enabled)
-                                            return UM.Theme.getColor("button_disabled_text");
-                                        else
-                                            return UM.Theme.getColor("button_text");
-                                    }
-                                    font: UM.Theme.getFont("small")
-                                    text: control.text
-                                }
-                            }
-                            label: Item { }
-                        }
+                        style: UM.Theme.styles.print_monitor_control_button
 	                 }
 
 	                Button
@@ -1289,57 +1171,7 @@ ScrollView
 	                        connectedPrinter.messageFromPrinter.connect(printer_control.receive)
 	                        printer_control.visible = true;
 	                    }
-                        style:   ButtonStyle
-                        {
-                            background: Rectangle
-                            {
-                                radius: 4
-                                border.width: UM.Theme.getSize("default_lining").width
-                                border.color:
-                                {
-                                    if(!control.enabled)
-                                        return UM.Theme.getColor("action_button_disabled_border");
-                                    else if(control.pressed)
-                                        return UM.Theme.getColor("action_button_active_border");
-                                    else if(control.hovered)
-                                        return UM.Theme.getColor("action_button_hovered_border");
-                                    else
-                                        return UM.Theme.getColor("action_button_border");
-                                }
-                                color:
-                                {
-                                    if(!control.enabled)
-                                        //return UM.Theme.getColor("button_disabled");
-                                        return UM.Theme.getColor("button_disabled_lighter");
-                                    else if(control.pressed)
-                                        return UM.Theme.getColor("button_active");
-                                    else if(control.hovered)
-                                        return UM.Theme.getColor("button_hover");
-                                    else
-                                        return UM.Theme.getColor("button");
-                                }
-                                //Behavior on color { ColorAnimation { duration: 50; } }
-
-                                implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
-                                implicitHeight: actualLabel.contentHeight + (UM.Theme.getSize("default_margin").height/2)
-
-                                Label
-                                {
-                                    id: actualLabel
-                                    anchors.centerIn: parent
-                                    color:
-                                    {
-                                        if(!control.enabled)
-                                            return UM.Theme.getColor("button_disabled_text");
-                                        else
-                                            return UM.Theme.getColor("button_text");
-                                    }
-                                    font: UM.Theme.getFont("small")
-                                    text: control.text
-                                }
-                            }
-                            label: Item { }
-                        }
+                        style: UM.Theme.styles.print_monitor_control_button
 	                }
 	            }
 
@@ -1795,57 +1627,7 @@ ScrollView
 	                            connectedPrinter.extrude(parseFloat(extrusionAmountTextField.text))
 	                        }
 
-                            style:   ButtonStyle
-                            {
-                                background: Rectangle
-                                {
-                                    radius: 4
-                                    border.width: UM.Theme.getSize("default_lining").width
-                                    border.color:
-                                    {
-                                        if(!control.enabled)
-                                            return UM.Theme.getColor("action_button_disabled_border");
-                                        else if(control.pressed)
-                                            return UM.Theme.getColor("action_button_active_border");
-                                        else if(control.hovered)
-                                            return UM.Theme.getColor("action_button_hovered_border");
-                                        else
-                                            return UM.Theme.getColor("action_button_border");
-                                    }
-                                    color:
-                                    {
-                                        if(!control.enabled)
-                                            //return UM.Theme.getColor("button_disabled");
-                                            return UM.Theme.getColor("button_disabled_lighter");
-                                        else if(control.pressed)
-                                            return UM.Theme.getColor("button_active");
-                                        else if(control.hovered)
-                                            return UM.Theme.getColor("button_hover");
-                                        else
-                                            return UM.Theme.getColor("button");
-                                    }
-                                    //Behavior on color { ColorAnimation { duration: 50; } }
-
-                                    implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
-                                    implicitHeight: actualLabel.contentHeight + (UM.Theme.getSize("default_margin").height/2)
-
-                                    Label
-                                    {
-                                        id: actualLabel
-                                        anchors.centerIn: parent
-                                        color:
-                                        {
-                                            if(!control.enabled)
-                                                return UM.Theme.getColor("button_disabled_text");
-                                            else
-                                                return UM.Theme.getColor("button_text");
-                                        }
-                                        font: UM.Theme.getFont("small")
-                                        text: control.text
-                                    }
-                                }
-                                label: Item { }
-                            }
+                            style: UM.Theme.styles.print_monitor_control_button
 	                    }
 
 	                    Button
@@ -1858,57 +1640,7 @@ ScrollView
 	                            connectedPrinter.extrude(-parseFloat(extrusionAmountTextField.text))
 	                        }
 
-                            style:   ButtonStyle
-                            {
-                                background: Rectangle
-                                {
-                                    radius: 4
-                                    border.width: UM.Theme.getSize("default_lining").width
-                                    border.color:
-                                    {
-                                        if(!control.enabled)
-                                            return UM.Theme.getColor("action_button_disabled_border");
-                                        else if(control.pressed)
-                                            return UM.Theme.getColor("action_button_active_border");
-                                        else if(control.hovered)
-                                            return UM.Theme.getColor("action_button_hovered_border");
-                                        else
-                                            return UM.Theme.getColor("action_button_border");
-                                    }
-                                    color:
-                                    {
-                                        if(!control.enabled)
-                                            //return UM.Theme.getColor("button_disabled");
-                                            return UM.Theme.getColor("button_disabled_lighter");
-                                        else if(control.pressed)
-                                            return UM.Theme.getColor("button_active");
-                                        else if(control.hovered)
-                                            return UM.Theme.getColor("button_hover");
-                                        else
-                                            return UM.Theme.getColor("button");
-                                    }
-                                    //Behavior on color { ColorAnimation { duration: 50; } }
-
-                                    implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
-                                    implicitHeight: actualLabel.contentHeight + (UM.Theme.getSize("default_margin").height/2)
-
-                                    Label
-                                    {
-                                        id: actualLabel
-                                        anchors.centerIn: parent
-                                        color:
-                                        {
-                                            if(!control.enabled)
-                                                return UM.Theme.getColor("button_disabled_text");
-                                            else
-                                                return UM.Theme.getColor("button_text");
-                                        }
-                                        font: UM.Theme.getFont("small")
-                                        text: control.text
-                                    }
-                                }
-                                label: Item { }
-                            }
+                            style: UM.Theme.styles.print_monitor_control_button
 	                    }
 	                }
 
@@ -1954,57 +1686,7 @@ ScrollView
                                 connectedPrinter.setTargetHotendTemperature(extruderSelector.currentIndex, parseInt(temperatureTextField.text))
 	                        }
 
-                            style:   ButtonStyle
-                            {
-                                background: Rectangle
-                                {
-                                    radius: 4
-                                    border.width: UM.Theme.getSize("default_lining").width
-                                    border.color:
-                                    {
-                                        if(!control.enabled)
-                                            return UM.Theme.getColor("action_button_disabled_border");
-                                        else if(control.pressed)
-                                            return UM.Theme.getColor("action_button_active_border");
-                                        else if(control.hovered)
-                                            return UM.Theme.getColor("action_button_hovered_border");
-                                        else
-                                            return UM.Theme.getColor("action_button_border");
-                                    }
-                                    color:
-                                    {
-                                        if(!control.enabled)
-                                            //return UM.Theme.getColor("button_disabled");
-                                            return UM.Theme.getColor("button_disabled_lighter");
-                                        else if(control.pressed)
-                                            return UM.Theme.getColor("button_active");
-                                        else if(control.hovered)
-                                            return UM.Theme.getColor("button_hover");
-                                        else
-                                            return UM.Theme.getColor("button");
-                                    }
-                                    //Behavior on color { ColorAnimation { duration: 50; } }
-
-                                    implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
-                                    implicitHeight: actualLabel.contentHeight + (UM.Theme.getSize("default_margin").height/2)
-
-                                    Label
-                                    {
-                                        id: actualLabel
-                                        anchors.centerIn: parent
-                                        color:
-                                        {
-                                            if(!control.enabled)
-                                                return UM.Theme.getColor("button_disabled_text");
-                                            else
-                                                return UM.Theme.getColor("button_text");
-                                        }
-                                        font: UM.Theme.getFont("small")
-                                        text: control.text
-                                    }
-                                }
-                                label: Item { }
-                            }
+                            style: UM.Theme.styles.print_monitor_control_button
 	                    }
 
 	                    Button
@@ -2017,57 +1699,7 @@ ScrollView
 	                            connectedPrinter.setTargetBedTemperature(parseInt(temperatureTextField.text))
 	                        }
 
-                            style:   ButtonStyle
-                            {
-                                background: Rectangle
-                                {
-                                    radius: 4
-                                    border.width: UM.Theme.getSize("default_lining").width
-                                    border.color:
-                                    {
-                                        if(!control.enabled)
-                                            return UM.Theme.getColor("action_button_disabled_border");
-                                        else if(control.pressed)
-                                            return UM.Theme.getColor("action_button_active_border");
-                                        else if(control.hovered)
-                                            return UM.Theme.getColor("action_button_hovered_border");
-                                        else
-                                            return UM.Theme.getColor("action_button_border");
-                                    }
-                                    color:
-                                    {
-                                        if(!control.enabled)
-                                            //return UM.Theme.getColor("button_disabled");
-                                            return UM.Theme.getColor("button_disabled_lighter");
-                                        else if(control.pressed)
-                                            return UM.Theme.getColor("button_active");
-                                        else if(control.hovered)
-                                            return UM.Theme.getColor("button_hover");
-                                        else
-                                            return UM.Theme.getColor("button");
-                                    }
-                                    //Behavior on color { ColorAnimation { duration: 50; } }
-
-                                    implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
-                                    implicitHeight: actualLabel.contentHeight + (UM.Theme.getSize("default_margin").height/2)
-
-                                    Label
-                                    {
-                                        id: actualLabel
-                                        anchors.centerIn: parent
-                                        color:
-                                        {
-                                            if(!control.enabled)
-                                                return UM.Theme.getColor("button_disabled_text");
-                                            else
-                                                return UM.Theme.getColor("button_text");
-                                        }
-                                        font: UM.Theme.getFont("small")
-                                        text: control.text
-                                    }
-                                }
-                                label: Item { }
-                            }
+                            style:  UM.Theme.styles.print_monitor_control_button
 	                    }
 	                }
 	            }
