@@ -20,10 +20,12 @@ UM.Dialog
         anchors.top: parent.top
         width: parent.width
         anchors.bottom: buttonRow.top
-        text: ' <center><h3>DISCLAIMER BY ULTIMAKER</h3></center>
-                <p>PLEASE READ THIS DISCLAIMER CAREFULLY.</p>
-                <p>EXCEPT WHEN OTHERWISE STATED IN WRITING, ULTIMAKER PROVIDES ANY ULTIMAKER SOFTWARE OR THIRD PARTY SOFTWARE “AS IS” WITHOUT WARRANTY OF ANY KIND. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF ULTIMAKER SOFTWARE IS WITH YOU.</p>
-                <p>UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING, IN NO EVENT WILL ULTIMAKER BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE ANY ULTIMAKER SOFTWARE OR THIRD PARTY SOFTWARE.</p>
+        text: '
+                <p>Cura LulzBot Edition, a Free Software solution for Fused Filament Fabrication 3D printing, is distributed under the terms of the GNU Lesser General Public License (LGPLv3).</p>
+                <p>Copyright © 2014, 2015, 2016, 2017 Aleph Objects, Inc. - Released under terms of the LGPLv3 License.</p>
+                <p>Derived from Cura, which was created by David Braam and Ultimaker. Copyright © 2013 David Braam - Released under terms of the LGPLv3 License.</p>
+                <p>This program is Free Software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
+                <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this program. If not, see http://www.gnu.org/licenses/.</p>
                 '
         readOnly: true;
         textFormat: TextEdit.RichText
