@@ -1058,11 +1058,7 @@ class PrintThread:
     def _print_func(self):
         Logger.log("i", "Printer connection listen thread started for %s" % self._parent._serial_port)
 
-        try:
-            self._backend_print_time = Application.getInstance().getPrintInformation().currentPrintTime.totalSeconds
-        except:
-            self._backend_print_time = 0
-            pass
+        self._backend_print_time = Application.getInstance().getPrintInformation().currentPrintTime.totalSeconds
 
         # Wrap a MarlinSerialProtocol object around the serial port
         # for serial error correction.
