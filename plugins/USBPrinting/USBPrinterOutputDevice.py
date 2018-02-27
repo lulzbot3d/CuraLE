@@ -1088,6 +1088,7 @@ class PrintThread:
         try:
             self._backend_print_time = Application.getInstance().getPrintInformation().currentPrintTime.totalSeconds
         except:
+            Logger.log("w", "Failed to access PrintTime, setting it to zero")
             self._backend_print_time = 0
             pass
 
