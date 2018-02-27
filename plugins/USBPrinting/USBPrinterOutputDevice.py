@@ -171,7 +171,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         code = Application.getInstance().getGlobalContainerStack().getProperty("machine_wipe_gcode", "value")
         if not code or len(code) == 0:
             Logger.log("w", "This device doesn't support wiping")
-            QMessageBox.critical(None, "Error wiping nozzle", "This device doesn't support wiping" )
             return
         code = code.replace("{material_wipe_temperature}", str(Application.getInstance().getGlobalContainerStack().getProperty("material_wipe_temperature", "value"))).split("\n")
         self.writeStarted.emit(self)
@@ -183,6 +182,34 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
         if result == Error.PRINTER_NOT_CONNECTED:
             QMessageBox.critical(None, "Error wiping nozzle", "Printer is not connected  " )
+
+    def _supportWipeNozzle(self):
+        code = Application.getInstance().getGlobalContainerStack().getProperty("machine_wipe_gcode", "value")
+        if not code or len(code) == 0:
+            return False
+        return True
+
+    def _levelXAxis(self):
+        code = Application.getInstance().getGlobalContainerStack().getProperty("machine_level_x_axis_gcode", "value")
+        if not code or len(code) == 0:
+            Logger.log("w", "This device doesn't support x axis levelling")
+            return
+        code = code.split("\n")
+        self.writeStarted.emit(self)
+        self._updateJobState("printing")
+        result=self.printGCode(code)
+
+        if result == Error.PRINTER_BUSY:
+            QMessageBox.critical(None, "Error", "Printer is busy, aborting print" )
+
+        if result == Error.PRINTER_NOT_CONNECTED:
+            QMessageBox.critical(None, "Error", "Printer is not connected  " )
+
+    def _supportLevelXAxis(self):
+        code = Application.getInstance().getGlobalContainerStack().getProperty("machine_level_x_axis_gcode", "value")
+        if not code or len(code) == 0:
+            return False
+        return True
 
     def _moveHead(self, x, y, z, speed):
         self.sendCommand("G91")

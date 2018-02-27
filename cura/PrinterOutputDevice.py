@@ -68,6 +68,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
         self._can_abort = True
         self._can_pre_heat_bed = True
         self._can_control_manually = True
+        Application.getInstance().globalContainerStackChanged.connect(self._onGlobalStackChanged)
 
     def requestWrite(self, nodes, file_name = None, filter_by_machine = False, file_handler = None):
         raise NotImplementedError("requestWrite needs to be implemented")
@@ -76,6 +77,11 @@ class PrinterOutputDevice(QObject, OutputDevice):
 
     # Signal to be emitted when bed temp is changed
     bedTemperatureChanged = pyqtSignal()
+
+    globalStackChanged = pyqtSignal()
+
+    def _onGlobalStackChanged(self):
+        self.globalStackChanged.emit()
 
     # Signal to be emitted when target bed temp is changed
     targetBedTemperatureChanged = pyqtSignal()
@@ -511,6 +517,27 @@ class PrinterOutputDevice(QObject, OutputDevice):
 
     def _wipeNozzle(self):
         Logger.log("w", "_wipeNozzle is not implemented by this output device")
+
+    @pyqtProperty(bool, notify=globalStackChanged)
+    def supportWipeNozzle(self):
+        return self._supportWipeNozzle()
+
+    def _supportWipeNozzle(self):
+        return False
+
+    @pyqtSlot()
+    def levelXAxis(self):
+        self._levelXAxis()
+
+    def _levelXAxis(self):
+        Logger.log("w", "_levelXAxis is not implemented by this output device")
+
+    @pyqtProperty(bool, notify=globalStackChanged)
+    def supportLevelXAxis(self):
+        return self._supportLevelXAxis()
+
+    def _supportLevelXAxis(self):
+        return False
 
     @pyqtSlot()
     def preheatBed(self):
