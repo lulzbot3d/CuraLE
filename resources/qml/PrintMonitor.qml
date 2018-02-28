@@ -144,7 +144,7 @@ ScrollView
                             {
                                 id: extruderTemperature
                                 Layout.row: 1
-                                Layout.column: 2
+                                Layout.column: 3
 
                                 text:
                                 {
@@ -155,7 +155,7 @@ ScrollView
                                 }
                                 color: UM.Theme.getColor("text")
                                 font: UM.Theme.getFont("large")
-                                anchors.right: extruderTargetTemperature.left
+                                anchors.right: parent.right
                                 anchors.top: parent.top
                                 anchors.margins: UM.Theme.getSize("default_margin").width
 
@@ -188,7 +188,7 @@ ScrollView
                             {
                                 id: extruderTargetTemperature
                                 Layout.row: 1
-                                Layout.column: 3
+                                Layout.column: 2
 
                                 text:
                                 {
@@ -199,10 +199,9 @@ ScrollView
                                 }
                                 font: UM.Theme.getFont("small")
                                 color: UM.Theme.getColor("text_inactive")
-                                anchors.right: parent.right
                                 anchors.rightMargin: UM.Theme.getSize("default_margin").width
                                 anchors.bottom: extruderTemperature.bottom
-
+                                anchors.right: extruderTemperature.left
 
                                 MouseArea //For tooltip.
                                 {
@@ -516,7 +515,7 @@ ScrollView
                     text: (connectedPrinter != null && connectedPrinter.targetBedTemperature != 0) ? connectedPrinter.targetBedTemperature + "°C" : ""
                     font: UM.Theme.getFont("small")
                     color: UM.Theme.getColor("text_inactive")
-                    anchors.right: parent.right
+                    anchors.right: bedCurrentTemperature.left
                     anchors.rightMargin: UM.Theme.getSize("default_margin").width
                     anchors.bottom: bedCurrentTemperature.bottom
 
@@ -551,7 +550,7 @@ ScrollView
                     text: connectedPrinter != null && connectedPrinter.bedTemperature != 0 ? Math.round(connectedPrinter.bedTemperature) + "°C" : ""
                     font: UM.Theme.getFont("large")
                     color: UM.Theme.getColor("text")
-                    anchors.right: bedTargetTemperature.left
+                    anchors.right: parent.right
                     anchors.top: parent.top
                     anchors.margins: UM.Theme.getSize("default_margin").width
 
