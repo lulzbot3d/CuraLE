@@ -456,6 +456,9 @@ class PrinterOutputDevice(QObject, OutputDevice):
     #   /sa _setTargetHotendTemperature implementation function
     @pyqtSlot(int, int)
     def setTargetHotendTemperature(self, index, temperature):
+        if index >= self._num_extruders:
+            Logger.log("w", "Tried to set value to extruder that is not initialized")
+            return
         self._setTargetHotendTemperature(index, temperature)
         self._emitTargetHotendTemperatureChanged(index, temperature)
 
