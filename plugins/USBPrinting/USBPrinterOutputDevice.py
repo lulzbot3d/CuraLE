@@ -1138,8 +1138,9 @@ class PrintThread:
                     self._parent._error_message.show()
                     break
 
-                if ((not isPrinting and line == b"" and self._commandAvailable.wait(2)) or
-                    (    isPrinting and self._commandAvailable.isSet())):
+                if  (serial_proto.clearToSend() and
+                    ((not isPrinting and line == b"" and self._commandAvailable.wait(2)) or
+                    (    isPrinting and self._commandAvailable.isSet()))):
                     self._mutex.acquire()
                     cmd = self._command_queue.get()
                     if self._command_queue.empty():
@@ -1173,7 +1174,7 @@ class PrintThread:
             # If we keep getting a temperature_request_timeout, it likely
             # means that Marlin does not support AUTO_REPORT_TEMPERATURES,
             # in which case we must poll.
-            if time.time() > temperature_request_timeout:
+            if serial_proto.marlinBufferCapacity() > 1 and time.time() > temperature_request_timeout:
                 Logger.log("d", "Requesting temperature auto-update")
                 serial_proto.sendCmdUnreliable("M155 S3")
                 serial_proto.sendCmdUnreliable("M105")
