@@ -1123,7 +1123,11 @@ class PrintThread:
                 # otherwise wait for interactive commands when the serial
                 # port is idle. This allows us to be most responsive to
                 # whatever action is currently taking place
-                line = serial_proto.readline(isPrinting)
+                if serial_proto.clearToSend():
+                    line = serial_proto.readline(isPrinting)
+                else:
+                    line = serial_proto.readline(False)
+
                 if isPrinting and self._gcode_position > 1 and re.search(b"start\n",line):
                     Logger.log("e", "The printer has restarted or lost power.")
                     self.cancelPrint()
