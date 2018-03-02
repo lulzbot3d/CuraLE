@@ -859,20 +859,9 @@ class ContainerManager(QObject):
         if not global_stack:
             return ""
 
-        approximate_diameter = round(global_stack.getProperty("material_diameter", "value"))
-
-
-
         # Create a new ID & container to hold the data.
         new_id = self._container_registry.uniqueName("custom_material")
-        container_type = type(global_stack.material)  # Always XMLMaterialProfile, since we specifically clone the base_file
-        duplicated_container = container_type(new_id)
-
-        # Instead of duplicating we load the data from the basefile again.
-        # This ensures that the inheritance goes well and all "cut up" subclasses of the xmlMaterial profile
-        # are also correctly created.
-        # with open(containers[0].getPath(), encoding="utf-8") as f:
-        #     duplicated_container.deserialize(f.read())
+        container_type = type(ExtruderManager.getInstance().getActiveExtruderStack().material)  # Always XMLMaterialProfile, since we specifically clone the base_file
 
         machine_materials = global_stack.getMetaDataEntry("has_machine_materials", False)
 
@@ -906,19 +895,19 @@ class ContainerManager(QObject):
 
         if machine_materials:
             new_quality = InstanceContainer("%s_default_%s" % (new_id, global_stack.getBottom().getId()))
-            new_quality.setDefinition(global_stack.getBottom())
             metadata = {
                 "material": new_id+"_"+global_stack.getBottom().getId(),
                 "quality_type": "custom",
-                "setting_version": 1,
-                "type": "quality"
+                "setting_version": 4,
+                "type": "quality",
+                "container_type": type(new_quality)
             }
             new_quality.setMetaData(metadata)
+            new_quality.setDefinition(global_stack.getBottom().getId())
             new_quality.setName("Default")
             self._container_registry.addContainer(new_quality)
 
         self._container_registry.addContainer(new_material)
-
 
         return self._getMaterialContainerIdForActiveMachine(new_id)
 
