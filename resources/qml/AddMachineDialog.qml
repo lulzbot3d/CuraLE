@@ -20,8 +20,8 @@ UM.Dialog
     property string preferredCategory: "LulzBot"
     property string activeCategory: preferredCategory
 
-    minimumWidth: UM.Theme.getSize("modal_window_minimum").width*0.5
-    minimumHeight: UM.Theme.getSize("modal_window_minimum").height
+    minimumWidth: UM.Theme.getSize("modal_window_minimum").width*0.4
+    minimumHeight: UM.Theme.getSize("modal_window_minimum").height*0.4
     width: minimumWidth
     height: minimumHeight
 

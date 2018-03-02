@@ -916,7 +916,10 @@ UM.MainWindow
 
         title: catalog.i18nc("@title:window", "Add Printer")
         property var machine;
-
+        minimumWidth: UM.Theme.getSize("modal_window_minimum").width*0.6
+        minimumHeight: UM.Theme.getSize("modal_window_minimum").height*0.6
+        width: minimumWidth
+        height: minimumHeight
         function start(id)
         {
             var actions = Cura.MachineActionManager.getFirstStartActions(id)
@@ -943,7 +946,10 @@ UM.MainWindow
 
         title: catalog.i18nc("@title:window", "Tool Head Changed")
         property var machine;
-
+        minimumWidth: UM.Theme.getSize("modal_window_minimum").width*0.6
+        minimumHeight: UM.Theme.getSize("modal_window_minimum").height*0.6
+        width: minimumWidth
+        height: minimumHeight
         function start(id)
         {
             var actions =  Cura.MachineActionManager.getRequiredActions(id)
