@@ -1081,19 +1081,19 @@ class PrintThread:
         self._commandAvailable.set()
 
     def _print_func(self):
-        Logger.log("i", "Printer connection listen thread started for %s" % self._parent._serial_port)
+        #Logger.log("i", "Printer connection listen thread started for %s" % self._parent._serial_port)
 
         try:
             self._backend_print_time = Application.getInstance().getPrintInformation().currentPrintTime.totalSeconds
         except:
-            Logger.log("w", "Failed to access PrintTime, setting it to zero")
+            #Logger.log("w", "Failed to access PrintTime, setting it to zero")
             self._backend_print_time = 0
             pass
 
         # Wrap a MarlinSerialProtocol object around the serial port
         # for serial error correction.
         def onResendCallback(line):
-            Logger.log("i", "USBPrinterOutputDevice: Resending from: %d" % (line))
+            #Logger.log("i", "USBPrinterOutputDevice: Resending from: %d" % (line))
             self._parent.messageFromPrinter.emit("USBPrinterOutputDevice: Resending from: %d" % (line))
         serial_proto = MarlinSerialProtocol(self._parent._serial, onResendCallback)
 
@@ -1129,7 +1129,7 @@ class PrintThread:
                     line = serial_proto.readline(False)
 
                 if isPrinting and self._gcode_position > 1 and re.search(b"start\n",line):
-                    Logger.log("e", "The printer has restarted or lost power.")
+                    #Logger.log("e", "The printer has restarted or lost power.")
                     self.cancelPrint()
                     self._parent._printingStopped()
                     self._parent.setProgress(0)
@@ -1159,7 +1159,7 @@ class PrintThread:
 
             if b"PROBE FAIL CLEAN NOZZLE" in line:
                 self._parent.errorFromPrinter.emit( "Wipe nozzle failed." )
-                Logger.log("d", "---------------PROBE FAIL CLEAN NOZZLE" )
+                #Logger.log("d", "---------------PROBE FAIL CLEAN NOZZLE" )
                 self._parent._error_message = Message(catalog.i18nc("@info:status", "Wipe nozzle failed, clean nozzle and reconnect printer."))
                 self._parent._error_message.show()
                 self._parent._setErrorState("Wipe nozzle failed")
@@ -1175,7 +1175,7 @@ class PrintThread:
             # means that Marlin does not support AUTO_REPORT_TEMPERATURES,
             # in which case we must poll.
             if serial_proto.marlinBufferCapacity() > 1 and time.time() > temperature_request_timeout:
-                Logger.log("d", "Requesting temperature auto-update")
+                #Logger.log("d", "Requesting temperature auto-update")
                 serial_proto.sendCmdUnreliable("M155 S3")
                 serial_proto.sendCmdUnreliable("M105")
                 temperature_request_timeout = time.time() + 5
@@ -1236,7 +1236,7 @@ class PrintThread:
             if line not in [b"", b"ok\n"]:
                 self._parent.messageFromPrinter.emit(line.decode("latin-1").replace("\n", ""))
 
-        Logger.log("i", "Printer connection listen thread stopped for %s" % self._parent._serial_port)
+        #Logger.log("i", "Printer connection listen thread stopped for %s" % self._parent._serial_port)
 
     ##  Gets the next Gcode in the gcode list
     def _getNextGcodeLine(self):
@@ -1259,7 +1259,7 @@ class PrintThread:
         # an LCD menu pause.
         if re.match('\s*M[01]\\b', line):
             # Don't send the M0 or M1 to the machine, as M0 and M1 are handled as an LCD menu pause.
-            Logger.log("d", "Encountered M0 or M1, pausing print" )
+            #Logger.log("d", "Encountered M0 or M1, pausing print" )
             self._parent._setJobState("pause")
             line = False
 
@@ -1378,7 +1378,7 @@ class PrintThread:
             self.sendCommand("G28 X0 Y0")
             # Position the toolhead to the correct position and feedrate again
             self.sendCommand("G1 X%f Y%f Z%f F%f" % (pos.x, pos.y, pos.z, pos.f))
-            Logger.log("d", "Print resumed")
+            #Logger.log("d", "Print resumed")
 
             # Release the PrintThread.
             self._mutex.acquire()
