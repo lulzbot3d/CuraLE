@@ -20,7 +20,7 @@ UM.Dialog
     width: minimumWidth
     height: minimumHeight
     signal command(string command)
-    signal receive(string command)
+    signal receive(string type, string command)
 
     property var history_list: []
     property var current_history_index: -1

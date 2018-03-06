@@ -1711,7 +1711,7 @@ ScrollView
 	        {
 	            if (!Cura.USBPrinterManager.sendCommandToCurrentPrinter(command))
 	            {
-	                receive("Error: Printer not connected")
+	                receive("i", "Error: Printer not connected")
 	            }
 	        }
 		}
