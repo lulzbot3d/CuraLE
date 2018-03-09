@@ -577,7 +577,7 @@ class ContainerManager(QObject):
 
         new_changes = self._createQualityChanges(global_stack.quality, unique_name,
                                                  Application.getInstance().getGlobalContainerStack().getBottom(),
-                                                 None)
+                                                 s.definition.getId() if s is not None else None)
         for stack in stacks:
             user_container = stack.getTop()
             quality_container = stack.quality
@@ -1078,6 +1078,9 @@ class ContainerManager(QObject):
             quality_changes.setDefinition("fdmprinter")
         else:
             quality_changes.setDefinition(QualityManager.getInstance().getParentMachineDefinition(machine_definition).getId())
+
+        if machine_definition.getMetaDataEntry("has_machine_materials"):
+            quality_changes.getMetaData()["material"] = quality_container.getMetaData()["material"]
 
         from cura.CuraApplication import CuraApplication
         quality_changes.addMetaDataEntry("setting_version", CuraApplication.SettingVersion)
