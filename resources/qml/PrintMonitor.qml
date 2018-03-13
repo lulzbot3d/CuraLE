@@ -651,6 +651,7 @@ ScrollView
                     {
                         id: preheatTemperatureInput
                         font: UM.Theme.getFont("default")
+                        text: ""
                         color: !enabled ? UM.Theme.getColor("setting_control_disabled_text") : UM.Theme.getColor("setting_control_text")
                         selectByMouse: true
                         maximumLength: 10
@@ -659,23 +660,6 @@ ScrollView
                         width: parent.width
                         height: parent.height
                         anchors.fill: parent
-
-                        Component.onCompleted:
-                        {
-                            if ((bedTemperature.resolve != "None" && bedTemperature.resolve) && (bedTemperature.stackLevels[0] != 0) && (bedTemperature.stackLevels[0] != 1))
-                            {
-                                // We have a resolve function. Indicates that the setting is not settable per extruder and that
-                                // we have to choose between the resolved value (default) and the global value
-                                // (if user has explicitly set this).
-                                text = bedTemperature.resolve;
-                                //text = "";
-                            }
-                            else
-                            {
-                                text = bedTemperature.properties.value;
-                                //text = "";
-                            }
-                        }
                     }
                 }
 
@@ -746,7 +730,16 @@ ScrollView
                     {
                         if (!preheatUpdateTimer.running)
                         {
-                            connectedPrinter.preheatBed(preheatTemperatureInput.text, connectedPrinter.preheatBedTimeout);
+                            if(preheatTemperatureInput.text != "")
+                            {
+                                connectedPrinter.preheatBed(preheatTemperatureInput.text, connectedPrinter.preheatBedTimeout);
+                            }
+                            else
+                            {
+                               connectedPrinter.preheatBed(bedTemperature.resolve, connectedPrinter.preheatBedTimeout);
+                               preheatTemperatureInput.text = bedTemperature.resolve;
+                            }
+
                             preheatUpdateTimer.start();
                             preheatUpdateTimer.update(); //Update once before the first timer is triggered.
                         }
