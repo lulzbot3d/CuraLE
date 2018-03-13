@@ -667,13 +667,13 @@ ScrollView
                                 // We have a resolve function. Indicates that the setting is not settable per extruder and that
                                 // we have to choose between the resolved value (default) and the global value
                                 // (if user has explicitly set this).
-                                //text = bedTemperature.resolve;
-                                text = "";
+                                text = bedTemperature.resolve;
+                                //text = "";
                             }
                             else
                             {
-                                //text = bedTemperature.properties.value;
-                                text = "";
+                                text = bedTemperature.properties.value;
+                                //text = "";
                             }
                         }
                     }
