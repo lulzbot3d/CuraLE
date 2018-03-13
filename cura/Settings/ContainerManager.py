@@ -577,7 +577,7 @@ class ContainerManager(QObject):
 
         new_changes = self._createQualityChanges(global_stack.quality, unique_name,
                                                  Application.getInstance().getGlobalContainerStack().getBottom(),
-                                                 s.definition.getId() if s is not None else None)
+                                                 None)
         for stack in stacks:
             user_container = stack.getTop()
             quality_container = stack.quality

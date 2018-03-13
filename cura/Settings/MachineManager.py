@@ -1147,8 +1147,7 @@ class MachineManager(QObject):
         else:
             Logger.log("e", "Could not find the global quality changes container with name %s", quality_changes_name)
             return None
-
-        material = global_container_stack.material.getMetadata()
+        material = global_container_stack.material.getMetaData()
 
         # For the global stack, find a quality which matches the quality_type in
         # the quality changes profile and also satisfies any material constraints.
@@ -1170,10 +1169,9 @@ class MachineManager(QObject):
             else:
                 quality_changes = global_quality_changes
 
-            material = stack.material.getMetadata()
+            material = stack.material.getMetaData()
             quality = quality_manager.findQualityByQualityType(quality_type, global_machine_definition, [material])
             if not quality: #No quality profile found for this quality type.
-
                 quality = self._empty_quality_container
 
             result.append({"stack": stack, "quality": quality, "quality_changes": quality_changes})
@@ -1182,9 +1180,7 @@ class MachineManager(QObject):
             global_quality = quality_manager.findQualityByQualityType(quality_type, global_machine_definition, [material], global_quality = "True")
             if not global_quality:
                 global_quality = self._empty_quality_container
-            result.append({"stack": global_container_stack, "quality": global_quality, "quality_changes": global_quality_changes})
-        # else:
-        #     result.append({"stack": global_container_stack, "quality": global_quality, "quality_changes": global_quality_changes})
+                result.append({"stack": global_container_stack, "quality": global_quality, "quality_changes": global_quality_changes})
 
         return result
 
