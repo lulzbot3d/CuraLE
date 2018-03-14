@@ -1141,10 +1141,20 @@ class PrintThread:
                 # otherwise wait for interactive commands when the serial
                 # port is idle. This allows us to be most responsive to
                 # whatever action is currently taking place
-                if serial_proto.clearToSend():
-                    line = serial_proto.readline(isPrinting)
+                if isPrinting:
+                    line = serial_proto.readline(True)
+                    iteractiveCmdAvailable = self._commandAvailable.isSet()
                 else:
                     line = serial_proto.readline(False)
+                    iteractiveCmdAvailable = self._commandAvailable.wait(2)
+
+                if  iteractiveCmdAvailable and (isPrinting or line == b""):
+                    self._mutex.acquire()
+                    cmd = self._command_queue.get()
+                    if self._command_queue.empty():
+                        self._commandAvailable.clear()
+                    self._mutex.release()
+                    serial_proto.sendCmdUnreliable(cmd)
 
                 if isPrinting and self._gcode_position > 1 and re.search(b"start\n",line):
                     self._parent.log("e", "The printer has restarted or lost power.")
@@ -1155,16 +1165,6 @@ class PrintThread:
                     self._parent._error_message = Message(catalog.i18nc("@info:status", "The printer has restarted or lost power."), 0, True, None, 2)
                     self._parent._error_message.show()
                     break
-
-                if  (serial_proto.clearToSend() and
-                    ((not isPrinting and line == b"" and self._commandAvailable.wait(2)) or
-                    (    isPrinting and self._commandAvailable.isSet()))):
-                    self._mutex.acquire()
-                    cmd = self._command_queue.get()
-                    if self._command_queue.empty():
-                        self._commandAvailable.clear()
-                    self._mutex.release()
-                    serial_proto.sendCmdUnreliable(cmd)
 
             except Exception as e:
                 self._parent.log("e", "Unexpected error while accessing serial port. %s" % e)
