@@ -1146,9 +1146,12 @@ class PrintThread:
                     iteractiveCmdAvailable = self._commandAvailable.isSet()
                 else:
                     line = serial_proto.readline(False)
-                    iteractiveCmdAvailable = self._commandAvailable.wait(2)
+                    if line == b"":
+                        iteractiveCmdAvailable = self._commandAvailable.wait(2)
+                    else:
+                        iteractiveCmdAvailable = self._commandAvailable.isSet()
 
-                if  iteractiveCmdAvailable and (isPrinting or line == b""):
+                if  iteractiveCmdAvailable:
                     self._mutex.acquire()
                     cmd = self._command_queue.get()
                     if self._command_queue.empty():
