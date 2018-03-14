@@ -547,9 +547,10 @@ UM.MainWindow
     UM.PreferencesDialog
     {
         id: preferences
-        minimumWidth: UM.Theme.getSize("modal_window_minimum").width
-        minimumHeight: UM.Theme.getSize("modal_window_minimum").height
-
+        minimumWidth: UM.Theme.getSize("modal_window_minimum").width * 0.5
+        minimumHeight: UM.Theme.getSize("modal_window_minimum").height * 0.5
+        width: UM.Theme.getSize("modal_window_minimum").width * 0.8
+        height: UM.Theme.getSize("modal_window_minimum").height *0.8
         Component.onCompleted:
         {
             //; Remove & re-add the general page as we want to use our own instead of uranium standard.
