@@ -43,9 +43,8 @@ class QualityAndUserProfilesModel(ProfilesModel):
         quality_type_set.add(self._empty_quality.getMetaDataEntry("quality_type"))
         filtered_quality_changes = {qc.getId(): qc for qc in quality_changes_list if
                                     qc.getMetaDataEntry("quality_type") in quality_type_set and
-                                    qc.getMetaDataEntry("extruder") is not None and
-                                    (qc.getMetaDataEntry("extruder") == active_extruder.definition.getMetaDataEntry("quality_definition") or
-                                     qc.getMetaDataEntry("extruder") == active_extruder.definition.getId())}
+                                    ((qc.getMetaDataEntry("extruder") == active_extruder.definition.getMetaDataEntry("quality_definition") or
+                                     qc.getMetaDataEntry("extruder") == active_extruder.definition.getId()) if qc.getMetaDataEntry("extruder") is not None else True)}
 
         result = filtered_quality_changes
         for q in quality_list:
