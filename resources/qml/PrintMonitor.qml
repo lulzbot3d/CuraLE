@@ -651,6 +651,7 @@ ScrollView
                     {
                         id: preheatTemperatureInput
                         font: UM.Theme.getFont("default")
+                        text: ""
                         color: !enabled ? UM.Theme.getColor("setting_control_disabled_text") : UM.Theme.getColor("setting_control_text")
                         selectByMouse: true
                         maximumLength: 10
@@ -659,23 +660,6 @@ ScrollView
                         width: parent.width
                         height: parent.height
                         anchors.fill: parent
-
-                        Component.onCompleted:
-                        {
-                            if ((bedTemperature.resolve != "None" && bedTemperature.resolve) && (bedTemperature.stackLevels[0] != 0) && (bedTemperature.stackLevels[0] != 1))
-                            {
-                                // We have a resolve function. Indicates that the setting is not settable per extruder and that
-                                // we have to choose between the resolved value (default) and the global value
-                                // (if user has explicitly set this).
-                                //text = bedTemperature.resolve;
-                                text = "";
-                            }
-                            else
-                            {
-                                //text = bedTemperature.properties.value;
-                                text = "";
-                            }
-                        }
                     }
                 }
 
@@ -746,7 +730,16 @@ ScrollView
                     {
                         if (!preheatUpdateTimer.running)
                         {
-                            connectedPrinter.preheatBed(preheatTemperatureInput.text, connectedPrinter.preheatBedTimeout);
+                            if(preheatTemperatureInput.text != "")
+                            {
+                                connectedPrinter.preheatBed(preheatTemperatureInput.text, connectedPrinter.preheatBedTimeout);
+                            }
+                            else
+                            {
+                               connectedPrinter.preheatBed(bedTemperature.resolve, connectedPrinter.preheatBedTimeout);
+                               preheatTemperatureInput.text = bedTemperature.resolve;
+                            }
+
                             preheatUpdateTimer.start();
                             preheatUpdateTimer.update(); //Update once before the first timer is triggered.
                         }
@@ -1405,107 +1398,108 @@ ScrollView
 	                }
 	            }
 
-
-	            Row
+	            Column
 	            {
-	                id: homeXRow
+	                id: positionHomeColumn
 
-	                //anchors.left: positionXYColumn.right
-	                anchors.leftMargin: UM.Theme.getSize("default_margin").width/2
 	                anchors.top: positionXYColumn.bottom
-	                anchors.topMargin: UM.Theme.getSize("default_margin").height/4
-
-	                spacing: 4
-	                width: parent.width
-
-	                Label
-	                {
-                        text: "Home X:  "
-	                    color: UM.Theme.getColor("setting_control_text")
-	                    font: UM.Theme.getFont("default")
-
-	                }
-
-	                Button
-	                {
-	                    //text: "X"
-	                    width: UM.Theme.getSize("section").height
-	                    height: UM.Theme.getSize("section").height
-	                    iconSource: UM.Theme.getIcon("x_home");
-
-	                    onClicked:
-	                    {
-	                        connectedPrinter.homeX()
-	                    }
-	                }
-	            }
-
-	            Row
-	            {
-	                id: homeYRow
-
+	                anchors.topMargin: UM.Theme.getSize("default_margin").width
 	                anchors.leftMargin: UM.Theme.getSize("default_margin").width/2
-	                anchors.top: homeXRow.bottom
-	                anchors.topMargin: UM.Theme.getSize("default_margin").height/4
 
-	                spacing: 4
-	                width: parent.width
+	                width: childrenRect.width
+	                height: childrenRect.height
 
-	                Label
-	                {
-                        text: "Home Y:  "
-	                    color: UM.Theme.getColor("setting_control_text")
-	                    font: UM.Theme.getFont("default")
-	                }
+	                spacing: 1
 
-	                Button
-	                {
-	                    //text: "Y"
-	                    width: UM.Theme.getSize("section").height
-	                    height: UM.Theme.getSize("section").height
-	                    iconSource: UM.Theme.getIcon("y_home");
-
-	                    onClicked:
-	                    {
-	                        connectedPrinter.homeY()
-	                    }
-	                }
-
-	            }
-
-                Row
-                {
-                    id: homeAllRow
-
-                    anchors.leftMargin: UM.Theme.getSize("default_margin").width/2
-                    anchors.top: homeYRow.bottom
-                    anchors.topMargin: UM.Theme.getSize("default_margin").height/4
-
-                    spacing: 4
-                    width: parent.width
-
-                    Label
+                    GridLayout
                     {
-                        text: "Home All:"
-                        color: UM.Theme.getColor("setting_control_text")
-                        font: UM.Theme.getFont("default")
-                    }
+                        id: controlsHomeLayout
+                        columns: 2
+                        rows: 3
+                        rowSpacing: 4
+                        columnSpacing: 1
+                        anchors.left: parent.left
 
-                    Button
-                    {
-                        //text: "Y"
-                        width: UM.Theme.getSize("section").height
-                        height: UM.Theme.getSize("section").height
-                        iconSource: UM.Theme.getIcon("all_home");
-
-                        onClicked:
+                        Label
                         {
-                            connectedPrinter.homeHead()
+                            Layout.row: 1
+                            Layout.column: 1
+                            text: "Home X:  "
+                            color: UM.Theme.getColor("setting_control_text")
+                            font: UM.Theme.getFont("default")
+
                         }
+
+                        Button
+                        {
+                            Layout.row: 1
+                            Layout.column: 2
+	                        Layout.preferredWidth: UM.Theme.getSize("section").height
+	                        Layout.preferredHeight: UM.Theme.getSize("section").height
+	                        width: UM.Theme.getSize("section").height
+	                        height: UM.Theme.getSize("section").height
+                            iconSource: UM.Theme.getIcon("x_home");
+
+                            onClicked:
+                            {
+                                connectedPrinter.homeX()
+                            }
+                        }
+
+
+                        Label
+                        {
+                            Layout.row: 2
+                            Layout.column: 1
+                            text: "Home Y:  "
+                            color: UM.Theme.getColor("setting_control_text")
+                            font: UM.Theme.getFont("default")
+                        }
+
+                        Button
+                        {
+                            Layout.row: 2
+                            Layout.column: 2
+	                        Layout.preferredWidth: UM.Theme.getSize("section").height
+	                        Layout.preferredHeight: UM.Theme.getSize("section").height
+	                        width: UM.Theme.getSize("section").height
+	                        height: UM.Theme.getSize("section").height
+                            iconSource: UM.Theme.getIcon("y_home");
+
+                            onClicked:
+                            {
+                                connectedPrinter.homeY()
+                            }
+                        }
+
+
+                        Label
+                        {
+                            Layout.row: 3
+                            Layout.column: 1
+                            text: "Home All:"
+                            color: UM.Theme.getColor("setting_control_text")
+                            font: UM.Theme.getFont("default")
+                        }
+
+                        Button
+                        {
+                            Layout.row: 3
+                            Layout.column: 2
+	                        Layout.preferredWidth: UM.Theme.getSize("section").height
+	                        Layout.preferredHeight: UM.Theme.getSize("section").height
+	                        width: UM.Theme.getSize("section").height
+	                        height: UM.Theme.getSize("section").height
+                            iconSource: UM.Theme.getIcon("all_home");
+
+                            onClicked:
+                            {
+                                connectedPrinter.homeHead()
+                            }
+                        }
+
                     }
-
                 }
-
 
 	            // Extrusion
 	            Column
@@ -1711,7 +1705,7 @@ ScrollView
 	        {
 	            if (!Cura.USBPrinterManager.sendCommandToCurrentPrinter(command))
 	            {
-	                receive("Error: Printer not connected")
+	                receive("i", "Error: Printer not connected")
 	            }
 	        }
 		}

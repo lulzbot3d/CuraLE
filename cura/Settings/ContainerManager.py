@@ -780,56 +780,45 @@ class ContainerManager(QObject):
 
         containers = self._container_registry.findInstanceContainers(id=material_id)
         if not containers:
-
             Logger.log("d", "Unable to duplicate the material with id %s, because it doesn't exist.", material_id)
             return ""
-        original = original[0]
-
-        base_container_id = original.get("base_file")
-        base_container = self._container_registry.findContainers(id = base_container_id)
-        if not base_container:
-            Logger.log("d", "Unable to duplicate the material with id {material_id}, because base_file {base_container_id} doesn't exist.".format(material_id = material_id, base_container_id = base_container_id))
-            return ""
-        base_container = base_container[0]
-
-        #We'll copy all containers with the same base.
-        #This way the correct variant and machine still gets assigned when loading the copy of the material.
-        containers_to_copy = self._container_registry.findInstanceContainers(base_file = base_container_id)
 
         # Ensure all settings are saved.
         Application.getInstance().saveSettings()
 
         # Create a new ID & container to hold the data.
-        new_containers = []
-        new_base_id = self._container_registry.uniqueName(base_container.getId())
-        new_base_container = copy.deepcopy(base_container)
-        new_base_container.getMetaData()["id"] = new_base_id
-        new_base_container.getMetaData()["base_file"] = new_base_id
-        new_containers.append(new_base_container)
+        new_id = self._container_registry.uniqueName(material_id)
+        container_type = type(containers[0])  # Could be either a XMLMaterialProfile or a InstanceContainer
+        duplicated_container = container_type(new_id)
 
-        #Clone all of them.
-        clone_of_original = None #Keeping track of which one is the clone of the original material, since we need to return that.
-        for container_to_copy in containers_to_copy:
-            #Create unique IDs for every clone.
-            current_id = container_to_copy.getId()
-            new_id = new_base_id
-            if container_to_copy.getMetaDataEntry("definition") != "fdmprinter":
-                new_id += "_" + container_to_copy.getMetaDataEntry("definition")
-                if container_to_copy.getMetaDataEntry("variant"):
-                    variant = self._container_registry.findContainers(id = container_to_copy.getMetaDataEntry("variant"))[0]
-                    new_id += "_" + variant.getName().replace(" ", "_")
-            if current_id == material_id:
-                clone_of_original = new_id
+        # Instead of duplicating we load the data from the basefile again.
+        # This ensures that the inheritance goes well and all "cut up" subclasses of the xmlMaterial profile
+        # are also correctly created.
+        with open(containers[0].getPath(), encoding="utf-8") as f:
+            duplicated_container.deserialize(f.read())
+        duplicated_container.setMetaDataEntry("GUID", str(uuid.uuid4()))
+        duplicated_container.setDirty(True)
+        duplicated_container.setMetaDataEntry("material", "Custom")
+        duplicated_container.setMetaDataEntry("brand", "Custom")
 
-            new_container = copy.deepcopy(container_to_copy)
-            new_container.getMetaData()["id"] = new_id
-            new_container.getMetaData()["base_file"] = new_base_id
-            new_containers.append(new_container)
+        machine_materials = global_stack.getMetaDataEntry("has_machine_materials", False)
+        if machine_materials:
+            new_quality = InstanceContainer("%s_default_%s" % (new_id, global_stack.getBottom().getId()))
+            metadata = {
+                "material": new_id + "_" + global_stack.getBottom().getId(),
+                "quality_type": "custom",
+                "setting_version": 4,
+                "type": "quality",
+                "container_type": type(new_quality)
+            }
+            new_quality.setMetaData(metadata)
+            new_quality.setDefinition(global_stack.getBottom().getId())
+            new_quality.setName("Default")
+            self._container_registry.addContainer(new_quality)
 
-        for container_to_add in new_containers:
-            container_to_add.setDirty(True)
-            ContainerRegistry.getInstance().addContainer(container_to_add)
-        return self._getMaterialContainerIdForActiveMachine(clone_of_original)
+        self._container_registry.addContainer(duplicated_container)
+
+        return self._getMaterialContainerIdForActiveMachine(new_id)
 
     ##  Create a duplicate of a material or it's original entry
     #
@@ -1089,6 +1078,9 @@ class ContainerManager(QObject):
             quality_changes.setDefinition("fdmprinter")
         else:
             quality_changes.setDefinition(QualityManager.getInstance().getParentMachineDefinition(machine_definition).getId())
+
+        if machine_definition.getMetaDataEntry("has_machine_materials"):
+            quality_changes.getMetaData()["material"] = quality_container.getMetaData()["material"]
 
         from cura.CuraApplication import CuraApplication
         quality_changes.addMetaDataEntry("setting_version", CuraApplication.SettingVersion)
