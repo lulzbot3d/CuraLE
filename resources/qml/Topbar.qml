@@ -164,7 +164,6 @@ Rectangle
     ComboBox
     {
         id: viewModeButton
-
         anchors {
             verticalCenter: parent.verticalCenter
             right: parent.right
@@ -172,7 +171,8 @@ Rectangle
         }
 
         style: UM.Theme.styles.combobox
-        visible: UM.Controller.activeStage.stageId != "MonitorStage"
+        visible: (UM.Controller.activeStage.stageId != "MonitorStage") && (base.width - allItemsWidth
+                  + 1 * UM.Theme.getSize("small_button").width + UM.Theme.getSize("default_margin").width > 0)
 
         model: UM.ViewModel { }
         textRole: "name"
