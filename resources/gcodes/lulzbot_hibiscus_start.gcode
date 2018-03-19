@@ -51,6 +51,6 @@ G4 S1					; pause
 M400					; wait for moves to finish
 M117 Heating...				; progress indicator message on LCD
 M109 R{material_print_temperature}	; wait for extruder to reach printing temp
-M190 S{material_bed_temperature}	; wait for bed to reach printing temp
+M190 S{material_bed_temperature_layer_0} ; wait for bed to reach printing temp
 G1 Z2 E0 F75				; prime tiny bit of filment into the nozzle
 M117 Hibiscus Printing...		; progress indicator message on LCD
