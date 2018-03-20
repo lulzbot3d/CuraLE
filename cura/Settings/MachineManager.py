@@ -1106,10 +1106,10 @@ class MachineManager(QObject):
         extruder_stack = ExtruderManager.getInstance().getActiveExtruderStack()
         stack = extruder_stack if extruder_stack else global_container_stack
         if stack:
+            self._executeDelayedActiveContainerStackChanges()
             material = stack.material.getMetaData()
             quality = quality_manager.findQualityByQualityType(quality_type, global_machine_definition, [material])
             if not quality: #No quality profile is found for this quality type.
-
                 quality = self._empty_quality_container
             result.append({"stack": stack, "quality": quality, "quality_changes": empty_quality_changes})
 
