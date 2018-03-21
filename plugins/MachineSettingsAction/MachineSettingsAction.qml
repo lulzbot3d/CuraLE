@@ -343,6 +343,29 @@ Cura.MachineAction
                                     }
                                 }
 
+                                Label
+                                {
+                                    text: catalog.i18nc("@label", "Communication Speed:")
+                                }
+                                ComboBox
+                                {
+                                    model: ["AUTO", "250000", "230400", "115200", "57600", "38400", "19200", "9600"]
+
+                                    currentIndex:
+                                    {
+                                        var index = model.indexOf(machineBaudrateProvider.properties.value);
+                                        if(index == -1)
+                                        {
+                                            index = 0;
+                                        }
+                                        return index
+                                    }
+                                    onActivated:
+                                    {
+                                        machineBaudrateProvider.setPropertyValue("value", model[index]);
+                                    }
+                                }
+
 
                                 CheckBox
                                 {
