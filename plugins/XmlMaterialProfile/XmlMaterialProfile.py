@@ -574,6 +574,10 @@ class XmlMaterialProfile(InstanceContainer):
                         new_material.getMetaData()["compatible"] = machine_compatibility
                         new_material.getMetaData()["machine_manufacturer"] = machine_manufacturer
                         new_material.getMetaData()["definition"] = machine_id
+                        metadata = machine.iterfind("./um:metadata", self.__namespaces)
+                        for entry in metadata:
+                            key = entry.get("key")
+                            new_material.getMetaData()[key] = entry.text
 
                         new_material.setCachedValues(cached_machine_setting_properties)
 
@@ -629,10 +633,6 @@ class XmlMaterialProfile(InstanceContainer):
                         new_hotend_material.getMetaData()["compatible"] = hotend_compatibility
                         new_hotend_material.getMetaData()["machine_manufacturer"] = machine_manufacturer
                         new_hotend_material.getMetaData()["definition"] = machine_id
-                        metadata = machine.iterfind("./um:metadata", self.__namespaces)
-                        for entry in metadata:
-                            key = entry.get("key")
-                            new_hotend_material.getMetaData()[key] = entry.text
 
                         cached_hotend_setting_properties = cached_machine_setting_properties.copy()
                         cached_hotend_setting_properties.update(hotend_setting_values)
