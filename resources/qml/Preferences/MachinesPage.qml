@@ -89,7 +89,7 @@ UM.ManagementPage
             anchors.right: parent.right
             anchors.top: machineName.bottom
             anchors.topMargin: UM.Theme.getSize("default_margin").height
-
+            anchors.bottomMargin: UM.Theme.getSize("default_margin").height
             Repeater
             {
                 id: machineActionRepeater
