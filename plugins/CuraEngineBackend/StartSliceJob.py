@@ -272,6 +272,15 @@ class StartSliceJob(Job):
         result["date"] = time.strftime("%d-%m-%Y")
         result["day"] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][int(time.strftime("%w"))]
 
+        for extruder_stack in ExtruderManager.getInstance().getMachineExtruders(Application.getInstance().getGlobalContainerStack().getId()):
+            num = extruder_stack.getMetaDataEntry("position")
+            for key in extruder_stack.getAllKeys():
+                if extruder_stack.getProperty(key, "settable_per_extruder") == False:
+                    continue
+                if key in ["material_soften_temperature", "material_wipe_temperature", "material_probe_temperature",
+                           "material_print_temperature"]:
+                    result["%s_%s" % (key, num)] = extruder_stack.getProperty(key, "value")
+
         initial_extruder_stack = Application.getInstance().getExtruderManager().getUsedExtruderStacks()[0]
         initial_extruder_nr = initial_extruder_stack.getProperty("extruder_nr", "value")
         result["initial_extruder_nr"] = initial_extruder_nr
@@ -342,28 +351,15 @@ class StartSliceJob(Job):
         #print_temperature_settings = {"material_print_temperature", "material_print_temperature_layer_0", "default_material_print_temperature", "material_initial_print_temperature", "material_final_print_temperature", "material_standby_temperature"}
         settings["material_print_temp_prepend"] = False #all(("{" + setting + "}" not in start_gcode for setting in print_temperature_settings))
 
-
-        # Replace the setting tokens in start and end g-code.
-        # Use values from the first used extruder by default so we get the expected temperatures
-        initial_extruder_stack = Application.getInstance().getExtruderManager().getUsedExtruderStacks()[0]
-        initial_extruder_nr = initial_extruder_stack.getProperty("extruder_nr", "value")
-
-        settings["machine_start_gcode"] = self._expandGcodeTokens(settings["machine_start_gcode"], initial_extruder_nr)
-        settings["machine_end_gcode"] = self._expandGcodeTokens(settings["machine_end_gcode"], initial_extruder_nr)
-
         manager = Application.getInstance().getMachineManager()
         settings["printer_name"] = manager.activeDefinitionName
         settings["material_name"] = manager.activeMaterialName
         settings["quality_name"] = manager.activeQualityName
 
-        for extruder_stack in ExtruderManager.getInstance().getMachineExtruders(stack.getId()):
-            num = extruder_stack.getMetaDataEntry("position")
-            for key in extruder_stack.getAllKeys():
-                if extruder_stack.getProperty(key, "settable_per_extruder") == False:
-                    continue
-                if key in ["material_soften_temperature", "material_wipe_temperature", "material_probe_temperature",
-                           "material_print_temperature"]:
-                    settings["%s_%s" % (key, num)] = extruder_stack.getProperty(key, "value")
+        initial_extruder_stack = Application.getInstance().getExtruderManager().getUsedExtruderStacks()[0]
+        initial_extruder_nr = initial_extruder_stack.getProperty("extruder_nr", "value")
+        settings["machine_start_gcode"] = self._expandGcodeTokens(settings["machine_start_gcode"], initial_extruder_nr)
+        settings["machine_end_gcode"] = self._expandGcodeTokens(settings["machine_end_gcode"], initial_extruder_nr)
 
         for key, value in settings.items(): #Add all submessages for each individual setting.
             setting_message = self._slice_message.getMessage("global_settings").addRepeatedMessage("settings")
