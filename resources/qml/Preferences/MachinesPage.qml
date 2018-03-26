@@ -98,7 +98,7 @@ UM.ManagementPage
                 Item
                 {
                     width: childrenRect.width + 2 * screenScaleFactor
-                    height: childrenRect.height
+                    height: childrenRect.height + 1
                     Button
                     {
                         text: machineActionRepeater.model[index].label
@@ -113,7 +113,6 @@ UM.ManagementPage
                 }
             }
         }
-
         UM.Dialog
         {
             id: actionDialog
