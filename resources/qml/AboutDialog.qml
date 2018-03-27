@@ -116,11 +116,11 @@ UM.Dialog
             }
             Component.onCompleted:
             {
-                projectsModel.append({ name:"Cura", description: catalog.i18nc("@label", "Graphical user interface"), license: "AGPLv3", url: "https://code.alephobjects.com/source/cura-lulzbot/" });
-                projectsModel.append({ name:"Uranium", description: catalog.i18nc("@label", "Application framework"), license: "AGPLv3", url: "https://code.alephobjects.com/diffusion/U/" });
+                projectsModel.append({ name:"Cura", description: catalog.i18nc("@label", "Graphical user interface"), license: "LGPLv3", url: "https://code.alephobjects.com/source/cura-lulzbot/" });
+                projectsModel.append({ name:"Uranium", description: catalog.i18nc("@label", "Application framework"), license: "LGPLv3", url: "https://code.alephobjects.com/diffusion/U/" });
                 projectsModel.append({ name:"CuraEngine", description: catalog.i18nc("@label", "GCode generator"), license: "AGPLv3", url: "https://code.alephobjects.com/diffusion/CTE/" });
-                projectsModel.append({ name:"libArcus", description: catalog.i18nc("@label", "Interprocess communication library"), license: "AGPLv3", url: "https://code.alephobjects.com/source/arcus/" });
-                projectsModel.append({ name:"libSavitar", description: catalog.i18nc("@label", "Support library for handling 3MF files"), license: "AGPLv3", url: "https://code.alephobjects.com/source/savitar/" });
+                projectsModel.append({ name:"libArcus", description: catalog.i18nc("@label", "Interprocess communication library"), license: "LGPLv3", url: "https://code.alephobjects.com/source/arcus/" });
+                projectsModel.append({ name:"libSavitar", description: catalog.i18nc("@label", "Support library for handling 3MF files"), license: "LGPLv3", url: "https://code.alephobjects.com/source/savitar/" });
 
                 projectsModel.append({ name:"Python", description: catalog.i18nc("@label", "Programming language"), license: "Python", url: "http://python.org/" });
                 projectsModel.append({ name:"Qt5", description: catalog.i18nc("@label", "GUI framework"), license: "LGPLv3", url: "https://www.qt.io/" });
