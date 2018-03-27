@@ -46,14 +46,15 @@ Cura.MachineAction
     }
 
 
-    Flickable
+    ScrollView
     {
-        id: flick
+        id: scrollView
+        anchors.fill: parent;
+        frameVisible : true
         width: base.width;
         height: base.height
-        contentWidth: bedLevelMachineAction.width;
-        contentHeight: bedLevelMachineAction.height;
-        clip: true
+        implicitWidth: bedLevelMachineAction.width;
+        implicitHeight: bedLevelMachineAction.height;
 
 
         Item
