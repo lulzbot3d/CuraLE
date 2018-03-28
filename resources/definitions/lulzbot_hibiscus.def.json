@@ -24,7 +24,7 @@
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
-        "firmware_toolhead_name": "AerostruderV2"
+        "firmware_toolhead_name": "Aerostruder"
     },
     "overrides":
     {
@@ -222,7 +222,7 @@
         },
         "firmware_machine_type":
         {
-            "resolve": "'LulzBot Hibiscus LCD' if machine_has_lcd else 'LulzBot Hibiscus'"
+            "resolve": "'LulzBot Mini 2 LCD' if machine_has_lcd else 'LulzBot Mini 2'"
         },
         "machine_max_feedrate_x":
         {
