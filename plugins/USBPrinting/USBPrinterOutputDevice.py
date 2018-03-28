@@ -48,6 +48,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     @staticmethod
     def _log(log_type, message):
+        if message.startswith(" T:") or message.startswith("ok "):
+            return
         Logger.log(log_type, message)
 
     def __init__(self, serial_port):
