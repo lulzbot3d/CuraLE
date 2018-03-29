@@ -261,16 +261,17 @@ class FlavorParser:
                     continue
                 if item.startswith(";"):
                     continue
-                if item[0] == "X":
-                    x = float(item[1:])
-                if item[0] == "Y":
-                    y = float(item[1:])
-                if item[0] == "Z":
-                    z = float(item[1:])
-                if item[0] == "F":
-                    f = float(item[1:]) / 60
-                if item[0] == "E":
-                    e = float(item[1:])
+                if item[1].isdigit():
+                    if item[0] == "X":
+                        x = float(item[1:])
+                    if item[0] == "Y":
+                        y = float(item[1:])
+                    if item[0] == "Z":
+                        z = float(item[1:])
+                    if item[0] == "F":
+                        f = float(item[1:]) / 60
+                    if item[0] == "E":
+                        e = float(item[1:])
             if self._is_absolute_positioning and ((x is not None and x < 0) or (y is not None and y < 0)):
                 self._center_is_zero = True
             params = self._position(x, y, z, f, e)
