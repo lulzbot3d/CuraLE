@@ -222,7 +222,7 @@
         },
         "firmware_machine_type":
         {
-            "resolve": "'LulzBot Mini 2 LCD' if machine_has_lcd else 'LulzBot Mini 2'"
+            "default_value": "LulzBot Hibiscus"
         },
         "machine_max_feedrate_x":
         {
