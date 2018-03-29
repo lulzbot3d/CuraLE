@@ -236,6 +236,8 @@ class ContainerManager(QObject):
             for _ in range(len(entries)):
                 item = item.get(entries.pop(0), { })
 
+            if entry_name not in item:
+                item[entry_name] = None
             if item[entry_name] != entry_value:
                 sub_item_changed = True
             item[entry_name] = entry_value
@@ -872,7 +874,8 @@ class ContainerManager(QObject):
     <version>1</version>
     <GUID>%s</GUID>
   </metadata>
-  <properties />
+  <properties>
+  </properties>
   <settings>
     %s
   </settings>
