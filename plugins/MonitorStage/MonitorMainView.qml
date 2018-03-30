@@ -20,7 +20,15 @@ Item
         color: UM.Theme.getColor("viewport_overlay")
         width: parent.width
         height: parent.height
-
+        Label
+        {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            visible: UM.Backend.state == 1
+            text:"Load a model file or verified G-code in the Prepare Window to begin a print."
+            font: UM.Theme.getFont("large")
+            color: UM.Theme.getColor("text_green")
+        }
         MouseArea
         {
             anchors.fill: parent

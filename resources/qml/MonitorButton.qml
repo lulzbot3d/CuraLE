@@ -226,7 +226,7 @@ Item
 
             // 3 = Done, 5 = Disabled
             enabled: (UM.Backend.state == 3 || UM.Backend.state == 5) && CuraApplication.platformActivity == true
-            visible: (UM.Backend.state == 3 || UM.Backend.state == 5) && CuraApplication.platformActivity == true
+            visible: printerConnected && !(Cura.MachineManager.printerOutputDevices[0].jobState == "paused" || Cura.MachineManager.printerOutputDevices[0].jobState == "printing")
             tooltip: "Print";
 
             onClicked:
