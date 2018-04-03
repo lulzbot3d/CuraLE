@@ -340,7 +340,7 @@ Cura.MachineAction
 
                                     onActivated:
                                     {
-                                        machineBaudrateProvider.setPropertyValue("value", model[index]);
+                                        machinePortProvider.setPropertyValue("value", model[index]);
                                     }
                                 }
 
