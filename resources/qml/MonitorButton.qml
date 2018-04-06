@@ -46,6 +46,8 @@ Item
 
     property variant statusColor:
     {
+        if(UM.Backend.state == 1)
+            return UM.Theme.getColor("text");
         if(!printerConnected || !printerAcceptsCommands)
             return UM.Theme.getColor("text");
 
@@ -81,8 +83,12 @@ Item
 
     property bool activity: CuraApplication.platformActivity;
     property string fileBaseName
+
     property string statusText:
     {
+
+        if(UM.Backend.state == 1)
+            return catalog.i18nc("@label:MonitorStatus", "Load a model file or verified G-code \nin the Prepare Window to begin a print.");
         if(!printerConnected)
             return catalog.i18nc("@label:MonitorStatus", "Not connected to a printer");
         if(!printerAcceptsCommands)
@@ -122,6 +128,7 @@ Item
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width
+        anchors.rightMargin: UM.Theme.getSize("sidebar_margin").width
 
         color: base.statusColor
         font: UM.Theme.getFont("large")
