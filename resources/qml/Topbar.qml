@@ -81,10 +81,10 @@ Rectangle
                 checkable: true
                 checked: model.active
                 exclusiveGroup: topbarMenuGroup
-                style: (model.stage.iconSource != "") ? UM.Theme.styles.topbar_header_tab_no_overlay : UM.Theme.styles.topbar_header_tab
+                style: UM.Theme.styles.topbar_header_tab_no_overlay
                 height: UM.Theme.getSize("sidebar_header").height
                 onClicked: UM.Controller.setActiveStage(model.id)
-                iconSource: model.stage.iconSource
+
 
                 property color overlayColor: "transparent"
                 property string overlayIconSource: ""
