@@ -39,5 +39,8 @@
       <machine_identifier product="lulzbot_taz6_dual_v2"/>
       <metadata key="category">Supported</metadata>
     </machine>
+    <machine>
+      <machine_identifier product="taz6_twool_head"/>
+    </machine>
   </settings>
 </fdmmaterial>

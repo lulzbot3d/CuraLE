@@ -28,5 +28,8 @@
       <setting key="standby temperature">175.0</setting>
       <setting key="part removal temperature">45.0</setting>
     </machine>
+    <machine>
+      <machine_identifier product="taz6_twool_head"/>
+    </machine>
   </settings>
 </fdmmaterial>
