@@ -50,7 +50,7 @@
         },
         "machine_wipe_gcode":
         {
-            "default_value_from_file": "lulzbot_taz6_wipe"
+            "default_value_from_file": "taz6_twool_wipe_sequence"
         },
         "machine_baudrate":
         {
