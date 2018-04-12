@@ -131,6 +131,9 @@ class MarlinSerialProtocol:
     while(not self.history.atEnd() and self.marlinBufferCapacity() > 0):
       pos, cmd = self.history.getNextCommand();
       self._sendImmediate(cmd)
+      if self.marlinBufferCapacity() > 0:
+        # Slow down refill of Marlin buffer
+        time.sleep(0.01)
 
   def _isResendRequest(self, line):
     """If the line is a resend command from Marlin, returns the line number. This
