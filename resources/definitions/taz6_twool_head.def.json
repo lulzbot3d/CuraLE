@@ -1,6 +1,6 @@
 {
     "id": "LulzBot_TAZ6_Twoolhead",
-    "name": "Twoolhead TAZ 6",
+    "name": "Twool Head TAZ 6",
     "inherits": "lulzbot_taz_base",
     "version": 2,
     "metadata":
@@ -16,6 +16,11 @@
             0,
             0
         ],
+	"first_start_actions":
+        [
+            "MachineSettingsAction"
+        ],
+        "category": "LulzBot + Community Developed Add-Ons",
         "visible": true,
         "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-taz-6",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-single-extruder-tool-head-v21",
