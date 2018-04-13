@@ -11,10 +11,10 @@ import UM 1.1 as UM
 
 UM.Dialog
 {
+
     id: base
-
     title: catalog.i18nc("@title:window","Printer control")
-
+    modality: Qt.NonModal;
     minimumWidth: 500 * Screen.devicePixelRatio
     minimumHeight: 400 * Screen.devicePixelRatio
     width: minimumWidth
