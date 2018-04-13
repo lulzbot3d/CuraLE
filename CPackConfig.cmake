@@ -102,7 +102,6 @@ set(CPACK_DEBIAN_PACKAGE_RECOMMENDS
   "cura-binary-data-lulzbot (>=1.0.0)"
   "cura-binary-data-ultimaker (>=1.0.0)"
   "ultimaker (>=1.0.0)"
-  "postprocessingplugin (>=1.0.0)"
   "doodle3d (>=1.0.0)")
 string(REPLACE ";" "," CPACK_DEBIAN_PACKAGE_RECOMMENDS "${CPACK_DEBIAN_PACKAGE_RECOMMENDS}")
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE amd64)
