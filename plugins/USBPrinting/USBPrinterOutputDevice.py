@@ -1135,7 +1135,7 @@ class PrintThread:
                 # If we are printing, and Marlin can receive data, then send
                 # the next line (unless there are immediate commands queued up)
                 if serial_proto.clearToSend() and isPrinting and not self._commandAvailable.isSet():
-                    line = self._getNextGcodeLine()
+                    line = self._getNextGcodeLine(serial_proto)
                     if line:
                         serial_proto.sendCmdReliable(line)
 
@@ -1262,7 +1262,7 @@ class PrintThread:
         self._parent.log("i", "Printer connection listen thread stopped for %s" % self._parent._serial_port)
 
     ##  Gets the next Gcode in the gcode list
-    def _getNextGcodeLine(self):
+    def _getNextGcodeLine(self,serial_proto):
         self._mutex.acquire();
         gcodeLen  = len(self._gcode)
         line = self._gcode[self._gcode_position]
@@ -1270,13 +1270,24 @@ class PrintThread:
 
         if self._gcode_position >= gcodeLen:
             return
-        if self._gcode_position % 100 == 0:
-            elapsed = time.time() - self._print_start_time
+
+        self._gcode_position += 1
+
+        # Update the progress only every 100 gcode lines to prevent overwhelming things.
+        if self._gcode_position % 100 == 0 or self._gcode_position == gcodeLen:
             progress = self._gcode_position / gcodeLen
             if progress > 0:
+                elapsed = time.time() - self._print_start_time
                 total = elapsed + self._backend_print_time * (1 - progress)
                 self._parent.setTimeTotal(total)
                 self._parent.setTimeElapsed(elapsed)
+                self._parent.setProgress(progress * 100)
+                self._parent.progressChanged.emit()
+                # Also inform Marlin of the print progress
+                if progress == 100:
+                    serial_proto.sendCmdUnreliable("M73 P0")
+                else:
+                    serial_proto.sendCmdUnreliable("M73 P" + str(int(progress * 100)))
 
         # Don't send the M0 or M1 to the machine, as M0 and M1 are handled as
         # an LCD menu pause.
@@ -1286,9 +1297,6 @@ class PrintThread:
             self._parent._setJobState("pause")
             line = False
 
-        self._gcode_position += 1
-        self._parent.setProgress((self._gcode_position / gcodeLen) * 100)
-        self._parent.progressChanged.emit()
         return line
 
     class PauseState:
