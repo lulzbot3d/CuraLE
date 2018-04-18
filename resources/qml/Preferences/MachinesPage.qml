@@ -98,7 +98,7 @@ UM.ManagementPage
                 Item
                 {
                     width: childrenRect.width + 2 * screenScaleFactor
-                    height: childrenRect.height + 1
+                    height: childrenRect.height + 2 * screenScaleFactor
                     Button
                     {
                         text: machineActionRepeater.model[index].label
