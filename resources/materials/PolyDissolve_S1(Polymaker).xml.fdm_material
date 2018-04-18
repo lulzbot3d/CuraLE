@@ -6,7 +6,7 @@
       <material>PolyDissolve S1(Polymaker)</material>
       <color>Generic</color>
     </name>
-    <GUID>506c9f0d-e3aa-4bd4-b2d2-23e2425b1aa9</GUID>
+    <GUID>577aff64-923f-44e4-bf89-f05e1ecbb433</GUID>
     <version>1</version>
     <color_code>#788814</color_code>
     <adhesion_info>Use glue stick.</adhesion_info>
@@ -32,7 +32,7 @@
       <metadata key="category">Supported</metadata>
     </machine>
     <machine>
-	  <machine_identifier product="lulzbot_taz5_dual_v2"/>
+      <machine_identifier product="lulzbot_taz5_dual_v2"/>
       <metadata key="category">Supported</metadata>
     </machine>
     <machine>
