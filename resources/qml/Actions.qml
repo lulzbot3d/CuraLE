@@ -22,6 +22,7 @@ Item
     property alias viewTopCamera: viewTopCameraAction;
     property alias viewLeftSideCamera: viewLeftSideCameraAction;
     property alias viewRightSideCamera: viewRightSideCameraAction;
+    property alias viewBottomSideCamera: viewBottomSideCameraAction;
 
     property alias expandSidebar: expandSidebarAction;
 
@@ -141,6 +142,13 @@ Item
         id: viewRightSideCameraAction;
         text: catalog.i18nc("@action:inmenu menubar:view","&Right Side View");
         onTriggered: UM.Controller.rotateView("x", -90);
+    }
+
+    Action
+    {
+        id: viewBottomSideCameraAction;
+        text: catalog.i18nc("@action:inmenu menubar:view","&Bottom Side View");
+        onTriggered: UM.Controller.rotateView("bottom", 0);
     }
 
     Action
