@@ -1,3 +1,4 @@
+M75 			     ; start GLCD timer
 G26                          ; clear potential 'probe fail' condition
 G21                          ; set units to Millimetres
 M107                         ; disable fans

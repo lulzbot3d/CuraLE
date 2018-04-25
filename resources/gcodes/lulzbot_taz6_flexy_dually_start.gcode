@@ -1,5 +1,6 @@
 ;This profile is designed specifically for LulzBot TAZ6 3D Printer
 ;{material_print_temperature}
+M75			     ; start GLCD timer
 G26                          ; clear potential 'probe fail' condition
 G21                          ; set units to Millimetres
 M107                         ; disable fans

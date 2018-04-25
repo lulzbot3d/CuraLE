@@ -1,3 +1,4 @@
+M75			     ; Start GLCD Timer
 G26                          ; clear potential 'probe fail' condition
 G21                          ; metric values
 G90                          ; absolute positioning

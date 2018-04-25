@@ -1,4 +1,5 @@
 ;This G-Code has been generated specifically for the LulzBot TAZ 6 with Aerosturder
+M75 ; start GLCD timer
 G26 ; clear potential 'probe fail' condition
 G21 ; set units to Millimetres
 M107 ; disable fans

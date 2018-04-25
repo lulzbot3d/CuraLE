@@ -1,4 +1,5 @@
 ;This G-Code has been generated specifically for the LulzBot TAZ 5 with standard extruder
+M75			 ; Start GLCD Timer
 M140 S{material_bed_temperature}    ; start bed heating up
 G21                      ; set units to Millimetres
 G90                      ; absolute positioning

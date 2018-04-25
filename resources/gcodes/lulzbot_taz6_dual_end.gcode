@@ -17,6 +17,7 @@ G1 Y0 F3000                    ; move to cooling position
 M190 R{material_part_removal_temperature}                       ; set bed to cool off
 G1 Y280 F3000                  ; present finished print
 M140 S{material_keep_part_removal_temperature_t}; keep temperature or cool downs
+M77			       ; stop GLCD timer
 M84                            ; steppers off
 G90                            ; absolute positioning
 M117 Print complete            ; progress indicator message
