@@ -299,6 +299,8 @@ class PrintInformation(QObject):
 
     @pyqtSlot(str)
     def setJobName(self, name):
+        if (self._job_name == name):
+            return
         self._job_name = name
         self.jobNameChanged.emit()
 
