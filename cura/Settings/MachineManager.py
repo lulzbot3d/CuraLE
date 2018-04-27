@@ -1160,10 +1160,6 @@ class MachineManager(QObject):
         # For the global stack, find a quality which matches the quality_type in
         # the quality changes profile and also satisfies any material constraints.
         quality_type = global_quality_changes.getMetaDataEntry("quality_type")
-        if global_container_stack.getProperty("machine_extruder_count", "value") > 1:
-            global_quality = quality_manager.findQualityByQualityType(quality_type, global_machine_definition, [], global_quality = True)
-        else:
-            global_quality = quality_manager.findQualityByQualityType(quality_type, global_machine_definition, [material])
 
         extruder_stack = ExtruderManager.getInstance().getActiveExtruderStack()
         stack = extruder_stack if extruder_stack else global_container_stack
@@ -1187,8 +1183,10 @@ class MachineManager(QObject):
         if extruder_stack:
             global_quality = quality_manager.findQualityByQualityType(quality_type, global_machine_definition, [material], global_quality = "True")
             if not global_quality:
-                global_quality = self._empty_quality_container
-                result.append({"stack": global_container_stack, "quality": global_quality, "quality_changes": global_quality_changes})
+                global_quality = quality_manager.findQualityByQualityType(quality_type, global_machine_definition, [material])
+                if not global_quality:
+                    global_quality = self._empty_quality_container
+            result.append({"stack": global_container_stack, "quality": global_quality, "quality_changes": global_quality_changes})
 
         return result
 
