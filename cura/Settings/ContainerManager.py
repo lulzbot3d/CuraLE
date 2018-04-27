@@ -1083,7 +1083,9 @@ class ContainerManager(QObject):
             quality_changes.setDefinition(QualityManager.getInstance().getParentMachineDefinition(machine_definition).getId())
 
         if machine_definition.getMetaDataEntry("has_machine_materials"):
-            quality_changes.getMetaData()["material"] = quality_container.getMetaData()["material"]
+            metadata = quality_container.getMetaData()
+            if "material" in metadata:
+                quality_changes.getMetaData()["material"] = metadata["material"]
 
         from cura.CuraApplication import CuraApplication
         quality_changes.addMetaDataEntry("setting_version", CuraApplication.SettingVersion)
