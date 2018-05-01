@@ -39,8 +39,7 @@ Cura.MachineAction
             text: catalog.i18nc("@label", "Firmware is the piece of software running directly on your 3D printer. This firmware controls the stepper motors, regulates the temperature, and ultimately makes your printer work.")
         }
 
-        Label
-        {
+        Label {
             id: upgradeText1
             anchors.top: pageDescription.bottom
             anchors.topMargin: UM.Theme.getSize("default_margin").height
@@ -48,54 +47,36 @@ Cura.MachineAction
             wrapMode: Text.WordWrap
             text: catalog.i18nc("@label", "The firmware shipping with new printers works, but new versions tend to have more features and improvements.")
         }
-
-	Label
-        {
+        Label {
             id: upgradeText2
             anchors.top: upgradeText1.bottom
             anchors.topMargin: UM.Theme.getSize("default_margin").height
             width: parent.width
             wrapMode: Text.WordWrap
-            text: catalog.i18nc("@label", "Note: Find and record two key values before updating your firmware:")
+            text: catalog.i18nc("@label", "
+                <b>WARNING</b>: Firmware upgrading process might overwrite your tuned parameters with default values.<br>
+                Please have the following recorded <u>before</u> upgrading firmware:
+                <ul type=\"bullet\">
+                    <li>Extruder Steps per unit
+                        (<a href='https://www.lulzbot.com/learn/tutorials/firmware-flashing-through-cura#get-esteps'>E-steps</a>)
+                    <li>Z-axis offset
+                        (<a href='https://www.lulzbot.com/learn/tutorials/Z-axis-offset#get-offset'>Z-offset</a>)
+                </ul>
+                You will need to restore
+                <a href='https://www.lulzbot.com/learn/tutorials/firmware-flashing-through-cura#esteps'>E-steps</a> and
+                <a href='https://www.lulzbot.com/learn/tutorials/Z-axis-offset#restore-offset'>Z-offset</a> after firmware upgrade.
+                ")
+            onLinkActivated: Qt.openUrlExternally(link)
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
+                cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+            }
         }
-
-	Label
-        {
-            id: upgradeText3
-            anchors.top: upgradeText2.bottom
-            anchors.topMargin: UM.Theme.getSize("default_margin").height
-            width: parent.width
-            wrapMode: Text.WordWrap
-            text: catalog.i18nc("@label", "Find and record your Extruder Steps per unit (E-steps.) <a href='https://www.lulzbot.com/learn/tutorials/firmware-flashing-through-cura#get-esteps'>Get E-steps</a>");
-	    onLinkActivated: Qt.openUrlExternally(link)
-        }
-
-	Label
-        {
-            id: upgradeText4
-            anchors.top: upgradeText3.bottom
-            anchors.topMargin: UM.Theme.getSize("default_margin").height
-            width: parent.width
-            wrapMode: Text.WordWrap
-            text: catalog.i18nc("@label", "Find and record your Z-axis offset (Z-offset.) <a href='https://www.lulzbot.com/learn/tutorials/firmware-flashing-through-cura#get-esteps'>Get Z-offset</a>");
-	    onLinkActivated: Qt.openUrlExternally(link)
-        }
-
-	Label
-        {
-            id: upgradeText5
-            anchors.top: upgradeText4.bottom
-            anchors.topMargin: UM.Theme.getSize("default_margin").height
-            width: parent.width
-            wrapMode: Text.WordWrap
-            text: catalog.i18nc("@label", "Restore the following two values after the firmware upgrade has completed: <a href='https://www.lulzbot.com/learn/tutorials/firmware-flashing-through-cura#esteps'>Restore E-steps</a> and <a href='https://www.lulzbot.com/learn/tutorials/Z-axis-offset#restore-offset'>Restore Z-offset</a>");
-	    onLinkActivated: Qt.openUrlExternally(link)
-        }
-
         Row
         {
             id: buttonRow
-            anchors.top: upgradeText5.bottom
+            anchors.top: upgradeText2.bottom
             anchors.topMargin: UM.Theme.getSize("default_margin").height
             anchors.horizontalCenter: parent.horizontalCenter
             width: childrenRect.width
