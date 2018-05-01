@@ -1,4 +1,4 @@
-;This G-Code has been generated specifically for the LulzBot Hibiscus
+;This G-Code has been generated specifically for the LulzBot Mini 2
 M75 					; Start GLCD Print Timer
 G26 					; clear potential 'probe fail' condition
 G21 					; set units to Millimetres
