@@ -44,7 +44,8 @@ class QualityAndUserProfilesModel(ProfilesModel):
         filtered_quality_changes = {qc.getId(): qc for qc in quality_changes_list if
                                     qc.getMetaDataEntry("quality_type") in quality_type_set and
                                     ((qc.getMetaDataEntry("extruder") == active_extruder.definition.getMetaDataEntry("quality_definition") or
-                                     qc.getMetaDataEntry("extruder") == active_extruder.definition.getId()) if qc.getMetaDataEntry("extruder") is not None else True)}
+                                     qc.getMetaDataEntry("extruder") == active_extruder.definition.getId()) if qc.getMetaDataEntry("extruder") is not None else True) and
+                                    ((qc.getMetaDataEntry("material") == active_extruder.material.id) if machine_definition.getMetaDataEntry("has_machine_materials") else True)}
 
         result = filtered_quality_changes
         for q in quality_list:
