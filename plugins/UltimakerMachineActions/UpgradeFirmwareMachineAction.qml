@@ -39,27 +39,50 @@ Cura.MachineAction
             text: catalog.i18nc("@label", "Your LulzBot 3D Printer ships from our factory ready to help you Make Everything, right out of the box. Get the latest features and the most performance out of your LulzBot 3D Printer by keeping your firmware updated.")
         }
 
-        Label {
+        Label
+        {
             id: upgradeText1
             anchors.top: pageDescription.bottom
             anchors.topMargin: UM.Theme.getSize("default_margin").height
             width: parent.width
             wrapMode: Text.WordWrap
             text: catalog.i18nc("@label", "
-                <b>WARNING:</b>The firmware updating process will overwrite certain parameters. Restore the tuned values by following the steps below after the firmware update is complete.<br>
-		Please have the following recorded <u>before</u> upgrading firmware:
+                <b>WARNING:</b>The firmware updating process will overwrite certain parameters. Restore the tuned values by following the steps below after the firmware update is complete.<br>")
+
+        }
+        Label
+        {
+            id: upgradeText2
+            anchors.top: upgradeText1.bottom
+            anchors.topMargin: UM.Theme.getSize("default_margin").height
+            width: parent.width
+            wrapMode: Text.WordWrap
+            text: catalog.i18nc("@label", "Please have the following recorded <u>before</u> upgrading firmware:
                 <ul type=\"bullet\">
                     <li>Extruder steps per unit
                         (<a href='https://www.lulzbot.com/learn/tutorials/firmware-flashing-through-cura#get-esteps'>E-steps</a>)
                     <li>Z-axis offset
                         (<a href='https://www.lulzbot.com/learn/tutorials/Z-axis-offset#get-offset'>Z-offset</a>)
-                </ul>
-                You will need to
-                <a href='https://www.lulzbot.com/learn/tutorials/firmware-flashing-through-cura#esteps'>restore the E-steps</a> and
-                <a href='https://www.lulzbot.com/learn/tutorials/Z-axis-offset#restore-offset'>restore the Z-offset</a> after firmware upgrade.
-                ")
+                </ul>")
+                onLinkActivated: Qt.openUrlExternally(link)
+            MouseArea
+            {
+                anchors.fill: parent
+                acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
+                cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+            }
+        }
+        Label
+        {
+        id: upgradeText3
+            anchors.top: upgradeText2.bottom
+            anchors.topMargin: UM.Theme.getSize("default_margin").height
+            width: parent.width
+            wrapMode: Text.WordWrap
+            text: catalog.i18nc("@label", "You will need to <a href='https://www.lulzbot.com/learn/tutorials/firmware-flashing-through-cura#esteps'>restore the E-steps</a> and <a href='https://www.lulzbot.com/learn/tutorials/Z-axis-offset#restore-offset'>restore the Z-offset</a> after firmware upgrade.")
             onLinkActivated: Qt.openUrlExternally(link)
-            MouseArea {
+            MouseArea
+            {
                 anchors.fill: parent
                 acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
                 cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
@@ -68,7 +91,7 @@ Cura.MachineAction
         Row
         {
             id: buttonRow
-            anchors.top: upgradeText1.bottom
+            anchors.top: upgradeText3.bottom
             anchors.topMargin: UM.Theme.getSize("default_margin").height
             anchors.horizontalCenter: parent.horizontalCenter
             width: childrenRect.width
