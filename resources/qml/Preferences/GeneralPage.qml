@@ -291,7 +291,7 @@ UM.PreferencesPage
             Label
             {
                 font.bold: true
-                text: catalog.i18nc("@label","Viewport behavior")
+                text: catalog.i18nc("@label","Slicing behavior")
             }
 
             UM.TooltipArea
