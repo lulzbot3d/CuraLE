@@ -96,15 +96,14 @@ Cura.MachineAction
             anchors.horizontalCenter: parent.horizontalCenter
             width: childrenRect.width
             spacing: UM.Theme.getSize("default_margin").width
-            property var firmwareName: Cura.USBPrinterManager.getDefaultFirmwareName()
             Button
             {
                 id: autoUpgradeButton
                 text: catalog.i18nc("@action:button", "Automatically upgrade Firmware");
-                enabled: parent.firmwareName != ""
+                enabled: Cura.USBPrinterManager.getDefaultFirmwareName() != ""
                 onClicked:
                 {
-                    Cura.USBPrinterManager.updateAllFirmware(parent.firmwareName, updateEepromCheckbox.checked)
+                    Cura.USBPrinterManager.updateAllFirmware(Cura.USBPrinterManager.getDefaultFirmwareName(), updateEepromCheckbox.checked)
                 }
             }
             Button
