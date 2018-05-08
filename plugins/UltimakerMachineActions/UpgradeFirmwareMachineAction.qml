@@ -100,7 +100,7 @@ Cura.MachineAction
             {
                 id: autoUpgradeButton
                 text: catalog.i18nc("@action:button", "Automatically upgrade Firmware");
-                enabled: Cura.USBPrinterManager.getDefaultFirmwareName() != ""
+                // enabled: Cura.USBPrinterManager.getDefaultFirmwareName() != ""
                 onClicked:
                 {
                     Cura.USBPrinterManager.updateAllFirmware(Cura.USBPrinterManager.getDefaultFirmwareName(), updateEepromCheckbox.checked)
