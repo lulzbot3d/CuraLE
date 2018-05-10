@@ -494,6 +494,22 @@ class ContainerManager(QObject):
             return { "status": "error", "message": "Permission denied when trying to read the file"}
 
         container.setName(container_id)
+        if container.getMetaDataEntry("type") == "material" and container.getMetaDataEntry("material") == "Custom":
+            global_stack = Application.getInstance().getGlobalContainerStack()
+            machine_materials = global_stack.getMetaDataEntry("has_machine_materials", False)
+            if machine_materials:
+                new_quality = InstanceContainer("%s_default_%s" % (container.getId(), global_stack.getBottom().getId()))
+                metadata = {
+                    "material": container.getId()+"_"+global_stack.getBottom().getId(),
+                    "quality_type": "custom",
+                    "setting_version": 4,
+                    "type": "quality",
+                    "container_type": type(new_quality)
+                }
+                new_quality.setMetaData(metadata)
+                new_quality.setDefinition(global_stack.getBottom().getId())
+                new_quality.setName("Default")
+                self._container_registry.addContainer(new_quality)
 
         self._container_registry.addContainer(container)
 
