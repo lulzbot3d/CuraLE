@@ -309,7 +309,7 @@ Column
                 onEntered:
                 {
                     var content = catalog.i18nc("@tooltip", "Material Info")
-                    base.showTooltip(variantRow, Qt.point(-UM.Theme.getSize("default_margin").width, parent.height/2),  content)
+                    base.showTooltip(materialRow, Qt.point(-UM.Theme.getSize("default_margin").width, parent.height/4),  content)
                 }
                 onExited: base.hideTooltip()
             }
