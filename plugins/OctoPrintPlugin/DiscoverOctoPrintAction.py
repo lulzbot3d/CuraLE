@@ -5,6 +5,7 @@ from UM.Application import Application
 
 from UM.Settings.ContainerRegistry import ContainerRegistry
 from cura.MachineAction import MachineAction
+from cura.Settings.CuraStackBuilder import CuraStackBuilder
 
 from PyQt5.QtCore import pyqtSignal, pyqtProperty, pyqtSlot, QUrl, QObject
 from PyQt5.QtQml import QQmlComponent, QQmlContext
@@ -52,11 +53,12 @@ class DiscoverOctoPrintAction(MachineAction):
             Application.getInstance().getVersion()
         )).encode()
 
-
         self._instance_responded = False
         self._instance_api_key_accepted = False
         self._instance_supports_sd = False
         self._instance_supports_camera = False
+
+        self._additional_components = None
 
         ContainerRegistry.getInstance().containerAdded.connect(self._onContainerAdded)
         Application.getInstance().engineCreatedSignal.connect(self._createAdditionalComponentsView)
@@ -199,7 +201,7 @@ class DiscoverOctoPrintAction(MachineAction):
 
     @pyqtSlot(str, str, str)
     def setContainerMetaDataEntry(self, container_id, key, value):
-        containers = ContainerRegistry.getInstance().findContainers(None, id = container_id)
+        containers = ContainerRegistry.getInstance().findContainers(id = container_id)
         if not containers:
             UM.Logger.log("w", "Could not set metadata of container %s because it was not found.", container_id)
             return False
@@ -210,6 +212,58 @@ class DiscoverOctoPrintAction(MachineAction):
         else:
             container.addMetaDataEntry(key, value)
 
+    @pyqtSlot(bool)
+    def applyGcodeFlavorFix(self, apply_fix):
+        global_container_stack = Application.getInstance().getGlobalContainerStack()
+        if not global_container_stack:
+            return
+
+        gcode_flavor = "RepRap (Marlin/Sprinter)" if apply_fix else "UltiGCode"
+        if global_container_stack.getProperty("machine_gcode_flavor", "value") == gcode_flavor:
+            # No need to add a definition_changes container if the setting is not going to be changed
+            return
+
+        # Make sure there is a definition_changes container to store the machine settings
+        definition_changes_container = global_container_stack.definitionChanges
+        if definition_changes_container == ContainerRegistry.getInstance().getEmptyInstanceContainer():
+            definition_changes_container = CuraStackBuilder.createDefinitionChangesContainer(
+                global_container_stack, global_container_stack.getId() + "_settings")
+
+        definition_changes_container.setProperty("machine_gcode_flavor", "value", gcode_flavor)
+
+        # Update the has_materials metadata flag after switching gcode flavor
+        definition = global_container_stack.getBottom()
+        if definition.getProperty("machine_gcode_flavor", "value") != "UltiGCode" or definition.getMetaDataEntry("has_materials", False):
+            # In other words: only continue for the UM2 (extended), but not for the UM2+
+            return
+
+        has_materials = global_container_stack.getProperty("machine_gcode_flavor", "value") != "UltiGCode"
+
+        material_container = global_container_stack.material
+
+        if has_materials:
+            if "has_materials" in global_container_stack.getMetaData():
+                global_container_stack.setMetaDataEntry("has_materials", True)
+            else:
+                global_container_stack.addMetaDataEntry("has_materials", True)
+
+            # Set the material container to a sane default
+            if material_container == ContainerRegistry.getInstance().getEmptyInstanceContainer():
+                search_criteria = { "type": "material", "definition": "fdmprinter", "id": global_container_stack.getMetaDataEntry("preferred_material")}
+                materials = ContainerRegistry.getInstance().findInstanceContainers(**search_criteria)
+                if materials:
+                    global_container_stack.material = materials[0]
+        else:
+            # The metadata entry is stored in an ini, and ini files are parsed as strings only.
+            # Because any non-empty string evaluates to a boolean True, we have to remove the entry to make it False.
+            if "has_materials" in global_container_stack.getMetaData():
+                global_container_stack.removeMetaDataEntry("has_materials")
+
+            global_container_stack.material = ContainerRegistry.getInstance().getEmptyInstanceContainer()
+
+        Application.getInstance().globalContainerStackChanged.emit()
+
+
     @pyqtSlot(str)
     def openWebPage(self, url):
         QDesktopServices.openUrl(QUrl(url))
@@ -217,19 +271,13 @@ class DiscoverOctoPrintAction(MachineAction):
     def _createAdditionalComponentsView(self):
         Logger.log("d", "Creating additional ui components for OctoPrint-connected printers.")
 
-        path = QUrl.fromLocalFile(os.path.join(os.path.dirname(os.path.abspath(__file__)), "OctoPrintComponents.qml"))
-        self._additional_component = QQmlComponent(Application.getInstance()._engine, path)
-
-        # We need access to engine (although technically we can't)
-        self._additional_components_context = QQmlContext(Application.getInstance()._engine.rootContext())
-        self._additional_components_context.setContextProperty("manager", self)
-
-        self._additional_components_view = self._additional_component.create(self._additional_components_context)
-        if not self._additional_components_view:
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "OctoPrintComponents.qml")
+        self._additional_components = Application.getInstance().createQmlComponent(path, {"manager": self})
+        if not self._additional_components:
             Logger.log("w", "Could not create additional components for OctoPrint-connected printers.")
             return
 
-        Application.getInstance().addAdditionalComponent("monitorButtons", self._additional_components_view.findChild(QObject, "openOctoPrintButton"))
+        Application.getInstance().addAdditionalComponent("monitorButtons", self._additional_components.findChild(QObject, "openOctoPrintButton"))
 
     ##  Handler for all requests that have finished.
     def _onRequestFinished(self, reply):
