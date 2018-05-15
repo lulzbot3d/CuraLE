@@ -215,7 +215,6 @@ Rectangle
                     renderType: Text.NativeRendering
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    renderType: Text.NativeRendering
                     elide: Text.ElideRight
                 }
             }
