@@ -132,6 +132,7 @@ Rectangle
         anchors.topMargin: UM.Theme.getSize("sidebar_margin").height
         width: Math.floor(parent.width * 0.45)
         font: UM.Theme.getFont("large")
+        renderType: Text.NativeRendering
         color: UM.Theme.getColor("text")
         visible: !monitoringPrint && !hideView
     }
@@ -207,12 +208,14 @@ Rectangle
                     color: (control.checked || control.pressed) ? UM.Theme.getColor("action_button_active") : control.hovered ? UM.Theme.getColor("action_button_hovered") : UM.Theme.getColor("action_button")
                 }
 
-                contentItem: Text
+                contentItem: Label
                 {
                     text: model.text
                     font: UM.Theme.getFont("default")
+                    renderType: Text.NativeRendering
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
+                    renderType: Text.NativeRendering
                     elide: Text.ElideRight
                 }
             }
@@ -340,6 +343,7 @@ Rectangle
             font: UM.Theme.getFont("large")
             color: UM.Theme.getColor("text_subtext")
             text: (!base.printDuration || !base.printDuration.valid) ? catalog.i18nc("@label Hours and minutes", "00h 00min") : base.printDuration.getDisplayString(UM.DurationFormat.Short)
+            renderType: Text.NativeRendering
 
             MouseArea
             {
@@ -467,6 +471,7 @@ Rectangle
             anchors.left: parent.left
             anchors.bottom: parent.bottom
             font: UM.Theme.getFont("very_small")
+            renderType: Text.NativeRendering
             color: UM.Theme.getColor("text_subtext")
             elide: Text.ElideMiddle
             width: parent.width
