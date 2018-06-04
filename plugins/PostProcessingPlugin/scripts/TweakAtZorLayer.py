@@ -10,6 +10,7 @@
 # Modified by Stefan Heule, Dim3nsioneer@gmx.ch since V3.0 (see changelog below)
 # Modified by Jaime van Kessel (Ultimaker), j.vankessel@ultimaker.com to make it work for 15.10 / 2.x
 # Modified by Ruben Dulek (Ultimaker), r.dulek@ultimaker.com, to debug.
+# Modified by Brad Morgan, brad-morgan@comcast.net
 
 ##history / changelog:
 ##V3.0.1: TweakAtZ-state default 1 (i.e. the plugin works without any TweakAtZ comment)
@@ -32,6 +33,8 @@
 ##V5.0:   Bugfix for fall back after one layer and doubled G0 commands when using print speed tweak, Initial version for Cura 2.x
 ##V5.0.1: Bugfix for calling unknown property 'bedTemp' of previous settings storage and unkown variable 'speed'
 ##V5.1:   API Changes included for use with Cura 2.2
+##V5.1.1: ?
+##V5.1.2: Added test for ;LAYER=0 to avoid tweaking the start gcode.
 
 ## Uses -
 ## M220 S<factor in percent> - set speed factor override percentage
@@ -46,15 +49,15 @@ from ..Script import Script
 #from UM.Logger import Logger
 import re
 
-class TweakAtZ(Script):
-    version = "5.1.1"
+class TweakAtZorLayer(Script):
+    version = "5.1.2"
     def __init__(self):
         super().__init__()
 
     def getSettingDataString(self):
         return """{
-            "name":"TweakAtZ """ + self.version + """ (Experimental)",
-            "key":"TweakAtZ",
+            "name":"TweakAtZ or Layer """ + self.version + """ (Experimental)",
+            "key":"TweakAtZorLayer",
             "metadata": {},
             "version": 2,
             "settings":
@@ -355,6 +358,7 @@ class TweakAtZ(Script):
         IsUM2 = False
         oldValueUnknown = False
         TWinstances = 0
+        layers_started = False
 
         if self.getSettingValueByKey("a_trigger") == "layer_no":
             targetL_i = int(self.getSettingValueByKey("b_targetL"))
@@ -385,6 +389,11 @@ class TweakAtZ(Script):
                 if ";Small layer" in line: #checks for begin of Cool Head Lift
                     old["state"] = state
                     state = 0
+                if ";LAYER:0" in line:
+                    layers_started = True
+                    continue
+                if not layers_started:
+                    continue
                 if ";LAYER:" in line: #new layer no. found
                     if state == 0:
                         state = old["state"]
