@@ -86,15 +86,14 @@ Item
 
     property string statusText:
     {
+        var printerOutputDevice = Cura.MachineManager.printerOutputDevices[0]
 
-        if(UM.Backend.state == 1)
+        if(!UM.Scene.hasObjectsOnBuildPlate && (!printerConnected || (printerConnected && !(printerOutputDevice.jobState == "printing"  || printerOutputDevice.jobState ==  "paused"  || printerOutputDevice.jobState ==  "resuming" || printerOutputDevice.jobState ==  "pausing"))))
             return catalog.i18nc("@label:MonitorStatus", "Load a model file or verified G-code \nin the Prepare Window to begin a print.");
         if(!printerConnected)
             return catalog.i18nc("@label:MonitorStatus", "Not connected to a printer");
         if(!printerAcceptsCommands)
             return catalog.i18nc("@label:MonitorStatus", "Printer does not accept commands");
-
-        var printerOutputDevice = Cura.MachineManager.printerOutputDevices[0]
 
         if(printerOutputDevice.printerState == "maintenance")
         {

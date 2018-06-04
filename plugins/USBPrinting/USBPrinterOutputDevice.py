@@ -653,7 +653,11 @@ class ConnectThread:
             self._parent.setConnectionText(catalog.i18nc("@info:status", "Scanning available serial ports for printers"))
             self._parent._detectSerialPort()
             if self._parent._serial_port == None:
+                ## Do not return from function right away, first set the right state
                 self._parent.setConnectionText(catalog.i18nc("@info:status", "Failed to find a printer via USB"))
+                self._parent.log("e", "Failed to find a printer via USB")
+                self._parent.close()  # Unable to connect, wrap up the parent thread.
+                self._parent.setConnectionState(ConnectionState.closed)
                 return
         else:
             self._parent.setConnectionText(catalog.i18nc("@info:status", "Connecting to USB device"))

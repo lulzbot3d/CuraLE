@@ -34,7 +34,7 @@ Item
 
         Rectangle
         {
-            width: childrenRect.width
+            width: parseInt( UM.Theme.getSize("sidebar").width )
             height: childrenRect.height
             color: UM.Theme.getColor("sidebar")
 

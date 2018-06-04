@@ -1,4 +1,5 @@
 ;This G-Code has been generated specifically for the LulzBot TAZ 5 with dual extruder V3
+M75	   ;start GLCD timer
 G21        ;metric values
 G90        ;absolute positioning
 M107       ;start with the fan off

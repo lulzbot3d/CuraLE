@@ -1,4 +1,5 @@
 ;{material_print_temperature}{material_bed_temperature}
+M75	   ; Start GLCD Timer
 G21        ;metric values
 G90        ;absolute positioning
 M107       ;start with the fan off

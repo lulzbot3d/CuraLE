@@ -962,7 +962,11 @@ QtObject {
                     implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
                     border.color:
                     {
-                        if(!control.enabled)
+                        if(!control)
+                        {
+                            return UM.Theme.getColor("action_button_disabled_border");
+                        }
+                        else if(!control.enabled)
                         {
                             return UM.Theme.getColor("action_button_disabled_border");
                         }
@@ -981,7 +985,11 @@ QtObject {
                     }
                     color:
                     {
-                        if(!control.enabled)
+                        if(!control)
+                        {
+                            return UM.Theme.getColor("action_button_disabled");
+                        }
+                        else if(!control.enabled)
                         {
                             return UM.Theme.getColor("action_button_disabled");
                         }
@@ -1012,7 +1020,11 @@ QtObject {
                         anchors.centerIn: parent
                         color:
                         {
-                            if(!control.enabled)
+                            if(!control)
+                            {
+                                return UM.Theme.getColor("action_button_disabled_text");
+                            }
+                            else if(!control.enabled)
                             {
                                 return UM.Theme.getColor("action_button_disabled_text");
                             }

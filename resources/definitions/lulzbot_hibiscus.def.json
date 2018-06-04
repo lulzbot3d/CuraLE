@@ -1,6 +1,6 @@
 {
     "id": "LulzBot_Hibiscus",
-    "name": "LulzBot Hibiscus",
+    "name": "LulzBot Mini 2",
     "inherits": "lulzbot_base",
     "version": 2,
     "metadata":
@@ -53,6 +53,14 @@
         "machine_height":
         {
             "default_value": 180
+        },
+	"machine_has_lcd":
+        {
+        "type": "bool",
+        "default_value": true,
+        "enabled": true,
+        "label": "LCD",
+        "description": "LCD"
         },
         "machine_center_is_zero":
         {

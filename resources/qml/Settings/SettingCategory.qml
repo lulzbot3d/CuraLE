@@ -79,6 +79,7 @@ Button
             }
             text: definition.label
             font: UM.Theme.getFont("setting_category")
+            renderType: Text.NativeRendering
             color:
             {
                 if (!base.enabled) {

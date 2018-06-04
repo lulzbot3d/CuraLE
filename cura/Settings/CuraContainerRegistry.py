@@ -318,7 +318,7 @@ class CuraContainerRegistry(ContainerRegistry):
             if self._machineHasOwnMaterials():
                 active_material_id = self._activeMaterialId()
                 if active_material_id and active_material_id != "empty":  # only update if there is an active material
-                    profile.addMetaDataEntry("material", active_material_id)
+                    profile.setMetaDataEntry("material", active_material_id)
                     quality_type_criteria["material"] = active_material_id
 
             quality_type_criteria["definition"] = profile.getDefinition().getId()
@@ -388,9 +388,9 @@ class CuraContainerRegistry(ContainerRegistry):
     ##  Gets the ID of the active material
     #   \return the ID of the active material or the empty string
     def _activeMaterialId(self):
-        global_container_stack = Application.getInstance().getGlobalContainerStack()
-        if global_container_stack and global_container_stack.material:
-            return global_container_stack.material.getId()
+        active_extruder_stack = ExtruderManager.getInstance().getActiveExtruderStack()
+        if active_extruder_stack and active_extruder_stack.material:
+            return active_extruder_stack.material.getId()
         return ""
 
     ##  Returns true if the current machine requires its own quality profiles

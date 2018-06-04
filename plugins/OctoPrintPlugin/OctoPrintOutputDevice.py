@@ -35,6 +35,7 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
 
         self._gcode = None
         self._auto_print = True
+        self._forced_queue = False
 
         # We start with a single extruder, but update this when we get data from octoprint
         self._num_extruders_set = False
@@ -316,7 +317,13 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
 
     def requestWrite(self, node, file_name = None, filter_by_machine = False, file_handler = None, **kwargs):
         self.writeStarted.emit(self)
-        self._gcode = getattr(Application.getInstance().getController().getScene(), "gcode_list")
+
+        active_build_plate = Application.getInstance().getBuildPlateModel().activeBuildPlate
+        scene = Application.getInstance().getController().getScene()
+        gcode_dict = getattr(scene, "gcode_dict", None)
+        if not gcode_dict:
+            return
+        self._gcode = gcode_dict.get(active_build_plate, None)
 
         self.startPrint()
 
@@ -377,11 +384,20 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
         if not global_container_stack:
             return
 
+        if self._error_message:
+            self._error_message.hide()
+            self._error_message = None
+
+        if self._progress_message:
+            self._progress_message.hide()
+            self._progress_message = None
+
         self._auto_print = parseBool(global_container_stack.getMetaDataEntry("octoprint_auto_print", True))
+        self._forced_queue = False
 
         if self.jobState not in ["ready", ""]:
             if self.jobState == "offline":
-                self._error_message = Message(i18n_catalog.i18nc("@info:status", "OctoPrint is offline. Unable to start a new job."))
+                self._error_message = Message(i18n_catalog.i18nc("@info:status", "The printer is offline. Unable to start a new job."))
             elif self._auto_print:
                 self._error_message = Message(i18n_catalog.i18nc("@info:status", "OctoPrint is busy. Unable to start a new job."))
             else:
@@ -389,12 +405,23 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
                 self._error_message = None
 
             if self._error_message:
+                self._error_message.addAction("Queue", i18n_catalog.i18nc("@action:button", "Queue job"), None, i18n_catalog.i18nc("@action:tooltip", "Queue this print job so it can be printed later"))
+                self._error_message.actionTriggered.connect(self._queuePrint)
                 self._error_message.show()
                 return
 
+        self._startPrint()
+
+    def _queuePrint(self, message_id, action_id):
+        if self._error_message:
+            self._error_message.hide()
+        self._forced_queue = True
+        self._startPrint()
+
+    def _startPrint(self):
         self._preheat_timer.stop()
 
-        if self._auto_print:
+        if self._auto_print and not self._forced_queue:
             Application.getInstance().showPrintMonitor.emit(True)
 
         try:
@@ -427,7 +454,7 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
             self._post_part.setBody(b"true")
             self._post_multi_part.append(self._post_part)
 
-            if self._auto_print:
+            if self._auto_print and not self._forced_queue:
                 self._post_part = QHttpPart()
                 self._post_part.setHeader(QNetworkRequest.ContentDispositionHeader, "form-data; name=\"print\"")
                 self._post_part.setBody(b"true")
@@ -439,7 +466,7 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
             self._post_multi_part.append(self._post_part)
 
             destination = "local"
-            if self._sd_supported and parseBool(global_container_stack.getMetaDataEntry("octoprint_store_sd", False)):
+            if self._sd_supported and parseBool(Application.getInstance().getGlobalContainerStack().getMetaDataEntry("octoprint_store_sd", False)):
                 destination = "sdcard"
 
             ##  Post request + data
@@ -467,7 +494,8 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
 
             self._post_reply.abort()
             self._post_reply = None
-        self._progress_message.hide()
+        if self._progress_message:
+            self._progress_message.hide()
 
     def _sendCommand(self, command):
         self._sendCommandToApi("printer/command", command)
@@ -477,11 +505,14 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
         self._sendCommandToApi("job", command)
         Logger.log("d", "Sent job command to OctoPrint instance: %s", command)
 
-    def _sendCommandToApi(self, end_point, command):
+    def _sendCommandToApi(self, end_point, commands):
         command_request = self._createApiRequest(end_point)
         command_request.setHeader(QNetworkRequest.ContentTypeHeader, "application/json")
 
-        data = "{\"command\": \"%s\"}" % command
+        if isinstance(commands, list):
+            data = json.dumps({"commands": commands})
+        else:
+            data = json.dumps({"command": commands})
         self._command_reply = self._manager.post(command_request, data.encode())
 
     ##  Pre-heats the heated bed of the printer.
@@ -562,10 +593,10 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
         self._sendCommand("G0 Y%s F%s" % (y, speed))
 
     def _setHeadZ(self, z, speed):
-        self._sendCommand("G0 Y%s F%s" % (z, speed))
+        self._sendCommand("G0 Z%s F%s" % (z, speed))
 
     def _homeHead(self):
-        self._sendCommand("G28")
+        self._sendCommand("G28 X Y")
 
     def _homeBed(self):
         self._sendCommand("G28 Z")
@@ -746,18 +777,19 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
 
                         Logger.log("d", "Set OctoPrint camera url to %s", self._camera_url)
 
-                        self._camera_rotation = -90 if json_data["webcam"]["rotate90"] else 0
-                        if json_data["webcam"]["flipH"] and json_data["webcam"]["flipV"]:
-                            self._camera_mirror = False
-                            self._camera_rotation += 180
-                        elif json_data["webcam"]["flipH"]:
-                            self._camera_mirror = True
-                        elif json_data["webcam"]["flipV"]:
-                            self._camera_mirror = True
-                            self._camera_rotation += 180
-                        else:
-                            self._camera_mirror = False
-                        self.cameraOrientationChanged.emit()
+                        if "rotate90" in json_data["webcam"]:
+                            self._camera_rotation = -90 if json_data["webcam"]["rotate90"] else 0
+                            if json_data["webcam"]["flipH"] and json_data["webcam"]["flipV"]:
+                                self._camera_mirror = False
+                                self._camera_rotation += 180
+                            elif json_data["webcam"]["flipH"]:
+                                self._camera_mirror = True
+                            elif json_data["webcam"]["flipV"]:
+                                self._camera_mirror = True
+                                self._camera_rotation += 180
+                            else:
+                                self._camera_mirror = False
+                            self.cameraOrientationChanged.emit()
 
         elif reply.operation() == QNetworkAccessManager.PostOperation:
             if self._api_prefix + "files" in reply.url().toString():  # Result from /files command:
@@ -768,15 +800,15 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
 
                 reply.uploadProgress.disconnect(self._onUploadProgress)
                 self._progress_message.hide()
-                global_container_stack = Application.getInstance().getGlobalContainerStack()
-                if not self._auto_print:
+
+                if self._forced_queue or not self._auto_print:
                     location = reply.header(QNetworkRequest.LocationHeader)
                     if location:
                         file_name = QUrl(reply.header(QNetworkRequest.LocationHeader).toString()).fileName()
                         message = Message(i18n_catalog.i18nc("@info:status", "Saved to OctoPrint as {0}").format(file_name))
                     else:
                         message = Message(i18n_catalog.i18nc("@info:status", "Saved to OctoPrint"))
-                    message.addAction("open_browser", i18n_catalog.i18nc("@action:button", "Open OctoPrint..."), "globe",
+                    message.addAction("open_browser", i18n_catalog.i18nc("@action:button", "OctoPrint..."), "globe",
                                         i18n_catalog.i18nc("@info:tooltip", "Open the OctoPrint web interface"))
                     message.actionTriggered.connect(self._onMessageActionTriggered)
                     message.show()

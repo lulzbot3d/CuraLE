@@ -36,7 +36,7 @@ Cura.MachineAction
             anchors.topMargin: UM.Theme.getSize("default_margin").height
             width: parent.width
             wrapMode: Text.WordWrap
-            text: catalog.i18nc("@label", "Firmware is the piece of software running directly on your 3D printer. This firmware controls the step motors, regulates the temperature and ultimately makes your printer work.")
+            text: catalog.i18nc("@label", "Your LulzBot 3D Printer ships from our factory ready to help you Make Everything, right out of the box. Get the latest features and the most performance out of your LulzBot 3D Printer by keeping your firmware updated.")
         }
 
         Label
@@ -46,26 +46,64 @@ Cura.MachineAction
             anchors.topMargin: UM.Theme.getSize("default_margin").height
             width: parent.width
             wrapMode: Text.WordWrap
-            text: catalog.i18nc("@label", "The firmware shipping with new printers works, but new versions tend to have more features and improvements.");
-        }
+            text: catalog.i18nc("@label", "
+                <b>WARNING:</b>The firmware updating process will overwrite certain parameters. Restore the tuned values by following the steps below after the firmware update is complete.<br>")
 
+        }
+        Label
+        {
+            id: upgradeText2
+            anchors.top: upgradeText1.bottom
+            anchors.topMargin: UM.Theme.getSize("default_margin").height
+            width: parent.width
+            wrapMode: Text.WordWrap
+            text: catalog.i18nc("@label", "Please have the following recorded <u>before</u> upgrading firmware:
+                <ul type=\"bullet\">
+                    <li>Extruder steps per unit
+                        (<a href='https://www.lulzbot.com/learn/tutorials/firmware-flashing-through-cura#get-esteps'>E-steps</a>)
+                    <li>Z-axis offset
+                        (<a href='https://www.lulzbot.com/learn/tutorials/Z-axis-offset#get-offset'>Z-offset</a>)
+                </ul>")
+                onLinkActivated: Qt.openUrlExternally(link)
+            MouseArea
+            {
+                anchors.fill: parent
+                acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
+                cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+            }
+        }
+        Label
+        {
+        id: upgradeText3
+            anchors.top: upgradeText2.bottom
+            anchors.topMargin: UM.Theme.getSize("default_margin").height
+            width: parent.width
+            wrapMode: Text.WordWrap
+            text: catalog.i18nc("@label", "You will need to <a href='https://www.lulzbot.com/learn/tutorials/firmware-flashing-through-cura#esteps'>restore the E-steps</a> and <a href='https://www.lulzbot.com/learn/tutorials/Z-axis-offset#restore-offset'>restore the Z-offset</a> after firmware upgrade.")
+            onLinkActivated: Qt.openUrlExternally(link)
+            MouseArea
+            {
+                anchors.fill: parent
+                acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
+                cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+            }
+        }
         Row
         {
             id: buttonRow
-            anchors.top: upgradeText1.bottom
+            anchors.top: upgradeText3.bottom
             anchors.topMargin: UM.Theme.getSize("default_margin").height
             anchors.horizontalCenter: parent.horizontalCenter
             width: childrenRect.width
             spacing: UM.Theme.getSize("default_margin").width
-            property var firmwareName: Cura.USBPrinterManager.getDefaultFirmwareName()
             Button
             {
                 id: autoUpgradeButton
                 text: catalog.i18nc("@action:button", "Automatically upgrade Firmware");
-                enabled: parent.firmwareName != ""
+                // enabled: Cura.USBPrinterManager.getDefaultFirmwareName() != ""
                 onClicked:
                 {
-                    Cura.USBPrinterManager.updateAllFirmware(parent.firmwareName, updateEepromCheckbox.checked)
+                    Cura.USBPrinterManager.updateAllFirmware(Cura.USBPrinterManager.getDefaultFirmwareName(), updateEepromCheckbox.checked)
                 }
             }
             Button
