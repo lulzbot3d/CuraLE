@@ -40,6 +40,7 @@ Menu
         MenuItem { action: Cura.Actions.viewTopCamera; }
         MenuItem { action: Cura.Actions.viewLeftSideCamera; }
         MenuItem { action: Cura.Actions.viewRightSideCamera; }
+        MenuItem { action: Cura.Actions.viewBottomSideCamera; }
     }
 
     MenuSeparator {

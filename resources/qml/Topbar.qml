@@ -117,7 +117,7 @@ Rectangle
             style: UM.Theme.styles.small_tool_button
             anchors.verticalCenter: viewOrientationControl.verticalCenter
             onClicked:UM.Controller.rotateView("3d", 0)
-            visible: base.width - allItemsWidth - 4 * this.width > 0
+            visible: base.width - allItemsWidth - 5 * this.width > 0
         }
 
         // #2 Front view
@@ -127,7 +127,7 @@ Rectangle
             style: UM.Theme.styles.small_tool_button
             anchors.verticalCenter: viewOrientationControl.verticalCenter
             onClicked: UM.Controller.rotateView("home", 0);
-            visible: base.width - allItemsWidth - 3 * this.width > 0
+            visible: base.width - allItemsWidth - 4 * this.width > 0
         }
 
         // #3 Top view
@@ -137,7 +137,7 @@ Rectangle
             style: UM.Theme.styles.small_tool_button
             anchors.verticalCenter: viewOrientationControl.verticalCenter
             onClicked: UM.Controller.rotateView("y", 90)
-            visible: base.width - allItemsWidth - 2 * this.width > 0
+            visible: base.width - allItemsWidth - 3 * this.width > 0
         }
 
         // #4 Left view
@@ -147,16 +147,26 @@ Rectangle
             style: UM.Theme.styles.small_tool_button
             anchors.verticalCenter: viewOrientationControl.verticalCenter
             onClicked: UM.Controller.rotateView("x", 90)
-            visible: base.width - allItemsWidth - 1 * this.width > 0
+            visible: base.width - allItemsWidth - 2 * this.width > 0
         }
 
-        // #5 Left view
+        // #5 Right view
         Button
         {
             iconSource: UM.Theme.getIcon("view_right")
             style: UM.Theme.styles.small_tool_button
             anchors.verticalCenter: viewOrientationControl.verticalCenter
             onClicked: UM.Controller.rotateView("x", -90)
+            visible: base.width - allItemsWidth - 1 * this.width > 0
+        }
+
+        // #6 Bottom view
+        Button
+        {
+            iconSource: UM.Theme.getIcon("view_bottom")
+            style: UM.Theme.styles.small_tool_button
+            anchors.verticalCenter: viewOrientationControl.verticalCenter
+            onClicked: UM.Controller.rotateView("bottom", 0)
             visible: base.width - allItemsWidth > 0
         }
     }
