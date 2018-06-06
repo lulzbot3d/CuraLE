@@ -819,18 +819,29 @@ class ContainerManager(QObject):
         duplicated_container.setMetaDataEntry("material", "Custom")
         duplicated_container.setMetaDataEntry("brand", "Custom")
 
+        printer_id = global_stack.getBottom().getId()
+        criteria = {"type": "quality", "material": material_id+"_"+printer_id, "definition": printer_id}
+        qualities = self._container_registry.findInstanceContainers(**criteria)
+        if len(qualities) > 0:
+            for q in qualities:
+                new_quality = copy.deepcopy(q)
+                new_quality.setMetaDataEntry("id", new_quality.id + "_" + new_id)
+                new_quality.setMetaDataEntry("material", new_id + "_" + printer_id)
+                new_quality.setDirty(True)
+                self._container_registry.addContainer(new_quality)
+
         machine_materials = global_stack.getMetaDataEntry("has_machine_materials", False)
-        if machine_materials:
-            new_quality = InstanceContainer("%s_default_%s" % (new_id, global_stack.getBottom().getId()))
+        if machine_materials and len(qualities) == 0:
+            new_quality = InstanceContainer("%s_default_%s" % (new_id, printer_id))
             metadata = {
-                "material": new_id + "_" + global_stack.getBottom().getId(),
+                "material": new_id + "_" + printer_id,
                 "quality_type": "custom",
                 "setting_version": 4,
                 "type": "quality",
                 "container_type": type(new_quality)
             }
             new_quality.setMetaData(metadata)
-            new_quality.setDefinition(global_stack.getBottom().getId())
+            new_quality.setDefinition(printer_id)
             new_quality.setName("Default")
             self._container_registry.addContainer(new_quality)
 
