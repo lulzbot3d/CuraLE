@@ -74,5 +74,8 @@
     <machine>
       <machine_identifier product="taz6_twool_head"/>
     </machine>
+    <machine>
+      <machine_identifier product="taz5_twool_head"/>
+    </machine>
   </settings>
 </fdmmaterial>

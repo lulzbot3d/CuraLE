@@ -34,5 +34,8 @@
     <machine>
       <machine_identifier product="lulzbot_mini"/>
     </machine>
+    <machine>
+      <machine_identifier product="taz5_twool_head"/>
+    </machine>
   </settings>
 </fdmmaterial>
