@@ -762,13 +762,13 @@ class ContainerManager(QObject):
         self._container_registry.addContainer(global_changes)
 
         # Handle the extruders if present.
-        extruders = machine_definition.getMetaDataEntry("machine_extruder_trains")
-        if extruders:
-            for extruder_id in extruders:
-                extruder = extruders[extruder_id]
-                new_changes = self._createQualityChanges(quality_container, new_name, machine_definition, extruder)
-                new_change_instances.append(new_changes)
-                self._container_registry.addContainer(new_changes)
+        # extruders = machine_definition.getMetaDataEntry("machine_extruder_trains")
+        # if extruders:
+        #     for extruder_id in extruders:
+        #         extruder = extruders[extruder_id]
+        #         new_changes = self._createQualityChanges(quality_container, new_name, machine_definition, extruder)
+        #         new_change_instances.append(new_changes)
+        #         self._container_registry.addContainer(new_changes)
 
         return new_change_instances
 
@@ -1097,7 +1097,7 @@ class ContainerManager(QObject):
         quality_changes = InstanceContainer(self._createUniqueId(base_id, new_name))
         quality_changes.setName(new_name)
         quality_changes.addMetaDataEntry("type", "quality_changes")
-        quality_changes.addMetaDataEntry("quality_type", self._machine_manager.currentQualityType)
+        quality_changes.addMetaDataEntry("quality_type", quality_container.getMetaDataEntry("quality_type", "default"))
 
         # If we are creating a container for an extruder, ensure we add that to the container
         if extruder_id is not None:
