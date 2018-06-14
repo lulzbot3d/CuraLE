@@ -131,7 +131,7 @@ Item {
         Row {
             id: additionalComponentsRow
             anchors.top: parent.top
-            anchors.right: saveToButton.visible ? saveToButton.left : parent.right
+            anchors.right: prepareButton.visible ? prepareButton.left : (saveToButton.visible ? saveToButton.left : parent.right)
             anchors.rightMargin: UM.Theme.getSize("default_margin").width
 
             spacing: UM.Theme.getSize("default_margin").width
