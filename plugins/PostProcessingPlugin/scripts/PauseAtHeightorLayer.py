@@ -7,6 +7,8 @@
 ## Added some logging (most is commented out)
 ## Removed adjusting by layer 0 z so that a height in mm pauses closer to that height.
 ## Added current temperature search so that a pause without standby or resume temperatures might actually resume printing
+## Added tracking of relative and absolute modes (G90, G91, M82, M83)
+## Added a pause (G4) after moving the filament around to allow for manual nozzle cleaning (continues after pause, ready or not)
 
 from ..Script import Script
 import re
@@ -41,7 +43,7 @@ class PauseAtHeightorLayer(Script):
                     "type": "float",
                     "default_value": 5.0,
                      "enabled": "trigger == 'height'"
-               },
+                },
                 "pause_layer":
                 {
                     "label": "Pause Layer",
@@ -99,6 +101,14 @@ class PauseAtHeightorLayer(Script):
                     "type": "float",
                     "default_value": 3.3333
                 },
+                "pause_time":
+                {
+                    "label": "Pause Time",
+                    "description": "How long to wait after extra extrude. This might be needed to manually clean the nozzle.",
+                    "unit": "seconds",
+                    "type": "float",
+                    "default_value": 0.0
+                },
                 "redo_layers":
                 {
                     "label": "Redo Layers",
@@ -111,7 +121,7 @@ class PauseAtHeightorLayer(Script):
                 {
                     "label": "Standby Temperature",
                     "description": "Change the temperature during the pause",
-                    "unit": "°C",
+                    "unit": "C",
                     "type": "int",
                     "default_value": 0
                 },
@@ -135,6 +145,10 @@ class PauseAtHeightorLayer(Script):
         current_z = 0.
         pause_layer = -10000
         pause_height = 10000.0
+        layers_started = False
+        current_temperature = 0
+        xyz_absolute = True
+        e_absolute = True
         if self.getSettingValueByKey("trigger") == "layer_no":
             pause_layer = int(self.getSettingValueByKey("pause_layer"))
             pause_by = "L"
@@ -142,29 +156,49 @@ class PauseAtHeightorLayer(Script):
             pause_height = self.getSettingValueByKey("pause_height")
             pause_by = "H"
         # Logger.log("d", "pause_by = %s, pause_layer = %i, pause_height = %f", pause_by, pause_layer, pause_height)
+        park_x = self.getSettingValueByKey("head_park_x")
+        park_y = self.getSettingValueByKey("head_park_y")
         retraction_amount = self.getSettingValueByKey("retraction_amount")
         retraction_speed = self.getSettingValueByKey("retraction_speed")
         extrude_amount = self.getSettingValueByKey("extrude_amount")
         extrude_speed = self.getSettingValueByKey("extrude_speed")
-        park_x = self.getSettingValueByKey("head_park_x")
-        park_y = self.getSettingValueByKey("head_park_y")
-        layers_started = False
+        pause_time = self.getSettingValueByKey("pause_time")
         redo_layers = self.getSettingValueByKey("redo_layers")
         standby_temperature = self.getSettingValueByKey("standby_temperature")
         resume_temperature = self.getSettingValueByKey("resume_temperature")
-        current_temperature = 0
 
         # T = ExtruderManager.getInstance().getActiveExtruderStack().getProperty("material_print_temperature", "value")
         # with open("out.txt", "w") as f:
             # f.write(T)
 
         for layer in data:
+            index = data.index(layer)
             lines = layer.split("\n")
+            lineno = 0
             for line in lines:
+                lineno += 1
                 if ";LAYER:0" in line:
                     layers_started = True
                     current_layer = 0
                     continue
+
+                if self.getValue(line, 'G') == 90:
+                    Logger.log("d", "Got one: index = %i, lineno = %i, line = %s", index, lineno, line)
+                    xyz_absolute = True
+                    e_absolute = True
+
+                if self.getValue(line, 'G') == 91:
+                    Logger.log("d", "Got one: index = %i, lineno = %i, line = %s", index, lineno, line)
+                    xyz_absolute = False
+                    e_absolute = False
+
+                if self.getValue(line, 'M') == 82 and not ";pauseAt" in line:
+                    Logger.log("d", "Got one: index = %i, lineno = %i, line = %s", index, lineno, line)
+                    e_absolute = True
+
+                if self.getValue(line, 'M') == 83 and not ";pauseAt" in line:
+                    Logger.log("d", "Got one: index = %i, lineno = %i, line = %s", index, lineno, line)
+                    e_absolute = False
 
                 if self.getValue(line, 'M') == 104 or self.getValue(line, 'M') == 109:
                     current_temperature = self.getValue(line, 'S')
@@ -180,22 +214,26 @@ class PauseAtHeightorLayer(Script):
                     current_layer = float(m.group(0))
 
                 if self.getValue(line, 'G') == 1 or self.getValue(line, 'G') == 0:
-                    current_z = self.getValue(line, 'Z')
+                    if xyz_absolute:
+                        current_z = self.getValue(line, 'Z')
+                    else:
+                        current_z = current_z + self.getValue(line, 'Z')
 
                     x = self.getValue(line, 'X', x)
                     y = self.getValue(line, 'Y', y)
                     if current_z is not None:
                         # Logger.log("d", "Look for: pause_by = %s, pause_layer = %i, pause_height = %f, current_layer = %i, current_z = %f", pause_by, pause_layer, pause_height, current_layer, current_z)
                         if (pause_by == "L" and current_layer == pause_layer) or (pause_by == "H" and current_z >= pause_height):
-                            # Logger.log("d", "Got one: pause_by = %s, pause_layer = %i, pause_height = %f, current_layer = %i, current_z = %f", pause_by, pause_layer, pause_height, current_layer, current_z)
-                            index = data.index(layer)
-                            prevLayer = data[index - 1]
-                            prevLines = prevLayer.split("\n")
-                            current_e = 0.
-                            for prevLine in reversed(prevLines):
-                                current_e = self.getValue(prevLine, 'E', -1)
-                                if current_e >= 0:
-                                    break
+                            Logger.log("d", "Got one: index = %i, lineno = %i, pause_by = %s, pause_layer = %i, pause_height = %f, current_layer = %i, current_z = %f", index, lineno, pause_by, pause_layer, pause_height, current_layer, current_z)
+                            if e_absolute:
+                                index = data.index(layer)
+                                prevLayer = data[index - 1]
+                                prevLines = prevLayer.split("\n")
+                                current_e = 0.
+                                for prevLine in reversed(prevLines):
+                                    current_e = self.getValue(prevLine, 'E', -1)
+                                    if current_e != 0:
+                                        break
 
                             # include a number of previous layers
                             for i in range(1, redo_layers + 1):
@@ -210,17 +248,26 @@ class PauseAtHeightorLayer(Script):
                             prepend_gcode += ";pause_by: %s \n" % pause_by
                             if current_temperature is not None:
                                 prepend_gcode += ";current_temperature: %i \n" % current_temperature
+                            if not xyz_absolute:
+                                prepend_gcode += ";XYZ values are relative\n"
+                            if not e_absolute:
+                                prepend_gcode += ";E values are relative\n"
 
-                            # Retraction
-                            prepend_gcode += "M83\n"
+                            # Retract the filament
+                            if e_absolute:
+                                prepend_gcode += "M83 ;pauseAt\n"        # set E relative
                             if retraction_amount != 0:
                                 prepend_gcode += "G1 E-%f F%f\n" % (retraction_amount, retraction_speed * 60)
 
                             # Move the head away
-                            prepend_gcode += "G1 Z%f F300\n" % (current_z + 1)
-                            prepend_gcode += "G1 X%f Y%f F9000\n" % (park_x, park_y)
-                            if current_z < 15:
-                                prepend_gcode += "G1 Z15 F300\n"
+                            if xyz_absolute:
+                                prepend_gcode += "G1 Z%f F300\n" % (current_z + 1)
+                                prepend_gcode += "G1 X%f Y%f F9000\n" % (park_x, park_y)
+                                if current_z < 15:
+                                    prepend_gcode += "G1 Z15 F300\n"
+                            else:
+                                prepend_gcode += "G1 Z+1 F300\n"
+                                prepend_gcode += "G1 X%f Y%f F9000\n" % (park_x, park_y) # This is relative move
 
                             # Disable the E steppers
                             prepend_gcode += "M84 E0\n"
@@ -237,34 +284,42 @@ class PauseAtHeightorLayer(Script):
                             else:
                                 prepend_gcode += "M109 S%i ; resume previous temperature\n" % (current_temperature)
 
-                            # Push the filament back,
+                            # Push the filament back
                             if retraction_amount != 0:
                                 prepend_gcode += "G1 E%f F%f\n" % (retraction_amount, retraction_speed * 60)
 
-                            # Optionally extrude material
+                            # Optionally extrude more material
                             if extrude_amount != 0:
                                 prepend_gcode += "G1 E%f F%f\n" % (extrude_amount, extrude_speed * 60)
 
-                            # and retract again, the properly primes the nozzle
-                            # when changing filament.
+                            # Optionally wait for manual nozzle clean (continue after delay, ready or not)
+                            if pause_time != 0:
+                                prepend_gcode += "G4 P%f\n" % (pause_time * 1000)
+
+                            # Retract filament again, this properly primes the nozzle when changing filament.
                             if retraction_amount != 0:
                                 prepend_gcode += "G1 E-%f F%f\n" % (retraction_amount, retraction_speed * 60)
 
                             # Move the head back
-                            prepend_gcode += "G1 Z%f F300\n" % (current_z + 1)
-                            prepend_gcode += "G1 X%f Y%f F9000\n" % (x, y)
+                            if xyz_absolute:
+                                prepend_gcode += "G1 Z%f F300\n" % (current_z + 1)
+                                prepend_gcode += "G1 X%f Y%f F9000\n" % (x, y)
+                            else:
+                                prepend_gcode += "G1 Z-1 F300\n"
+                                prepend_gcode += "G1 X%f Y%f F9000\n" % (-park_x, -park_y) # This is relative move
+
+                            # Push the filament back again
                             if retraction_amount != 0:
                                 prepend_gcode += "G1 E%f F%f\n" % (retraction_amount, retraction_speed * 60)
-                            prepend_gcode += "G1 F9000\n"
-                            prepend_gcode += "M82\n"
 
-                            # reset extrude value to pre pause value
-                            prepend_gcode += "G92 E%f\n" % (current_e)
+                            # restore previous E absolute and reset extrude value to pre pause value
+                            if e_absolute:
+                                prepend_gcode += "M82 ;pauseAt\n"
+                                prepend_gcode += "G92 E%f\n" % (current_e)
 
                             layer = prepend_gcode + layer
 
-                            # Override the data of this layer with the
-                            # modified data
+                            # Override the data of this layer with the modified data
                             data[index] = layer
                             return data
                         break
