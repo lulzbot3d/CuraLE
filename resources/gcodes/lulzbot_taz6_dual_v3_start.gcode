@@ -76,6 +76,7 @@ G1  E0 F100                  ; undo retraction
 G92 E-15                     ; set extruder negative amount to purge
 G1  E0 F100                  ; purge XXmm of filament
 T1                           ; switch to second extruder
+G92 E-15                     ; set extruder negative amount to purge
 G1  E0 F100                  ; undo retraction
 G92 E-15                     ; set extruder negative amount to purge
 G1  E0 F100                  ; purge XXmm of filament
