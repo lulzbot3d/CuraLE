@@ -532,7 +532,7 @@ Item
                     onEntered:
                     {
                         base.showTooltip(adhesionComboBox, Qt.point(-adhesionComboBox.x, 0),
-                            catalog.i18nc("@label", "Enable printing a brim or raft. This will add a flat area around or under your object which is easy to cut off afterwards."));
+                            catalog.i18nc("@label", "Enable printing a brim, skirt, or raft. This will add a flat area around or under your object which is easy to cut off afterwards."));
                     }
                     onExited:
                     {
