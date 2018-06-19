@@ -231,7 +231,7 @@ class PauseAtHeightorLayer(Script):
                                 prevLines = prevLayer.split("\n")
                                 current_e = 0.
                                 for prevLine in reversed(prevLines):
-                                    current_e = self.getValue(prevLine, 'E', -1)
+                                    current_e = self.getValue(prevLine, 'E', 0)
                                     if current_e != 0:
                                         break
 
