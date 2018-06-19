@@ -121,7 +121,7 @@ class PauseAtHeightorLayer(Script):
                 {
                     "label": "Standby Temperature",
                     "description": "Change the temperature during the pause",
-                    "unit": "C",
+                    "unit": "°C",
                     "type": "int",
                     "default_value": 0
                 },
@@ -255,7 +255,7 @@ class PauseAtHeightorLayer(Script):
 
                             # Retract the filament
                             if e_absolute:
-                                prepend_gcode += "M83 ;pauseAt\n"        # set E relative
+                                prepend_gcode += "M83 ;Set E relative\n"
                             if retraction_amount != 0:
                                 prepend_gcode += "G1 E-%f F%f\n" % (retraction_amount, retraction_speed * 60)
 
@@ -314,7 +314,7 @@ class PauseAtHeightorLayer(Script):
 
                             # restore previous E absolute and reset extrude value to pre pause value
                             if e_absolute:
-                                prepend_gcode += "M82 ;pauseAt\n"
+                                prepend_gcode += "M82 ;Set E absolute\n"
                                 prepend_gcode += "G92 E%f\n" % (current_e)
 
                             layer = prepend_gcode + layer
