@@ -892,7 +892,7 @@
                             "type": "float",
                             "unit": "mm",
                             "default_value": 0.0,
-                            "minimum_value": 0,0,
+                            "minimum_value": 0.0,
                             "settable_per_mesh": false,
                             "settable_per_extruder": false
                         }
