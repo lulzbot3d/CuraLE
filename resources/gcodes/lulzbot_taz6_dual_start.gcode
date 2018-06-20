@@ -56,6 +56,8 @@ M109 R{material_probe_temperature_0}                   ; heat to probe temp
 G1 X-9 Y-9                   ; move above first probe point
 M204 S100                    ; set accel for probing
 G29                          ; probe sequence (for auto-leveling)
+M425 Z			     ; use measured Z backlash for compensation
+M425 Z F0		     ; turn off measured Z backlash compensation. (if activated in the quality settings, this command will automatically be ignored)
 M204 S500                    ; set accel back to normal
 G1 X0 Y0 Z15 F5000           ; get out the way
 M400                         ; clear buffer

@@ -62,6 +62,8 @@ G1 X -17 Z15                         ; raise extruder
 M109 R{material_probe_temperature_0}                   ; heat to probe temp
 M204 S100                    ; set accel for probing
 G29                          ; probe sequence (for auto-leveling)
+M425 Z			     ; use measured Z backlash for compensation
+M425 Z F0		     ; turn off measured Z backlash compensation. (if activated in the quality settings, this command will automatically be ignored)
 M204 S500                    ; set accel back to normal
 M104 S{material_print_temperature_0} T0 ; set extruder temp
 M104 S{material_print_temperature_1} T1; set extruder temp
