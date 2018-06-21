@@ -22,7 +22,7 @@ i18n_catalog = i18nCatalog("cura")
 class PostProcessingPlugin(QObject, Extension):
     def __init__(self, parent = None):
         super().__init__(parent)
-        self.addMenuItem(i18n_catalog.i18n("Modify G-Code"), self.showPopup)
+        self.addMenuItem(i18n_catalog.i18n("Modify G-code"), self.showPopup)
         self._view = None
 
         # Loaded scripts are all scripts that can be used

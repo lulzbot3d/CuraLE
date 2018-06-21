@@ -434,14 +434,14 @@ Item
     Action
     {
         id: browsePluginsAction
-        text: catalog.i18nc("@action:menu", "Browse plugins...")
+        text: catalog.i18nc("@action:menu", "Browse Plugins...")
         iconName: "plugins_browse"
     }
 
     Action
     {
         id: configurePluginsAction
-        text: catalog.i18nc("@action:menu", "Installed plugins...");
+        text: catalog.i18nc("@action:menu", "Installed Plugins...");
         iconName: "plugins_configure"
     }
 

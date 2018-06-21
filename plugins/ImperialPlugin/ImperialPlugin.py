@@ -9,8 +9,8 @@ i18n_catalog = i18nCatalog("ImperialPlugin")
 class ImperialPlugin(Extension):
     def __init__(self):
         super().__init__()
-        self.addMenuItem(i18n_catalog.i18n("Convert to METRIC"), self.convertToMetric)
-        self.addMenuItem(i18n_catalog.i18n("Convert to IMPERIAL"), self.convertToImperial)
+        self.addMenuItem(i18n_catalog.i18n("Convert to Metric"), self.convertToMetric)
+        self.addMenuItem(i18n_catalog.i18n("Convert to Imperial"), self.convertToImperial)
 
     ##  Scales all selected objects by 25.4 (inch to mm)
     def convertToMetric(self):

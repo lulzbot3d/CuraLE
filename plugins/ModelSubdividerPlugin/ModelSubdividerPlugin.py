@@ -33,8 +33,8 @@ class ModelSubdividerPlugin(Extension):
 
     def __init__(self):
         super().__init__()
-        self.addMenuItem(i18n_catalog.i18n("Create plane"), self.createPlane)
-        self.addMenuItem(i18n_catalog.i18n("Subdivide mesh by plane"), self.subdivide)
+        self.addMenuItem(i18n_catalog.i18n("Create Plane"), self.createPlane)
+        self.addMenuItem(i18n_catalog.i18n("Subdivide Mesh by Plane"), self.subdivide)
 
     def createPlane(self):
         plane = Plane()

@@ -34,7 +34,7 @@ Menu
 
     Menu
     {
-        title: catalog.i18nc("@action:inmenu menubar:view","&Camera position");
+        title: catalog.i18nc("@action:inmenu menubar:view","&Camera Position");
         MenuItem { action: Cura.Actions.view3DCamera; }
         MenuItem { action: Cura.Actions.viewFrontCamera; }
         MenuItem { action: Cura.Actions.viewTopCamera; }
