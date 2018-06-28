@@ -744,7 +744,7 @@ UM.MainWindow
         //: File open dialog title
         title: catalog.i18nc("@title:window","Open file(s)")
         modality: UM.Application.platform == "linux" ? Qt.NonModal : Qt.WindowModal;
-        selectMultiple: true
+        selectMultiple: false
         nameFilters: UM.MeshFileHandler.supportedReadFileTypes;
         folder: CuraApplication.getDefaultPath("dialog_load_path")
         onAccepted:
