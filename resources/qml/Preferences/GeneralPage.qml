@@ -670,7 +670,7 @@ UM.PreferencesPage
                 {
                     id: wrongPrinterDialog
                     title: catalog.i18nc("@label","Warning")
-                    text: catalog.i18nc("@label","Do you really sure to allow connection to wrong/custom printers? It may harm your machine.")
+                    text: catalog.i18nc("@label","Do you really want to allow connections to wrong/custom printers? It may harm your machine.")
                     standardButtons: StandardButton.Yes | StandardButton.No
                     function resetValue()
                     {
