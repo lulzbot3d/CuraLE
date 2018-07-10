@@ -40,5 +40,9 @@
     <machine>
       <machine_identifier product="taz5_twool_head"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_flexy_dually_v2"/>
+      <metadata key="category">Experimental</metadata>
+    </machine>
   </settings>
 </fdmmaterial>
