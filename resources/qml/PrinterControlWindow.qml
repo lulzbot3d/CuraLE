@@ -15,8 +15,8 @@ UM.Dialog
     id: base
     title: catalog.i18nc("@title:window","Printer control")
     modality: Qt.NonModal;
-    minimumWidth: 500 * Screen.devicePixelRatio
-    minimumHeight: 400 * Screen.devicePixelRatio
+    minimumWidth: 500 * screenScaleFactor
+    minimumHeight: 400 * screenScaleFactor
     width: minimumWidth
     height: minimumHeight
     signal command(string command)
