@@ -61,6 +61,9 @@
       <machine_identifier product="lulzbot_hibiscus"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_hibiscus_achemon"/>
+    </machine>
+    <machine>
       <machine_identifier product="taz5_twool_head"/>
     </machine>
   </settings>
