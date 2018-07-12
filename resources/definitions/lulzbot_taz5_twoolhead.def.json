@@ -1,15 +1,15 @@
 {
-    "id": "LulzBot_TAZ6_Twoolhead",
-    "name": "Twool Head TAZ 6",
+    "id": "LulzBot_TAZ5_Twoolhead",
+    "name": "Twoolhead TAZ 5",
     "inherits": "lulzbot_taz_base",
     "version": 2,
     "metadata":
     {
         "machine_extruder_trains":
         {
-            "0": "lulzbot_taz6_extruder"
+            "0": "lulzbot_taz5_twoolhead_extruder"
         },
-        "platform": "lulzbot_taz6.stl",
+        "platform": "lulzbot_taz5.stl",
         "platform_offset":
         [
             70,
@@ -24,14 +24,14 @@
         "visible": true,
         "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-taz-6",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-single-extruder-tool-head-v21",
-        "base_machine": "lulzbot_taz_6",
+        "base_machine": "lulzbot_taz_5",
         "firmware_toolhead_name": "SingleExtruder"
     },
     "overrides":
     {
         "machine_name":
         {
-            "default_value": "LulzBot TAZ 6"
+            "default_value": "LulzBot TAZ 5"
         },
         "machine_width":
         {
@@ -47,15 +47,11 @@
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "twool_head_start_gcode_taz6"
+            "default_value_from_file": "twool_head_taz5_start"
         },
         "machine_end_gcode":
         {
-            "default_value_from_file": "twool_head_end_gcode_taz6"
-        },
-        "machine_wipe_gcode":
-        {
-            "default_value_from_file": "taz6_twool_wipe_sequence"
+            "default_value_from_file": "twool_head_taz5_end"
         },
         "machine_baudrate":
         {
