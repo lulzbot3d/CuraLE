@@ -54,10 +54,10 @@
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_hibiscus"/>
     </machine>
     <machine>
-      <machine_identifier product="taz6_twool_head"/>
+       <machine_identifier product="lulzbot_taz6_twoolhead"/>
     </machine>
     <machine>
-      <machine_identifier product="taz5_twool_head"/>
+      <machine_identifier product="lulzbot_taz5_twoolhead"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz6_flexy_dually_v2"/>

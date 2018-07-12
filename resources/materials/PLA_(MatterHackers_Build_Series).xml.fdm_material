@@ -32,13 +32,13 @@
       <setting key="part removal temperature">45.0</setting>
     </machine>
     <machine>
-      <machine_identifier product="taz6_twool_head"/>
-    </machine>
-    <machine>
       <machine_identifier product="lulzbot_mini"/>
     </machine>
     <machine>
-      <machine_identifier product="taz5_twool_head"/>
+       <machine_identifier product="lulzbot_taz6_twoolhead"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_twoolhead"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz6_flexy_dually_v2"/>
