@@ -59,14 +59,6 @@
     </machine>
     <machine>
       <machine_identifier product="lulzbot_hibiscus"/>
-    </machine>
-    <machine>
-     <machine_identifier product="lulzbot_taz6_twoolhead"/>
-     <metadata key="category">Experimental</metadata>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_taz5_twoolhead"/>
-      <metadata key="category">Experimental</metadata>
     </machine>  
   </settings>
 </fdmmaterial>
