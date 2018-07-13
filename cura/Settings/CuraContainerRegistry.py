@@ -5,6 +5,7 @@ import os
 import os.path
 import re
 import configparser
+import copy
 
 from typing import Optional
 
@@ -29,6 +30,7 @@ from .ContainerManager import ContainerManager
 from .ExtruderManager import ExtruderManager
 
 from cura.CuraApplication import CuraApplication
+from cura.QualityManager import QualityManager
 
 from UM.i18n import i18nCatalog
 catalog = i18nCatalog("cura")
@@ -141,6 +143,21 @@ class CuraContainerRegistry(ContainerRegistry):
                         extruder_positions.append(0)
         # Ensure the profiles are always exported in order (global, extruder 0, extruder 1, ...)
         found_containers = [containers for (positions, containers) in sorted(zip(extruder_positions, found_containers))]
+        base_containers = []
+        quality_manager = QualityManager.getInstance()
+
+        global_container_stack = Application.getInstance().getGlobalContainerStack()
+        global_machine_definition = quality_manager.getParentMachineDefinition(global_container_stack.getBottom())
+        for container in found_containers:
+            if container.getMetaDataEntry("type") == "quality_changes":
+                material = ContainerRegistry.getInstance().findInstanceContainers(id = container.getMetaDataEntry("material"))
+                if len(material) > 0:
+                    base_container = quality_manager.findQualityByQualityType(container.getMetaDataEntry("quality_type"), global_machine_definition, [material[0].getMetaData()])
+                    if base_container:
+                        c = copy.deepcopy(base_container)
+                        c.setMetaDataEntry("id", "base/" + container.id)
+                        base_containers.append(c)
+        found_containers.extend(base_containers)
 
         profile_writer = self._findProfileWriter(extension, description)
 
