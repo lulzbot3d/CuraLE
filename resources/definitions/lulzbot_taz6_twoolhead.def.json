@@ -49,15 +49,15 @@
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "twool_head_start_gcode_taz6"
+            "default_value_from_file": "lulzbot_taz6_twoolhead_start"
         },
         "machine_end_gcode":
         {
-            "default_value_from_file": "twool_head_end_gcode_taz6"
+            "default_value_from_file": "lulzbot_taz6_twoolhead_end"
         },
         "machine_wipe_gcode":
         {
-            "default_value_from_file": "taz6_twool_wipe_sequence"
+            "default_value_from_file": "lulzbot_taz6_twoolhead_wipe_sequence"
         },
         "machine_baudrate":
         {
