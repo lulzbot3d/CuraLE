@@ -270,6 +270,8 @@ class CuraContainerRegistry(ContainerRegistry):
                         profile_id = (global_container_stack.getBottom().getId() + "_" + name_seed).lower().replace(" ", "_")
 
                     elif profile_index < len(machine_extruders) + 1:
+                        if profile.id.startswith("base/"):
+                            break
                         # This is assumed to be an extruder profile
                         extruder_id = Application.getInstance().getMachineManager().getQualityDefinitionId(machine_extruders[profile_index - 1].getBottom())
                         if not profile.getMetaDataEntry("extruder"):
@@ -281,7 +283,13 @@ class CuraContainerRegistry(ContainerRegistry):
                     else: #More extruders in the imported file than in the machine.
                         continue #Delete the additional profiles.
 
-                    result = self._configureProfile(profile, profile_id, new_name)
+                    base_profile = None
+                    for p in profile_or_list:
+                        if p.id == "base/" + profile.id:
+                            base_profile = p
+                            break
+
+                    result = self._configureProfile(profile, profile_id, new_name, base_profile)
                     if result is not None:
                         return {"status": "error", "message": catalog.i18nc(
                             "@info:status Don't translate the XML tags <filename> or <message>!",
@@ -309,7 +317,7 @@ class CuraContainerRegistry(ContainerRegistry):
     #   \param new_name The new name for the profile.
     #
     #   \return None if configuring was successful or an error message if an error occurred.
-    def _configureProfile(self, profile: InstanceContainer, id_seed: str, new_name: str) -> Optional[str]:
+    def _configureProfile(self, profile: InstanceContainer, id_seed: str, new_name: str, base_profile: InstanceContainer=None) -> Optional[str]:
         profile.setDirty(True)  # Ensure the profiles are correctly saved
 
         new_id = self.createUniqueName("quality_changes", "", id_seed, catalog.i18nc("@label", "Custom profile"))
@@ -363,7 +371,12 @@ class CuraContainerRegistry(ContainerRegistry):
         from cura.QualityManager import QualityManager
         qualities = QualityManager.getInstance()._getFilteredContainersForStack(machine_definition, materials, **quality_type_criteria)
         if not qualities:
-            return catalog.i18nc("@info:status", "Could not find a quality type {0} for the current configuration.", quality_type)
+            if base_profile:
+                base_profile.setMetaDataEntry("material", active_material_id)
+                base_profile.setDirty(True)
+                ContainerRegistry.getInstance().addContainer(base_profile)
+            else:
+                return catalog.i18nc("@info:status", "Could not find a quality type {0} for the current configuration.", quality_type)
 
         ContainerRegistry.getInstance().addContainer(profile)
 
