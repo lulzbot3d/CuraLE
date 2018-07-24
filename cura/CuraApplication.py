@@ -796,8 +796,6 @@ class CuraApplication(QtApplication):
             self.closeSplash()
             for file_name in self.getCommandLineOption("file", []):
                 self._openFile(file_name)
-            for file in self.getCommandLineOption("file", []):
-                self._openFile(file)
             for file_name in self._open_file_queue: #Open all the files that were queued up while plug-ins were loading.
                 self._openFile(file_name)
 
