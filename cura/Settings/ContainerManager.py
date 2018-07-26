@@ -495,6 +495,7 @@ class ContainerManager(QObject):
 
         container.setName(container_id)
         if container.getMetaDataEntry("type") == "material" and container.getMetaDataEntry("material") == "Custom":
+            container.setDirty(True)
             global_stack = Application.getInstance().getGlobalContainerStack()
             machine_materials = global_stack.getMetaDataEntry("has_machine_materials", False)
             if machine_materials:
