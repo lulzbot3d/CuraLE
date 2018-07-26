@@ -867,6 +867,15 @@ class BuildVolume(SceneNode):
                     right_unreachable_border = max(right_unreachable_border, other_offset_x - offset_x)
                     top_unreachable_border = min(top_unreachable_border, other_offset_y - offset_y)
                     bottom_unreachable_border = max(bottom_unreachable_border, other_offset_y - offset_y)
+            else:
+                if offset_x > 0:
+                    left_unreachable_border = offset_x
+                else:
+                    right_unreachable_border = offset_x
+                if offset_y > 0:
+                    bottom_unreachable_border = offset_y
+                else:
+                    top_unreachable_border = offset_y
             half_machine_width = self._global_container_stack.getProperty("machine_width", "value") / 2
             half_machine_depth = self._global_container_stack.getProperty("machine_depth", "value") / 2
 

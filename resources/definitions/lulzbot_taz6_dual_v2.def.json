@@ -14,7 +14,8 @@
         },
         "supported_actions": ["MachineSettingsAction"],
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-dual-extruder-tool-head-v2",
-        "firmware_toolhead_name": "DualExtruder v2"
+        "firmware_toolhead_name": "DualExtruder v2",
+        "nozzle_offsetting_for_disallowed_areas": false
     },
     "overrides":
     {
