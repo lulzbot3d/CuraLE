@@ -790,6 +790,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
     @pyqtSlot("long")
     @pyqtSlot("long", "long")
     def extrude(self, e=0, speed=75):
+        speed = Application.getInstance().getGlobalContainerStack().getMetaDataEntry("default_extrusion_rate", 75)
         self._extrude(e, speed)
 
     ##  Implementation function of extrude.
