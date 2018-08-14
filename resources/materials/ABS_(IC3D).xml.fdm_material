@@ -65,10 +65,13 @@
       <machine_identifier product="lulzbot_hibiscus"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_hibiscus_achemon"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_hibiscus_banded_tiger"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_hibiscus_achemon"/>
+      <machine_identifier product="lulzbot_hibiscus_dingy_cutworm"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz6_twoolhead"/>

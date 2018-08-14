@@ -1,13 +1,13 @@
 {
-    "id": "LulzBot_Hibiscus_Banded_Tiger",
-    "name": "LulzBot Mini 2 Banded Tiger",
+    "id": "LulzBot_Hibiscus_Dingy_Cutworm",
+    "name": "LulzBot Mini 2 Dingy Cutworm",
     "inherits": "lulzbot_hibiscus",
     "version": 2,
     "metadata":
     {
         "machine_extruder_trains":
         {
-            "0": "lulzbot_hibiscus_banded_tiger_extruder"
+            "0": "lulzbot_hibiscus_dingy_cutworm_extruder"
         },
         "type": "machine",
         "platform": "lulzbot_mini.stl",
