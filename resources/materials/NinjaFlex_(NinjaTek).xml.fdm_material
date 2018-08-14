@@ -63,5 +63,8 @@
     <machine>
       <machine_identifier product="lulzbot_hibiscus_achemon"/>
     </machine>  
+    <machine>
+      <machine_identifier product="lulzbot_hibiscus_banded_tiger"/>
+    </machine>
   </settings>
 </fdmmaterial>
