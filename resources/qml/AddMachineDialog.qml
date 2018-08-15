@@ -19,6 +19,7 @@ UM.Dialog
     property bool firstRun: false
     property string preferredCategory: "LulzBot"
     property string activeCategory: preferredCategory
+    property bool currentState: true
 
     minimumWidth: UM.Theme.getSize("modal_window_minimum").width*0.4
     minimumHeight: UM.Theme.getSize("modal_window_minimum").height*0.4
@@ -38,172 +39,243 @@ UM.Dialog
     {
         // Reset selection and machine name
         if (visible) {
-            activeCategory = preferredCategory;
-            machineList.currentIndex = 0;
-            machineName.text = getMachineName();
+            printerSelectorLoader.sourceComponent = lulzbotSelector;
+            printerSelectorLoader.item.update();
+            machineName.text = printerSelectorLoader.item.getMachineName();
         }
     }
 
     signal machineAdded(string id)
-    function getMachineName()
-    {
-        var name = machineList.model.getItem(machineList.currentIndex) != undefined ? machineList.model.getItem(machineList.currentIndex).name : ""
-        return name
-    }
 
-    ScrollView
-    {
-        id: machinesHolder
+    onAccepted: printerSelectorLoader.item.addMachine()
 
-        anchors
+    Item
+    {
+        UM.I18nCatalog
         {
-            left: parent.left;
-            top: parent.top;
-            right: parent.right;
-            bottom: machineNameRow.top;
-            bottomMargin: UM.Theme.getSize("default_margin").height
+            id: catalog;
+            name: "cura";
         }
+        SystemPalette { id: palette }
+        ExclusiveGroup { id: printerGroup; }
 
-        ListView
+        Component
         {
-            id: machineList
-            signal reset();
+            id: lulzbotSelector
 
-            model: UM.DefinitionContainersModel
+            Item
             {
-                id: machineDefinitionsModel
-                filter: { "visible": true }
-                sectionProperty: "category"
-                preferredSectionValue: preferredCategory
-            }
-
-            section.property: "section"
-            section.delegate: Button
-            {
-                text: section
-                width: machineList.width
-                style: ButtonStyle
+                function getMachineName()
                 {
-                    background: Item
-                    {
-                        height: UM.Theme.getSize("standard_list_lineheight").height
-                        width: machineList.width
-                    }
-                    label: Label
-                    {
-                        anchors.left: parent.left
-                        anchors.leftMargin: UM.Theme.getSize("standard_arrow").width + UM.Theme.getSize("default_margin").width
-                        text: control.text
-                        color: palette.windowText
-                        font.bold: true
-                        UM.RecolorImage
-                        {
-                            id: downArrow
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.right: parent.left
-                            anchors.rightMargin: UM.Theme.getSize("default_margin").width
-                            width: UM.Theme.getSize("standard_arrow").width
-                            height: UM.Theme.getSize("standard_arrow").height
-                            sourceSize.width: width
-                            sourceSize.height: width
-                            color: palette.windowText
-                            source: base.activeCategory == section ? UM.Theme.getIcon("arrow_bottom") : UM.Theme.getIcon("arrow_right")
-                        }
-                    }
+                    var name = "LulzBot Printer"
+                    return name
                 }
 
-                onClicked:
+                function addMachine()
                 {
-                    base.activeCategory = section;
-                    if (machineList.model.getItem(machineList.currentIndex).section != section) {
-                        // Find the first machine from this section
-                        for(var i = 0; i < machineList.model.rowCount(); i++) {
-                            var item = machineList.model.getItem(i);
-                            if (item.section == section) {
-                                machineList.currentIndex = i;
-                                break;
-                            }
-                        }
-                    }
+                    base.visible = false
+                }
+
+                function update()
+                {
                     machineName.text = getMachineName();
                 }
             }
+        }
 
-            delegate: Column
+        Component
+        {
+            id: otherSelector
+
+            Item
             {
-                id: machineColumn
-                spacing: (machineButton.opacity == 1) ? (UM.Theme.getSize("default_margin").height/2) : 0;
-                property bool checked: ListView.isCurrentItem;
-                property int columnIndex: index
-                property ListView listView: ListView.view
+                id: root
 
-                Rectangle
+                function getMachineName()
                 {
-                    width: 5
-                    height: 0.000001
+                    var name = machineList.model.getItem(machineList.currentIndex) != undefined ? machineList.model.getItem(machineList.currentIndex).name : ""
+                    return name
                 }
 
-                RadioButton
+                function addMachine()
                 {
-                    id: machineButton
+                    base.visible = false
+                    var item = machineList.model.getItem(machineList.currentIndex);
+                    Cura.MachineManager.addMachine(machineName.text, item.id)
+                    base.machineAdded(item.id) // Emit signal that the user added a machine.
+                }
 
-                    anchors.left: parent.left
-                    anchors.leftMargin: UM.Theme.getSize("standard_list_lineheight").width
+                function update()
+                {
+                    activeCategory = preferredCategory;
+                    machineList.currentIndex = 0;
+                    machineName.text = getMachineName();
+                }
 
-                    opacity: 1;
-                    height: UM.Theme.getSize("standard_list_lineheight").height;
+                ScrollView
+                {
+                    id: machinesHolder
+                    anchors.fill: parent
 
-                    //checked: ListView.isCurrentItem;
-                    checked: machineColumn.checked
-
-                    exclusiveGroup: printerGroup;
-
-                    text: model.name
-
-                    onClicked:
+                    ListView
                     {
-                        machineColumn.listView.currentIndex = machineColumn.columnIndex;
-                        machineName.text = getMachineName()
-                    }
+                        id: machineList
+                        signal reset();
 
-                    states: State
-                    {
-                        name: "collapsed";
-                        when: base.activeCategory != model.section;
-
-                        PropertyChanges { target: machineButton; opacity: 0; height: 0; }
-                    }
-
-                    transitions:
-                    [
-                        Transition
+                        model: UM.DefinitionContainersModel
                         {
-                            to: "collapsed";
-                            SequentialAnimation
+                            id: machineDefinitionsModel
+                            filter: { "visible": true }
+                            sectionProperty: "category"
+                            preferredSectionValue: preferredCategory
+                        }
+
+                        section.property: "section"
+                        section.delegate: Button
+                        {
+                            text: section
+                            width: machineList.width
+                            style: ButtonStyle
                             {
-                                NumberAnimation { property: "opacity"; duration: 75; }
-                                NumberAnimation { property: "height"; duration: 75; }
+                                background: Item
+                                {
+                                    height: UM.Theme.getSize("standard_list_lineheight").height
+                                    width: machineList.width
+                                }
+                                label: Label
+                                {
+                                    anchors.left: parent.left
+                                    anchors.leftMargin: UM.Theme.getSize("standard_arrow").width + UM.Theme.getSize("default_margin").width
+                                    text: control.text
+                                    color: palette.windowText
+                                    font.bold: true
+                                    UM.RecolorImage
+                                    {
+                                        id: downArrow
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        anchors.right: parent.left
+                                        anchors.rightMargin: UM.Theme.getSize("default_margin").width
+                                        width: UM.Theme.getSize("standard_arrow").width
+                                        height: UM.Theme.getSize("standard_arrow").height
+                                        sourceSize.width: width
+                                        sourceSize.height: width
+                                        color: palette.windowText
+                                        source: base.activeCategory == section ? UM.Theme.getIcon("arrow_bottom") : UM.Theme.getIcon("arrow_right")
+                                    }
+                                }
                             }
-                        },
-                        Transition
-                        {
-                            from: "collapsed";
-                            SequentialAnimation
+
+                            onClicked:
                             {
-                                NumberAnimation { property: "height"; duration: 75; }
-                                NumberAnimation { property: "opacity"; duration: 75; }
+                                base.activeCategory = section;
+                                if (machineList.model.getItem(machineList.currentIndex).section != section) {
+                                    // Find the first machine from this section
+                                    for(var i = 0; i < machineList.model.rowCount(); i++) {
+                                        var item = machineList.model.getItem(i);
+                                        if (item.section == section) {
+                                            machineList.currentIndex = i;
+                                            break;
+                                        }
+                                    }
+                                }
+                                machineName.text = getMachineName();
                             }
                         }
-                    ]
-                }
 
-                Rectangle
-                {
-                    width: 5
-                    height: 0.000001
+                        delegate: Column
+                        {
+                            id: machineColumn
+                            spacing: (machineButton.opacity == 1) ? (UM.Theme.getSize("default_margin").height/2) : 0;
+                            property bool checked: ListView.isCurrentItem;
+                            property int columnIndex: index
+                            property ListView listView: ListView.view
+
+                            Rectangle
+                            {
+                                width: 5
+                                height: 0.000001
+                            }
+
+                            RadioButton
+                            {
+                                id: machineButton
+
+                                anchors.left: parent.left
+                                anchors.leftMargin: UM.Theme.getSize("standard_list_lineheight").width
+
+                                opacity: 1;
+                                height: UM.Theme.getSize("standard_list_lineheight").height;
+
+                                //checked: ListView.isCurrentItem;
+                                checked: machineColumn.checked
+
+                                exclusiveGroup: printerGroup;
+
+                                text: model.name
+
+                                onClicked:
+                                {
+                                    machineColumn.listView.currentIndex = machineColumn.columnIndex;
+                                    machineName.text = getMachineName()
+                                }
+
+                                states: State
+                                {
+                                    name: "collapsed";
+                                    when: base.activeCategory != model.section;
+
+                                    PropertyChanges { target: machineButton; opacity: 0; height: 0; }
+                                }
+
+                                transitions:
+                                [
+                                    Transition
+                                    {
+                                        to: "collapsed";
+                                        SequentialAnimation
+                                        {
+                                            NumberAnimation { property: "opacity"; duration: 75; }
+                                            NumberAnimation { property: "height"; duration: 75; }
+                                        }
+                                    },
+                                    Transition
+                                    {
+                                        from: "collapsed";
+                                        SequentialAnimation
+                                        {
+                                            NumberAnimation { property: "height"; duration: 75; }
+                                            NumberAnimation { property: "opacity"; duration: 75; }
+                                        }
+                                    }
+                                ]
+                            }
+
+                            Rectangle
+                            {
+                                width: 5
+                                height: 0.000001
+                            }
+                        }
+                    }
                 }
             }
         }
+    }
+
+    Loader
+    {
+        id: printerSelectorLoader
+        sourceComponent: lulzbotSelector
+
+        anchors
+        {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+            bottom: machineNameRow.top
+        }
+
+        onSourceComponentChanged: item.update()
     }
 
     Row
@@ -221,7 +293,7 @@ UM.Dialog
         TextField
         {
             id: machineName
-            text: getMachineName()
+            text: printerSelectorLoader.item.getMachineName()
             implicitWidth: UM.Theme.getSize("standard_list_input").width
             maximumLength: 40
             //validator: Cura.MachineNameValidator { } //TODO: Gives a segfault in PyQt5.6. For now, we must use a signal on text changed.
@@ -237,30 +309,25 @@ UM.Dialog
 
     Button
     {
+        id: addPrinterButton
         text: catalog.i18nc("@action:button", "Add Printer")
         anchors.bottom: parent.bottom
         anchors.right: parent.right
-        onClicked: addMachine()
+        onClicked: printerSelectorLoader.item.addMachine()
     }
 
-    onAccepted: addMachine()
 
-    function addMachine()
+    Button
     {
-        base.visible = false
-        var item = machineList.model.getItem(machineList.currentIndex);
-        Cura.MachineManager.addMachine(machineName.text, item.id)
-        base.machineAdded(item.id) // Emit signal that the user added a machine.
-    }
-
-    Item
-    {
-        UM.I18nCatalog
+        text: currentState ? "O" : "L"
+        tooltip: currentState ? catalog.i18nc("@action:button", "Select other printer") : catalog.i18nc("@action:button", "Select LulzBot printer")
+        anchors.bottom: parent.bottom
+        anchors.right: addPrinterButton.left
+        width: height
+        onClicked:
         {
-            id: catalog;
-            name: "cura";
+            currentState = !currentState
+            printerSelectorLoader.sourceComponent = currentState ? lulzbotSelector : otherSelector;
         }
-        SystemPalette { id: palette }
-        ExclusiveGroup { id: printerGroup; }
     }
 }
