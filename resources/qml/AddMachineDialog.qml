@@ -39,6 +39,7 @@ UM.Dialog
     {
         // Reset selection and machine name
         if (visible) {
+            currentState = true;
             printerSelectorLoader.sourceComponent = lulzbotSelector;
             printerSelectorLoader.item.update();
             machineName.text = printerSelectorLoader.item.getMachineName();
