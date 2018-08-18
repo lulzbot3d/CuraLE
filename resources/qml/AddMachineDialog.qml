@@ -81,6 +81,101 @@ UM.Dialog
                 {
                     machineName.text = getMachineName();
                 }
+
+                Row
+                {
+                    anchors.fill: parent
+                    spacing: 2
+
+                    GroupBox
+                    {
+                        id: printerSelection
+                        width: parent.width/3-4
+                        anchors.bottom: parent.bottom
+                        anchors.top: parent.top
+                        anchors.bottomMargin: UM.Theme.getSize("default_margin").width
+
+                        title: catalog.i18nc("@action:button", "Printer")
+                        ExclusiveGroup { id: printerGroup }
+
+                        property int selectedIndex: 0
+
+                        Column
+                        {
+                            anchors.fill: parent
+                            Repeater
+                            {
+                                model: ["TAZ 6", "TAZ 5", "Mini", "Mini 2"]
+                                delegate: RadioButton
+                                {
+                                    text: modelData
+                                    exclusiveGroup: printerGroup
+                                    checked: model.index == 0
+                                    onClicked: { printerSelection.selectedIndex = model.index }
+                                }
+                            }
+                        }
+                    }
+                    GroupBox
+                    {
+                        id: toolheadSelection
+                        width: parent.width/3-4
+                        anchors.bottom: parent.bottom
+                        anchors.top: parent.top
+                        anchors.bottomMargin: UM.Theme.getSize("default_margin").width
+
+                        title: catalog.i18nc("@action:button", "Toolhead")
+                        ExclusiveGroup { id: toolheadGroup }
+
+                        property int selectedIndex: 0
+
+                        Column
+                        {
+                            anchors.fill: parent
+                            Repeater
+                            {
+                                model: ["Standard", "Dual"]
+                                delegate: RadioButton
+                                {
+                                    text: modelData
+                                    exclusiveGroup: toolheadGroup
+                                    checked: model.index == 0
+                                    onClicked: { toolheadSelection.selectedIndex = model.index }
+                                }
+                            }
+                        }
+                    }
+                    GroupBox
+                    {
+                        id: lcdSelection
+                        width: parent.width/3-4
+                        anchors.bottom: parent.bottom
+                        anchors.top: parent.top
+                        anchors.bottomMargin: UM.Theme.getSize("default_margin").width
+
+                        title: catalog.i18nc("@action:button", "LCD")
+                        ExclusiveGroup { id: lcdGroup }
+
+                        property int selectedIndex: 0
+
+                        Column
+                        {
+                            anchors.fill: parent
+                            Repeater
+                            {
+                                model: ["Yes", "No"]
+                                delegate: RadioButton
+                                {
+                                    text: modelData
+                                    exclusiveGroup: lcdGroup
+                                    checked: model.index == 0
+                                    enabled: printerSelection.selectedIndex > 1
+                                    onClicked: { lcdSelection.selectedIndex = model.index }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
