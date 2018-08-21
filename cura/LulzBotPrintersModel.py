@@ -45,7 +45,7 @@ class LulzBotPrintersModel(ListModel):
                     break
             if not already_added:
                 items.append({
-                    "name": metadata["base_machine"],
+                    "name": metadata["base_machine_name"],
                     "id": metadata["base_machine"],
                     "lcd": metadata.get("has_optional_lcd", False)
                 })

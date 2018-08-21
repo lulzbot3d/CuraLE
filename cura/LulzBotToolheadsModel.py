@@ -43,7 +43,7 @@ class LulzBotToolheadsModel(ListModel):
             metadata = metadata.copy()
 
             items.append({
-                "name": metadata["name"],
+                "name": metadata["firmware_toolhead_name"],
                 "id": metadata["id"]
             })
         self.setItems(items)

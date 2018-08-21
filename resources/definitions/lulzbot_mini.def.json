@@ -24,6 +24,7 @@
         "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-mini",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-mini-single-extruder-tool-head-v2_1",
         "base_machine": "lulzbot_mini",
+        "base_machine_name": "Mini",
         "firmware_toolhead_name": "SingleExtruder",
         "has_optional_lcd": true
     },
