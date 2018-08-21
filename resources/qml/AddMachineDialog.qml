@@ -58,7 +58,6 @@ UM.Dialog
             name: "cura";
         }
         SystemPalette { id: palette }
-        ExclusiveGroup { id: printerGroup; }
 
         Component
         {
@@ -99,20 +98,24 @@ UM.Dialog
                         ExclusiveGroup { id: printerGroup }
 
                         property int selectedIndex: 0
+                        property bool lcd: false
+                        property string baseMachine: ""
 
                         Column
                         {
                             anchors.fill: parent
                             Repeater
                             {
-                                model: ["TAZ 6", "TAZ 5", "Mini", "Mini 2"]
+                                model: Cura.LulzBotPrintersModel {}
                                 delegate: RadioButton
                                 {
-                                    text: modelData
+                                    text: model.name
                                     exclusiveGroup: printerGroup
                                     checked: model.index == 0
-                                    onClicked: { printerSelection.selectedIndex = model.index }
+                                    onClicked: { printerSelection.selectedIndex = model.index; printerSelection.lcd = model.lcd; printerSelection.baseMachine = model.id }
                                 }
+
+                                Component.onCompleted: {printerSelection.lcd = model.getItem(0).lcd; printerSelection.baseMachine = model.getItem(0).id}
                             }
                         }
                     }
@@ -134,10 +137,10 @@ UM.Dialog
                             anchors.fill: parent
                             Repeater
                             {
-                                model: ["Standard", "Dual"]
+                                model: Cura.LulzBotToolheadsModel { id: toolheadsModel; baseMachineProperty: printerSelection.baseMachine }
                                 delegate: RadioButton
                                 {
-                                    text: modelData
+                                    text: model.name
                                     exclusiveGroup: toolheadGroup
                                     checked: model.index == 0
                                     onClicked: { toolheadSelection.selectedIndex = model.index }
@@ -169,7 +172,11 @@ UM.Dialog
                                     text: modelData
                                     exclusiveGroup: lcdGroup
                                     checked: model.index == 0
-                                    enabled: printerSelection.selectedIndex > 1
+                                    enabled: printerSelection.lcd
+                                    onEnabledChanged:
+                                    {
+                                        if(!enabled && model.index == 0) checked = true
+                                    }
                                     onClicked: { lcdSelection.selectedIndex = model.index }
                                 }
                             }
@@ -186,6 +193,8 @@ UM.Dialog
             Item
             {
                 id: root
+
+                ExclusiveGroup { id: printerGroup; }
 
                 function getMachineName()
                 {

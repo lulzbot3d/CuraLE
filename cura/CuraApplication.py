@@ -65,6 +65,9 @@ from cura.Settings.SettingInheritanceManager import SettingInheritanceManager
 from cura.Settings.UserProfilesModel import UserProfilesModel
 from cura.Settings.SimpleModeSettingsManager import SimpleModeSettingsManager
 
+from cura.LulzBotPrintersModel import LulzBotPrintersModel
+from cura.LulzBotToolheadsModel import LulzBotToolheadsModel
+
 import time
 
 from . import PlatformPhysics
@@ -918,6 +921,9 @@ class CuraApplication(QtApplication):
         qmlRegisterType(MachineNameValidator, "Cura", 1, 0, "MachineNameValidator")
         qmlRegisterType(UserChangesModel, "Cura", 1, 1, "UserChangesModel")
         qmlRegisterSingletonType(ContainerManager, "Cura", 1, 0, "ContainerManager", ContainerManager.createContainerManager)
+
+        qmlRegisterType(LulzBotPrintersModel, "Cura", 1, 0, "LulzBotPrintersModel")
+        qmlRegisterType(LulzBotToolheadsModel, "Cura", 1, 0, "LulzBotToolheadsModel")
 
         # As of Qt5.7, it is necessary to get rid of any ".." in the path for the singleton to work.
         actions_url = QUrl.fromLocalFile(os.path.abspath(Resources.getPath(CuraApplication.ResourceTypes.QmlFiles, "Actions.qml")))
