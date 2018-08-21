@@ -11,11 +11,13 @@ import copy
 class LulzBotToolheadsModel(ListModel):
     NameRole = Qt.UserRole + 1
     IdRole = Qt.UserRole + 2
+    ToolheadRole = Qt.UserRole + 3
 
     def __init__(self, parent = None):
         super().__init__(parent)
         self.addRoleName(self.NameRole, "name")
         self.addRoleName(self.IdRole, "id")
+        self.addRoleName(self.ToolheadRole, "toolhead")
 
         # Listen to changes
         ContainerRegistry.getInstance().containerAdded.connect(self._onContainerChanged)
@@ -43,8 +45,9 @@ class LulzBotToolheadsModel(ListModel):
             metadata = metadata.copy()
 
             items.append({
-                "name": metadata["firmware_toolhead_name"],
-                "id": metadata["id"]
+                "toolhead": metadata["firmware_toolhead_name"],
+                "id": metadata["id"],
+                "name": metadata["name"]
             })
         self.setItems(items)
 

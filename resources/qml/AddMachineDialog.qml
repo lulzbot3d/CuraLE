@@ -67,13 +67,16 @@ UM.Dialog
             {
                 function getMachineName()
                 {
-                    var name = "LulzBot Printer"
+                    var name = toolheadsModel.getItem(toolheadSelection.selectedIndex).name
                     return name
                 }
 
                 function addMachine()
                 {
                     base.visible = false
+                    var item = toolheadsModel.getItem(toolheadSelection.selectedIndex).id
+                    Cura.MachineManager.addMachine(machineName.text, item)
+                    base.machineAdded(item)
                 }
 
                 function update()
@@ -128,7 +131,10 @@ UM.Dialog
                         anchors.bottomMargin: UM.Theme.getSize("default_margin").width
 
                         title: catalog.i18nc("@action:button", "Toolhead")
-                        ExclusiveGroup { id: toolheadGroup }
+                        ExclusiveGroup
+                        {
+                            id: toolheadGroup;
+                        }
 
                         property int selectedIndex: 0
 
@@ -140,10 +146,10 @@ UM.Dialog
                                 model: Cura.LulzBotToolheadsModel { id: toolheadsModel; baseMachineProperty: printerSelection.baseMachine }
                                 delegate: RadioButton
                                 {
-                                    text: model.name
+                                    text: model.toolhead
                                     exclusiveGroup: toolheadGroup
                                     checked: model.index == 0
-                                    onClicked: { toolheadSelection.selectedIndex = model.index }
+                                    onCheckedChanged: { if(checked) {toolheadSelection.selectedIndex = model.index; machineName.text = model.name }}
                                 }
                             }
                         }
