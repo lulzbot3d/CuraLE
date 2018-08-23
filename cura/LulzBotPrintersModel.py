@@ -49,6 +49,7 @@ class LulzBotPrintersModel(ListModel):
                     "id": metadata["base_machine"],
                     "lcd": metadata.get("has_optional_lcd", False)
                 })
+        items = sorted(items, key=lambda x: x["name"])
         self.setItems(items)
 
 

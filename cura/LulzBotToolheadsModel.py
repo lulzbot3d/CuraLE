@@ -49,6 +49,7 @@ class LulzBotToolheadsModel(ListModel):
                 "id": metadata["id"],
                 "name": metadata["name"]
             })
+        items = sorted(items, key=lambda x: x["name"])
         self.setItems(items)
 
     def setBaseMachineProperty(self, new_base_machine):
