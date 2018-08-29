@@ -270,7 +270,7 @@ class PauseAtHeightorLayer(Script):
                                 prepend_gcode += "G1 X%f Y%f F9000\n" % (park_x, park_y) # This is relative move
 
                             # Disable the E steppers
-                            prepend_gcode += "M84 E0\n"
+                            prepend_gcode += "M18 E\n"
 
                             # Set extruder standby temperature
                             prepend_gcode += "M104 S%i ; standby temperature\n" % (standby_temperature)
