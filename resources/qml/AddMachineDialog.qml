@@ -125,12 +125,12 @@ UM.Dialog
                     GroupBox
                     {
                         id: toolheadSelection
-                        width: parent.width/3-4
+                        width: parent.width/3
                         anchors.bottom: parent.bottom
                         anchors.top: parent.top
                         anchors.bottomMargin: UM.Theme.getSize("default_margin").width
 
-                        title: catalog.i18nc("@action:button", "Toolhead")
+                        title: catalog.i18nc("@action:button", "Tool Head")
                         ExclusiveGroup
                         {
                             id: toolheadGroup;
