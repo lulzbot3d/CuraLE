@@ -17,7 +17,7 @@ UM.Dialog
     id: base
     title: catalog.i18nc("@title:window", "Add Printer")
     property bool firstRun: false
-    property string preferredCategory: "LulzBot"
+    property string preferredCategory: ""
     property string activeCategory: preferredCategory
     property bool currentState: true
 
@@ -383,39 +383,39 @@ UM.Dialog
             left: parent.left
             right: parent.right
             top: parent.top
-            bottom: machineNameRow.top
+            bottom: machineName.top
         }
 
         onSourceComponentChanged: item.update()
     }
 
-    Row
+    Label
     {
-        id: machineNameRow
-        anchors.bottom:parent.bottom
-        spacing: UM.Theme.getSize("default_margin").width
+        id: printerLabel
+        text: catalog.i18nc("@label", "Printer Name:")
+        anchors.verticalCenter: machineName.verticalCenter
+        anchors.left: parent.left
+    }
 
-        Label
+    TextField
+    {
+        id: machineName
+        anchors.right: categoryButton.left
+        anchors.left: printerLabel.right
+        anchors.bottom: parent.bottom
+        anchors.leftMargin: UM.Theme.getSize("default_margin").width
+        anchors.rightMargin: UM.Theme.getSize("default_margin").width
+        text: printerSelectorLoader.item.getMachineName()
+        //implicitWidth: UM.Theme.getSize("standard_list_input").width
+        maximumLength: 40
+        //validator: Cura.MachineNameValidator { } //TODO: Gives a segfault in PyQt5.6. For now, we must use a signal on text changed.
+        validator: RegExpValidator
         {
-            text: catalog.i18nc("@label", "Printer Name:")
-            anchors.verticalCenter: machineName.verticalCenter
-        }
-
-        TextField
-        {
-            id: machineName
-            text: printerSelectorLoader.item.getMachineName()
-            implicitWidth: UM.Theme.getSize("standard_list_input").width
-            maximumLength: 40
-            //validator: Cura.MachineNameValidator { } //TODO: Gives a segfault in PyQt5.6. For now, we must use a signal on text changed.
-            validator: RegExpValidator
-            {
-                regExp: {
-                    machineName.machine_name_validator.machineNameRegex
-                }
+            regExp: {
+                machineName.machine_name_validator.machineNameRegex
             }
-            property var machine_name_validator: Cura.MachineNameValidator { }
         }
+        property var machine_name_validator: Cura.MachineNameValidator { }
     }
 
     Button
@@ -430,11 +430,11 @@ UM.Dialog
 
     Button
     {
-        text: currentState ? "O" : "L"
+        id: categoryButton
+        text: currentState ? "Other" : "LulzBot"
         tooltip: currentState ? catalog.i18nc("@action:button", "Select other printer") : catalog.i18nc("@action:button", "Select LulzBot printer")
         anchors.bottom: parent.bottom
         anchors.right: addPrinterButton.left
-        width: height
         onClicked:
         {
             currentState = !currentState
