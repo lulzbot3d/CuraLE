@@ -1,13 +1,13 @@
 {
-    "id": "LulzBot_Hibiscus_Achemon",
-    "name": "LulzBot Mini 2 Aerostruder v2 Micro",
+    "id": "LulzBot_Hibiscus_Dingy_Cutworm",
+    "name": "LulzBot Mini 2 Dingy Cutworm",
     "inherits": "lulzbot_hibiscus",
     "version": 2,
     "metadata":
     {
         "machine_extruder_trains":
         {
-            "0": "lulzbot_hibiscus_achemon_extruder"
+            "0": "lulzbot_hibiscus_dingy_cutworm_extruder"
         },
         "type": "machine",
         "platform": "lulzbot_mini.stl",
@@ -24,7 +24,7 @@
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
-        "firmware_toolhead_name": "AerostruderMicro",
+        "firmware_toolhead_name": "Aerostruder",
         "default_extrusion_rate": 60
     },
     "overrides":

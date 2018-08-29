@@ -3,9 +3,9 @@
   <metadata>
     <name>
       <brand>Generic</brand>
-      <material>PETg</material>
+      <material>PETG</material>
       <color>Generic</color>
-      <label>PETg (IC3D)</label>
+      <label>PETG (IC3D)</label>
       <category>Intermediate</category>
     </name>
     <color_code>#3465a4</color_code>
@@ -55,6 +55,12 @@
     </machine>
     <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_hibiscus_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_hibiscus_banded_tiger"/>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_hibiscus_dingy_cutworm"/>
     </machine>
     <machine>
        <machine_identifier product="lulzbot_taz6_twoolhead"/>
