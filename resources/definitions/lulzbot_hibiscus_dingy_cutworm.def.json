@@ -24,7 +24,7 @@
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
-        "firmware_toolhead_name": "Aerostruder",
+        "firmware_toolhead_name": "AeroMoarstuder",
         "user_toolhead_name": "Dingy Cutworm",
         "default_extrusion_rate": 60
     },
