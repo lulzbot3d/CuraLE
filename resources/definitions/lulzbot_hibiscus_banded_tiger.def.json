@@ -25,6 +25,7 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
         "firmware_toolhead_name": "Aerostruder",
+        "user_toolhead_name": "Banded Tiger",
         "default_extrusion_rate": 60
     },
     "overrides":
