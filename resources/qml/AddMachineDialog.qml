@@ -162,7 +162,7 @@ UM.Dialog
                         anchors.top: parent.top
                         anchors.bottomMargin: UM.Theme.getSize("default_margin").width
 
-                        title: catalog.i18nc("@action:button", "LCD")
+                        title: catalog.i18nc("@action:button", "Graphical LCD")
                         ExclusiveGroup { id: lcdGroup }
 
                         property int selectedIndex: 0
