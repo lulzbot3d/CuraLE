@@ -106,7 +106,6 @@ UM.Dialog
 
                         Column
                         {
-                            anchors.fill: parent
                             Repeater
                             {
                                 model: Cura.LulzBotPrintersModel {}
@@ -140,7 +139,6 @@ UM.Dialog
 
                         Column
                         {
-                            anchors.fill: parent
                             Repeater
                             {
                                 model: Cura.LulzBotToolheadsModel { id: toolheadsModel; baseMachineProperty: printerSelection.baseMachine }
@@ -169,7 +167,6 @@ UM.Dialog
 
                         Column
                         {
-                            anchors.fill: parent
                             Repeater
                             {
                                 model: ["Yes", "No"]
