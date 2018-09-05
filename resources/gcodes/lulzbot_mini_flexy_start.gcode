@@ -4,6 +4,7 @@ G21                          ; metric values
 G90                          ; absolute positioning
 M82                          ; set extruder to absolute mode
 M107                         ; start with the fan off
+M420 S0                      ; disable leveling matrix
 G92 E0                       ; set extruder position to 0
 M140 S{print_bed_temperature}; get bed heating up
 M109 R{material_soften_temperature} ; soften filament before homing Z
@@ -46,6 +47,7 @@ G0 X0 Y187 F200 ; move away from endstops
 M109 R{material_probe_temperature}                    ; set to probing temp
 M204 S300                    ; Set probing acceleration
 G29                          ; Probe
+M420 S1                      ; enable leveling matrix
 M425 Z			     ; use measured Z backlash for compensation
 M425 Z F0		     ; turn off measured Z backlash compensation. (if activated in the quality settings, this command will automatically be ignored)
 M204 S2000                   ; Restore standard acceleration

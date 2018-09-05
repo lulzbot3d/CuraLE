@@ -3,6 +3,7 @@ M75 ; start GLCD timer
 G26 ; clear potential 'probe fail' condition
 G21 ; set units to Millimetres
 M107 ; disable fans
+M420 S0 ; disable leveling matrix
 G90 ; absolute positioning
 M82 ; set extruder to absolute mode
 G92 E0 ; set extruder position to 0
@@ -43,6 +44,7 @@ M109 R{material_probe_temperature} ; wait for extruder to reach probe temp
 G1 X-9 Y-9 ; move above first probe point
 M204 S100 ; set probing acceleration
 G29 ; start auto-leveling sequence
+M420 S1              ; enable leveling matrix
 M425 Z			     ; use measured Z backlash for compensation
 M425 Z F0		     ; turn off measured Z backlash compensation. (if activated in the quality settings, this command will automatically be ignored)
 M204 S500 ; restore standard acceleration
