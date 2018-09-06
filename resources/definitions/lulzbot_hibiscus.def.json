@@ -25,6 +25,7 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
         "base_machine_name": "LulzBot Mini 2",
+        "user_toolhead_name": "Aerostruder v2",
         "firmware_toolhead_name": "Aerostruder"
     },
     "overrides":
