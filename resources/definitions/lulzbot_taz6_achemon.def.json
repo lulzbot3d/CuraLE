@@ -1,0 +1,32 @@
+{
+    "id": "LulzBot_TAZ6_Achemon",
+    "name": "LulzBot TAZ 6 Areostruder V2 Micro",
+    "inherits": "lulzbot_taz6",
+    "version": 2,
+    "metadata":
+    {
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_taz6_achemon_extruder"
+        },
+        "type": "machine",
+        "visible": true,
+        "user_toolhead_name": "Aerostruder V2 Micro",
+        "firmware_toolhead_name": "AerostruderMicro"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "LulzBot TAZ 6 Aerostruder V2 Micro"
+        },
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_taz6_achemon_start"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_taz6_end"
+        }
+    }
+}
