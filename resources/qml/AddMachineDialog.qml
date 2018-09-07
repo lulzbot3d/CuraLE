@@ -92,7 +92,7 @@ UM.Dialog
                     GroupBox
                     {
                         id: printerSelection
-                        width: parent.width/3-4
+                        width: parent.width/13*5-4
                         anchors.bottom: parent.bottom
                         anchors.top: parent.top
                         anchors.bottomMargin: UM.Theme.getSize("default_margin").width
@@ -124,7 +124,7 @@ UM.Dialog
                     GroupBox
                     {
                         id: toolheadSelection
-                        width: parent.width/3
+                        width: parent.width/13*5-4
                         anchors.bottom: parent.bottom
                         anchors.top: parent.top
                         anchors.bottomMargin: UM.Theme.getSize("default_margin").width
@@ -155,7 +155,7 @@ UM.Dialog
                     GroupBox
                     {
                         id: lcdSelection
-                        width: parent.width/3-4
+                        width: parent.width/13*3-4
                         anchors.bottom: parent.bottom
                         anchors.top: parent.top
                         anchors.bottomMargin: UM.Theme.getSize("default_margin").width
