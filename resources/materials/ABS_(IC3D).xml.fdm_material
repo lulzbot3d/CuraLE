@@ -29,6 +29,9 @@
       <metadata key="category">Supported</metadata>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_taz5_achemon"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_taz5_dual_v3"/>
       <metadata key="category">Supported</metadata>
     </machine>
@@ -57,6 +60,9 @@
     </machine>
     <machine>
       <machine_identifier product="lulzbot_mini"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini_achemon"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz5"/>
