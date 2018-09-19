@@ -41,6 +41,9 @@
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_taz6_aerostruder"/>
     </machine>
     <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_taz6_banded_tiger"/>
+    </machine>
+    <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_taz5_aerostruder"/>
     </machine>
     <machine>
