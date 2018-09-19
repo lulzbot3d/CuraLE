@@ -29,6 +29,9 @@
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_hibiscus_dingy_cutworm" />
     </machine>
     <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_mini_banded_tiger"/>
+    </machine>
+    <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_mini_dingy_cutworm"/>
     </machine>
     <machine>
