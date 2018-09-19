@@ -68,6 +68,9 @@
       <machine_identifier product="lulzbot_mini"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_mini_dingy_cutworm"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_mini_achemon"/>
     </machine>
     <machine>

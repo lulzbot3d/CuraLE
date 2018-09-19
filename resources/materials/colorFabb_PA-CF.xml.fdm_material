@@ -33,6 +33,9 @@
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_taz6_banded_tiger"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_mini_dingy_cutworm"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_taz6_dingy_cutworm"/>
     </machine>
   </settings>

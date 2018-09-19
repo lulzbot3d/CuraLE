@@ -1,0 +1,32 @@
+{
+    "id": "lulzbot_mini_dingy_cutworm",
+    "name": "LulzBot Mini Aerostruder v2 Moar",
+    "inherits": "lulzbot_mini",
+    "version": 2,
+    "metadata":
+    {
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_mini_dingy_cutworm_extruder"
+        },
+        "type": "machine",
+        "visible": true,
+        "user_toolhead_name": "Aerostruder v2 Moar",
+        "firmware_toolhead_name": "AerostruderMoar"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "LulzBot Mini Aerostruder v2 Moar"
+        },
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_mini_dingy_cutworm_start"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_mini_end"
+        }
+    }
+}
