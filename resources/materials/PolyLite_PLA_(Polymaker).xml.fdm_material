@@ -45,6 +45,9 @@
       <machine_identifier product="lulzbot_taz6_banded_tiger"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_taz6_dingy_cutworm"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_taz6"/>
     </machine>
     <machine>
