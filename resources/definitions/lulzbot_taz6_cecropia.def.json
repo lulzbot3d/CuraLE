@@ -18,7 +18,7 @@
     {
         "machine_name":
         {
-            "default_value": "LulzBot TAZ 6 Aerostruder"
+            "default_value": "LulzBot TAZ 6 Aerostruder v2"
         },
         "machine_start_gcode":
         {

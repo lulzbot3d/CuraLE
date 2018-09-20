@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_mini_banded_tiger",
-    "name": "LulzBot Mini Aerostruder v2 Moar",
+    "name": "LulzBot Mini Aerostruder v2 Macro",
     "inherits": "lulzbot_mini",
     "version": 2,
     "metadata":
