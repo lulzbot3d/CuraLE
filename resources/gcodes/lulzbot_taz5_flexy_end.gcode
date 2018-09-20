@@ -10,3 +10,4 @@ G90                          ; absolute positioning
 G1 X0 Y250                   ; move to cooling position
 M84                          ; disable steppers
 G90                          ; absolute positioning
+M117 Print Complete.                      ; print complete message

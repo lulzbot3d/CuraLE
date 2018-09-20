@@ -13,3 +13,4 @@ G1 Y175 F1000                             ; present finished print
 M140 S{material_keep_part_removal_temperature_t}; keep temperature or cool down
 M84                                       ; disable steppers
 G90                                       ; absolute positioning
+M117 Print Complete.                      ; print complete message

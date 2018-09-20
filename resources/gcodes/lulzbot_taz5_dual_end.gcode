@@ -8,3 +8,4 @@ M77				       ;Stop GLCD Timer
 G28 X0 Y0                              ;move X/Y to min endstops, so the head is out of the way
 M84                         ;steppers off
 G90
+M117 Print Complete.                      ; print complete message

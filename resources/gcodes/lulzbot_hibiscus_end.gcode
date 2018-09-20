@@ -9,8 +9,8 @@ G1 E5                                     ; re-prime extruder
 M190 R{material_part_removal_temperature} ; wait for bed to cool down to removal temp
 G1 X145 F1000                             ; move extruder out of the way
 G1 Y175 F1000                             ; present finished print
-M117 Print Complete.                      ; print complete message
 M140 S{material_keep_part_removal_temperature_t}; keep temperature or cool down
 M77					  ; End GLCD Print Timer
 G90                                       ; absolute positioning
 M18 X Y E				  ; turn off x y and e axis
+M117 Print Complete.                      ; print complete message
