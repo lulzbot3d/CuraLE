@@ -48,6 +48,9 @@
       <machine_identifier product="lulzbot_taz5_moarstruder"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_taz5_banded_tiger"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_taz5_dual_v2"/>
     </machine>
     <machine>

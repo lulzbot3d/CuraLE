@@ -82,6 +82,9 @@
       <machine_identifier product="lulzbot_taz5_achemon"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_taz5_banded_tiger"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_taz5_aerostruder"/>
     </machine>
     <machine>
