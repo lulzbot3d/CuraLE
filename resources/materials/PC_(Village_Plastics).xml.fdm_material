@@ -62,6 +62,9 @@
       <machine_identifier product="lulzbot_taz5"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_taz5_cecropia"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_taz5_flexy_dually_v2"/>
       <metadata key="category">Experimental</metadata>
     </machine>
