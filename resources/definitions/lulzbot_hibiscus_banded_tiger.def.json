@@ -1,6 +1,6 @@
 {
     "id": "LulzBot_Hibiscus_Banded_Tiger",
-    "name": "LulzBot Mini 2 Banded Tiger",
+    "name": "LulzBot Mini 2 Aerostruder v2 Macro",
     "inherits": "lulzbot_hibiscus",
     "version": 2,
     "metadata":
@@ -25,7 +25,7 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
         "firmware_toolhead_name": "AerostruderMacro",
-        "user_toolhead_name": "Banded Tiger",
+        "user_toolhead_name": "Aerostruder v2 Macro",
         "default_extrusion_rate": 60
     },
     "overrides":
