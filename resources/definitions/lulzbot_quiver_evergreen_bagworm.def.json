@@ -1,0 +1,51 @@
+{
+    "id": "lulzbot_quiver_evergreen_bagworm",
+    "name": "Q",
+    "inherits": "lulzbot_taz6",
+    "version": 2,
+    "metadata":
+    {
+        "type": "machine",
+        "visible": true,
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_quiver_evergreen_bagowrm_1st",
+            "1": "lulzbot_quiver_evergreen_bagworm_2nd"
+        },
+        "category": "Other",
+        "supported_actions": ["MachineSettingsAction"],
+        "firmware_toolhead_name": "Evergreen Bagworm",
+        "base_machine": "Q",
+        "base_machine_name": "Q",
+        "preferred_material": "*PolyLite_PLA*",
+        "default_category": "Supported"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "Q"
+        },
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_quiver_evergreen_bagworm_start"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_quiver_evergreen_bagworm_end"
+        },
+        "machine_extruder_count": {
+            "default_value": 2
+        },
+        "machine_height":
+        {
+            "default_value": 290
+        },
+        "machine_wipe_gcode":
+        {
+            "default_value": ""
+        },
+        "layer_start_x": { "value": "100" },
+        "layer_start_y": { "value": "100" }
+    }
+}

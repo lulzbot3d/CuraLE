@@ -62,6 +62,9 @@
       <machine_identifier product="lulzbot_taz5"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_quiver_evergreen_bagworm"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_taz5_aerostruder"/>
     </machine>
     <machine>
