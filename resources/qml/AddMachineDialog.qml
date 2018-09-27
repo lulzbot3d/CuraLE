@@ -21,8 +21,8 @@ UM.Dialog
     property string activeCategory: preferredCategory
     property bool currentState: true
 
-    minimumWidth: UM.Theme.getSize("modal_window_minimum").width*0.4
-    minimumHeight: UM.Theme.getSize("modal_window_minimum").height*0.4
+    minimumWidth: UM.Theme.getSize("modal_window_minimum").width*0.5
+    minimumHeight: UM.Theme.getSize("modal_window_minimum").height*0.5
     width: minimumWidth
     height: minimumHeight
 
@@ -92,7 +92,7 @@ UM.Dialog
                     GroupBox
                     {
                         id: printerSelection
-                        width: parent.width/13*5-4
+                        width: parent.width/17*7-4
                         anchors.bottom: parent.bottom
                         anchors.top: parent.top
                         anchors.bottomMargin: UM.Theme.getSize("default_margin").width
@@ -124,7 +124,7 @@ UM.Dialog
                     GroupBox
                     {
                         id: toolheadSelection
-                        width: parent.width/13*5-4
+                        width: parent.width/17*7-4
                         anchors.bottom: parent.bottom
                         anchors.top: parent.top
                         anchors.bottomMargin: UM.Theme.getSize("default_margin").width
@@ -155,7 +155,7 @@ UM.Dialog
                     GroupBox
                     {
                         id: lcdSelection
-                        width: parent.width/13*3-4
+                        width: parent.width/17*3-4
                         anchors.bottom: parent.bottom
                         anchors.top: parent.top
                         anchors.bottomMargin: UM.Theme.getSize("default_margin").width
