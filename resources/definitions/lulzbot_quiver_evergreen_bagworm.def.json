@@ -12,13 +12,20 @@
             "0": "lulzbot_quiver_evergreen_bagowrm_1st",
             "1": "lulzbot_quiver_evergreen_bagworm_2nd"
         },
+        "platform": "quiver_bed.stl",
+        "platform_offset":
+        [
+            -70,
+            -26,
+            36
+        ],
         "category": "Other",
         "supported_actions": ["MachineSettingsAction"],
         "firmware_toolhead_name": "Evergreen Bagworm",
         "base_machine": "Q",
         "base_machine_name": "Q",
         "preferred_material": "*PolyLite_PLA*",
-        "default_category": "Supported"
+        "default_category": "All"
     },
     "overrides":
     {
@@ -43,7 +50,7 @@
         },
         "machine_wipe_gcode":
         {
-            "default_value": ""
+            "default_value": "lulzbot_quiver_wipe"
         },
         "layer_start_x": { "value": "100" },
         "layer_start_y": { "value": "100" }
