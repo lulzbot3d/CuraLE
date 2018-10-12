@@ -124,10 +124,11 @@ Item
     {
         id: statusLabel
         width: parent.width - 2 * UM.Theme.getSize("sidebar_margin").width
-        anchors.top: parent.top
+        anchors.bottom: progressBar.top
         anchors.left: parent.left
         anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width
         anchors.rightMargin: UM.Theme.getSize("sidebar_margin").width
+        anchors.bottomMargin: UM.Theme.getSize("sidebar_margin").height/2
 
         color: base.statusColor
         font: UM.Theme.getFont("large")
@@ -137,8 +138,9 @@ Item
     Label
     {
         id: percentageLabel
-        anchors.top: parent.top
+        anchors.bottom: progressBar.top
         anchors.right: progressBar.right
+        anchors.bottomMargin: UM.Theme.getSize("sidebar_margin").height/2
 
         color: base.statusColor
         font: UM.Theme.getFont("large")
@@ -184,8 +186,9 @@ Item
 
         width: parent.width - 2 * UM.Theme.getSize("sidebar_margin").width;
         height: UM.Theme.getSize("progressbar").height;
-        anchors.top: statusLabel.bottom;
+        anchors.bottom: buttonsRow.top;
         anchors.topMargin: UM.Theme.getSize("sidebar_margin").height / 4;
+        anchors.bottomMargin: UM.Theme.getSize("sidebar_margin").height
         anchors.left: parent.left;
         anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width;
     }
@@ -193,8 +196,9 @@ Item
     Row {
         id: buttonsRow
         height: abortButton.height
-        anchors.top: progressBar.bottom
+        anchors.bottom: parent.bottom
         anchors.topMargin: UM.Theme.getSize("sidebar_margin").height
+        anchors.bottomMargin: UM.Theme.getSize("sidebar_margin").height
         anchors.right: parent.right
         anchors.rightMargin: UM.Theme.getSize("sidebar_margin").width
         spacing: UM.Theme.getSize("default_margin").width
