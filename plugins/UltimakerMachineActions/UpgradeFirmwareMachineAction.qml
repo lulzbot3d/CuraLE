@@ -136,9 +136,12 @@ Cura.MachineAction
         {
             id: customFirmwareDialog
             title: catalog.i18nc("@title:window", "Select custom firmware")
-            nameFilters:  "Firmware image files (*.hex)"
+            nameFilters:  "Firmware image files (*.hex *.bin)"
             selectExisting: true
-            onAccepted: Cura.USBPrinterManager.updateAllFirmware(fileUrl, updateEepromCheckbox.checked)
+            selectMultiple: false
+            onAccepted: {
+                Cura.USBPrinterManager.updateAllFirmware(customFirmwareDialog.fileUrl, updateEepromCheckbox.checked)
+            }
         }
     }
 }

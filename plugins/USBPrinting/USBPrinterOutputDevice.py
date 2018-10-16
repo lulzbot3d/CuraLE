@@ -2,6 +2,7 @@
 # Cura is released under the terms of the LGPLv3 or higher.
 
 from .avr_isp import stk500v2, ispBase, intelHex
+from .bossapy import bossa
 import serial   # type: ignore
 import threading
 import time
@@ -918,49 +919,92 @@ class UpdateFirmwareThread:
         else:
             self._parent._detectSerialPort()
 
-        try:
-            hex_file = intelHex.readHex(self._firmware_file_name)
-        except FileNotFoundError:
-            self._parent.log("e", "Unable to find hex file. Could not update firmware")
-            self._updateFirmwareFailedMissingFirmware()
-            return
+        if self._firmware_file_name.endswith('.hex'):
+            ## We're loading HEX file
+            self._parent.log("i", "Loading HEX firmware file" + self._firmware_file_name)
+            try:
+                hex_file = intelHex.readHex(self._firmware_file_name)
+            except FileNotFoundError:
+                self._parent.log("e", "Unable to find hex file. Could not update firmware")
+                self._updateFirmwareFailedMissingFirmware()
+                return
 
-        if len(hex_file) == 0:
-            self._parent.log("e", "Unable to read provided hex file. Could not update firmware")
-            self._updateFirmwareFailedMissingFirmware()
-            return
+            if len(hex_file) == 0:
+                self._parent.log("e", "Unable to read provided hex file. Could not update firmware")
+                self._updateFirmwareFailedMissingFirmware()
+                return
 
-        programmer = stk500v2.Stk500v2()
-        programmer.progress_callback = self._parent.setProgress
+            programmer = stk500v2.Stk500v2()
+            programmer.progress_callback = self._parent.setProgress
 
-        try:
-            programmer.connect(self._parent._serial_port)
-        except Exception:
+            try:
+                programmer.connect(self._parent._serial_port)
+            except Exception:
+                programmer.close()
+                pass
+
+            # Give programmer some time to connect. Might need more in some cases, but this worked in all tested cases.
+            time.sleep(1)
+
+            if not programmer.isConnected():
+                self._parent.log("e", "Unable to connect with serial. Could not update firmware")
+                self._updateFirmwareFailedCommunicationError()
+                return
+
+            self._updating_firmware = True
+
+            try:
+                programmer.programChip(hex_file)
+                self._updating_firmware = False
+            except serial.SerialException as e:
+                self._parent.log("e", "SerialException while trying to update firmware: <%s>" %(repr(e)))
+                self._updateFirmwareFailedIOError()
+                return
+            except Exception as e:
+                self._parent.log("e", "Exception while trying to update firmware: <%s>" %(repr(e)))
+                self._updateFirmwareFailedUnknown()
+                return
             programmer.close()
-            pass
+        elif self._firmware_file_name.endswith('.bin'):
+            ##--> We're loading a BIN file
+            self._parent.log("i", "Loading BIN firmware file: " + self._firmware_file_name)
 
-        # Give programmer some time to connect. Might need more in some cases, but this worked in all tested cases.
-        time.sleep(1)
+            programmer = bossa.BOSSA()
+            programmer.progress_callback = self._parent.setProgress
 
-        if not programmer.isConnected():
-            self._parent.log("e", "Unable to connect with serial. Could not update firmware")
-            self._updateFirmwareFailedCommunicationError()
-            return
+            try:
+                programmer.connect(self._parent._serial_port)
+            except Exception:
+                programmer.close()
+                pass
 
-        self._updating_firmware = True
+            # Give programmer some time to connect. Might need more in some cases, but this worked in all tested cases.
+            time.sleep(1)
 
-        try:
-            programmer.programChip(hex_file)
-            self._updating_firmware = False
-        except serial.SerialException as e:
-            self._parent.log("e", "SerialException while trying to update firmware: <%s>" %(repr(e)))
-            self._updateFirmwareFailedIOError()
-            return
-        except Exception as e:
-            self._parent.log("e", "Exception while trying to update firmware: <%s>" %(repr(e)))
+            if not programmer.isConnected():
+                self._parent.log("e", "Unable to connect with serial. Could not update firmware")
+                self._updateFirmwareFailedCommunicationError()
+                return
+
+            self._updating_firmware = True
+
+            try:
+                programmer.flash_firmware(self._firmware_file_name)
+                self._updating_firmware = False
+            except serial.SerialException as e:
+                self._parent.log("e", "SerialException while trying to update firmware: <%s>" %(repr(e)))
+                self._updateFirmwareFailedIOError()
+                return
+            except Exception as e:
+                self._parent.log("e", "Exception while trying to update firmware: <%s>" %(repr(e)))
+                self._updateFirmwareFailedUnknown()
+                return
+
+            programmer.close()
+        else:
+            self._parent.log("e", "Unknown extension for firmware: " + self._firmware_file_name)
             self._updateFirmwareFailedUnknown()
             return
-        programmer.close()
 
         self._updateFirmwareCompletedSucessfully()
         self._parent._serial_port = None
