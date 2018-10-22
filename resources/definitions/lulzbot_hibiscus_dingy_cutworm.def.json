@@ -1,6 +1,6 @@
 {
     "id": "LulzBot_Hibiscus_Dingy_Cutworm",
-    "name": "LulzBot Mini 2 Aerostruder v2 Moar",
+    "name": "LulzBot Mini 2 | HS+ | 1.2 mm",
     "inherits": "lulzbot_hibiscus",
     "version": 2,
     "metadata":
@@ -25,7 +25,7 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
         "firmware_toolhead_name": "AerostruderMoar",
-        "user_toolhead_name": "Aerostruder v2 Moar",
+        "user_toolhead_name": "HS+ | 1.2 mm",
         "default_extrusion_rate": 60
     },
     "overrides":
