@@ -12,13 +12,13 @@
         "type": "machine",
         "visible": true,
         "user_toolhead_name": "SL | 0.25 mm (Micro)",
-        "firmware_toolhead_name": "AerostruderMicro"
+        "firmware_toolhead_name": "SmallLayer"
     },
     "overrides":
     {
         "machine_name":
         {
-            "default_value": "LulzBot Mini Aerostruder v2 Micro"
+            "default_value": "LulzBot Mini | SL | 0.25 mm (Micro)"
         },
         "machine_start_gcode":
         {

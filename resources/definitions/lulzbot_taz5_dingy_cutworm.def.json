@@ -12,13 +12,13 @@
         "type": "machine",
         "visible": true,
         "user_toolhead_name": "HS+ | 1.2 mm",
-        "firmware_toolhead_name": "AerostruderMoar"
+        "firmware_toolhead_name": "HardenedSteelPlus"
     },
     "overrides":
     {
         "machine_name":
         {
-            "default_value": "LulzBot TAZ 5 Aerostruder v2 Moar"
+            "default_value": "LulzBot TAZ 5 | HS+ | 1.2 mm"
         },
         "machine_start_gcode":
         {
