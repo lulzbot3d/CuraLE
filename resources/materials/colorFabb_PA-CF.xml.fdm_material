@@ -14,6 +14,7 @@
     <description />
     <version>1</version>
     <compatible>True</compatible>
+    <adhesion_info>Use directly on clean PEI.</adhesion_info>
   </metadata>
   <properties />
   <settings>
