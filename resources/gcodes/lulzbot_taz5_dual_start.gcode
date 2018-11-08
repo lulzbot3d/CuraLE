@@ -1,3 +1,4 @@
+; This gcode was specifically sliced for a TAZ 5 with Dual Extruder v2
 ;{material_print_temperature}{material_bed_temperature}
 M75	   ; Start GLCD Timer
 G21        ;metric values
@@ -7,7 +8,7 @@ G28 X0 Y0  ;move X/Y to min endstops
 G28 Z0     ;move Z to min endstops
 M117 Heating...                     ; progress indicator message on LCD
 M109 R{material_print_temperature_0}  ; wait for extruder 1 to reach printing temp
-M109 R[material_print_temperature_1}  ; wait for extruder 2 to reach printing temp
+M109 R{material_print_temperature_1}  ; wait for extruder 2 to reach printing temp
 M190 S{material_bed_temperature_layer_0}    ; wait for bed to reach printing temp
 G1 Z15.0 F{speed_travel} ;move the platform down 15mm
 T1                      ;Switch to the 2nd extruder
