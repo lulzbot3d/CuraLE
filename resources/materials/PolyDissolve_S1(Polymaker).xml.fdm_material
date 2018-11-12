@@ -5,6 +5,7 @@
       <brand>Generic</brand>
       <material>PolyDissolve S1(Polymaker)</material>
       <color>Generic</color>
+      <category>Advanced</category>
     </name>
     <GUID>577aff64-923f-44e4-bf89-f05e1ecbb433</GUID>
     <version>1</version>
@@ -30,18 +31,6 @@
     <machine>
       <machine_identifier product="lulzbot_taz5_dual_v3"/>
       <metadata key="category">Supported</metadata>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_taz5_dual_v2"/>
-      <metadata key="category">Supported</metadata>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_taz6_dual_v2"/>
-      <metadata key="category">Supported</metadata>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_taz5_flexy_dually_v2"/>
-      <metadata key="category">Experimental</metadata>
     </machine>
   </settings>
 </fdmmaterial>

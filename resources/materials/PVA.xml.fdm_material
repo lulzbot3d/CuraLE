@@ -5,6 +5,7 @@
       <brand>Generic</brand>
       <material>PVA</material>
       <color>Generic</color>
+      <category>Advanced</category>
     </name>
     <GUID>ce747483-8d4e-47ab-96c7-eda81bb3f77f</GUID>
     <version>1</version>
@@ -35,8 +36,13 @@
       <machine_identifier product="lulzbot_taz6_dual_v2"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_taz5_dual_v2"/>
+    </machine>
+    <machine>
+	  <machine_identifier product = "lulzbot_taz6_flexy_dually_v2"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_taz5_flexy_dually_v2"/>
-      <metadata key="category">Experimental</metadata>
     </machine>
   </settings>
 </fdmmaterial>
