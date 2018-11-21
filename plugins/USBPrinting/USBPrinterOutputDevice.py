@@ -1408,6 +1408,7 @@ class PrintThread:
                 self.sendCommand("G92 E%f" % pos.e)
 
             # Set proper feedrate
+            self.sendCommand("M108")
             self.sendCommand("G1 F%f" % pos.f)
             # Re-home the nozzle
             self.sendCommand("G28 X0 Y0")
