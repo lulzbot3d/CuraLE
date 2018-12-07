@@ -5,7 +5,7 @@
     "version": 2,
     "metadata":
     {
-        "priority": "99",
+        "priority": "02",
         "machine_extruder_trains":
         {
             "0": "lulzbot_hibiscus_achemon_extruder"
