@@ -24,7 +24,7 @@ M104 S{material_wipe_temperature_0} T0    ; set to wipe temp
 M104 S{material_wipe_temperature_1} T1    ; set to wipe temp
 M106                                      ; turn on fans to speed cooling
 T0                                        ; select first extruder for probing
-G1 X-11 Y90 F2000                         ; move above wiper pad
+G1 X-16 Y90 F2000                         ; move above wiper pad
 M104
 M117 Cooling...                           ; LCD status message
 M109 R{material_wipe_temperature_0} T0    ; wait for T0 to reach temp
@@ -57,10 +57,10 @@ G1 X -16 Y23 F1000                        ; slow wipe
 G1 X -15 Z15 F2000                        ; raise extruder
 G0 X50 F1000                              ; move over to switch extruders
 T1                                        ; switch to second extruder
-G1 X288 Y90  F5000                        ; move E2 above second wiper pad
+G1 X298 Y90  F5000                        ; move E2 above second wiper pad
 G1 Z 1                                    ; push nozzle into wiper
 G1 X299 Y95 F1000                         ; slow wipe
-G1 X288 Y90 F1000                         ; slow wipe
+G1 X298 Y90 F1000                         ; slow wipe
 G1 X299 Y85 F1000                         ; slow wipe
 G1 X298 Y90 F1000                         ; slow wipe
 G1 X299 Y80 F1000                         ; slow wipe
