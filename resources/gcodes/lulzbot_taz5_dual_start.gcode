@@ -1,5 +1,6 @@
 ; This gcode was specifically sliced for a TAZ 5 with Dual Extruder v2
 ;{material_print_temperature}{material_bed_temperature}
+M73 P0 ; clear GLCD progress bar
 M75	   ; Start GLCD Timer
 G21        ;metric values
 G90        ;absolute positioning

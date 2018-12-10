@@ -1,4 +1,5 @@
-;This G-Code has been generated specifically for the LulzBot Mini with Aerostruder v2 Micro
+;This G-Code has been generated specifically for the LulzBot Mini with a SL 0.25mm Tool Head
+M73 P0 ; clear GLCD progress bar
 M75 ; Start GLCD Timer
 G26 ; clear potential 'probe fail' condition
 G21 ; set units to Millimetres

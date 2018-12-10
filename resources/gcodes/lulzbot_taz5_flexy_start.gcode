@@ -1,4 +1,6 @@
+; This profile was specifically generated for a TAZ 5 3D Printer with Flexystruder v2 Tool Head
 M140 S{material_bed_temperature}    ; start bed heating up
+M73 P0                              ; clear GLCD progress bar
 M75			; start GLCD timer
 G21                     ; metric values
 G90                     ; absolute positioning
