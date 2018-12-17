@@ -531,6 +531,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self.sendCommand("M104 S0")
         self.sendCommand("M107")
         self.sendCommand("M84")
+        self.sendCommand("M117 Print Canceled.")
         Application.getInstance().showPrintMonitor.emit(False)
 
 
