@@ -5,8 +5,8 @@
     "version": 2,
     "metadata":
     {
-				"priority": "12",
-                "machine_extruder_trains":
+        "priority": "12",
+        "machine_extruder_trains":
         {
             "0": "lulzbot_taz6_flexy_v2_extruder"
         },
