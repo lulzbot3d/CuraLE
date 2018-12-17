@@ -338,7 +338,8 @@ Rectangle
         {
             id: timeDetails
             anchors.left: parent.left
-            anchors.bottom: costSpec.top
+            anchors.top: footerSeparator.bottom
+            anchors.topMargin: UM.Theme.getSize("sidebar_margin").height
             font: UM.Theme.getFont("large")
             color: UM.Theme.getColor("text_subtext")
             text: (!base.printDuration || !base.printDuration.valid) ? catalog.i18nc("@label Hours and minutes", "00h 00min") : base.printDuration.getDisplayString(UM.DurationFormat.Short)
@@ -468,7 +469,7 @@ Rectangle
 
             id: costSpec
             anchors.left: parent.left
-            anchors.bottom: parent.bottom
+            anchors.top: timeDetails.bottom
             font: UM.Theme.getFont("very_small")
             renderType: Text.NativeRendering
             color: UM.Theme.getColor("text_subtext")
