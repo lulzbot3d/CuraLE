@@ -8,6 +8,7 @@ from UM.Application import Application
 from UM.Mesh.MeshData import MeshData
 from UM.Preferences import Preferences
 from UM.View.GL.OpenGLContext import OpenGLContext
+from UM.Scene.SceneNode import SceneNode
 
 from UM.Message import Message
 from UM.i18n import i18nCatalog
@@ -81,7 +82,7 @@ class ProcessSlicedLayersJob(Job):
 
         Application.getInstance().getController().activeViewChanged.connect(self._onActiveViewChanged)
 
-        new_node = CuraSceneNode()
+        new_node = SceneNode()
         new_node.addDecorator(BuildPlateDecorator(self._build_plate_number))
 
         # Force garbage collection.
