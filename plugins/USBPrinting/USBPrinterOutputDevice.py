@@ -1193,6 +1193,9 @@ class PrintThread:
                 self._parent.close()
                 break
 
+            if b"//action:filament_runout" in line:
+                self._parent._pausePrint()
+
             if b"Z Offset " in line:
                 value = line.split(b":")
                 if len(value) == 3:
