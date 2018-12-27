@@ -4519,18 +4519,6 @@ msgid ""
 msgstr ""
 
 #: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness label"
-msgid "Prime Tower Thickness"
-msgstr ""
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness description"
-msgid ""
-"The thickness of the hollow prime tower. A thickness larger than half the "
-"Prime Tower Minimum Volume will result in a dense prime tower."
-msgstr ""
-
-#: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
 msgid "Prime Tower X Position"
 msgstr ""

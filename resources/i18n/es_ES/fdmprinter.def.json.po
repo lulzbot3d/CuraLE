@@ -3933,16 +3933,6 @@ msgid "The minimum volume for each layer of the prime tower in order to purge en
 msgstr "El volumen mínimo de cada capa de la torre auxiliar que permite purgar suficiente material."
 
 #: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness label"
-msgid "Prime Tower Thickness"
-msgstr "Grosor de la torre auxiliar"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness description"
-msgid "The thickness of the hollow prime tower. A thickness larger than half the Prime Tower Minimum Volume will result in a dense prime tower."
-msgstr "El grosor de la torre auxiliar hueca. Un grosor mayor de la mitad del volumen mínimo de la torre auxiliar dará lugar a una torre auxiliar densa."
-
-#: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
 msgid "Prime Tower X Position"
 msgstr "Posición de la torre auxiliar sobre el eje X"

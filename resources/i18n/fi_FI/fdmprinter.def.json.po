@@ -3937,16 +3937,6 @@ msgid "The minimum volume for each layer of the prime tower in order to purge en
 msgstr "Esitäyttötornin kunkin kerroksen minimitilavuus, jotta voidaan poistaa riittävästi materiaalia."
 
 #: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness label"
-msgid "Prime Tower Thickness"
-msgstr "Esitäyttötornin paksuus"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness description"
-msgid "The thickness of the hollow prime tower. A thickness larger than half the Prime Tower Minimum Volume will result in a dense prime tower."
-msgstr "Onton esitäyttötornin paksuus. Jos paksuus ylittää puolet esitäyttötornin minimitilavuudesta, tuloksena on tiheä esitäyttötorni."
-
-#: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
 msgid "Prime Tower X Position"
 msgstr "Esitäyttötornin X-sijainti"

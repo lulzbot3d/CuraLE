@@ -3933,16 +3933,6 @@ msgid "The minimum volume for each layer of the prime tower in order to purge en
 msgstr "Het minimale volume voor elke laag van de primepijler om voldoende materiaal te zuiveren."
 
 #: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness label"
-msgid "Prime Tower Thickness"
-msgstr "Dikte primepijler"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness description"
-msgid "The thickness of the hollow prime tower. A thickness larger than half the Prime Tower Minimum Volume will result in a dense prime tower."
-msgstr "De dikte van de holle primepijler. Een dikte groter dan de helft van het minimale volume van de primepijler leidt tot een primepijler met een hoge dichtheid."
-
-#: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
 msgid "Prime Tower X Position"
 msgstr "X-positie Primepijler"

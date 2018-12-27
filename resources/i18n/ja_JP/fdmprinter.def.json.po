@@ -4074,16 +4074,6 @@ msgid "The minimum volume for each layer of the prime tower in order to purge en
 msgstr "プライムタワーの各層の最小容積"
 
 #: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness label"
-msgid "Prime Tower Thickness"
-msgstr "プライムタワーの厚さ"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness description"
-msgid "The thickness of the hollow prime tower. A thickness larger than half the Prime Tower Minimum Volume will result in a dense prime tower."
-msgstr "中空プライムタワーの厚さ。プライムタワーの半分を超える厚さは、密集したプライムタワーになります。"
-
-#: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
 msgid "Prime Tower X Position"
 msgstr "プライムタワーX位置"

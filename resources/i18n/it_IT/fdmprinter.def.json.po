@@ -3933,16 +3933,6 @@ msgid "The minimum volume for each layer of the prime tower in order to purge en
 msgstr "Il volume minimo per ciascuno strato della torre di innesco per scaricare materiale a sufficienza."
 
 #: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness label"
-msgid "Prime Tower Thickness"
-msgstr "Spessore torre di innesco"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness description"
-msgid "The thickness of the hollow prime tower. A thickness larger than half the Prime Tower Minimum Volume will result in a dense prime tower."
-msgstr "Lo spessore della torre di innesco cava. Uno spessore superiore alla metà del volume minimo della torre di innesco genera una torre di innesco densa."
-
-#: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
 msgid "Prime Tower X Position"
 msgstr "Posizione X torre di innesco"

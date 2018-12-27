@@ -3935,16 +3935,6 @@ msgid "The minimum volume for each layer of the prime tower in order to purge en
 msgstr "为了清除足够的材料，装填塔每层的最小体积。"
 
 #: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness label"
-msgid "Prime Tower Thickness"
-msgstr "装填塔厚度"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness description"
-msgid "The thickness of the hollow prime tower. A thickness larger than half the Prime Tower Minimum Volume will result in a dense prime tower."
-msgstr "空装填塔的厚度。 如果厚度大于装填塔最小体积的一半，则将打造一个密集的装填塔。"
-
-#: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
 msgid "Prime Tower X Position"
 msgstr "装填塔 X 位置"

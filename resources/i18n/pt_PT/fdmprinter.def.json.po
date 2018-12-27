@@ -4089,16 +4089,6 @@ msgid "The minimum volume for each layer of the prime tower in order to purge en
 msgstr "O volume mínimo para cada camada da torre de preparação para preparar material suficiente."
 
 #: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness label"
-msgid "Prime Tower Thickness"
-msgstr "Espessura da torre de preparação"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness description"
-msgid "The thickness of the hollow prime tower. A thickness larger than half the Prime Tower Minimum Volume will result in a dense prime tower."
-msgstr "A espessura da torre de preparação oca. Uma espessura superior a metade do Volume mínimo da torre de preparação irá resultar numa torre de preparação densa."
-
-#: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
 msgid "Prime Tower X Position"
 msgstr "Posição X da torre de preparação"

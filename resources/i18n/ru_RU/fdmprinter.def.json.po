@@ -3935,16 +3935,6 @@ msgid "The minimum volume for each layer of the prime tower in order to purge en
 msgstr "Минимальный объём материала на каждый слой черновой башни, который требуется выдавить."
 
 #: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness label"
-msgid "Prime Tower Thickness"
-msgstr "Толщина черновой башни"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness description"
-msgid "The thickness of the hollow prime tower. A thickness larger than half the Prime Tower Minimum Volume will result in a dense prime tower."
-msgstr "Толщина полости черновой башни. Если толщина больше половины минимального объёма черновой башни, то результатом будет увеличение плотности башни."
-
-#: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
 msgid "Prime Tower X Position"
 msgstr "X позиция черновой башни"

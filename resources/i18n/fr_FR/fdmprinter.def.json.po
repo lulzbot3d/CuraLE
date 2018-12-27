@@ -3933,16 +3933,6 @@ msgid "The minimum volume for each layer of the prime tower in order to purge en
 msgstr "Le volume minimum pour chaque touche de la tour primaire afin de purger suffisamment de matériau."
 
 #: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness label"
-msgid "Prime Tower Thickness"
-msgstr "Épaisseur de la tour primaire"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness description"
-msgid "The thickness of the hollow prime tower. A thickness larger than half the Prime Tower Minimum Volume will result in a dense prime tower."
-msgstr "L'épaisseur de la tour primaire creuse. Une épaisseur supérieure à la moitié du volume minimum de la tour primaire résultera en une tour primaire dense."
-
-#: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
 msgid "Prime Tower X Position"
 msgstr "Position X de la tour primaire"

@@ -3933,16 +3933,6 @@ msgid "The minimum volume for each layer of the prime tower in order to purge en
 msgstr "Yeterince malzeme temizlemek için ilk direğin her bir katmanı için minimum hacim."
 
 #: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness label"
-msgid "Prime Tower Thickness"
-msgstr "İlk Direğin Kalınlığı"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness description"
-msgid "The thickness of the hollow prime tower. A thickness larger than half the Prime Tower Minimum Volume will result in a dense prime tower."
-msgstr "Boş olan ilk direğin kalınlığı Kalınlığın Minimum İlk Direk Hacminin yarısından fazla olması ilk direğin yoğun olmasına neden olur."
-
-#: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
 msgid "Prime Tower X Position"
 msgstr "İlk Direk X Konumu"

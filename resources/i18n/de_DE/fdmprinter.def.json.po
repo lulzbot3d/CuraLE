@@ -3933,16 +3933,6 @@ msgid "The minimum volume for each layer of the prime tower in order to purge en
 msgstr "Das Mindestvolumen für jede Schicht des Einzugsturms, um ausreichend Material zu spülen."
 
 #: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness label"
-msgid "Prime Tower Thickness"
-msgstr "Dicke Einzugsturm"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness description"
-msgid "The thickness of the hollow prime tower. A thickness larger than half the Prime Tower Minimum Volume will result in a dense prime tower."
-msgstr "Die Dicke des Hohleinzugsturms. Eine Dicke, die mehr als die Hälfte des Mindestvolumens für den Einzugsturm beträgt, führt zu einem dichten Einzugsturm."
-
-#: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
 msgid "Prime Tower X Position"
 msgstr "X-Position für Einzugsturm"

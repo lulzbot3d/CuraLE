@@ -4745,20 +4745,6 @@ msgid ""
 msgstr "為了清除足夠的耗材，換料塔每層的最小體積。"
 
 #: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness label"
-msgid "Prime Tower Thickness"
-msgstr "換料塔厚度"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness description"
-msgid ""
-"The thickness of the hollow prime tower. A thickness larger than half the "
-"Prime Tower Minimum Volume will result in a dense prime tower."
-msgstr ""
-"空心換料塔的厚度。如果厚度大於換料塔最小體積的一半，則將形成一個密集的換料"
-"塔。"
-
-#: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
 msgid "Prime Tower X Position"
 msgstr "換料塔 X 位置"

@@ -510,7 +510,7 @@ class CuraApplication(QtApplication):
             coasting_speed;wireframe_roof_fall_down;wireframe_height;draft_shield_height;wireframe_strategy;wireframe_enabled
             wireframe_flat_delay;draft_shield_dist;infill_hollow;magic_fuzzy_skin_enabled;wireframe_bottom_delay;ooze_shield_dist
             ooze_shield_angle;prime_tower_flow;prime_tower_position_y;prime_tower_wipe_enabled;ooze_shield_enabled;prime_tower_enable
-            dual_pre_wipe;prime_tower_size;prime_tower_min_volume;prime_tower_wall_thickness;prime_tower_position_x
+            dual_pre_wipe;prime_tower_size;prime_tower_min_volume;prime_tower_position_x
         """.replace("\n", ";").replace(" ", ""))
 
 
