@@ -4129,33 +4129,6 @@ msgid "After printing the prime tower with one nozzle, wipe the oozed material f
 msgstr "Após a impressão da torre de preparação com um nozzle, limpe o material que vazou do nozzle para a torre de preparação."
 
 # rever!
-# mudança?
-# troca?
-# substituição?
-#: fdmprinter.def.json
-msgctxt "dual_pre_wipe label"
-msgid "Wipe Nozzle After Switch"
-msgstr "Limpar nozzle após mudança"
-
-# rever!
-# vazou? vazado?
-# escorreu? escorrido?
-#: fdmprinter.def.json
-msgctxt "dual_pre_wipe description"
-msgid "After switching extruder, wipe the oozed material off of the nozzle on the first thing printed. This performs a safe slow wipe move at a place where the oozed material causes least harm to the surface quality of your print."
-msgstr "Após a mudança de extrusor, limpar o material que escorreu do nozzle na primeira \"coisa\" impressa. Isto executa um movimento lento de limpeza num local onde o material que tenha escorrido seja menos prejudicial para a qualidade da superfície da sua impressão."
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume label"
-msgid "Prime Tower Purge Volume"
-msgstr "Volume Purga Torre Preparação"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume description"
-msgid "Amount of filament to be purged when wiping on the prime tower. Purging is useful for compensating the filament lost by oozing during inactivity of the nozzle."
-msgstr "Quantidade de filamento a ser purgado ao limpar na torre de preparação. A purga é útil para compensar o filamento perdido por escorrimento durante a inatividade do nozzle."
-
-# rever!
 #: fdmprinter.def.json
 msgctxt "ooze_shield_enabled label"
 msgid "Enable Ooze Shield"

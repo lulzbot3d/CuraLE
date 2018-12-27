@@ -3980,26 +3980,6 @@ msgid "After printing the prime tower with one nozzle, wipe the oozed material f
 msgstr "Po wydrukowaniu podstawowej wieży jedną dyszą, wytrzyj wytłoczony materiał z drugiej dyszy o  wieżę czyszczącą."
 
 #: fdmprinter.def.json
-msgctxt "dual_pre_wipe label"
-msgid "Wipe Nozzle After Switch"
-msgstr "Wytrzyj Dyszę po Przełączeniu"
-
-#: fdmprinter.def.json
-msgctxt "dual_pre_wipe description"
-msgid "After switching extruder, wipe the oozed material off of the nozzle on the first thing printed. This performs a safe slow wipe move at a place where the oozed material causes least harm to the surface quality of your print."
-msgstr "Po przełączeniu ekstrudera, wytrzyj materiał wyciekający z dyszy na pierwszą drukowaną część. powoduje to bezpieczny, powolny ruch wycierania w miejscu gdzie wyciekający materiał nie spowoduje dużej szkody dla powierzchni modelu."
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume label"
-msgid "Prime Tower Purge Volume"
-msgstr "Pole Czyszczące Wieży Czyszcz."
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume description"
-msgid "Amount of filament to be purged when wiping on the prime tower. Purging is useful for compensating the filament lost by oozing during inactivity of the nozzle."
-msgstr "Ilość filamentu, która jest czyszczona podczas wycierania na wieży czyszczącej. Czyszczenie jest użyteczne do kompensowania utraty filamentu przez wypływanie z nieużywanej dyszy."
-
-#: fdmprinter.def.json
 msgctxt "ooze_shield_enabled label"
 msgid "Enable Ooze Shield"
 msgstr "Włącz Osłonę Wycierającą"

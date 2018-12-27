@@ -3973,26 +3973,6 @@ msgid "After printing the prime tower with one nozzle, wipe the oozed material f
 msgstr "Nach dem Drucken des Einzugsturms mit einer Düse wird das ausgetretene Material von der anderen Düse am Einzugsturm abgewischt."
 
 #: fdmprinter.def.json
-msgctxt "dual_pre_wipe label"
-msgid "Wipe Nozzle After Switch"
-msgstr "Düse nach dem Schalten abwischen"
-
-#: fdmprinter.def.json
-msgctxt "dual_pre_wipe description"
-msgid "After switching extruder, wipe the oozed material off of the nozzle on the first thing printed. This performs a safe slow wipe move at a place where the oozed material causes least harm to the surface quality of your print."
-msgstr "Wischt nach dem Schalten des Extruders ausgetretenes Material am ersten Druckelement an der Düse ab. Hierdurch wird eine sichere, langsame Wischbewegung an einer Position ausgeführt, an der das ausgetretene Material am wenigsten Schaden an der Oberflächenqualität Ihres Drucks verursacht."
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume label"
-msgid "Prime Tower Purge Volume"
-msgstr "Einzugsturm Spülvolumen"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume description"
-msgid "Amount of filament to be purged when wiping on the prime tower. Purging is useful for compensating the filament lost by oozing during inactivity of the nozzle."
-msgstr "Menge des zu spülenden Filaments beim Wischen des Spülturms. Spülen ist hilfreich, um dem Filament-Verlust durch Aussickern während der Inaktivität der Düse zu kompensieren."
-
-#: fdmprinter.def.json
 msgctxt "ooze_shield_enabled label"
 msgid "Enable Ooze Shield"
 msgstr "Sickerschutz aktivieren"

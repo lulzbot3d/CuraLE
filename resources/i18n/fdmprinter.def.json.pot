@@ -4563,32 +4563,6 @@ msgid ""
 msgstr ""
 
 #: fdmprinter.def.json
-msgctxt "dual_pre_wipe label"
-msgid "Wipe Nozzle After Switch"
-msgstr ""
-
-#: fdmprinter.def.json
-msgctxt "dual_pre_wipe description"
-msgid ""
-"After switching extruder, wipe the oozed material off of the nozzle on the "
-"first thing printed. This performs a safe slow wipe move at a place where "
-"the oozed material causes least harm to the surface quality of your print."
-msgstr ""
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume label"
-msgid "Prime Tower Purge Volume"
-msgstr ""
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume description"
-msgid ""
-"Amount of filament to be purged when wiping on the prime tower. Purging is "
-"useful for compensating the filament lost by oozing during inactivity of the "
-"nozzle."
-msgstr ""
-
-#: fdmprinter.def.json
 msgctxt "ooze_shield_enabled label"
 msgid "Enable Ooze Shield"
 msgstr ""

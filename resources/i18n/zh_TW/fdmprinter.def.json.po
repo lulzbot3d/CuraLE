@@ -4789,36 +4789,6 @@ msgid ""
 msgstr "在一個噴頭列印換料塔後，在換料塔上擦拭另一個噴頭滲出的耗材。"
 
 #: fdmprinter.def.json
-msgctxt "dual_pre_wipe label"
-msgid "Wipe Nozzle After Switch"
-msgstr "切換後擦拭噴頭"
-
-#: fdmprinter.def.json
-msgctxt "dual_pre_wipe description"
-msgid ""
-"After switching extruder, wipe the oozed material off of the nozzle on the "
-"first thing printed. This performs a safe slow wipe move at a place where "
-"the oozed material causes least harm to the surface quality of your print."
-msgstr ""
-"切換擠出機後，在列印的第一個物件上擦拭噴頭上的滲出耗材。這會在滲出耗材對列印"
-"品表面品質造成最小損害的位置進行緩慢安全的擦拭動作。"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume label"
-msgid "Prime Tower Purge Volume"
-msgstr "換料塔清洗量"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume description"
-msgid ""
-"Amount of filament to be purged when wiping on the prime tower. Purging is "
-"useful for compensating the filament lost by oozing during inactivity of the "
-"nozzle."
-msgstr ""
-"在換料塔上進行擦拭時要清洗的耗材量。清洗可用於補償在噴頭不活動期間由於滲出而"
-"損失的耗材。"
-
-#: fdmprinter.def.json
 msgctxt "ooze_shield_enabled label"
 msgid "Enable Ooze Shield"
 msgstr "啟用擦拭牆"

@@ -3973,26 +3973,6 @@ msgid "After printing the prime tower with one nozzle, wipe the oozed material f
 msgstr "Veeg na het printen van de primepijler met één nozzle het doorgevoerde materiaal van de andere nozzle af aan de primepijler."
 
 #: fdmprinter.def.json
-msgctxt "dual_pre_wipe label"
-msgid "Wipe Nozzle After Switch"
-msgstr "Nozzle vegen na wisselen"
-
-#: fdmprinter.def.json
-msgctxt "dual_pre_wipe description"
-msgid "After switching extruder, wipe the oozed material off of the nozzle on the first thing printed. This performs a safe slow wipe move at a place where the oozed material causes least harm to the surface quality of your print."
-msgstr "Veeg na het wisselen van de extruder het doorgevoerde materiaal van de nozzle af aan het eerste dat wordt geprint. Hiermee wordt met een langzame beweging het doorgevoerde materiaal veilig afgeveegd op een plek waar dit het minste kwaad kan voor de oppervlaktekwaliteit van de print."
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume label"
-msgid "Prime Tower Purge Volume"
-msgstr "Zuiveringsvolume primepijler"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume description"
-msgid "Amount of filament to be purged when wiping on the prime tower. Purging is useful for compensating the filament lost by oozing during inactivity of the nozzle."
-msgstr "De hoeveelheid filament die wordt gezuiverd tijdens afvegen aan de primepijler. Zuiveren wordt gebruikt om filament te compenseren dat tijdens inactiviteit van de nozzle wordt verloren via uitloop."
-
-#: fdmprinter.def.json
 msgctxt "ooze_shield_enabled label"
 msgid "Enable Ooze Shield"
 msgstr "Uitloopscherm Inschakelen"

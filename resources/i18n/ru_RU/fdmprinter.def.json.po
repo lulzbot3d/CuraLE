@@ -3975,26 +3975,6 @@ msgid "After printing the prime tower with one nozzle, wipe the oozed material f
 msgstr "После печати черновой башни одним соплом, вытирает вытекший материал из другого сопла об эту башню."
 
 #: fdmprinter.def.json
-msgctxt "dual_pre_wipe label"
-msgid "Wipe Nozzle After Switch"
-msgstr "Очистка сопла после переключения"
-
-#: fdmprinter.def.json
-msgctxt "dual_pre_wipe description"
-msgid "After switching extruder, wipe the oozed material off of the nozzle on the first thing printed. This performs a safe slow wipe move at a place where the oozed material causes least harm to the surface quality of your print."
-msgstr "После смены экструдера убираем на первой печатаемой части материал, вытекший из сопла. Выполняется безопасная медленная очистка на месте, где вытекший материал нанесёт наименьший ущерб качеству печатаемой поверхности."
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume label"
-msgid "Prime Tower Purge Volume"
-msgstr "Объём очистки черновой башни"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume description"
-msgid "Amount of filament to be purged when wiping on the prime tower. Purging is useful for compensating the filament lost by oozing during inactivity of the nozzle."
-msgstr "Объём материала, который будет выдавлен при очистке на черновой башне. Очистка полезна для компенсации недостатка материала из-за его вытекания при простое сопла."
-
-#: fdmprinter.def.json
 msgctxt "ooze_shield_enabled label"
 msgid "Enable Ooze Shield"
 msgstr "Печатать защиту от капель"

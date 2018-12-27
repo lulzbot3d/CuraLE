@@ -3973,26 +3973,6 @@ msgid "After printing the prime tower with one nozzle, wipe the oozed material f
 msgstr "Tras imprimir la torre auxiliar con una tobera, limpie el material rezumado de la otra tobera de la torre auxiliar."
 
 #: fdmprinter.def.json
-msgctxt "dual_pre_wipe label"
-msgid "Wipe Nozzle After Switch"
-msgstr "Limpiar tobera después de cambiar"
-
-#: fdmprinter.def.json
-msgctxt "dual_pre_wipe description"
-msgid "After switching extruder, wipe the oozed material off of the nozzle on the first thing printed. This performs a safe slow wipe move at a place where the oozed material causes least harm to the surface quality of your print."
-msgstr "Tras cambiar de extrusor, limpie el material que rezuma de la tobera en el primer objeto que imprima. Esto lleva a cabo un movimiento de limpieza lento y suave en un lugar en el que el material que rezuma produzca el menor daño posible a la calidad superficial de la impresión."
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume label"
-msgid "Prime Tower Purge Volume"
-msgstr "Volumen de purga de la torre auxiliar"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume description"
-msgid "Amount of filament to be purged when wiping on the prime tower. Purging is useful for compensating the filament lost by oozing during inactivity of the nozzle."
-msgstr "Cantidad de filamentos que purgar al limpiar la torre auxiliar. La purga sirve para compensar la pérdida de filamentos que se produce durante el rezumado cuando la tobera está inactiva."
-
-#: fdmprinter.def.json
 msgctxt "ooze_shield_enabled label"
 msgid "Enable Ooze Shield"
 msgstr "Activar placa de rezumado"

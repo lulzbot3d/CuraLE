@@ -3975,26 +3975,6 @@ msgid "After printing the prime tower with one nozzle, wipe the oozed material f
 msgstr "하나의 노즐로 프라임 타워를 인쇄 한 후, 다른 타워의 흙먼지 물질을 프라임 타워에서 닦아냅니다. "
 
 #: fdmprinter.def.json
-msgctxt "dual_pre_wipe label"
-msgid "Wipe Nozzle After Switch"
-msgstr "스위치 후 노즐 닦기"
-
-#: fdmprinter.def.json
-msgctxt "dual_pre_wipe description"
-msgid "After switching extruder, wipe the oozed material off of the nozzle on the first thing printed. This performs a safe slow wipe move at a place where the oozed material causes least harm to the surface quality of your print."
-msgstr "압출기를 전환 한 후, 인쇄 된 첫 번째 것을 노즐에서 닦아 낸 물질을 닦아냅니다. 이렇게하면 흘러 나온 물질이 인쇄물의 표면 품질에 가장 해를 입히는 곳에서 안전한 천천히 닦아줍니다. "
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume label"
-msgid "Prime Tower Purge Volume"
-msgstr "프라임 타워 퍼지 볼륨"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume description"
-msgid "Amount of filament to be purged when wiping on the prime tower. Purging is useful for compensating the filament lost by oozing during inactivity of the nozzle."
-msgstr "프라임 타워에서 닦을 때 제거 할 필라멘트의 양. 퍼지는 노즐이 작동하지 않을 때 새어 나와 분실 된 필라멘트를 보정하는 데 유용합니다. "
-
-#: fdmprinter.def.json
 msgctxt "ooze_shield_enabled label"
 msgid "Enable Ooze Shield"
 msgstr "Ooze Shield 사용"
