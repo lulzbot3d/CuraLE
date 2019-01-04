@@ -18,6 +18,6 @@ M190 R{material_part_removal_temperature}                       ; set bed to coo
 G1 Y280 F3000                  ; present finished print
 M140 S{material_keep_part_removal_temperature_t}; keep temperature or cool downs
 M77			       ; stop GLCD timer
-M84                            ; steppers off
+M18 X Y E				       ; turn off x y and e axis
 G90                            ; absolute positioning
 M117 Print complete            ; progress indicator message
