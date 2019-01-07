@@ -112,7 +112,8 @@ class ThreeMFReader(MeshReader):
 
         # Add the setting override decorator, so we can add settings to this node.
         if settings:
-            um_node.addDecorator(SettingOverrideDecorator())
+            if not um_node.callDecoration("getStack"):
+                um_node.addDecorator(SettingOverrideDecorator())
 
             global_container_stack = Application.getInstance().getGlobalContainerStack()
 
