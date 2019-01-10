@@ -1,7 +1,6 @@
 ;This G-Code is for the LulzBot TAZ 6 with the TWOOLHEAD!
     M73 P0                              ; clear GLCD progress bar
 	G26                                 ; clear potential 'probe fail' condition
-	G21                                 ; set units to Millimetres
 	M107                                ; disable fans
 	G90                                 ; absolute positioning
 	M82                                 ; set extruder to absolute mode
@@ -78,7 +77,7 @@
 	G28 XY                              ; home X and Y
 	M204 S100                           ; set probing acceleration
 	G29                                 ; start auto-leveling sequence
-        M425 Z			     ; use measured Z backlash for compensation
+    M425 Z			     ; use measured Z backlash for compensation
 	M425 Z F0		     ; turn off measured Z backlash compensation. (if activated in the quality settings, this command will automatically be ignored)
 	M204 S350                           ; restore standard acceleration
 	G1 Z15 F5000                        ; move up off last probe point

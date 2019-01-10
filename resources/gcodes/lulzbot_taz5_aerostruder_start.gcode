@@ -2,7 +2,6 @@
 M73 P0       ; clear GLCD progress bar
 M75			 ; Start GLCD Timer
 M140 S{material_bed_temperature}    ; start bed heating up
-G21                      ; set units to Millimetres
 G90                      ; absolute positioning
 M107                     ; disable fans
 M82                      ; set extruder to absolute mode

@@ -1,7 +1,6 @@
 ; This profile is designed specifically for the dual-extruder Q 3D Printer
 M73 P0                                    ; clear GLCD progress bar
 M75			          	  ; start GLCD timer
-G21                                       ; set units to Millimetres
 M107                                      ; disable fans
 G90                                       ; absolute positioning
 M420 S0                                   ; disable previous leveling matrix

@@ -2,7 +2,6 @@
 ;{material_print_temperature}
 M73 P0 ;resetting progress bar on LCD
 G26 ; clear potential 'probe fail' condition
-G21 ; set units to Millimetres
 M107 ; disable fans
 G90 ; absolute positioning
 T0 ; select this extruder first
