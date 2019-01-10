@@ -4106,10 +4106,10 @@
                     "unit": "mm",
                     "type": "float",
                     "default_value": 0.1,
-                    "minimum_value": "resolveOrValue('layer_height')",
+                    "minimum_value": "sum(extruderValues('layer_height')) / len(extruderValues('layer_height')) * 0.5",
                     "maximum_value_warning": "0.75 * machine_nozzle_size",
-                    "maximum_value": "resolveOrValue('layer_height') * 8",
-                    "value": "resolveOrValue('layer_height')",
+                    "maximum_value": "sum(extruderValues('layer_height')) / len(extruderValues('layer_height')) * 8",
+                    "resolve": "layer_height",
                     "enabled": "(support_enable or support_tree_enable) and support_infill_rate > 0",
                     "limit_to_extruder": "support_infill_extruder_nr",
                     "settable_per_mesh": false
