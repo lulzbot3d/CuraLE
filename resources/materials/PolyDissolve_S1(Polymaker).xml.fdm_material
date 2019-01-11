@@ -47,5 +47,8 @@
     <machine>
       <machine_identifier product="lulzbot_quiver_evergreen_bagworm"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_cecropia"/>
+    </machine>
   </settings>
 </fdmmaterial>
