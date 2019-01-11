@@ -122,6 +122,9 @@
       <machine_identifier product="lulzbot_quiver_achemon"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_quiver_dingy_cutworm"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_taz6_twoolhead"/>
     </machine>
     <machine>

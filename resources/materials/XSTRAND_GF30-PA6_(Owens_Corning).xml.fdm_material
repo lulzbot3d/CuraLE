@@ -49,5 +49,11 @@
     <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_taz6_dingy_cutworm"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_evergreen_bagworm"/>
+    </machine>
   </settings>
 </fdmmaterial>
