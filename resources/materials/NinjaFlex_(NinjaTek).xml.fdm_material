@@ -100,6 +100,9 @@
       <machine_identifier product="lulzbot_quiver_cecropia"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_quiver_achemon"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_mini_cecropia"/>
     </machine>
     <machine>
