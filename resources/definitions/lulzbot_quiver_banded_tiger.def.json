@@ -1,6 +1,6 @@
 {
-    "id": "lulzbot_quiver_dingy_cutworm",
-    "name": "Q - HS+",
+    "id": "lulzbot_quiver_banded_tiger",
+    "name": "Q - HS",
     "inherits": "lulzbot_taz6",
     "version": 2,
     "metadata":
@@ -30,11 +30,11 @@
     {
         "machine_name":
         {
-            "default_value": "Q - HS+"
+            "default_value": "Q - HS"
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "lulzbot_quiver_dingy_cutworm_start"
+            "default_value_from_file": "lulzbot_quiver_banded_tiger_start"
         },
         "machine_end_gcode":
         {
@@ -53,7 +53,7 @@
         },
         "machine_wipe_gcode":
         {
-            "default_value_from_file": "lulzbot_quiver_dingy_cutworm_wipe"
+            "default_value_from_file": "lulzbot_quiver_banded_tiger_wipe"
         },
         "layer_start_x": { "value": "100" },
         "layer_start_y": { "value": "100" }
