@@ -325,7 +325,9 @@
         "layerview_support_interface": [64, 192, 255, 255],
         "layerview_nozzle": [181, 166, 66, 120],
 
-        "info_button": [127, 127, 127, 255]
+        "info_button": [127, 127, 127, 255],
+        
+        "job_specs_background": [117, 117, 117, 1]
     },
 
     "sizes": {
