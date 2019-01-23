@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   id="svg19"
+   version="1.1"
+   viewBox="0 0 30 30"
+   height="30px"
+   width="30px">
+  <metadata
+     id="metadata23">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>icn_top_white</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title2">icn_top_white</title>
+  <desc
+     id="desc4">Created with Sketch.</desc>
+  <defs
+     id="defs7">
+    <polygon
+       points="7.13513514 0 21.4054054 0 14.2702703 7.33333333 0 7.33333333"
+       id="path-1" />
+  </defs>
+  <g
+     style="fill:none;fill-rule:evenodd;stroke:none;stroke-width:1"
+     transform="matrix(1,0,0,-1,0,30)"
+     id="Page-1">
+    <g
+       id="icn_top_white">
+      <g
+         transform="translate(4,4)"
+         id="Group-3-Copy">
+        <polygon
+           style="stroke:#1f2427"
+           points="7.1865234,0 0.055552586,7.3333333 0,22 14.335812,22 21.470947,14.666667 21.456794,0 "
+           id="Path-2-Copy" />
+        <g
+           id="Rectangle-3-Copy-6">
+          <use
+             height="100%"
+             width="100%"
+             y="0"
+             x="0"
+             style="fill:#1f2427;fill-rule:evenodd"
+             id="use10"
+             xlink:href="#path-1" />
+          <path
+             style="stroke:#1f2427;stroke-width:1"
+             id="path12"
+             d="M 7.3462654,0.5 1.1841032,6.8333333 H 14.05914 L 20.221302,0.5 Z" />
+        </g>
+        <path
+           style="stroke:#1f2427"
+           id="Path-3"
+           d="M 14.27027,22 V 6.7222222" />
+      </g>
+    </g>
+  </g>
+</svg>
