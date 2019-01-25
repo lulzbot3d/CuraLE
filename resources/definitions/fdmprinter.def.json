@@ -4111,8 +4111,8 @@
                     "maximum_value": "sum(extruderValues('layer_height')) / len(extruderValues('layer_height')) * 8",
                     "resolve": "layer_height",
                     "enabled": "(support_enable or support_tree_enable) and support_infill_rate > 0",
-                    "limit_to_extruder": "support_infill_extruder_nr",
-                    "settable_per_mesh": false
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": false
                 },
                 "gradual_support_infill_steps":
                 {
