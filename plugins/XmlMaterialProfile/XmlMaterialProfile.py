@@ -896,7 +896,8 @@ class XmlMaterialProfile(InstanceContainer):
         "wipe temperature": "material_wipe_temperature",
         "part removal temperature": "material_part_removal_temperature",
         "adhesion tendency": "material_adhesion_tendency",
-        "surface energy": "material_surface_energy"
+        "surface energy": "material_surface_energy",
+        "shrinkage percentage": "material_shrinkage_percentage"
     }
     __unmapped_settings = [
         "hardware compatible"

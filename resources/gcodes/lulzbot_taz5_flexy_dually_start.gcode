@@ -1,7 +1,8 @@
+; This profile was specifically created for a TAZ 5 3D Printer with Flexy Dually V2 Tool Head
 ;{material_print_temperature}{material_bed_temperature}
+M73 P0 ; clear GLCD progress bar
 M75	   ;start GLCD timer
 M140 S{material_bed_temperature}    ; start bed heating up
-G21        ;metric values
 G90        ;absolute positioning
 M107       ;start with the fan off
 G28 X0 Y0  ;move X/Y to min endstops

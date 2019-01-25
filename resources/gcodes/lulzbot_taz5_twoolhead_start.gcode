@@ -1,6 +1,6 @@
 ;This G-Code is for the LulzBot TAZ 5 with the TWOOLHEAD!
+M73 P0 ; clear GLCD progress bar
 G26 ; clear potential 'probe fail' condition
-G21 ; set units to Millimetres
 M107 ; disable fans
 G90 ; absolute positioning
 M82 ; set extruder to absolute mode

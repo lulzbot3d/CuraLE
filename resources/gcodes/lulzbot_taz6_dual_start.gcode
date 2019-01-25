@@ -1,8 +1,7 @@
-;This profile is designed specifically for LulzBot TAZ6 3D Printer
+;This profile is designed specifically for LulzBot TAZ6 3D Printer with Dual Extruder V2 Tool Head
 ;{material_print_temperature}
 M75			     ; start GLCD timer
 G26                          ; clear potential 'probe fail' condition
-G21                          ; set units to Millimetres
 M107                         ; disable fans
 M420 S0                      ; disable leveling matrix
 G90                          ; absolute positioning

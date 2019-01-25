@@ -121,7 +121,7 @@ Item {
                     background: Rectangle {
                         opacity: 100
                         border.width: 0
-                        color: "#788814"
+                        color: UM.Theme.getColor("job_specs_background")
                     }
                 }
             }

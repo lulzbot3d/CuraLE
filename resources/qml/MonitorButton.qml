@@ -46,7 +46,7 @@ Item
 
     property variant statusColor:
     {
-        if(UM.Backend.state == 1)
+        if(UM.Backend.state == 1 && !(printerOutputDevice.jobState == "printing") )
             return UM.Theme.getColor("text");
         if(!printerConnected || !printerAcceptsCommands)
             return UM.Theme.getColor("text");

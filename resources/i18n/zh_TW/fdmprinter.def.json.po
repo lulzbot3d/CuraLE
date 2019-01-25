@@ -4745,20 +4745,6 @@ msgid ""
 msgstr "為了清除足夠的耗材，換料塔每層的最小體積。"
 
 #: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness label"
-msgid "Prime Tower Thickness"
-msgstr "換料塔厚度"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness description"
-msgid ""
-"The thickness of the hollow prime tower. A thickness larger than half the "
-"Prime Tower Minimum Volume will result in a dense prime tower."
-msgstr ""
-"空心換料塔的厚度。如果厚度大於換料塔最小體積的一半，則將形成一個密集的換料"
-"塔。"
-
-#: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
 msgid "Prime Tower X Position"
 msgstr "換料塔 X 位置"
@@ -4801,36 +4787,6 @@ msgid ""
 "After printing the prime tower with one nozzle, wipe the oozed material from "
 "the other nozzle off on the prime tower."
 msgstr "在一個噴頭列印換料塔後，在換料塔上擦拭另一個噴頭滲出的耗材。"
-
-#: fdmprinter.def.json
-msgctxt "dual_pre_wipe label"
-msgid "Wipe Nozzle After Switch"
-msgstr "切換後擦拭噴頭"
-
-#: fdmprinter.def.json
-msgctxt "dual_pre_wipe description"
-msgid ""
-"After switching extruder, wipe the oozed material off of the nozzle on the "
-"first thing printed. This performs a safe slow wipe move at a place where "
-"the oozed material causes least harm to the surface quality of your print."
-msgstr ""
-"切換擠出機後，在列印的第一個物件上擦拭噴頭上的滲出耗材。這會在滲出耗材對列印"
-"品表面品質造成最小損害的位置進行緩慢安全的擦拭動作。"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume label"
-msgid "Prime Tower Purge Volume"
-msgstr "換料塔清洗量"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume description"
-msgid ""
-"Amount of filament to be purged when wiping on the prime tower. Purging is "
-"useful for compensating the filament lost by oozing during inactivity of the "
-"nozzle."
-msgstr ""
-"在換料塔上進行擦拭時要清洗的耗材量。清洗可用於補償在噴頭不活動期間由於滲出而"
-"損失的耗材。"
 
 #: fdmprinter.def.json
 msgctxt "ooze_shield_enabled label"

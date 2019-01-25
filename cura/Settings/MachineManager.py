@@ -47,6 +47,7 @@ if TYPE_CHECKING:
     from cura.Settings.GlobalStack import GlobalStack
 
 import os
+import json
 
 class MachineManager(QObject):
     def __init__(self, parent = None):
@@ -89,7 +90,7 @@ class MachineManager(QObject):
 
         self._onGlobalContainerChanged()
 
-        self._current_category = "All"
+        self._current_category = "all"
 
         ExtruderManager.getInstance().activeExtruderChanged.connect(self._onActiveExtruderStackChanged)
         self._onActiveExtruderStackChanged()
@@ -125,6 +126,10 @@ class MachineManager(QObject):
 
         self._auto_materials_changed = {}
         self._auto_hotends_changed = {}
+
+        from cura.CuraApplication import CuraApplication
+
+        self.material_categories_priority = json.load(open(Resources.getPath(CuraApplication.getInstance().ResourceTypes.MaterialInstanceContainer, "Categories_priority.json")))
 
         self._material_incompatible_message = Message(catalog.i18nc("@info:status",
                                               "The selected material is incompatible with the selected machine or configuration."),
@@ -201,6 +206,9 @@ class MachineManager(QObject):
             category = material.getMetaDataEntry("category")
             if category and category not in categories_list:
                 categories_list.append(category)
+
+        categories_list.sort()
+        categories_list = sorted(categories_list, key=lambda x: self.material_categories_priority[x])
         return categories_list
 
     @property

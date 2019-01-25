@@ -5,10 +5,13 @@
       <brand>Generic</brand>
       <material>XSTRAND GF30-PA6 (Owens Corning)</material>
       <color>Generic</color>
-      <category>Expert</category>
+      <category>Experimental</category>
     </name>
     <GUID>4a93345b-114d-40f9-9781-40216df0e2b4</GUID>
     <version>1</version>
+    <adhesion_info>**Dry Before Use**
+    
+    Use glue stick on PEI.</adhesion_info>
   </metadata>
   <properties>
     <density>1.25</density>
@@ -45,6 +48,15 @@
     </machine>
     <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_taz6_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_banded_tiger"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_evergreen_bagworm"/>
     </machine>
   </settings>
 </fdmmaterial>

@@ -129,7 +129,7 @@ UM.Dialog
                         anchors.top: parent.top
                         anchors.bottomMargin: UM.Theme.getSize("default_margin").width
 
-                        title: catalog.i18nc("@action:button", "Tool Head")
+                        title: catalog.i18nc("@action:button", "Tool Head | Nozzle Diameter")
                         ExclusiveGroup
                         {
                             id: toolheadGroup;

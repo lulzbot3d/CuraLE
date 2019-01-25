@@ -5,6 +5,7 @@
     "version": 2,
     "metadata":
     {
+        "priority": "01",
         "machine_extruder_trains":
         {
             "0": "lulzbot_mini_extruder"
@@ -83,68 +84,68 @@
         },
         "machine_acceleration":
         {
-            "default_value": 2000
+            "default_value": 1000
         },
         "acceleration_print":
         {
-            "default_value": 2000
+            "default_value": 1000
         },
         "acceleration_infill":
         {
-            "default_value": 2000
+            "default_value": 1000
         },
         "acceleration_wall":
         {
-            "default_value": 2000
+            "default_value": 1000
         },
         "acceleration_wall_0":
         {
-            "default_value": 2000
+            "default_value": 1000
         },
         "acceleration_wall_x":
         {
-            "default_value": 2000
+            "default_value": 1000
         },
         "acceleration_topbottom":
         {
-            "default_value": 2000
+            "default_value": 1000
         },
         "acceleration_support":
         {
-            "default_value": 2000
+            "default_value": 1000
         },
         "acceleration_support_infill":
         {
-            "default_value": 2000
+            "default_value": 1000
         },
         "acceleration_support_interface":
         {
-            "default_value": 2000
+            "default_value": 1000
         },
         "acceleration_prime_tower":
         {
-            "default_value": 2000
+            "default_value": 1000
         },
         "acceleration_travel":
         {
-            "default_value": 2000,
+            "default_value": 1000,
             "value": "acceleration_print if magic_spiralize else 2000"
         },
         "acceleration_layer_0":
         {
-            "default_value": 2000
+            "default_value": 1000
         },
         "acceleration_print_layer_0":
         {
-            "default_value": 2000
+            "default_value": 1000
         },
         "acceleration_travel_layer_0":
         {
-            "default_value": 2000
+            "default_value": 1000
         },
         "acceleration_skirt_brim":
         {
-            "default_value": 2000
+            "default_value": 1000
         },
         "jerk_print":
         {

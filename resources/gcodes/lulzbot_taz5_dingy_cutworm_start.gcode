@@ -1,7 +1,7 @@
-;This G-Code has been generated specifically for the LulzBot TAZ 5 with Aerostruder v2 Moar
+;This G-Code has been generated specifically for the LulzBot TAZ 5 with a HS+ Tool Head
+M73 P0       ; clear GLCD progress bar
 M75			 ; Start GLCD Timer
 M140 S{material_bed_temperature}    ; start bed heating up
-G21                      ; set units to Millimetres
 G90                      ; absolute positioning
 M107                     ; disable fans
 M82                      ; set extruder to absolute mode

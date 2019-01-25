@@ -1,7 +1,7 @@
-;This G-Code has been generated specifically for the LulzBot Mini with Aerostruder v2
+;This G-Code has been generated specifically for the LulzBot Mini with SE 0.5mm Tool Head
+M73 P0 ; clear GLCD progress bar
 M75 ; Start GLCD Timer
 G26 ; clear potential 'probe fail' condition
-G21 ; set units to Millimetres
 M107 ; disable fans
 M420 S0 ; disable leveling matrix
 G90 ; absolute positioning

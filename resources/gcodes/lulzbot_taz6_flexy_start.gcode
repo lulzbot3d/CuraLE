@@ -1,6 +1,7 @@
-M75 			     ; start GLCD timer
+; This was specifically sliced for a TAZ 6 with Flexystruder V2 Tool Head
+M73 P0                       ; clear GLCD progress bar
+M75 			             ; start GLCD timer
 G26                          ; clear potential 'probe fail' condition
-G21                          ; set units to Millimetres
 M107                         ; disable fans
 M420 S0                      ; disable leveling matrix
 G90                          ; absolute positioning

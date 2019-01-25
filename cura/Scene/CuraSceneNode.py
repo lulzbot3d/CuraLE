@@ -2,6 +2,7 @@ from UM.Application import Application
 from UM.Logger import Logger
 from UM.Scene.SceneNode import SceneNode
 from copy import deepcopy
+from cura.Settings.SettingOverrideDecorator import SettingOverrideDecorator
 
 
 ##  Scene nodes that are models are only seen when selecting the corresponding build plate
@@ -10,6 +11,7 @@ class CuraSceneNode(SceneNode):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._outside_buildarea = True
+        self.addDecorator(SettingOverrideDecorator())
 
     def setOutsideBuildArea(self, new_value):
         self._outside_buildarea = new_value
@@ -26,6 +28,7 @@ class CuraSceneNode(SceneNode):
     ##  Taken from SceneNode, but replaced SceneNode with CuraSceneNode
     def __deepcopy__(self, memo):
         copy = CuraSceneNode()
+        copy.removeDecorators()
         copy.setTransformation(self.getLocalTransformation())
         copy.setMeshData(self._mesh_data)
         copy.setVisible(deepcopy(self._visible, memo))

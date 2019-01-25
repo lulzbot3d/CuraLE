@@ -99,6 +99,18 @@
       <machine_identifier manufacturer="Aleph Objects, Inc."  product="lulzbot_taz6_cecropia"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_quiver_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_banded_tiger"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_dingy_cutworm"/>
+    </machine>
+    <machine>
        <machine_identifier product="lulzbot_taz6_twoolhead"/>
     </machine>
     <machine>

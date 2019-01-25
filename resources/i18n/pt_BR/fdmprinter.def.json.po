@@ -3940,16 +3940,6 @@ msgid "The minimum volume for each layer of the prime tower in order to purge en
 msgstr "O volume mínimo para cada camada da torre de purga de forma a purgar material suficiente."
 
 #: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness label"
-msgid "Prime Tower Thickness"
-msgstr "Espessura da Torre de Purga"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness description"
-msgid "The thickness of the hollow prime tower. A thickness larger than half the Prime Tower Minimum Volume will result in a dense prime tower."
-msgstr "A espessura da torre de purga (que é oca). Uma espessura maior que a metade do volume mínimo da torre de purga resultará em uma torre de purga densa."
-
-#: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
 msgid "Prime Tower X Position"
 msgstr "Posição X da Torre de Purga"
@@ -3988,26 +3978,6 @@ msgstr "Limpar Bico Inativo na Torre de Purga"
 msgctxt "prime_tower_wipe_enabled description"
 msgid "After printing the prime tower with one nozzle, wipe the oozed material from the other nozzle off on the prime tower."
 msgstr "Depois de imprimir a torre de purga com um bico, limpar o material escorrendo do outro bico na torre de purga."
-
-#: fdmprinter.def.json
-msgctxt "dual_pre_wipe label"
-msgid "Wipe Nozzle After Switch"
-msgstr "Limpar Bico Depois da Troca"
-
-#: fdmprinter.def.json
-msgctxt "dual_pre_wipe description"
-msgid "After switching extruder, wipe the oozed material off of the nozzle on the first thing printed. This performs a safe slow wipe move at a place where the oozed material causes least harm to the surface quality of your print."
-msgstr "Depois de trocar extrusores, limpar o material escorrendo do bico na primeira peça impressa. Isso causa um movimento lento de limpeza do bico em um lugar onde o material escorrido causa o menor dano à qualidade de superfície da sua impressão."
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume label"
-msgid "Prime Tower Purge Volume"
-msgstr "Volume de Purga da Torre de Purga"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume description"
-msgid "Amount of filament to be purged when wiping on the prime tower. Purging is useful for compensating the filament lost by oozing during inactivity of the nozzle."
-msgstr "Quantidade de filamento a ser purgado na torre de purga. A purga é útil para compensar filamento perdido por escorrimento durante inatividade do bico."
 
 #: fdmprinter.def.json
 msgctxt "ooze_shield_enabled label"

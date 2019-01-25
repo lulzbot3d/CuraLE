@@ -532,6 +532,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self.sendCommand("M104 S0")
         self.sendCommand("M107")
         self.sendCommand("M84")
+        self.sendCommand("M117 Print Canceled.")
         Application.getInstance().showPrintMonitor.emit(False)
 
 
@@ -1236,6 +1237,9 @@ class PrintThread:
                 self._parent._setErrorState("Wipe nozzle failed")
                 self._parent.close()
                 break
+
+            if b"//action:filament_runout" in line:
+                self._parent._pausePrint()
 
             if b"Z Offset " in line:
                 value = line.split(b":")

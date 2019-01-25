@@ -4074,16 +4074,6 @@ msgid "The minimum volume for each layer of the prime tower in order to purge en
 msgstr "プライムタワーの各層の最小容積"
 
 #: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness label"
-msgid "Prime Tower Thickness"
-msgstr "プライムタワーの厚さ"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_wall_thickness description"
-msgid "The thickness of the hollow prime tower. A thickness larger than half the Prime Tower Minimum Volume will result in a dense prime tower."
-msgstr "中空プライムタワーの厚さ。プライムタワーの半分を超える厚さは、密集したプライムタワーになります。"
-
-#: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
 msgid "Prime Tower X Position"
 msgstr "プライムタワーX位置"
@@ -4122,27 +4112,6 @@ msgstr "プライムタワーノズル拭き取り"
 msgctxt "prime_tower_wipe_enabled description"
 msgid "After printing the prime tower with one nozzle, wipe the oozed material from the other nozzle off on the prime tower."
 msgstr "1本のノズルでプライムタワーを印刷した後、もう片方のノズルから滲み出した材料をプライムタワーが拭き取ります。"
-
-#: fdmprinter.def.json
-msgctxt "dual_pre_wipe label"
-msgid "Wipe Nozzle After Switch"
-msgstr "スイッチ後のノズル拭き取り"
-
-#: fdmprinter.def.json
-msgctxt "dual_pre_wipe description"
-msgid "After switching extruder, wipe the oozed material off of the nozzle on the first thing printed. This performs a safe slow wipe move at a place where the oozed material causes least harm to the surface quality of your print."
-msgstr "エクストルーダーを切り替えた後、最初に印刷したものの上にあるノズルから滲み出したマテリアルを拭き取ってください。余分に出たマテリアルがプリントの表面品質に与える影響が最も少ない場所で、ゆっくりと払拭を行います。"
-
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume label"
-msgid "Prime Tower Purge Volume"
-msgstr "プライムタワーのパージ量"
-
-# msgstr "プライムタワーのパージ時のボリューム"
-#: fdmprinter.def.json
-msgctxt "prime_tower_purge_volume description"
-msgid "Amount of filament to be purged when wiping on the prime tower. Purging is useful for compensating the filament lost by oozing during inactivity of the nozzle."
-msgstr "プライムタワーの上を拭くときにパージするフィラメントの量。パージは、ノズルの不活動時にじみ出たフィラメントを補修するため便利です。"
 
 #: fdmprinter.def.json
 msgctxt "ooze_shield_enabled label"

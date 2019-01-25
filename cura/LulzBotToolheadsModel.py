@@ -47,9 +47,10 @@ class LulzBotToolheadsModel(ListModel):
             items.append({
                 "toolhead": metadata.get("user_toolhead_name", metadata.get("firmware_toolhead_name", metadata["name"])),
                 "id": metadata["id"],
-                "name": metadata["name"]
+                "name": metadata["name"],
+                "priority": metadata.get("priority", "99")
             })
-        items = sorted(items, key=lambda x: x["name"])
+        items = sorted(items, key=lambda x: x["priority"]+x["name"])
         self.setItems(items)
 
     def setBaseMachineProperty(self, new_base_machine):
