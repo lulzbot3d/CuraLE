@@ -46,9 +46,9 @@ Item
 
     property variant statusColor:
     {
-        if(UM.Backend.state == 1 && !(printerOutputDevice.jobState == "printing") )
-            return UM.Theme.getColor("text");
-        if(!printerConnected || !printerAcceptsCommands)
+
+        if(!printerConnected || !printerAcceptsCommands ||
+          (printerConnected && UM.Backend.state == 1 && Cura.MachineManager.printerOutputDevices[0].jobState != "printing"))
             return UM.Theme.getColor("text");
 
         switch(Cura.MachineManager.printerOutputDevices[0].printerState)
