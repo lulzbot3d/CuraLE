@@ -11,10 +11,12 @@ from serial import SerialException
 from serial import SerialTimeoutException
 from UM.Logger import Logger
 
+from . import bossa_chip_db
 
 class BOSSA():
     def __init__(self):
         self.serial = None
+        self.chip = False
         self.seq = 1
         self.last_addr = -1
         self.progress_callback = None
@@ -66,44 +68,9 @@ class BOSSA():
         ver = self.version()
         Logger.log("d", "...SAM-BA version = [" + ver +"]")
 
-        eproc = (cid >> 5) & 0x7
-        arch = (cid >> 20) & 0xff
-
-        # Check for ARM7TDMI processor
-        if (eproc == 2):
-            # Check for SAM7 architecture
-            if (arch >= 0x70 and arch <= 0x76):
-                return
-            Logger.log("d", "...Unsupported ARM7TDMI architecture")
-        # Check for Cortex-M3 processor
-        elif (eproc == 3):
-            # Check for SAM3 architecture
-            if (arch >= 0x80 and arch <= 0x8a):
-                return
-            if (arch >= 0x93 and arch <= 0x9a):
-                return
-            Logger.log("d", "...Unsupported Cortex-M3 architecture")
-        # Check for Cortex-M4 processor
-        elif (eproc == 7):
-            # Check for SAM4 architecture
-            if (arch >= 0x88 and arch <= 0x8a):
-                return
-            Logger.log("d", "...Unsupported Cortex-M4 architecture")
-        # Check for ARM920T processor
-        elif (eproc == 4):
-            # Check for SAM9XE architecture
-            if (arch == 0x29):
-                return
-            Logger.log("d", "...Unsupported ARM920T architecture")
-        # Check for supported M0+ processor
-        # NOTE: 0x1001000a is a ATSAMD21E18A, 0x1001001c is ATSAMR21E18A
-        elif (cid == 0x10010000 or cid == 0x10010100 or cid == 0x10010005 or cid == 0x1001000a or cid == 0x1001001c):
-            return
-        else:
-            Logger.log("d", "...Unsupported processor")
-
-        self.close()
-        raise Exception("Unsupported processor or architecture")
+        self.chip = bossa_chip_db.getChipFromDB(cid)
+        if not self.chip:
+            raise Exception("Chip with signature: " + str(cid) + "not found")
 
 
     def version(self):
@@ -142,6 +109,8 @@ class BOSSA():
         return cid
 
     def flash_firmware(self, firmware_file_name):
+        Logger.log("d", "...Flashing firmware from " + str (firmware_file_name) )
+        
         return
 
  
@@ -175,3 +144,28 @@ class BOSSA():
         except SerialTimeoutException:
             raise Exception("writeWord failed")
         Logger.log("d", "...Write to addr=" + hex(address) + "[" + hex(value)+ "]")
+
+#---------------------------------------------------------------------------------------#
+def runProgrammer(port, filename):
+    """ Run a BOSSA program on serial port 'port' and write 'filename' into flash. """
+    programmer = BOSSA()
+    programmer.connect(port = port)
+    programmer.flash_firmware(filename)
+    programmer.close()
+
+def main():
+    """ Entry point to call the BOSSA programmer from the commandline. """
+    import threading
+    if sys.argv[1] == "AUTO":
+        Logger.log("d", "portList(): ", repr(portList()))
+        for port in portList():
+            threading.Thread(target=runProgrammer, args=(port,sys.argv[2])).start()
+            time.sleep(5)
+    else:
+        programmer = BOSSA()
+        programmer.connect(port = sys.argv[1])
+        programmer.flash_firmware(sys.argv[2])
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
