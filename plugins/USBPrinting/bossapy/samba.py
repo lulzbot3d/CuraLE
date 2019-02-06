@@ -15,6 +15,24 @@ class Samba():
         self.serial.flush()
         self.serial.read(2) #Expects b'\n\r' here
 
+
+    def write(self, addr, data):
+        cmd = str.encode("S" + str('%0*x' % (8,addr)) + "," + str('%0*x' % (8,len(data)))  + "#")
+        try:
+            self.serial.write(cmd)
+            self.serial.flush()
+        except SerialTimeoutException:
+            raise Exception("write failed")
+
+        try:
+            size = self.serial.write(data)
+            self.serial.flush()
+        except SerialTimeoutException:
+            raise Exception("write failed")
+
+        Logger.log("d", "...Write to addr=" + hex(addr) + " of " + str(size) + " bytes")
+        
+
     def version(self):
         version_string=""
         self.serial.write(b'V#')

@@ -82,6 +82,7 @@ class BOSSA():
 
     def flash_firmware(self, firmware_file_name):
         Logger.log("d", "...Flashing firmware from " + str (firmware_file_name) )
+        self.flash.waitFSR()
         
         return
 
