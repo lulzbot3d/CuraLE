@@ -4,14 +4,14 @@ import struct
 import time
 
 from . import bossa_chip_db
-from UM.Logger import Logger
+# from UM.Logger import Logger
 
 class Samba():
     def __init__(self,serial):
         self.serial = serial
 
     def SetBinary(self):
-        Logger.log("d", "...Set binary mode")
+        # Logger.log("d", "...Set binary mode")
         self.serial.write(b'N#')
         self.serial.flush()
         self.serial.read(2) #Expects b'\n\r' here
@@ -31,7 +31,7 @@ class Samba():
         except SerialTimeoutException:
             raise Exception("write failed")
 
-        Logger.log("d", "...Write to addr=" + hex(addr) + " of " + str(size) + " bytes")
+        # Logger.log("d", "...Write to addr=" + hex(addr) + " of " + str(size) + " bytes")
     
     def go(self, addr):
         cmd = str.encode("G" + str('%0*x' % (8,addr)) + "#")
@@ -40,7 +40,7 @@ class Samba():
             self.serial.flush()
         except SerialTimeoutException:
             raise Exception("write failed")
-        Logger.log("d", "...Go to addr=" + hex(addr) )
+        # Logger.log("d", "...Go to addr=" + hex(addr) )
 
     def version(self):
         version_string=""
@@ -80,8 +80,8 @@ class Samba():
         chip_id = self.chipId()
         if chip_id == 0x285e0a60:
             self.writeWord(0x400E1A00, 0xA500000D)
-        else:
-            Logger.log("d", "...Reset is not supported for this CPU")
+        # else:
+        #    Logger.log("d", "...Reset is not supported for this CPU")
         # Some linux users experienced a lock up if the serial
         # port is closed while the port itself is being destroyed.
         # This delay is here to give the time to kernel driver to
@@ -99,7 +99,7 @@ class Samba():
         if len(s) < 1:
             raise Exception("readWord timeout")
         value = struct.unpack("<L", s)[0]
-        Logger.log("d", "...Read from addr=" + hex(address) + "[" + hex(value)+ "]")
+        # Logger.log("d", "...Read from addr=" + hex(address) + "[" + hex(value)+ "]")
         return value
 
     def writeWord(self, address, value):
@@ -109,5 +109,5 @@ class Samba():
             self.serial.flush()
         except SerialTimeoutException:
             raise Exception("writeWord failed")
-        Logger.log("d", "...Write to addr=" + hex(address) + "[" + hex(value)+ "]")
+        # Logger.log("d", "...Write to addr=" + hex(address) + "[" + hex(value)+ "]")
 
