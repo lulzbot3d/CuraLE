@@ -43,8 +43,39 @@
             "default_value": 0.5
         }
     },
+   
     "settings":
     {
+		"speed":
+        {
+            "label": "Speed",
+            "icon": "category_speed",
+            "description": "Speed",
+            "type": "category",
+            "children":
+			{
+				 "acceleration_enabled":
+                {
+                    "label": "Enable Acceleration Control",
+                    "description": "Enables adjusting the print head acceleration. Increasing the accelerations can reduce printing time at the cost of print quality. Populated values are the firmware defaults.",
+                    "type": "bool",
+                    "default_value": false,
+                    "resolve": "any(extruderValues('acceleration_enabled'))",
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": false
+                },
+             "jerk_enabled":
+                {
+                    "label": "Enable Jerk Control",
+                    "description": "Enables adjusting the jerk of print head when the velocity in the X or Y axis changes. Increasing the jerk can reduce printing time at the cost of print quality. Populated values are the firmware defaults.",
+                    "type": "bool",
+                    "default_value": false,
+                    "resolve": "any(extruderValues('jerk_enabled'))",
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": false
+                }
+             }
+          },
         "machine_settings":
         {
             "children":

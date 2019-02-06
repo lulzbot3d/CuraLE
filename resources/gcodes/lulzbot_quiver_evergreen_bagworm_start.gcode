@@ -106,14 +106,12 @@ M109 R{material_print_temperature_1}  T1  ; set extruder temp and wait
 M117 Purging...                           ; LCD status message
 T0                                        ; select this extruder first
 G1 E0 F100				  ; undo retraction
-G92 E-15				  ; set extruder negative amount to purge
+G92 E-30				  ; set extruder negative amount to purge
 G1 E0 F200				  ; purge XXmm of filament
-G1 E-2 F200				  ; retract
 T1                                        ; set extruder
 G1  E0 F100                               ; undo retraction
-G92 E-20                                  ; set extruder negative amount to purge
+G92 E-30                                  ; set extruder negative amount to purge
 G1 E0 F200                                ; purge XXmm of filament
-G1 E-2 F200				  ; retract
 G1 Z0.5                                   ; clear bed (barely)
 G1 X100 Y10 F5000                         ; move above bed to shear off filament
 T0                                        : set extruder
