@@ -4,6 +4,7 @@ BOSSA is a flash programming utility for Atmel's SAM family of flash-based ARM m
 """
 import sys
 import time
+import os
 
 from serial import Serial   # type: ignore
 from serial import SerialException
@@ -82,7 +83,38 @@ class BOSSA():
 
     def flash_firmware(self, firmware_file_name):
         Logger.log("d", "...Flashing firmware from " + str (firmware_file_name) )
-        self.flash.waitFSR()
+
+        Logger.log("d", "...Unlock all regions")
+        self.flash.unlockAll()
+
+        Logger.log("d", "...Erase flash")
+        self.flash.eraseAll()
+        self.flash.eraseAuto(False)
+
+
+        file_size = os.path.getsize(firmware_file_name)
+        page_size = self.flash.pageSize()
+        num_pages = int( (file_size + page_size - 1) / page_size)
+        if num_pages > self.flash.numPages():
+            raise Exception("FileSizeError")
+        Logger.log("d", "...Write " + str(file_size) + " bytes to flash ( " + str(num_pages) +" pages )")
+
+        # Using Legacy write
+        with open(str(firmware_file_name), "rb") as firmware_file:
+            # Seek a specific position in the file and read N bytes
+            for page in range(0, num_pages):
+                firmware_file.seek(page * page_size, 0)
+                data = firmware_file.read(page_size)
+                self.flash.loadBuffer(data)
+                self.flash.writePage(page)
+        
+        # TODO: Verify
+        
+        Logger.log("d", "...Set boot flash true ")
+        self.flash.setBootFlash(True)
+
+        Logger.log("d", "...CPU reset")
+        self.samba.reset()
         
         return
 

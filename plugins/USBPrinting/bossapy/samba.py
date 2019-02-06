@@ -1,6 +1,7 @@
 """
 """
 import struct
+import time
 
 from . import bossa_chip_db
 from UM.Logger import Logger
@@ -31,7 +32,15 @@ class Samba():
             raise Exception("write failed")
 
         Logger.log("d", "...Write to addr=" + hex(addr) + " of " + str(size) + " bytes")
-        
+    
+    def go(self, addr):
+        cmd = str.encode("G" + str('%0*x' % (8,addr)) + "#")
+        try:
+            self.serial.write(cmd)
+            self.serial.flush()
+        except SerialTimeoutException:
+            raise Exception("write failed")
+        Logger.log("d", "...Go to addr=" + hex(addr) )
 
     def version(self):
         version_string=""
@@ -67,6 +76,18 @@ class Samba():
 
         return cid
 
+    def reset(self):
+        chip_id = self.chipId()
+        if chip_id == 0x285e0a60:
+            self.writeWord(0x400E1A00, 0xA500000D)
+        else:
+            Logger.log("d", "...Reset is not supported for this CPU")
+        # Some linux users experienced a lock up if the serial
+        # port is closed while the port itself is being destroyed.
+        # This delay is here to give the time to kernel driver to
+        # sort out things before closing the port.
+        time.sleep(0.1)
+
     def readWord(self, address):
         cmd = str.encode("w" + str('%0*x' % (8,address)) + ",4#")
         try:
@@ -89,3 +110,4 @@ class Samba():
         except SerialTimeoutException:
             raise Exception("writeWord failed")
         Logger.log("d", "...Write to addr=" + hex(address) + "[" + hex(value)+ "]")
+
