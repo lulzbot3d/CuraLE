@@ -349,11 +349,18 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self.sendCommand("M119")
             time.sleep(0.5)
 
+    ## This is the list of USB serial devices VIDs that will be tested when autodetect is selected
+    ## If the 3D printer is not in this list it will not be autodetected
+    def _getAutodetectVIDList(self):
+        ret = [ 0x03EB,  # Atmel 
+                0x27B1 ] # UltiMachine 
+        return ret
+
     def _detectSerialPort(self):
         import serial.tools.list_ports
         # self._serial_port = None
         for port in serial.tools.list_ports.comports():
-            if (port.vid == 0x03EB):
+            if port.vid in self._getAutodetectVIDList():
                 self.log("i", "Detected 3D printer on %s." % port.device)
                 self._serial_port = port.device
                 return
