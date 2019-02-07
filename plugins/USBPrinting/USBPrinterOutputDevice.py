@@ -350,21 +350,14 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             time.sleep(0.5)
 
     def _detectSerialPort(self):
-        # Deferred import due to circular dependency
-        from .USBPrinterOutputDeviceManager import USBPrinterOutputDeviceManager
-
-        ports = USBPrinterOutputDeviceManager.getSerialPortList(True)
-        for port in ports:
-            programmer = stk500v2.Stk500v2()
-            try:
-                programmer.connect(port) # Connect with the serial, if this succeeds, it's an arduino based usb device.
-                programmer.close()
-                self._serial_port = port
-                break
-            except ispBase.IspError as e:
-                self.log("i", "Could not establish connection on %s: %s. Device is not arduino based." %(port,str(e)))
-            except Exception as e:
-                self.log("i", "Could not establish connection on %s, unknown reasons.  Device is not arduino based." % port)
+        import serial.tools.list_ports
+        # self._serial_port = None
+        for port in serial.tools.list_ports.comports():
+            if (port.vid == 0x03EB):
+                self.log("i", "Detected 3D printer on %s." % port.device)
+                self._serial_port = port.device
+                return
+        self.log("i", "No 3D printers detected")
 
     ##  Set the baud rate of the serial. This can cause exceptions, but we simply want to ignore those.
     def setBaudRate(self, baud_rate):
@@ -601,7 +594,7 @@ class ConnectThread:
     ##  Create a list of baud rates at which we can communicate.
     #   \return list of int
     def _getBaudrateList(self):
-        ret = [115200, 250000, 230400, 57600, 38400, 19200, 9600]
+        ret = [250000, 115200, 57600, 38400, 19200, 9600]
         return ret
 
     ##  private read line used by ConnectThread to listen for data on serial port.
@@ -663,16 +656,6 @@ class ConnectThread:
                 return
         else:
             self._parent.setConnectionText(catalog.i18nc("@info:status", "Connecting to USB device"))
-        programmer = stk500v2.Stk500v2()
-        try:
-            programmer.connect(self._parent._serial_port) # Connect with the serial, if this succeeds, it's an arduino based usb device.
-            self._parent._serial = programmer.leaveISP()
-        except ispBase.IspError as e:
-            programmer.close()
-            self._parent.log("i", "Could not establish connection on %s: %s. Device is not arduino based." %(self._parent._serial_port,str(e)))
-        except Exception as e:
-            programmer.close()
-            self._parent.log("i", "Could not establish connection on %s, unknown reasons.  Device is not arduino based." % self._parent._serial_port)
 
         baud_rate = Application.getInstance().getGlobalContainerStack().getProperty("machine_baudrate", "value")
         if baud_rate != "AUTO":
@@ -681,7 +664,8 @@ class ConnectThread:
             if self._parent._serial is None:
                 try:
                     self._parent._serial = serial.Serial(str(self._parent._serial_port), baud_rate, timeout=3, writeTimeout=10000)
-                    time.sleep(10)
+                    # 10 seconds is too much to sleep?
+                    time.sleep(1)
                 except serial.SerialException:
                     self._parent.log("d", "Could not open port %s" % self._parent._serial_port)
             else:
@@ -704,14 +688,13 @@ class ConnectThread:
                     return
 
         self._parent.setConnectionText(catalog.i18nc("@info:status", "Autodetecting Baudrate"))
-        # If the programmer connected, we know its an atmega based version.
-        # Not all that useful, but it does give some debugging information.
         for baud_rate in self._getBaudrateList(): # Cycle all baud rates (auto detect)
             self._parent.log("d", "Attempting to connect to printer with serial %s on baud rate %s", self._parent._serial_port, baud_rate)
             if self._parent._serial is None:
                 try:
                     self._parent._serial = serial.Serial(str(self._parent._serial_port), baud_rate, timeout = 3, writeTimeout = 10000)
-                    time.sleep(10)
+                    # 10 Seconds is too much to sleep?
+                    time.sleep(1)
                 except serial.SerialException:
                     self._parent.log("d", "Could not open port %s" % self._parent._serial_port)
                     continue
