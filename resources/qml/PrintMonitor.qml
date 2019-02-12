@@ -13,6 +13,7 @@ import Cura 1.0 as Cura
 ScrollView
 {
     property var connectedPrinter: Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null
+    property var formData: 0
 
     style: UM.Theme.styles.scrollview;
     flickableItem.flickableDirection: Flickable.VerticalFlick;
@@ -1530,10 +1531,13 @@ ScrollView
 
 	                    TextField
 	                    {
-	                        text: "1"
+	                        text: formData.moveLengthAmount
 	                        id: moveLengthTextField
 	                        width: parent.width / 2
-
+                            onEditingFinished:
+                            {
+                                formData.moveLengthAmount = text
+                            }
 	                        validator: DoubleValidator
 	                        {
 	                            bottom: 0
@@ -1593,9 +1597,13 @@ ScrollView
 
 	                    TextField
 	                    {
-	                        text: "1"
+	                        text: formData.extrusionAmount
 	                        id: extrusionAmountTextField
 	                        width: parent.width / 2
+                            onEditingFinished:
+                            {
+                                formData.extrusionAmount = text
+                            }
 	                        validator: DoubleValidator
 	                        {
 	                            bottom: 0
@@ -1652,9 +1660,13 @@ ScrollView
 
 	                    TextField
 	                    {
-                            text: "1"
+                            text: formData.temperature
 	                        id: temperatureTextField
 	                        width: parent.width / 2
+	                        onEditingFinished:
+                            {
+                                formData.temperature = text
+                            }
 	                        validator: IntValidator
 	                        {
                                 bottom: 1
