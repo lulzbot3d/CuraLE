@@ -534,6 +534,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self.sendCommand("M107")        # Turn off fan
         self.sendCommand("M84 X Y")     # Disable X and Y steppers (not Z)
         self.sendCommand("M77")         # Stop print timer
+        self.sendCommand("M117 Print Canceled.")
         Application.getInstance().showPrintMonitor.emit(False)
 
 
