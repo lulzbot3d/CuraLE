@@ -529,7 +529,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
         # Turn off temperatures, fan and steppers
         self.sendCommand("M140 S0")     # Turn off heated bed
-        self.sendCommand("M104 S0")     # Turn off heater T0
+        self.sendCommand("M104 S0 T0")  # Turn off heater T0
         self.sendCommand("M104 S0 T1")  # Turn off heater T1
         self.sendCommand("M107")        # Turn off fan
         self.sendCommand("M84 X Y")     # Disable X and Y steppers (not Z)
