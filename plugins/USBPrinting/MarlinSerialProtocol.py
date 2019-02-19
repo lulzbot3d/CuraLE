@@ -96,13 +96,13 @@ class MarlinSerialProtocol:
     self.marlinPendingCommands  = 0
     self.history                = GCodeHistory()
     self.asap                   = []
-    self.slowCommands           = re.compile(b"M109|M190|G28|G29")
-    self.slowTimeout            = 100
+    self.slowCommands           = re.compile(b"M109|M190|G28|G29|G425")
+    self.slowTimeout            = 300
     self.fastTimeout            = 15
     self.usingAdvancedOk        = False
     self.watchdogTimeout        = time.time()
     self.onResendCallback       = onResendCallback
-    self.onDebugMsgCallback = onDebugMsgCallback
+    self.onDebugMsgCallback     = onDebugMsgCallback
     self.restart()
 
   def _stripCommentsAndWhitespace(self, str):
@@ -278,6 +278,9 @@ class MarlinSerialProtocol:
       line = self.serial.readline()
     else:
       line = b""
+
+    if b"busy: processing" in line:
+      self._adjustStallWatchdogTimer("busy")
 
     if line.startswith(b"ok"):
       self._gotOkay(line)
