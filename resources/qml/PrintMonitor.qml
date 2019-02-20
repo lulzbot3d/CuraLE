@@ -1607,7 +1607,7 @@ ScrollView
 	                        validator: DoubleValidator
 	                        {
 	                            bottom: 0
-	                            top: 10
+	                            top: 126
 	                        }
 	                    }
 	                }
