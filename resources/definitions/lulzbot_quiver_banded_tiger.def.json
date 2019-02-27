@@ -14,9 +14,9 @@
         "platform": "quiver_bed.stl",
         "platform_offset":
         [
-            -70,
-            -26,
-            36
+            0,
+            -25,
+            0
         ],
         "category": "LulzBot",
         "supported_actions": ["MachineSettingsAction"],
