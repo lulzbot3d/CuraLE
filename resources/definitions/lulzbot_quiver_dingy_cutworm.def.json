@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_quiver_dingy_cutworm",
-    "name": "Q - HS+",
+    "name": "LulzBot Pro | HS+ | 1.2mm",
     "inherits": "lulzbot_taz6",
     "version": 2,
     "metadata":
@@ -18,19 +18,20 @@
             -26,
             36
         ],
-        "category": "Other",
+        "category": "LulzBot",
         "supported_actions": ["MachineSettingsAction"],
         "firmware_toolhead_name": "Evergreen Bagworm",
-        "base_machine": "Q",
-        "base_machine_name": "Q",
+        "base_machine": "LulzBot Pro",
+        "base_machine_name": "LulzBot Pro",
         "preferred_material": "*PolyLite_PLA*",
+        "user_toolhead_name": "HS+ | 1.2mm",
         "default_category": "All"
     },
     "overrides":
     {
         "machine_name":
         {
-            "default_value": "Q - HS+"
+            "default_value": "LulzBot Pro | HS+ | 1.2mm"
         },
         "machine_start_gcode":
         {

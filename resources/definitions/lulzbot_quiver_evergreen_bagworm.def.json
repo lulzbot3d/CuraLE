@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_quiver_evergreen_bagworm",
-    "name": "Q",
+    "name": "LulzBot Pro",
     "inherits": "lulzbot_taz6",
     "version": 2,
     "metadata":
@@ -15,23 +15,24 @@
         "platform": "quiver_bed.stl",
         "platform_offset":
         [
-            -70,
-            -26,
-            36
+            0,
+            0,
+            0
         ],
-        "category": "Other",
+        "category": "LulzBot",
         "supported_actions": ["MachineSettingsAction"],
         "firmware_toolhead_name": "Evergreen Bagworm",
-        "base_machine": "Q",
-        "base_machine_name": "Q",
+        "base_machine": "LulzBot Pro",
+        "base_machine_name": "LulzBot Pro",
         "preferred_material": "*PolyLite_PLA*",
+        "user_toolhead_name": "Super amazing awesome tool head!",
         "default_category": "All"
     },
     "overrides":
     {
         "machine_name":
         {
-            "default_value": "Q"
+            "default_value": "LulzBot Pro"
         },
         "machine_start_gcode":
         {
