@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_quiver_evergreen_bagworm",
-    "name": "LulzBot TAZ Pro",
+    "name": "LulzBot TAZ Pro Dual Extruder",
     "inherits": "lulzbot_taz6",
     "version": 2,
     "metadata":
@@ -26,7 +26,7 @@
         "base_machine": "LulzBot TAZ Pro",
         "base_machine_name": "LulzBot TAZ Pro",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "Super amazing awesome tool head!",
+        "user_toolhead_name": "TAZ Pro Dual Extruder",
         "default_category": "All"
     },
     "overrides":
