@@ -1,12 +1,13 @@
 {
     "id": "lulzbot_quiver_cecropia",
-    "name": "LulzBot Pro SE | 0.5mm (Aero v2)",
+    "name": "LulzBot TAZ Pro SE | 0.5mm (Aero v2)",
     "inherits": "lulzbot_taz6",
     "version": 2,
     "metadata":
     {
         "type": "machine",
         "visible": true,
+        "priority": "01",
         "machine_extruder_trains":
         {
             "0": "lulzbot_quiver_cecropia_extruder"
@@ -21,8 +22,8 @@
         "category": "LulzBot",
         "supported_actions": ["MachineSettingsAction"],
         "firmware_toolhead_name": "Evergreen Bagworm",
-        "base_machine": "LulzBot Pro",
-        "base_machine_name": "LulzBot Pro",
+        "base_machine": "LulzBot TAZ Pro",
+        "base_machine_name": "LulzBot TAZ Pro",
         "preferred_material": "*PolyLite_PLA*",
         "user_toolhead_name": "SE | 0.5mm (Aero v2)",
         "default_category": "All"

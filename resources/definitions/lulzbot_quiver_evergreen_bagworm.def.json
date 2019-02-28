@@ -1,12 +1,13 @@
 {
     "id": "lulzbot_quiver_evergreen_bagworm",
-    "name": "LulzBot Pro",
+    "name": "LulzBot TAZ Pro",
     "inherits": "lulzbot_taz6",
     "version": 2,
     "metadata":
     {
         "type": "machine",
         "visible": true,
+        "priority": "00",
         "machine_extruder_trains":
         {
             "0": "lulzbot_quiver_evergreen_bagowrm_1st",
@@ -22,8 +23,8 @@
         "category": "LulzBot",
         "supported_actions": ["MachineSettingsAction"],
         "firmware_toolhead_name": "Evergreen Bagworm",
-        "base_machine": "LulzBot Pro",
-        "base_machine_name": "LulzBot Pro",
+        "base_machine": "LulzBot TAZ Pro",
+        "base_machine_name": "LulzBot TAZ Pro",
         "preferred_material": "*PolyLite_PLA*",
         "user_toolhead_name": "Super amazing awesome tool head!",
         "default_category": "All"

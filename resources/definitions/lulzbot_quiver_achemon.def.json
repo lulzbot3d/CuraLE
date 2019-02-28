@@ -1,12 +1,13 @@
 {
     "id": "lulzbot_quiver_achemon",
-    "name": "LulzBot Pro | SL | 0.25mm (Micro)",
+    "name": "LulzBot TAZ Pro | SL | 0.25mm (Micro)",
     "inherits": "lulzbot_taz6",
     "version": 2,
     "metadata":
     {
         "type": "machine",
         "visible": true,
+        "priority": "02",
         "machine_extruder_trains":
         {
             "0": "lulzbot_quiver_achemon_extruder"
@@ -21,8 +22,8 @@
         "category": "LulzBot",
         "supported_actions": ["MachineSettingsAction"],
         "firmware_toolhead_name": "Evergreen Bagworm",
-        "base_machine": "LulzBot Pro",
-        "base_machine_name": "LulzBot Pro",
+        "base_machine": "LulzBot TAZ Pro",
+        "base_machine_name": "LulzBot TAZ Pro",
         "preferred_material": "*PolyLite_PLA*",
         "user_toolhead_name": "SL | 0.25mm (Micro)",
         "default_category": "All"
