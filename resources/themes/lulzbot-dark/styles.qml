@@ -962,7 +962,7 @@ QtObject {
                     implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
                     border.color:
                     {
-                        if(!control)
+                        if(typeof control == "undefined")
                         {
                             return UM.Theme.getColor("action_button_disabled_border");
                         }
