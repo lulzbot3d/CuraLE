@@ -827,7 +827,12 @@ class BuildVolume(SceneNode):
     def _computeDisallowedAreasStatic(self, border_size, used_extruders):
         #Convert disallowed areas to polygons and dilate them.
         machine_disallowed_polygons = []
-        for area in self._global_container_stack.getProperty("machine_disallowed_areas", "value"):
+        all_disallowed_areas = []
+        all_disallowed_areas += self._global_container_stack.getProperty("machine_disallowed_areas", "value")
+
+        for extruder in used_extruders:
+            all_disallowed_areas += extruder.getProperty("extruder_disallowed_areas","value")
+        for area in all_disallowed_areas:
             polygon = Polygon(numpy.array(area, numpy.float32))
             polygon = polygon.getMinkowskiHull(Polygon.approximatedCircle(border_size))
             machine_disallowed_polygons.append(polygon)
