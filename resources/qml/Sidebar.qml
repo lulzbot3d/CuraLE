@@ -338,7 +338,7 @@ Rectangle
         {
             id: timeDetails
             anchors.left: parent.left
-            // anchors.top: footerSeparator.bottom
+            anchors.top: footerSeparator.bottom
             anchors.topMargin: UM.Theme.getSize("sidebar_margin").height
             font: UM.Theme.getFont("large")
             color: UM.Theme.getColor("text_subtext")
