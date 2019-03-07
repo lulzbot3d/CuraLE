@@ -352,8 +352,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     ## This is the list of USB serial devices VIDs that will be tested when autodetect is selected
     ## If the 3D printer is not in this list it will not be autodetected
     def _getAutodetectVIDList(self):
-        ret = [ 0x03EB,  # Atmel 
-                0x27B1 ] # UltiMachine 
+        ret = [ 0x03EB,  # Atmel
+                0x27B1 ] # UltiMachine
         return ret
 
     def _detectSerialPort(self):
@@ -528,10 +528,12 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._print_thread.pause(machine_width, machine_depth, machine_height, 0)
 
         # Turn off temperatures, fan and steppers
-        self.sendCommand("M140 S0")
-        self.sendCommand("M104 S0")
-        self.sendCommand("M107")
-        self.sendCommand("M84")
+        self.sendCommand("M140 S0")     # Turn off heated bed
+        self.sendCommand("M104 S0 T0")  # Turn off heater T0
+        self.sendCommand("M104 S0 T1")  # Turn off heater T1
+        self.sendCommand("M107")        # Turn off fan
+        self.sendCommand("M84 X Y")     # Disable X and Y steppers (not Z)
+        self.sendCommand("M77")         # Stop print timer
         self.sendCommand("M117 Print Canceled.")
         Application.getInstance().showPrintMonitor.emit(False)
 
@@ -1219,7 +1221,7 @@ class PrintThread:
             if line is None:
                 break  # None is only returned when something went wrong. Stop listening
 
-            if b"PROBE FAIL CLEAN NOZZLE" in line:
+            if b"//action:probe_failed" or b"PROBE FAIL CLEAN NOZZLE" in line:
                 self._parent.errorFromPrinter.emit( "Wipe nozzle failed." )
                 self._parent.log("d", "---------------PROBE FAIL CLEAN NOZZLE" )
                 self._parent._error_message = Message(catalog.i18nc("@info:status", "Wipe nozzle failed, clean nozzle and reconnect printer."))
@@ -1228,8 +1230,22 @@ class PrintThread:
                 self._parent.close()
                 break
 
-            if b"//action:filament_runout" in line:
-                self._parent._pausePrint()
+            if b"//action:" in line:
+                if b"out_of_filament" in line:
+                    self._parent._error_message = Message(catalog.i18nc("@info:status", "Filament run out or filament jam."))
+                    self._parent._error_message.show()
+
+                if b"pause" in line:
+                    self._parent._pausePrint()
+
+                if b"resume" in line:
+                    self._parent._resumePrint()
+
+                if b"cancel" in line:
+                    self._parent.cancelPrint()
+
+                if b"disconnect" in line:
+                    self._parent.close()
 
             if b"Z Offset " in line:
                 value = line.split(b":")
@@ -1423,6 +1439,9 @@ class PrintThread:
         # Disable the E steppers
         self.sendCommand("M18 E")
 
+        # Pause print job timer
+        self.sendCommand("M76")
+
     def resume(self):
         """Resumes a print that was paused"""
         if isinstance(self._pauseState, self.PauseState):
@@ -1451,6 +1470,10 @@ class PrintThread:
             self.sendCommand("G28 X0 Y0")
             # Position the toolhead to the correct position and feedrate again
             self.sendCommand("G1 X%f Y%f Z%f F%f" % (pos.x, pos.y, pos.z, pos.f))
+            # Reset filament runout sensor
+            self.sendCommand("M412 R1")
+            # Restart print job timer
+            self.sendCommand("M75")
             self._parent.log("d", "Print resumed")
 
             # Release the PrintThread.
