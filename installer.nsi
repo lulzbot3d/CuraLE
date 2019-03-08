@@ -111,18 +111,12 @@ Section "Install Visual Studio 2010 Redistributable"
 
 SectionEnd
 
-Section "Install Arduino Drivers"
+Section "Install RAMBo Drivers"
   ; Set output path to the driver directory.
   SetOutPath "$INSTDIR\drivers\"
   File /r "drivers\"
-  
-  ${If} ${RunningX64}
-    IfSilent +2
-      ExecWait '"$INSTDIR\drivers\dpinst64.exe" /lm'
-  ${Else}
-    IfSilent +2
-      ExecWait '"$INSTDIR\drivers\dpinst32.exe" /lm'
-  ${EndIf}
+
+  ExecWait '"rundll32.exe" setupapi,InstallHinfSection DefaultInstall 132 $INSTDIR\drivers\rambo.inf'
 SectionEnd
 
 Section "Open STL files with Cura"
