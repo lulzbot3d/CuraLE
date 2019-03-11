@@ -1221,7 +1221,7 @@ class PrintThread:
             if line is None:
                 break  # None is only returned when something went wrong. Stop listening
 
-            if b"//action:probe_failed" or b"PROBE FAIL CLEAN NOZZLE" in line:
+            if (b"//action:probe_failed" in line) or (b"PROBE FAIL CLEAN NOZZLE" in line):
                 self._parent.errorFromPrinter.emit( "Wipe nozzle failed." )
                 self._parent.log("d", "---------------PROBE FAIL CLEAN NOZZLE" )
                 self._parent._error_message = Message(catalog.i18nc("@info:status", "Wipe nozzle failed, clean nozzle and reconnect printer."))
