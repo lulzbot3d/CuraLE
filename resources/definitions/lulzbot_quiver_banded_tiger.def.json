@@ -49,9 +49,17 @@
         "machine_extruder_count": {
             "default_value": 1
         },
+        "machine_width":
+        {
+            "default_value": 282
+        },
+        "machine_depth":
+        {
+            "default_value": 282
+        },
         "machine_height":
         {
-            "default_value": 290
+            "default_value": 286
         },
         "machine_wipe_gcode":
         {
