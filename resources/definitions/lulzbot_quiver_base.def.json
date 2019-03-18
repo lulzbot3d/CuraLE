@@ -14,6 +14,10 @@
     },
     "overrides":
     {
+        "firmware_machine_type":
+        {
+            "resolve": "'LulzBot TAZ Pro'"
+        },
         "machine_heated_bed":
         {
             "default_value": true
