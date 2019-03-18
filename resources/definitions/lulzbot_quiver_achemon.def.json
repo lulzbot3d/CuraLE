@@ -1,7 +1,7 @@
 {
     "id": "lulzbot_quiver_achemon",
     "name": "LulzBot TAZ Pro | SL | 0.25mm (Micro)",
-    "inherits": "lulzbot_taz6",
+    "inherits": "lulzbot_quiver_base",
     "version": 2,
     "metadata":
     {

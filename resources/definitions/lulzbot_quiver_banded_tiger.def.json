@@ -1,7 +1,7 @@
 {
     "id": "lulzbot_quiver_banded_tiger",
     "name": "LulzBot TAZ Pro | HS | 0.8mm",
-    "inherits": "lulzbot_taz6",
+    "inherits": "lulzbot_quiver_base",
     "version": 2,
     "metadata":
     {

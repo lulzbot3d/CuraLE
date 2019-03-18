@@ -1,7 +1,7 @@
 {
     "id": "lulzbot_quiver_cecropia",
     "name": "LulzBot TAZ Pro SE | 0.5mm (Aero v2)",
-    "inherits": "lulzbot_taz6",
+    "inherits": "lulzbot_quiver_base",
     "version": 2,
     "metadata":
     {
