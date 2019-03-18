@@ -286,6 +286,15 @@ Rectangle
             return null
         }
     }
+    Item
+    {
+        id: formDataSaved
+        property var moveLengthAmount: 1
+        property var extrusionAmount: 1
+        property var temperature: 1
+
+
+    }
 
     Loader
     {
@@ -309,6 +318,10 @@ Rectangle
             {
                 return ""
             }
+        }
+        onLoaded:
+        {
+            item.formData = formDataSaved
         }
     }
 
