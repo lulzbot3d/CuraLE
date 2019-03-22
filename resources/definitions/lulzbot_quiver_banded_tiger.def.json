@@ -20,7 +20,6 @@
             0
         ],
         "category": "LulzBot",
-        "supported_actions": ["MachineSettingsAction"],
         "firmware_toolhead_name": "HardenedSteel",
         "base_machine": "LulzBot TAZ Pro",
         "base_machine_name": "LulzBotTAZ Pro",
