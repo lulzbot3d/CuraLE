@@ -1,0 +1,11 @@
+[
+{
+    "id":"lulzbot_quiver_evergreen_bagworm",
+    "models_per_extruders":
+        [
+            {"extruder":"0", "model":"rocktopus.stl"},
+            {"extruder":"1", "model":"rocktopus.stl"}
+        ]
+
+}
+]

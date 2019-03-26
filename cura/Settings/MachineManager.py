@@ -444,10 +444,18 @@ class MachineManager(QObject):
 
             # Instead of setting the global container stack here, we set the active machine and so the signals are emitted
             self.setActiveMachine(new_stack.getId())
-
             Application.getInstance().setGlobalContainerStack(new_stack)
             if Preferences.getInstance().getValue("general/is_first_run"):
-                Application.getInstance().openFile(os.path.join(Resources.getPath(Resources.Meshes), "rocktopus.stl"))
+                initial_models_path = json.load(open(os.path.join(Resources.getPath(Resources.Meshes), "initial_models_for_first_run.json")))
+                for i in initial_models_path:
+                    if new_stack.definition.id == i['id']:
+                        for j in i['models_per_extruders']:
+                            model_will_be_loaded = j["model"]
+                            Application.getInstance().openFile(os.path.join(Resources.getPath(Resources.Meshes), model_will_be_loaded))
+                        break
+                else:
+                    model_will_be_loaded = "rocktopus.stl"
+                    Application.getInstance().openFile(os.path.join(Resources.getPath(Resources.Meshes), model_will_be_loaded))
                 Preferences.getInstance().setValue("general/is_first_run", False)
         else:
             Logger.log("w", "Failed creating a new machine!")
