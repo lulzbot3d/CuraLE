@@ -321,7 +321,9 @@ Rectangle
         }
         onLoaded:
         {
-            item.formData = formDataSaved
+            if(monitoringPrint) {
+                item.formData = formDataSaved
+            }
         }
     }
 
