@@ -3,8 +3,8 @@
     "id":"lulzbot_quiver_evergreen_bagworm",
     "models_per_extruders":
         [
-            {"extruder":"0", "model":"rocktopus.stl"},
-            {"extruder":"1", "model":"rocktopus.stl"}
+            {"extruder":"0", "model":"TAZ_Pro_Calibration01.stl"},
+            {"extruder":"1", "model":"TAZ_Pro_Calibration02.stl"}
         ]
 
 }
