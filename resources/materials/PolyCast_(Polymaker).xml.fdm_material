@@ -143,5 +143,8 @@
     <machine>
       <machine_identifier product="lulzbot_redgum_banded_tiger"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_dingy_cutworm"/>
+    </machine>
   </settings>
 </fdmmaterial>
