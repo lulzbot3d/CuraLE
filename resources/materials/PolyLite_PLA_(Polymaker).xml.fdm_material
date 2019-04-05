@@ -142,5 +142,8 @@
     <machine>
       <machine_identifier product="lulzbot_redgum_goldenrod"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_banded_tiger"/>
+    </machine>
   </settings>
 </fdmmaterial>
