@@ -1,4 +1,4 @@
-; This profile is designed specifically for the dual-extruder Q 3D Printer
+; This profile is designed specifically for the LulzBot TAZ Pro with Dual Extruder Tool Head
 M73 P0                                    ; clear GLCD progress bar
 M75			     	          ; start GLCD timer
 M107                                      ; disable fans
