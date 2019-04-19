@@ -10,7 +10,7 @@
     </name>
     <color_code>#3465a4</color_code>
     <GUID>0b33d81d-7d66-4204-8abc-a54fa28deff4</GUID>
-    <adhesion_info>Use glue stick.</adhesion_info>
+    <adhesion_info>PETG sticks very well to PEI. Glue stick on the plate will help aid part release post print for larger objects.</adhesion_info>
   </metadata>
   <properties>
     <diameter>2.85</diameter>

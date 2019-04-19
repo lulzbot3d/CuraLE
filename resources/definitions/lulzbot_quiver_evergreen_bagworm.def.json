@@ -1,7 +1,7 @@
 {
     "id": "lulzbot_quiver_evergreen_bagworm",
     "name": "LulzBot TAZ Pro Dual Extruder",
-    "inherits": "lulzbot_taz6",
+    "inherits": "lulzbot_quiver_base",
     "version": 2,
     "metadata":
     {
@@ -21,8 +21,7 @@
             0
         ],
         "category": "LulzBot",
-        "supported_actions": ["MachineSettingsAction"],
-        "firmware_toolhead_name": "Evergreen Bagworm",
+        "firmware_toolhead_name": "DualExtruder",
         "base_machine": "LulzBot TAZ Pro",
         "base_machine_name": "LulzBot TAZ Pro",
         "preferred_material": "*PolyLite_PLA*",
@@ -50,13 +49,21 @@
         "machine_extruder_count": {
             "default_value": 2
         },
+        "machine_width":
+        {
+            "default_value": 282
+        },
+        "machine_depth":
+        {
+            "default_value": 282
+        },
         "machine_height":
         {
-            "default_value": 290
+            "default_value": 286
         },
         "machine_wipe_gcode":
         {
-            "default_value": "lulzbot_quiver_wipe"
+            "default_value_from_file": "lulzbot_quiver_wipe"
         },
         "layer_start_x": { "value": "100" },
         "layer_start_y": { "value": "100" }

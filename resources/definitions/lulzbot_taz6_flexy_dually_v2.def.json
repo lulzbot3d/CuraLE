@@ -13,7 +13,6 @@
             "0": "lulzbot_taz6_flexy_dually_v2_1st",
             "1": "lulzbot_taz6_flexy_dually_v2_2nd"
         },
-        "supported_actions": ["MachineSettingsAction"],
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-flexydually-tool-head-v2",
         "firmware_toolhead_name": "FlexyDually v2",
         "nozzle_offsetting_for_disallowed_areas": false

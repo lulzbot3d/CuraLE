@@ -1202,7 +1202,7 @@ class PrintThread:
                     self._mutex.release()
                     serial_proto.sendCmdUnreliable(cmd)
 
-                if isPrinting and self._gcode_position > 1 and re.search(b"start\n",line):
+                if isPrinting and (self._gcode_position > 1) and (b"start" in line):
                     self._parent.log("e", "The printer has restarted or lost power.")
                     self.cancelPrint()
                     self._parent._printingStopped()

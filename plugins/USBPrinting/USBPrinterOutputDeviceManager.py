@@ -215,6 +215,12 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_hibiscus_achemon":               "Marlin_Mini2_SmallLayer_1.1.9.34_5f9c029d1.hex",
             "lulzbot_hibiscus_banded_tiger":       "Marlin_Mini2_HardenedSteel_1.1.9.34_5f9c029d1.hex",
             "lulzbot_hibiscus_dingy_cutworm":  "Marlin_Mini2_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex",
+
+            "lulzbot_quiver_achemon":               "Marlin_TAZPro_SmallLayer_2.0.0.109_9fa22c2ea.bin",
+            "lulzbot_quiver_banded_tiger":       "Marlin_TAZPro_HardenedSteel_2.0.0.109_9fa22c2ea.bin",
+            "lulzbot_quiver_cecropia":    "Marlin_TAZPro_SingleExtruderAeroV2_2.0.0.109_9fa22c2ea.bin",
+            "lulzbot_quiver_dingy_cutworm":  "Marlin_TAZPro_HardenedSteelPlus_2.0.0.109_9fa22c2ea.bin",
+            "lulzbot_quiver_evergreen_bagworm":   "Marlin_TAZPro_DualExtruder_2.0.0.109_9fa22c2ea.bin",
         }
 
         lulzbot_lcd_machines = {

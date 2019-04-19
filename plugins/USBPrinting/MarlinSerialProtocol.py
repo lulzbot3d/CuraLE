@@ -280,7 +280,7 @@ class MarlinSerialProtocol:
       line = b""
 
     if b"busy: processing" in line:
-      self._adjustStallWatchdogTimer("busy")
+      self._adjustStallWatchdogTimer(b"busy")
 
     if line.startswith(b"ok"):
       self._gotOkay(line)

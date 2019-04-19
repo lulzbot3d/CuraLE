@@ -1,4 +1,4 @@
-;This G-Code has been generated specifically for Q - HS
+;This G-Code has been generated specifically for LulzBot TAZ Pro with HS Tool Head
 M73 P0                  ; clear LCD progress bar
 M75 					; Start LCD Print Timer
 G26 					; clear potential 'probe fail' condition

@@ -1,4 +1,4 @@
-; This profile is designed specifically for the dual-extruder Q 3D Printer
+; This profile is designed specifically for the LulzBot TAZ Pro with Dual Extruder Tool Head
 M73 P0                                    ; clear GLCD progress bar
 M75			     	          ; start GLCD timer
 M107                                      ; disable fans
@@ -31,35 +31,35 @@ M109 R{material_wipe_temperature_0} T0    ; wait for T0 to reach temp
 M109 R{material_wipe_temperature_1} T1    ; wait for T1 to reach temp
 M107                                      ; turn off fan
 G1 Z 1.0                                 ; push nozzle into wiper
-G1 X -16 Y100 F1000                       ; slow wipe
-G1 X -16 Y90 F1000                        ; slow wipe
-G1 X -15 Y86 F2000                        ; fast wipe
-G1 X -17 Y80 F2000                        ; fast wipe
-G1 X -15 Y74 F2000                        ; fast wipe
-G1 X -17 Y70 F2000                        ; fast wipe
-G1 X -16 Y68 F1000                        ; slow wipe
-G1 X -16 Y60 F1000                        ; slow wipe
-G1 X -14 Y60 F1000                        ; slow wipe
-G1 X -14 Y46 F1000                        ; slow wipe
-G1 X -17 Y46 F1000                        ; slow wipe
+G1 X -17 Y100 F1000                       ; slow wipe
+G1 X -17 Y90 F1000                        ; slow wipe
+G1 X -16 Y86 F2000                        ; fast wipe
+G1 X -18 Y80 F2000                        ; fast wipe
+G1 X -16 Y74 F2000                        ; fast wipe
+G1 X -18 Y70 F2000                        ; fast wipe
+G1 X -17 Y68 F1000                        ; slow wipe
 G1 X -17 Y60 F1000                        ; slow wipe
-G1 X -14 Y60 F1000                        ; slow wipe
-G1 X -14 Y46 F1000                        ; slow wipe
-G1 X -17 Y46 F1000                        ; slow wipe
+G1 X -15 Y60 F1000                        ; slow wipe
+G1 X -15 Y46 F1000                        ; slow wipe
+G1 X -18 Y46 F1000                        ; slow wipe
+G1 X -18 Y60 F1000                        ; slow wipe
+G1 X -15 Y60 F1000                        ; slow wipe
+G1 X -15 Y46 F1000                        ; slow wipe
+G1 X -18 Y46 F1000                        ; slow wipe
+G1 X -18 Y60 F1000                        ; slow wipe
+G1 X -15 Y60 F1000                        ; slow wipe
+G1 X -15 Y46 F1000                        ; slow wipe
+G1 X -18 Y46 F1000                        ; slow wipe
+G1 X -18 Y60 F1000                        ; slow wipe
 G1 X -17 Y60 F1000                        ; slow wipe
-G1 X -14 Y60 F1000                        ; slow wipe
-G1 X -14 Y46 F1000                        ; slow wipe
-G1 X -17 Y46 F1000                        ; slow wipe
-G1 X -17 Y60 F1000                        ; slow wipe
-G1 X -16 Y60 F1000                        ; slow wipe
-G1 X -16 Y42 F1000                        ; slow wipe
-G1 X -15 Y40 F2000                        ; fast wipe
-G1 X -17 Y38 F2000                        ; fast wipe
-G1 X -15 Y36 F2000                        ; fast wipe
-G1 X -17 Y34 F2000                        ; fast wipe
-G1 X -16 Y30 F1000                        ; slow wipe
-G1 X -16 Y19 F1000                        ; slow wipe
-G1 X -16 Y19 Z20 F1000			  ; raise extruder
+G1 X -17 Y42 F1000                        ; slow wipe
+G1 X -16 Y40 F2000                        ; fast wipe
+G1 X -18 Y38 F2000                        ; fast wipe
+G1 X -16 Y36 F2000                        ; fast wipe
+G1 X -18 Y34 F2000                        ; fast wipe
+G1 X -17 Y30 F1000                        ; slow wipe
+G1 X -17 Y19 F1000                        ; slow wipe
+G1 X -17 Y19 Z20 F1000			  ; raise extruder
 M106 S255                                 ; turn on fan to blow away fuzzies
 G4 S5                                     ; wait 5 seconds
 M107                                      ; turn off fan
@@ -67,35 +67,35 @@ G0 X50 F1000                              ; move over to switch extruders
 T1                                        ; switch to second extruder
 G1 X297.5 Y100  F5000                     ; move E2 above second wiper pad
 G1 Z 1.0                                 ; push nozzle into wiper
-G1 X 297.5 Y100 F1000                     ; slow wipe
-G1 X 297.5 Y90 F1000                      ; slow wipe
-G1 X 298.5 Y86 F2000                      ; fast wipe
-G1 X 296.5 Y80 F2000                      ; fast wipe
-G1 X 298.5 Y74 F2000                      ; fast wipe
-G1 X 296.5 Y70 F2000                      ; fast wipe
-G1 X 297.5 Y68 F1000                      ; slow wipe
-G1 X 297.5 Y60 F1000                      ; slow wipe
-G1 X 299 Y60 F1000                        ; slow wipe
-G1 X 299 Y46 F1000                        ; slow wipe
-G1 X 296 Y46 F1000                        ; slow wipe
+G1 X 294.5 Y100 F1000                     ; slow wipe
+G1 X 294.5 Y90 F1000                      ; slow wipe
+G1 X 295.5 Y86 F2000                      ; fast wipe
+G1 X 293.5 Y80 F2000                      ; fast wipe
+G1 X 295.5 Y74 F2000                      ; fast wipe
+G1 X 293.5 Y70 F2000                      ; fast wipe
+G1 X 294.5 Y68 F1000                      ; slow wipe
+G1 X 294.5 Y60 F1000                      ; slow wipe
 G1 X 296 Y60 F1000                        ; slow wipe
-G1 X 299 Y60 F1000                        ; slow wipe
-G1 X 299 Y46 F1000                        ; slow wipe
 G1 X 296 Y46 F1000                        ; slow wipe
+G1 X 293 Y46 F1000                        ; slow wipe
+G1 X 293 Y60 F1000                        ; slow wipe
 G1 X 296 Y60 F1000                        ; slow wipe
-G1 X 299 Y60 F1000                        ; slow wipe
-G1 X 299 Y46 F1000                        ; slow wipe
 G1 X 296 Y46 F1000                        ; slow wipe
+G1 X 293 Y46 F1000                        ; slow wipe
+G1 X 293 Y60 F1000                        ; slow wipe
 G1 X 296 Y60 F1000                        ; slow wipe
-G1 X 297.5 Y60 F1000                      ; slow wipe
-G1 X 297.5 Y42 F1000                      ; slow wipe
-G1 X 298.5 Y40 F2000                      ; fast wipe
-G1 X 296.5 Y38 F2000                      ; fast wipe
-G1 X 298.5 Y36 F2000                      ; fast wipe
-G1 X 296.5 Y34 F2000                      ; fast wipe
-G1 X 298.5 Y30 F1000                      ; slow wipe
-G1 X 297.5 Y19 F1000                      ; slow wipe
-G1 X 297.5 Y19 Z20 F1000                  ; raise extruder
+G1 X 296 Y46 F1000                        ; slow wipe
+G1 X 293 Y46 F1000                        ; slow wipe
+G1 X 293 Y60 F1000                        ; slow wipe
+G1 X 294.5 Y60 F1000                      ; slow wipe
+G1 X 294.5 Y42 F1000                      ; slow wipe
+G1 X 295.5 Y40 F2000                      ; fast wipe
+G1 X 293.5 Y38 F2000                      ; fast wipe
+G1 X 295.5 Y36 F2000                      ; fast wipe
+G1 X 293.5 Y34 F2000                      ; fast wipe
+G1 X 295.5 Y30 F1000                      ; slow wipe
+G1 X 294.5 Y19 F1000                      ; slow wipe
+G1 X 294.5 Y19 Z20 F1000                  ; raise extruder
 M106 S255                                 ; turn on fan to blow away fuzzies
 G4 S5                                     ; wait 5 seconds
 M107                                      ; turn off fan
