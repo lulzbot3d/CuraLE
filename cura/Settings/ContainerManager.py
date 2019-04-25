@@ -828,6 +828,7 @@ class ContainerManager(QObject):
                 new_quality = copy.deepcopy(q)
                 new_quality.setMetaDataEntry("id", new_quality.id + "_" + new_id)
                 new_quality.setMetaDataEntry("material", new_id + "_" + printer_id)
+                new_quality.addMetaDataEntry("duplicated", True)
                 new_quality.setDirty(True)
                 self._container_registry.addContainer(new_quality)
 

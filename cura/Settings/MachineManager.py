@@ -845,6 +845,15 @@ class MachineManager(QObject):
     def isReadOnly(self, container_id: str) -> bool:
         return ContainerRegistry.getInstance().isReadOnly(container_id)
 
+    @pyqtSlot(str, result=bool)
+    def isUpdateAllowed(self, container_id: str) -> bool:
+        containers = ContainerRegistry.getInstance().findInstanceContainers(id=container_id)
+        if not containers:
+            return False
+        container = containers[0]
+        allow = not container.getMetaDataEntry("duplicated", False)
+        return allow
+
     ## Copy the value of the setting of the current extruder to all other extruders as well as the global container.
     @pyqtSlot(str)
     def copyValueToExtruders(self, key: str):
