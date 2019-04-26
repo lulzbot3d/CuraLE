@@ -809,7 +809,7 @@ class MachineManager(QObject):
     def isCurrentSetupSupported(self) -> bool:
         if not self._global_container_stack:
             return False
-        for stack in [self._global_container_stack] + list(self._global_container_stack.extruders.values()):
+        for stack in list(self._global_container_stack.extruders.values()):
             for container in stack.getContainers():
                 if not container:
                     return False
@@ -1060,6 +1060,11 @@ class MachineManager(QObject):
             if has_not_supported_quality:
                 for setting_info in new_quality_settings_list:
                     setting_info["quality"] = self._empty_quality_container
+
+            for setting_info in new_quality_settings_list:
+                if setting_info["stack"] == self._global_container_stack:
+                    setting_info["quality"] = self._empty_quality_container
+                    setting_info["quality_changes"] = self._empty_quality_changes_container
 
             self._new_quality_containers.clear()
 
