@@ -359,11 +359,23 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     def _detectSerialPort(self):
         import serial.tools.list_ports
         # self._serial_port = None
+        baud_rate = Application.getInstance().getGlobalContainerStack().getProperty("machine_baudrate", "value")
         for port in serial.tools.list_ports.comports():
             if port.vid in self._getAutodetectVIDList():
                 self.log("i", "Detected 3D printer on %s." % port.device)
                 self._serial_port = port.device
-                return
+                # Let's try to open the serial connection and read Temperature
+                serial_connection = serial.Serial(str(self._serial_port), baud_rate, timeout=3, writeTimeout=10000)
+                if serial_connection :
+                    # We found the serial port, now let's try to write and read from it
+                    try:
+                        serial_connection.write(b"\n")
+                    except serial.SerialException:
+                        serial_connection.close()
+                        continue
+                    serial_connection.close()
+                    return
+        self._serial_port = None
         self.log("i", "No 3D printers detected")
 
     ##  Set the baud rate of the serial. This can cause exceptions, but we simply want to ignore those.
@@ -696,22 +708,6 @@ class ConnectThread:
                     self._onConnectionSucceeded()
                     return
 
-        self._parent.setConnectionText(catalog.i18nc("@info:status", "Autodetecting Baudrate"))
-        for baud_rate in self._getBaudrateList(): # Cycle all baud rates (auto detect)
-            self._parent.log("d", "Attempting to connect to printer with serial %s on baud rate %s", self._parent._serial_port, baud_rate)
-            if self._parent._serial is None:
-                try:
-                    self._parent._serial = serial.Serial(str(self._parent._serial_port), baud_rate, timeout = 3, writeTimeout = 10000)
-                    # 10 Seconds is too much to sleep?
-                    time.sleep(1)
-                except serial.SerialException:
-                    self._parent.log("d", "Could not open port %s" % self._parent._serial_port)
-                    continue
-            else:
-                if not self._parent.setBaudRate(baud_rate):
-                    continue  # Could not set the baud rate, go to the next
-
-            time.sleep(1.5) # Ensure that we are not talking to the bootloader. 1.5 seconds seems to be the magic number
             sucesfull_responses = 0
             timeout_time = time.time() + 5
             self._parent._serial.write(b"\n")
@@ -733,10 +729,10 @@ class ConnectThread:
 
                 self._sendCommand("M105")  # Send M105 as long as we are listening, otherwise we end up in an undefined state
 
-        self._parent.log("e", "Baud rate detection for %s failed", self._parent._serial_port)
+        self._parent.log("e", "Can't connect to printer on %s", self._parent._serial_port)
         self._parent.close()  # Unable to connect, wrap up.
         self._parent.setConnectionState(ConnectionState.closed)
-        self._parent.setConnectionText(catalog.i18nc("@info:status", "Baud rate detection failed"))
+        self._parent.setConnectionText(catalog.i18nc("@info:status", "Can't connect to printer"))
         self._parent._serial_port = None
 
     class CheckFirmwareStatus(Enum):
