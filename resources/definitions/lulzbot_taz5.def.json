@@ -52,7 +52,7 @@
         },
         "machine_baudrate":
         {
-            "default_value": "115200"
+            "default_value": "250000"
         },
         "material_wipe_temperature":
         {

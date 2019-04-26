@@ -18,6 +18,10 @@
         {
             "resolve": "'LulzBot TAZ Pro'"
         },
+        "machine_baudrate":
+        {
+            "default_value": "250000"
+        },
         "machine_heated_bed":
         {
             "default_value": true
