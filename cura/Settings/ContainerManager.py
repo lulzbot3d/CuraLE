@@ -594,7 +594,7 @@ class ContainerManager(QObject):
         if s is not None:
             stacks.append(s)
 
-        new_changes = self._createQualityChanges(global_stack.quality, unique_name,
+        new_changes = self._createQualityChanges(s.quality if s is not None else global_stack.quality, unique_name,
                                                  Application.getInstance().getGlobalContainerStack().getBottom(),
                                                  None)
         for stack in stacks:
