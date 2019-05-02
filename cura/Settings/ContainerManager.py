@@ -530,7 +530,7 @@ class ContainerManager(QObject):
 
         self._machine_manager.blurSettings.emit()
 
-        stacks = [global_stack]
+        stacks = []
         s = ExtruderManager.getInstance().getActiveExtruderStack()
         if s is not None:
             stacks.append(s)
@@ -543,6 +543,8 @@ class ContainerManager(QObject):
                 return False
 
             self._performMerge(quality_changes, stack.getTop())
+            self._performMerge(quality_changes, global_stack.getTop())
+
 
         self._machine_manager.activeQualityChanged.emit()
 
