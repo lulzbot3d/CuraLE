@@ -86,7 +86,6 @@
     </machine>
     <machine>
       <machine_identifier product="lulzbot_quiver_evergreen_bagworm"/>
-      <metadata key="category">Experimental</metadata>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_quiver_cecropia"/>
@@ -108,6 +107,9 @@
     </machine>
     <machine>
       <machine_identifier product="lulzbot_redgum_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_achemon"/>
     </machine>
   </settings>
 </fdmmaterial>
