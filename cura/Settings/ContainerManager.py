@@ -530,7 +530,7 @@ class ContainerManager(QObject):
 
         self._machine_manager.blurSettings.emit()
 
-        stacks = [global_stack]
+        stacks = []
         s = ExtruderManager.getInstance().getActiveExtruderStack()
         if s is not None:
             stacks.append(s)
@@ -543,6 +543,8 @@ class ContainerManager(QObject):
                 return False
 
             self._performMerge(quality_changes, stack.getTop())
+            self._performMerge(quality_changes, global_stack.getTop())
+
 
         self._machine_manager.activeQualityChanged.emit()
 
@@ -594,7 +596,7 @@ class ContainerManager(QObject):
         if s is not None:
             stacks.append(s)
 
-        new_changes = self._createQualityChanges(global_stack.quality, unique_name,
+        new_changes = self._createQualityChanges(s.quality if s is not None else global_stack.quality, unique_name,
                                                  Application.getInstance().getGlobalContainerStack().getBottom(),
                                                  None)
         for stack in stacks:
@@ -828,6 +830,7 @@ class ContainerManager(QObject):
                 new_quality = copy.deepcopy(q)
                 new_quality.setMetaDataEntry("id", new_quality.id + "_" + new_id)
                 new_quality.setMetaDataEntry("material", new_id + "_" + printer_id)
+                new_quality.addMetaDataEntry("duplicated", True)
                 new_quality.setDirty(True)
                 self._container_registry.addContainer(new_quality)
 

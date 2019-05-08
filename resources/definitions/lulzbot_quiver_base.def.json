@@ -10,13 +10,17 @@
         "preferred_quality": "normal",
         "file_formats": "text/x-gcode",
         "visible": false,
-        "firmware_last_version": "2.0.0.109"
+        "firmware_last_version": "2.0.0.110"
     },
     "overrides":
     {
         "firmware_machine_type":
         {
             "resolve": "'LulzBot TAZ Pro'"
+        },
+        "machine_baudrate":
+        {
+            "default_value": "250000"
         },
         "machine_heated_bed":
         {

@@ -681,13 +681,13 @@ class MachineManager(QObject):
 
         quality_changes = self._global_container_stack.qualityChanges
         if quality_changes:
-            value = self._global_container_stack.getRawProperty("layer_height", "value", skip_until_container = quality_changes.getId())
+            value = self._global_container_stack.getProperty("layer_height", "value")
             if isinstance(value, SettingFunction):
                 value = value(self._global_container_stack)
             return value
         quality = self._global_container_stack.quality
         if quality:
-            value = self._global_container_stack.getRawProperty("layer_height", "value", skip_until_container = quality.getId())
+            value = self._global_container_stack.getProperty("layer_height", "value")
             if isinstance(value, SettingFunction):
                 value = value(self._global_container_stack)
             return value
@@ -809,7 +809,7 @@ class MachineManager(QObject):
     def isCurrentSetupSupported(self) -> bool:
         if not self._global_container_stack:
             return False
-        for stack in [self._global_container_stack] + list(self._global_container_stack.extruders.values()):
+        for stack in list(self._global_container_stack.extruders.values()):
             for container in stack.getContainers():
                 if not container:
                     return False
@@ -844,6 +844,15 @@ class MachineManager(QObject):
     @pyqtSlot(str, result = bool)
     def isReadOnly(self, container_id: str) -> bool:
         return ContainerRegistry.getInstance().isReadOnly(container_id)
+
+    @pyqtSlot(str, result=bool)
+    def isUpdateAllowed(self, container_id: str) -> bool:
+        containers = ContainerRegistry.getInstance().findInstanceContainers(id=container_id)
+        if not containers:
+            return False
+        container = containers[0]
+        allow = not container.getMetaDataEntry("duplicated", False)
+        return allow
 
     ## Copy the value of the setting of the current extruder to all other extruders as well as the global container.
     @pyqtSlot(str)
@@ -1060,6 +1069,11 @@ class MachineManager(QObject):
             if has_not_supported_quality:
                 for setting_info in new_quality_settings_list:
                     setting_info["quality"] = self._empty_quality_container
+
+            for setting_info in new_quality_settings_list:
+                if setting_info["stack"] == self._global_container_stack:
+                    setting_info["quality"] = self._empty_quality_container
+                    setting_info["quality_changes"] = self._empty_quality_changes_container
 
             self._new_quality_containers.clear()
 

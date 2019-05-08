@@ -115,6 +115,12 @@ class BOSSA():
 
         Logger.log("d", "...CPU reset")
         self.samba.reset()
+
+        Logger.log("d", "...Closing Serial")
+        self.close()
+
+        # Wait for 5secs for port to re-appear
+        time.sleep(5)
         
         return
 

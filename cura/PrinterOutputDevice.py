@@ -63,6 +63,8 @@ class PrinterOutputDevice(QObject, OutputDevice):
         self._control_view_qml_path = ""
         self._control_item = None
 
+        self._current_hotend = 0
+
         self._qml_context = None
         self._can_pause = True
         self._can_abort = True
