@@ -500,7 +500,7 @@ Column
                     if (Cura.MachineManager.activeQualityLayerHeight > 0) {
                         result += " <font color=\"" + UM.Theme.getColor("text_detail") + "\">"
                         result += " - "
-                        result += Cura.MachineManager.activeQualityLayerHeight + "mm"
+                        result += Cura.MachineManager.activeQualityLayerHeight.toFixed(3) + "mm"
                         result += "</font>"
                     }
                 }
