@@ -137,5 +137,17 @@
       <machine_identifier product="lulzbot_taz5_flexy_dually_v2"/>
       <metadata key="category">Experimental</metadata>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_banded_tiger"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_achemon"/>
+    </machine>
   </settings>
 </fdmmaterial>

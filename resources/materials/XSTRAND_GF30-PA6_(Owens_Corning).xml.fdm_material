@@ -58,5 +58,14 @@
     <machine>
       <machine_identifier product="lulzbot_quiver_evergreen_bagworm"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_banded_tiger"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_dingy_cutworm"/>
+    </machine>
   </settings>
 </fdmmaterial>
