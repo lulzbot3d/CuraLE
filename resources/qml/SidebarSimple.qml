@@ -501,24 +501,44 @@ Item
 
                 model: ListModel {
                     id: cbItems
-                    ListElement { text: "Skirt" }
-                    ListElement { text: "Brim" }
-                    ListElement { text: "Raft" }
-                    ListElement { text: "None" }
+                    ListElement { text: "Skirt"; type: "skirt" }
+                    ListElement { text: "Brim"; type: "brim" }
+                    ListElement { text: "Raft"; type: "raft" }
+                    ListElement { text: "None"; type: "none" }
                 }
 
-                onCurrentIndexChanged:
+                onActivated:
                 {
-                    var adhesionType = cbItems.get(currentIndex).text.toLowerCase();
+                    var adhesionType = cbItems.get(index).type;
                     platformAdhesionType.setPropertyValue("value", adhesionType);
-                    //console.log( "----------------------- cbItems.get(" ,currentIndex, ").text", cbItems.get(currentIndex).text, adhesionType )
+                }
+
+                function updateValue()
+                {
+                    var adhesionType = platformAdhesionType.getRawPropertyValue("value");
+                    console.log(adhesionType);
+                    for(var i = 0; i < cbItems.count; i++)
+                    {
+                        if(cbItems.get(i).type == adhesionType)
+                        {
+                            adhesionComboBox.currentIndex = i;
+                            break;
+                        }
+                    }
                 }
 
                 Component.onCompleted:
                 {
-                    var adhesionType = cbItems.get(currentIndex).text.toLowerCase();
-                    platformAdhesionType.setPropertyValue("value", adhesionType);
-                    //console.log( "----------------------- cbItems.get(" ,currentIndex, ").text", cbItems.get(currentIndex).text, adhesionType )
+                    updateValue()
+                }
+
+                Connections
+                {
+                    target: platformAdhesionType
+                    onPropertiesChanged:
+                    {
+                        adhesionComboBox.updateValue()
+                    }
                 }
 
                 MouseArea
