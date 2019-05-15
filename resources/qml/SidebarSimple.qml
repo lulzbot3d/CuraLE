@@ -501,44 +501,24 @@ Item
 
                 model: ListModel {
                     id: cbItems
-                    ListElement { text: "Skirt"; type: "skirt" }
-                    ListElement { text: "Brim"; type: "brim" }
-                    ListElement { text: "Raft"; type: "raft" }
-                    ListElement { text: "None"; type: "none" }
+                    ListElement { text: "Skirt" }
+                    ListElement { text: "Brim" }
+                    ListElement { text: "Raft" }
+                    ListElement { text: "None" }
                 }
 
-                onActivated:
+                onCurrentIndexChanged:
                 {
-                    var adhesionType = cbItems.get(index).type;
+                    var adhesionType = cbItems.get(currentIndex).text.toLowerCase();
                     platformAdhesionType.setPropertyValue("value", adhesionType);
-                }
-
-                function updateValue()
-                {
-                    var adhesionType = platformAdhesionType.getRawPropertyValue("value");
-                    console.log(adhesionType);
-                    for(var i = 0; i < cbItems.count; i++)
-                    {
-                        if(cbItems.get(i).type == adhesionType)
-                        {
-                            adhesionComboBox.currentIndex = i;
-                            break;
-                        }
-                    }
+                    //console.log( "----------------------- cbItems.get(" ,currentIndex, ").text", cbItems.get(currentIndex).text, adhesionType )
                 }
 
                 Component.onCompleted:
                 {
-                    updateValue()
-                }
-
-                Connections
-                {
-                    target: platformAdhesionType
-                    onPropertiesChanged:
-                    {
-                        adhesionComboBox.updateValue()
-                    }
+                    var adhesionType = cbItems.get(currentIndex).text.toLowerCase();
+                    platformAdhesionType.setPropertyValue("value", adhesionType);
+                    //console.log( "----------------------- cbItems.get(" ,currentIndex, ").text", cbItems.get(currentIndex).text, adhesionType )
                 }
 
                 MouseArea
