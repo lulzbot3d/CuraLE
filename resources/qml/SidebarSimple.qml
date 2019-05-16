@@ -516,7 +516,6 @@ Item
                 function updateValue()
                 {
                     var adhesionType = platformAdhesionType.getRawPropertyValue("value");
-                    console.log(adhesionType);
                     for(var i = 0; i < cbItems.count; i++)
                     {
                         if(cbItems.get(i).type == adhesionType)
