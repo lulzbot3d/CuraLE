@@ -244,7 +244,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self.sendCommand("G90")
 
     def _setHotend(self, num):
-        self.sendCommand("T%i" % num)
+        self.sendCommand("T%i S1" % num)
 
     def _setZOffset(self, zOffset, saveEEPROM):
         self.sendCommand("M851 Z%s" % (zOffset))
