@@ -57,7 +57,7 @@ G0 X0 Y187 F200              ; move away from endstops
 G0 Y152 F4000                ; move in front of wiper pad
 G4 S1                        ; pause
 M400                         ; clear buffer
-M109 R{print_temperature}    ; set extruder temp and wait
+M109 R{material_print_temperature_layer_0}  ; wait for extruder to reach printing temp
 G4 S15                       ; wait for bed to temp up
 G1 Z2 E0 F45                 ; extrude filament back into nozzle
 M140 S{material_bed_temperature_layer_0}; get bed temping up during first layer
