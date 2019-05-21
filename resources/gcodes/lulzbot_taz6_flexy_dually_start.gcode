@@ -58,8 +58,8 @@ G1 X0 Y0 Z15 F5000 ; get out the way
 M400 ; clear buffer
 M140 S{material_bed_temperature}; get bed heating up
 M104 S{material_print_temperature_0} T0 ; set extruder temp
-M109 S{material_print_temperature_layer_0} T1; set extruder temp
-M109 S{material_print_temperature_layer_0} T0 ; set extruder temp and wait
+M109 S{material_print_temperature_1} T1; set extruder temp
+M109 S{material_print_temperature_0} T0 ; set extruder temp and wait
 T1 ; switch to second extruder
 G1 E0 F100 ; prime nozzle from previous print
 G1 F100 E-{retraction_amount} ;retract second nozzle before print
