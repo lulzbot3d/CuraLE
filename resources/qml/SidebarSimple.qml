@@ -540,6 +540,15 @@ Item
                     }
                 }
 
+                Connections
+                {
+                    target: Cura.MachineManager
+                    onActiveQualityChanged:
+                    {
+                        adhesionComboBox.updateValue()
+                    }
+                }
+
                 MouseArea
                 {
                     id: adhesionMouseArea
