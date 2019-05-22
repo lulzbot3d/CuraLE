@@ -149,6 +149,7 @@
                             "description": "Keep temperature after print on removal value",
                             "type": "bool",
                             "default_value": true,
+                            "resolve": "any(extruderValues('material_keep_part_removal_temperature'))",
                             "enabled": "True",
                             "settable_per_mesh": false,
                             "settable_per_extruder": false
