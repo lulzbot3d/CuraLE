@@ -1,5 +1,4 @@
 ;This profile is designed specifically for LulzBot TAZ6 Flexy Dually 3D Printer
-;{material_print_temperature}
 M73 P0 ;resetting progress bar on LCD
 G26 ; clear potential 'probe fail' condition
 M107 ; disable fans
@@ -7,7 +6,7 @@ G90 ; absolute positioning
 T0 ; select this extruder first
 M82 ; set extruder to absolute mode
 G92 E0 ; set extruder position to 0
-M140 S{material_bed_temperature}; get bed heating up
+M140 S{material_bed_temperature_layer_0}; get bed heating up
 M104 S{material_soften_temperature_0} T0 ; set T0 to soften temp
 M109 S{material_soften_temperature_1} T1 ; soften filament and wait
 M109 S{material_soften_temperature_0} T0 ; soften filament and wait
@@ -56,15 +55,14 @@ G29 ; probe sequence (for auto-leveling)
 M204 S500 ; set accel back to normal
 G1 X0 Y0 Z15 F5000 ; get out the way
 M400 ; clear buffer
-M140 S{material_bed_temperature}; get bed heating up
-M104 S{material_print_temperature_0} T0 ; set extruder temp
-M109 S{material_print_temperature_1} T1; set extruder temp
-M109 S{material_print_temperature_0} T0 ; set extruder temp and wait
+M104 S{material_print_temperature_layer_0_0} T0 ; set extruder temp
+M109 S{material_print_temperature_layer_0_1} T1 ; set extruder temp
+M109 S{material_print_temperature_layer_0_0} T0 ; set extruder temp and wait
 T1 ; switch to second extruder
 G1 E0 F100 ; prime nozzle from previous print
 G1 F100 E-{retraction_amount} ;retract second nozzle before print
 G92 E0 ; adjust to 1st nozzle e value
-T0 ; switch back to back
+T0 ; switch back to first extruder
 M190 S{material_bed_temperature_layer_0}; get bed temping up during first layer
 G1 Z2 E0 F75 ; extrude filament back into nozzle
 M117 TAZ Printing... ; LCD status message

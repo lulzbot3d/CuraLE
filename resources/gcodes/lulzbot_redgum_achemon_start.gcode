@@ -7,7 +7,7 @@ M420 S0 ; disable previous leveling matrix
 G90 ; absolute positioning
 M82 ; set extruder to absolute mode
 G92 E0 ; set extruder position to 0
-M140 S{material_bed_temperature} ; start bed heating up
+M140 S{material_bed_temperature_layer_0} ; start bed heating up
 M109 R{material_soften_temperature} ; soften filament before homing Z
 G28 ; Home all axis
 G1 E-30 F100 ; retract filament

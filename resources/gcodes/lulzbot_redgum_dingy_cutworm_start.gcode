@@ -7,7 +7,7 @@ M420 S0 ; disable previous leveling matrix
 G90 ; absolute positioning
 M82 ; set extruder to absolute mode
 G92 E0 ; set extruder position to 0
-M140 S{material_bed_temperature} ; start bed heating up
+M140 S{material_bed_temperature_layer_0} ; start bed heating up
 M109 R{material_soften_temperature} ; soften filament before homing Z
 G28 ; Home all axis
 G1 E-30 F100 ; retract filament
@@ -41,10 +41,10 @@ G1 Z10 ; raise extruder
 M109 R{material_probe_temperature} ; wait for extruder to reach probe temp
 G1 X-9 Y-9 ; move above first probe point
 M204 S100 ; set probing acceleration
-G29 ; start auto-leveling sequence
-M420 S1 ; activate bed level matrix
-M425 Z			     ; use measured Z backlash for compensation
-M425 Z F0		     ; turn off measured Z backlash compensation. (if activated in the quality settings, this command will automatically be ignored)
+G29       ; start auto-leveling sequence
+M420 S1   ; activate bed level matrix
+M425 Z    ; use measured Z backlash for compensation
+M425 Z F0 ; turn off measured Z backlash compensation. (if activated in the quality settings, this command will automatically be ignored)
 M204 S500 ; restore standard acceleration
 G1 X0 Y0 Z15 F5000 ; move up off last probe point
 G4 S1 ; pause

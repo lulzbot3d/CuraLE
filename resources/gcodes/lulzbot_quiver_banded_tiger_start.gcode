@@ -7,18 +7,18 @@ M420 S0                 ; disable leveling matrix
 G90 					; absolute positioning
 M82 					; set extruder to absolute mode
 G92 E0 					; set extruder position to 0
-M140 S{material_bed_temperature} 	; start bed heating up
+M140 S{material_bed_temperature_layer_0} ; start bed heating up
 G28 					; home all axes
-G0 X145 Y187 Z156 F3000 			; move away from endstops
-M117 Q - HS+ Heating Up...			; progress indicator message on LCD
+G0 X145 Y187 Z156 F3000 		; move away from endstops
+M117 Q - HS+ Heating Up...		; progress indicator message on LCD
 M109 R{material_soften_temperature} 	; soften filament before retraction
-M117 Q - HS Retracting Filament...			; progress indicator message on LCD
+M117 Q - HS Retracting Filament...	; progress indicator message on LCD
 G1 E-15 F75 				; retract filament
-M117 Q - HS Moving to Position...			; progress indicator message on LCD
-G1 X295 Y100 Z10 F3000 ; move above wiper pad
+M117 Q - HS Moving to Position...	; progress indicator message on LCD
+G1 X295 Y100 Z10 F3000                  ; move above wiper pad
 M109 R{material_wipe_temperature} 	; wait for extruder to reach wiping temp
-M117 Q - HS Wiping Nozzle...			; progress indicator message on LCD
-G1 Z1.5              ; lower nozzle
+M117 Q - HS Wiping Nozzle...		; progress indicator message on LCD
+G1 Z1.5           ; lower nozzle
 G1 X295 Y95 F1000 ; slow wipe
 G1 X295 Y90 F1000 ; slow wipe
 G1 X295 Y85 F1000 ; slow wipe
@@ -43,7 +43,7 @@ G1 X295 Y30 F2000 ; fast wipe
 G1 X293 Y25 Z1.5 F1000 ; slow wipe
 G1 X295 Y23 F1000 ; slow wipe
 G1 Z10 ; raise extruder
-M117 Q - HS Wiping Complete.			; progress indicator message on LCD
+M117 Q - HS Wiping Complete.        ; progress indicator message on LCD
 G1 X0 Y0 F3000				; move toward first probe point
 M109 R{material_probe_temperature}	; wait for extruder to reach probe temp
 M204 S300				; set probing acceleration

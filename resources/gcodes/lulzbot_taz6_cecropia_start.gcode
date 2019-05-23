@@ -7,7 +7,7 @@ M420 S0 ; disable leveling matrix
 G90 ; absolute positioning
 M82 ; set extruder to absolute mode
 G92 E0 ; set extruder position to 0
-M140 S{material_bed_temperature} ; start bed heating up
+M140 S{material_bed_temperature_layer_0} ; start bed heating up
 G28 XY ; home X and Y
 G1 X-19 Y258 F1000 ; move to safe homing position
 M109 R{material_soften_temperature} ; soften filament before homing Z
@@ -43,10 +43,10 @@ G1 Z10 ; raise extruder
 M109 R{material_probe_temperature} ; wait for extruder to reach probe temp
 G1 X-9 Y-9 ; move above first probe point
 M204 S100 ; set probing acceleration
-G29 ; start auto-leveling sequence
-M420 S1              ; enable leveling matrix
-M425 Z			     ; use measured Z backlash for compensation
-M425 Z F0		     ; turn off measured Z backlash compensation. (if activated in the quality settings, this command will automatically be ignored)
+G29       ; start auto-leveling sequence
+M420 S1   ; enable leveling matrix
+M425 Z	  ; use measured Z backlash for compensation
+M425 Z F0 ; turn off measured Z backlash compensation. (if activated in the quality settings, this command will automatically be ignored)
 M204 S500 ; restore standard acceleration
 G1 X0 Y0 Z15 F5000 ; move up off last probe point
 G4 S1 ; pause
@@ -56,4 +56,3 @@ M109 R{material_print_temperature_layer_0} ; wait for extruder to reach printing
 M190 S{material_bed_temperature_layer_0} ; wait for bed to reach printing temp
 G1 Z2 E0 F75 ; prime tiny bit of filament into the nozzle
 M117 TAZ 6 Printing... ; progress indicator message on LCD
-

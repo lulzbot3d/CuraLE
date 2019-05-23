@@ -1,13 +1,13 @@
 ; This profile was specifically generated for a LulzBot Mini with Flexystruder V2
 M73 P0                       ; clear GLCD progress bar
-M75			                 ; Start GLCD Timer
+M75			     ; Start GLCD Timer
 G26                          ; clear potential 'probe fail' condition
 G90                          ; absolute positioning
 M82                          ; set extruder to absolute mode
 M107                         ; start with the fan off
 M420 S0                      ; disable leveling matrix
 G92 E0                       ; set extruder position to 0
-M140 S{print_bed_temperature}; get bed heating up
+M140 S{print_bed_temperature_layer_0}; get bed heating up
 M109 R{material_soften_temperature} ; soften filament before homing Z
 G28                          ; home all
 G0 X0 Y187 Z156 F200         ; move away from endstops
@@ -56,8 +56,9 @@ G28 X0 Y0                    ; re-home to account for build variance of earlier 
 G0 X0 Y187 F200              ; move away from endstops
 G0 Y152 F4000                ; move in front of wiper pad
 G4 S1                        ; pause
-M400                         ; clear buffer
+M400 ; wait for moves to finish
+M117 Heating... ; progress indicator message on LCD
 M109 R{material_print_temperature_layer_0}  ; wait for extruder to reach printing temp
-G4 S15                       ; wait for bed to temp up
+M190 S{material_bed_temperature_layer_0}    ; wait for bed to reach printing temp
 G1 Z2 E0 F45                 ; extrude filament back into nozzle
-M140 S{material_bed_temperature_layer_0}; get bed temping up during first layer
+M117 Mini Printing... ; progress indicator message on LCD

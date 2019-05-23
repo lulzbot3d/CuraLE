@@ -7,7 +7,7 @@ M420 S0                      ; disable leveling matrix
 G90                          ; absolute positioning
 M82                          ; set extruder to absolute mode
 G92 E0                       ; set extruder position to 0
-M140 S{print_bed_temperature}; get bed heating up
+M140 S{print_bed_temperature_layer_0} ; get bed heating up
 M907 E67                     ; set safe extruder torque
 G28 XY                       ; home X and Y
 G1 X-19 Y258 F1000           ; move to safe homing position
@@ -53,8 +53,6 @@ G1 X0 Y0 Z15 F5000           ; get out the way
 M400                         ; clear buffer
 G4 S1                        ; pause
 M117 Heating...              ; LCD status message
-M104 S{material_print_temperature_layer_0}	; get hot end heating up
-M140 S{print_bed_temperature}; get bed heating up
 M109 R{material_print_temperature_layer_0}  ; wait for extruder to reach printing temp
 M190 R{material_bed_temperature_layer_0}; get bed temping up during first layer
 G1 Z2 E0 F75                 ; extrude filament back into nozzle

@@ -7,7 +7,7 @@ M420 S0                 ; disable leveling matrix
 G90 					; absolute positioning
 M82 					; set extruder to absolute mode
 G92 E0 					; set extruder position to 0
-M140 S{material_bed_temperature} 	; start bed heating up
+M140 S{material_bed_temperature_layer_0} ; start bed heating up
 G28 					; home all axes
 G0 X145 Y187 Z156 F3000 			; move away from endstops
 M117 Q - SE Heating Up...			; progress indicator message on LCD
@@ -18,7 +18,7 @@ M117 Q - SE Moving to Position...			; progress indicator message on LCD
 G1 X295 Y100 Z10 F3000 ; move above wiper pad
 M109 R{material_wipe_temperature} 	; wait for extruder to reach wiping temp
 M117 Q - SE Wiping Nozzle...			; progress indicator message on LCD
-G1 Z0.5              ; lower nozzle
+G1 Z0.5           ; lower nozzle
 G1 X295 Y95 F1000 ; slow wipe
 G1 X295 Y90 F1000 ; slow wipe
 G1 X295 Y85 F1000 ; slow wipe
@@ -56,7 +56,7 @@ G1 X5 Y15 Z10 F5000			; move up off last probe point
 G4 S1					; pause
 M400					; wait for moves to finish
 M117 Heating...				; progress indicator message on LCD
-M109 R{material_print_temperature_layer_0}	; wait for extruder to reach initial printing temp
+M109 R{material_print_temperature_layer_0} ; wait for extruder to reach initial printing temp
 M190 S{material_bed_temperature_layer_0} ; wait for bed to reach printing temp
 G1 Z2 E0 F75				; prime tiny bit of filment into the nozzle
 M117 Q - SE Printing...		; progress indicator message on LCD

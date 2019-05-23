@@ -5,7 +5,7 @@
 	G90                                 ; absolute positioning
 	M82                                 ; set extruder to absolute mode
 	G92 E0                              ; set extruder position to 0
-	M140 S{material_bed_temperature}    ; start bed heating up
+	M140 S{material_bed_temperature_layer_0}    ; start bed heating up
 	G28 XY                              ; home X and Y
 	G1 X-19 Y258 F1000                  ; move to safe homing position
 	T0                                  ; switch to extruder 1
@@ -85,7 +85,7 @@
 	M400                                ; wait for moves to finish
 	M117 Heating...                     ; progress indicator message on LCD
 	T0                                  ; switch to extruder 1
-	M104 S{material_print_temperature}  ; set but don't wait
+	M104 S{material_print_temperature_layer_0}  ; set but don't wait
 	T1                                  ; switch to extruder 2
 	M109 R{material_print_temperature_layer_0}  ; wait for extruder to reach printing temp
 	M190 S{material_bed_temperature_layer_0} ; wait for bed to reach printing temp

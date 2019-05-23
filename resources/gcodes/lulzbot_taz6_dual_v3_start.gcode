@@ -7,7 +7,7 @@ M420 S0                      ; disable leveling matrix
 G90                          ; absolute positioning
 M104 S{material_soften_temperature_0} T0               ; soften filament
 M104 S{material_soften_temperature_1} T1               ; soften filament
-M140 S{material_bed_temperature}; get bed heating up
+M140 S{material_bed_temperature_layer_0}  ; get bed heating up
 G28 X Y                      ; home X and Y
 G1 X-17 F3000                ; clear X endstop
 G1 Y258 F3000                ; move over the Z_MIN switch
@@ -67,13 +67,13 @@ M420 S1                      ; enable leveling matrix
 M425 Z			     ; use measured Z backlash for compensation
 M425 Z F0		     ; turn off measured Z backlash compensation. (if activated in the quality settings, this command will automatically be ignored)
 M204 S500                    ; set accel back to normal
-M104 S{material_print_temperature_0} T0 ; set extruder temp
-M104 S{material_print_temperature_1} T1; set extruder temp
+M104 S{material_print_temperature_layer_0_0} T0 ; set extruder temp
+M104 S{material_print_temperature_layer_0_1} T1; set extruder temp
 G1 X100 Y-25 Z0.5 F3000      ; move to open space
 M400                         ; clear buffer
 M117 Heating...              ; LCD status message
-M109 R{material_print_temperature_0} T0 ; set extruder temp and wait
-M109 R{material_print_temperature_1} T1; set extruder temp and wait
+M109 R{material_print_temperature_layer_0_0} T0 ; set extruder temp and wait
+M109 R{material_print_temperature_layer_0_1} T1; set extruder temp and wait
 M117 Purging...              ; LCD status message
 T0                           ; select this extruder first
 G1  E0 F100                  ; undo retraction
