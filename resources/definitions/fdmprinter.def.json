@@ -4109,7 +4109,8 @@
                     "minimum_value": "sum(extruderValues('layer_height')) / len(extruderValues('layer_height')) * 0.5",
                     "maximum_value_warning": "0.75 * machine_nozzle_size",
                     "maximum_value": "sum(extruderValues('layer_height')) / len(extruderValues('layer_height')) * 8",
-                    "resolve": "layer_height",
+                    "resolve": "sum(extruderValues('support_infill_sparse_thickness')) / len(extruderValues('support_infill_sparse_thickness'))",
+                    "value": "layer_height",
                     "enabled": "(support_enable or support_tree_enable) and support_infill_rate > 0",
                     "settable_per_mesh": false,
                     "settable_per_extruder": false
