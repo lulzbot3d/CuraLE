@@ -268,7 +268,7 @@ QtObject {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter;
                     // width: childrenRect.width
-		    width: Theme.getSize("topbar_button").width + Theme.getSize("topbar_button_icon").width
+		            width: Theme.getSize("topbar_button").width + Theme.getSize("topbar_button_icon").width
                     height: Theme.getSize("topbar_button_icon").height
                     Label
                     {
@@ -325,10 +325,8 @@ QtObject {
     property Component tool_button: Component {
         ButtonStyle {
             background: Item {
-                //implicitWidth: Theme.getSize("button").width;
-                //implicitHeight: Theme.getSize("button").height;
-                implicitWidth: Screen.desktopAvailableHeight/16;
-                implicitHeight: Screen.desktopAvailableHeight/16;
+                implicitWidth: Math.min(Screen.desktopAvailableHeight/16 , Screen.desktopAvailableWidth/16, Theme.getSize("button").width);
+                implicitHeight: Math.min(Screen.desktopAvailableHeight/16 , Screen.desktopAvailableWidth/16, Theme.getSize("button").height);
 
                 UM.PointingRectangle {
                     id: button_tooltip
@@ -403,8 +401,8 @@ QtObject {
                     anchors.centerIn: parent;
                     opacity: !control.enabled ? 0.2 : 1.0
                     source: control.iconSource;
-                    width: Theme.getSize("button_icon").width;
-                    height: Theme.getSize("button_icon").height;
+                    width: (Math.min(Screen.desktopAvailableHeight/20 , Screen.desktopAvailableWidth/20, Theme.getSize("button").height)); // (Screen.desktopAvailableHeight / 16 / 5 * 4) 5 to 4 ratio (button to icon) from theme
+                    height: (Math.min(Screen.desktopAvailableHeight/20 , Screen.desktopAvailableWidth/20, Theme.getSize("button").height));
                     color: Theme.getColor("button_text")
 
                     sourceSize: Theme.getSize("button_icon")
