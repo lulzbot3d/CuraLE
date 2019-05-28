@@ -9,7 +9,7 @@ G28 Z0                   ; home Z
 G1 Z15.0 F{speed_travel} ; move extruder up
 M117 Heating...                     ; progress indicator message on LCD
 M109 R{material_print_temperature_layer_0}  ; wait for extruder to reach printing temp
-M190 S{material_bed_temperature_layer_0}    ; wait for bed to reach printing temp
+M190 R{material_bed_temperature_layer_0}    ; wait for bed to reach printing temp
 G92 E0                   ; set extruder position to 0
 G1 F200 E0               ; prime the nozzle with filament
 G92 E0                   ; re-set extruder position to 0

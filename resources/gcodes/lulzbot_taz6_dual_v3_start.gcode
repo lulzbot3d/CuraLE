@@ -87,7 +87,7 @@ G1  E0 F100                  ; purge XXmm of filament
 G1 Z0.5                      ; clear bed (barely)
 G1 X100 Y0 F5000             ; move above bed to shear off filament
 T0                           ; switch to first extruder
-M190 S{material_bed_temperature_layer_0}; get bed temping up during first layer
+M190 R{material_bed_temperature_layer_0}; get bed temping up during first layer
 G1 Z2 E0 F75
 M400                         ; clear buffer
 M117 TAZ Printing...         ; LCD status message

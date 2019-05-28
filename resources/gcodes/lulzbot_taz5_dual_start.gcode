@@ -22,6 +22,6 @@ G92 E0                  ;zero the extruded length
 G1 F100 E10             ;extrude 10mm of feed stock
 G92 E0                  ;zero the extruded length again
 G1 F{speed_travel}
-M190 S{material_bed_temperature_layer_0}  ; wait for bed temperature
+M190 R{material_bed_temperature_layer_0}  ; wait for bed temperature
 ;Put printing message on LCD screen
 M117 Printing...
