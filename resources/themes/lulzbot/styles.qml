@@ -324,9 +324,11 @@ QtObject {
 
     property Component tool_button: Component {
         ButtonStyle {
+            property var button_size: Math.min(Screen.desktopAvailableHeight/16 , Screen.desktopAvailableWidth/16, Theme.getSize("button").width);
+            property var button_size_icon: button_size * (Theme.getSize("button_icon").width / Theme.getSize("button").width);
             background: Item {
-                implicitWidth: Math.min(Screen.desktopAvailableHeight/16 , Screen.desktopAvailableWidth/16, Theme.getSize("button").width);
-                implicitHeight: Math.min(Screen.desktopAvailableHeight/16 , Screen.desktopAvailableWidth/16, Theme.getSize("button").height);
+                implicitWidth: button_size;
+                implicitHeight: implicitWidth;
 
                 UM.PointingRectangle {
                     id: button_tooltip
@@ -401,8 +403,8 @@ QtObject {
                     anchors.centerIn: parent;
                     opacity: !control.enabled ? 0.2 : 1.0
                     source: control.iconSource;
-                    width: (Math.min(Screen.desktopAvailableHeight/20 , Screen.desktopAvailableWidth/20, Theme.getSize("button").height)); // (Screen.desktopAvailableHeight / 16 / 5 * 4) 5 to 4 ratio (button to icon) from theme
-                    height: (Math.min(Screen.desktopAvailableHeight/20 , Screen.desktopAvailableWidth/20, Theme.getSize("button").height));
+                    width: button_size_icon;
+                    height: width;
                     color: Theme.getColor("button_text")
 
                     sourceSize: Theme.getSize("button_icon")
