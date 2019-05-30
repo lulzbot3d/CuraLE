@@ -11,7 +11,7 @@ M117 Heating...                     ; progress indicator message on LCD
 M104 S{material_print_temperature_layer_0_1} T1 ; set extruder temp
 M109 R{material_print_temperature_layer_0_0} T0 ; set extruder temp and wait
 M109 R{material_print_temperature_layer_0_1} T1 ; set extruder temp and wait
-M190 S{material_bed_temperature_layer_0}    ; wait for bed to reach printing temp
+M190 R{material_bed_temperature_layer_0}    ; wait for bed to reach printing temp
 T1                      ;Switch to the 2nd extruder
 G92 E0                  ;zero the extruded length
 G1 F100 E10             ;extrude 10mm of feed stock

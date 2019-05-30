@@ -132,7 +132,7 @@ G1 E-4 F200                               ; purge retraction
 G1 Z0.35                                  ; clear bed (barely)
 G1 X180 Y10 F4000                         ; move above bed to shear off filament
 T0                                        : set extruder
-M190 S{material_bed_temperature_layer_0}  ; get bed temping up during first layer
+M190 R{material_bed_temperature_layer_0}  ; get bed temping up during first layer
 G1 Z2 E0 F75                              ; raise head and 0 extruder
 M82					  ; set to absolute mode
 M400                                      ; clear buffer
