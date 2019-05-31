@@ -54,7 +54,10 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
         progress = 0
         for printer_name, device in self._usb_output_devices.items(): # TODO: @UnusedVariable "printer_name"
             progress += device.progress
-        return progress / len(self._usb_output_devices)
+        if len(self._usb_output_devices) > 0:
+            return progress / len(self._usb_output_devices)
+        else:
+            return progress
 
     @pyqtProperty(int, notify = progressChanged)
     def errorCode(self):
