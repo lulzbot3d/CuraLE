@@ -131,5 +131,9 @@
     <machine>
       <machine_identifier product="lulzbot_redgum_dingy_cutworm"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_yellowfin"/>
+      <metadata key="category">Supported</metadata>
+    </machine>
   </settings>
 </fdmmaterial>
