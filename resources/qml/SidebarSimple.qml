@@ -495,7 +495,7 @@ Item
                 id: adhesionComboBox
 
                 anchors.top: supportExtruderCombobox.bottom
-                anchors.topMargin: UM.Theme.getSize("default_margin").height * 2
+                anchors.topMargin: UM.Theme.getSize("sidebar_margin").height
                 anchors.left: infillCellRight.left //anchors.left: adhesionHelperLabel.right
                 width: UM.Theme.getSize("sidebar").width * .55
 
