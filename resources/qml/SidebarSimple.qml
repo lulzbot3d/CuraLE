@@ -612,7 +612,7 @@ Item
 
                 style: UM.Theme.styles.combobox_color
                 enabled: base.settingsEnabled
-                property alias _hovered: buildPlateAdhesionExtruderMouseArea.containsMouse
+                property alias _hovered: adhesionExtruderMouseArea.containsMouse
 
                 currentIndex: adhesionExtruderNr.properties !== null ? parseFloat(adhesionExtruderNr.properties.value) : 0
                 onActivated:
