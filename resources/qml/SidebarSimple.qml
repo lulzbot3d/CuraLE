@@ -630,7 +630,7 @@ Item
                     onEntered:
                     {
                         base.showTooltip(adhesionExtruderCombobox, Qt.point(-adhesionExtruderCombobox.x, 0),
-                            catalog.i18nc("@label", "adhesionExtruderMouseArea tooltip"));
+                            catalog.i18nc("@label", "The extruder train to use for printing the brim/raft."));
                     }
                     onExited:
                     {
