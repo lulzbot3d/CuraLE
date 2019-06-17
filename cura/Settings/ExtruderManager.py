@@ -304,6 +304,11 @@ class ExtruderManager(QObject):
                     continue
                 used_extruder_stack_ids.add(self.extruderIds[str(extruder_nr)])
 
+        for extruder in self.getExtruderStacks():
+            support_enabled |= extruder.getProperty("support_enable", "value")
+            support_bottom_enabled |= extruder.getProperty("support_bottom_enable", "value")
+            support_roof_enabled |= extruder.getProperty("support_roof_enable", "value")
+
         # Check support extruders
         if support_enabled:
             used_extruder_stack_ids.add(self.extruderIds[str(global_stack.getProperty("support_infill_extruder_nr", "value"))])

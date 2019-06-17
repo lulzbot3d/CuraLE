@@ -47,7 +47,6 @@ Item
 
                 anchors.top: parent.top
                 anchors.left: parent.left
-
                 width: parseInt(UM.Theme.getSize("sidebar").width * .45 - UM.Theme.getSize("sidebar_margin").width)
 
                 Label
@@ -479,22 +478,26 @@ Item
             Label
             {
                 id: adhesionHelperLabel
+
                 anchors.left: parent.left
-                anchors.leftMargin: UM.Theme.getSize("default_margin").width
+                anchors.right: infillCellLeft.right
+                anchors.rightMargin: UM.Theme.getSize("sidebar_margin").width
+                anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width
                 anchors.verticalCenter: adhesionComboBox.verticalCenter
                 width: parent.width * .45 - 3 * UM.Theme.getSize("default_margin").width
                 text: catalog.i18nc("@label", "Build Plate Adhesion");
                 font: UM.Theme.getFont("default");
                 color: UM.Theme.getColor("text");
+                elide: Text.ElideRight
             }
             ComboBox
             {
                 id: adhesionComboBox
 
                 anchors.top: supportExtruderCombobox.bottom
-                anchors.topMargin: UM.Theme.getSize("default_margin").height * 2
-                anchors.left: adhesionHelperLabel.right
-                anchors.leftMargin: UM.Theme.getSize("default_margin").width
+                anchors.topMargin: UM.Theme.getSize("sidebar_margin").height
+                anchors.left: infillCellRight.left //anchors.left: adhesionHelperLabel.right
+                width: UM.Theme.getSize("sidebar").width * .55
 
                 style: UM.Theme.styles.combobox;
                 enabled: base.settingsEnabled
@@ -568,7 +571,82 @@ Item
                     }
                 }
             }
+            Label
+            {
+                id: adhesionExtruderHelperLabel
+                visible: adhesionExtruderCombobox.visible
+                anchors.left: parent.left
+                anchors.right: infillCellLeft.right
+                anchors.rightMargin: UM.Theme.getSize("sidebar_margin").width
+                anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                anchors.verticalCenter: adhesionExtruderCombobox.verticalCenter
+                text: catalog.i18nc("@label", "Adhesion Extruder");
+                font: UM.Theme.getFont("default");
+                color: UM.Theme.getColor("text");
+            }
+            ComboBox
+            {
+                id: adhesionExtruderCombobox
+                visible: (platformAdhesionType.properties.value == "brim" || platformAdhesionType.properties.value == "raft") && (machineExtruderCount.properties.value > 1)
+                model: extruderModel
 
+                property string color_override: ""  // for manually setting values
+                property string color:  // is evaluated automatically, but the first time is before extruderModel being filled
+                {
+                    var current_extruder = extruderModel.get(currentIndex);
+                    color_override = "";
+                    if (current_extruder === undefined) return ""
+                    return (current_extruder.color) ? current_extruder.color : "";
+                }
+
+                textRole: "text"  // this solves that the combobox isn't populated in the first time Cura is started
+
+                anchors.top: adhesionComboBox.bottom
+                anchors.topMargin: visible ? UM.Theme.getSize("sidebar_margin").height : 0
+                anchors.left: infillCellRight.left
+
+                width: UM.Theme.getSize("sidebar").width * .55
+                height: visible ? UM.Theme.getSize("setting_control").height : 0
+
+                Behavior on height { NumberAnimation { duration: 100 } }
+
+                style: UM.Theme.styles.combobox_color
+                enabled: base.settingsEnabled
+                property alias _hovered: adhesionExtruderMouseArea.containsMouse
+
+                currentIndex: adhesionExtruderNr.properties !== null ? parseFloat(adhesionExtruderNr.properties.value) : 0
+                onActivated:
+                {
+                    // Send the extruder nr as a string.
+                    adhesionExtruderNr.setPropertyValue("value", String(index));
+                }
+                MouseArea
+                {
+                    id: adhesionExtruderMouseArea
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    enabled: base.settingsEnabled
+                    acceptedButtons: Qt.NoButton
+                    onEntered:
+                    {
+                        base.showTooltip(adhesionExtruderCombobox, Qt.point(-adhesionExtruderCombobox.x, 0),
+                            catalog.i18nc("@label", "The extruder train to use for printing the brim/raft."));
+                    }
+                    onExited:
+                    {
+                        base.hideTooltip();
+                    }
+                }
+
+                function updateCurrentColor()
+                {
+                    var current_extruder = extruderModel.get(currentIndex);
+                    if (current_extruder !== undefined) {
+                        adhesionExtruderCombobox.color_override = current_extruder.color;
+                    }
+                }
+
+            }
             ListModel
             {
                 id: extruderModel
@@ -643,6 +721,14 @@ Item
                 watchedProperties: [ "value" ]
                 storeIndex: 0
             }
+            UM.SettingPropertyProvider
+            {
+                id: adhesionExtruderNr
+                containerStackId: Cura.MachineManager.activeMachineId
+                key: "adhesion_extruder_nr"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
         }
     }
 
@@ -657,5 +743,6 @@ Item
             })
         }
         supportExtruderCombobox.updateCurrentColor();
+        adhesionExtruderCombobox.updateCurrentColor();
     }
 }
