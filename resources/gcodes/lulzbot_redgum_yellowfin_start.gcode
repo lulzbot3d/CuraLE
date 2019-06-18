@@ -92,4 +92,4 @@ T0 ; switch to first extruder
 M190 R{material_bed_temperature_layer_0}; get bed temping up during first layer
 G1 Z2 E0 F75
 M400 ; clear buffer
-M117 TAZ Printing... ; LCD status message
+M117 TAZ Workhorse Printing... ; LCD status message
