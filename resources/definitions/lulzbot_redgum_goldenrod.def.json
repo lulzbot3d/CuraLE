@@ -1,7 +1,7 @@
 {
     "id": "lulzbot_redgum_goldenrod",
     "name": "redgum",
-    "inherits": "lulzbot_taz6",
+    "inherits": "lulzbot_redgum_base",
     "version": 2,
     "metadata":
     {
@@ -12,13 +12,6 @@
         {
             "0": "lulzbot_redgum_goldenrod_extruder"
         },
-        "platform": "quiver_bed.stl",
-        "platform_offset":
-        [
-            0,
-            -25,
-            0
-        ],
         "category": "Other",
         "supported_actions": ["MachineSettingsAction"],
         "firmware_toolhead_name": "",
