@@ -18,7 +18,8 @@
   </metadata>
   <properties />
   <settings>
-	<setting key="wipe temperature">180.0</setting>
+    <setting key="retraction amount">7.0</setting>
+    <setting key="wipe temperature">180.0</setting>
     <setting key="part removal temperature">60</setting>
     <setting key="heated bed temperature">105</setting>
     <setting key="print temperature">240.0</setting>
