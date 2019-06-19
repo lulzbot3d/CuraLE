@@ -13,7 +13,6 @@ import Cura 1.0 as Cura
 ScrollView
 {
     property var connectedPrinter: Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null
-    property var formData: 0
 
     style: UM.Theme.styles.scrollview;
     flickableItem.flickableDirection: Flickable.VerticalFlick;
@@ -1531,12 +1530,12 @@ ScrollView
 
 	                    TextField
 	                    {
-	                        text: formData.moveLengthAmount
+	                        text: Cura.MonitorStageStorage.moveLengthAmount
 	                        id: moveLengthTextField
 	                        width: parent.width / 2
                             onEditingFinished:
                             {
-                                formData.moveLengthAmount = text
+                                Cura.MonitorStageStorage.moveLengthAmount = text
                             }
 	                        validator: DoubleValidator
 	                        {
@@ -1563,6 +1562,7 @@ ScrollView
 	                    {
 	                        id: extruderSelector
 	                        width: parent.width / 2
+                            currentIndex: Cura.MonitorStageStorage.extruderNumber
 
 	                        model:
 	                        {
@@ -1574,11 +1574,18 @@ ScrollView
 	                            return l
 	                        }
 
+                            onActivated:
+	                        {
+                                Cura.MonitorStageStorage.extruderNumber = index
+	                        }
+
 	                        onCurrentIndexChanged:
 	                        {
                                 if( connectedPrinter != null )
                                     connectedPrinter.setHotend(currentIndex)
 	                        }
+
+
 	                    }
 	                }
 
@@ -1597,12 +1604,12 @@ ScrollView
 
 	                    TextField
 	                    {
-	                        text: formData.extrusionAmount
+	                        text: Cura.MonitorStageStorage.extrusionAmount
 	                        id: extrusionAmountTextField
 	                        width: parent.width / 2
                             onEditingFinished:
                             {
-                                formData.extrusionAmount = text
+                                Cura.MonitorStageStorage.extrusionAmount = text
                             }
 	                        validator: DoubleValidator
 	                        {
@@ -1660,12 +1667,12 @@ ScrollView
 
 	                    TextField
 	                    {
-                            text: formData.temperature
+                            text: Cura.MonitorStageStorage.Temperature
 	                        id: temperatureTextField
 	                        width: parent.width / 2
 	                        onEditingFinished:
                             {
-                                formData.temperature = text
+                                Cura.MonitorStageStorage.Temperature = text
                             }
 	                        validator: IntValidator
 	                        {
