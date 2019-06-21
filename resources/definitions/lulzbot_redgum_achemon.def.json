@@ -1,22 +1,21 @@
 {
     "id": "lulzbot_redgum_achemon",
-    "name": "redgum achemon",
+    "name": "LulzBot TAZ Workhorse | SL | 0.25mm (Micro)",
     "inherits": "lulzbot_redgum_base",
     "version": 2,
     "metadata":
     {
         "type": "machine",
         "visible": true,
-        "priority": "01",
+        "priority": "02",
         "machine_extruder_trains":
         {
             "0": "lulzbot_redgum_achemon_extruder"
         },
-        "category": "Other",
         "supported_actions": ["MachineSettingsAction"],
         "firmware_toolhead_name": "",
-        "base_machine": "LulzBot Workhorse",
-        "base_machine_name": "LulzBot Workhorse",
+        "base_machine": "LulzBot TAZ Workhorse",
+        "base_machine_name": "LulzBot TAZ Workhorse",
         "preferred_material": "*PolyLite_PLA*",
         "user_toolhead_name": "SL | 0.25mm (Micro)",
         "default_category": "All"

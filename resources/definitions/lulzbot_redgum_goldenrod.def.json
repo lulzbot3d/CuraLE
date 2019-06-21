@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_redgum_goldenrod",
-    "name": "redgum",
+    "name": "LulzBot TAZ Workhorse | HS | 0.5mm",
     "inherits": "lulzbot_redgum_base",
     "version": 2,
     "metadata":
@@ -12,13 +12,12 @@
         {
             "0": "lulzbot_redgum_goldenrod_extruder"
         },
-        "category": "Other",
         "supported_actions": ["MachineSettingsAction"],
         "firmware_toolhead_name": "",
-        "base_machine": "LulzBot Workhorse",
-        "base_machine_name": "LulzBot Workhorse",
+        "base_machine": "LulzBot TAZ Workhorse",
+        "base_machine_name": "LulzBot TAZ Workhorse",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "SE | 0.5mm (Aero v2)",
+        "user_toolhead_name": "HS | 0.5mm",
         "default_category": "All"
     },
     "overrides":

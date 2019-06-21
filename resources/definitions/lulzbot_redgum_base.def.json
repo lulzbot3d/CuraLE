@@ -10,6 +10,7 @@
         {
             "0": "lulzbot_taz6_extruder"
         },
+        "category": "LulzBot",
         "platform": "redgum_bed.stl",
         "platform_offset":
         [
@@ -28,7 +29,7 @@
     {
         "machine_name":
         {
-            "default_value": "LulzBot TAZ 6"
+            "default_value": "LulzBot TAZ Workhorse"
         },
         "machine_width":
         {

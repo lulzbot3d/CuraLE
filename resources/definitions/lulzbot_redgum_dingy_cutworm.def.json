@@ -1,24 +1,23 @@
 {
     "id": "lulzbot_redgum_dingy_cutworm",
-    "name": "redgum HS+",
+    "name": "LulzBot TAZ Workhorse | HS+ | 1.2mm",
     "inherits": "lulzbot_redgum_base",
     "version": 2,
     "metadata":
     {
         "type": "machine",
         "visible": true,
-        "priority": "01",
+        "priority": "04",
         "machine_extruder_trains":
         {
             "0": "lulzbot_redgum_dingy_cutworm"
         },
-        "category": "Other",
         "supported_actions": ["MachineSettingsAction"],
         "firmware_toolhead_name": "",
-        "base_machine": "LulzBot Workhorse",
-        "base_machine_name": "LulzBot Workhorse",
+        "base_machine": "LulzBot TAZ Workhorse",
+        "base_machine_name": "LulzBot TAZ Workhorse",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "SE | 0.5mm (Aero v2)",
+        "user_toolhead_name": "HS+ | 1.2mm",
         "default_category": "All"
     },
     "overrides":
