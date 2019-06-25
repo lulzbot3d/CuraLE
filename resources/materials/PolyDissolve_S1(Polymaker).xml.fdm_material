@@ -50,5 +50,9 @@
     <machine>
       <machine_identifier product="lulzbot_quiver_cecropia"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_yellowfin"/>
+      <metadata key="category">Supported</metadata>
+    </machine>
   </settings>
 </fdmmaterial>
