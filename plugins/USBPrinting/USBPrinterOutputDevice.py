@@ -688,7 +688,11 @@ class ConnectThread:
                     # 10 seconds is too much to sleep?
                     time.sleep(1)
                 except serial.SerialException:
-                    self._parent.log("d", "Could not open port %s" % self._parent._serial_port)
+                    self._parent.log("e", "Could not open port %s" % self._parent._serial_port)
+                    self._parent.log("e", "Failed to open USB serial")
+                    self._parent.close()  # Unable to connect, wrap up the parent thread.
+                    self._parent.setConnectionState(ConnectionState.closed)
+                    return
             else:
                 self._parent.setBaudRate(baud_rate)
 

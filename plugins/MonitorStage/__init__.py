@@ -4,6 +4,9 @@
 from . import MonitorStage
 
 from UM.i18n import i18nCatalog
+from PyQt5.QtQml import qmlRegisterSingletonType
+from .MonitorStageStorage import MonitorStageStorage
+
 i18n_catalog = i18nCatalog("cura")
 
 def getMetaData():
@@ -15,6 +18,8 @@ def getMetaData():
     }
 
 def register(app):
+    qmlRegisterSingletonType(MonitorStageStorage, "Cura", 1, 0, "MonitorStageStorage",
+                             MonitorStageStorage.getInstance)
     return {
         "stage": MonitorStage.MonitorStage()
     }
