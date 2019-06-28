@@ -35,7 +35,7 @@ Item
 
                 onClicked:
                 {
-                    connectedPrinter.preheatHotend(-1)
+                    connectedPrinter.preheatHotend(Cura.MonitorStageStorage.extruderNumber)
                 }
                 style: UM.Theme.styles.print_monitor_control_button
 
@@ -69,7 +69,7 @@ Item
 
                 onClicked:
                 {
-                    connectedPrinter.setTargetHotendTemperature(-1, 0)
+                    connectedPrinter.setTargetHotendTemperature(Cura.MonitorStageStorage.extruderNumber, 0)
                 }
                 style:  UM.Theme.styles.print_monitor_control_button
 
@@ -130,7 +130,7 @@ Item
 
                 onClicked:
                 {
-                    connectedPrinter.coldPull(-1)
+                    connectedPrinter.coldPull(Cura.MonitorStageStorage.extruderNumber)
                 }
                 style:  UM.Theme.styles.print_monitor_control_button
 
