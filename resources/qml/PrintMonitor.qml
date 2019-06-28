@@ -1578,14 +1578,6 @@ ScrollView
 	                        {
                                 Cura.MonitorStageStorage.extruderNumber = index
 	                        }
-
-	                        onCurrentIndexChanged:
-	                        {
-                                if( connectedPrinter != null )
-                                    connectedPrinter.setHotend(currentIndex)
-	                        }
-
-
 	                    }
 	                }
 
@@ -1632,6 +1624,7 @@ ScrollView
 
 	                        onClicked:
 	                        {
+	                            connectedPrinter.setHotend(Cura.MonitorStageStorage.extruderNumber)
 	                            connectedPrinter.extrude(parseFloat(extrusionAmountTextField.text))
 	                        }
 
@@ -1645,6 +1638,7 @@ ScrollView
 
 	                        onClicked:
 	                        {
+	                            connectedPrinter.setHotend(Cura.MonitorStageStorage.extruderNumber)
 	                            connectedPrinter.extrude(-parseFloat(extrusionAmountTextField.text))
 	                        }
 
@@ -1695,7 +1689,8 @@ ScrollView
 
 	                        onClicked:
 	                        {
-                                connectedPrinter.setTargetHotendTemperature(extruderSelector.currentIndex, parseInt(temperatureTextField.text))
+	                            connectedPrinter.setTargetHotendTemperature(Cura.MonitorStageStorage.extruderNumber, 
+	                                parseInt(temperatureTextField.text))
 	                        }
 
                             style: UM.Theme.styles.print_monitor_control_button
@@ -1727,7 +1722,7 @@ ScrollView
 	                receive("i", "Error: Printer not connected")
 	            }
 	        }
-		}
+	    }
 
         MessageDialog
         {
