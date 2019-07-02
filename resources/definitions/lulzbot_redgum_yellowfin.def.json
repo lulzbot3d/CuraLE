@@ -13,12 +13,13 @@
             "0": "lulzbot_redgum_yellowfin_1st",
             "1": "lulzbot_redgum_yellowfin_2nd"
         },
-        "category": "Other",
+        "category": "LulzBot",
         "firmware_toolhead_name": "DualExtruder",
         "base_machine": "LulzBot TAZ Workhorse",
         "base_machine_name": "LulzBot TAZ Workhorse",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "TAZ Dual Extruder v3",
+        "user_toolhead_name": "Dual Extruder v3",
+        "priority": "8",
         "default_category": "All"
     },
     "overrides":
