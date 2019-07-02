@@ -1,4 +1,4 @@
-; This profile is designed specifically for LulzBot TAZ WH 3D Printer with the Yellowfin Dual
+; This profile is designed specifically for LulzBot TAZ Workhorse 3D Printer with the Dual Extruder v3
 M73 P0 ; clear GLCD progress bar
 M75 ; start GLCD timer
 G26 ; clear potential 'probe fail' condition
