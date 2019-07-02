@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_redgum_yellowfin",
-    "name": "redgum yellowfin",
+    "name": "TAZ Workhorse Dual Extruder v3",
     "inherits": "lulzbot_redgum_base",
     "version": 2,
     "metadata":

@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_redgum_dingy_cutworm",
-    "name": "LulzBot TAZ Workhorse | HS+ | 1.2mm",
+    "name": "TAZ Workhorse | HS+ | 1.2mm",
     "inherits": "lulzbot_redgum_base",
     "version": 2,
     "metadata":

@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_redgum_goldenrod",
-    "name": "LulzBot TAZ Workhorse | HS | 0.5mm",
+    "name": "TAZ Workhorse | HS | 0.5mm",
     "inherits": "lulzbot_redgum_base",
     "version": 2,
     "metadata":

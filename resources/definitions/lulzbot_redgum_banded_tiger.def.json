@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_redgum_banded_tiger",
-    "name": "LulzBot TAZ Workhorse | HS | 0.8mm",
+    "name": "TAZ Workhorse | HS | 0.8mm",
     "inherits": "lulzbot_redgum_base",
     "version": 2,
     "metadata":
