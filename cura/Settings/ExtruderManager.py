@@ -437,6 +437,10 @@ class ExtruderManager(QObject):
 
         result = []
         for extruder in ExtruderManager.getInstance().getMachineExtruders(global_stack.getId()):
+
+            if extruder.material.getMetaData().get("extruder_disabled", False) == True:
+                continue
+
             # only include values from extruders that are "active" for the current machine instance
             if int(extruder.getMetaDataEntry("position")) >= global_stack.getProperty("machine_extruder_count", "value"):
                 continue
@@ -602,8 +606,7 @@ class ExtruderManager(QObject):
     @staticmethod
     def getExtruderValue(extruder_index, key):
         extruder = ExtruderManager.getInstance().getExtruderStack(extruder_index)
-
-        if extruder:
+        if extruder and extruder.material.getMetaData().get("extruder_disabled", False) == False:
             value = extruder.getRawProperty(key, "value")
             if isinstance(value, SettingFunction):
                 value = value(extruder)

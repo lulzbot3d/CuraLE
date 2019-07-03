@@ -486,6 +486,11 @@ class XmlMaterialProfile(InstanceContainer):
         if "adhesion_info" not in meta_data:
             meta_data["adhesion_info"] = ""
 
+        if "extruder_disabled" not in meta_data:
+            meta_data["extruder_disabled"] = "False"
+
+        meta_data["extruder_disabled"] = True if meta_data["extruder_disabled"] == "True" else False
+
         property_values = {}
         properties = data.iterfind("./um:properties/*", self.__namespaces)
         for entry in properties:

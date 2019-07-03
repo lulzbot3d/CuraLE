@@ -7,6 +7,7 @@
       <color>Generic</color>
       <category />
     </name>
+    <extruder_disabled>True</extruder_disabled>
     <GUID>592bfb95-8110-46e0-9361-dd0ae217d9d1</GUID>
     <definition>fdmprinter</definition>
     <color_code>#ffffff</color_code>
