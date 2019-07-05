@@ -256,12 +256,13 @@ class FlavorParser:
         if func is not None:
             s = line.upper().split(" ")
             x, y, z, f, e = None, None, None, None, None
+            num_format = re.compile("^[\-]?[0-9]*\.?[0-9]+$")
             for item in s[1:]:
                 if len(item) <= 1:
                     continue
                 if item.startswith(";"):
                     continue
-                if item[1].isdigit():
+                if re.match(num_format, item[1:]):
                     if item[0] == "X":
                         x = float(item[1:])
                     if item[0] == "Y":
