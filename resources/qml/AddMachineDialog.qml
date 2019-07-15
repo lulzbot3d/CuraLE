@@ -81,7 +81,22 @@ UM.Dialog
 
                 function update()
                 {
-                    machineName.text = getMachineName();
+                    machineName.text = getMachineName()
+                    printerSelection.lcd = printerSelectionRepeater.model.getItem(0).lcd
+                    printerSelection.baseMachine = printerSelectionRepeater.model.getItem(0).id
+                    printerSelection.selectedIndex = 0
+                    for (var i = 0; i < printerSelectionRepeater.count; i++)
+                    {
+                        var item = printerSelectionRepeater.itemAt(i)
+                        if (i==0)
+                        {
+                            item.checked = true
+                        }
+                        else
+                        {
+                            item.checked = false
+                        }
+                    }
                 }
 
                 Row
@@ -108,6 +123,7 @@ UM.Dialog
                         {
                             Repeater
                             {
+                                id: printerSelectionRepeater
                                 model: Cura.LulzBotPrintersModel {}
                                 delegate: RadioButton
                                 {
