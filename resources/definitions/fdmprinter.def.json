@@ -5364,7 +5364,7 @@
                         "one_at_a_time": "One at a Time"
                     },
                     "default_value": "all_at_once",
-                    "enabled": "machine_extruder_count == 1",
+                    "enabled": "not resolveOrValue('prime_tower_enable') and activeExtruderCount() == 1",
                     "settable_per_mesh": false,
                     "settable_per_extruder": false,
                     "settable_per_meshgroup": false
