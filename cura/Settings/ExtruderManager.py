@@ -460,6 +460,19 @@ class ExtruderManager(QObject):
 
         return result
 
+    @staticmethod
+    def getActiveExtruderCount():
+        global_stack = Application.getInstance().getGlobalContainerStack()
+
+        extruders = ExtruderManager.getInstance().getMachineExtruders(global_stack.getId())
+        active_extruders = len(extruders)
+
+        for extruder in extruders:
+            if extruder.material.getMetaData().get("extruder_disabled", False) == True:
+                active_extruders -= 1
+
+        return active_extruders
+
     ##  Get all extruder values for a certain setting. This function will skip the user settings container.
     #
     #   This is exposed to SettingFunction so it can be used in value functions.
