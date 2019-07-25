@@ -905,6 +905,13 @@ class MachineManager(QObject):
             return True
         return False
 
+    @pyqtProperty(bool, notify=globalContainerChanged)
+    def currentPrinterEEPROMDefaultState(self):
+        if self.activeMachine is None:
+            return True
+        state = self.activeMachine.getBottom().getMetaDataEntry("default_eeprom_state", True)
+        return state
+
     @pyqtSlot()
     def openCurrentToolheadInfo(self):
         link = self.activeMachine.getBottom().getMetaDataEntry("toolhead_info_link")

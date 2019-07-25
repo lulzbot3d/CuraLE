@@ -125,7 +125,7 @@ Cura.MachineAction
             {
                 id: updateEepromCheckbox
                 text: qsTr("Update EEPROM")
-                checked: true
+                checked: Cura.MachineManager.currentPrinterEEPROMDefaultState
 
             }
         }
