@@ -6,11 +6,10 @@ M420 S0 ; disable previous leveling matrix
 G90 ; absolute positioning
 M82 ; set extruder to absolute mode
 G92 E0 ; set extruder position to 0
-M140 S60 ; start bed heating up
-M109 R160 ; soften filament before homing Z
+M109 R{material_soften_temperature} ; soften filament before homing Z
 G28 ; Home all axis
 G1 E-30 F100 ; retract filament
-M109 R170 ; wait for extruder to reach wiping temp
+M109 R{material_wipe_temperature} ; wait for extruder to reach wiping temp
 G1 X-15 Y100 F3000 ; move above wiper pad
 G1 Z1 ; push nozzle into wiper
 G1 X-17 Y95 F1000 ; slow wipe
