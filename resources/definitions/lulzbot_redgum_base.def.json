@@ -39,7 +39,7 @@
         },
         "machine_wipe_gcode":
         {
-            "default_value_from_file": "lulzbot_redgum_goldenrod_wipe"
+            "default_value_from_file": "lulzbot_redgum_wipe"
         },
         "machine_baudrate":
         {
