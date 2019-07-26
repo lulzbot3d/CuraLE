@@ -14,7 +14,7 @@
             "1": "lulzbot_redgum_yellowfin_2nd"
         },
         "category": "LulzBot",
-        "firmware_toolhead_name": "DualExtruderV3",
+        "firmware_toolhead_name": "DualExtruder v3",
         "base_machine": "LulzBot TAZ Workhorse",
         "base_machine_name": "LulzBot TAZ Workhorse",
         "preferred_material": "*PolyLite_PLA*",
