@@ -317,6 +317,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     ##  Upload new firmware to machine
     #   \param filename full path of firmware file to be uploaded
     def updateFirmware(self, file_name, eeprom_upd):
+        self._close()
         if self._autodetect_port:
             self._detectSerialPort()
         self._update_firmware_thread.startFirmwareUpdate(file_name)
