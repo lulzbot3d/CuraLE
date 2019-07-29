@@ -1157,7 +1157,13 @@ class PrintThread:
         # for serial error correction.
         def onResendCallback(line):
             self._parent.log("i", "USBPrinterOutputDevice: Resending from: %d" % (line))
-        serial_proto = MarlinSerialProtocol(self._parent._serial, onResendCallback)
+
+        try:
+            serial_proto = MarlinSerialProtocol(self._parent._serial, onResendCallback)
+        except Exception as e:
+            self._parent.log("e", "Unexpected error while accessing marlin protocol. %s" % e)
+            self._parent._setErrorState("Printer has been disconnected")
+            self._parent.close()
 
         temperature_request_timeout = time.time()
         while self._parent._connection_state == ConnectionState.connected:
