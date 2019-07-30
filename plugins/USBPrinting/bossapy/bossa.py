@@ -25,7 +25,7 @@ class BOSSA():
         self.last_addr = -1
         self.progress_callback = None
 
-    def connect(self, port = "COM22", speed = 115200):
+    def reset(self, port = "COM22", speed = 115200):
         if self.serial is not None:
             self.close()
 
@@ -45,7 +45,11 @@ class BOSSA():
 
         # After this new serial device should appear within max 2 seconds..
         time.sleep(2.0)
-        Logger.log("d", "...Trying to reconnect with bootloader on %s", str(port) )
+
+    def connect(self, port="COM22", speed=115200):
+        if self.serial is not None:
+            self.close()
+        Logger.log("d", "...Trying to connect with bootloader on %s", str(port) )
         try:
             self.serial = Serial(str(port), 921600 , timeout=1, writeTimeout=10000)
         except SerialException:
