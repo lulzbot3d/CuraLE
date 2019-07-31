@@ -17,13 +17,14 @@
         "preferred_material": "*PolyLite_PLA*",
         "preferred_quality": "*Standard*",
         "firmware_last_version": "2.0.0.144",
-        "priority": "99"
+        "priority": "99",
+        "default_eeprom_state": false
     },
     "overrides":
     {
         "firmware_machine_type":
         {
-            "resolve": "'LulzBot TAZ Workhorse'"
+            "resolve": "'TAZ Workhorse Edition'"
         },
         "machine_width":
         {
@@ -36,6 +37,10 @@
         "machine_height":
         {
             "default_value": 250
+        },
+        "machine_wipe_gcode":
+        {
+            "default_value_from_file": "lulzbot_redgum_wipe"
         },
         "machine_baudrate":
         {

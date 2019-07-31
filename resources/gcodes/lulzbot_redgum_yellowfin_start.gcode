@@ -22,13 +22,13 @@ M82 ; set extruder to absolute mode
 G92 E0 ; set extruder to zero
 G1 E-15 F100 ; suck up XXmm of filament
 T1 ; switch extruders
-T0
 M82 ; set extruder to absolute mode
 G92 E0 ; set extruder to zero
 G1 E-15 F100 ; suck up XXmm of filament
 M104 S{material_wipe_temperature_0} T0 ; set to wipe temp
 M104 S{material_wipe_temperature_1} T1 ; set to wipe temp
 M106 ; Turn on fans to speed cooling
+T0 ; switch extruder
 G28 X ; Home X
 G1 X-26 Y100 F3000 ; move above wiper pad
 M104

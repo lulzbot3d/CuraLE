@@ -317,6 +317,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     ##  Upload new firmware to machine
     #   \param filename full path of firmware file to be uploaded
     def updateFirmware(self, file_name, eeprom_upd):
+        self._close()
         if self._autodetect_port:
             self._detectSerialPort()
         self._update_firmware_thread.startFirmwareUpdate(file_name)
@@ -356,25 +357,32 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 0x27B1 ] # UltiMachine
         return ret
 
-    def _detectSerialPort(self):
+    def _detectSerialPort(self, bootloader=False):
         import serial.tools.list_ports
         # self._serial_port = None
         baud_rate = Application.getInstance().getGlobalContainerStack().getProperty("machine_baudrate", "value")
-        for port in serial.tools.list_ports.comports():
-            if port.vid in self._getAutodetectVIDList():
-                self.log("i", "Detected 3D printer on %s." % port.device)
-                self._serial_port = port.device
-                # Let's try to open the serial connection and read Temperature
-                serial_connection = serial.Serial(str(self._serial_port), baud_rate, timeout=3, writeTimeout=10000)
-                if serial_connection :
-                    # We found the serial port, now let's try to write and read from it
-                    try:
-                        serial_connection.write(b"\n")
-                    except serial.SerialException:
-                        serial_connection.close()
-                        continue
-                    serial_connection.close()
+        if bootloader:
+            for port in serial.tools.list_ports.comports():
+                if port.vid == 0x03EB:
+                    self.log("i", "Detected bootloader on %s." % port.device)
+                    self._serial_port = port.device
                     return
+        else:
+            for port in serial.tools.list_ports.comports():
+                if port.vid in self._getAutodetectVIDList():
+                    self.log("i", "Detected 3D printer on %s." % port.device)
+                    self._serial_port = port.device
+                    # Let's try to open the serial connection and read Temperature
+                    serial_connection = serial.Serial(str(self._serial_port), baud_rate, timeout=3, writeTimeout=10000)
+                    if serial_connection :
+                        # We found the serial port, now let's try to write and read from it
+                        try:
+                            serial_connection.write(b"\n")
+                        except serial.SerialException:
+                            serial_connection.close()
+                            continue
+                        serial_connection.close()
+                        return
         self._serial_port = None
         self.log("i", "No 3D printers detected")
 
@@ -966,10 +974,21 @@ class UpdateFirmwareThread:
             programmer.progress_callback = self._parent.setProgress
 
             try:
-                programmer.connect(self._parent._serial_port)
+                programmer.reset(self._parent._serial_port)
             except Exception:
                 programmer.close()
                 pass
+
+            try:
+                programmer.connect(self._parent._serial_port)
+            except Exception:
+                programmer.close()
+                self._parent._detectSerialPort(bootloader=True)
+                try:
+                    programmer.connect(self._parent._serial_port)
+                except Exception:
+                    programmer.close()
+                    pass
 
             # Give programmer some time to connect. Might need more in some cases, but this worked in all tested cases.
             time.sleep(1)
@@ -1156,7 +1175,13 @@ class PrintThread:
         # for serial error correction.
         def onResendCallback(line):
             self._parent.log("i", "USBPrinterOutputDevice: Resending from: %d" % (line))
-        serial_proto = MarlinSerialProtocol(self._parent._serial, onResendCallback)
+
+        try:
+            serial_proto = MarlinSerialProtocol(self._parent._serial, onResendCallback)
+        except Exception as e:
+            self._parent.log("e", "Unexpected error while accessing marlin protocol. %s" % e)
+            self._parent._setErrorState("Printer has been disconnected")
+            self._parent.close()
 
         temperature_request_timeout = time.time()
         while self._parent._connection_state == ConnectionState.connected:

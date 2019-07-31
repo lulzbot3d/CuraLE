@@ -211,8 +211,11 @@ class MarlinSerialProtocol:
       self.onResendCallback(position)
 
   def _flushReadBuffer(self):
-    while self.serial.readline() != b"":
-      pass
+    try:
+        while self.serial.readline() != b"":
+            pass
+    except:
+        pass
 
   def sendCmdReliable(self, line):
     """Adds command line (can contain comments or blanks) to the queue for reliable

@@ -415,6 +415,10 @@ class MachineManager(QObject):
 
     def _onPropertyChanged(self, key: str, property_name: str):
         if property_name == "value":
+            if self._global_container_stack.getProperty("print_sequence", "enabled") == False:
+                self.clearUserSettingAllCurrentStacks("print_sequence")
+
+
             # Notify UI items, such as the "changed" star in profile pull down menu.
             self.activeStackValueChanged.emit()
 
@@ -901,6 +905,13 @@ class MachineManager(QObject):
             return True
         return False
 
+    @pyqtProperty(bool, notify=globalContainerChanged)
+    def currentPrinterEEPROMDefaultState(self):
+        if self.activeMachine is None:
+            return True
+        state = self.activeMachine.getBottom().getMetaDataEntry("default_eeprom_state", True)
+        return state
+
     @pyqtSlot()
     def openCurrentToolheadInfo(self):
         link = self.activeMachine.getBottom().getMetaDataEntry("toolhead_info_link")
@@ -1094,6 +1105,9 @@ class MachineManager(QObject):
             # show the keep/discard dialog after the containers have been switched. Otherwise, the default values on
             # the dialog will be the those before the switching.
             self._executeDelayedActiveContainerStackChanges()
+
+            if self._global_container_stack.getProperty("print_sequence", "enabled") == False:
+                self.clearUserSettingAllCurrentStacks("print_sequence")
 
             if self.hasUserSettings and Preferences.getInstance().getValue("cura/active_mode") == 1:
                 Application.getInstance().discardOrKeepProfileChanges()
