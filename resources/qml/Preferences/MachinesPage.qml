@@ -215,6 +215,23 @@ UM.ManagementPage
                 visible: base.currentItem && base.currentItem.id == Cura.MachineManager.activeMachineId && machineInfo.printerAcceptsCommands
                 wrapMode: Text.WordWrap
             }
+            Label
+            {
+                text: catalog.i18nc("@label", "Firmware:")
+                visible: base.currentItem && base.currentItem.id == Cura.MachineManager.activeMachineId && machineInfo.printerAcceptsCommands
+            }
+            Label {
+                width: (parent.width * 0.7) | 0
+                text:
+                {
+                    if(!machineInfo.printerConnected) {
+                        return "";
+                    }
+                    return machineInfo.connectedPrinter.firmwareVersion;
+                }
+                visible: base.currentItem && base.currentItem.id == Cura.MachineManager.activeMachineId && machineInfo.printerAcceptsCommands
+                wrapMode: Text.WordWrap
+            }
         }
 
         Column {

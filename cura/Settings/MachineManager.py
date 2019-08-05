@@ -912,6 +912,13 @@ class MachineManager(QObject):
         state = self.activeMachine.getBottom().getMetaDataEntry("default_eeprom_state", True)
         return state
 
+    @pyqtProperty(str, notify=globalContainerChanged)
+    def currentPrinterLastFirmwareVersion(self):
+        if self.activeMachine is None:
+            return ""
+        state = self.activeMachine.getBottom().getMetaDataEntry("firmware_last_version", "")
+        return state
+
     @pyqtSlot()
     def openCurrentToolheadInfo(self):
         link = self.activeMachine.getBottom().getMetaDataEntry("toolhead_info_link")

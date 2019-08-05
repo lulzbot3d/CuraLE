@@ -70,6 +70,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._serial = None
         self._serial_port = serial_port
         self._error_state = None
+        self._connection_data = None
 
         self._end_stop_thread = None
         self._poll_endstop = False
@@ -101,6 +102,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     firmwareUpdateComplete = pyqtSignal()
     firmwareUpdateChange = pyqtSignal()
+
+    connectionDataChanged = pyqtSignal()
 
     endstopStateChanged = pyqtSignal(str ,bool, arguments = ["key","state"])
 
@@ -416,6 +419,14 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._serial_port = None
         self._is_printing = False
         self._is_paused = False
+        self._connection_data = None
+        self.connectionDataChanged.emit()
+
+    @pyqtProperty(str, notify=connectionDataChanged)
+    def firmwareVersion(self):
+        if self._connection_data and "FIRMWARE_VERSION" in self._connection_data:
+            return str(self._connection_data["FIRMWARE_VERSION"])
+        return catalog.i18nc("@info:status", "Connect to obtain info")
 
     ##  Send a command to printer.
     #   \param cmd string with g-code
@@ -766,6 +777,9 @@ class ConnectThread:
 
         firmware_string = reply.decode()
         values = {m[0] : m[1] for m in re.findall("([A-Z_]+)\:(.*?)(?= [A-Z_]+\:|$)", firmware_string)}
+
+        self._parent._connection_data = values
+        self._parent.connectionDataChanged.emit()
 
         global_container_stack = Application.getInstance().getGlobalContainerStack()
 

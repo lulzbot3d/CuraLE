@@ -118,8 +118,19 @@ Cura.MachineAction
         }
         Row
         {
+            id: newFirmwareRow
             anchors.topMargin: UM.Theme.getSize("default_margin").height
             anchors.top: buttonRow.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            Label
+            {
+                text: catalog.i18nc("@action:button", "Automatically upgrade Firmware version:") + " " + Cura.MachineManager.currentPrinterLastFirmwareVersion;
+            }
+        }
+        Row
+        {
+            anchors.topMargin: UM.Theme.getSize("default_margin").height
+            anchors.top: newFirmwareRow.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             CheckBox
             {
@@ -129,7 +140,6 @@ Cura.MachineAction
 
             }
         }
-
 
 
         FileDialog
