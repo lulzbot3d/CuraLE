@@ -1429,6 +1429,11 @@ class MachineManager(QObject):
         if containers:
             return containers[0].definition.getId()
 
+    @pyqtProperty(str, notify=globalContainerChanged)
+    def getDefinitionId(self):
+        if self._global_container_stack:
+            return self._global_container_stack.getBottom().getId()
+
     ##  Set the amount of extruders on the active machine (global stack)
     #   \param extruder_count int the number of extruders to set
     def setActiveMachineExtruderCount(self, extruder_count):
