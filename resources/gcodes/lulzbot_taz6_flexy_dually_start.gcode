@@ -2,6 +2,7 @@
 M73 P0 ;resetting progress bar on LCD
 G26 ; clear potential 'probe fail' condition
 M107 ; disable fans
+M420 S0 ; disable leveling matrix
 G90 ; absolute positioning
 T0 ; select this extruder first
 M82 ; set extruder to absolute mode
@@ -53,6 +54,7 @@ G1 X-9 Y-9 ; move above first probe point
 M204 S100 ; set accel for probing
 G29 ; probe sequence (for auto-leveling)
 M204 S500 ; set accel back to normal
+M420 S1 ; enable leveling matrix
 G1 X0 Y0 Z15 F5000 ; get out the way
 M400 ; clear buffer
 M104 S{material_print_temperature_layer_0_0} T0 ; set extruder temp
