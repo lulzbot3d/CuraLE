@@ -376,7 +376,7 @@ Item
                         Layout.column: 2
                         Layout.row: 1
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
-
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
 
                         style: UM.Theme.styles.checkbox;
                         enabled: base.settingsEnabled
@@ -443,8 +443,9 @@ Item
                         Layout.column: 2
                         Layout.row: 2
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.preferredWidth: UM.Theme.getSize("sidebar").width * .55
 
-                        width: UM.Theme.getSize("sidebar").width * .55
                         height: ((supportEnabled.properties.value == "True") && (machineExtruderCount.properties.value > 1)) ? UM.Theme.getSize("setting_control").height : 0
 
                         Behavior on height { NumberAnimation { duration: 100 } }
@@ -493,8 +494,8 @@ Item
 
                         Layout.column: 1
                         Layout.row: 3
-                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
 
                         width: parent.width * .45 - 3 * UM.Theme.getSize("default_margin").width
                         text: catalog.i18nc("@label", "Build Plate Adhesion");
@@ -502,6 +503,7 @@ Item
                         color: UM.Theme.getColor("text");
                         elide: Text.ElideRight
                     }
+
                     ComboBox
                     {
                         id: adhesionComboBox
@@ -509,6 +511,7 @@ Item
                         Layout.column: 2
                         Layout.row: 3
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.preferredWidth: UM.Theme.getSize("sidebar").width * .55
 
 
@@ -584,6 +587,7 @@ Item
                             }
                         }
                     }
+
                     Label
                     {
                         id: adhesionExtruderHelperLabel
@@ -591,13 +595,14 @@ Item
 
                         Layout.column: 1
                         Layout.row: 4
-                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
 
                         text: catalog.i18nc("@label", "Adhesion Extruder");
                         font: UM.Theme.getFont("default");
                         color: UM.Theme.getColor("text");
                     }
+
                     ComboBox
                     {
                         id: adhesionExtruderCombobox
@@ -618,8 +623,9 @@ Item
                         Layout.column: 2
                         Layout.row: 4
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.preferredWidth: UM.Theme.getSize("sidebar").width * .55
 
-                        width: UM.Theme.getSize("sidebar").width * .55
                         height: visible ? UM.Theme.getSize("setting_control").height : 0
 
                         Behavior on height { NumberAnimation { duration: 100 } }
@@ -774,9 +780,10 @@ Item
                         font: UM.Theme.getFont("default");
                         color: UM.Theme.getColor("text");
                         elide: Text.ElideRight
+
                     }
 
-                    Loader
+                    Loader //TODO
                     {
                         id: infillPatternCombobox
 
@@ -788,6 +795,8 @@ Item
                         sourceComponent: comboBoxWithOptions
                         property string settingKey: "infill_pattern"
                         property bool isExtruderSetting: true
+                        property var mouseAreaBinding: infillPatternCombobox
+
                     }
 
                     Label
@@ -817,6 +826,7 @@ Item
                         sourceComponent: comboBoxWithOptions
                         property string settingKey: "top_bottom_pattern"
                         property bool isExtruderSetting: true
+                        property var mouseAreaBinding: topBottomPatternCombobox
                     }
 
                     Label
@@ -847,6 +857,7 @@ Item
                         property string settingKey: "material_flow"
                         property string unit: catalog.i18nc("@label", "%")
                         property bool isExtruderSetting: true
+                        property var mouseAreaBinding: flowRateTextField
                     }
 
                     Label
@@ -874,6 +885,7 @@ Item
 
                         sourceComponent: comboBoxWithOptions
                         property string settingKey: "machine_shape"
+                        property var mouseAreaBinding: buildPlateShapeCombobox
                     }
 
                     Label
@@ -897,6 +909,7 @@ Item
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
                         Layout.alignment : Qt.AlignRight
+
                         text: catalog.i18nc("@label", "Y");
                         font: UM.Theme.getFont("default");
                         color: UM.Theme.getColor("text");
@@ -908,6 +921,7 @@ Item
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
                         Layout.alignment: Qt.AlignRight
+
                         text: catalog.i18nc("@label", "Z");
                         font: UM.Theme.getFont("default");
                         color: UM.Theme.getColor("text");
@@ -924,6 +938,7 @@ Item
 
                         sourceComponent: numericTextFieldWithUnit
                         property string settingKey: "machine_width"
+                        property var mouseAreaBinding: buildPlateVolumeXTextField
                         property string unit: catalog.i18nc("@label", "mm")
 
                     }
@@ -939,6 +954,7 @@ Item
 
                         sourceComponent: numericTextFieldWithUnit
                         property string settingKey: "machine_depth"
+                        property var mouseAreaBinding: buildPlateVolumeYTextField
                         property string unit: catalog.i18nc("@label", "mm")
                     }
 
@@ -953,6 +969,7 @@ Item
 
                         sourceComponent: numericTextFieldWithUnit
                         property string settingKey: "machine_height"
+                        property var mouseAreaBinding: buildPlateVolumeZTextField
                         property string unit: catalog.i18nc("@label", "mm")
                     }
 
@@ -1007,6 +1024,24 @@ Item
                             ListElement { text: "Custom needle ID (mm)"}
                         }
 
+                        MouseArea
+                        {
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            enabled: base.settingsEnabled
+                            acceptedButtons: Qt.NoButton
+
+                            onEntered:
+                            {
+                                base.showTooltip(needleGaugeCombobox, Qt.point(-needleGaugeCombobox.x, 0),
+                                    catalog.i18nc("@label", "Needle Gauge Tooltip"));
+                            }
+                            onExited:
+                            {
+                                base.hideTooltip();
+                            }
+                        }
+
                         onActivated:
                         {
                             if(index != 3)
@@ -1030,6 +1065,7 @@ Item
                         property string unit: catalog.i18nc("@label", "mm")
                         property bool isExtruderSetting: true
                         property int storeIndex: 5
+                        property var mouseAreaBinding: needleGaugeTextInput
 
                         visible: needleGaugeCombobox.currentIndex == 3 ? true : false
 
@@ -1059,6 +1095,8 @@ Item
 
 
             property bool _isExtruderSetting: (typeof(isExtruderSetting) === 'undefined') ? false : isExtruderSetting
+            property string _tooltipText: (typeof(tooltipText) === 'undefined') ? 0 : tooltipText
+            property var _mouseAreaBinding: (typeof(mouseAreaBinding) === 'undefined') ? 0 : mouseAreaBinding
 
             UM.SettingPropertyProvider
             {
@@ -1098,6 +1136,25 @@ Item
                         }
                     }
                 }
+
+                MouseArea
+                {
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    enabled: base.settingsEnabled
+                    acceptedButtons: Qt.NoButton
+
+                    onEntered:
+                    {
+                        base.showTooltip(_mouseAreaBinding, Qt.point(-_mouseAreaBinding.x, 0),
+                            catalog.i18nc("@label", propertyProvider.properties.description));
+                    }
+                    onExited:
+                    {
+                        base.hideTooltip();
+                    }
+                }
+
                 currentIndex:
                 {
                     var currentValue = propertyProvider.properties.value;
@@ -1111,6 +1168,7 @@ Item
                     }
                     return index
                 }
+
                 onActivated:
                 {
                     if(propertyProvider.properties.value != optionsModel.get(index).value)
@@ -1134,6 +1192,8 @@ Item
             property bool _isExtruderSetting: (typeof(isExtruderSetting) === 'undefined') ? false: isExtruderSetting
             property bool _allowNegative: (typeof(allowNegative) === 'undefined') ? false : allowNegative
             property int _storeIndex: (typeof(storeIndex) === 'undefined') ? 0 : storeIndex
+            property var _mouseAreaBinding: (typeof(mouseAreaBinding) === 'undefined') ? 0 : mouseAreaBinding
+
             UM.SettingPropertyProvider
             {
                 id: propertyProvider
@@ -1177,6 +1237,24 @@ Item
                             {
                                 propertyProvider.setPropertyValue("value", text);
                             }
+                        }
+                    }
+
+                    MouseArea
+                    {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        enabled: base.settingsEnabled
+                        acceptedButtons: Qt.NoButton
+
+                        onEntered:
+                        {
+                            base.showTooltip(_mouseAreaBinding, Qt.point(-_mouseAreaBinding.x, 0),
+                                catalog.i18nc("@label", propertyProvider.properties.description));
+                        }
+                        onExited:
+                        {
+                            base.hideTooltip();
                         }
                     }
 
