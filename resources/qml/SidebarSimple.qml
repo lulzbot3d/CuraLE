@@ -783,7 +783,7 @@ Item
 
                     }
 
-                    Loader //TODO
+                    Loader
                     {
                         id: infillPatternCombobox
 
