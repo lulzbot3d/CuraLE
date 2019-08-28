@@ -682,7 +682,7 @@
                 "layer_height":
                 {
                     "label": "Layer Height",
-                    "description": "The height of each layer in mm. Higher values produce faster prints in lower resolution, lower values produce slower prints in higher resolution.",
+                    "description": "The height of each layer in mm. Higher values produce faster prints in lower resolution, lower values produce slower prints in higher resolution. When using dual extrusion, the layer height is averaged when different between extruder profiles.",
                     "unit": "mm",
                     "type": "float",
                     "default_value": 0.1,
