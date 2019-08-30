@@ -886,6 +886,7 @@ Item
                         sourceComponent: comboBoxWithOptions
                         property string settingKey: "machine_shape"
                         property var mouseAreaBinding: buildPlateShapeCombobox
+                        property int storeIndex: 5
                     }
 
                     Label
@@ -940,6 +941,7 @@ Item
                         property string settingKey: "machine_width"
                         property var mouseAreaBinding: buildPlateVolumeXTextField
                         property string unit: catalog.i18nc("@label", "mm")
+                        property int storeIndex: 5
 
                     }
 
@@ -956,6 +958,7 @@ Item
                         property string settingKey: "machine_depth"
                         property var mouseAreaBinding: buildPlateVolumeYTextField
                         property string unit: catalog.i18nc("@label", "mm")
+                        property int storeIndex: 5
                     }
 
                     Loader
@@ -971,6 +974,7 @@ Item
                         property string settingKey: "machine_height"
                         property var mouseAreaBinding: buildPlateVolumeZTextField
                         property string unit: catalog.i18nc("@label", "mm")
+                        property int storeIndex: 5
                     }
 
                     Label
@@ -1097,6 +1101,7 @@ Item
             property bool _isExtruderSetting: (typeof(isExtruderSetting) === 'undefined') ? false : isExtruderSetting
             property string _tooltipText: (typeof(tooltipText) === 'undefined') ? 0 : tooltipText
             property var _mouseAreaBinding: (typeof(mouseAreaBinding) === 'undefined') ? 0 : mouseAreaBinding
+            property int _storeIndex: (typeof(storeIndex) === 'undefined') ? 0 : storeIndex
 
             UM.SettingPropertyProvider
             {
@@ -1111,6 +1116,7 @@ Item
                 }
                 key: settingKey
                 watchedProperties: [ "value", "options", "description" ]
+                storeIndex: _storeIndex
             }
 
             ComboBox
