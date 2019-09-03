@@ -12,7 +12,7 @@
         },
         "type": "machine",
         "visible": true,
-        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-moarstruder-tool-head",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-moarstruder-tool-head?pk_campaign=software-cura",
         "firmware_toolhead_name": "MOARstruder"
     },
     "overrides":
