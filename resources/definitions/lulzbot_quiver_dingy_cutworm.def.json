@@ -25,6 +25,7 @@
         "base_machine_name": "LulzBot TAZ Pro",
         "preferred_material": "*PolyLite_PLA*",
         "user_toolhead_name": "HS+ | 1.2mm",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-hs-plus-tool-head-hardened-steel-1_2-mm?pk_campaign=software-cura",
         "default_category": "All"
     },
     "overrides":
