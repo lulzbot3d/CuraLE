@@ -5,7 +5,6 @@
     "version": 2,
     "metadata":
     {
-        "priority": "99",
         "type": "machine",
         "platform": "lulzbot_mini.stl",
         "platform_offset":
