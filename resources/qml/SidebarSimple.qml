@@ -766,7 +766,7 @@ Item
                 GridLayout
                 {
                     columns: 2
-                    rows: 9
+                    rows: 10
                     Label
                     {
                         id: infillPatternLabel
@@ -961,6 +961,35 @@ Item
                         property int storeIndex: 5
                     }
 
+                    Label
+                    {
+                        Layout.column: 1
+                        Layout.row: 8
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        text: catalog.i18nc("@label", "Syringe Internal Dia");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                    }
+
+                    Loader
+                    {
+                        id: syringeInternalDiameterField
+
+                        Layout.column: 2
+                        Layout.row: 8
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        sourceComponent: numericTextFieldWithUnit
+                        property string settingKey: "material_diameter"
+                        property var mouseAreaBinding: syringeInternalDiameterField
+                        property string unit: catalog.i18nc("@label", "mm")
+                        property bool isExtruderSetting: true
+
+                    }
+
                     Loader
                     {
                         id: buildPlateVolumeZTextField
@@ -982,7 +1011,7 @@ Item
                         id: needleGaugeLabel
 
                         Layout.column: 1
-                        Layout.row: 8
+                        Layout.row: 9
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
@@ -997,7 +1026,7 @@ Item
                         id: needleGaugeCombobox
 
                         Layout.column: 2
-                        Layout.row: 8
+                        Layout.row: 9
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
                         Layout.preferredWidth: UM.Theme.getSize("sidebar").width * .55
@@ -1060,7 +1089,7 @@ Item
                         id: needleGaugeTextInput
 
                         Layout.column: 2
-                        Layout.row: 9
+                        Layout.row: 10
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
