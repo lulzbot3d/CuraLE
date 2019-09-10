@@ -901,32 +901,6 @@ Item
                         color: UM.Theme.getColor("text");
                         elide: Text.ElideRight
                     }
-                    Label
-                    {
-                        id: buildPlateVolumesLabel
-
-                        Layout.column: 1
-                        Layout.row: 6
-                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
-                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
-                        Layout.alignment : Qt.AlignRight
-
-                        text: catalog.i18nc("@label", "Y");
-                        font: UM.Theme.getFont("default");
-                        color: UM.Theme.getColor("text");
-                    }
-                    Label
-                    {
-                        Layout.column: 1
-                        Layout.row: 7
-                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
-                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
-                        Layout.alignment: Qt.AlignRight
-
-                        text: catalog.i18nc("@label", "Z");
-                        font: UM.Theme.getFont("default");
-                        color: UM.Theme.getColor("text");
-                    }
 
                     Loader
                     {
@@ -945,6 +919,21 @@ Item
 
                     }
 
+                    Label
+                    {
+                        id: buildPlateVolumesLabel
+
+                        Layout.column: 1
+                        Layout.row: 6
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+                        Layout.alignment : Qt.AlignRight
+
+                        text: catalog.i18nc("@label", "Y");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                    }
+
                     Loader
                     {
                         id: buildPlateVolumeYTextField
@@ -957,6 +946,35 @@ Item
                         sourceComponent: numericTextFieldWithUnit
                         property string settingKey: "machine_depth"
                         property var mouseAreaBinding: buildPlateVolumeYTextField
+                        property string unit: catalog.i18nc("@label", "mm")
+                        property int storeIndex: 5
+                    }
+
+                    Label
+                    {
+                        Layout.column: 1
+                        Layout.row: 7
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+                        Layout.alignment: Qt.AlignRight
+
+                        text: catalog.i18nc("@label", "Z");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                    }
+                    
+                    Loader
+                    {
+                        id: buildPlateVolumeZTextField
+
+                        Layout.column: 2
+                        Layout.row: 7
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        sourceComponent: numericTextFieldWithUnit
+                        property string settingKey: "machine_height"
+                        property var mouseAreaBinding: buildPlateVolumeZTextField
                         property string unit: catalog.i18nc("@label", "mm")
                         property int storeIndex: 5
                     }
@@ -988,22 +1006,6 @@ Item
                         property string unit: catalog.i18nc("@label", "mm")
                         property bool isExtruderSetting: true
 
-                    }
-
-                    Loader
-                    {
-                        id: buildPlateVolumeZTextField
-
-                        Layout.column: 2
-                        Layout.row: 7
-                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
-                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
-
-                        sourceComponent: numericTextFieldWithUnit
-                        property string settingKey: "machine_height"
-                        property var mouseAreaBinding: buildPlateVolumeZTextField
-                        property string unit: catalog.i18nc("@label", "mm")
-                        property int storeIndex: 5
                     }
 
                     Label
