@@ -869,7 +869,7 @@ Item
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
-                        text: catalog.i18nc("@label", "Build Plate Shape");
+                        text: catalog.i18nc("@label", "Build Container Shape");
                         font: UM.Theme.getFont("default");
                         color: UM.Theme.getColor("text");
                         elide: Text.ElideRight
@@ -896,7 +896,7 @@ Item
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
-                        text: catalog.i18nc("@label", "Build Plate Volume   X");
+                        text: catalog.i18nc("@label", "Build Container Volume   X");
                         font: UM.Theme.getFont("default");
                         color: UM.Theme.getColor("text");
                         elide: Text.ElideRight
