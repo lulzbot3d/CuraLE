@@ -986,7 +986,7 @@ Item
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
-                        text: catalog.i18nc("@label", "Syringe Internal Dia");
+                        text: catalog.i18nc("@label", "Syringe Internal Diameter");
                         font: UM.Theme.getFont("default");
                         color: UM.Theme.getColor("text");
                     }
@@ -1031,7 +1031,7 @@ Item
                         Layout.row: 9
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
-                        Layout.preferredWidth: UM.Theme.getSize("sidebar").width * .55
+                        Layout.preferredWidth: UM.Theme.getSize("sidebar").width * .45
 
                         style: UM.Theme.styles.combobox;
 
@@ -1153,7 +1153,7 @@ Item
             ComboBox
             {
                 id: comboBox
-                width: UM.Theme.getSize("sidebar").width * .55
+                width: UM.Theme.getSize("sidebar").width * .45
                 style: UM.Theme.styles.combobox;
                 model: ListModel
                 {
@@ -1260,7 +1260,7 @@ Item
                     id: textFieldWithUnit
                     TextField
                     {
-                        width: UM.Theme.getSize("sidebar").width * .55
+                        width: UM.Theme.getSize("sidebar").width * .45
                         style: UM.Theme.styles.text_field;
                         id: textField
                         text: {
