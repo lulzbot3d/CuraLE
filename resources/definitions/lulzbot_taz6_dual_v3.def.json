@@ -13,6 +13,7 @@
             "0": "lulzbot_taz6_dual_v3_1st",
             "1": "lulzbot_taz6_dual_v3_2nd"
         },
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-dual-extruder-v3-tool-head?pk_campaign=software-cura",
         "firmware_toolhead_name": "DualExtruder v3",
         "preferred_material": "*PolyLite_PLA*",
         "default_category": "Supported"

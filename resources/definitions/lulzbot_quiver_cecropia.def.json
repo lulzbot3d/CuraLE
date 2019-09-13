@@ -25,6 +25,7 @@
         "base_machine_name": "LulzBot TAZ Pro",
         "preferred_material": "*PolyLite_PLA*",
         "user_toolhead_name": "SE | 0.5mm (Aero v2)",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/se-tool-head-single-extruder-05-mm?pk_campaign=software-cura",
         "default_category": "All"
     },
     "overrides":

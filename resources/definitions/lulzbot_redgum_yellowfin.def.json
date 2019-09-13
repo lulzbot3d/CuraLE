@@ -19,6 +19,7 @@
         "base_machine_name": "LulzBot TAZ Workhorse",
         "preferred_material": "*PolyLite_PLA*",
         "user_toolhead_name": "Dual Extruder v3",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-dual-extruder-v3-tool-head?pk_campaign=software-cura",
         "priority": "8",
         "default_category": "All"
     },

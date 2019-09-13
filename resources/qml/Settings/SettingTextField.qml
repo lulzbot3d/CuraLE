@@ -166,12 +166,13 @@ SettingItem
                     // 4: variant
                     // 5: machine_changes
                     // 6: machine
-                    if ((base.resolve != "None" && base.resolve) && (stackLevel != 0) && (stackLevel != 1)) {
+
+                    if ((base.resolve != "None" && base.resolve) && (stackLevel != 0)) {
                         // We have a resolve function. Indicates that the setting is not settable per extruder and that
                         // we have to choose between the resolved value (default) and the global value
                         // (if user has explicitly set this).
                         var num = base.resolve;
-                        return Math.round(num*100)/100;
+                        return Math.round(num*1000)/1000;
                     } else {
                         return propertyProvider.properties.value;
                     }

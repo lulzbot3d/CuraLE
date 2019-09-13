@@ -13,6 +13,7 @@
         "type": "machine",
         "visible": true,
         "user_toolhead_name": "HS | 0.8 mm",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/hs-tool-head-hardened-steel-08-mm?pk_campaign=software-cura",
         "firmware_toolhead_name": "HardenedSteel"
     },
     "overrides":

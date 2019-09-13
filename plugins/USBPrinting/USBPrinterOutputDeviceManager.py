@@ -224,6 +224,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_quiver_cecropia":         "Marlin_TAZPro_SingleExtruderAeroV2_2.0.0.144_aded3b617.bin",
             "lulzbot_quiver_dingy_cutworm":       "Marlin_TAZPro_HardenedSteelPlus_2.0.0.144_aded3b617.bin",
             "lulzbot_quiver_evergreen_bagworm":        "Marlin_TAZPro_DualExtruder_2.0.0.144_aded3b617.bin",
+            "lulzbot_quiver_goldenrod":            "Marlin_TAZPro_HardenedExtruder_2.0.0.144_aded3b617.bin",
 
             "lulzbot_redgum_goldenrod":      "Marlin_TAZWorkhorse_HardenedExtruder_2.0.0.144_aded3b617.hex",
             "lulzbot_redgum_achemon":              "Marlin_TAZWorkhorse_SmallLayer_2.0.0.144_aded3b617.hex",
