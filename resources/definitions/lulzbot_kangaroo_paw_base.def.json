@@ -6,7 +6,7 @@
     "metadata":
     {
         "type": "machine",
-        "platform": "bed_plate_kpaw.stl",
+        "platform": "lulzbot_kangaroo_paw.stl",
         "platform_offset":
         [
             -100,
