@@ -6,11 +6,11 @@
     "metadata":
     {
         "type": "machine",
-        "platform": "lulzbot_mini.stl",
+        "platform": "bed_plate_kpaw.stl",
         "platform_offset":
         [
             -100,
-            -11,
+            -13,
             100
         ],
         "file_formats": "text/x-gcode",

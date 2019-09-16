@@ -11,13 +11,6 @@
             "0": "lulzbot_kangaroo_paw_extruder"
         },
         "type": "machine",
-        "platform": "lulzbot_mini.stl",
-        "platform_offset":
-        [
-            -100,
-            -11,
-            100
-        ],
         "category": "LulzBot",
         "preferred_material": "*Sodium_Alginate*",
         "preferred_quality": "*High Detail*",
