@@ -428,6 +428,12 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             return str(self._connection_data["FIRMWARE_VERSION"])
         return catalog.i18nc("@info:status", "Connect to obtain info")
 
+    @pyqtProperty(str, notify=connectionDataChanged)
+    def machineType(self):
+        if self._connection_data and "MACHINE_TYPE" in self._connection_data:
+            return str(self._connection_data["MACHINE_TYPE"])
+        return catalog.i18nc("@info:status", "Connect to obtain info")
+    
     ##  Send a command to printer.
     #   \param cmd string with g-code
     @pyqtSlot(str)
@@ -559,6 +565,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._print_thread.pause(machine_width, machine_depth, machine_height, 0)
 
         # Turn off temperatures, fan and steppers
+        if (machineType(self) == "Lulzbot Bio"): self.sendCommand("G28 Z")
         self.sendCommand("M140 S0")     # Turn off heated bed
         self.sendCommand("M104 S0 T0")  # Turn off heater T0
         self.sendCommand("M104 S0 T1")  # Turn off heater T1
