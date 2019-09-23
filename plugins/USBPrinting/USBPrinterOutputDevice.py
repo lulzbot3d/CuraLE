@@ -564,9 +564,19 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         machine_height = settings.getProperty("machine_height",    "value")
         self._print_thread.pause(machine_width, machine_depth, machine_height, 0)
 
+        abort_gcode = []
+        code = Application.getInstance().getGlobalContainerStack().getProperty("machine_abort_gcode", "value")
+
+        if not code or len(code) == 0:
+            self.log("w", "This device doesn't support abort GCode")
+            return
+        for line in code:
+            abort_gcode.extend(line.strip("\n").split("\n"))
+        for command in abort_gcode:
+            self.sendCommand(command)
+
+
         # Turn off temperatures, fan and steppers
-        if self.machineType() == "Lulzbot Bio":
-            self.sendCommand("G28 Z")
         self.sendCommand("M140 S0")     # Turn off heated bed
         self.sendCommand("M104 S0 T0")  # Turn off heater T0
         self.sendCommand("M104 S0 T1")  # Turn off heater T1
