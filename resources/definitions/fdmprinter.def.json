@@ -78,6 +78,15 @@
                     "settable_per_extruder": false,
                     "settable_per_meshgroup": false
                 },
+                "machine_abort_gcode":
+                {
+                    "label": "Abort GCode",
+                    "description": "",
+                    "type": "str",
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": false,
+                    "settable_per_meshgroup": false
+                },
                 "machine_level_x_axis_gcode":
                 {
                     "label": "Level X Axis GCode",

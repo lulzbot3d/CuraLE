@@ -428,6 +428,12 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             return str(self._connection_data["FIRMWARE_VERSION"])
         return catalog.i18nc("@info:status", "Connect to obtain info")
 
+    @pyqtProperty(str, notify=connectionDataChanged)
+    def machineType(self):
+        if self._connection_data and "MACHINE_TYPE" in self._connection_data:
+            return str(self._connection_data["MACHINE_TYPE"])
+        return catalog.i18nc("@info:status", "Connect to obtain info")
+
     ##  Send a command to printer.
     #   \param cmd string with g-code
     @pyqtSlot(str)
@@ -557,6 +563,18 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         machine_depth  = settings.getProperty("machine_depth",     "value")
         machine_height = settings.getProperty("machine_height",    "value")
         self._print_thread.pause(machine_width, machine_depth, machine_height, 0)
+
+        abort_gcode = []
+        code = Application.getInstance().getGlobalContainerStack().getProperty("machine_abort_gcode", "value")
+
+        if not code or len(code) == 0:
+            self.log("w", "This device doesn't support abort GCode")
+            return
+        for line in code:
+            abort_gcode.extend(line.strip("\n").split("\n"))
+        for command in abort_gcode:
+            self.sendCommand(command)
+
 
         # Turn off temperatures, fan and steppers
         self.sendCommand("M140 S0")     # Turn off heated bed
