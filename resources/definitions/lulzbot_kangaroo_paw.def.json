@@ -1,32 +1,26 @@
 {
     "id": "lulzbot_kangaroo_paw",
-    "name": "kangaroo paw",
-    "inherits": "lulzbot_hibiscus",
+    "name": "LulzBot Bio",
+    "inherits": "lulzbot_kangaroo_paw_base",
     "version": 2,
     "metadata":
     {
-        "priority": "02",
+        "machine_priority": "99",
         "machine_extruder_trains":
         {
             "0": "lulzbot_kangaroo_paw_extruder"
         },
         "type": "machine",
-        "platform": "lulzbot_mini.stl",
-        "platform_offset":
-        [
-            -100,
-            -11,
-            100
-        ],
-        "category": "Other",
+        "category": "LulzBot",
         "preferred_material": "*Sodium_Alginate*",
         "preferred_quality": "*High Detail*",
         "file_formats": "text/x-gcode",
         "visible": true,
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
-        "base_machine": "lulzbot_hibiscus",
-        "user_toolhead_name": "260 micron needle",
+        "base_machine": "lulzbot_kangaroo_paw_base",
+        "base_machine_name": "LulzBot Bio",
+        "user_toolhead_name": "Syringe Pump",
         "default_extrusion_rate": 60
     },
     "overrides":

@@ -248,7 +248,7 @@ Item
 
                     style: UM.Theme.styles.checkbox
                     enabled: base.settingsEnabled
-                    visible: infillSteps.properties.enabled == "True"
+                    visible: baseSettingsLayout.visible ? infillSteps.properties.enabled == "True" : false
                     checked: parseInt(infillSteps.properties.value) > 0
 
                     MouseArea {
@@ -337,224 +337,845 @@ Item
                 }
             }
 
-            //
-            //  Enable support
-            //
-            Label
-            {
-                id: enableSupportLabel
-                visible: enableSupportCheckBox.visible
 
+            Item
+            {
+                id: baseSettingsLayout
                 anchors.top: infillCellRight.bottom
-                anchors.topMargin: parseInt(UM.Theme.getSize("sidebar_margin").height * 1.5)
-                anchors.left: parent.left
-                anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width
-                anchors.right: infillCellLeft.right
-                anchors.rightMargin: UM.Theme.getSize("sidebar_margin").width
-                anchors.verticalCenter: enableSupportCheckBox.verticalCenter
 
-                text: catalog.i18nc("@label", "Generate Support");
-                font: UM.Theme.getFont("default");
-                color: UM.Theme.getColor("text");
-                elide: Text.ElideRight
-            }
 
-            CheckBox
-            {
-                id: enableSupportCheckBox
-                property alias _hovered: enableSupportMouseArea.containsMouse
+                visible: Cura.MachineManager.getDefinitionId == "lulzbot_kangaroo_paw" ? false : true
 
-                anchors.top: enableSupportLabel.top
-                anchors.left: infillCellRight.left
+                height: childrenRect.height
 
-                style: UM.Theme.styles.checkbox;
-                enabled: base.settingsEnabled
-
-                visible: supportEnabled.properties.enabled == "True"
-                checked: supportEnabled.properties.value == "True";
-
-                MouseArea
+                GridLayout
                 {
-                    id: enableSupportMouseArea
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    enabled: true
-                    onClicked:
+                    columns: 2
+                    rows: 4
+                    Label
                     {
-                        // The value is a string "True" or "False"
-                        supportEnabled.setPropertyValue("value", supportEnabled.properties.value != "True");
+                        id: enableSupportLabel
+                        visible: enableSupportCheckBox.visible
+
+                        Layout.column: 1
+                        Layout.row: 1
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        text: catalog.i18nc("@label", "Generate Support");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                        elide: Text.ElideRight
                     }
-                    onEntered:
+
+                    CheckBox
                     {
-                        base.showTooltip(enableSupportCheckBox, Qt.point(-enableSupportCheckBox.x, 0),
-                            catalog.i18nc("@label", "Generate structures to support parts of the model which have overhangs. Without these structures, such parts would collapse during printing."));
-                    }
-                    onExited:
-                    {
-                        base.hideTooltip();
-                    }
-                }
-            }
+                        id: enableSupportCheckBox
+                        property alias _hovered: enableSupportMouseArea.containsMouse
 
-            Label
-            {
-                id: supportExtruderLabel
-                visible: supportExtruderCombobox.visible
-                anchors.left: parent.left
-                anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width
-                anchors.right: infillCellLeft.right
-                anchors.rightMargin: UM.Theme.getSize("sidebar_margin").width
-                anchors.verticalCenter: supportExtruderCombobox.verticalCenter
-                text: catalog.i18nc("@label", "Support Extruder");
-                font: UM.Theme.getFont("default");
-                color: UM.Theme.getColor("text");
-                elide: Text.ElideRight
-            }
+                        Layout.column: 2
+                        Layout.row: 1
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
 
-            ComboBox
-            {
-                id: supportExtruderCombobox
-                visible: enableSupportCheckBox.visible && (supportEnabled.properties.value == "True") && (machineExtruderCount.properties.value > 1)
-                model: extruderModel
+                        style: UM.Theme.styles.checkbox;
+                        enabled: base.settingsEnabled
 
-                property string color_override: ""  // for manually setting values
-                property string color:  // is evaluated automatically, but the first time is before extruderModel being filled
-                {
-                    var current_extruder = extruderModel.get(currentIndex);
-                    color_override = "";
-                    if (current_extruder === undefined) return ""
-                    return (current_extruder.color) ? current_extruder.color : "";
-                }
+                        visible: supportEnabled.properties.enabled == "True"
+                        checked: supportEnabled.properties.value == "True";
 
-                textRole: "text"  // this solves that the combobox isn't populated in the first time Cura is started
-
-                anchors.top: enableSupportCheckBox.bottom
-                anchors.topMargin: ((supportEnabled.properties.value === "True") && (machineExtruderCount.properties.value > 1)) ? UM.Theme.getSize("sidebar_margin").height : 0
-                anchors.left: infillCellRight.left
-
-                width: UM.Theme.getSize("sidebar").width * .55
-                height: ((supportEnabled.properties.value == "True") && (machineExtruderCount.properties.value > 1)) ? UM.Theme.getSize("setting_control").height : 0
-
-                Behavior on height { NumberAnimation { duration: 100 } }
-
-                style: UM.Theme.styles.combobox_color
-                enabled: base.settingsEnabled
-                property alias _hovered: supportExtruderMouseArea.containsMouse
-
-                currentIndex: supportExtruderNr.properties !== null ? parseFloat(supportExtruderNr.properties.value) : 0
-                onActivated:
-                {
-                    // Send the extruder nr as a string.
-                    supportExtruderNr.setPropertyValue("value", String(index));
-                }
-                MouseArea
-                {
-                    id: supportExtruderMouseArea
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    enabled: base.settingsEnabled
-                    acceptedButtons: Qt.NoButton
-                    onEntered:
-                    {
-                        base.showTooltip(supportExtruderCombobox, Qt.point(-supportExtruderCombobox.x, 0),
-                            catalog.i18nc("@label", "Select which extruder to use for support. This will build up supporting structures below the model to prevent the model from sagging or printing in mid air."));
-                    }
-                    onExited:
-                    {
-                        base.hideTooltip();
-                    }
-                }
-
-                function updateCurrentColor()
-                {
-                    var current_extruder = extruderModel.get(currentIndex);
-                    if (current_extruder !== undefined) {
-                        supportExtruderCombobox.color_override = current_extruder.color;
-                    }
-                }
-
-            }
-
-            Label
-            {
-                id: adhesionHelperLabel
-
-                anchors.left: parent.left
-                anchors.right: infillCellLeft.right
-                anchors.rightMargin: UM.Theme.getSize("sidebar_margin").width
-                anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width
-                anchors.verticalCenter: adhesionComboBox.verticalCenter
-                width: parent.width * .45 - 3 * UM.Theme.getSize("default_margin").width
-                text: catalog.i18nc("@label", "Build Plate Adhesion");
-                font: UM.Theme.getFont("default");
-                color: UM.Theme.getColor("text");
-                elide: Text.ElideRight
-            }
-            ComboBox
-            {
-                id: adhesionComboBox
-
-                anchors.top: supportExtruderCombobox.bottom
-                anchors.topMargin: UM.Theme.getSize("sidebar_margin").height
-                anchors.left: infillCellRight.left //anchors.left: adhesionHelperLabel.right
-                width: UM.Theme.getSize("sidebar").width * .55
-
-                style: UM.Theme.styles.combobox;
-                enabled: base.settingsEnabled
-
-                model: ListModel {
-                    id: cbItems
-                    ListElement { text: "Skirt"; type: "skirt" }
-                    ListElement { text: "Brim"; type: "brim" }
-                    ListElement { text: "Raft"; type: "raft" }
-                    ListElement { text: "None"; type: "none" }
-                }
-
-                onActivated:
-                {
-                    var adhesionType = cbItems.get(index).type;
-                    platformAdhesionType.setPropertyValue("value", adhesionType);
-                }
-
-                function updateValue()
-                {
-                    var adhesionType = platformAdhesionType.getRawPropertyValue("value");
-                    for(var i = 0; i < cbItems.count; i++)
-                    {
-                        if(cbItems.get(i).type == adhesionType)
+                        MouseArea
                         {
-                            adhesionComboBox.currentIndex = i;
-                            break;
+                            id: enableSupportMouseArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            enabled: true
+                            onClicked:
+                            {
+                                // The value is a string "True" or "False"
+                                supportEnabled.setPropertyValue("value", supportEnabled.properties.value != "True");
+                            }
+                            onEntered:
+                            {
+                                base.showTooltip(enableSupportCheckBox, Qt.point(-enableSupportCheckBox.x, 0),
+                                    catalog.i18nc("@label", "Generate structures to support parts of the model which have overhangs. Without these structures, such parts would collapse during printing."));
+                            }
+                            onExited:
+                            {
+                                base.hideTooltip();
+                            }
+                        }
+                    }
+
+                    Label
+                    {
+                        id: supportExtruderLabel
+                        visible: supportExtruderCombobox.visible
+
+                        Layout.column: 1
+                        Layout.row: 2
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        text: catalog.i18nc("@label", "Support Extruder");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                        elide: Text.ElideRight
+                    }
+
+                    ComboBox
+                    {
+                        id: supportExtruderCombobox
+                        visible: enableSupportCheckBox.visible && (supportEnabled.properties.value == "True") && (machineExtruderCount.properties.value > 1)
+                        model: extruderModel
+
+                        property string color_override: ""  // for manually setting values
+                        property string color:  // is evaluated automatically, but the first time is before extruderModel being filled
+                        {
+                            var current_extruder = extruderModel.get(currentIndex);
+                            color_override = "";
+                            if (current_extruder === undefined) return ""
+                            return (current_extruder.color) ? current_extruder.color : "";
+                        }
+
+                        textRole: "text"  // this solves that the combobox isn't populated in the first time Cura is started
+
+                        Layout.column: 2
+                        Layout.row: 2
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.preferredWidth: UM.Theme.getSize("sidebar").width * .55
+
+                        height: ((supportEnabled.properties.value == "True") && (machineExtruderCount.properties.value > 1)) ? UM.Theme.getSize("setting_control").height : 0
+
+                        Behavior on height { NumberAnimation { duration: 100 } }
+
+                        style: UM.Theme.styles.combobox_color
+                        enabled: base.settingsEnabled
+                        property alias _hovered: supportExtruderMouseArea.containsMouse
+
+                        currentIndex: supportExtruderNr.properties !== null ? parseFloat(supportExtruderNr.properties.value) : 0
+                        onActivated:
+                        {
+                            // Send the extruder nr as a string.
+                            supportExtruderNr.setPropertyValue("value", String(index));
+                        }
+                        MouseArea
+                        {
+                            id: supportExtruderMouseArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            enabled: base.settingsEnabled
+                            acceptedButtons: Qt.NoButton
+                            onEntered:
+                            {
+                                base.showTooltip(supportExtruderCombobox, Qt.point(-supportExtruderCombobox.x, 0),
+                                    catalog.i18nc("@label", "Select which extruder to use for support. This will build up supporting structures below the model to prevent the model from sagging or printing in mid air."));
+                            }
+                            onExited:
+                            {
+                                base.hideTooltip();
+                            }
+                        }
+
+                        function updateCurrentColor()
+                        {
+                            var current_extruder = extruderModel.get(currentIndex);
+                            if (current_extruder !== undefined) {
+                                supportExtruderCombobox.color_override = current_extruder.color;
+                            }
+                        }
+
+                    }
+
+                    Label
+                    {
+                        id: adhesionHelperLabel
+
+                        Layout.column: 1
+                        Layout.row: 3
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+
+                        width: parent.width * .45 - 3 * UM.Theme.getSize("default_margin").width
+                        text: catalog.i18nc("@label", "Build Plate Adhesion");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                        elide: Text.ElideRight
+                    }
+
+                    ComboBox
+                    {
+                        id: adhesionComboBox
+
+                        Layout.column: 2
+                        Layout.row: 3
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.preferredWidth: UM.Theme.getSize("sidebar").width * .55
+
+
+                        style: UM.Theme.styles.combobox;
+                        enabled: base.settingsEnabled
+
+                        model: ListModel {
+                            id: cbItems
+                            ListElement { text: "Skirt"; type: "skirt" }
+                            ListElement { text: "Brim"; type: "brim" }
+                            ListElement { text: "Raft"; type: "raft" }
+                            ListElement { text: "None"; type: "none" }
+                        }
+
+                        onActivated:
+                        {
+                            var adhesionType = cbItems.get(index).type;
+                            platformAdhesionType.setPropertyValue("value", adhesionType);
+                        }
+
+                        function updateValue()
+                        {
+                            var adhesionType = platformAdhesionType.getRawPropertyValue("value");
+                            for(var i = 0; i < cbItems.count; i++)
+                            {
+                                if(cbItems.get(i).type == adhesionType)
+                                {
+                                    adhesionComboBox.currentIndex = i;
+                                    break;
+                                }
+                            }
+                        }
+
+                        Component.onCompleted:
+                        {
+                            updateValue()
+                        }
+
+                        Connections
+                        {
+                            target: platformAdhesionType
+                            onPropertiesChanged:
+                            {
+                                adhesionComboBox.updateValue()
+                            }
+                        }
+
+                        Connections
+                        {
+                            target: Cura.MachineManager
+                            onActiveQualityChanged:
+                            {
+                                adhesionComboBox.updateValue()
+                            }
+                        }
+
+                        MouseArea
+                        {
+                            id: adhesionMouseArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            enabled: base.settingsEnabled
+                            acceptedButtons: Qt.NoButton
+
+                            onEntered:
+                            {
+                                base.showTooltip(adhesionComboBox, Qt.point(-adhesionComboBox.x, 0),
+                                    catalog.i18nc("@label", "Enable printing a brim, skirt, or raft. This will add a flat area around or under your object which is easy to cut off afterwards."));
+                            }
+                            onExited:
+                            {
+                                base.hideTooltip();
+                            }
+                        }
+                    }
+
+                    Label
+                    {
+                        id: adhesionExtruderHelperLabel
+                        visible: adhesionExtruderCombobox.visible
+
+                        Layout.column: 1
+                        Layout.row: 4
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+
+                        text: catalog.i18nc("@label", "Adhesion Extruder");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                    }
+
+                    ComboBox
+                    {
+                        id: adhesionExtruderCombobox
+                        visible: (platformAdhesionType.properties.value == "brim" || platformAdhesionType.properties.value == "raft") && (machineExtruderCount.properties.value > 1)
+                        model: extruderModel
+
+                        property string color_override: ""  // for manually setting values
+                        property string color:  // is evaluated automatically, but the first time is before extruderModel being filled
+                        {
+                            var current_extruder = extruderModel.get(currentIndex);
+                            color_override = "";
+                            if (current_extruder === undefined) return ""
+                            return (current_extruder.color) ? current_extruder.color : "";
+                        }
+
+                        textRole: "text"  // this solves that the combobox isn't populated in the first time Cura is started
+
+                        Layout.column: 2
+                        Layout.row: 4
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.preferredWidth: UM.Theme.getSize("sidebar").width * .55
+
+                        height: visible ? UM.Theme.getSize("setting_control").height : 0
+
+                        Behavior on height { NumberAnimation { duration: 100 } }
+
+                        style: UM.Theme.styles.combobox_color
+                        enabled: base.settingsEnabled
+                        property alias _hovered: adhesionExtruderMouseArea.containsMouse
+
+                        currentIndex: adhesionExtruderNr.properties !== null ? parseFloat(adhesionExtruderNr.properties.value) : 0
+                        onActivated:
+                        {
+                            // Send the extruder nr as a string.
+                            adhesionExtruderNr.setPropertyValue("value", String(index));
+                        }
+                        MouseArea
+                        {
+                            id: adhesionExtruderMouseArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            enabled: base.settingsEnabled
+                            acceptedButtons: Qt.NoButton
+                            onEntered:
+                            {
+                                base.showTooltip(adhesionExtruderCombobox, Qt.point(-adhesionExtruderCombobox.x, 0),
+                                    catalog.i18nc("@label", "The extruder train to use for printing the brim/raft."));
+                            }
+                            onExited:
+                            {
+                                base.hideTooltip();
+                            }
+                        }
+
+                        function updateCurrentColor()
+                        {
+                            var current_extruder = extruderModel.get(currentIndex);
+                            if (current_extruder !== undefined) {
+                                adhesionExtruderCombobox.color_override = current_extruder.color;
+                            }
+                        }
+
+                    }
+                    ListModel
+                    {
+                        id: extruderModel
+                        Component.onCompleted: populateExtruderModel()
+                    }
+
+                    Cura.ExtrudersModel
+                    {
+                        id: extruders
+                        onModelChanged: populateExtruderModel()
+                    }
+
+                    UM.SettingPropertyProvider
+                    {
+                        id: infillExtruderNumber
+                        containerStackId: Cura.MachineManager.activeStackId
+                        key: "infill_extruder_nr"
+                        watchedProperties: [ "value" ]
+                        storeIndex: 0
+                    }
+
+                    UM.SettingPropertyProvider
+                    {
+                        id: infillDensity
+                        containerStackId: Cura.MachineManager.activeStackId
+                        key: "infill_sparse_density"
+                        watchedProperties: [ "value" ]
+                        storeIndex: 0
+                    }
+
+                    UM.SettingPropertyProvider
+                    {
+                        id: infillSteps
+                        containerStackId: Cura.MachineManager.activeStackId
+                        key: "gradual_infill_steps"
+                        watchedProperties: ["value", "enabled"]
+                        storeIndex: 0
+                    }
+
+                    UM.SettingPropertyProvider
+                    {
+                        id: platformAdhesionType
+                        containerStackId: Cura.MachineManager.activeMachineId
+                        key: "adhesion_type"
+                        watchedProperties: [ "value", "enabled" ]
+                        storeIndex: 0
+                    }
+
+                    UM.SettingPropertyProvider
+                    {
+                        id: supportEnabled
+                        containerStackId: Cura.MachineManager.activeMachineId
+                        key: "support_enable"
+                        watchedProperties: [ "value", "enabled", "description" ]
+                        storeIndex: 0
+                    }
+
+                    UM.SettingPropertyProvider
+                    {
+                        id: machineExtruderCount
+                        containerStackId: Cura.MachineManager.activeMachineId
+                        key: "machine_extruder_count"
+                        watchedProperties: [ "value" ]
+                        storeIndex: 0
+                    }
+
+                    UM.SettingPropertyProvider
+                    {
+                        id: supportExtruderNr
+                        containerStackId: Cura.MachineManager.activeMachineId
+                        key: "support_extruder_nr"
+                        watchedProperties: [ "value" ]
+                        storeIndex: 0
+                    }
+                    UM.SettingPropertyProvider
+                    {
+                        id: adhesionExtruderNr
+                        containerStackId: Cura.MachineManager.activeMachineId
+                        key: "adhesion_extruder_nr"
+                        watchedProperties: [ "value" ]
+                        storeIndex: 0
+                    }
+
+
+                }
+            }
+
+            Item
+            {
+                anchors.top: infillCellRight.bottom
+                anchors.topMargin: parseInt(UM.Theme.getSize("sidebar_margin").height) * 2
+
+                visible: !baseSettingsLayout.visible
+
+                height: childrenRect.height
+
+                GridLayout
+                {
+                    columns: 2
+                    rows: 10
+                    Label
+                    {
+                        id: infillPatternLabel
+
+                        Layout.column: 1
+                        Layout.row: 1
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        text: catalog.i18nc("@label", "Infill Pattern");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                        elide: Text.ElideRight
+
+                    }
+
+                    Loader
+                    {
+                        id: infillPatternCombobox
+
+                        Layout.column: 2
+                        Layout.row: 1
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        sourceComponent: comboBoxWithOptions
+                        property string settingKey: "infill_pattern"
+                        property bool isExtruderSetting: true
+                        property var mouseAreaBinding: infillPatternCombobox
+
+                    }
+
+                    Label
+                    {
+                        id: topBottomPatternLabel
+
+                        Layout.column: 1
+                        Layout.row: 2
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        text: catalog.i18nc("@label", "Top Bottom Pattern");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                        elide: Text.ElideRight
+                    }
+
+                    Loader
+                    {
+                        id: topBottomPatternCombobox
+
+                        Layout.column: 2
+                        Layout.row: 2
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        sourceComponent: comboBoxWithOptions
+                        property string settingKey: "top_bottom_pattern"
+                        property bool isExtruderSetting: true
+                        property var mouseAreaBinding: topBottomPatternCombobox
+                    }
+
+                    Label
+                    {
+                        id: flowRateLabel
+
+                        Layout.column: 1
+                        Layout.row: 3
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        text: catalog.i18nc("@label", "Flow Rate");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                        elide: Text.ElideRight
+                    }
+
+                    Loader
+                    {
+                        id: flowRateTextField
+
+                        Layout.column: 2
+                        Layout.row: 3
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        sourceComponent: numericTextFieldWithUnit
+                        property string settingKey: "material_flow"
+                        property string unit: catalog.i18nc("@label", "%")
+                        property bool isExtruderSetting: true
+                        property var mouseAreaBinding: flowRateTextField
+                    }
+
+                    Label
+                    {
+                        id: buildPlateShapeLabel
+
+                        Layout.column: 1
+                        Layout.row: 4
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        text: catalog.i18nc("@label", "Build Container Shape");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                        elide: Text.ElideRight
+                    }
+                    Loader
+                    {
+                        id: buildPlateShapeCombobox
+
+                        Layout.column: 2
+                        Layout.row: 4
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        sourceComponent: comboBoxWithOptions
+                        property string settingKey: "machine_shape"
+                        property var mouseAreaBinding: buildPlateShapeCombobox
+                        property int storeIndex: 5
+                    }
+
+                    Label
+                    {
+                        Layout.column: 1
+                        Layout.row: 5
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        text: catalog.i18nc("@label", "Build Container Volume   X");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                        elide: Text.ElideRight
+                    }
+
+                    Loader
+                    {
+                        id: buildPlateVolumeXTextField
+
+                        Layout.column: 2
+                        Layout.row: 5
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        sourceComponent: numericTextFieldWithUnit
+                        property string settingKey: "machine_width"
+                        property var mouseAreaBinding: buildPlateVolumeXTextField
+                        property string unit: catalog.i18nc("@label", "mm")
+                        property int storeIndex: 5
+
+                    }
+
+                    Label
+                    {
+                        id: buildPlateVolumesLabel
+
+                        Layout.column: 1
+                        Layout.row: 6
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+                        Layout.alignment : Qt.AlignRight
+
+                        text: catalog.i18nc("@label", "Y");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                    }
+
+                    Loader
+                    {
+                        id: buildPlateVolumeYTextField
+
+                        Layout.column: 2
+                        Layout.row: 6
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        sourceComponent: numericTextFieldWithUnit
+                        property string settingKey: "machine_depth"
+                        property var mouseAreaBinding: buildPlateVolumeYTextField
+                        property string unit: catalog.i18nc("@label", "mm")
+                        property int storeIndex: 5
+                    }
+
+                    Label
+                    {
+                        Layout.column: 1
+                        Layout.row: 7
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+                        Layout.alignment: Qt.AlignRight
+
+                        text: catalog.i18nc("@label", "Z");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                    }
+                    
+                    Loader
+                    {
+                        id: buildPlateVolumeZTextField
+
+                        Layout.column: 2
+                        Layout.row: 7
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        sourceComponent: numericTextFieldWithUnit
+                        property string settingKey: "machine_height"
+                        property var mouseAreaBinding: buildPlateVolumeZTextField
+                        property string unit: catalog.i18nc("@label", "mm")
+                        property int storeIndex: 5
+                    }
+
+                    Label
+                    {
+                        Layout.column: 1
+                        Layout.row: 8
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        text: catalog.i18nc("@label", "Syringe Internal Diameter");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                    }
+
+                    Loader
+                    {
+                        id: syringeInternalDiameterField
+
+                        Layout.column: 2
+                        Layout.row: 8
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        sourceComponent: numericTextFieldWithUnit
+                        property string settingKey: "material_diameter"
+                        property var mouseAreaBinding: syringeInternalDiameterField
+                        property string unit: catalog.i18nc("@label", "mm")
+                        property bool isExtruderSetting: true
+
+                    }
+
+                    Label
+                    {
+                        id: needleGaugeLabel
+
+                        Layout.column: 1
+                        Layout.row: 9
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        text: catalog.i18nc("@label", "Needle Gauge");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                        elide: Text.ElideRight
+                    }
+
+                    ComboBox
+                    {
+                        id: needleGaugeCombobox
+
+                        Layout.column: 2
+                        Layout.row: 9
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+                        Layout.preferredWidth: UM.Theme.getSize("sidebar").width * .45
+
+                        style: UM.Theme.styles.combobox;
+
+
+                        currentIndex:
+                        {
+                            var nozzle_size = nozzleSizePropertyProvider.properties.value
+                            if (nozzle_size == 0.60)
+                                return 0
+                            else if (nozzle_size == 0.26)
+                                return 1
+                            else if (nozzle_size == 0.16)
+                                return 2
+                            else
+                                return 3
+
+                        }
+
+                        model: ListModel
+                        {
+                            id: modelGaugeCombobox
+                            ListElement { text: "20 ga (0.60mm)"; type: 0.60 }
+                            ListElement { text: "25 ga (0.26mm)"; type: 0.26 }
+                            ListElement { text: "30 ga (0.16mm)"; type: 0.16 }
+                            ListElement { text: "Custom needle ID (mm)"}
+                        }
+
+                        MouseArea
+                        {
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            enabled: base.settingsEnabled
+                            acceptedButtons: Qt.NoButton
+
+                            onEntered:
+                            {
+                                base.showTooltip(needleGaugeCombobox, Qt.point(-needleGaugeCombobox.x, 0),
+                                    catalog.i18nc("@label", "Needle Gauge Tooltip"));
+                            }
+                            onExited:
+                            {
+                                base.hideTooltip();
+                            }
+                        }
+
+                        onActivated:
+                        {
+                            if(index != 3)
+                            {
+                                nozzleSizePropertyProvider.setPropertyValue("value", model.get(index).type)
+                            }
+                        }
+                    }
+
+                    Loader
+                    {
+                        id: needleGaugeTextInput
+
+                        Layout.column: 2
+                        Layout.row: 10
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        sourceComponent: numericTextFieldWithUnit
+                        property string settingKey: "machine_nozzle_size"
+                        property string unit: catalog.i18nc("@label", "mm")
+                        property bool isExtruderSetting: true
+                        property int storeIndex: 5
+                        property var mouseAreaBinding: needleGaugeTextInput
+
+                        visible: needleGaugeCombobox.currentIndex == 3 ? true : false
+
+                    }
+
+                    UM.SettingPropertyProvider
+                    {
+                        id: nozzleSizePropertyProvider
+
+                        containerStackId: Cura.ExtruderManager.activeExtruderStackId;
+                        key: "machine_nozzle_size"
+                        watchedProperties: ["value"]
+                        storeIndex: 5
+
+                    }
+                }
+            }
+        }
+    }
+    Component
+    {
+        id: comboBoxWithOptions
+        Item
+        {
+            height: childrenRect.height
+            width: childrenRect.width
+
+
+            property bool _isExtruderSetting: (typeof(isExtruderSetting) === 'undefined') ? false : isExtruderSetting
+            property string _tooltipText: (typeof(tooltipText) === 'undefined') ? 0 : tooltipText
+            property var _mouseAreaBinding: (typeof(mouseAreaBinding) === 'undefined') ? 0 : mouseAreaBinding
+            property int _storeIndex: (typeof(storeIndex) === 'undefined') ? 0 : storeIndex
+
+            UM.SettingPropertyProvider
+            {
+                id: propertyProvider
+
+                containerStackId: {
+                    if(_isExtruderSetting)
+                    {
+                        return Cura.ExtruderManager.activeExtruderStackId;
+                    }
+                    return Cura.MachineManager.activeMachineId;
+                }
+                key: settingKey
+                watchedProperties: [ "value", "options", "description" ]
+                storeIndex: _storeIndex
+            }
+
+            ComboBox
+            {
+                id: comboBox
+                width: UM.Theme.getSize("sidebar").width * .45
+                style: UM.Theme.styles.combobox;
+                model: ListModel
+                {
+                    id: optionsModel
+                    Component.onCompleted:
+                    {
+                        // Options come in as a string-representation of an OrderedDict
+                        var options = propertyProvider.properties.options.match(/^OrderedDict\(\[\((.*)\)\]\)$/);
+                        if(options)
+                        {
+                            options = options[1].split("), (")
+                            for(var i = 0; i < options.length; i++)
+                            {
+                                var option = options[i].substring(1, options[i].length - 1).split("', '")
+                                optionsModel.append({text: option[1], value: option[0]});
+                            }
                         }
                     }
                 }
 
-                Component.onCompleted:
-                {
-                    updateValue()
-                }
-
-                Connections
-                {
-                    target: platformAdhesionType
-                    onPropertiesChanged:
-                    {
-                        adhesionComboBox.updateValue()
-                    }
-                }
-
-                Connections
-                {
-                    target: Cura.MachineManager
-                    onActiveQualityChanged:
-                    {
-                        adhesionComboBox.updateValue()
-                    }
-                }
-
                 MouseArea
                 {
-                    id: adhesionMouseArea
                     anchors.fill: parent
                     hoverEnabled: true
                     enabled: base.settingsEnabled
@@ -562,175 +1183,130 @@ Item
 
                     onEntered:
                     {
-                        base.showTooltip(adhesionComboBox, Qt.point(-adhesionComboBox.x, 0),
-                            catalog.i18nc("@label", "Enable printing a brim, skirt, or raft. This will add a flat area around or under your object which is easy to cut off afterwards."));
+                        base.showTooltip(_mouseAreaBinding, Qt.point(-_mouseAreaBinding.x, 0),
+                            catalog.i18nc("@label", propertyProvider.properties.description));
                     }
                     onExited:
                     {
                         base.hideTooltip();
                     }
                 }
-            }
-            Label
-            {
-                id: adhesionExtruderHelperLabel
-                visible: adhesionExtruderCombobox.visible
-                anchors.left: parent.left
-                anchors.right: infillCellLeft.right
-                anchors.rightMargin: UM.Theme.getSize("sidebar_margin").width
-                anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width
-                anchors.verticalCenter: adhesionExtruderCombobox.verticalCenter
-                text: catalog.i18nc("@label", "Adhesion Extruder");
-                font: UM.Theme.getFont("default");
-                color: UM.Theme.getColor("text");
-            }
-            ComboBox
-            {
-                id: adhesionExtruderCombobox
-                visible: (platformAdhesionType.properties.value == "brim" || platformAdhesionType.properties.value == "raft") && (machineExtruderCount.properties.value > 1)
-                model: extruderModel
 
-                property string color_override: ""  // for manually setting values
-                property string color:  // is evaluated automatically, but the first time is before extruderModel being filled
+                currentIndex:
                 {
-                    var current_extruder = extruderModel.get(currentIndex);
-                    color_override = "";
-                    if (current_extruder === undefined) return ""
-                    return (current_extruder.color) ? current_extruder.color : "";
+                    var currentValue = propertyProvider.properties.value;
+                    var index = 0;
+                    for(var i = 0; i < optionsModel.count; i++)
+                    {
+                        if(optionsModel.get(i).value == currentValue) {
+                            index = i;
+                            break;
+                        }
+                    }
+                    return index
                 }
 
-                textRole: "text"  // this solves that the combobox isn't populated in the first time Cura is started
-
-                anchors.top: adhesionComboBox.bottom
-                anchors.topMargin: visible ? UM.Theme.getSize("sidebar_margin").height : 0
-                anchors.left: infillCellRight.left
-
-                width: UM.Theme.getSize("sidebar").width * .55
-                height: visible ? UM.Theme.getSize("setting_control").height : 0
-
-                Behavior on height { NumberAnimation { duration: 100 } }
-
-                style: UM.Theme.styles.combobox_color
-                enabled: base.settingsEnabled
-                property alias _hovered: adhesionExtruderMouseArea.containsMouse
-
-                currentIndex: adhesionExtruderNr.properties !== null ? parseFloat(adhesionExtruderNr.properties.value) : 0
                 onActivated:
                 {
-                    // Send the extruder nr as a string.
-                    adhesionExtruderNr.setPropertyValue("value", String(index));
-                }
-                MouseArea
-                {
-                    id: adhesionExtruderMouseArea
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    enabled: base.settingsEnabled
-                    acceptedButtons: Qt.NoButton
-                    onEntered:
+                    if(propertyProvider.properties.value != optionsModel.get(index).value)
                     {
-                        base.showTooltip(adhesionExtruderCombobox, Qt.point(-adhesionExtruderCombobox.x, 0),
-                            catalog.i18nc("@label", "The extruder train to use for printing the brim/raft."));
-                    }
-                    onExited:
-                    {
-                        base.hideTooltip();
+                        propertyProvider.setPropertyValue("value", optionsModel.get(index).value)
                     }
                 }
-
-                function updateCurrentColor()
-                {
-                    var current_extruder = extruderModel.get(currentIndex);
-                    if (current_extruder !== undefined) {
-                        adhesionExtruderCombobox.color_override = current_extruder.color;
-                    }
-                }
-
-            }
-            ListModel
-            {
-                id: extruderModel
-                Component.onCompleted: populateExtruderModel()
-            }
-
-            Cura.ExtrudersModel
-            {
-                id: extruders
-                onModelChanged: populateExtruderModel()
-            }
-
-            UM.SettingPropertyProvider
-            {
-                id: infillExtruderNumber
-                containerStackId: Cura.MachineManager.activeStackId
-                key: "infill_extruder_nr"
-                watchedProperties: [ "value" ]
-                storeIndex: 0
-            }
-
-            UM.SettingPropertyProvider
-            {
-                id: infillDensity
-                containerStackId: Cura.MachineManager.activeStackId
-                key: "infill_sparse_density"
-                watchedProperties: [ "value" ]
-                storeIndex: 0
-            }
-
-            UM.SettingPropertyProvider
-            {
-                id: infillSteps
-                containerStackId: Cura.MachineManager.activeStackId
-                key: "gradual_infill_steps"
-                watchedProperties: ["value", "enabled"]
-                storeIndex: 0
-            }
-
-            UM.SettingPropertyProvider
-            {
-                id: platformAdhesionType
-                containerStackId: Cura.MachineManager.activeMachineId
-                key: "adhesion_type"
-                watchedProperties: [ "value", "enabled" ]
-                storeIndex: 0
-            }
-
-            UM.SettingPropertyProvider
-            {
-                id: supportEnabled
-                containerStackId: Cura.MachineManager.activeMachineId
-                key: "support_enable"
-                watchedProperties: [ "value", "enabled", "description" ]
-                storeIndex: 0
-            }
-
-            UM.SettingPropertyProvider
-            {
-                id: machineExtruderCount
-                containerStackId: Cura.MachineManager.activeMachineId
-                key: "machine_extruder_count"
-                watchedProperties: [ "value" ]
-                storeIndex: 0
-            }
-
-            UM.SettingPropertyProvider
-            {
-                id: supportExtruderNr
-                containerStackId: Cura.MachineManager.activeMachineId
-                key: "support_extruder_nr"
-                watchedProperties: [ "value" ]
-                storeIndex: 0
-            }
-            UM.SettingPropertyProvider
-            {
-                id: adhesionExtruderNr
-                containerStackId: Cura.MachineManager.activeMachineId
-                key: "adhesion_extruder_nr"
-                watchedProperties: [ "value" ]
-                storeIndex: 0
             }
         }
     }
+
+    Component
+    {
+        id: numericTextFieldWithUnit
+        Item
+        {
+            height: childrenRect.height
+            width: childrenRect.width
+
+
+            property bool _isExtruderSetting: (typeof(isExtruderSetting) === 'undefined') ? false: isExtruderSetting
+            property bool _allowNegative: (typeof(allowNegative) === 'undefined') ? false : allowNegative
+            property int _storeIndex: (typeof(storeIndex) === 'undefined') ? 0 : storeIndex
+            property var _mouseAreaBinding: (typeof(mouseAreaBinding) === 'undefined') ? 0 : mouseAreaBinding
+
+            UM.SettingPropertyProvider
+            {
+                id: propertyProvider
+
+                containerStackId: {
+                    if(_isExtruderSetting)
+                    {
+                        return Cura.ExtruderManager.activeExtruderStackId;
+                    }
+                    return Cura.MachineManager.activeMachineId;
+                }
+                key: settingKey
+                watchedProperties: [ "value", "description" ]
+                storeIndex: _storeIndex
+
+            }
+
+            Row
+            {
+                spacing: UM.Theme.getSize("default_margin").width
+
+                Item
+                {
+                    width: textField.width
+                    height: textField.height
+
+                    id: textFieldWithUnit
+                    TextField
+                    {
+                        width: UM.Theme.getSize("sidebar").width * .45
+                        style: UM.Theme.styles.text_field;
+                        id: textField
+                        text: {
+                            const value = propertyProvider.properties.value;
+                            return value ? value : "";
+                        }
+                        validator: RegExpValidator { regExp: _allowNegative ? /-?[0-9\.]{0,6}/ : /[0-9\.]{0,6}/ }
+                        onEditingFinished:
+                        {
+                            if (propertyProvider && text != propertyProvider.properties.value)
+                            {
+                                propertyProvider.setPropertyValue("value", text);
+                            }
+                        }
+                    }
+
+                    MouseArea
+                    {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        enabled: base.settingsEnabled
+                        acceptedButtons: Qt.NoButton
+
+                        onEntered:
+                        {
+                            base.showTooltip(_mouseAreaBinding, Qt.point(-_mouseAreaBinding.x, 0),
+                                catalog.i18nc("@label", propertyProvider.properties.description));
+                        }
+                        onExited:
+                        {
+                            base.hideTooltip();
+                        }
+                    }
+
+                    Label
+                    {
+                        text: unit
+                        anchors.right: textField.right
+                        anchors.rightMargin: y - textField.y
+                        anchors.verticalCenter: textField.verticalCenter
+                    }
+                }
+            }
+        }
+    }
+
 
     function populateExtruderModel()
     {
