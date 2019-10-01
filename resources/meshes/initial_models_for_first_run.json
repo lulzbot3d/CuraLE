@@ -10,6 +10,11 @@
     "models_per_extruders":
         [
             {"extruder":"0", "model":"octo_gear_v1.stl"}
-        ]
+        ],
+    "id":"lulzbot_kangaroo_paw",
+    "models_per_extruders":
+            [
+                {"extruder":0,"model":"Right_Coronary_Artery_Tree.stl"}
+            ]
 }
 ]
