@@ -373,10 +373,13 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         else:
             for port in serial.tools.list_ports.comports():
                 if port.vid in self._getAutodetectVIDList():
-                    self.log("i", "Detected 3D printer on %s." % port.device)
+                    self.log("i", "Trying to detect 3D printer on %s." % port.device)
                     self._serial_port = port.device
                     # Let's try to open the serial connection and read Temperature
-                    serial_connection = serial.Serial(str(self._serial_port), baud_rate, timeout=3, writeTimeout=10000)
+                    try:
+                        serial_connection = serial.Serial(str(self._serial_port), baud_rate, timeout=3, writeTimeout=10000)
+                    except:
+                        continue
                     if serial_connection :
                         # We found the serial port, now let's try to write and read from it
                         try:
