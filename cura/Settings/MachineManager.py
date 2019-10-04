@@ -1434,6 +1434,11 @@ class MachineManager(QObject):
         if self._global_container_stack:
             return self._global_container_stack.getBottom().getId()
 
+    @pyqtProperty(bool, notify=globalContainerChanged)
+    def isSyringePrinter(self):
+        if self._global_container_stack:
+            return Util.parseBool(self._global_container_stack.getBottom().getMetaDataEntry("syringe_printer", False))
+        return False
     ##  Set the amount of extruders on the active machine (global stack)
     #   \param extruder_count int the number of extruders to set
     def setActiveMachineExtruderCount(self, extruder_count):

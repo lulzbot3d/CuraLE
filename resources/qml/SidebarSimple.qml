@@ -344,7 +344,7 @@ Item
                 anchors.top: infillCellRight.bottom
 
 
-                visible: Cura.MachineManager.getDefinitionId == "lulzbot_kangaroo_paw" ? false : true
+                visible: !syringeSettings.visible
 
                 height: childrenRect.height
 
@@ -753,13 +753,23 @@ Item
 
                 }
             }
+        }
+        Rectangle
+        {
+            id: syringeSettings
+
+            visible: Cura.MachineManager.isSyringePrinter
+
+            width: parseInt( UM.Theme.getSize("sidebar").width )
+            height: childrenRect.height
+            color: UM.Theme.getColor("sidebar")
 
             Item
             {
-                anchors.top: infillCellRight.bottom
-                anchors.topMargin: parseInt(UM.Theme.getSize("sidebar_margin").height) * 2
 
-                visible: !baseSettingsLayout.visible
+
+                anchors.top: parent.top
+                anchors.topMargin: parseInt(UM.Theme.getSize("sidebar_margin").height) * 2
 
                 height: childrenRect.height
 

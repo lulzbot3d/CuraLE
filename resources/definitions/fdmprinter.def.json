@@ -8,6 +8,7 @@
         "category": "Other",
         "manufacturer": "Unknown",
         "setting_version": 1,
+        "syringe_printer": false,
         "file_formats": "text/x-gcode;application/x-stl-ascii;application/x-stl-binary;application/x-wavefront-obj;application/x3g",
         "visible": false,
         "has_materials": true,
