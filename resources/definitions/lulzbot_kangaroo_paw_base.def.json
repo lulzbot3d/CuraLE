@@ -15,6 +15,7 @@
         ],
         "file_formats": "text/x-gcode",
         "visible": false,
+        "syringe_printer": true,
         "base_machine": "LulzBot Bio",
         "base_machine_name": "LulzBot Bio",
         "user_toolhead_name": "Syringe Pump",
