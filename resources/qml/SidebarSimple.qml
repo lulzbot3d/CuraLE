@@ -1045,15 +1045,14 @@ Item
 
                         style: UM.Theme.styles.combobox;
 
-
                         currentIndex:
                         {
-                            var nozzle_size = nozzleSizePropertyProvider.properties.value
-                            if (nozzle_size == 0.60)
+                            var needle_gauge = lineWidthPropertyProvider.properties.value
+                            if (needle_gauge == 0.60)
                                 return 0
-                            else if (nozzle_size == 0.26)
+                            else if (needle_gauge == 0.26)
                                 return 1
-                            else if (nozzle_size == 0.16)
+                            else if (needle_gauge == 0.16)
                                 return 2
                             else
                                 return 3
@@ -1091,7 +1090,7 @@ Item
                         {
                             if(index != 3)
                             {
-                                nozzleSizePropertyProvider.setPropertyValue("value", model.get(index).type)
+                                lineWidthPropertyProvider.setPropertyValue("value", model.get(index).type)
                             }
                         }
                     }
@@ -1106,24 +1105,24 @@ Item
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
                         sourceComponent: numericTextFieldWithUnit
-                        property string settingKey: "machine_nozzle_size"
+                        property string settingKey: "line_width"
                         property string unit: catalog.i18nc("@label", "mm")
+                        property int storeIndex: 0
                         property bool isExtruderSetting: true
-                        property int storeIndex: 5
-                        property var mouseAreaBinding: needleGaugeTextInput
 
+                        property var mouseAreaBinding: needleGaugeTextInput
                         visible: needleGaugeCombobox.currentIndex == 3 ? true : false
 
                     }
 
                     UM.SettingPropertyProvider
                     {
-                        id: nozzleSizePropertyProvider
+                        id: lineWidthPropertyProvider
 
-                        containerStackId: Cura.ExtruderManager.activeExtruderStackId;
-                        key: "machine_nozzle_size"
+                        containerStackId: Cura.ExtruderManager.activeExtruderStackId
+                        key: "line_width"
                         watchedProperties: ["value"]
-                        storeIndex: 5
+                        storeIndex: 0
 
                     }
                 }
