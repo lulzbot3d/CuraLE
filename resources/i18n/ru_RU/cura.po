@@ -1491,7 +1491,7 @@ msgstr "Обновление прошивки не удалось из-за не
 
 #: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:64
 msgctxt "@label"
-msgid "Firmware update failed due to an communication error."
+msgid "Firmware update failed due to a communication error."
 msgstr "Обновление прошивки не удалось из-за ошибки связи."
 
 #: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:67

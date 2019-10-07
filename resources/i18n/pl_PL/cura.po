@@ -1490,7 +1490,7 @@ msgstr "Aktualizacja oprogramowania nie powiodła się z powodu nieznanego błę
 
 #: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:64
 msgctxt "@label"
-msgid "Firmware update failed due to an communication error."
+msgid "Firmware update failed due to a communication error."
 msgstr "Aktualizacja oprogramowania nie powiodła się z powodu błędu komunikacji."
 
 #: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:67

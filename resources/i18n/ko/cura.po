@@ -1229,7 +1229,7 @@ msgstr ""
 
 #: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:62
 msgctxt "@label"
-msgid "Firmware update failed due to an communication error."
+msgid "Firmware update failed due to a communication error."
 msgstr ""
 
 #: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:65

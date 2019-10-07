@@ -61,7 +61,7 @@ UM.Dialog
                             return catalog.i18nc("@label","Firmware update failed due to an unknown error.")
                         case 2:
                             //: Firmware update status label
-                            return catalog.i18nc("@label","Firmware update failed due to an communication error.")
+                            return catalog.i18nc("@label","Firmware update failed due to a communication error.")
                         case 3:
                             //: Firmware update status label
                             return catalog.i18nc("@label","Firmware update failed due to an input/output error.")

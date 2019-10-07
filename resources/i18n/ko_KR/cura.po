@@ -1487,7 +1487,7 @@ msgstr "알 수없는 오류로 인해 펌웨어 업데이트에 실패했습니
 
 #: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:64
 msgctxt "@label"
-msgid "Firmware update failed due to an communication error."
+msgid "Firmware update failed due to a communication error."
 msgstr "통신 오류로 인해 펌웨어 업데이트에 실패했습니다."
 
 #: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:67

@@ -1485,7 +1485,7 @@ msgstr "Laiteohjelmiston päivitys epäonnistui tuntemattoman virheen takia."
 
 #: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:64
 msgctxt "@label"
-msgid "Firmware update failed due to an communication error."
+msgid "Firmware update failed due to a communication error."
 msgstr "Laiteohjelmiston päivitys epäonnistui tietoliikennevirheen takia."
 
 #: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:67

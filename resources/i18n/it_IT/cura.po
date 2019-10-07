@@ -1485,7 +1485,7 @@ msgstr "Aggiornamento firmware non riuscito a causa di un errore sconosciuto."
 
 #: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:64
 msgctxt "@label"
-msgid "Firmware update failed due to an communication error."
+msgid "Firmware update failed due to a communication error."
 msgstr "Aggiornamento firmware non riuscito a causa di un errore di comunicazione."
 
 #: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:67
