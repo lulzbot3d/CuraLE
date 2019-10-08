@@ -29,6 +29,7 @@ Item
     {
         visible: Cura.MachineManager.activeMachineName != "" // If no printers added then the view is invisible
         anchors.fill: parent
+        height: childrenRect.height
         style: UM.Theme.styles.scrollview
         flickableItem.flickableDirection: Flickable.VerticalFlick
 
@@ -37,6 +38,7 @@ Item
             width: parseInt( UM.Theme.getSize("sidebar").width )
             height: childrenRect.height
             color: UM.Theme.getColor("sidebar")
+            anchors.top: parent.top
 
             //
             // Infill
@@ -763,119 +765,151 @@ Item
             width: parseInt( UM.Theme.getSize("sidebar").width )
             height: childrenRect.height
             color: UM.Theme.getColor("sidebar")
+            anchors.top: parent.top
 
             Item
             {
-
-
                 anchors.top: parent.top
-                anchors.topMargin: parseInt(UM.Theme.getSize("sidebar_margin").height) * 2
-
                 height: childrenRect.height
 
                 GridLayout
                 {
                     columns: 2
-                    rows: 10
+                    rows: 13
+
                     Label
                     {
-                        id: infillPatternLabel
+                        id: needleGaugeLabel
 
                         Layout.column: 1
                         Layout.row: 1
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
-                        text: catalog.i18nc("@label", "Infill Pattern");
+                        text: catalog.i18nc("@label", "Needle Gauge");
                         font: UM.Theme.getFont("default");
                         color: UM.Theme.getColor("text");
                         elide: Text.ElideRight
-
                     }
-
-                    Loader
+                    Item
                     {
-                        id: infillPatternCombobox
-
                         Layout.column: 2
                         Layout.row: 1
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+                        Layout.preferredWidth: UM.Theme.getSize("sidebar").width * .4
 
-                        sourceComponent: comboBoxWithOptions
-                        property string settingKey: "infill_pattern"
-                        property bool isExtruderSetting: true
-                        property var mouseAreaBinding: infillPatternCombobox
+                        ComboBox
+                        {
+                            id: needleGaugeCombobox
 
+                            visible: !needleGaugeTextInput.visible
+
+                            style: UM.Theme.styles.combobox;
+                            width: UM.Theme.getSize("sidebar").width * .4
+                            height: needleGaugeTextInput.height
+
+                            currentIndex:
+                            {
+                                var needle_gauge = lineWidthPropertyProvider.properties.value
+                                if (needle_gauge == 0.60)
+                                    return 0
+                                else if (needle_gauge == 0.26)
+                                    return 1
+                                else if (needle_gauge == 0.16)
+                                    return 2
+                                else
+                                    return 3
+
+                            }
+
+                            model: ListModel
+                            {
+                                id: modelGaugeCombobox
+                                ListElement { text: "20 ga (0.60mm)"; type: 0.60 }
+                                ListElement { text: "25 ga (0.26mm)"; type: 0.26 }
+                                ListElement { text: "30 ga (0.16mm)"; type: 0.16 }
+                                ListElement { text: "Custom needle ID (mm)"}
+                            }
+
+                            MouseArea
+                            {
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                enabled: base.settingsEnabled
+                                acceptedButtons: Qt.NoButton
+
+                                onEntered:
+                                {
+                                    base.showTooltip(needleGaugeCombobox, Qt.point(-needleGaugeCombobox.x, 0),
+                                        catalog.i18nc("@label", lineWidthPropertyProvider.properties.description));
+                                }
+                                onExited:
+                                {
+                                    base.hideTooltip();
+                                }
+                            }
+
+                            onActivated:
+                            {
+                                if(index != 3)
+                                {
+                                    lineWidthPropertyProvider.setPropertyValue("value", model.get(index).type)
+                                }
+                            }
+                        }
+
+                        Loader
+                        {
+                            id: needleGaugeTextInput
+
+                            sourceComponent: numericTextFieldWithUnit
+                            property string settingKey: "line_width"
+                            property string unit: catalog.i18nc("@label", "mm")
+                            property int storeIndex: 0
+                            property bool isExtruderSetting: true
+
+                            property var mouseAreaBinding: needleGaugeTextInput
+                            visible: needleGaugeCombobox.currentIndex == 3 ? true : false
+
+                        }
                     }
 
                     Label
                     {
-                        id: topBottomPatternLabel
-
                         Layout.column: 1
                         Layout.row: 2
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
-                        text: catalog.i18nc("@label", "Top Bottom Pattern");
+                        text: catalog.i18nc("@label", "Syringe Internal Diameter");
                         font: UM.Theme.getFont("default");
                         color: UM.Theme.getColor("text");
-                        elide: Text.ElideRight
                     }
-
                     Loader
                     {
-                        id: topBottomPatternCombobox
+                        id: syringeInternalDiameterField
 
                         Layout.column: 2
                         Layout.row: 2
-                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
-                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
-
-                        sourceComponent: comboBoxWithOptions
-                        property string settingKey: "top_bottom_pattern"
-                        property bool isExtruderSetting: true
-                        property var mouseAreaBinding: topBottomPatternCombobox
-                    }
-
-                    Label
-                    {
-                        id: flowRateLabel
-
-                        Layout.column: 1
-                        Layout.row: 3
-                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
-                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
-
-                        text: catalog.i18nc("@label", "Flow Rate");
-                        font: UM.Theme.getFont("default");
-                        color: UM.Theme.getColor("text");
-                        elide: Text.ElideRight
-                    }
-
-                    Loader
-                    {
-                        id: flowRateTextField
-
-                        Layout.column: 2
-                        Layout.row: 3
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
                         sourceComponent: numericTextFieldWithUnit
-                        property string settingKey: "material_flow"
-                        property string unit: catalog.i18nc("@label", "%")
+                        property string settingKey: "material_diameter"
+                        property var mouseAreaBinding: syringeInternalDiameterField
+                        property string unit: catalog.i18nc("@label", "mm")
+                        property string tooltipText: "This setting is the internal diameter of the syringe."
                         property bool isExtruderSetting: true
-                        property var mouseAreaBinding: flowRateTextField
+
                     }
 
                     Label
                     {
-                        id: buildPlateShapeLabel
+                        id: buildContainerShapeLabel
 
                         Layout.column: 1
-                        Layout.row: 4
+                        Layout.row: 3
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
@@ -886,38 +920,37 @@ Item
                     }
                     Loader
                     {
-                        id: buildPlateShapeCombobox
+                        id: buildContainerShapeCombobox
 
                         Layout.column: 2
-                        Layout.row: 4
+                        Layout.row: 3
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
                         sourceComponent: comboBoxWithOptions
                         property string settingKey: "machine_shape"
-                        property var mouseAreaBinding: buildPlateShapeCombobox
+                        property var mouseAreaBinding: buildContainerShapeCombobox
                         property int storeIndex: 5
                     }
 
                     Label
                     {
                         Layout.column: 1
-                        Layout.row: 5
+                        Layout.row: 4
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
-                        text: catalog.i18nc("@label", "Build Container Volume   X");
+                        text: catalog.i18nc("@label", "Build Container Dimensions  X");
                         font: UM.Theme.getFont("default");
                         color: UM.Theme.getColor("text");
                         elide: Text.ElideRight
                     }
-
                     Loader
                     {
                         id: buildPlateVolumeXTextField
 
                         Layout.column: 2
-                        Layout.row: 5
+                        Layout.row: 4
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
@@ -934,7 +967,7 @@ Item
                         id: buildPlateVolumesLabel
 
                         Layout.column: 1
-                        Layout.row: 6
+                        Layout.row: 5
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
                         Layout.alignment : Qt.AlignRight
@@ -943,13 +976,12 @@ Item
                         font: UM.Theme.getFont("default");
                         color: UM.Theme.getColor("text");
                     }
-
                     Loader
                     {
                         id: buildPlateVolumeYTextField
 
                         Layout.column: 2
-                        Layout.row: 6
+                        Layout.row: 5
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
@@ -963,7 +995,7 @@ Item
                     Label
                     {
                         Layout.column: 1
-                        Layout.row: 7
+                        Layout.row: 6
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
                         Layout.alignment: Qt.AlignRight
@@ -972,13 +1004,12 @@ Item
                         font: UM.Theme.getFont("default");
                         color: UM.Theme.getColor("text");
                     }
-                    
                     Loader
                     {
                         id: buildPlateVolumeZTextField
 
                         Layout.column: 2
-                        Layout.row: 7
+                        Layout.row: 6
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
@@ -991,113 +1022,115 @@ Item
 
                     Label
                     {
+                        id: infillPercentLabel
+
                         Layout.column: 1
-                        Layout.row: 8
+                        Layout.row: 7
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
-                        text: catalog.i18nc("@label", "Syringe Internal Diameter");
+                        text: catalog.i18nc("@label", "Infill %");
                         font: UM.Theme.getFont("default");
                         color: UM.Theme.getColor("text");
-                    }
+                        elide: Text.ElideRight
 
+                    }
                     Loader
                     {
-                        id: syringeInternalDiameterField
+                        id: infillPercentCombobox
 
                         Layout.column: 2
-                        Layout.row: 8
+                        Layout.row: 7
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
                         sourceComponent: numericTextFieldWithUnit
-                        property string settingKey: "material_diameter"
-                        property var mouseAreaBinding: syringeInternalDiameterField
-                        property string unit: catalog.i18nc("@label", "mm")
+                        property string settingKey: "infill_sparse_density"
                         property bool isExtruderSetting: true
+                        property string unit: catalog.i18nc("@label", "%")
+                        property var mouseAreaBinding: infillPercentLabel
 
                     }
 
                     Label
                     {
-                        id: needleGaugeLabel
+                        id: infillPatternLabel
+
+                        Layout.column: 1
+                        Layout.row: 8
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        text: catalog.i18nc("@label", "Infill Pattern");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                        elide: Text.ElideRight
+
+                    }
+                    Loader
+                    {
+                        id: infillPatternCombobox
+
+                        Layout.column: 2
+                        Layout.row: 8
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        sourceComponent: comboBoxWithOptions
+                        property string settingKey: "infill_pattern"
+                        property bool isExtruderSetting: true
+                        property var mouseAreaBinding: infillPatternCombobox
+
+                    }
+
+                    Label
+                    {
+                        id: flowRateLabel
 
                         Layout.column: 1
                         Layout.row: 9
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
-                        text: catalog.i18nc("@label", "Needle Gauge");
+                        text: catalog.i18nc("@label", "Flow Rate");
                         font: UM.Theme.getFont("default");
                         color: UM.Theme.getColor("text");
                         elide: Text.ElideRight
                     }
-
-                    ComboBox
+                    Loader
                     {
-                        id: needleGaugeCombobox
+                        id: flowRateTextField
 
                         Layout.column: 2
                         Layout.row: 9
                         Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
-                        Layout.preferredWidth: UM.Theme.getSize("sidebar").width * .45
 
-                        style: UM.Theme.styles.combobox;
-
-                        currentIndex:
-                        {
-                            var needle_gauge = lineWidthPropertyProvider.properties.value
-                            if (needle_gauge == 0.60)
-                                return 0
-                            else if (needle_gauge == 0.26)
-                                return 1
-                            else if (needle_gauge == 0.16)
-                                return 2
-                            else
-                                return 3
-
-                        }
-
-                        model: ListModel
-                        {
-                            id: modelGaugeCombobox
-                            ListElement { text: "20 ga (0.60mm)"; type: 0.60 }
-                            ListElement { text: "25 ga (0.26mm)"; type: 0.26 }
-                            ListElement { text: "30 ga (0.16mm)"; type: 0.16 }
-                            ListElement { text: "Custom needle ID (mm)"}
-                        }
-
-                        MouseArea
-                        {
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            enabled: base.settingsEnabled
-                            acceptedButtons: Qt.NoButton
-
-                            onEntered:
-                            {
-                                base.showTooltip(needleGaugeCombobox, Qt.point(-needleGaugeCombobox.x, 0),
-                                    catalog.i18nc("@label", "Needle Gauge Tooltip"));
-                            }
-                            onExited:
-                            {
-                                base.hideTooltip();
-                            }
-                        }
-
-                        onActivated:
-                        {
-                            if(index != 3)
-                            {
-                                lineWidthPropertyProvider.setPropertyValue("value", model.get(index).type)
-                            }
-                        }
+                        sourceComponent: numericTextFieldWithUnit
+                        property string settingKey: "material_flow"
+                        property string unit: catalog.i18nc("@label", "%")
+                        property bool isExtruderSetting: true
+                        property var mouseAreaBinding: flowRateTextField
                     }
 
+                    Label
+                    {
+                        id: wallLineCountLabel
+
+                        Layout.column: 1
+                        Layout.row: 10
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        text: catalog.i18nc("@label", "Wall Line Count");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                        elide: Text.ElideRight
+
+                    }
                     Loader
                     {
-                        id: needleGaugeTextInput
+                        id: wallLineCountCombobox
 
                         Layout.column: 2
                         Layout.row: 10
@@ -1105,14 +1138,100 @@ Item
                         Layout.minimumHeight: UM.Theme.getSize("setting_control").height
 
                         sourceComponent: numericTextFieldWithUnit
-                        property string settingKey: "line_width"
-                        property string unit: catalog.i18nc("@label", "mm")
-                        property int storeIndex: 0
+                        property string settingKey: "wall_line_count"
                         property bool isExtruderSetting: true
+                        property string unit: catalog.i18nc("@label", "")
+                        property var mouseAreaBinding: wallLineCountLabel
 
-                        property var mouseAreaBinding: needleGaugeTextInput
-                        visible: needleGaugeCombobox.currentIndex == 3 ? true : false
+                    }
 
+                    Label
+                    {
+                        id: topBottomPatternLabel
+
+                        Layout.column: 1
+                        Layout.row: 11
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        text: catalog.i18nc("@label", "Top/Bottom Pattern");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                        elide: Text.ElideRight
+                    }
+                    Loader
+                    {
+                        id: topBottomPatternCombobox
+
+                        Layout.column: 2
+                        Layout.row: 11
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        sourceComponent: comboBoxWithOptions
+                        property string settingKey: "top_bottom_pattern"
+                        property bool isExtruderSetting: true
+                        property var mouseAreaBinding: topBottomPatternCombobox
+                    }
+
+                    Label
+                    {
+                        id: topLayersLabel
+
+                        Layout.column: 1
+                        Layout.row: 12
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        text: catalog.i18nc("@label", "Top Layers");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                        elide: Text.ElideRight
+                    }
+                    Loader
+                    {
+                        id: topLayersField
+
+                        Layout.column: 2
+                        Layout.row: 12
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        sourceComponent: numericTextFieldWithUnit
+                        property string settingKey: "top_layers"
+                        property string unit: catalog.i18nc("@label", "")
+                        property bool isExtruderSetting: true
+                        property var mouseAreaBinding: topLayersLabel
+                    }
+
+                    Label
+                    {
+                        id: bottomLayersLabel
+
+                        Layout.column: 1
+                        Layout.row: 13
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        text: catalog.i18nc("@label", "Bottom Layers");
+                        font: UM.Theme.getFont("default");
+                        color: UM.Theme.getColor("text");
+                        elide: Text.ElideRight
+                    }
+                    Loader
+                    {
+                        id: bottomLayersField
+
+                        Layout.column: 2
+                        Layout.row: 13
+                        Layout.leftMargin: UM.Theme.getSize("sidebar_margin").width
+                        Layout.minimumHeight: UM.Theme.getSize("setting_control").height
+
+                        sourceComponent: numericTextFieldWithUnit
+                        property string settingKey: "bottom_layers"
+                        property string unit: catalog.i18nc("@label", "")
+                        property bool isExtruderSetting: true
+                        property var mouseAreaBinding: bottomLayersLabel
                     }
 
                     UM.SettingPropertyProvider
@@ -1121,7 +1240,7 @@ Item
 
                         containerStackId: Cura.ExtruderManager.activeExtruderStackId
                         key: "line_width"
-                        watchedProperties: ["value"]
+                        watchedProperties: ["value","description"]
                         storeIndex: 0
 
                     }
@@ -1139,7 +1258,6 @@ Item
 
 
             property bool _isExtruderSetting: (typeof(isExtruderSetting) === 'undefined') ? false : isExtruderSetting
-            property string _tooltipText: (typeof(tooltipText) === 'undefined') ? 0 : tooltipText
             property var _mouseAreaBinding: (typeof(mouseAreaBinding) === 'undefined') ? 0 : mouseAreaBinding
             property int _storeIndex: (typeof(storeIndex) === 'undefined') ? 0 : storeIndex
 
@@ -1162,7 +1280,7 @@ Item
             ComboBox
             {
                 id: comboBox
-                width: UM.Theme.getSize("sidebar").width * .45
+                width: UM.Theme.getSize("sidebar").width * .4
                 style: UM.Theme.styles.combobox;
                 model: ListModel
                 {
@@ -1238,6 +1356,7 @@ Item
             property bool _isExtruderSetting: (typeof(isExtruderSetting) === 'undefined') ? false: isExtruderSetting
             property bool _allowNegative: (typeof(allowNegative) === 'undefined') ? false : allowNegative
             property int _storeIndex: (typeof(storeIndex) === 'undefined') ? 0 : storeIndex
+            property string _tooltipText: (typeof(tooltipText) === 'undefined') ? propertyProvider.properties.description : tooltipText
             property var _mouseAreaBinding: (typeof(mouseAreaBinding) === 'undefined') ? 0 : mouseAreaBinding
 
             UM.SettingPropertyProvider
@@ -1269,7 +1388,7 @@ Item
                     id: textFieldWithUnit
                     TextField
                     {
-                        width: UM.Theme.getSize("sidebar").width * .45
+                        width: UM.Theme.getSize("sidebar").width * .4
                         style: UM.Theme.styles.text_field;
                         id: textField
                         text: {
@@ -1296,13 +1415,14 @@ Item
                         onEntered:
                         {
                             base.showTooltip(_mouseAreaBinding, Qt.point(-_mouseAreaBinding.x, 0),
-                                catalog.i18nc("@label", propertyProvider.properties.description));
+                                catalog.i18nc("@label", _tooltipText));
                         }
                         onExited:
                         {
                             base.hideTooltip();
                         }
                     }
+
 
                     Label
                     {
