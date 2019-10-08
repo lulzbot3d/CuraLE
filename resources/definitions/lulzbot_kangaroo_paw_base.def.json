@@ -16,15 +16,16 @@
         "file_formats": "text/x-gcode",
         "visible": false,
         "syringe_printer": true,
-        "base_machine": "LulzBot Bio",
-        "base_machine_name": "LulzBot Bio",
-        "user_toolhead_name": "Syringe Pump",
-        "printer_info_link": "https://www.lulzbot.com/store/printers/",
-        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
-        "firmware_toolhead_name": "SingleExtruderAeroV2"
+        "printer_info_link": "https://www.lulzbot.com/store/printers/?pk_campaign=software-cura",
+        "firmware_last_version": "2.0.0.169",
+        "default_eeprom_state": false
     },
     "overrides":
     {
+        "firmware_machine_type":
+        {
+            "resolve": "'LulzBot Bio'"
+        },
         "machine_disallowed_areas": { "default_value": [
             [[85,85],[85,77],[77,85]],
             [[-85,85],[-85,77],[-77,85]],
@@ -224,10 +225,6 @@
         "machine_baudrate":
         {
             "default_value": "250000"
-        },
-        "firmware_machine_type":
-        {
-            "default_value": "LulzBot Hibiscus"
         },
         "machine_max_feedrate_x":
         {
