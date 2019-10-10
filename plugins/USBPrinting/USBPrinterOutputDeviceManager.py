@@ -233,7 +233,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_redgum_dingy_cutworm": "Marlin_TAZWorkhorse_HardenedSteelPlus_2.0.0.144_aded3b617.hex",
             "lulzbot_redgum_yellowfin":        "Marlin_TAZWorkhorse_DualExtruderV3_2.0.0.144_aded3b617.hex",
 
-            "lulzbot_kangaroo_paw":                     "Marlin_Bio_SingleExtruder_2.0.0.173_94464acd0.hex",
+            "lulzbot_kangaroo_paw":                     "Marlin_Bio_SingleExtruder_2.0.0.174_226bfbbb7.hex",
         }
 
         lulzbot_lcd_machines = {
