@@ -841,7 +841,7 @@ Item
 
                                 onEntered:
                                 {
-                                    base.showTooltip(needleGaugeCombobox, Qt.point(-needleGaugeCombobox.x, 0),
+                                    base.showTooltip(needleGaugeLabel, Qt.point(-needleGaugeLabel.x, 0),
                                         catalog.i18nc("@label", lineWidthPropertyProvider.properties.description));
                                 }
                                 onExited:
@@ -869,7 +869,7 @@ Item
                             property int storeIndex: 0
                             property bool isExtruderSetting: true
 
-                            property var mouseAreaBinding: needleGaugeTextInput
+                            property var mouseAreaBinding: needleGaugeLabel
                             visible: needleGaugeCombobox.currentIndex == 3 ? true : false
 
                         }
