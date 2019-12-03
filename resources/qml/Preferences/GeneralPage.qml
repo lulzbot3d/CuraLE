@@ -146,7 +146,7 @@ UM.PreferencesPage
                         id: languageList
 
                         Component.onCompleted: {
-                            append({ text: "English", code: "en_US" })
+                            append({ text: "English (USA)", code: "en_US" })
                             append({ text: "Deutsch", code: "de_DE" })
                             append({ text: "Español", code: "es_ES" })
                             //Finnish is disabled for being incomplete: append({ text: "Suomi", code: "fi_FI" })
