@@ -92,7 +92,7 @@ Section "Cura ${VERSION}"
   
   CreateDirectory "$SMPROGRAMS\Cura ${VERSION}"
   CreateShortCut "$SMPROGRAMS\Cura ${VERSION}\Uninstall Cura ${VERSION}.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\Cura ${VERSION}\Cura ${VERSION}.lnk" "$INSTDIR\Cura.exe" '' "$INSTDIR\Cura.exe" 0
+  CreateShortCut "$SMPROGRAMS\Cura ${VERSION}\Cura ${VERSION}.lnk" "$INSTDIR\cura-lulzbot.exe" '' "$INSTDIR\cura-lulzbot.exe" 0
   
 SectionEnd
 
@@ -120,15 +120,15 @@ Section "Install RAMBo Drivers"
 SectionEnd
 
 Section "Open STL files with Cura"
-   ${registerExtension} "$INSTDIR\Cura.exe" ".stl" "STL_File"
+   ${registerExtension} "$INSTDIR\cura-lulzbot.exe" ".stl" "STL_File"
 SectionEnd
 
 Section /o "Open OBJ files with Cura"
 	WriteRegStr HKCR .obj "" "Cura OBJ model file"
 	DeleteRegValue HKCR .obj "Content Type"
-	WriteRegStr HKCR "Cura OBJ model file\DefaultIcon" "" "$INSTDIR\Cura.exe,0"
+	WriteRegStr HKCR "Cura OBJ model file\DefaultIcon" "" "$INSTDIR\cura-lulzbot.exe,0"
 	WriteRegStr HKCR "Cura OBJ model file\shell" "" "open"
-	WriteRegStr HKCR "Cura OBJ model file\shell\open\command" "" '"$INSTDIR\Cura.exe" "%1"'
+	WriteRegStr HKCR "Cura OBJ model file\shell\open\command" "" '"$INSTDIR\cura-lulzbot.exe" "%1"'
 SectionEnd
 
 ;--------------------------------
