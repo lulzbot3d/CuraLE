@@ -5,25 +5,25 @@
       <brand>Generic</brand>
       <material>Sodium Alginate</material>
       <color>Generic</color>
-      <category>Beginner</category>
+      <category>Expert</category>
     </name>
     <GUID>4a93345b-114d-40f9-9781-40216df0e2b4</GUID>
     <version>1</version>
     <color_code>#c1d82f</color_code>
-    <info_link>https://www.lulzbot.com/store/filament/polylite-pla</info_link>
+    <info_link></info_link>
   </metadata>
   <properties>
     <density>1.25</density>
     <diameter>2.85</diameter>
   </properties>
   <settings>
-    <setting key="print temperature">205</setting>
-    <setting key="heated bed temperature">60</setting>
-    <setting key="standby temperature">175</setting>
-    <setting key="soften temperature">140</setting>
-    <setting key="probe temperature">140</setting>
-    <setting key="wipe temperature">140</setting>
-    <setting key="part removal temperature">45</setting>
+    <setting key="print temperature">0</setting>
+    <setting key="heated bed temperature">0</setting>
+    <setting key="standby temperature">0</setting>
+    <setting key="soften temperature">0</setting>
+    <setting key="probe temperature">0</setting>
+    <setting key="wipe temperature">0</setting>
+    <setting key="part removal temperature">0</setting>
     <machine>
       <machine_identifier product="lulzbot_kangaroo_paw"/>
     </machine>

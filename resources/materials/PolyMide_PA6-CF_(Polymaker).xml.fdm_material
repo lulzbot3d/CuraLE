@@ -3,9 +3,9 @@
   <metadata>
     <name>
       <brand>Generic</brand>
-      <material>PA6-CF (Polymaker)</material>
+      <material>PolyMide PA6-CF (Polymaker)</material>
       <color>Purple</color>
-      <label>PA6-CF (Polymaker)</label>
+      <label>PolyMide PA6-CF (Polymaker)</label>
       <category />
     </name>
     <extruder_disabled>False</extruder_disabled>
