@@ -10,12 +10,14 @@ class LulzBotPrintersModel(ListModel):
     NameRole = Qt.UserRole + 1
     IdRole = Qt.UserRole + 2
     LCDRole = Qt.UserRole + 3
+    RevisionRole = Qt.UserRole + 4
 
     def __init__(self, parent = None):
         super().__init__(parent)
         self.addRoleName(self.NameRole, "name")
         self.addRoleName(self.IdRole, "id")
         self.addRoleName(self.LCDRole, "lcd")
+        self.addRoleName(self.RevisionRole, "revision")
 
         # Listen to changes
         ContainerRegistry.getInstance().containerAdded.connect(self._onContainerChanged)
