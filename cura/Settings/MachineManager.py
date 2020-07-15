@@ -439,13 +439,14 @@ class MachineManager(QObject):
         self.__emitChangedSignals()
 
     @pyqtSlot(str, str)
-    @pyqtSlot(str, str, bool)
-    def addMachine(self, name: str, definition_id: str, lcd=True) -> None:
+    @pyqtSlot(str, str, bool, bool)
+    def addMachine(self, name: str, definition_id: str, lcd=True, rev=True) -> None:
         new_stack = CuraStackBuilder.createMachine(name, definition_id)
         if new_stack:
             if new_stack.getMetaDataEntry("has_optional_lcd", False):
                 new_stack.setProperty("machine_has_lcd", "value", lcd, "definition_changes")
-
+            if new_stack.getMetaDataEntry("has_revision",True):
+                new_stack.setProperty("revision_type", "value", rev, "definition_changes")
             # Instead of setting the global container stack here, we set the active machine and so the signals are emitted
             self.setActiveMachine(new_stack.getId())
             Application.getInstance().setGlobalContainerStack(new_stack)

@@ -13,13 +13,14 @@
         "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-taz-pro?pk_campaign=software-cura",
         "firmware_last_version": "2.0.0.144",
         "priority": "98",
-        "default_eeprom_state": false
+        "default_eeprom_state": false,
+        "has_revision":true
     },
     "overrides":
     {
         "firmware_machine_type":
         {
-            "resolve": "'LulzBot TAZ Pro'"
+            "resolve": "'LulzBot TAZ Pro' if revision_type else 'LulzBot TAZ Pro(Rev B)'"
         },
         "machine_baudrate":
         {

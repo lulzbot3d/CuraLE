@@ -75,7 +75,7 @@ UM.Dialog
                 {
                     base.visible = false
                     var item = toolheadsModel.getItem(toolheadSelection.selectedIndex).id
-                    Cura.MachineManager.addMachine(machineName.text, item, lcdSelection.selectedIndex == 0 ? true: false)
+                    Cura.MachineManager.addMachine(machineName.text, item, lcdSelection.selectedIndex == 0 ? true: false,revisionSelection.selectedIndex == 0 ? true: false)
                     base.machineAdded(item)
                 }
 
@@ -83,6 +83,7 @@ UM.Dialog
                 {
                     machineName.text = getMachineName()
                     printerSelection.lcd = printerSelectionRepeater.model.getItem(0).lcd
+                    printerSelection.revision = printerSelectionRepeater.model.getItem(0).revision
                     printerSelection.baseMachine = printerSelectionRepeater.model.getItem(0).id
                     printerSelection.selectedIndex = 0
                     for (var i = 0; i < printerSelectionRepeater.count; i++)
