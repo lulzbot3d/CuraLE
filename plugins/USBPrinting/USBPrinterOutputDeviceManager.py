@@ -245,6 +245,21 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_mini_dingy_cutworm":         "Marlin_MiniLCD_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex",
             "lulzbot_mini_cecropia":           "Marlin_MiniLCD_SingleExtruderAeroV2_1.1.9.34_5f9c029d1.hex",
         }
+        lulzbot_revision_machines = {
+            "lulzbot_quiver_achemon":                    "Marlin_TAZProRevB_SmallLayer_2.0.0.144_aded3b617.bin",
+            "lulzbot_quiver_banded_tiger":            "Marlin_TAZProRevB_HardenedSteel_2.0.0.144_aded3b617.bin",
+            "lulzbot_quiver_cecropia":         "Marlin_TAZProRevB_SingleExtruderAeroV2_2.0.0.144_aded3b617.bin",
+            "lulzbot_quiver_dingy_cutworm":       "Marlin_TAZProRevB_HardenedSteelPlus_2.0.0.144_aded3b617.bin",
+            "lulzbot_quiver_evergreen_bagworm":        "Marlin_TAZProRevB_DualExtruder_2.0.0.144_aded3b617.bin",
+            "lulzbot_quiver_goldenrod":            "Marlin_TAZProRevB_HardenedExtruder_2.0.0.144_aded3b617.bin",
+
+            "lulzbot_redgum_goldenrod":      "Marlin_TAZWorkhorseRevB_HardenedExtruder_2.0.0.144_aded3b617.hex",
+            "lulzbot_redgum_achemon":              "Marlin_TAZWorkhorseRevB_SmallLayer_2.0.0.144_aded3b617.hex",
+            "lulzbot_redgum_banded_tiger":      "Marlin_TAZWorkhorseRevB_HardenedSteel_2.0.0.144_aded3b617.hex",
+            "lulzbot_redgum_cecropia":   "Marlin_TAZWorkhorseRevB_SingleExtruderAeroV2_2.0.0.144_aded3b617.hex",
+            "lulzbot_redgum_dingy_cutworm": "Marlin_TAZWorkhorseRevB_HardenedSteelPlus_2.0.0.144_aded3b617.hex",
+            "lulzbot_redgum_yellowfin":        "Marlin_TAZWorkhorseRevB_DualExtruderV3_2.0.0.144_aded3b617.hex",
+        }
 
         ##TODO: Add check for multiple extruders
         hex_file = None
@@ -257,9 +272,13 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
                 hex_file = machine_without_extras[machine_id]  # Return "basic" firmware
         elif machine_id in lulzbot_machines.keys():
             machine_has_lcd = global_container_stack.getProperty("machine_has_lcd", "value")
+            revision_type = global_container_stack.getProperty("revision_type","value")
             if machine_id in lulzbot_lcd_machines.keys() and machine_has_lcd:
                 Logger.log("d", "Found firmware with LCD for machine %s.", machine_id)
                 hex_file = lulzbot_lcd_machines[machine_id]
+            elif machine_id in lulzbot_revision_machines.keys() and revision_type:
+                Logger.log("d","Found firmware with Revision for machine %s.", machine_id)
+                hex_file = lulzbot_revision_machines[machine_id]
             else:
                 Logger.log("d", "Found firmware for machine %s.", machine_id)
                 hex_file = lulzbot_machines[machine_id]

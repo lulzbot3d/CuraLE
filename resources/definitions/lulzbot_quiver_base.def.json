@@ -20,7 +20,7 @@
     {
         "firmware_machine_type":
         {
-            "resolve": "'LulzBot TAZ Pro' if revision_type else 'LulzBot TAZ Pro(Rev B)'"
+            "resolve": "'LulzBot TAZ Pro' if revision_type else 'LulzBot TAZ Pro Rev B'"
         },
         "machine_baudrate":
         {

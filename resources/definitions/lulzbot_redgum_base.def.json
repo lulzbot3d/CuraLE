@@ -25,7 +25,7 @@
     {
         "firmware_machine_type":
         {
-            "resolve": "'TAZ Workhorse Edition' if revision_type else 'TAZ Workhorse Edition(Rev B)'"
+            "resolve": "'TAZ Workhorse Edition' if revision_type else 'TAZ Workhorse Edition Rev B'"
         },
         "machine_width":
         {
