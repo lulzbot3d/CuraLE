@@ -111,6 +111,14 @@
                     "label": "LCD",
                     "description": "LCD"
                 },
+                "revision_type":
+                {
+                    "type": "bool",
+                    "default_value": false,
+                    "enabled": false,
+                    "label": "Revision",
+                    "description": "Revision"
+                },
                 "firmware_machine_type":
                 {
                     "type": "str",

@@ -1006,6 +1006,15 @@ Cura.MachineAction
         watchedProperties: [ "value" ]
         storeIndex: manager.containerIndex
     }
+    UM.SettingPropertyProvider
+    {
+        id: machineRevisionProvider
+
+        containerStackId: Cura.MachineManager.activeMachineId
+        key: "revision_type"
+        watchedProperties: [ "value" ]
+        storeIndex: manager.containerIndex
+    }
 
     UM.SettingPropertyProvider
     {
