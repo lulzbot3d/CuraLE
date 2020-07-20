@@ -118,6 +118,7 @@ UM.Dialog
 
                         property int selectedIndex: 0
                         property bool lcd: false
+                        property bool revision: false
                         property string baseMachine: ""
 
                         Column
@@ -131,10 +132,10 @@ UM.Dialog
                                     text: model.name
                                     exclusiveGroup: printerGroup
                                     checked: model.index == 0
-                                    onClicked: { printerSelection.selectedIndex = model.index; printerSelection.lcd = model.lcd; printerSelection.baseMachine = model.id }
+                                    onClicked: { printerSelection.selectedIndex = model.index; printerSelection.lcd = model.lcd;printerSelection.revision = model.revision; printerSelection.baseMachine = model.id }
                                 }
 
-                                Component.onCompleted: {printerSelection.lcd = model.getItem(0).lcd; printerSelection.baseMachine = model.getItem(0).id}
+                                Component.onCompleted: {printerSelection.lcd = model.getItem(0).lcd;printerSelection.revision = model.getItem(0).revision; printerSelection.baseMachine = model.getItem(0).id}
                             }
                         }
                     }
