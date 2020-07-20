@@ -272,7 +272,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
                 hex_file = machine_without_extras[machine_id]  # Return "basic" firmware
         elif machine_id in lulzbot_machines.keys():
             machine_has_lcd = global_container_stack.getProperty("machine_has_lcd", "value")
-            revision_type = global_container_stack.getProperty("revision_type","value")
+            revision_type = global_container_stack.getProperty("has_revision","value")
             if machine_id in lulzbot_lcd_machines.keys() and machine_has_lcd:
                 Logger.log("d", "Found firmware with LCD for machine %s.", machine_id)
                 hex_file = lulzbot_lcd_machines[machine_id]
