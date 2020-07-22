@@ -24,7 +24,7 @@ SetCompressor /SOLID lzma
 
 !include "MUI2.nsh"
 !include "Library.nsh"
-
+!include "FileAssociation.nsh"
 ; !define MUI_ICON "dist/resources/cura.ico"
 !define MUI_BGCOLOR FFFFFF
 
