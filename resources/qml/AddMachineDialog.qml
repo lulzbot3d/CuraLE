@@ -3,7 +3,7 @@
 
 import QtQuick 2.2
 import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
+import Quick.Layouts 1.1
 import QtQuick.Window 2.1
 
 import QtQuick.Controls.Styles 1.1
@@ -220,7 +220,7 @@ UM.Dialog
                         {
                             Repeater
                             {
-                                model: ["Rev A(Silver Gearbox)", "Rev B(Black Gearbox)"]
+                                model: ["Rev B(Black Gearbox)", "Rev A(Silver Gearbox)"]
                                 delegate: RadioButton
                                 {
                                     text: modelData
