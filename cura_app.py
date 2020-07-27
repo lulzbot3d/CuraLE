@@ -32,8 +32,6 @@ if not known_args["debug"]:
         os.makedirs(dirpath, exist_ok = True)
         sys.stdout = open(os.path.join(dirpath, "stdout.log"), "w")
         sys.stderr = open(os.path.join(dirpath, "stderr.log"), "w")
-        datadir = os.path.dirname(sys.executable)
-        os.chdir(datadir)
 
 import platform
 import faulthandler
