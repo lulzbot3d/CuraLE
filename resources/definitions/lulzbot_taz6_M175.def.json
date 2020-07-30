@@ -1,6 +1,6 @@
 {
-    "id": "lulzbot_taz6_cecropia",
-    "name": "LulzBot TAZ 6 | SE | 0.5 mm",
+    "id": "lulzbot_taz6_M175",
+    "name": "LulzBot TAZ 6 | M175 | 0.5 mm",
     "inherits": "lulzbot_taz6",
     "version": 2,
     "metadata":
@@ -8,7 +8,7 @@
         "priority": "02",
         "machine_extruder_trains":
         {
-            "0": "lulzbot_taz6_cecropia_extruder"
+            "0": "lulzbot_taz6_M175_extruder"
         },
         "type": "machine",
         "visible": true,
@@ -20,11 +20,11 @@
     {
         "machine_name":
         {
-            "default_value": "LulzBot TAZ 6 | SE | 0.5 mm (Aero v2)"
+            "default_value": "LulzBot TAZ 6 | M175 | 0.5 mm "
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "lulzbot_taz6_cecropia_start"
+            "default_value_from_file": "lulzbot_taz6_M175_start"
         },
         "machine_end_gcode":
         {
