@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_quiver_M175",
-    "name": "LulzBot TAZ Pro | HE | 0.5mm",
+    "name": "LulzBot TAZ Pro | M175 | 0.5mm",
     "inherits": "lulzbot_quiver_base",
     "version": 2,
     "metadata":
@@ -32,7 +32,7 @@
     {
         "machine_name":
         {
-            "default_value": "LulzBot Pro | HE | 0.5mm"
+            "default_value": "LulzBot Pro | M175 | 0.5mm"
         },
         "machine_start_gcode":
         {
