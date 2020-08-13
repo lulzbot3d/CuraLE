@@ -587,7 +587,7 @@ class CuraApplication(QtApplication):
         elif choice == "always_keep":
             # don't show dialog and KEEP the profile
             self.discardOrKeepProfileChangesClosed("keep")
-        elif len(self.getGlobalContainerStack().getTop().getAllKeys()) > 0:
+        elif len(self.getGlobalContainerStack().getTop().getAllKeys()) > 0  or len(self.getExtruderManager().getActiveExtruderStack().getTop().getAllKeys()) > 0:
             # ALWAYS ask whether to keep or discard the profile
             self.showDiscardOrKeepProfileChanges.emit()
             has_user_interaction = True
