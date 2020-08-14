@@ -1,5 +1,5 @@
 {
-    "id": "LulzBot_Mini_M175",
+    "id": "LulzBot_Mini_lutefisk",
     "name": "LulzBot Mini M175",
     "inherits": "lulzbot_mini",
     "version": 2,
@@ -8,12 +8,12 @@
         "priority": "06",
         "machine_extruder_trains":
         {
-            "0": "lulzbot_mini_M175_extruder"
+            "0": "lulzbot_mini_lutefisk_extruder"
         },
         "type": "machine",
         "visible": true,
         "user_toolhead_name": "M175",
-        "firmware_toolhead_name": "M175"
+        "firmware_toolhead_name": "lutefisk"
     },
     "overrides":
     {
@@ -23,7 +23,7 @@
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "lulzbot_mini_M175_start"
+            "default_value_from_file": "lulzbot_mini_lutefisk_start"
         },
         "machine_end_gcode":
         {

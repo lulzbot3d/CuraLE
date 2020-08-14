@@ -1,5 +1,5 @@
 {
-    "id": "LulzBot_Hibiscus_M175",
+    "id": "LulzBot_Hibiscus_lutefisk",
     "name": "LulzBot Mini 2 | M175 | 0.5 mm",
     "inherits": "lulzbot_hibiscus",
     "version": 2,
@@ -8,7 +8,7 @@
         "priority": "03",
         "machine_extruder_trains":
         {
-            "0": "lulzbot_hibiscus_M175_extruder"
+            "0": "lulzbot_hibiscus_lutefisk_extruder"
         },
         "type": "machine",
         "platform": "lulzbot_mini.stl",
@@ -25,7 +25,7 @@
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
-        "firmware_toolhead_name": "M175",
+        "firmware_toolhead_name": "lutefisk",
         "user_toolhead_name": "M175 | 0.5 mm",
         "default_extrusion_rate": 60
     },
@@ -33,7 +33,7 @@
     {
         "machine_start_gcode":
         {
-            "default_value_from_file": "lulzbot_hibiscus_M175_start"
+            "default_value_from_file": "lulzbot_hibiscus_lutefisk_start"
         },
         "machine_end_gcode":
         {

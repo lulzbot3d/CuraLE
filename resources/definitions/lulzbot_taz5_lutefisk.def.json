@@ -1,5 +1,5 @@
 {
-    "id": "lulzbot_taz5_M175",
+    "id": "lulzbot_taz5_lutefisk",
     "name": "LulzBot TAZ 5 | M175 | 0.5 mm",
     "inherits": "lulzbot_taz5",
     "version": 2,
@@ -8,12 +8,12 @@
         "priority": "04",
         "machine_extruder_trains":
         {
-            "0": "lulzbot_taz5_M175_extruder"
+            "0": "lulzbot_taz5_lutefisk_extruder"
         },
         "type": "machine",
         "visible": true,
         "user_toolhead_name": "M175 | 0.5 mm",
-        "firmware_toolhead_name": "M175"
+        "firmware_toolhead_name": "lutefisk"
     },
     "overrides":
     {
@@ -23,7 +23,7 @@
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "lulzbot_taz5_M175_start"
+            "default_value_from_file": "lulzbot_taz5_start"
         },
         "machine_end_gcode":
         {

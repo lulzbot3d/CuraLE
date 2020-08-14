@@ -1,10 +1,10 @@
 {
-    "id": "lulzbot_redgum_M175_extruder",
+    "id": "lulzbot_hibiscus_lutefisk_extruder",
     "version": 2,
     "name": "Hot End",
     "inherits": "fdmextruder",
     "metadata": {
-        "machine": "lulzbot_redgum_M175",
+        "machine": "lulzbot_hibiscus_lutefisk",
         "position": "0"
     },
 
