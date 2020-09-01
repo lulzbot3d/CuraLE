@@ -23,7 +23,7 @@
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "lulzbot_taz5_start"
+            "default_value_from_file": "taz5_lutefisk_start"
         },
         "machine_end_gcode":
         {
