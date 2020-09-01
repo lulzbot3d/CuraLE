@@ -189,6 +189,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_mini_banded_tiger":                 "Marlin_Mini_HardenedSteel_1.1.9.34_5f9c029d1.hex",
             "lulzbot_mini_dingy_cutworm":            "Marlin_Mini_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex",
             "lulzbot_mini_cecropia":              "Marlin_Mini_SingleExtruderAeroV2_1.1.9.34_5f9c029d1.hex",
+            "lulzbot_mini_lutefisk":              "lulzbot_mini_lutefisk.hex",
 
             "lulzbot_taz5":                             "Marlin_TAZ5_SingleExtruder_1.1.9.34_5f9c029d1.hex",
             "lulzbot_taz5_flexy_v2":                      "Marlin_TAZ5_Flexystruder_1.1.9.34_5f9c029d1.hex",
@@ -201,6 +202,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_taz5_banded_tiger":                 "Marlin_TAZ5_HardenedSteel_1.1.9.34_5f9c029d1.hex",
             "lulzbot_taz5_dingy_cutworm":            "Marlin_TAZ5_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex",
             "lulzbot_taz5_cecropia":              "Marlin_TAZ5_SingleExtruderAeroV2_1.1.9.34_5f9c029d1.hex",
+            "lulzbot_taz5_lutefisk":              "lulzbot_taz5_lutefisk.hex",
 
             "lulzbot_taz6":                             "Marlin_TAZ6_SingleExtruder_1.1.9.34_5f9c029d1.hex",
             "lulzbot_taz6_flexy_v2":                      "Marlin_TAZ6_Flexystruder_1.1.9.34_5f9c029d1.hex",
@@ -213,11 +215,13 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_taz6_banded_tiger":                 "Marlin_TAZ6_HardenedSteel_1.1.9.34_5f9c029d1.hex",
             "lulzbot_taz6_dingy_cutworm":            "Marlin_TAZ6_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex",
             "lulzbot_taz6_cecropia":              "Marlin_TAZ6_SingleExtruderAeroV2_1.1.9.34_5f9c029d1.hex",
+            "lulzbot_taz6_lutefisk":              "lulzbot_taz6_lutefisk.hex",
 
             "lulzbot_hibiscus":                  "Marlin_Mini2_SingleExtruderAeroV2_1.1.9.34_5f9c029d1.hex",
             "lulzbot_hibiscus_achemon":                    "Marlin_Mini2_SmallLayer_1.1.9.34_5f9c029d1.hex",
             "lulzbot_hibiscus_banded_tiger":            "Marlin_Mini2_HardenedSteel_1.1.9.34_5f9c029d1.hex",
             "lulzbot_hibiscus_dingy_cutworm":       "Marlin_Mini2_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex",
+            "lulzbot_hibiscus_lutefisk":       "lulzbot_hibiscus_lutefisk.hex",
 
             "lulzbot_quiver_achemon":                    "Marlin_TAZPro_SmallLayer_2.0.0.144_aded3b617.bin",
             "lulzbot_quiver_banded_tiger":            "Marlin_TAZPro_HardenedSteel_2.0.0.144_aded3b617.bin",
@@ -225,6 +229,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_quiver_dingy_cutworm":       "Marlin_TAZPro_HardenedSteelPlus_2.0.0.144_aded3b617.bin",
             "lulzbot_quiver_evergreen_bagworm":        "Marlin_TAZPro_DualExtruder_2.0.0.144_aded3b617.bin",
             "lulzbot_quiver_goldenrod":            "Marlin_TAZPro_HardenedExtruder_2.0.0.144_aded3b617.bin",
+            "lulzbot_quiver_lutefisk":            "lulzbot_quiver_lutefisk.bin",
 
             "lulzbot_redgum_goldenrod":      "Marlin_TAZWorkhorse_HardenedExtruder_2.0.0.144_aded3b617.hex",
             "lulzbot_redgum_achemon":              "Marlin_TAZWorkhorse_SmallLayer_2.0.0.144_aded3b617.hex",
@@ -232,6 +237,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_redgum_cecropia":   "Marlin_TAZWorkhorse_SingleExtruderAeroV2_2.0.0.144_aded3b617.hex",
             "lulzbot_redgum_dingy_cutworm": "Marlin_TAZWorkhorse_HardenedSteelPlus_2.0.0.144_aded3b617.hex",
             "lulzbot_redgum_yellowfin":        "Marlin_TAZWorkhorse_DualExtruderV3_2.0.0.144_aded3b617.hex",
+            "lulzbot_redgum_lutefisk":        "lulzbot_redgum_lutefisk.hex",
 
             "lulzbot_kangaroo_paw":                     "Marlin_Bio_SingleExtruder_2.0.0.174_226bfbbb7.hex",
         }
@@ -244,6 +250,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_mini_banded_tiger":              "Marlin_MiniLCD_HardenedSteel_1.1.9.34_5f9c029d1.hex",
             "lulzbot_mini_dingy_cutworm":         "Marlin_MiniLCD_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex",
             "lulzbot_mini_cecropia":           "Marlin_MiniLCD_SingleExtruderAeroV2_1.1.9.34_5f9c029d1.hex",
+            "lulzbot_mini_lutefisk":           "lulzbot_mini_lcd_lutefisk.hex",
         }
         lulzbot_revision_machines = {
             "lulzbot_quiver_achemon":                    "Marlin_TAZProRevB_SmallLayer_2.0.0.144_aded3b617.bin",
