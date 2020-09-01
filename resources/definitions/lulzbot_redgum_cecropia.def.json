@@ -17,7 +17,7 @@
         "base_machine": "LulzBot TAZ Workhorse",
         "base_machine_name": "LulzBot TAZ Workhorse",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "HE | 0.5mm",
+        "user_toolhead_name": "SE | 0.5mm",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
         "default_category": "All"
     },
