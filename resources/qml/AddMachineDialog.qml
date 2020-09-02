@@ -75,7 +75,7 @@ UM.Dialog
                 {
                     base.visible = false
                     var item = toolheadsModel.getItem(toolheadSelection.selectedIndex).id
-                    Cura.MachineManager.addMachine(machineName.text, item, lcdSelection.selectedIndex == 0 ? true: false,revisionSelection.selectedIndex == 0 ? true: false)
+                    Cura.MachineManager.addMachine(machineName.text, item, lcdSelection.selectedIndex == 0 ? true: false,false/*revisionSelection.selectedIndex == 0 ? true: false*/)
                     base.machineAdded(item)
                 }
 
@@ -203,7 +203,7 @@ UM.Dialog
                             }
                         }
                     }
-                    GroupBox
+                    /*GroupBox
                     {
                         id: revisionSelection
                         width: parent.width/17*4-6
@@ -235,7 +235,7 @@ UM.Dialog
                                 }
                             }
                         }
-                    }
+                    }*/
                 }
             }
         }
