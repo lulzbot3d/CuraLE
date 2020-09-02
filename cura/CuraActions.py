@@ -39,7 +39,7 @@ class CuraActions(QObject):
 
     @pyqtSlot()
     def openBugReportPage(self):
-        event = CallFunctionEvent(self._openUrl, [QUrl("https://code.alephobjects.com/project/board/10/")], {})
+        event = CallFunctionEvent(self._openUrl, [QUrl("https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot")], {})
         Application.getInstance().functionEvent(event)
 
     ##  Reset camera position and direction to default
