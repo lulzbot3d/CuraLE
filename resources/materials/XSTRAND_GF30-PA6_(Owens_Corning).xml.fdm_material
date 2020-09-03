@@ -65,6 +65,9 @@
       <machine_identifier product="lulzbot_redgum_goldenrod"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_redgum_cecropia"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_redgum_dingy_cutworm"/>
     </machine>
   </settings>

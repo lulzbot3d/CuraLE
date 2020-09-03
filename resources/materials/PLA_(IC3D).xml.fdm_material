@@ -43,5 +43,8 @@
       <machine_identifier product="lulzbot_redgum_goldenrod"/>
 	<metadata key="category">Supported</metadata>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_cecropia"/>
+    </machine>
   </settings>
 </fdmmaterial>

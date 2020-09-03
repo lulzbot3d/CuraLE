@@ -23,6 +23,9 @@
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_redgum_goldenrod" />
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_redgum_cecropia"/>
+    </machine>
+    <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_quiver_evergreen_bagworm" />
     </machine>
   </settings>

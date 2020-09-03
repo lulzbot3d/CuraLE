@@ -78,5 +78,8 @@
     <machine>
       <machine_identifier product="lulzbot_redgum_goldenrod" />
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_cecropia"/>
+    </machine>
   </settings>
 </fdmmaterial>

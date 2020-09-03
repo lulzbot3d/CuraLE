@@ -33,5 +33,12 @@
       <setting key="part removal temperature">45</setting>
       <setting key="soften temperature">140</setting>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_cecropia"/>
+      <setting key="probe temperature">140</setting>
+      <setting key="wipe temperature">140</setting>
+      <setting key="part removal temperature">45</setting>
+      <setting key="soften temperature">140</setting>
+    </machine>
   </settings>
 </fdmmaterial>
