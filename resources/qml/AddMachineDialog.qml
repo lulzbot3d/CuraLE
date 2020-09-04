@@ -75,7 +75,7 @@ UM.Dialog
                 {
                     base.visible = false
                     var item = toolheadsModel.getItem(toolheadSelection.selectedIndex).id
-                    Cura.MachineManager.addMachine(machineName.text, item, lcdSelection.selectedIndex == 0 ? true: false,false/*revisionSelection.selectedIndex == 0 ? true: false*/)
+                    Cura.MachineManager.addMachine(machineName.text, item, lcdSelection.selectedIndex == 0 ? true: false,true/*revisionSelection.selectedIndex == 0 ? true: false*/)
                     base.machineAdded(item)
                 }
 
