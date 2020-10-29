@@ -26,6 +26,7 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
         "firmware_toolhead_name": "lutefisk",
+        "firmware_last_version": "2.0.0.144",
         "user_toolhead_name": "M175 | 0.5 mm",
         "default_extrusion_rate": 60
     },

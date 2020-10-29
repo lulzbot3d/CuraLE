@@ -9,6 +9,7 @@
         "preferred_material": "pla",
         "preferred_quality": "normal",
         "file_formats": "text/x-gcode",
+        "default_eeprom_state": true,
         "visible": false
     },
     "overrides":
