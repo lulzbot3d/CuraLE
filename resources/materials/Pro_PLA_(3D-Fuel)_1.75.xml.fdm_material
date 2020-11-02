@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Generic</brand>
+      <material>Pro PLA (3D_Fuel)</material>
+      <color>Generic</color>
+      <category>Beginner</category>
+    </name>
+    <GUID>4a93345b-114d-40f9-9781-40216df0e2b4</GUID>
+    <version>1</version>
+    <color_code>#c1d82f</color_code>
+    <info_link>https://www.lulzbot.com/store/filament/175mm-pro-pla</info_link>
+  </metadata>
+  <properties>
+    <density>1.25</density>
+    <diameter>1.75</diameter>
+  </properties>
+  <settings>
+    <setting key="print temperature">205</setting>
+    <setting key="heated bed temperature">60</setting>
+    <setting key="standby temperature">175</setting>
+    <setting key="soften temperature">140</setting>
+    <setting key="probe temperature">140</setting>
+    <setting key="wipe temperature">140</setting>
+    <setting key="part removal temperature">45</setting>
+     <machine>
+      <machine_identifier product="lulzbot_hibiscus_lutefisk"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_quiver_lutefisk"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_redgum_lutefisk"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_mini_lutefisk"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_taz6_lutefisk"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_taz5_lutefisk"/>
+    </machine>
+  </settings>
+</fdmmaterial>

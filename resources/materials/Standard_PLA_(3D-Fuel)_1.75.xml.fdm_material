@@ -3,14 +3,14 @@
   <metadata>
     <name>
       <brand>Generic</brand>
-      <material>Pro PLA (3D_Fuel)</material>
+      <material>Standard PLA (3D-Fuel)</material>
       <color>Generic</color>
       <category>Beginner</category>
     </name>
     <GUID>4a93345b-114d-40f9-9781-40216df0e2b4</GUID>
     <version>1</version>
     <color_code>#c1d82f</color_code>
-    <info_link>https://www.lulzbot.com/store/filament/polylite-pla?pk_campaign=software-cura</info_link>
+    <info_link>https://www.lulzbot.com/store/filament/175-mm-standard-pla</info_link>
   </metadata>
   <properties>
     <density>1.25</density>
