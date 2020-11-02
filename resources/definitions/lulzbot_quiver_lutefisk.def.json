@@ -7,7 +7,7 @@
     {
         "type": "machine",
         "visible": true,
-        "priority": "02",
+        "priority": "01",
         "machine_extruder_trains":
         {
             "0": "lulzbot_quiver_lutefisk_extruder"
