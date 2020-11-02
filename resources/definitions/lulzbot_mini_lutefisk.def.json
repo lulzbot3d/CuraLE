@@ -12,6 +12,7 @@
         },
         "type": "machine",
         "visible": true,
+        "firmware_last_version": "2.0.0.144",
         "user_toolhead_name": "M175",
         "firmware_toolhead_name": "lutefisk"
     },
