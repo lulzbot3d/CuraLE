@@ -28,7 +28,7 @@
         "base_machine_name": "LulzBot Mini",
         "user_toolhead_name": "Single Extruder",
         "firmware_toolhead_name": "SingleExtruder",
-        "default_eeprom_state": true,
+        "default_eeprom_state": false,
         "has_optional_lcd": true
     },
     "overrides":
