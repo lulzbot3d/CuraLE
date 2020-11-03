@@ -46,6 +46,7 @@ Cura.MachineAction
             anchors.topMargin: UM.Theme.getSize("default_margin").height
             width: parent.width
             wrapMode: Text.WordWrap
+            color: "red"
             text: catalog.i18nc("@label", "
                 <b>WARNING:</b>The firmware updating process will overwrite certain parameters. Restore the tuned values by following the steps below after the firmware update is complete.<br>")
 
@@ -57,6 +58,7 @@ Cura.MachineAction
             anchors.topMargin: UM.Theme.getSize("default_margin").height
             width: parent.width
             wrapMode: Text.WordWrap
+            color: "red"
             text: catalog.i18nc("@label", "Please have the following recorded <u>before</u> upgrading firmware:
                 <ul type=\"bullet\">
                     <li>Extruder steps per unit
