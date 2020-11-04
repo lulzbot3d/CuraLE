@@ -48,7 +48,7 @@ Cura.MachineAction
             wrapMode: Text.WordWrap
             color: "red"
             text: catalog.i18nc("@label", "
-                <b>WARNING:</b>The firmware updating process will overwrite certain parameters. Restore the tuned values by following the steps below after the firmware update is complete.<br>")
+                <font color=\"red\"><b>WARNING:</b>The firmware updating process will overwrite certain parameters. Restore the tuned values by following the steps below after the firmware update is complete.</font><br>")
 
         }
         Label
