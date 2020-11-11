@@ -25,6 +25,7 @@ LC_MESSAGES
 *.qm
 .idea
 cura.desktop
+.vscode/settings.json
 
 # Eclipse+PyDev
 .project
@@ -65,4 +66,5 @@ run.sh
 CuraEngine
 debug.html
 .scannerwork/
+
 

@@ -5,7 +5,7 @@
     "version": 2,
     "metadata":
     {
-        "priority": "06",
+        "priority": "07",
         "machine_extruder_trains":
         {
             "0": "lulzbot_mini_aerostruder_extruder"

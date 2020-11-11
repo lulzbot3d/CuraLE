@@ -5,7 +5,7 @@
     "version": 2,
     "metadata":
     {
-        "priority": "01",
+        "priority": "00",
         "machine_extruder_trains":
         {
             "0": "lulzbot_taz5_extruder"

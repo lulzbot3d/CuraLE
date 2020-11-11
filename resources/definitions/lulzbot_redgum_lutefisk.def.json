@@ -7,7 +7,7 @@
     {
         "type": "machine",
         "visible": true,
-        "priority": "01",
+        "priority": "06",
         "machine_extruder_trains":
         {
             "0": "lulzbot_redgum_lutefisk_extruder"

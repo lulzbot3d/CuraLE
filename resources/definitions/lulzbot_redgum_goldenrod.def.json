@@ -7,7 +7,7 @@
     {
         "type": "machine",
         "visible": true,
-        "priority": "01",
+        "priority": "00",
         "machine_extruder_trains":
         {
             "0": "lulzbot_redgum_goldenrod_extruder"
