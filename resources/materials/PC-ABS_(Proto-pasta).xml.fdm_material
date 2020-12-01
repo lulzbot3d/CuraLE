@@ -43,6 +43,9 @@
       <machine_identifier product="lulzbot_taz6_cecropia"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_taz6_goldenrod"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_mini_aerostruder"/>
     </machine>
     <machine>
