@@ -66,7 +66,7 @@ UM.Dialog
         width: parent.width
 
         //: About dialog application author note
-        text: catalog.i18nc("@info:credit","Cura LulzBot Edition is maintained by FAME 3D, Inc. for use with LulzBot 3D printers. It is derived from Cura, which is developed by Ultimaker B.V. in cooperation with the community.\nCura proudly uses the following open source projects:")
+        text: catalog.i18nc("@info:credit","Cura LulzBot Edition is maintained by Aleph Objects, Inc. for use with LulzBot 3D printers. It is derived from Cura, which is developed by Ultimaker B.V. in cooperation with the community.\nCura proudly uses the following open source projects:")
         font: UM.Theme.getFont("system")
         wrapMode: Text.WordWrap
         anchors.top: description.bottom
@@ -116,11 +116,11 @@ UM.Dialog
             }
             Component.onCompleted:
             {
-                projectsModel.append({ name:"Cura", description: catalog.i18nc("@label", "Graphical user interface"), license: "LGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot" });
-                projectsModel.append({ name:"Uranium", description: catalog.i18nc("@label", "Application framework"), license: "LGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/uranium" });
-                projectsModel.append({ name:"CuraEngine", description: catalog.i18nc("@label", "GCode generator"), license: "AGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/curaengine" });
-                projectsModel.append({ name:"libArcus", description: catalog.i18nc("@label", "Interprocess communication library"), license: "LGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/libarcus" });
-                projectsModel.append({ name:"libSavitar", description: catalog.i18nc("@label", "Support library for handling 3MF files"), license: "LGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/libsavitar" });
+                projectsModel.append({ name:"Cura", description: catalog.i18nc("@label", "Graphical user interface"), license: "LGPLv3", url: "https://code.alephobjects.com/source/cura-lulzbot/" });
+                projectsModel.append({ name:"Uranium", description: catalog.i18nc("@label", "Application framework"), license: "LGPLv3", url: "https://code.alephobjects.com/diffusion/U/" });
+                projectsModel.append({ name:"CuraEngine", description: catalog.i18nc("@label", "GCode generator"), license: "AGPLv3", url: "https://code.alephobjects.com/diffusion/CTE/" });
+                projectsModel.append({ name:"libArcus", description: catalog.i18nc("@label", "Interprocess communication library"), license: "LGPLv3", url: "https://code.alephobjects.com/source/arcus/" });
+                projectsModel.append({ name:"libSavitar", description: catalog.i18nc("@label", "Support library for handling 3MF files"), license: "LGPLv3", url: "https://code.alephobjects.com/source/savitar/" });
 
                 projectsModel.append({ name:"Python", description: catalog.i18nc("@label", "Programming language"), license: "Python", url: "http://python.org/" });
                 projectsModel.append({ name:"Qt5", description: catalog.i18nc("@label", "GUI framework"), license: "LGPLv3", url: "https://www.qt.io/" });

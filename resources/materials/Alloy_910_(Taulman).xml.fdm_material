@@ -45,6 +45,9 @@
       <machine_identifier product="lulzbot_taz6_aerostruder"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_taz6_goldenrod"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_taz6_flexy_dually_v2"/>
     </machine>
     <machine>

@@ -1,0 +1,71 @@
+{
+    "id": "lulzbot_gladiator_achemon",
+    "name": "LulzBot TAZ ProXT | SL | 0.25mm (Micro)",
+    "inherits": "lulzbot_gladiator_base",
+    "version": 2,
+    "metadata":
+    {
+        "type": "machine",
+        "visible": true,
+        "priority": "4",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_gladiator_achemon_extruder"
+        },
+        "platform": "gladiator_bed.stl",
+        "platform_offset":
+        [
+            0,
+            -25,
+            0
+        ],
+        "category": "LulzBot",
+        "firmware_toolhead_name": "SmallLayer",
+        "base_machine": "LulzBot TAZ ProXT",
+        "base_machine_name": "LulzBot TAZ ProXT",
+        "preferred_material": "*PolyLite_PLA*",
+        "user_toolhead_name": "SL | 0.25mm (Micro)",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/sl-tool-head-small-layer-micro-025-mm",
+        "default_category": "All"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "LulzBot Pro Single Extruder SL"
+        },
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_gladiator_achemon_start"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_gladiator_achemon_end"
+        },
+        "machine_level_x_axis_gcode":
+        {
+            "default_value_from_file": "lulzbot_gladiator_level_x_axis"
+        },
+        "machine_extruder_count": {
+            "default_value": 1
+        },
+        "machine_width":
+        {
+            "default_value": 282
+        },
+        "machine_depth":
+        {
+            "default_value": 282
+        },
+        "machine_height":
+        {
+            "default_value": 586
+        },
+        "machine_wipe_gcode":
+        {
+            "default_value_from_file": "lulzbot_gladiator_achemon_wipe"
+        },
+        "layer_start_x": { "value": "100" },
+        "layer_start_y": { "value": "100" }
+    }
+}

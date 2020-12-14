@@ -27,7 +27,6 @@
         "base_machine": "lulzbot_hibiscus",
         "base_machine_name": "LulzBot Mini 2",
         "user_toolhead_name": "SE | 0.5 mm (Aero v2)",
-        "default_eeprom_state": false,
         "firmware_toolhead_name": "SingleExtruderAeroV2"
     },
     "overrides":
