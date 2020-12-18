@@ -78,6 +78,9 @@
       <metadata key="category">Experimental</metadata>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_gladiator_evergreen_bagworm"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_quiver_cecropia"/>
     </machine>
     <machine>
