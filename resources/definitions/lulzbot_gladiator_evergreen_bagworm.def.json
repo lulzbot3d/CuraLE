@@ -60,7 +60,7 @@
         },
         "machine_height":
         {
-            "default_value": 286
+            "default_value": 586
         },
         "machine_wipe_gcode":
         {
