@@ -4,7 +4,7 @@
     "name": "Hot End 1",
     "inherits": "fdmextruder",
     "metadata": {
-        "machine": "lulzbot_glagiator_evergreen_bagworm",
+        "machine": "lulzbot_gladiator_evergreen_bagworm",
         "position": "0"
     },
 
