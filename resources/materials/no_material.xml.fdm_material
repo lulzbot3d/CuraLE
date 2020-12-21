@@ -22,6 +22,9 @@
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_quiver_evergreen_bagworm" />
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_gladiator_evergreen_bagworm"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_taz6_dual_v3"/>
       <metadata key="category">Supported</metadata>
     </machine>

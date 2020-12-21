@@ -39,6 +39,9 @@
       <machine_identifier product="lulzbot_taz6_cecropia"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_taz6_goldenrod"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_taz6"/>
     </machine>
     <machine>
@@ -78,6 +81,10 @@
     </machine>
     <machine>
       <machine_identifier product="lulzbot_quiver_evergreen_bagworm"/>
+      <metadata key="category">Experimental</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_evergreen_bagworm"/>
       <metadata key="category">Experimental</metadata>
     </machine>
     <machine>

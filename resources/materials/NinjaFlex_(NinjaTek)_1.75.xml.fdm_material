@@ -32,6 +32,9 @@
         <machine_identifier product="lulzbot_quiver_lutefisk"/>
     </machine>
      <machine>
+        <machine_identifier product="lulzbot_gladiator_lutefisk"/>
+    </machine>
+     <machine>
         <machine_identifier product="lulzbot_redgum_lutefisk"/>
     </machine>
      <machine>

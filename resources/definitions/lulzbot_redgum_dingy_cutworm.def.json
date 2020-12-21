@@ -7,7 +7,7 @@
     {
         "type": "machine",
         "visible": true,
-        "priority": "05",
+        "priority": "04",
         "machine_extruder_trains":
         {
             "0": "lulzbot_redgum_dingy_cutworm"

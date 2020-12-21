@@ -7,7 +7,7 @@
     {
         "type": "machine",
         "visible": true,
-        "priority": "05",
+        "priority": "03",
         "machine_extruder_trains":
         {
             "0": "lulzbot_quiver_cecropia_extruder"
@@ -22,7 +22,7 @@
         "category": "LulzBot",
         "firmware_toolhead_name": "HardenedSteel",
         "base_machine": "LulzBot TAZ Pro",
-        "base_machine_name": "LulzBot TAZ Pro",
+        "base_machine_name": "LulzBotTAZ Pro",
         "preferred_material": "*PolyLite_PLA*",
         "user_toolhead_name": "HS | 0.8mm",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/hs-tool-head-hardened-steel-08-mm?pk_campaign=software-cura",

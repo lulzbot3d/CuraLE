@@ -76,6 +76,9 @@
       <machine_identifier product="lulzbot_taz6_cecropia"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_taz6_goldenrod"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_taz6_achemon"/>
     </machine>
     <machine>
@@ -95,6 +98,12 @@
     </machine>
     <machine>
       <machine_identifier product="lulzbot_quiver_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_evergreen_bagworm"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_mini_cecropia"/>

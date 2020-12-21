@@ -7,7 +7,7 @@
     {
         "type": "machine",
         "visible": true,
-        "priority": "09",
+        "priority": "10",
         "machine_extruder_trains":
         {
             "0": "lulzbot_taz6_dual_v2_1st",
