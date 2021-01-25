@@ -51,5 +51,11 @@
     <machine>
       <machine_identifier product="lulzbot_sidekick_9in_lutefisk"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_6in_sk175"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_9in_sk175"/>
+    </machine>
   </settings>
 </fdmmaterial>

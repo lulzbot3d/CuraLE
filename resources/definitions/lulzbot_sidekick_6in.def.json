@@ -1,11 +1,11 @@
 {
     "id": "lulzbot_sidekick_6in",
-    "name": "LulzBot TAZ Sidekick 6 Inch | SK175 | 0.5 mm",
+    "name": "LulzBot TAZ Sidekick 6 Inch | SK285 | 0.5 mm",
     "inherits": "lulzbot_base",
     "version": 2,
     "metadata":
     {
-        "priority": "01",
+        "priority": "02",
         "machine_extruder_trains":
         {
             "0": "lulzbot_sidekick_6in_extruder"
@@ -26,7 +26,7 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_sidekick_6in",
         "base_machine_name": "LulzBot TAZ Sidekick 252",
-        "user_toolhead_name": "SK175 | 0.5 mm ",
+        "user_toolhead_name": "SK285 | 0.5 mm ",
         "firmware_toolhead_name": "SidekickToolHead"
     },
     "overrides":

@@ -1,14 +1,14 @@
 {
-    "id": "lulzbot_sidekick_6in_lutefisk",
-    "name": "LulzBot TAZ Sidekick 6 Inch | M175 | 0.5 mm",
-    "inherits": "lulzbot_sidekick_6in",
+    "id": "lulzbot_sidekick_9in_sk175",
+    "name": "LulzBot TAZ Sidekick 9 Inch | SK175 | 0.5 mm",
+    "inherits": "lulzbot_sidekick_9in",
     "version": 2,
     "metadata":
     {
-        "priority": "08",
+        "priority": "01",
         "machine_extruder_trains":
         {
-            "0": "lulzbot_sidekick_6in_lutefisk_extruder"
+            "0": "lulzbot_sidekick_9in_sk175_extruder"
         },
         "type": "machine",
         "platform": "lulzbot_mini.stl",
@@ -24,9 +24,9 @@
         "visible": true,
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
-        "base_machine": "lulzbot_sidekick_6in",
-        "firmware_toolhead_name": "lutefisk",
-        "user_toolhead_name": "M175 | 0.5 mm",
+        "base_machine": "lulzbot_sidekick_9in",
+        "firmware_toolhead_name": "sk175",
+        "user_toolhead_name": "SK175 | 0.5 mm",
         "default_extrusion_rate": 60
     },
     "overrides":
@@ -45,7 +45,7 @@
         },
         "firmware_machine_type":
         {
-            "default_value": "LulzBot TAZ Sidekick 6 Inch"
+            "default_value": "LulzBot TAZ Sidekick 9 Inch"
         },
         "material_diameter":
         {

@@ -46,6 +46,10 @@
         "firmware_machine_type":
         {
             "default_value": "LulzBot TAZ Sidekick 9 Inch"
+        },
+        "material_diameter":
+        {
+            "default_value": 1.75
         }
     }
 }
