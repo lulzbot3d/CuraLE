@@ -1,0 +1,8 @@
+{
+    "name": "Unit Conversion",
+    "author": "Jaime van Kessel",
+    "version": "1.0.0",
+    "description": "xtension that allows to quickly convert models in metric and imperial units",
+    "api": 4,
+    "i18n-catalog": "cura"
+}

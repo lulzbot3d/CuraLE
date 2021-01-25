@@ -1,0 +1,20 @@
+[
+{
+    "id":"lulzbot_quiver_evergreen_bagworm",
+    "models_per_extruders":
+        [
+            {"extruder":"0", "model":"TAZ_Pro_Calibration01.stl"},
+            {"extruder":"1", "model":"TAZ_Pro_Calibration02.stl"}
+        ],
+    "id":"lulzbot_redgum_goldenrod",
+    "models_per_extruders":
+        [
+            {"extruder":"0", "model":"octo_gear_v1.stl"}
+        ],
+    "id":"lulzbot_kangaroo_paw",
+    "models_per_extruders":
+            [
+                {"extruder":0,"model":"Right_Coronary_Artery_Tree.stl"}
+            ]
+}
+]

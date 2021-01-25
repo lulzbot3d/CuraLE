@@ -1,0 +1,62 @@
+{
+    "id": "lulzbot_redgum_yellowfin",
+    "name": "TAZ Workhorse Dual Extruder v3",
+    "inherits": "lulzbot_redgum_base",
+    "version": 2,
+    "metadata":
+    {
+        "type": "machine",
+        "visible": true,
+        "priority": "00",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_redgum_yellowfin_1st",
+            "1": "lulzbot_redgum_yellowfin_2nd"
+        },
+        "category": "LulzBot",
+        "firmware_toolhead_name": "DualExtruder v3",
+        "base_machine": "LulzBot TAZ Workhorse",
+        "base_machine_name": "LulzBot TAZ Workhorse",
+        "preferred_material": "*PolyLite_PLA*",
+        "user_toolhead_name": "Dual Extruder v3",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-dual-extruder-v3-tool-head?pk_campaign=software-cura",
+        "priority": "8",
+        "default_category": "All"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "redgum yellowfin"
+        },
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_redgum_yellowfin_start"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_redgum_yellowfin_end"
+        },
+        "machine_level_x_axis_gcode":
+        {
+            "default_value_from_file": "lulzbot_quiver_level_x_axis"
+        },
+        "machine_extruder_count": {
+            "default_value": 2
+        },
+        "machine_width":
+        {
+            "default_value": 282
+        },
+        "machine_depth":
+        {
+            "default_value": 282
+        },
+        "machine_height":
+        {
+            "default_value": 286
+        },
+        "layer_start_x": { "value": "100" },
+        "layer_start_y": { "value": "100" }
+    }
+}

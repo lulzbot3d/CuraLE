@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Generic</brand>
+      <material>PVA</material>
+      <color>Generic</color>
+      <category>Advanced</category>
+    </name>
+    <GUID>ce747483-8d4e-47ab-96c7-eda81bb3f77f</GUID>
+    <version>1</version>
+    <color_code>#8DB6CD</color_code>
+    <info_link>https://www.lulzbot.com/store/filament/natural-pva?pk_campaign=software-cura</info_link>
+    <adhesion_info>Use glue stick.</adhesion_info>
+  </metadata>
+  <properties>
+    <density>1.25</density>
+    <diameter>2.85</diameter>
+  </properties>
+  <settings>
+    <setting key="print temperature">200</setting>
+    <setting key="heated bed temperature">60</setting>
+    <setting key="standby temperature">175</setting>
+    <setting key="soften temperature">150</setting>
+    <setting key="probe temperature">140</setting>
+    <setting key="wipe temperature">140</setting>
+    <setting key="part removal temperature">45</setting>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_dual_v3"/>
+      <metadata key="category">Supported</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_dual_v3"/>
+      <metadata key="category">Supported</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_dual_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_dual_v2"/>
+    </machine>
+    <machine>
+	  <machine_identifier product = "lulzbot_taz6_flexy_dually_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_flexy_dually_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_evergreen_bagworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_evergreen_bagworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_yellowfin"/>
+      <metadata key="category">Supported</metadata>
+    </machine>
+  </settings>
+</fdmmaterial>

@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<fdmmaterial xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Generic</brand>
+      <material>Alloy 920 GF (Taulman)</material>
+      <color>Generic</color>
+      <category>Experimental</category>
+    </name>
+    <GUID>8c5eab64-5040-4fca-9903-778ddcbc359b</GUID>
+    <color_code>#d3d7cf</color_code>
+    <adhesion_info />
+    <definition>fdmprinter</definition>
+    <description />
+    <version>1</version>
+    <compatible>True</compatible>
+    <adhesion_info>Use directly on clean PEI.</adhesion_info>
+  </metadata>
+  <properties />
+  <settings>
+    <setting key="retraction amount">7.0</setting>
+    <setting key="wipe temperature">180.0</setting>
+    <setting key="part removal temperature">60</setting>
+    <setting key="heated bed temperature">105</setting>
+    <setting key="print temperature">240.0</setting>
+    <setting key="retraction speed">30.0</setting>
+    <setting key="soften temperature">180</setting>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_hibiscus_dingy_cutworm" />
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_mini_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_taz5_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_evergreen_bagworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_evergreen_bagworm"/>
+    </machine>
+    <machine>
+      <machine_identifier manufactuere = "Aleph Objects, Inc." product="lulzbot_taz6_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_dingy_cutworm"/>
+    </machine>
+  </settings>
+</fdmmaterial>

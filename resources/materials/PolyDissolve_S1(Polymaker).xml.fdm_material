@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Generic</brand>
+      <material>PolyDissolve S1(Polymaker)</material>
+      <color>Generic</color>
+      <category>Advanced</category>
+    </name>
+    <GUID>577aff64-923f-44e4-bf89-f05e1ecbb433</GUID>
+    <version>1</version>
+    <color_code>#788814</color_code>
+    <info_link>https://www.lulzbot.com/store/filament/polydissolve-s1?pk_campaign=software-cura</info_link>
+    <adhesion_info>Use glue stick.</adhesion_info>
+  </metadata>
+  <properties>
+    <density>1.25</density>
+    <diameter>2.85</diameter>
+  </properties>
+  <settings>
+    <setting key="print temperature">220</setting>
+    <setting key="heated bed temperature">60</setting>
+    <setting key="standby temperature">175</setting>
+    <setting key="soften temperature">160</setting>
+    <setting key="probe temperature">140</setting>
+    <setting key="wipe temperature">140</setting>
+    <setting key="part removal temperature">45</setting>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_dual_v3"/>
+      <metadata key="category">Supported</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_dual_v3"/>
+      <metadata key="category">Supported</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_hibiscus"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_evergreen_bagworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_evergreen_bagworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_yellowfin"/>
+      <metadata key="category">Supported</metadata>
+    </machine>
+  </settings>
+</fdmmaterial>

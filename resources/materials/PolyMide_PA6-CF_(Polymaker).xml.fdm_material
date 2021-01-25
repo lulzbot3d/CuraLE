@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Generic</brand>
+      <material>PolyMide PA6-CF (Polymaker)</material>
+      <color>Purple</color>
+      <label>PolyMide PA6-CF (Polymaker)</label>
+      <category />
+    </name>
+    <extruder_disabled>False</extruder_disabled>
+    <description />
+    <version>1</version>
+    <definition>fdmprinter</definition>
+    <GUID>54660aef-2bda-440d-8e46-cf672e56efbc</GUID>
+    <compatible>True</compatible>
+    <adhesion_info>Use Glue Stick</adhesion_info>
+    <color_code>#5500ff</color_code>
+  </metadata>
+  <properties />
+  <settings>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_redgum_goldenrod" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_quiver_evergreen_bagworm" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_evergreen_bagworm"/>
+    </machine>
+  </settings>
+</fdmmaterial>

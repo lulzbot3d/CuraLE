@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Generic</brand>
+      <material>nGen (colorFabb)</material>
+      <color>Generic</color>
+      <category>Intermediate</category>
+    </name>
+    <GUID>1a032551-39fb-4664-ae88-632e4eeb1617</GUID>
+    <version>1</version>
+    <color_code>#CD8C95</color_code>
+    <info_link>https://www.lulzbot.com/store/filament/ngen?pk_campaign=software-cura</info_link>
+    <adhesion_info>Use glue stick.</adhesion_info>
+  </metadata>
+  <properties>
+    <density>1.2</density>
+    <diameter>2.85</diameter>
+  </properties>
+  <settings>
+    <setting key="print temperature">230</setting>
+    <setting key="heated bed temperature">85</setting>
+    <setting key="standby temperature">175</setting>
+    <setting key="soften temperature">170</setting>
+    <setting key="probe temperature">170</setting>
+    <setting key="wipe temperature">170</setting>
+    <setting key="part removal temperature">50</setting>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_dual_v3"/>
+      <metadata key="category">Experimental</metadata>
+    </machine>
+    <machine>
+	  <machine_identifier product="lulzbot_taz5_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_dual_v3"/>
+      <metadata key="category">Experimental</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_moarstruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_flexy_dually_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_dual_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_flexy_dually_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_moarstruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_aerostruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini_aerostruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_aerostruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_hibiscus"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_evergreen_bagworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_evergreen_bagworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_hibiscus_achemon"/>
+    </machine>
+    <machine>
+     <machine_identifier product="lulzbot_taz6_twoolhead"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_twoolhead"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_achemon"/>
+    </machine>
+  </settings>
+</fdmmaterial>

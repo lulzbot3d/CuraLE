@@ -1,0 +1,42 @@
+{
+    "id": "LulzBot_Taz6_Flexy_v2",
+    "name": "LulzBot TAZ 6 Flexystruder v2",
+    "inherits": "lulzbot_taz6",
+    "version": 2,
+    "metadata":
+    {
+        "priority": "12",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_taz6_flexy_v2_extruder"
+        },
+        "type": "machine",
+        "visible": true,
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-flexystruder-tool-head-v2?pk_campaign=software-cura",
+        "user_toolhead_name": "Flexystruder v2",
+        "firmware_toolhead_name": "Flexystruder"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "LulzBot TAZ 6 Flexystruder v2"
+        },
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_taz6_flexy_start"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_taz6_flexy_end"
+        },
+        "machine_nozzle_size":
+        {
+            "default_value": 0.6
+        },
+        "machine_wipe_gcode":
+        {
+            "default_value_from_file": "lulzbot_taz6_wipe"
+        }
+    }
+}

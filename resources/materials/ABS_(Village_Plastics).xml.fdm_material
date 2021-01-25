@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Generic</brand>
+      <material>ABS (Village Plastics)</material>
+      <color>Generic</color>
+      <category>Intermediate</category>
+    </name>
+    <GUID>f8786edb-7a9f-40fa-a861-76633d250ada</GUID>
+    <version>1</version>
+    <color_code>#fa8072</color_code>
+    <info_link>https://www.lulzbot.com/store/filament/abs?pk_campaign=software-cura</info_link>
+  </metadata>
+  <properties>
+    <density>1.06</density>
+    <diameter>2.85</diameter>
+  </properties>
+  <settings>
+    <setting key="print temperature">240</setting>
+    <setting key="heated bed temperature">110</setting>
+    <setting key="standby temperature">170</setting>
+    <setting key="soften temperature">175</setting>
+    <setting key="probe temperature">170</setting>
+    <setting key="wipe temperature">170</setting>
+    <setting key="part removal temperature">50</setting>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_dual_v3"/>
+      <metadata key="category">Supported</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_dual_v3"/>
+      <metadata key="category">Supported</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_moarstruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_flexy_dually_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_dual_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_flexy_dually_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_moarstruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_dual_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_aerostruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini_aerostruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_aerostruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_hibiscus"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_evergreen_bagworm"/>
+      <metadata key="category">Experimental</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_evergreen_bagworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_twoolhead"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_twoolhead"/>
+    </machine>
+  </settings>
+</fdmmaterial>

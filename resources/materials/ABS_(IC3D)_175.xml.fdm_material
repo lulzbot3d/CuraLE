@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Generic</brand>
+      <material>ABS (IC3D) </material>
+      <color>Generic</color>
+      <category>Intermediate</category>
+    </name>
+    <GUID>519236cd-d32e-434e-82a7-84e1df1d1e70</GUID>
+    <version>1</version>
+    <color_code>#68d6ce</color_code>
+    <info_link>https://www.lulzbot.com/store/filament/IC3D-ABS?pk_campaign=software-cura</info_link>
+  </metadata>
+  <properties>
+    <density>1.07</density>
+    <diameter>1.75</diameter>
+  </properties>
+  <settings>
+    <setting key="print temperature">240</setting>
+    <setting key="heated bed temperature">105</setting>
+    <setting key="standby temperature">200</setting>
+    <setting key="soften temperature">170</setting>
+    <setting key="probe temperature">170</setting>
+    <setting key="wipe temperature">170</setting>
+    <setting key="part removal temperature">60</setting>
+     <machine>
+      <machine_identifier product="lulzbot_hibiscus_lutefisk"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_quiver_lutefisk"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_lutefisk"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_redgum_lutefisk"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_mini_lutefisk"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_taz6_lutefisk"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_taz5_lutefisk"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_sidekick_cecropia"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_sidekick"/>
+    </machine>
+  </settings>
+</fdmmaterial>

@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Generic</brand>
+      <material>PC + PBT(Push Plastics)</material>
+      <color>Generic</color>
+      <category>Intermediate</category>
+    </name>
+    <GUID>e22a658e-574d-4f65-a376-5a781be01e74</GUID>
+    <version>1</version>
+    <color_code>#a6acff</color_code>
+    <info_link>https://www.lulzbot.com/store/filament/pcpbt?pk_campaign=software-cura</info_link>
+    <adhesion_info>Use glue stick.</adhesion_info>
+  </metadata>
+  <properties>
+    <density>1.2</density>
+    <diameter>2.85</diameter>
+  </properties>
+  <settings>
+    <setting key="print temperature">250</setting>
+    <setting key="heated bed temperature">115</setting>
+    <setting key="standby temperature">200</setting>
+    <setting key="soften temperature">170</setting>
+    <setting key="probe temperature">170</setting>
+    <setting key="wipe temperature">170</setting>
+    <setting key="part removal temperature">60</setting>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_aerostruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_flexy_dually_v2"/>
+      <metadata key="category">Experimental</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini_aerostruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_aerostruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_flexy_dually_v2"/>
+      <metadata key="category">Experimental</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_hibiscus"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_evergreen_bagworm"/>
+      <metadata key="category">Experimental</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_evergreen_bagworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini_cecropia"/>
+    </machine>
+    <machine>
+       <machine_identifier product="lulzbot_taz6_twoolhead"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_twoolhead"/>
+    </machine>
+  </settings>
+</fdmmaterial>

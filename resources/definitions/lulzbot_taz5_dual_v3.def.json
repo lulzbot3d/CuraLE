@@ -1,0 +1,40 @@
+{
+    "id": "LulzBot_Taz5_Dual_v3",
+    "name": "LulzBot TAZ 5 DualExtruder v3",
+    "inherits": "lulzbot_taz5",
+    "version": 2,
+    "metadata":
+    {
+        "priority": "06",
+        "type": "machine",
+        "visible": true,
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_taz5_dual_v3_1st",
+            "1": "lulzbot_taz5_dual_v3_2nd"
+        },
+        "firmware_toolhead_name": "DualExtruder v3",
+        "preferred_material": "*PolyLite_PLA*",
+        "default_category": "Supported"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "LulzBot TAZ 5 DualExtruder v3"
+        },
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_taz5_dual_start_v3"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_taz5_dual_end"
+        },
+        "machine_extruder_count": {
+            "default_value": 2
+        },
+        "layer_start_x": { "value": "100" },
+        "layer_start_y": { "value": "100" }
+    }
+}

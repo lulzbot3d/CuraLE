@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Generic</brand>
+      <material>XSTRAND GF30-PA6 (Owens Corning)</material>
+      <color>Generic</color>
+      <category>Experimental</category>
+    </name>
+    <GUID>4a93345b-114d-40f9-9781-40216df0e2b4</GUID>
+    <version>1</version>
+    <adhesion_info>**Dry Before Use**
+    
+    Use glue stick on PEI.</adhesion_info>
+  </metadata>
+  <properties>
+    <density>1.25</density>
+    <diameter>2.85</diameter>
+  </properties>
+  <settings>
+    <setting key="heated bed temperature">60.0</setting>
+    <setting key="print temperature">250.0</setting>
+    <setting key="soften temperature">170.0</setting>
+    <setting key="part removal temperature">0.0</setting>
+    <setting key="retraction amount">10.0</setting>
+    <setting key="retraction speed">25.0</setting>
+    <setting key="probe temperature">155.0</setting>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_hibiscus_banded_tiger" />
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_hibiscus_dingy_cutworm" />
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_mini_banded_tiger"/>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_mini_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_taz5_banded_tiger"/>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_taz5_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_taz6_banded_tiger"/>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_taz6_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_banded_tiger"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_evergreen_bagworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_evergreen_bagworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_banded_tiger"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_dingy_cutworm"/>
+    </machine>
+  </settings>
+</fdmmaterial>

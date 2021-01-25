@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Generic</brand>
+      <material>Cheetah (NinjaTek)</material>
+      <color>Generic</color>
+    </name>
+    <GUID>db02b0bc-7ea6-4902-8cc1-9e006c8c755e</GUID>
+    <version>1</version>
+    <color_code>#cdc5bf</color_code>
+    <adhesion_info>Use glue stick with PEI, or print directly on glass.</adhesion_info>
+  </metadata>
+  <properties>
+    <density>1.2</density>
+    <diameter>2.85</diameter>
+  </properties>
+  <settings>
+    <setting key="print temperature">225</setting>
+    <setting key="heated bed temperature">60</setting>
+    <setting key="standby temperature">175</setting>
+    <setting key="soften temperature">180</setting>
+    <setting key="probe temperature">180</setting>
+    <setting key="wipe temperature">170</setting>
+    <setting key="part removal temperature">0</setting>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_flexy_dually_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_flexy_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini_flexy"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_dual_v3"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_aerostruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_flexy_dually_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_flexy_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_dual_v3"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini_aerostruder"/>
+    </machine>
+  </settings>
+</fdmmaterial>

@@ -1,0 +1,33 @@
+{
+    "id": "lulzbot_taz5_dingy_cutworm",
+    "name": "LulzBot TAZ 5 | HS+ | 1.2 mm",
+    "inherits": "lulzbot_taz5",
+    "version": 2,
+    "metadata":
+    {
+        "priority": "05",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_taz5_dingy_cutworm_extruder"
+        },
+        "type": "machine",
+        "visible": true,
+        "user_toolhead_name": "HS+ | 1.2 mm",
+        "firmware_toolhead_name": "HardenedSteelPlus"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "LulzBot TAZ 5 | HS+ | 1.2 mm"
+        },
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_taz5_dingy_cutworm_start"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_taz5_end"
+        }
+    }
+}

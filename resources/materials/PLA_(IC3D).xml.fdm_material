@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Generic</brand>
+      <material>PLA (IC3D)</material>
+      <color>Generic</color>
+      <category>Experimental</category>
+    </name>
+    <GUID>09bb79b8-e516-44fb-b6e5-be165c89c64e</GUID>
+    <version>1</version>
+    <color_code>#ffc924</color_code>
+  </metadata>
+  <properties>
+    <density>1.25</density>
+    <diameter>2.85</diameter>
+  </properties>
+  <settings>
+    <setting key="print temperature">210</setting>
+    <setting key="heated bed temperature">60</setting>
+    <setting key="standby temperature">175</setting>
+    <setting key="soften temperature">140</setting>
+    <setting key="probe temperature">140</setting>
+    <setting key="wipe temperature">140</setting>
+    <setting key="part removal temperature">45</setting>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_hibiscus"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_hibiscus_dingy_cutworm"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_hibiscus_banded_tiger"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_quiver_evergreen_bagworm"/>
+	<metadata key="category">Supported</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_evergreen_bagworm"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_redgum_goldenrod"/>
+	<metadata key="category">Supported</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_cecropia"/>
+    </machine>
+  </settings>
+</fdmmaterial>

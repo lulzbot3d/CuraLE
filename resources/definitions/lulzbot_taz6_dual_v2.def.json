@@ -1,0 +1,42 @@
+{
+    "id": "LulzBot_Taz6_Dual_v2",
+    "name": "LulzBot TAZ 6 DualExtruder v2",
+    "inherits": "lulzbot_taz6",
+    "version": 2,
+    "metadata":
+    {
+        "type": "machine",
+        "visible": true,
+        "priority": "10",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_taz6_dual_v2_1st",
+            "1": "lulzbot_taz6_dual_v2_2nd"
+        },
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-dual-extruder-tool-head-v2?pk_campaign=software-cura",
+        "firmware_toolhead_name": "DualExtruder v2",
+        "nozzle_offsetting_for_disallowed_areas": false
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "LulzBot TAZ 6 DualExtruder v2"
+        },
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_taz6_dual_start"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_taz6_dual_end"
+        },
+        "machine_wipe_gcode":
+        {
+            "default_value": ""
+        },
+        "machine_extruder_count": {
+            "default_value": 2
+        }
+    }
+}
