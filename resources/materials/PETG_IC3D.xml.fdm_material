@@ -34,6 +34,48 @@
       <metadata key="category">Experimental</metadata>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_sidekick_6in_archemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_9in_archemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_6in_cercopia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_9in_cercopia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_6in_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_9in_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_6in_banded_tiger"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_9in_banded_tiger"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_6in_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_9in_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_6in_sk175"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_9in_sk175"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_6in_sk285"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_9in_sk285"/>
+    </machine>
+    <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_taz5_banded_tiger"/>
     </machine>
     <machine>

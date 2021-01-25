@@ -25,7 +25,7 @@
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_sidekick_6in",
-        "base_machine_name": "LulzBot TAZ Sidekick 6 Inch",
+        "base_machine_name": "LulzBot TAZ Sidekick 252",
         "user_toolhead_name": "SK175 | 0.5 mm ",
         "firmware_toolhead_name": "SidekickToolHead"
     },
@@ -50,7 +50,7 @@
         },
         "machine_height":
         {
-            "default_value": 180
+            "default_value": 175
         },
 	"machine_has_lcd":
         {
