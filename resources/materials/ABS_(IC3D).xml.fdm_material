@@ -70,10 +70,10 @@
       <machine_identifier product="lulzbot_sidekick_9in_dingy_cutworm"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_6in_sk285"/>
+      <machine_identifier product="lulzbot_sidekick_6in"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_9in_sk285"/>
+      <machine_identifier product="lulzbot_sidekick_9in"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz6_aerostruder"/>
