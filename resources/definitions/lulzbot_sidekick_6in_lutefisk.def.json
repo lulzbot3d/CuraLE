@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_sidekick_6in_lutefisk",
-    "name": "LulzBot TAZ Sidekick 6 Inch | M175 | 0.5 mm",
+    "name": "LulzBot TAZ Sidekick 289 | M175 | 0.5 mm",
     "inherits": "lulzbot_sidekick_6in",
     "version": 2,
     "metadata":
@@ -45,7 +45,7 @@
         },
         "firmware_machine_type":
         {
-            "default_value": "LulzBot TAZ Sidekick 6 Inch"
+            "default_value": "LulzBot TAZ Sidekick 289"
         },
         "material_diameter":
         {

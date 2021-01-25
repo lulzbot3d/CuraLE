@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_sidekick_6in_cecropia",
-    "name": "LulzBot Sidekick 6in | SE | 0.5 mm",
+    "name": "LulzBot Sidekick 289 | SE | 0.5 mm",
     "inherits": "lulzbot_sidekick_6in",
     "version": 2,
     "metadata":
@@ -45,7 +45,7 @@
         },
         "firmware_machine_type":
         {
-            "default_value": "LulzBot Sidekick 6in"
+            "default_value": "LulzBot Sidekick 289"
         }
     }
 }

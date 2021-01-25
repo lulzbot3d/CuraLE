@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_sidekick_6in_dingy_cutworm",
-    "name": "LulzBot TAZ Sidekick 6 Inch | HS+ | 1.2 mm",
+    "name": "LulzBot TAZ Sidekick 289 | HS+ | 1.2 mm",
     "inherits": "lulzbot_sidekick_6in",
     "version": 2,
     "metadata":
@@ -45,7 +45,7 @@
         },
         "firmware_machine_type":
         {
-            "default_value": "LulzBot TAZ Sidekick 6 Inch"
+            "default_value": "LulzBot TAZ Sidekick 289"
         }
     }
 }

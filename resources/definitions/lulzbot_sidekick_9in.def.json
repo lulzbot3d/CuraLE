@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_sidekick_9in",
-    "name": "LulzBot TAZ Sidekick 9 Inch | SK285 | 0.5 mm",
+    "name": "LulzBot TAZ Sidekick 747 | SK285 | 0.5 mm",
     "inherits": "lulzbot_base",
     "version": 2,
     "metadata":
@@ -11,12 +11,12 @@
             "0": "lulzbot_sidekick_9in_extruder"
         },
         "type": "machine",
-        "platform": "lulzbot_mini.stl",
+        "platform": "gladiator_bed.stl",  
         "platform_offset":
         [
-            -100,
-            -11,
-            100
+            0,
+            -30,
+            0
         ],
         "preferred_material": "*PolyLite_PLA*",
         "preferred_quality": "*Standard*",
@@ -25,7 +25,7 @@
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_sidekick_9in",
-        "base_machine_name": "LulzBot TAZ Sidekick 9 Inch",
+        "base_machine_name": "LulzBot TAZ Sidekick 747",
         "user_toolhead_name": "SK285 | 0.5 mm ",
         "firmware_toolhead_name": "SidekickToolHead"
     },
@@ -34,7 +34,7 @@
         
         "machine_name":
         {
-            "default_value": "LulzBot TAZ Sidekick 9 Inch"
+            "default_value": "LulzBot TAZ Sidekick 747"
         },
         "machine_heated_bed":
         {
@@ -224,7 +224,7 @@
         },
         "firmware_machine_type":
         {
-            "default_value": "LulzBot TAZ Sidekick 9 Inch"
+            "default_value": "LulzBot TAZ Sidekick 747"
         },
         "machine_max_feedrate_x":
         {
