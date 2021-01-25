@@ -46,5 +46,11 @@
      <machine>
         <machine_identifier product="lulzbot_taz5_lutefisk"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_6in_lutefisk"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_9in_lutefisk"/>
+    </machine>
   </settings>
 </fdmmaterial>
