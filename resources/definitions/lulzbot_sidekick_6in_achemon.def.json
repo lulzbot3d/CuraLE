@@ -1,0 +1,51 @@
+{
+    "id": "lulzbot_sidekick_6in_achemon",
+    "name": "LulzBot TAZ Sidekick 289 | SL | 0.25 mm",
+    "inherits": "lulzbot_sidekick_6in",
+    "version": 2,
+    "metadata":
+    {
+        "priority": "03",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_sidekick_6in_achemon_extruder"
+        },
+        "type": "machine",
+        "platform": "lulzbot_mini.stl",
+        "platform_offset":
+        [
+            -100,
+            -11,
+            100
+        ],
+        "preferred_material": "*PolyLite_PLA*",
+        "preferred_quality": "*High Detail*",
+        "file_formats": "text/x-gcode",
+        "visible": true,
+        "printer_info_link": "https://www.lulzbot.com/store/printers/",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
+        "base_machine": "lulzbot_sidekick_6in",
+        "firmware_toolhead_name": "SmallLayer",
+        "user_toolhead_name": "SL | 0.25 mm",
+        "default_extrusion_rate": 60
+    },
+    "overrides":
+    {
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_sidekick_start"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_sidekick_6in_end"
+        },
+        "machine_level_x_axis_gcode":
+        {
+            "default_value_from_file": "lulzbot_sidekick_level_x_axis"
+        },
+        "firmware_machine_type":
+        {
+            "default_value": "LulzBot TAZ Sidekick 289"
+        }
+    }
+}

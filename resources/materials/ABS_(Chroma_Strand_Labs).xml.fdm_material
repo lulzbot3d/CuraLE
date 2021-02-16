@@ -36,12 +36,11 @@
       <machine_identifier product="lulzbot_taz5_flexy_dually_v2"/>
       <metadata key="category">Experimental</metadata>
     </machine>
-
     <machine>
-      <machine_identifier product="lulzbot_sidekick_6in_archemon"/>
+      <machine_identifier product="lulzbot_sidekick_6in_achemon"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_9in_archemon"/>
+      <machine_identifier product="lulzbot_sidekick_9in_achemon"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_sidekick_6in_cecropia"/>
@@ -73,7 +72,6 @@
     <machine>
       <machine_identifier product="lulzbot_sidekick_9in"/>
     </machine>
-
     <machine>
       <machine_identifier product="lulzbot_taz6_aerostruder"/>
     </machine>

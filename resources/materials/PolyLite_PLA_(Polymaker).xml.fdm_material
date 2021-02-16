@@ -36,10 +36,10 @@
       <metadata key="category">Supported</metadata>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_6in_archemon"/>
+      <machine_identifier product="lulzbot_sidekick_6in_achemon"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_9in_archemon"/>
+      <machine_identifier product="lulzbot_sidekick_9in_achemon"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_sidekick_6in_cecropia"/>

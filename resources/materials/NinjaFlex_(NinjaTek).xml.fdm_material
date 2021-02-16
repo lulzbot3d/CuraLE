@@ -26,10 +26,10 @@
     <setting key="wipe temperature">170</setting>
     <setting key="part removal temperature">0</setting>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_6in_archemon"/>
+      <machine_identifier product="lulzbot_sidekick_6in_achemon"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_9in_archemon"/>
+      <machine_identifier product="lulzbot_sidekick_9in_achemon"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_sidekick_6in_cecropia"/>
