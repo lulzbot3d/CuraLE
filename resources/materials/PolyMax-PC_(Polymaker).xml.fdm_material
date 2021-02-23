@@ -116,5 +116,8 @@
     <machine>
       <machine_identifier product="lulzbot_gladiator_cecropia"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_goldenrod"/>
+    </machine>
   </settings>
 </fdmmaterial>

@@ -45,6 +45,9 @@
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_taz6"/>
     </machine>
     <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_taz6_goldenrod"/>
+    </machine>
+    <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_taz6_aerostruder"/>
     </machine>
     <machine>

@@ -132,5 +132,8 @@
     <machine>
       <machine_identifier product="lulzbot_redgum_achemon"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_goldenrod"/>
+    </machine>
   </settings>
 </fdmmaterial>
