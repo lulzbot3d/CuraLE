@@ -127,6 +127,9 @@
       <machine_identifier product="lulzbot_redgum_cecropia"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_gladiator_cecropia"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_redgum_achemon"/>
     </machine>
   </settings>

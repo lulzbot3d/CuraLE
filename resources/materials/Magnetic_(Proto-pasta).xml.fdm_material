@@ -95,5 +95,11 @@
     <machine>
       <machine_identifier product="lulzbot_taz5_twoolhead"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_cecropia"/>
+    </machine>
   </settings>
 </fdmmaterial>
