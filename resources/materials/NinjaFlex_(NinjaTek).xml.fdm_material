@@ -162,5 +162,8 @@
     <machine>
       <machine_identifier product="lulzbot_redgum_achemon"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_yellowfin"/>
+    </machine>
   </settings>
 </fdmmaterial>
