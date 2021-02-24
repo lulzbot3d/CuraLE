@@ -245,7 +245,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_gladiator_dingy_cutworm":      "Marlin_ProXT_HardenedSteelPlus_2.0.0.144.1_78264b7f.bin",
             "lulzbot_gladiator_banded_tiger":      "Marlin_ProXT_HardenedSteel_2.0.0.144.1_78264b7f.bin",
             "lulzbot_gladiator_lutefisk":      "Marlin_ProXT_M175_2.0.0.144.1_78264b7f.bin",
-            "lulzbot_gladiator_cecropia":      "Marlin_ProXT_SignleExtruderAeroV2_2.0.0.144.1_78264b7f.bin",
+            "lulzbot_gladiator_cecropia":      "Marlin_ProXT_SingleExtruderAeroV2_2.0.0.144.1_78264b7f.bin",
             "lulzbot_gladiator_achemon":      "Marlin_ProXT_SmallLayer_2.0.0.144.1_78264b7f.bin",
             
 

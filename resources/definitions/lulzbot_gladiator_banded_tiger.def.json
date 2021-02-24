@@ -32,7 +32,7 @@
     {
         "machine_name":
         {
-            "default_value": "LulzBot Pro Single Extruder HS"
+            "default_value": "LulzBot ProXT Single Extruder HS"
         },
         "machine_start_gcode":
         {
