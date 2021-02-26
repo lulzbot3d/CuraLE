@@ -110,6 +110,9 @@
       <machine_identifier product="lulzbot_quiver_cecropia"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_quiver_goldenrod"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_quiver_banded_tiger"/>
     </machine>
     <machine>
@@ -175,6 +178,9 @@
     </machine>
     <machine>
       <machine_identifier product="lulzbot_redgum_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_yellowfin"/>
     </machine>
   </settings>
 </fdmmaterial>

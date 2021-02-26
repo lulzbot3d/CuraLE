@@ -93,5 +93,20 @@
       <machine_identifier product="lulzbot_redgum_yellowfin"/>
       <metadata key="category">Supported</metadata>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_cecropia"/>
+    </machine>
   </settings>
 </fdmmaterial>
