@@ -11,12 +11,12 @@
             "0": "lulzbot_sidekick_9in_goldenrod_extruder"
         },
         "type": "machine",
-        "platform": "lulzbot_mini.stl",
+        "platform": "Sidekick_747_bed.STL",
         "platform_offset":
         [
-            -100,
-            -11,
-            100
+            0,
+            -15,
+            0
         ],
         "preferred_material": "*PolyLite_PLA*",
         "preferred_quality": "*High Detail*",
@@ -41,7 +41,7 @@
         },
         "machine_level_x_axis_gcode":
         {
-            "default_value_from_file": "lulzbot_sidekick_level_x_axis"
+            "default_value_from_file": "lulzbot_sidekick_9in_level_x_axis"
         },
         "firmware_machine_type":
         {
