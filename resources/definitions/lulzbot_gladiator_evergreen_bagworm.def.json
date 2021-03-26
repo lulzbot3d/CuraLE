@@ -10,7 +10,7 @@
         "priority": "7",
         "machine_extruder_trains":
         {
-            "0": "lulzbot_gladiator_evergreen_bagowrm_1st",
+            "0": "lulzbot_gladiator_evergreen_bagworm_1st",
             "1": "lulzbot_gladiator_evergreen_bagworm_2nd"
         },
         "platform": "gladiator_bed.stl",

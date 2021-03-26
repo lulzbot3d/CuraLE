@@ -10,7 +10,7 @@
         "priority": "00",
         "machine_extruder_trains":
         {
-            "0": "lulzbot_quiver_evergreen_bagowrm_1st",
+            "0": "lulzbot_quiver_evergreen_bagworm_1st",
             "1": "lulzbot_quiver_evergreen_bagworm_2nd"
         },
         "platform": "quiver_bed.stl",
