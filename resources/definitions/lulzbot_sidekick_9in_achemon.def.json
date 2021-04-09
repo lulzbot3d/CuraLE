@@ -5,6 +5,7 @@
     "version": 2,
     "metadata":
     {
+        
         "priority": "04",
         "machine_extruder_trains":
         {
@@ -18,6 +19,7 @@
             -15,
             0
         ],
+        "supported_actions": ["MachineSettingsAction"],
         "preferred_material": "*PolyLite_PLA*",
         "preferred_quality": "*High Detail*",
         "file_formats": "text/x-gcode",
@@ -27,10 +29,15 @@
         "base_machine": "lulzbot_sidekick_9in",
         "firmware_toolhead_name": "SmallLayer",
         "user_toolhead_name": "SL | 0.25 mm",
-        "default_extrusion_rate": 60
+        "default_extrusion_rate": 60,
+        "default_category": "All"
     },
     "overrides":
     {
+        "machine_name":
+        {
+            "default_value": "LulzBot TAZ SideKick 9in Achemon"
+        },
         "machine_start_gcode":
         {
             "default_value_from_file": "lulzbot_sidekick_start"

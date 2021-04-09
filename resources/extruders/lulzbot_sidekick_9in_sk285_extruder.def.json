@@ -4,7 +4,7 @@
     "name": "Hot End",
     "inherits": "fdmextruder",
     "metadata": {
-        "machine": "lulzbot_sidekick_9in",
+        "machine": "lulzbot_sidekick_9in_sk285",
         "position": "0"
     },
 
