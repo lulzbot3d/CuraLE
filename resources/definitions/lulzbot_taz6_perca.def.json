@@ -1,0 +1,38 @@
+{
+    "id": "lulzbot_taz6_perca",
+    "name": "LulzBot TAZ 6 | HM175 | 0.5 mm",
+    "inherits": "lulzbot_taz6",
+    "version": 2,
+    "metadata":
+    {
+        "priority": "02",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_taz6_perca_extruder"
+        },
+        "type": "machine",
+        "visible": true,
+        "user_toolhead_name": "HM175 | 0.5 mm",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/se-tool-head-single-extruder-05-mm?pk_campaign=software-cura",
+        "firmware_toolhead_name": "SingleExtruderAeroV2"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "LulzBot TAZ 6 | HM175 | 0.5 mm "
+        },
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_taz6_perca_start"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_taz6_end"
+        },
+        "material_diameter":
+        {
+            "default_value": 1.75
+        }
+    }
+}

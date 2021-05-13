@@ -42,15 +42,15 @@
         },
         "machine_width":
         {
-            "default_value": 231
+            "default_value": 230
         },
         "machine_depth":
         {
-            "default_value": 231
+            "default_value": 230
         },
         "machine_height":
         {
-            "default_value": 229.5
+            "default_value": 235
         },
 	"machine_has_lcd":
         {

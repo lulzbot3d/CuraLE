@@ -12,7 +12,7 @@
         },
         "type": "machine",
         "visible": true,
-        "user_toolhead_name": "M175 | 0.5 mm (Aero v2)",
+        "user_toolhead_name": "M175 | 0.5 mm",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/se-tool-head-single-extruder-05-mm?pk_campaign=software-cura",
         "firmware_toolhead_name": "SingleExtruderAeroV2"
     },
@@ -24,7 +24,7 @@
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "taz_6_lutefisk_start"
+            "default_value_from_file": "lulzbot_taz6_lutefisk_start"
         },
         "machine_end_gcode":
         {

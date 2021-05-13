@@ -1,0 +1,75 @@
+{
+    "id": "lulzbot_gladiator_perca",
+    "name": "LulzBot TAZ ProXT | HM175 | 0.5mm",
+    "inherits": "lulzbot_gladiator_base",
+    "version": 2,
+    "metadata":
+    {
+        "type": "machine",
+        "visible": true,
+        "priority": "5",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_gladiator_perca_extruder"
+        },
+        "platform": "gladiator_bed.stl",
+        "platform_offset":
+        [
+            0,
+            -25,
+            0
+        ],
+        "category": "LulzBot",
+        "firmware_toolhead_name": "perca",
+        "base_machine": "LulzBot TAZ ProXT",
+        "base_machine_name": "LulzBot TAZ ProXT",
+        "preferred_material": "*PolyLite_PLA*",
+        "user_toolhead_name": "HM175 | 0.5mm",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/m175-tool-head-175-mm-single-extruder-05-mm",
+        "default_category": "All"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "LulzBot ProXT | M175 | 0.5mm"
+        },
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_gladiator_perca_start"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_gladiator_perca_end"
+        },
+        "machine_level_x_axis_gcode":
+        {
+            "default_value_from_file": "lulzbot_gladiator_level_x_axis"
+        },
+        "machine_extruder_count": {
+            "default_value": 1
+        },
+        "machine_width":
+        {
+            "default_value": 282
+        },
+        "machine_depth":
+        {
+            "default_value": 282
+        },
+        "machine_height":
+        {
+            "default_value": 586
+        },
+        "machine_wipe_gcode":
+        {
+            "default_value_from_file": "lulzbot_gladiator_perca_wipe"
+        },
+        "layer_start_x": { "value": "100" },
+        "layer_start_y": { "value": "100" },
+        "material_diameter":
+        {
+            "default_value": 1.75
+        }
+    }
+}
