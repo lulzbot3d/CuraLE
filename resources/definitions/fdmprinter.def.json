@@ -1176,16 +1176,6 @@
                     "limit_to_extruder": "top_bottom_extruder_nr",
                     "settable_per_mesh": true
                 },
-                "connect_skin_polygons":
-                {
-                    "label": "Connect Top/Bottom Polygons",
-                    "description": "Connect top/bottom skin paths where they run next to each other. For the concentric pattern enabling this setting greatly reduces the travel time, but because the connections can happen midway over infill this feature can reduce the top surface quality.",
-                    "type": "bool",
-                    "default_value": false,
-                    "enabled": "(top_layers > 0 or bottom_layers > 0) and top_bottom_pattern == 'concentric'",
-                    "limit_to_extruder": "top_bottom_extruder_nr",
-                    "settable_per_mesh": true
-                },
                 "skin_angles":
                 {
                     "label": "Top/Bottom Line Directions",
@@ -1652,17 +1642,6 @@
                     "limit_to_extruder": "infill_extruder_nr",
                     "settable_per_mesh": true
                 },
-                "connect_infill_polygons":
-                {
-                    "label": "Connect Infill Polygons",
-                    "description": "Connect infill paths where they run next to each other. For infill patterns which consist of several closed polygons, enabling this setting greatly reduces the travel time.",
-                    "type": "bool",
-                    "default_value": true,
-                    "value": "(infill_pattern == 'cross' or infill_pattern == 'cross_3d' or infill_multiplier % 2 == 0) and infill_wall_line_count > 0",
-                    "enabled": "infill_pattern == 'cross' or infill_pattern == 'cross_3d' or infill_pattern == 'concentric' or infill_multiplier % 2 == 0 or infill_wall_line_count > 1",
-                    "limit_to_extruder": "infill_extruder_nr",
-                    "settable_per_mesh": true
-                },
                 "infill_angles":
                 {
                     "label": "Infill Line Directions",
@@ -1715,18 +1694,6 @@
                     "type": "int",
                     "minimum_value": "0",
                     "enabled": "infill_sparse_density > 0 and not spaghetti_infill_enabled",
-                    "limit_to_extruder": "infill_extruder_nr",
-                    "settable_per_mesh": true
-                },
-                "infill_multiplier":
-                {
-                    "label": "Infill Line Multiplier",
-                    "description": "Convert each infill line to this many lines. The extra lines do not cross over each other, but avoid each other. This makes the infill stiffer, but increases print time and material usage.",
-                    "default_value": 1,
-                    "type": "int",
-                    "minimum_value": "1",
-                    "maximum_value_warning": "infill_line_distance / infill_line_width",
-                    "enabled": "infill_sparse_density > 0 and not spaghetti_infill_enabled and infill_pattern != 'zigzag'",
                     "limit_to_extruder": "infill_extruder_nr",
                     "settable_per_mesh": true
                 },
@@ -2376,16 +2343,6 @@
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 },
-                "limit_support_retractions":
-                {
-                    "label": "Limit Support Retractions",
-                    "description": "Omit retraction when moving from support to support in a straight line. Enabling this setting saves print time, but can lead to excesive stringing within the support structure.",
-                    "type": "bool",
-                    "default_value": false,
-                    "enabled": "retraction_enable and support_enable",
-                    "settable_per_mesh": false,
-                    "settable_per_extruder": true
-                },
                 "material_standby_temperature":
                 {
                     "label": "Standby Temperature",
@@ -2898,7 +2855,6 @@
                             "default_value": 3000,
                             "value": "acceleration_topbottom",
                             "enabled": "resolveOrValue('acceleration_enabled') and roofing_layer_count > 0 and top_layers > 0",
-                            "enabled": "top_layers > 0 or bottom_layers > 0",
                             "limit_to_extruder": "roofing_extruder_nr",
                             "settable_per_mesh": true
                         },
@@ -3827,20 +3783,6 @@
                     "type": "int",
                     "value": "1 if (support_pattern == 'grid' or support_pattern == 'triangles' or support_pattern == 'concentric') else 0",
                     "enabled": "support_enable",
-                    "limit_to_extruder": "support_infill_extruder_nr",
-                    "settable_per_mesh": false,
-                    "settable_per_extruder": true
-                },
-                "support_wall_count":
-                {
-                    "label": "Support Wall Line Count",
-                    "description": "The number of walls with which to surround support infill. Adding a wall can make support print more reliably and can support overhangs better, but increases print time and material used.",
-                    "default_value": 1,
-                    "minimum_value": "0",
-                    "minimum_value_warning": "1 if support_pattern == 'concentric' else 0",
-                    "maximum_value_warning": "3",
-                    "type": "int",
-                    "value": "1 if (support_pattern == 'grid' or support_pattern == 'triangles' or support_pattern == 'concentric') else 0",
                     "limit_to_extruder": "support_infill_extruder_nr",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
@@ -5758,19 +5700,6 @@
                     "enabled": "False and machine_nozzle_temp_enabled and material_flow_dependent_temperature",
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
-                },
-                "minimum_polygon_circumference":
-                {
-                    "label": "Minimum Polygon Circumference",
-                    "description": "Polygons in sliced layers that have a circumference smaller than this amount will be filtered out. Lower values lead to higher resolution mesh at the cost of slicing time. It is meant mostly for high resolution SLA printers and very tiny 3D models with a lot of details.",
-                    "unit": "mm",
-                    "type": "float",
-                    "default_value": 1.0,
-                    "minimum_value": "0.001",
-                    "minimum_value_warning": "0.05",
-                    "maximum_value_warning": "1.0",
-                    "settable_per_mesh": true,
-                    "settable_per_extruder": false
                 },
                 "minimum_polygon_circumference":
                 {
