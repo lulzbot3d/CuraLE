@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_sidekick_9in_achemon",
-    "name": "LulzBot TAZ Sidekick 747 | SL | 0.25 mm",
+    "name": "LulzBot TAZ SideKick 747 | SL | 0.25 mm",
     "inherits": "lulzbot_sidekick_9in",
     "version": 2,
     "metadata":
@@ -52,7 +52,7 @@
         },
         "firmware_machine_type":
         {
-            "default_value": "LulzBot TAZ Sidekick 747"
+            "default_value": "LulzBot TAZ SideKick 747"
         }
     }
 }

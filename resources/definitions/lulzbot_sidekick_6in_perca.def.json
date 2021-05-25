@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_sidekick_6in_perca",
-    "name": "LulzBot TAZ Sidekick 289 | HM175 | 0.5 mm",
+    "name": "LulzBot TAZ SideKick 289 | HM175 | 0.5 mm",
     "inherits": "lulzbot_sidekick_6in",
     "version": 2,
     "metadata":
@@ -45,7 +45,7 @@
         },
         "firmware_machine_type":
         {
-            "default_value": "LulzBot TAZ Sidekick 289"
+            "default_value": "LulzBot TAZ SideKick 289"
         },
         "material_diameter":
         {

@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_sidekick_9in_banded_tiger",
-    "name": "LulzBot TAZ Sidekick 747 | HS | 0.8 mm",
+    "name": "LulzBot TAZ SideKick 747 | HS | 0.8 mm",
     "inherits": "lulzbot_sidekick_9in",
     "version": 2,
     "metadata":
@@ -45,7 +45,7 @@
         },
         "firmware_machine_type":
         {
-            "default_value": "LulzBot TAZ Sidekick 747"
+            "default_value": "LulzBot TAZ SideKick 747"
         }
     }
 }
