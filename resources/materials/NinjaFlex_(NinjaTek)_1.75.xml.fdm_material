@@ -47,16 +47,16 @@
         <machine_identifier product="lulzbot_taz5_lutefisk"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_6in_lutefisk"/>
+      <machine_identifier product="lulzbot_sidekick_289_lutefisk"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_9in_lutefisk"/>
+      <machine_identifier product="lulzbot_sidekick_747_lutefisk"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_6in_sk175"/>
+      <machine_identifier product="lulzbot_sidekick_289_sk175"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_9in_sk175"/>
+      <machine_identifier product="lulzbot_sidekick_747_sk175"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_hibiscus_perca"/>
@@ -74,10 +74,10 @@
       <machine_identifier product="lulzbot_taz6_perca"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_6in_perca"/>
+      <machine_identifier product="lulzbot_sidekick_289_perca"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_9in_perca"/>
+      <machine_identifier product="lulzbot_sidekick_747_perca"/>
     </machine>
   </settings>
 </fdmmaterial>

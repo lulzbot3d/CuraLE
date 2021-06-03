@@ -36,40 +36,40 @@
       <metadata key="category">Supported</metadata>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_6in"/>
+      <machine_identifier product="lulzbot_sidekick_289"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_9in"/>
+      <machine_identifier product="lulzbot_sidekick_747"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_6in_achemon"/>
+      <machine_identifier product="lulzbot_sidekick_289_achemon"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_9in_achemon"/>
+      <machine_identifier product="lulzbot_sidekick_747_achemon"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_6in_cecropia"/>
+      <machine_identifier product="lulzbot_sidekick_289_cecropia"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_9in_cecropia"/>
+      <machine_identifier product="lulzbot_sidekick_747_cecropia"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_6in_goldenrod"/>
+      <machine_identifier product="lulzbot_sidekick_289_goldenrod"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_9in_goldenrod"/>
+      <machine_identifier product="lulzbot_sidekick_747_goldenrod"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_6in_banded_tiger"/>
+      <machine_identifier product="lulzbot_sidekick_289_banded_tiger"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_9in_banded_tiger"/>
+      <machine_identifier product="lulzbot_sidekick_747_banded_tiger"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_6in_dingy_cutworm"/>
+      <machine_identifier product="lulzbot_sidekick_289_dingy_cutworm"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_9in_dingy_cutworm"/>
+      <machine_identifier product="lulzbot_sidekick_747_dingy_cutworm"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz6_moarstruder"/>
