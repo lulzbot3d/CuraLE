@@ -32,7 +32,7 @@
     {
         "machine_name":
         {
-            "default_value": "LulzBot Pro | HS+ | 1.2mm"
+            "default_value": "LulzBot ProXT | HS+ | 1.2mm"
         },
         "machine_start_gcode":
         {

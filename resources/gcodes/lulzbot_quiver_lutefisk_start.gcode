@@ -10,14 +10,14 @@ G92 E0 					; set extruder position to 0
 M140 S{material_bed_temperature_layer_0} 	; start bed heating up
 G28 					; home all axes
 G0 X145 Y187 Z156 F3000 			; move away from endstops
-M117 Q - HE Heating Up...			; progress indicator message on LCD
+M117 Q - M175 Heating Up...			; progress indicator message on LCD
 M109 R{material_soften_temperature} 	; soften filament before retraction
-M117 Q - HE Retracting Filament...			; progress indicator message on LCD
+M117 Q - M175 Retracting Filament...			; progress indicator message on LCD
 G1 E-15 F75 				; retract filament
-M117 Q - HE Moving to Position...			; progress indicator message on LCD
+M117 Q - M175 Moving to Position...			; progress indicator message on LCD
 G1 X295 Y100 Z10 F3000 ; move above wiper pad
 M109 R{material_wipe_temperature} 	; wait for extruder to reach wiping temp
-M117 Q - HE Wiping Nozzle...			; progress indicator message on LCD
+M117 Q - M175 Wiping Nozzle...			; progress indicator message on LCD
 G1 Z0.5              ; lower nozzle
 G1 X295 Y95 F1000 ; slow wipe
 G1 X295 Y90 F1000 ; slow wipe

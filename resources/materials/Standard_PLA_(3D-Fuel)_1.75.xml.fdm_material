@@ -68,6 +68,7 @@
     </machine>
     <machine>
       <machine_identifier product="lulzbot_sidekick_747_perca"/>
+      <machine_identifier product="lulzbot_gladiator_lutefisk"/>
     </machine>
   </settings>
 </fdmmaterial>

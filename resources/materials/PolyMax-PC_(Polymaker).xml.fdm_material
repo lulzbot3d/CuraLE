@@ -84,6 +84,9 @@
       <machine_identifier product="lulzbot_hibiscus"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_hibiscus_goldenrod"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_quiver_evergreen_bagworm"/>
     </machine>
     <machine>
@@ -109,6 +112,15 @@
     </machine>
     <machine>
       <machine_identifier product="lulzbot_redgum_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_yellowfin"/>
     </machine>
   </settings>
 </fdmmaterial>
