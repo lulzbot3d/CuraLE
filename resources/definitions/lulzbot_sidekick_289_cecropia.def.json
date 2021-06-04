@@ -1,7 +1,7 @@
 {
     "id": "lulzbot_sidekick_289_cecropia",
     "name": "LulzBot TAZ SideKick 289 | SE | 0.5 mm",
-    "inherits": "lulzbot_base",
+    "inherits": "lulzbot_sidekick_289",
     "version": 2,
     "metadata":
     {
@@ -25,7 +25,6 @@
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_sidekick_289",
-        "firmware_toolhead_name": "SingleExtruderAeroV2",
         "user_toolhead_name": "SE | 0.5 mm",
         "default_extrusion_rate": 60
     },

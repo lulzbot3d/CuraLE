@@ -1,7 +1,7 @@
 {
     "id": "lulzbot_sidekick_289_sk285",
     "name": "LulzBot TAZ SideKick 289 | SK285 | 0.5 mm",
-    "inherits": "lulzbot_base",
+    "inherits": "lulzbot_sidekick_289",
     "version": 2,
     "metadata":
     {
@@ -26,8 +26,7 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_sidekick_289",
         "base_machine_name": "LulzBot TAZ SideKick 289",
-        "user_toolhead_name": "SK285 | 0.5 mm ",
-        "firmware_toolhead_name": "SidekickToolHead"
+        "user_toolhead_name": "SK285 | 0.5 mm "
     },
     "overrides":
     {
