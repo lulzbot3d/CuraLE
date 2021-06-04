@@ -1,7 +1,7 @@
 {
     "id": "lulzbot_sidekick_747_achemon",
     "name": "LulzBot TAZ SideKick 747 | SL | 0.25 mm",
-    "inherits": "lulzbot_sidekick_747",
+    "inherits": "lulzbot_base",
     "version": 2,
     "metadata":
     {

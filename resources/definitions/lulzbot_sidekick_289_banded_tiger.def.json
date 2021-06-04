@@ -1,7 +1,7 @@
 {
     "id": "lulzbot_sidekick_289_banded_tiger",
     "name": "LulzBot TAZ SideKick 289 | HS | 0.8 mm",
-    "inherits": "lulzbot_sidekick_289",
+    "inherits": "lulzbot_base",
     "version": 2,
     "metadata":
     {

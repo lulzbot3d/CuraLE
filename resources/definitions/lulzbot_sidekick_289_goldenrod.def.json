@@ -1,7 +1,7 @@
 {
     "id": "lulzbot_sidekick_289_goldenrod",
     "name": "LulzBot TAZ SideKick 289 | HE | 0.5 mm",
-    "inherits": "lulzbot_sidekick_289",
+    "inherits": "lulzbot_base",
     "version": 2,
     "metadata":
     {

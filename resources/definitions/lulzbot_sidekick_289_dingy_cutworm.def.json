@@ -1,7 +1,7 @@
 {
     "id": "lulzbot_sidekick_289_dingy_cutworm",
     "name": "LulzBot TAZ SideKick 289 | HS+ | 1.2 mm",
-    "inherits": "lulzbot_sidekick_289",
+    "inherits": "lulzbot_base",
     "version": 2,
     "metadata":
     {
