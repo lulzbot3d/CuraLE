@@ -1,5 +1,5 @@
 {
-    "id": "lulzbot_sidekick_289",
+    "id": "lulzbot_sidekick_289_base",
     "name": "LulzBot TAZ SideKick 289",
     "inherits": "lulzbot_base",
     "version": 2,
