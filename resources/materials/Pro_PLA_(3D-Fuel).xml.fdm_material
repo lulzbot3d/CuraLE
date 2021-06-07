@@ -39,10 +39,11 @@
       <setting key="wipe temperature">140</setting>
       <setting key="part removal temperature">45</setting>
       <setting key="soften temperature">140</setting>
-    <setting key="probe temperature">140</setting>
-    <setting key="wipe temperature">140</setting>
-    <setting key="part removal temperature">45</setting>
-    <setting key="soften temperature">140</setting>
+      <setting key="probe temperature">140</setting>
+      <setting key="wipe temperature">140</setting>
+      <setting key="part removal temperature">45</setting>
+      <setting key="soften temperature">140</setting>
+    </machine>
     <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_redgum_goldenrod" />
     </machine>
