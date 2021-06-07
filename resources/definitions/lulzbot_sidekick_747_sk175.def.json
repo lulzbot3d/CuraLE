@@ -1,7 +1,7 @@
 {
     "id": "lulzbot_sidekick_747_sk175",
     "name": "LulzBot TAZ SideKick 747 | SK175 | 0.5 mm",
-    "inherits": "lulzbot_sidekick_747",
+    "inherits": "lulzbot_sidekick_747_base",
     "version": 2,
     "metadata":
     {
