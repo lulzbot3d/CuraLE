@@ -26,7 +26,7 @@
         "visible": true,
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
-        "base_machine": "lulzbot_sidekick_747",
+        "base_machine": "lulzbot_sidekick_747_base",
         "user_toolhead_name": "SL | 0.25 mm",
         "default_extrusion_rate": 60,
         "default_category": "All"

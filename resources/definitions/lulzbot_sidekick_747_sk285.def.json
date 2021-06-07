@@ -24,7 +24,7 @@
         "visible": true,
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
-        "base_machine": "lulzbot_sidekick_747",
+        "base_machine": "lulzbot_sidekick_747_base",
         "base_machine_name": "LulzBot TAZ SideKick 747",
         "firmware_toolhead_name": "SidekickToolHead"
     },
