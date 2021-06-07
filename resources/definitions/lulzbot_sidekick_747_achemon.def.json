@@ -36,7 +36,7 @@
     {
         "machine_name":
         {
-            "default_value": "LulzBot TAZ SideKick 9in Achemon"
+            "default_value": "LulzBot TAZ SideKick 747 Achemon"
         },
         "machine_start_gcode":
         {
