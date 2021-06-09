@@ -43,10 +43,6 @@
         {
             "default_value_from_file": "lulzbot_sidekick_747_level_x_axis"
         },
-        "firmware_machine_type":
-        {
-            "default_value": "LulzBot TAZ SideKick 747"
-        },
         "material_diameter":
         {
             "default_value": 1.75

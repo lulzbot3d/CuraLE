@@ -217,10 +217,6 @@
         {
             "default_value": "250000"
         },
-        "firmware_machine_type":
-        {
-            "default_value": "LulzBot TAZ SideKick 747"
-        },
         "machine_max_feedrate_x":
         {
             "default_value": 800
