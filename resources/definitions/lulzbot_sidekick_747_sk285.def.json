@@ -26,7 +26,7 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_sidekick_747_base",
         "base_machine_name": "LulzBot TAZ SideKick 747",
-        "firmware_toolhead_name": "SidekickToolHead"
+        "user_toolhead_name": "SK285 | 0.5 mm"
     },
     "overrides":
     {
