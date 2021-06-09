@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_gladiator_perca",
-    "name": "LulzBot TAZ ProXT | HM175 | 0.5mm",
+    "name": "LulzBot TAZ ProXT | H175 | 0.5mm",
     "inherits": "lulzbot_gladiator_base",
     "version": 2,
     "metadata":
@@ -24,7 +24,7 @@
         "base_machine": "LulzBot TAZ ProXT",
         "base_machine_name": "LulzBot TAZ ProXT",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "HM175 | 0.5mm",
+        "user_toolhead_name": "H175 | 0.5mm",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/m175-tool-head-175-mm-single-extruder-05-mm",
         "default_category": "All"
     },

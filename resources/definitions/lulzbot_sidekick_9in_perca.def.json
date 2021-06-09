@@ -1,14 +1,14 @@
 {
-    "id": "lulzbot_sidekick_747_perca",
-    "name": "LulzBot TAZ SideKick 747 | H175 | 0.5 mm",
-    "inherits": "lulzbot_sidekick_747_base",
+    "id": "lulzbot_sidekick_9in_perca",
+    "name": "LulzBot TAZ SideKick 747 | HM175 | 0.5 mm",
+    "inherits": "lulzbot_sidekick_9in",
     "version": 2,
     "metadata":
     {
         "priority": "08",
         "machine_extruder_trains":
         {
-            "0": "lulzbot_sidekick_747_perca_extruder"
+            "0": "lulzbot_sidekick_9in_perca_extruder"
         },
         "type": "machine",
         "platform": "Sidekick_747_bed.STL",
@@ -24,9 +24,9 @@
         "visible": true,
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
-        "base_machine": "lulzbot_sidekick_747_base",
-        "base_machine_name": "LulzBot TAZ SideKick 747",
-        "user_toolhead_name": "H175 | 0.5 mm",
+        "base_machine": "lulzbot_sidekick_9in",
+        "firmware_toolhead_name": "perca",
+        "user_toolhead_name": "HM175 | 0.5 mm",
         "default_extrusion_rate": 60
     },
     "overrides":
@@ -37,11 +37,11 @@
         },
         "machine_end_gcode":
         {
-            "default_value_from_file": "lulzbot_sidekick_747_end"
+            "default_value_from_file": "lulzbot_sidekick_9in_end"
         },
         "machine_level_x_axis_gcode":
         {
-            "default_value_from_file": "lulzbot_sidekick_747_level_x_axis"
+            "default_value_from_file": "lulzbot_sidekick_9in_level_x_axis"
         },
         "firmware_machine_type":
         {
