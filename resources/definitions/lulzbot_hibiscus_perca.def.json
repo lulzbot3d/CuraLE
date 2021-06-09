@@ -1,11 +1,11 @@
 {
     "id": "LulzBot_Hibiscus_perca",
-    "name": "LulzBot Mini 2 | HM175 | 0.5 mm",
+    "name": "LulzBot Mini 2 | H175 | 0.5 mm",
     "inherits": "lulzbot_hibiscus",
     "version": 2,
     "metadata":
     {
-        "priority": "03",
+        "priority": "05",
         "machine_extruder_trains":
         {
             "0": "lulzbot_hibiscus_perca_extruder"
@@ -26,7 +26,7 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
         "firmware_toolhead_name": "perca",
-        "user_toolhead_name": "HM175 | 0.5 mm",
+        "user_toolhead_name": "H175 | 0.5 mm",
         "default_extrusion_rate": 60
     },
     "overrides":

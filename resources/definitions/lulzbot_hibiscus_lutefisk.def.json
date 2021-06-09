@@ -5,7 +5,7 @@
     "version": 2,
     "metadata":
     {
-        "priority": "03",
+        "priority": "06",
         "machine_extruder_trains":
         {
             "0": "lulzbot_hibiscus_lutefisk_extruder"

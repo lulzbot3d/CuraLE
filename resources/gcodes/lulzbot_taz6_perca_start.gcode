@@ -1,4 +1,4 @@
-;This G-Code has been generated specifically for the LulzBot TAZ 6 with HM175 Tool Head
+;This G-Code has been generated specifically for the LulzBot TAZ 6 with H175 Tool Head
 M73 P0 ; clear GLCD progress bar
 M75 ; start GLCD timer
 G26 ; clear potential 'probe fail' condition
