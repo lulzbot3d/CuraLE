@@ -111,6 +111,10 @@
         {
             "default_value": 1000
         },
+        "firmware_machine_type":
+        {
+            "default_value": "Taz SideKick 289"
+        },
         "jerk_print":
         {
             "default_value": 20
@@ -211,6 +215,10 @@
         "machine_max_acceleration_e":
         {
             "default_value": 10000
+        },
+        "machine_baudrate":
+        {
+            "default_value": "250000"
         }
     }
 }

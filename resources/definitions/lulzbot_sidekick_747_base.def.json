@@ -110,6 +110,10 @@
         {
             "default_value": 1000
         },
+        "firmware_machine_type":
+        {
+            "default_value": "Taz SideKick 747"
+        },
         "jerk_print":
         {
             "default_value": 20
