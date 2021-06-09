@@ -113,7 +113,7 @@
         },
         "firmware_machine_type":
         {
-            "default_value": "Lulzbot TAZ SideKick 289"
+            "default_value": "Taz SideKick 289"
         },
         "jerk_print":
         {
