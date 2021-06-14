@@ -18,7 +18,8 @@
         "file_formats": "text/x-gcode",
         "visible": false,
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
-        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/"
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
+        "has_optional_lcd": true
     },
     "overrides":
     {
