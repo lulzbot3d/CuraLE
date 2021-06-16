@@ -1,4 +1,4 @@
-;This G-Code has been generated specifically for the LulzBot TAZ Workhorse with SL 0.25mm Tool Head
+;This G-Code has been generated specifically for the LulzBot TAZ Workhorse with SL Tool Head
 M73 P0 ; clear GLCD progress bar
 M75 ; start GLCD timer
 G26 ; clear potential 'probe fail' condition
@@ -39,12 +39,12 @@ G1 X-15 Y25 Z1.5 F1000 ; slow wipe
 G1 X-17 Y23 F1000 ; slow wipe
 G1 Z10 ; raise extruder
 M109 R{material_probe_temperature} ; wait for extruder to reach probe temp
-G1 X-9 Y-9 ; move above first probe point
+G1 X289 Y-10 F4000; move above first probe point
 M204 S100 ; set probing acceleration
-G29 ; start auto-leveling sequence
-M420 S1 ; activate bed level matrix
-M425 Z			     ; use measured Z backlash for compensation
-M425 Z F0		     ; turn off measured Z backlash compensation. (if activated in the quality settings, this command will automatically be ignored)
+G29       ; start auto-leveling sequence
+M420 S1   ; activate bed level matrix
+M425 Z    ; use measured Z backlash for compensation
+M425 Z F0 ; turn off measured Z backlash compensation. (if activated in the quality settings, this command will automatically be ignored)
 M204 S500 ; restore standard acceleration
 G1 X0 Y0 Z15 F5000 ; move up off last probe point
 G4 S1 ; pause
