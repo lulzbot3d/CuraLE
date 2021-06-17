@@ -14,6 +14,7 @@
         "visible": true,
         "user_toolhead_name": "H175 | 0.5 mm",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/se-tool-head-single-extruder-05-mm?pk_campaign=software-cura",
+        "firmware_last_version": "2.0.6.4",
         "firmware_toolhead_name": "SingleExtruderAeroV2"
     },
     "overrides":

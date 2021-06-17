@@ -26,6 +26,7 @@
         "base_machine_name": "LulzBot TAZ ProXT",
         "preferred_material": "*PolyLite_PLA*",
         "user_toolhead_name": "TAZ Pro Dual Extruder",
+        "firmware_last_version": "2.0.0.144",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
         "default_category": "All"
     },

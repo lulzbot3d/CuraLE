@@ -27,8 +27,7 @@
         "base_machine": "lulzbot_sidekick_289_base",
         "base_machine_name": "LulzBot TAZ SideKick 289",
         "user_toolhead_name": "SL | 0.25 mm",
-        "default_extrusion_rate": 60,
-        "firmware_last_version": "2.0.6.2"
+        "default_extrusion_rate": 60
     },
     "overrides":
     {
