@@ -1,4 +1,4 @@
-;This G-Code has been generated specifically for G - HM175
+;This G-Code has been generated specifically for G - H175
 M73 P0                  ; clear LCD progress bar
 M75 					; Start LCD Print Timer
 G26 					; clear potential 'probe fail' condition

@@ -17,7 +17,9 @@
         "file_formats": "text/x-gcode",
         "visible": false,
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
-        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/"
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
+        "firmware_last_version": "2.0.6.4",
+        "has_optional_lcd": true
     },
     "overrides":
     {
@@ -109,6 +111,10 @@
         "acceleration_skirt_brim":
         {
             "default_value": 1000
+        },
+        "firmware_machine_type":
+        {
+            "default_value": "Taz SideKick 747"
         },
         "jerk_print":
         {

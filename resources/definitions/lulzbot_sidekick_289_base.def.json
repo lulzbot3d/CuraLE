@@ -18,7 +18,9 @@
         "file_formats": "text/x-gcode",
         "visible": false,
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
-        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/"
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
+        "firmware_last_version": "2.0.6.4",
+        "has_optional_lcd": true
     },
     "overrides":
     {
@@ -28,15 +30,15 @@
         },
         "machine_width":
         {
-            "default_value": 170
+            "default_value": 162
         },
         "machine_depth":
         {
-            "default_value": 170
+            "default_value": 164
         },
         "machine_height":
         {
-            "default_value": 175
+            "default_value": 178.3
         },
         "machine_center_is_zero":
         {
@@ -110,6 +112,10 @@
         "acceleration_skirt_brim":
         {
             "default_value": 1000
+        },
+        "firmware_machine_type":
+        {
+            "default_value": "Taz SideKick 289"
         },
         "jerk_print":
         {
@@ -211,6 +217,10 @@
         "machine_max_acceleration_e":
         {
             "default_value": 10000
+        },
+        "machine_baudrate":
+        {
+            "default_value": "250000"
         }
     }
 }

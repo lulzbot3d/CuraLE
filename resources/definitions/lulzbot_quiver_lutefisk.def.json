@@ -7,7 +7,7 @@
     {
         "type": "machine",
         "visible": true,
-        "priority": "02",
+        "priority": "04",
         "machine_extruder_trains":
         {
             "0": "lulzbot_quiver_lutefisk_extruder"
@@ -26,7 +26,6 @@
         "preferred_material": "*PolyLite_PLA*",
         "user_toolhead_name": "M175 | 0.5mm",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
-        "firmware_last_version": "2.0.0.144.1",
         "default_category": "All"
     },
     "overrides":

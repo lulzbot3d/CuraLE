@@ -1,4 +1,4 @@
-;This G-Code has been generated specifically for the LulzBot Mini 2 with HM175 0.5mm Tool Head
+;This G-Code has been generated specifically for the LulzBot Mini 2 with H175 0.5mm Tool Head
 M73 P0                  ; clear GLCD progress bar
 M75 					; Start GLCD Print Timer
 G26 					; clear potential 'probe fail' condition
