@@ -183,6 +183,22 @@ Item
                 style:  UM.Theme.styles.print_monitor_control_button
 
             }
+            Button
+            {
+                text: "Tool Head Swapping and Filament Changing Position"
+                Layout.row: 4
+                Layout.column: 1
+                Layout.columnSpan: 3
+                Layout.preferredWidth: parent.width - predefinedButtons.columnSpacing*7
+                Layout.preferredHeight: UM.Theme.getSize("section").height
+
+                onClicked:
+                {
+                    Cura.USBPrinterManager.sendCommandToCurrentPrinter("G28 O\nG27")
+                }
+                style:  UM.Theme.styles.print_monitor_control_button
+
+            }
 
         }
 }
