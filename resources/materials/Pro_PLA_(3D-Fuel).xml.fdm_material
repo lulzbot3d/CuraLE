@@ -65,8 +65,5 @@
     <machine>
       <machine_identifier product="lulzbot_taz6_cecropia"/>
     </machine>
-    <machine>
-      <machine_identifier product="lulzbot_redgum_cecropia"/>
-    </machine>
   </settings>
 </fdmmaterial>
