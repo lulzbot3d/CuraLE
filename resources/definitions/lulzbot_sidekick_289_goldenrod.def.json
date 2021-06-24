@@ -1,11 +1,11 @@
 {
     "id": "lulzbot_sidekick_289_goldenrod",
-    "name": "LulzBot TAZ SideKick 289 | HE | 0.5 mm",
+    "name": "TAZ SideKick 289 | HE | 0.50 mm",
     "inherits": "lulzbot_sidekick_289_base",
     "version": 2,
     "metadata":
     {
-        "priority": "05",
+        "priority": "04",
         "machine_extruder_trains":
         {
             "0": "lulzbot_sidekick_289_goldenrod_extruder"
@@ -19,8 +19,8 @@
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_sidekick_289_base",
-        "base_machine_name": "LulzBot TAZ SideKick 289",
-        "user_toolhead_name": "HE | 0.5 mm",
+        "base_machine_name": "TAZ Sidekick 289",
+        "user_toolhead_name": "HE | 0.50 mm | Hardened SST",
         "default_extrusion_rate": 60
     },
     "overrides":

@@ -1,13 +1,13 @@
 {
     "id": "LulzBot_Taz5_Dual_v2",
-    "name": "LulzBot TAZ 5 DualExtruder v2",
+    "name": "TAZ 5 DualExtruder v2",
     "inherits": "lulzbot_taz5",
     "version": 2,
     "metadata":
     {
         "type": "machine",
         "visible": true,
-        "priority": "09",
+        "priority": "08",
         "machine_extruder_trains":
         {
             "0": "lulzbot_taz5_dual_v2_1st",

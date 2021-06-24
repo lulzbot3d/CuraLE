@@ -5,9 +5,15 @@
     "version": 2,
     "metadata":
     {
+        "machine_priority": "01",
         "type": "machine",
         "platform": "Sidekick_289_bed.stl",
-        
+        "platform_offset":
+        [
+            0,
+            -15,
+            0
+        ],
         "preferred_material": "*PolyLite_PLA*",
         "preferred_quality": "*Standard*",
         "file_formats": "text/x-gcode",

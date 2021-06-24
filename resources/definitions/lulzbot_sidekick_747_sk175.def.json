@@ -1,11 +1,11 @@
 {
     "id": "lulzbot_sidekick_747_sk175",
-    "name": "LulzBot TAZ SideKick 747 | SK175 | 0.5 mm",
+    "name": "TAZ SideKick 747 | SK175 | 0.50 mm",
     "inherits": "lulzbot_sidekick_747_base",
     "version": 2,
     "metadata":
     {
-        "priority": "01",
+        "priority": "00",
         "machine_extruder_trains":
         {
             "0": "lulzbot_sidekick_747_sk175_extruder"
@@ -20,8 +20,8 @@
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_sidekick_747_base",
-        "base_machine_name": "LulzBot TAZ SideKick 747",
-        "user_toolhead_name": "SK175 | 0.5 mm",
+        "base_machine_name": "TAZ Sidekick 747",
+        "user_toolhead_name": "SK175 | 0.50 mm | Brass",
         "default_extrusion_rate": 60
     },
     "overrides":

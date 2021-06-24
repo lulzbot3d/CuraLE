@@ -5,7 +5,6 @@
     "version": 2,
     "metadata":
     {
-        "machine_priority": "99",
         "machine_extruder_trains":
         {
             "0": "lulzbot_kangaroo_paw_extruder"

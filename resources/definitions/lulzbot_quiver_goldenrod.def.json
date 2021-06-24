@@ -1,13 +1,13 @@
 {
     "id": "lulzbot_quiver_goldenrod",
-    "name": "LulzBot TAZ Pro | HE | 0.5mm",
+    "name": "TAZ Pro | HE | 0.50 mm",
     "inherits": "lulzbot_quiver_base",
     "version": 2,
     "metadata":
     {
         "type": "machine",
         "visible": true,
-        "priority": "02",
+        "priority": "03",
         "machine_extruder_trains":
         {
             "0": "lulzbot_quiver_goldenrod_extruder"
@@ -22,9 +22,9 @@
         "category": "LulzBot",
         "firmware_toolhead_name": "HardenedExtruder",
         "base_machine": "LulzBot TAZ Pro",
-        "base_machine_name": "LulzBot TAZ Pro",
+        "base_machine_name": "TAZ Pro",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "HE | 0.5mm",
+        "user_toolhead_name": "HE | 0.50 mm | Hardened SST",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
         "default_category": "All"
     },

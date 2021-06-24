@@ -1,13 +1,13 @@
 {
     "id": "lulzbot_gladiator_perca",
-    "name": "LulzBot TAZ ProXT | H175 | 0.5mm",
+    "name": "TAZ ProXT | H175 | 0.50 mm",
     "inherits": "lulzbot_gladiator_base",
     "version": 2,
     "metadata":
     {
         "type": "machine",
         "visible": true,
-        "priority": "5",
+        "priority": "07",
         "machine_extruder_trains":
         {
             "0": "lulzbot_gladiator_perca_extruder"
@@ -22,10 +22,10 @@
         "category": "LulzBot",
         "firmware_toolhead_name": "perca",
         "base_machine": "LulzBot TAZ ProXT",
-        "base_machine_name": "LulzBot TAZ ProXT",
+        "base_machine_name": "TAZ Pro XT",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "H175 | 0.5mm",
-        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/m175-tool-head-175-mm-single-extruder-05-mm",
+        "user_toolhead_name": "H175 | 0.50 mm | Nickel Plated Copper",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "default_category": "All"
     },
     "overrides":

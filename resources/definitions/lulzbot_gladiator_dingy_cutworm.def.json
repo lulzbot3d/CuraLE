@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_gladiator_dingy_cutworm",
-    "name": "LulzBot TAZ ProXT | HS+ | 1.2mm",
+    "name": "TAZ ProXT | HS+ | 1.20 mm",
     "inherits": "lulzbot_gladiator_base",
     "version": 2,
     "metadata":
@@ -22,9 +22,9 @@
         "category": "LulzBot",
         "firmware_toolhead_name": "HardenedSteelPlus",
         "base_machine": "LulzBot TAZ ProXT",
-        "base_machine_name": "LulzBot TAZ ProXT",
+        "base_machine_name": "TAZ Pro XT",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "HS+ | 1.2mm",
+        "user_toolhead_name": "HS+ | 1.20 mm | Hardened SST",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-hs-plus-tool-head-hardened-steel-1_2-mm?pk_campaign=software-cura",
         "default_category": "All"
     },

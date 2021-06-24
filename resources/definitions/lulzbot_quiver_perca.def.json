@@ -1,13 +1,13 @@
 {
     "id": "lulzbot_quiver_perca",
-    "name": "LulzBot TAZ Pro | H175 | 0.5mm",
+    "name": "TAZ Pro | H175 | 0.50 mm",
     "inherits": "lulzbot_quiver_base",
     "version": 2,
     "metadata":
     {
         "type": "machine",
         "visible": true,
-        "priority": "03",
+        "priority": "07",
         "machine_extruder_trains":
         {
             "0": "lulzbot_quiver_perca_extruder"
@@ -22,9 +22,9 @@
         "category": "LulzBot",
         "firmware_toolhead_name": "perca",
         "base_machine": "LulzBot TAZ Pro",
-        "base_machine_name": "LulzBot TAZ Pro",
+        "base_machine_name": "TAZ Pro",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "H175 | 0.5mm",
+        "user_toolhead_name": "H175 | 0.50 mm | Nickel Plated Copper",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
         "default_category": "All"
     },

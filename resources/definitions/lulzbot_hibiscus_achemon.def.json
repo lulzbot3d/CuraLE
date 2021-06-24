@@ -1,11 +1,11 @@
 {
     "id": "LulzBot_Hibiscus_Achemon",
-    "name": "LulzBot Mini 2 | SL | 0.25 mm (Micro)",
+    "name": "LulzBot Mini 2 | SL | 0.25 mm",
     "inherits": "lulzbot_hibiscus",
     "version": 2,
     "metadata":
     {
-        "priority": "02",
+        "priority": "01",
         "machine_extruder_trains":
         {
             "0": "lulzbot_hibiscus_achemon_extruder"
@@ -26,7 +26,7 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
         "firmware_toolhead_name": "SmallLayer",
-        "user_toolhead_name": "SL | 0.25 mm (Micro)",
+        "user_toolhead_name": "SL | 0.25 mm | Nickel Plated Copper",
         "default_extrusion_rate": 60
     },
     "overrides":

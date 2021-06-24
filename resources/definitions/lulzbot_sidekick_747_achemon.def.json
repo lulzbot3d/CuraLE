@@ -1,12 +1,12 @@
 {
     "id": "lulzbot_sidekick_747_achemon",
-    "name": "LulzBot TAZ SideKick 747 | SL | 0.25 mm",
+    "name": "TAZ SideKick 747 | SL | 0.25 mm",
     "inherits": "lulzbot_sidekick_747_base",
     "version": 2,
     "metadata":
     {
         
-        "priority": "04",
+        "priority": "03",
         "machine_extruder_trains":
         {
             "0": "lulzbot_sidekick_747_achemon_extruder"
@@ -22,8 +22,8 @@
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_sidekick_747_base",
-        "base_machine_name": "LulzBot TAZ SideKick 747",
-        "user_toolhead_name": "SL | 0.25 mm",
+        "base_machine_name": "TAZ Sidekick 747",
+        "user_toolhead_name": "SL | 0.25 mm | Nickel Plated Copper",
         "default_extrusion_rate": 60,
         "default_category": "All"
     },

@@ -1,18 +1,18 @@
 {
     "id": "lulzbot_taz5_banded_tiger",
-    "name": "LulzBot TAZ 5 | HS | 0.8 mm",
+    "name": "TAZ 5 | HS | 0.8 mm",
     "inherits": "lulzbot_taz5",
     "version": 2,
     "metadata":
     {
-        "priority": "04",
+        "priority": "03",
         "machine_extruder_trains":
         {
             "0": "lulzbot_taz5_banded_tiger_extruder"
         },
         "type": "machine",
         "visible": true,
-        "user_toolhead_name": "HS | 0.8 mm",
+        "user_toolhead_name": "HS | 0.80 mm | Hardened SST",
         "firmware_toolhead_name": "HardenedSteel"
     },
     "overrides":

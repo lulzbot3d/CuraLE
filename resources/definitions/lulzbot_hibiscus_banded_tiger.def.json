@@ -1,6 +1,6 @@
 {
     "id": "LulzBot_Hibiscus_Banded_Tiger",
-    "name": "LulzBot Mini 2 | HS | 0.8 mm",
+    "name": "LulzBot Mini 2 | HS | 0.80 mm",
     "inherits": "lulzbot_hibiscus",
     "version": 2,
     "metadata":
@@ -26,7 +26,7 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
         "firmware_toolhead_name": "HardenedSteel",
-        "user_toolhead_name": "HS | 0.8 mm",
+        "user_toolhead_name": "HS | 0.80 mm | Hardened SST",
         "default_extrusion_rate": 60
     },
     "overrides":

@@ -1,13 +1,13 @@
 {
     "id": "lulzbot_quiver_lutefisk",
-    "name": "LulzBot TAZ Pro | M175 | 0.5mm",
+    "name": "TAZ Pro | M175 | 0.50 mm",
     "inherits": "lulzbot_quiver_base",
     "version": 2,
     "metadata":
     {
         "type": "machine",
         "visible": true,
-        "priority": "04",
+        "priority": "06",
         "machine_extruder_trains":
         {
             "0": "lulzbot_quiver_lutefisk_extruder"
@@ -22,9 +22,9 @@
         "category": "LulzBot",
         "firmware_toolhead_name": "lutefisk",
         "base_machine": "LulzBot TAZ Pro",
-        "base_machine_name": "LulzBot TAZ Pro",
+        "base_machine_name": "TAZ Pro",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "M175 | 0.5mm",
+        "user_toolhead_name": "M175 | 0.50 mm | Carbide Coated Copper",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
         "default_category": "All"
     },

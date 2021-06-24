@@ -1,6 +1,6 @@
 {
     "id": "LulzBot_TAZ6_aerostruder",
-    "name": "LulzBot TAZ 6 Aerostruder",
+    "name": "TAZ 6 Aerostruder",
     "inherits": "lulzbot_taz6",
     "version": 2,
     "metadata":

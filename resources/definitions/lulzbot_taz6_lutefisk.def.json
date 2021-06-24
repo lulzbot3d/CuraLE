@@ -1,18 +1,18 @@
 {
     "id": "lulzbot_taz6_lutefisk",
-    "name": "LulzBot TAZ 6 | M175 | 0.5 mm",
+    "name": "TAZ 6 | M175 | 0.5 mm",
     "inherits": "lulzbot_taz6",
     "version": 2,
     "metadata":
     {
-        "priority": "02",
+        "priority": "06",
         "machine_extruder_trains":
         {
             "0": "lulzbot_taz6_lutefisk_extruder"
         },
         "type": "machine",
         "visible": true,
-        "user_toolhead_name": "M175 | 0.5 mm ",
+        "user_toolhead_name": "M175 | 0.50 mm | Carbide Coated Copper",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/se-tool-head-single-extruder-05-mm?pk_campaign=software-cura",
         "firmware_last_version": "2.0.6.4",
         "firmware_toolhead_name": "SingleExtruderAeroV2"

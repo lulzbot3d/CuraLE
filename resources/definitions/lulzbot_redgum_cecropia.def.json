@@ -1,13 +1,13 @@
 {
     "id": "lulzbot_redgum_cecropia",
-    "name": "TAZ Workhorse | SE | 0.5mm",
+    "name": "TAZ Workhorse | SE | 0.50 mm",
     "inherits": "lulzbot_redgum_base",
     "version": 2,
     "metadata":
     {
         "type": "machine",
         "visible": true,
-        "priority": "01",
+        "priority": "00",
         "machine_extruder_trains":
         {
             "0": "lulzbot_redgum_cecropia_extruder"
@@ -15,9 +15,9 @@
         "supported_actions": ["MachineSettingsAction"],
         "firmware_toolhead_name": "SingleExtruderAeroV2",
         "base_machine": "LulzBot TAZ Workhorse",
-        "base_machine_name": "LulzBot TAZ Workhorse",
+        "base_machine_name": "TAZ Workhorse",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "SE | 0.5mm",
+        "user_toolhead_name": "SE | 0.50 mm | Nickel Plated Copper",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
         "default_category": "All"
     },

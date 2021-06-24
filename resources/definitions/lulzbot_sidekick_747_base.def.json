@@ -5,6 +5,7 @@
     "version": 2,
     "metadata":
     {
+        "machine_priority": "02",
         "platform": "Sidekick_747_bed.STL",  
         "platform_offset":
         [

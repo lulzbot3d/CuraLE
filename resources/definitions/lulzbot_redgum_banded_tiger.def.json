@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_redgum_banded_tiger",
-    "name": "TAZ Workhorse | HS | 0.8mm",
+    "name": "TAZ Workhorse | HS | 0.80 mm",
     "inherits": "lulzbot_redgum_base",
     "version": 2,
     "metadata":
@@ -15,9 +15,9 @@
         "supported_actions": ["MachineSettingsAction"],
         "firmware_toolhead_name": "HardenedSteel",
         "base_machine": "LulzBot TAZ Workhorse",
-        "base_machine_name": "LulzBot TAZ Workhorse",
+        "base_machine_name": "TAZ Workhorse",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "HS | 0.8mm",
+        "user_toolhead_name": "HS | 0.80 mm | Hardened SST",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/hs-tool-head-hardened-steel-08-mm?pk_campaign=software-cura",
         "default_category": "All"
     },

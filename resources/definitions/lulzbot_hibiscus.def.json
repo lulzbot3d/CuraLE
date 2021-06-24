@@ -1,11 +1,12 @@
 {
     "id": "LulzBot_Hibiscus",
-    "name": "LulzBot Mini 2 | SE | 0.5 mm",
+    "name": "LulzBot Mini 2 | SE | 0.50 mm",
     "inherits": "lulzbot_base",
     "version": 2,
     "metadata":
     {
-        "priority": "01",
+        "machine_priority": "00",
+        "priority": "00",
         "machine_extruder_trains":
         {
             "0": "lulzbot_hibiscus_extruder"
@@ -26,7 +27,7 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
         "base_machine_name": "LulzBot Mini 2",
-        "user_toolhead_name": "SE | 0.5 mm (Aero v2)",
+        "user_toolhead_name": "SE | 0.50 mm | Nickel Plated Copper",
         "firmware_toolhead_name": "SingleExtruderAeroV2"
     },
     "overrides":

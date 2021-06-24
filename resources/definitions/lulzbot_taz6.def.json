@@ -5,7 +5,8 @@
     "version": 2,
     "metadata":
     {
-        "priority": "01",
+        "machine_priority": "99",
+        "priority": "00",
         "machine_extruder_trains":
         {
             "0": "lulzbot_taz6_extruder"
@@ -21,7 +22,7 @@
         "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-taz-6?pk_campaign=software-cura",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-single-extruder-tool-head-v21?pk_campaign=software-cura",
         "base_machine": "lulzbot_taz_6",
-        "base_machine_name": "LulzBot TAZ 6",
+        "base_machine_name": "[Legacy] TAZ 6",
         "firmware_toolhead_name": "SingleExtruder"
     },
     "overrides":

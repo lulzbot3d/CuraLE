@@ -1,18 +1,18 @@
 {
     "id": "lulzbot_taz5_cecropia",
-    "name": "LulzBot TAZ 5 | SE | 0.5 mm",
+    "name": "TAZ 5 | SE | 0.5 mm",
     "inherits": "lulzbot_taz5",
     "version": 2,
     "metadata":
     {
-        "priority": "02",
+        "priority": "01",
         "machine_extruder_trains":
         {
             "0": "lulzbot_taz5_cecropia_extruder"
         },
         "type": "machine",
         "visible": true,
-        "user_toolhead_name": "SE | 0.5 mm (Aero v2)",
+        "user_toolhead_name": "SE | 0.50 mm | Nickel Plated Copper",
         "firmware_toolhead_name": "SingleExtruderAeroV2"
     },
     "overrides":

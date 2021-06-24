@@ -1,13 +1,13 @@
 {
     "id": "lulzbot_gladiator_cecropia",
-    "name": "LulzBot TAZ ProXT | SE | 0.5mm (Aero v2)",
+    "name": "TAZ ProXT | SE | 0.50 mm",
     "inherits": "lulzbot_gladiator_base",
     "version": 2,
     "metadata":
     {
         "type": "machine",
         "visible": true,
-        "priority": "3",
+        "priority": "02",
         "machine_extruder_trains":
         {
             "0": "lulzbot_gladiator_cecropia_extruder"
@@ -22,9 +22,9 @@
         "category": "LulzBot",
         "firmware_toolhead_name": "SingleExtruderAeroV2",
         "base_machine": "LulzBot TAZ ProXT",
-        "base_machine_name": "LulzBot TAZ ProXT",
+        "base_machine_name": "TAZ Pro XT",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "SE | 0.5mm (Aero v2)",
+        "user_toolhead_name": "SE | 0.50 mm | Nickel Plated Copper",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/se-tool-head-single-extruder-05-mm?pk_campaign=software-cura",
         "default_category": "All"
     },

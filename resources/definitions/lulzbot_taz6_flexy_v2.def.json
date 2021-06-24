@@ -1,11 +1,11 @@
 {
     "id": "LulzBot_Taz6_Flexy_v2",
-    "name": "LulzBot TAZ 6 Flexystruder v2",
+    "name": "TAZ 6 Flexystruder v2",
     "inherits": "lulzbot_taz6",
     "version": 2,
     "metadata":
     {
-        "priority": "12",
+        "priority": "13",
         "machine_extruder_trains":
         {
             "0": "lulzbot_taz6_flexy_v2_extruder"

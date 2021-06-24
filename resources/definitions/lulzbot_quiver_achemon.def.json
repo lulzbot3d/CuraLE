@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_quiver_achemon",
-    "name": "LulzBot TAZ Pro | SL | 0.25mm (Micro)",
+    "name": "TAZ Pro | SL | 0.25 mm",
     "inherits": "lulzbot_quiver_base",
     "version": 2,
     "metadata":
@@ -22,9 +22,9 @@
         "category": "LulzBot",
         "firmware_toolhead_name": "SmallLayer",
         "base_machine": "LulzBot TAZ Pro",
-        "base_machine_name": "LulzBot TAZ Pro",
+        "base_machine_name": "TAZ Pro",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "SL | 0.25mm (Micro)",
+        "user_toolhead_name": "SL | 0.25 mm | Nickel Plated Copper",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/sl-tool-head-small-layer-micro-025-mm?pk_campaign=software-cura",
         "default_category": "All"
     },

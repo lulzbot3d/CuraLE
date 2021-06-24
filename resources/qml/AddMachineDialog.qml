@@ -108,12 +108,12 @@ UM.Dialog
                     GroupBox
                     {
                         id: printerSelection
-                        width: parent.width/17*4
+                        width: parent.width * .33 //the parent width of the window is multiplied by 1/ # of boxes to get evenly spaced boxes that take up the whole window
                         anchors.bottom: parent.bottom
                         anchors.top: parent.top
                         anchors.bottomMargin: UM.Theme.getSize("default_margin").width
 
-                        title: catalog.i18nc("@action:button", "Printer")
+                        title: catalog.i18nc("@action:button", "LulzBot 3D Printers")
                         ExclusiveGroup { id: printerGroup }
 
                         property int selectedIndex: 0
@@ -142,12 +142,12 @@ UM.Dialog
                     GroupBox
                     {
                         id: toolheadSelection
-                        width: parent.width/17*4
+                        width: parent.width * .33
                         anchors.bottom: parent.bottom
                         anchors.top: parent.top
                         anchors.bottomMargin: UM.Theme.getSize("default_margin").width
 
-                        title: catalog.i18nc("@action:button", "Tool Head | Nozzle Diameter")
+                        title: catalog.i18nc("@action:button", "Tool Head | Nozzle Ø | Nozzle Material")
                         ExclusiveGroup
                         {
                             id: toolheadGroup;
@@ -173,7 +173,7 @@ UM.Dialog
                     GroupBox
                     {
                         id: lcdSelection
-                        width: parent.width/17*3
+                        width: parent.width * .33
                         anchors.bottom: parent.bottom
                         anchors.top: parent.top
                         anchors.bottomMargin: UM.Theme.getSize("default_margin").width
@@ -206,7 +206,7 @@ UM.Dialog
                     /*GroupBox
                     {
                         id: revisionSelection
-                        width: parent.width/17*4-6
+                        width: parent.width * .25 
                         anchors.bottom: parent.bottom
                         anchors.top: parent.top
                         anchors.bottomMargin: UM.Theme.getSize("default_margin").width

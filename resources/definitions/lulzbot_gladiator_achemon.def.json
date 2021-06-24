@@ -1,13 +1,13 @@
 {
     "id": "lulzbot_gladiator_achemon",
-    "name": "LulzBot TAZ ProXT | SL | 0.25mm (Micro)",
+    "name": "TAZ ProXT | SL | 0.25 mm",
     "inherits": "lulzbot_gladiator_base",
     "version": 2,
     "metadata":
     {
         "type": "machine",
         "visible": true,
-        "priority": "4",
+        "priority": "03",
         "machine_extruder_trains":
         {
             "0": "lulzbot_gladiator_achemon_extruder"
@@ -22,9 +22,9 @@
         "category": "LulzBot",
         "firmware_toolhead_name": "SmallLayer",
         "base_machine": "LulzBot TAZ ProXT",
-        "base_machine_name": "LulzBot TAZ ProXT",
+        "base_machine_name": "TAZ Pro XT",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "SL | 0.25mm (Micro)",
+        "user_toolhead_name": "SL | 0.25 mm",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/sl-tool-head-small-layer-micro-025-mm",
         "default_category": "All"
     },

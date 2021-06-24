@@ -1,13 +1,13 @@
 {
     "id": "lulzbot_redgum_goldenrod",
-    "name": "TAZ Workhorse | HE | 0.5mm",
+    "name": "TAZ Workhorse | HE | 0.50 mm",
     "inherits": "lulzbot_redgum_base",
     "version": 2,
     "metadata":
     {
         "type": "machine",
         "visible": true,
-        "priority": "01",
+        "priority": "02",
         "machine_extruder_trains":
         {
             "0": "lulzbot_redgum_goldenrod_extruder"
@@ -15,9 +15,9 @@
         "supported_actions": ["MachineSettingsAction"],
         "firmware_toolhead_name": "HardenedExtruder",
         "base_machine": "LulzBot TAZ Workhorse",
-        "base_machine_name": "LulzBot TAZ Workhorse",
+        "base_machine_name": "TAZ Workhorse",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "HE | 0.5mm",
+        "user_toolhead_name": "HE | 0.50 mm | Hardened SST",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
         "default_category": "All"
     },

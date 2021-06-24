@@ -5,7 +5,8 @@
     "version": 2,
     "metadata":
     {
-        "priority": "01",
+        "machine_priority": "97",
+        "priority":"00",
         "machine_extruder_trains":
         {
             "0": "lulzbot_mini_extruder"
@@ -25,7 +26,7 @@
         "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-mini",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-mini-single-extruder-tool-head-v2_1",
         "base_machine": "lulzbot_mini",
-        "base_machine_name": "LulzBot Mini",
+        "base_machine_name": "[Legacy] Mini 1",
         "user_toolhead_name": "Single Extruder",
         "firmware_toolhead_name": "SingleExtruder",
         "has_optional_lcd": true

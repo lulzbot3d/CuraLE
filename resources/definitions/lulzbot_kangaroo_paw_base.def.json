@@ -5,6 +5,7 @@
     "version": 2,
     "metadata":
     {
+        "machine_priority": "07",
         "type": "machine",
         "platform": "lulzbot_kangaroo_paw.stl",
         "platform_offset":

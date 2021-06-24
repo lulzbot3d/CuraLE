@@ -1,13 +1,13 @@
 {
     "id": "lulzbot_redgum_achemon",
-    "name": "TAZ Workhorse | SL | 0.25mm (Micro)",
+    "name": "TAZ Workhorse | SL | 0.25 mm",
     "inherits": "lulzbot_redgum_base",
     "version": 2,
     "metadata":
     {
         "type": "machine",
         "visible": true,
-        "priority": "02",
+        "priority": "01",
         "machine_extruder_trains":
         {
             "0": "lulzbot_redgum_achemon_extruder"
@@ -15,9 +15,9 @@
         "supported_actions": ["MachineSettingsAction"],
         "firmware_toolhead_name": "SmallLayer",
         "base_machine": "LulzBot TAZ Workhorse",
-        "base_machine_name": "LulzBot TAZ Workhorse",
+        "base_machine_name": "TAZ Workhorse",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "SL | 0.25mm (Micro)",
+        "user_toolhead_name": "SL | 0.25 mm | Nickel Plated Copper",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/sl-tool-head-small-layer-micro-025-mm?pk_campaign=software-cura",
         "default_category": "All"
     },

@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_quiver_evergreen_bagworm",
-    "name": "LulzBot TAZ Pro Dual Extruder",
+    "name": "TAZ Pro Dual Extruder",
     "inherits": "lulzbot_quiver_base",
     "version": 2,
     "metadata":
@@ -23,9 +23,9 @@
         "category": "LulzBot",
         "firmware_toolhead_name": "DualExtruder",
         "base_machine": "LulzBot TAZ Pro",
-        "base_machine_name": "LulzBot TAZ Pro",
+        "base_machine_name": "TAZ Pro",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "TAZ Pro Dual Extruder",
+        "user_toolhead_name": "Pro Dual | 0.50 mm | Hardened SST",
         "firmware_last_version": "2.0.0.144",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
         "default_category": "All"
