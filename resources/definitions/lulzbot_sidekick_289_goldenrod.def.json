@@ -12,12 +12,6 @@
         },
         "type": "machine",
         "platform": "Sidekick_289_bed.stl",
-        "platform_offset":
-        [
-            -85,
-            -15, 
-            85
-        ],
         "preferred_material": "*PolyLite_PLA*",
         "preferred_quality": "*Standard*",
         "file_formats": "text/x-gcode",

@@ -12,12 +12,7 @@
         },
         "type": "machine",
         "platform": "Sidekick_747_bed.STL",  
-        "platform_offset":
-        [
-            0,
-            -15,
-            0
-        ],
+        
         "preferred_material": "*PolyLite_PLA*",
         "preferred_quality": "*Standard*",
         "file_formats": "text/x-gcode",
@@ -38,26 +33,6 @@
         "machine_heated_bed":
         {
             "default_value": true
-        },
-        "machine_width":
-        {
-            "default_value": 230
-        },
-        "machine_depth":
-        {
-            "default_value": 230
-        },
-        "machine_height":
-        {
-            "default_value": 235
-        },
-	"machine_has_lcd":
-        {
-        "type": "bool",
-        "default_value": true,
-        "enabled": true,
-        "label": "LCD",
-        "description": "LCD"
         },
         "machine_center_is_zero":
         {
