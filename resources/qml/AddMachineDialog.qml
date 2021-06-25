@@ -108,7 +108,7 @@ UM.Dialog
                     GroupBox
                     {
                         id: printerSelection
-                        width: parent.width * .33 //the parent width of the window is multiplied by 1/ # of boxes to get evenly spaced boxes that take up the whole window
+                        width: parent.width * .25 //the parent width of the window is multiplied by 1/ # of boxes to get evenly spaced boxes that take up the whole window
                         anchors.bottom: parent.bottom
                         anchors.top: parent.top
                         anchors.bottomMargin: UM.Theme.getSize("default_margin").width
@@ -142,7 +142,7 @@ UM.Dialog
                     GroupBox
                     {
                         id: toolheadSelection
-                        width: parent.width * .33
+                        width: parent.width * .50
                         anchors.bottom: parent.bottom
                         anchors.top: parent.top
                         anchors.bottomMargin: UM.Theme.getSize("default_margin").width
@@ -173,7 +173,7 @@ UM.Dialog
                     GroupBox
                     {
                         id: lcdSelection
-                        width: parent.width * .33
+                        width: parent.width * .25
                         anchors.bottom: parent.bottom
                         anchors.top: parent.top
                         anchors.bottomMargin: UM.Theme.getSize("default_margin").width
