@@ -13,7 +13,6 @@
             "0": "lulzbot_redgum_achemon_extruder"
         },
         "supported_actions": ["MachineSettingsAction"],
-        "firmware_toolhead_name": "SmallLayer",
         "base_machine": "LulzBot TAZ Workhorse",
         "base_machine_name": "TAZ Workhorse",
         "preferred_material": "*PolyLite_PLA*",

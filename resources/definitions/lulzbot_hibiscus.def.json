@@ -27,8 +27,7 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
         "base_machine_name": "LulzBot Mini 2",
-        "user_toolhead_name": "SE | 0.50 mm | Nickel Plated Copper",
-        "firmware_toolhead_name": "SingleExtruderAeroV2"
+        "user_toolhead_name": "SE | 0.50 mm | Nickel Plated Copper"
     },
     "overrides":
     {

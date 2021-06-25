@@ -20,7 +20,6 @@
             0
         ],
         "category": "LulzBot",
-        "firmware_toolhead_name": "lutefisk",
         "base_machine": "LulzBot TAZ Pro",
         "base_machine_name": "TAZ Pro",
         "preferred_material": "*PolyLite_PLA*",

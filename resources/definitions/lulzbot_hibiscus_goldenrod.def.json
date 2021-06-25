@@ -25,7 +25,6 @@
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
-        "firmware_toolhead_name": "HardenedExtruder",
         "user_toolhead_name": "HE | 0.50 mm | Hardened SST",
         "default_extrusion_rate": 60
     },
