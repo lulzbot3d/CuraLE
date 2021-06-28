@@ -233,7 +233,7 @@
         },
         "firmware_machine_type":
         {
-            "default_value": "LulzBot Hibiscus"
+            "default_value": "LulzBot Mini 2"
         },
         "machine_max_feedrate_x":
         {

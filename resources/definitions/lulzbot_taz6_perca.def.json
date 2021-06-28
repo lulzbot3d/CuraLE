@@ -20,7 +20,7 @@
     {
         "machine_name":
         {
-            "default_value": "LulzBot TAZ 6 | H175 | 0.5 mm "
+            "default_value": "LulzBot TAZ 6"
         },
         "machine_start_gcode":
         {

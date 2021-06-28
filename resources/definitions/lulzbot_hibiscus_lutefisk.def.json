@@ -48,7 +48,7 @@
         },
         "firmware_machine_type":
         {
-            "default_value": "LulzBot Hibiscus"
+            "default_value": "LulzBot Mini 2"
         },
         "material_diameter":
         {

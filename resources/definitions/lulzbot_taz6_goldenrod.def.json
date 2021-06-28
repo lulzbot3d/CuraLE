@@ -20,7 +20,7 @@
     {
         "machine_name":
         {
-            "default_value": "LulzBot TAZ 6 | HE | 0.5 mm (Aero v2)"
+            "default_value": "LulzBot TAZ 6"
         },
         "machine_start_gcode":
         {
