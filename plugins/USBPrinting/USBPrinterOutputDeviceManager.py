@@ -204,14 +204,14 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_taz5_cecropia":              "Marlin_TAZ5_SingleExtruderAeroV2_1.1.9.34_5f9c029d1.hex",
             "lulzbot_taz5_lutefisk":              "lulzbot_taz5_lutefisk.hex",
 
-            "lulzbot_taz6":                             "Marlin_TAZ6_SingleExtruder_1.1.9.34_5f9c029d1.hex",
             "lulzbot_taz6_flexy_v2":                      "Marlin_TAZ6_Flexystruder_1.1.9.34_5f9c029d1.hex",
             "lulzbot_taz6_moarstruder":                    "Marlin_TAZ6_Moarstruder_1.1.9.34_5f9c029d1.hex",
             "lulzbot_taz6_dual_v2":                     "Marlin_TAZ6_DualExtruderV2_1.1.9.34_5f9c029d1.hex",
             "lulzbot_taz6_flexy_dually_v2":                "Marlin_TAZ6_FlexyDually_1.1.9.34_5f9c029d1.hex",
             "lulzbot_taz6_dual_v3":                     "Marlin_TAZ6_DualExtruderV3_1.1.9.34_5f9c029d1.hex",
             "lulzbot_taz6_aerostruder":                    "Marlin_TAZ6_Aerostruder_1.1.9.34_5f9c029d1.hex",
-            
+
+            "lulzbot_taz6":                             "Marlin_TAZ6_Universal_2.0.6.5_e3cc1be2.hex",
             "lulzbot_taz6_achemon":                         "Marlin_TAZ6_Universal_2.0.6.5_e3cc1be2.hex",
             "lulzbot_taz6_banded_tiger":                 "Marlin_TAZ6_Universal_2.0.6.5_e3cc1be2.hex",
             "lulzbot_taz6_dingy_cutworm":            "Marlin_TAZ6_Universal_2.0.6.5_e3cc1be2.hex",
@@ -308,21 +308,24 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_sidekick_747_sk285" :            "Marlin_747_UNIVERSAL_2.0.6.5_0e33029c.hex",
         }
         lulzbot_revision_machines = {
-            "lulzbot_quiver_achemon":                    "Marlin_TAZPro_SmallLayer_2.0.0.144_aded3b617.bin",
-            "lulzbot_quiver_banded_tiger":            "Marlin_TAZPro_HardenedSteel_2.0.0.144_aded3b617.bin",
-            "lulzbot_quiver_cecropia":         "Marlin_TAZPro_SingleExtruderAeroV2_2.0.0.144_aded3b617.bin",
-            "lulzbot_quiver_dingy_cutworm":       "Marlin_TAZPro_HardenedSteelPlus_2.0.0.144_aded3b617.bin",
+            "lulzbot_quiver_achemon":                    "Marlin_TAZPro_Universal_2.0.6.5_e3cc1be2.bin",
+            "lulzbot_quiver_banded_tiger":            "Marlin_TAZPro_Universal_2.0.6.5_e3cc1be2.bin",
+            "lulzbot_quiver_cecropia":         "Marlin_TAZPro_Universal_2.0.6.5_e3cc1be2.bin",
+            "lulzbot_quiver_dingy_cutworm":       "Marlin_TAZPro_Universal_2.0.6.5_e3cc1be2.bin",
             "lulzbot_quiver_evergreen_bagworm":        "Marlin_TAZPro_DualExtruder_2.0.0.144_aded3b617.bin",
-            "lulzbot_quiver_goldenrod":            "Marlin_TAZPro_HardenedExtruder_2.0.0.144_aded3b617.bin",
-            "lulzbot_quiver_lutefisk":            "lulzbot_quiver_lutefisk.bin",
+            "lulzbot_quiver_goldenrod":            "Marlin_TAZPro_Universal_2.0.6.5_e3cc1be2.bin",
+            "lulzbot_quiver_lutefisk":            "Marlin_TAZPro_Universal_2.0.6.5_e3cc1be2.bin",
+            "lulzbot_quiver_perca":            "Marlin_TAZPro_Universal_2.0.6.5_e3cc1be2.bin",
 
-            "lulzbot_redgum_goldenrod":      "Marlin_TAZWorkhorse_HardenedExtruder_2.0.0.144_aded3b617.hex",
-            "lulzbot_redgum_achemon":              "Marlin_TAZWorkhorse_SmallLayer_2.0.0.144_aded3b617.hex",
-            "lulzbot_redgum_banded_tiger":      "Marlin_TAZWorkhorse_HardenedSteel_2.0.0.144_aded3b617.hex",
-            "lulzbot_redgum_cecropia":   "Marlin_TAZWorkhorse_SingleExtruderAeroV2_2.0.0.144.hex",
-            "lulzbot_redgum_dingy_cutworm": "Marlin_TAZWorkhorse_HardenedSteelPlus_2.0.0.144_aded3b617.hex",
-            "lulzbot_redgum_yellowfin":        "Marlin_TAZWorkhorse_DualExtruderV3_2.0.0.144_aded3b617.hex",
-            "lulzbot_redgum_lutefisk":        "lulzbot_redgum_lutefisk.hex",
+            "lulzbot_redgum_goldenrod":      "Marlin_TAZWorkhorse_Universal_2.0.6.5_e3cc1be2.hex",
+            "lulzbot_redgum_achemon":              "Marlin_TAZWorkhorse_Universal_2.0.6.5_e3cc1be2.hex",
+            "lulzbot_redgum_banded_tiger":      "Marlin_TAZWorkhorse_Universal_2.0.6.5_e3cc1be2.hex",
+            "lulzbot_redgum_cecropia":   "Marlin_TAZWorkhorse_Universal_2.0.6.5_e3cc1be2.hex",
+            "lulzbot_redgum_dingy_cutworm": "Marlin_TAZWorkhorse_Universal_2.0.6.5_e3cc1be2.hex",
+            "lulzbot_redgum_yellowfin":        "Marlin_TAZWorkhorse_DualExtruderV3.1_2.0.0.144.hex",
+            "lulzbot_redgum_lutefisk":        "Marlin_TAZWorkhorse_Universal_2.0.6.5_e3cc1be2.hex",
+            "lulzbot_redgum_perca":        "Marlin_TAZWorkhorse_Universal_2.0.6.5_e3cc1be2.hex",
+
         }
 
         ##TODO: Add check for multiple extruders
@@ -340,9 +343,9 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             if machine_id in lulzbot_lcd_machines.keys() and machine_has_lcd:
                 Logger.log("d", "Found firmware with LCD for machine %s.", machine_id)
                 hex_file = lulzbot_lcd_machines[machine_id]
-            elif machine_id in lulzbot_revision_machines.keys() and revision_type:
-                Logger.log("d","Found firmware with Revision for machine %s.", machine_id)
-                hex_file = lulzbot_revision_machines[machine_id]
+            ##elif machine_id in lulzbot_revision_machines.keys() and revision_type:
+            ##    Logger.log("d","Found firmware with Revision for machine %s.", machine_id)
+            ##    hex_file = lulzbot_revision_machines[machine_id]
             else:
                 Logger.log("d", "Found firmware for machine %s.", machine_id)
                 hex_file = lulzbot_machines[machine_id]
