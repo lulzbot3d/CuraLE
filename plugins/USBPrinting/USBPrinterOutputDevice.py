@@ -885,7 +885,7 @@ class ConnectThread:
                             "Wrong printer detected, starting a print with the incorrect printer selected may damage your printer.")
         elif check_firmware_status == self.CheckFirmwareStatus.WRONG_TOOLHEAD:
             self._parent.log("d", "Tried to connect to machine with wrong toolhead")
-            showWarning(self, "Wrong toolhead detected.", "Wrong toolhead detected. Please change this if it is not what you want.")
+            #showWarning(self, "Wrong toolhead detected.", "Wrong toolhead detected. Please change this if it is not what you want.")
             #self._parent.close()  # Unable to connect, wrap up.
             #self._parent.setConnectionState(ConnectionState.closed)
             Application.getInstance().getMachineManager().toolheadChanged.emit()
