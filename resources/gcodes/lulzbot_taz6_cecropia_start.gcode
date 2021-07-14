@@ -42,7 +42,7 @@ G1 X-19 Y23 F1000 ; slow wipe
 G1 X-17 Y23 F1000 ; slow wipe
 G1 Z10 ; raise extruder
 M109 R{material_probe_temperature} ; wait for extruder to reach probe temp
-G1 X-9 Y-9 ; move above first probe point
+G1 X-10 Y293 F4000 ; move above first probe point
 M204 S100 ; set probing acceleration
 G29       ; start auto-leveling sequence
 M420 S1   ; enable leveling matrix
