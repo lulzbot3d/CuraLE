@@ -14,7 +14,8 @@
         "visible": true,
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-flexystruder-tool-head-v2?pk_campaign=software-cura",
         "user_toolhead_name": "Flexystruder v2",
-        "firmware_toolhead_name": "Flexystruder"
+        "firmware_toolhead_name": "Flexystruder",
+        "firmware_last_version": "1.1.9.34"
     },
     "overrides":
     {

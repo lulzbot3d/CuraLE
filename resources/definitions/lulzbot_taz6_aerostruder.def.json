@@ -14,7 +14,8 @@
         "visible": true,
         "user_toolhead_name": "Aerostruder v1",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-aerostruder-tool-head?pk_campaign=software-cura",
-        "firmware_toolhead_name": "Aerostruder"
+        "firmware_toolhead_name": "Aerostruder",
+        "firmware_last_version": "1.1.9.34"
     },
     "overrides":
     {
