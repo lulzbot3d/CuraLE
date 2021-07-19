@@ -216,6 +216,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_taz6_banded_tiger":                 "Marlin_TAZ6_Universal_2.0.6.7_f3ce10ff.hex",
             "lulzbot_taz6_dingy_cutworm":            "Marlin_TAZ6_Universal_2.0.6.7_f3ce10ff.hex",
             "lulzbot_taz6_cecropia":              "Marlin_TAZ6_Universal_2.0.6.7_f3ce10ff.hex",
+            "lulzbot_taz6_goldenrod":              "Marlin_TAZ6_Universal_2.0.6.7_f3ce10ff.hex",
             "lulzbot_taz6_lutefisk":              "Marlin_TAZ6_Universal_2.0.6.7_f3ce10ff.hex",
             "lulzbot_taz6_perca":              "Marlin_TAZ6_Universal_2.0.6.7_f3ce10ff.hex",
 
