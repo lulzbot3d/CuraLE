@@ -459,7 +459,7 @@ class MachineManager(QObject):
                             Application.getInstance().openFile(os.path.join(Resources.getPath(Resources.Meshes), model_will_be_loaded))
                         break
                 else:
-                    model_will_be_loaded = "rocktopus.stl"
+                    model_will_be_loaded = "OctopusRev06.stl"
                     Application.getInstance().openFile(os.path.join(Resources.getPath(Resources.Meshes), model_will_be_loaded))
                 Preferences.getInstance().setValue("general/is_first_run", False)
         else:
