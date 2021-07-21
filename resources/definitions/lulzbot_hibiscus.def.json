@@ -27,7 +27,7 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
         "base_machine_name": "LulzBot Mini 2",
-        "firmware_last_version": "2.0.6.6",
+        "firmware_last_version": "2.0.6.7",
         "user_toolhead_name": "SE | 0.50 mm | Nickel Plated Copper"
     },
     "overrides":
