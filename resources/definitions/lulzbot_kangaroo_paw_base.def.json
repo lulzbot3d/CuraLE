@@ -18,7 +18,7 @@
         "visible": false,
         "syringe_printer": true,
         "printer_info_link": "https://www.lulzbot.com/store/printers/?pk_campaign=software-cura",
-        "firmware_last_version": "2.0.0.174",
+        "firmware_last_version": "2.0.0.175",
         "default_eeprom_state": false
     },
     "overrides":

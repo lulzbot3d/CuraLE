@@ -276,7 +276,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
 
             
 
-            "lulzbot_kangaroo_paw":                     "Marlin_Bio_SingleExtruder_2.0.0.174_226bfbbb7.hex",
+            "lulzbot_kangaroo_paw":                     "Marlin_Bio_SingleExtruder_2.0.0.175_6c8c1c0d.hex",
         }
 
         lulzbot_lcd_machines = {
