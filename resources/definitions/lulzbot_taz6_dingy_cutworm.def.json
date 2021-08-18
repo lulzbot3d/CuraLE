@@ -14,7 +14,7 @@
         "visible": true,
         "user_toolhead_name": "HS+ | 1.20 mm | Hardened SST",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-hs-plus-tool-head-hardened-steel-1_2-mm?pk_campaign=software-cura",
-        "firmware_last_version": "2.0.6.7"
+        "firmware_last_version": "2.0.6.10"
     },
     "overrides":
     {
