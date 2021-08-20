@@ -217,7 +217,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_taz6_dingy_cutworm":            "Marlin_TAZ6_Universal_2.0.6.10_bea44d9.hex",
             "lulzbot_taz6_cecropia":              "Marlin_TAZ6_Universal_2.0.6.10_bea44d9.hex",
             "lulzbot_taz6_goldenrod":              "Marlin_TAZ6_Universal_2.0.6.10_bea44d9.hex",
-            "lulzbot_taz6_lutefisk":              "lulzbot_taz6_lutefisk.hex",
+            "lulzbot_taz6_lutefisk":              "Marlin_TAZ6_M175_2.0.6.10_bea44d9.hex",
             "lulzbot_taz6_perca":              "Marlin_TAZ6_Universal_2.0.6.10_bea44d9.hex",
 
             "lulzbot_hibiscus":                  "Marlin_Mini2_Universal_2.0.6.10_7218dbb.hex",
@@ -225,7 +225,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_hibiscus_banded_tiger":            "Marlin_Mini2_Universal_2.0.6.10_7218dbb.hex",
             "lulzbot_hibiscus_dingy_cutworm":       "Marlin_Mini2_Universal_2.0.6.10_7218dbb.hex",
             "lulzbot_hibiscus_goldenrod":                    "Marlin_Mini2_Universal_2.0.6.10_7218dbb.hex",
-            "lulzbot_hibiscus_lutefisk":       "lulzbot_hibiscus_lutefisk.hex",
+            "lulzbot_hibiscus_lutefisk":       "Marlin_Mini2_M175_2.0.6.10_bea44d9.hex",
             "lulzbot_hibiscus_perca":       "Marlin_Mini2_Universal_2.0.6.10_7218dbb.hex",
 
             "lulzbot_quiver_achemon":                    "Marlin_TAZPro_Universal_2.0.6.10_bea44d9.bin",
@@ -234,7 +234,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_quiver_dingy_cutworm":       "Marlin_TAZPro_Universal_2.0.6.10_bea44d9.bin",
             "lulzbot_quiver_evergreen_bagworm":        "Marlin_TAZPro_DualExtruder_2.0.0.144_aded3b617.bin",
             "lulzbot_quiver_goldenrod":            "Marlin_TAZPro_Universal_2.0.6.10_bea44d9.bin",
-            "lulzbot_quiver_lutefisk":            "lulzbot_quiver_lutefisk.bin",
+            "lulzbot_quiver_lutefisk":            "Marlin_TAZPro_M175_2.0.6.10_bea44d9.bin",
             "lulzbot_quiver_perca":            "Marlin_TAZPro_Universal_2.0.6.10_bea44d9.bin",
 
             "lulzbot_redgum_goldenrod":      "Marlin_TAZWorkhorse_Universal_2.0.6.10_bea44d9.hex",
@@ -243,7 +243,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_redgum_cecropia":   "Marlin_TAZWorkhorse_Universal_2.0.6.10_bea44d9.hex",
             "lulzbot_redgum_dingy_cutworm": "Marlin_TAZWorkhorse_Universal_2.0.6.10_bea44d9.hex",
             "lulzbot_redgum_yellowfin":        "Marlin_TAZWorkhorse_DualExtruderV3.1_2.0.0.144.hex",
-            "lulzbot_redgum_lutefisk":        "lulzbot_redgum_lutefisk.hex",
+            "lulzbot_redgum_lutefisk":        "Marlin_TAZWorkhorse_M175_2.0.6.10_bea44d9.hex",
             "lulzbot_redgum_perca":        "Marlin_TAZWorkhorse_Universal_2.0.6.10_bea44d9.hex",
 
             "lulzbot_gladiator_evergreen_bagworm":      "Marlin_TAZProXT_DualExtruder_2.0.0.144.1_78264b7f.bin",
