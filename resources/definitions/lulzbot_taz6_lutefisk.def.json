@@ -14,7 +14,7 @@
         "visible": true,
         "user_toolhead_name": "M175 | 0.50 mm | Carbide Coated Copper",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/se-tool-head-single-extruder-05-mm?pk_campaign=software-cura",
-        "firmware_last_version": "2.0.6.7"
+        "firmware_last_version": "2.0.0.144.1"
     },
     "overrides":
     {

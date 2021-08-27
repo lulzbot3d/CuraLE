@@ -16,7 +16,7 @@
         "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-taz-workhorse?pk_campaign=software-cura",
         "preferred_material": "*PolyLite_PLA*",
         "preferred_quality": "*Standard*",
-        "firmware_last_version": "2.0.6.7",
+        "firmware_last_version": "2.0.6.10",
         "machine_priority": "04",
         "default_eeprom_state": false,
         "has_revision":true
