@@ -15,6 +15,7 @@
         },
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-flexydually-tool-head-v2?pk_campaign=software-cura",
         "firmware_toolhead_name": "FlexyDually v2",
+        "user_toolhead_name": "FlexyDually v2",
         "nozzle_offsetting_for_disallowed_areas": false,
         "firmware_last_version": "1.1.9.34"
     },
