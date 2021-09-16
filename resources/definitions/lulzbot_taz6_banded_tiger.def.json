@@ -13,8 +13,7 @@
         "type": "machine",
         "visible": true,
         "user_toolhead_name": "HS | 0.80 mm | Hardened SST",
-        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/hs-tool-head-hardened-steel-08-mm?pk_campaign=software-cura",
-        "firmware_last_version": "2.0.9.0.4"
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/hs-tool-head-hardened-steel-08-mm?pk_campaign=software-cura"
     },
     "overrides":
     {

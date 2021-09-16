@@ -19,7 +19,7 @@
         "visible": false,
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
-        "firmware_last_version": "2.0.9.0.5",
+        "firmware_last_version": "2.0.9.0.6",
         "has_optional_lcd": true
     },
     "overrides":
