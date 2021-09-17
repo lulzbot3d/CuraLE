@@ -31,7 +31,7 @@
     {
         "machine_name":
         {
-            "default_value": "LulzBot ProXT | M175 | 0.5mm"
+            "default_value": "LulzBot ProXT | H175 | 0.5mm"
         },
         "machine_start_gcode":
         {
