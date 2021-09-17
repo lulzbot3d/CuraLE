@@ -57,5 +57,26 @@
     <machine>
       <machine_identifier product="lulzbot_sidekick_747_sk175"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_lutefiskv1"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_lutefiskv1"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_lutefiskv1"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_hibiscus_lutefiskv1"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_quiver_lutefiskv1"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_lutefiskv1"/>
+    </machine>
+     <machine>
+      <machine_identifier product="lulzbot_redgum_lutefiskv1"/>
+    </machine>
   </settings>
 </fdmmaterial>
