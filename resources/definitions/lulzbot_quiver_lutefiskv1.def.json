@@ -1,7 +1,7 @@
 {
-    "id": "lulzbot_gladiator_lutefisk",
-    "name": "TAZ ProXT | M175v2 | 0.50 mm",
-    "inherits": "lulzbot_gladiator_base",
+    "id": "lulzbot_quiver_lutefiskv1",
+    "name": "TAZ Pro | M175v1 | 0.50 mm",
+    "inherits": "lulzbot_quiver_base",
     "version": 2,
     "metadata":
     {
@@ -10,9 +10,9 @@
         "priority": "06",
         "machine_extruder_trains":
         {
-            "0": "lulzbot_gladiator_lutefisk_extruder"
+            "0": "lulzbot_quiver_lutefisk_extruder"
         },
-        "platform": "gladiator_bed.stl",
+        "platform": "quiver_bed.stl",
         "platform_offset":
         [
             0,
@@ -20,30 +20,30 @@
             0
         ],
         "category": "LulzBot",
-        "base_machine": "LulzBot TAZ ProXT",
-        "base_machine_name": "TAZ Pro XT",
+        "base_machine": "LulzBot TAZ Pro",
+        "base_machine_name": "TAZ Pro",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "M175v2 | 0.50 mm | Carbide Coated Copper",
-        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/M175-tool-head-175-mm-single-extruder-05-mm",
+        "user_toolhead_name": "M175v1 | 0.50 mm | Carbide Coated Copper",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
         "default_category": "All"
     },
     "overrides":
     {
         "machine_name":
         {
-            "default_value": "LulzBot ProXT | M175v2 | 0.5mm"
+            "default_value": "LulzBot Pro | M175v1 | 0.5mm"
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "lulzbot_gladiator_lutefisk_start"
+            "default_value_from_file": "lulzbot_quiver_lutefisk_start"
         },
         "machine_end_gcode":
         {
-            "default_value_from_file": "lulzbot_gladiator_lutefisk_end"
+            "default_value_from_file": "lulzbot_quiver_goldenrod_end"
         },
         "machine_level_x_axis_gcode":
         {
-            "default_value_from_file": "lulzbot_gladiator_level_x_axis"
+            "default_value_from_file": "lulzbot_quiver_level_x_axis"
         },
         "machine_extruder_count": {
             "default_value": 1
@@ -58,11 +58,11 @@
         },
         "machine_height":
         {
-            "default_value": 586
+            "default_value": 286
         },
         "machine_wipe_gcode":
         {
-            "default_value_from_file": "lulzbot_gladiator_lutefisk_wipe"
+            "default_value_from_file": "lulzbot_quiver_lutefisk_wipe"
         },
         "layer_start_x": { "value": "100" },
         "layer_start_y": { "value": "100" },
