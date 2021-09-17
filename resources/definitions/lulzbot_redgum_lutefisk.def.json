@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_redgum_lutefisk",
-    "name": "TAZ Workhorse | M175v2 | 0.50 mm",
+    "name": "TAZ Workhorse | M175 v2 | 0.50 mm",
     "inherits": "lulzbot_redgum_base",
     "version": 2,
     "metadata":
@@ -17,7 +17,7 @@
         "base_machine": "LulzBot TAZ Workhorse",
         "base_machine_name": "TAZ Workhorse",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "M175v2 | 0.50 mm | Carbide Coated Copper",
+        "user_toolhead_name": "M175 v2 | 0.50 mm | Carbide Coated Copper",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
         "default_category": "All"
     },
@@ -25,7 +25,7 @@
     {
         "machine_name":
         {
-            "default_value": "LulzBot Workhorse M175v2"
+            "default_value": "LulzBot Workhorse M175 v2"
         },
         "machine_start_gcode":
         {

@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_gladiator_lutefisk",
-    "name": "TAZ ProXT | M175v2 | 0.50 mm",
+    "name": "TAZ ProXT | M175 v2 | 0.50 mm",
     "inherits": "lulzbot_gladiator_base",
     "version": 2,
     "metadata":
@@ -23,7 +23,7 @@
         "base_machine": "LulzBot TAZ ProXT",
         "base_machine_name": "TAZ Pro XT",
         "preferred_material": "*PolyLite_PLA*",
-        "user_toolhead_name": "M175v2 | 0.50 mm | Carbide Coated Copper",
+        "user_toolhead_name": "M175 v2 | 0.50 mm | Carbide Coated Copper",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/M175-tool-head-175-mm-single-extruder-05-mm",
         "default_category": "All"
     },
@@ -31,7 +31,7 @@
     {
         "machine_name":
         {
-            "default_value": "LulzBot ProXT | M175v2 | 0.5mm"
+            "default_value": "LulzBot ProXT | M175 v2 | 0.5mm"
         },
         "machine_start_gcode":
         {
