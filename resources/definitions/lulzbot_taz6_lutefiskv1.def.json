@@ -8,7 +8,7 @@
         "priority": "06",
         "machine_extruder_trains":
         {
-            "0": "lulzbot_taz6_lutefisk_extruder"
+            "0": "lulzbot_taz6_lutefiskv1_extruder"
         },
         "type": "machine",
         "visible": true,
