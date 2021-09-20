@@ -202,7 +202,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_taz5_banded_tiger":                 "Marlin_TAZ5_HardenedSteel_1.1.9.34_5f9c029d1.hex",
             "lulzbot_taz5_dingy_cutworm":            "Marlin_TAZ5_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex",
             "lulzbot_taz5_cecropia":              "Marlin_TAZ5_SingleExtruderAeroV2_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz5_lutefisk":              "lulzbot_taz5_lutefisk.hex",
+            "lulzbot_taz5_lutefisk":              "Marlin_TAZ5_M175_2.0.0.144.1_ffaa466.hex",
 
             "lulzbot_taz6_flexy_v2":                      "Marlin_TAZ6_Flexystruder_1.1.9.34_5f9c029d1.hex",
             "lulzbot_taz6_moarstruder":                    "Marlin_TAZ6_Moarstruder_1.1.9.34_5f9c029d1.hex",
