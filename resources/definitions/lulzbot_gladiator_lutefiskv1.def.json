@@ -10,7 +10,7 @@
         "priority": "06",
         "machine_extruder_trains":
         {
-            "0": "lulzbot_gladiator_lutefisk_extruder"
+            "0": "lulzbot_gladiator_lutefiskv1_extruder"
         },
         "platform": "gladiator_bed.stl",
         "platform_offset":

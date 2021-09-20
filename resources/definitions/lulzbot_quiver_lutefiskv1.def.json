@@ -10,7 +10,7 @@
         "priority": "06",
         "machine_extruder_trains":
         {
-            "0": "lulzbot_quiver_lutefisk_extruder"
+            "0": "lulzbot_quiver_lutefiskv1_extruder"
         },
         "platform": "quiver_bed.stl",
         "platform_offset":

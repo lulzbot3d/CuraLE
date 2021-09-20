@@ -10,7 +10,7 @@
         "priority": "05",
         "machine_extruder_trains":
         {
-            "0": "lulzbot_redgum_lutefisk_extruder"
+            "0": "lulzbot_redgum_lutefiskv1_extruder"
         },
         "supported_actions": ["MachineSettingsAction"],
         

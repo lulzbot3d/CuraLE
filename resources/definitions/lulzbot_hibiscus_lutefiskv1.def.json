@@ -8,7 +8,7 @@
         "priority": "05",
         "machine_extruder_trains":
         {
-            "0": "lulzbot_hibiscus_lutefisk_extruder"
+            "0": "lulzbot_hibiscus_lutefiskv1_extruder"
         },
         "type": "machine",
         "platform": "lulzbot_mini.stl",

@@ -8,7 +8,7 @@
         "priority": "07",
         "machine_extruder_trains":
         {
-            "0": "lulzbot_sidekick_747_lutefisk_extruder"
+            "0": "lulzbot_sidekick_747_lutefiskv1_extruder"
         },
         "type": "machine",
         "platform": "Sidekick_747_bed.STL",
