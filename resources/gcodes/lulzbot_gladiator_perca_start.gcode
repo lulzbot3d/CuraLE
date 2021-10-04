@@ -1,4 +1,4 @@
-;This G-Code has been generated specifically for LulzBot TAZ ProXT with SE Tool Head
+;This G-Code has been generated specifically for LulzBot TAZ ProXT with H175 Tool Head
 M73 P0                  ; clear LCD progress bar
 M75 					; Start LCD Print Timer
 G26 					; clear potential 'probe fail' condition
@@ -10,7 +10,7 @@ G92 E0 					; set extruder position to 0
 M140 S{material_bed_temperature_layer_0} ; start bed heating up
 G28 					; home all axes
 G0 X145 Y187 Z156 F3000 			; move away from endstops
-M117 G - HS+ Heating Up...			; progress indicator message on LCD
+M117 G - H175 Heating Up...			; progress indicator message on LCD
 M109 R{material_soften_temperature} 	; soften filament before retraction
 M117 G - H175 Retracting Filament...			; progress indicator message on LCD
 G1 E-15 F75 				; retract filament

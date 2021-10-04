@@ -1,4 +1,4 @@
-;This G-Code has been generated specifically for LulzBot TAZ Pro with Small Layer (SL) Tool Head
+;This G-Code has been generated specifically for LulzBot TAZ Pro with Small Layer SL Tool Head
 M73 P0                  ; clear LCD progress bar
 M75 					; Start LCD Print Timer
 G26 					; clear potential 'probe fail' condition
@@ -14,7 +14,7 @@ M117 Q - SL Heating Up...			; progress indicator message on LCD
 M109 R{material_soften_temperature} 	; soften filament before retraction
 M117 Q - SL Retracting Filament...			; progress indicator message on LCD
 G1 E-15 F75 				; retract filament
-M117 Q - SE Moving to Position...			; progress indicator message on LCD
+M117 Q - SL Moving to Position...			; progress indicator message on LCD
 G1 X295 Y100 Z10 F3000 ; move above wiper pad
 M109 R{material_wipe_temperature} 	; wait for extruder to reach wiping temp
 M117 Q - SL Wiping Nozzle...			; progress indicator message on LCD

@@ -1,4 +1,4 @@
-;This G-Code has been generated specifically for LulzBot TAZ Pro with Hardened Extruder (HE) Tool Head
+;This G-Code has been generated specifically for LulzBot TAZ Pro with Hardened Extruder HE Tool Head
 M73 P0                  ; clear LCD progress bar
 M75 					; Start LCD Print Timer
 G26 					; clear potential 'probe fail' condition
@@ -43,7 +43,7 @@ G1 X295 Y30 F2000 ; fast wipe
 G1 X293 Y25 Z1.5 F1000 ; slow wipe
 G1 X295 Y23 F1000 ; slow wipe
 G1 Z10 ; raise extruder
-M117 Q - SL Wiping Complete.		; progress indicator message on LCD
+M117 Q - HE Wiping Complete.		; progress indicator message on LCD
 G1 X0 Y0 F3000				; move toward first probe point
 M109 R{material_probe_temperature}	; wait for extruder to reach probe temp
 M204 S300				; set probing acceleration
