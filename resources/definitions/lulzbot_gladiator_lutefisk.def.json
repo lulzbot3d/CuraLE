@@ -35,11 +35,11 @@
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "lulzbot_gladiator_lutefisk_start"
+            "default_value_from_file": "lulzbot_gladiator_lutefiskv2_start"
         },
         "machine_end_gcode":
         {
-            "default_value_from_file": "lulzbot_gladiator_lutefisk_end"
+            "default_value_from_file": "lulzbot_gladiator_lutefiskv2_end"
         },
         "machine_level_x_axis_gcode":
         {
@@ -62,7 +62,7 @@
         },
         "machine_wipe_gcode":
         {
-            "default_value_from_file": "lulzbot_gladiator_lutefisk_wipe"
+            "default_value_from_file": "lulzbot_gladiator_lutefiskv2_wipe"
         },
         "layer_start_x": { "value": "100" },
         "layer_start_y": { "value": "100" },

@@ -40,7 +40,7 @@
         },
         "machine_end_gcode":
         {
-            "default_value_from_file": "lulzbot_quiver_goldenrod_end"
+            "default_value_from_file": "lulzbot_quiver_lutefisk_end"
         },
         "machine_level_x_axis_gcode":
         {
