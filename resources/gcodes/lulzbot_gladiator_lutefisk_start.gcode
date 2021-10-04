@@ -15,33 +15,33 @@ M109 R{material_soften_temperature} 	; soften filament before retraction
 M117 G - M175 Retracting Filament...			; progress indicator message on LCD
 G1 E-15 F75 				; retract filament
 M117 G - M175 Moving to Position...			; progress indicator message on LCD
-G1 X295 Y100 Z10 F3000 ; move above wiper pad
+G1 X298 Y100 Z10 F3000 ; move above wiper pad
 M109 R{material_wipe_temperature} 	; wait for extruder to reach wiping temp
 M117 G - M175 Wiping Nozzle...			; progress indicator message on LCD
 G1 Z0.5              ; lower nozzle
-G1 X297 Y95 F1000 ; slow wipe
-G1 X297 Y90 F1000 ; slow wipe
-G1 X297 Y85 F1000 ; slow wipe
-G1 X295 Y90 F1000 ; slow wipe
-G1 X297 Y80 F1000 ; slow wipe
-G1 X295 Y95 F1000 ; slow wipe
-G1 X297 Y75 F2000 ; fast wipe
-G1 X295 Y65 F2000 ; fast wipe
-G1 X297 Y70 F2000 ; fast wipe
-G1 X295 Y60 F2000 ; fast wipe
-G1 X297 Y55 F2000 ; fast wipe
-G1 X295 Y50 F2000 ; fast wipe
-G1 X297 Y40 F2000 ; fast wipe
-G1 X295 Y45 F2000 ; fast wipe
-G1 X297 Y35 F2000 ; fast wipe
-G1 X295 Y40 F2000 ; fast wipe
-G1 X297 Y70 F2000 ; fast wipe
-G1 X295 Y30 Z2 F2000 ; fast wipe
-G1 X297 Y35 F2000 ; fast wipe
-G1 X295 Y25 F2000 ; fast wipe
-G1 X297 Y30 F2000 ; fast wipe
-G1 X295 Y25 Z1.5 F1000 ; slow wipe
-G1 X297 Y23 F1000 ; slow wipe
+G1 X298 Y95 F1000 ; slow wipe
+G1 X298 Y90 F1000 ; slow wipe
+G1 X298 Y85 F1000 ; slow wipe
+G1 X296 Y90 F1000 ; slow wipe
+G1 X298 Y80 F1000 ; slow wipe
+G1 X296 Y95 F1000 ; slow wipe
+G1 X298 Y75 F2000 ; fast wipe
+G1 X296 Y65 F2000 ; fast wipe
+G1 X298 Y70 F2000 ; fast wipe
+G1 X296 Y60 F2000 ; fast wipe
+G1 X298 Y55 F2000 ; fast wipe
+G1 X296 Y50 F2000 ; fast wipe
+G1 X298 Y40 F2000 ; fast wipe
+G1 X296 Y45 F2000 ; fast wipe
+G1 X298 Y35 F2000 ; fast wipe
+G1 X296 Y40 F2000 ; fast wipe
+G1 X298 Y70 F2000 ; fast wipe
+G1 X296 Y30 Z2 F2000 ; fast wipe
+G1 X298 Y35 F2000 ; fast wipe
+G1 X296 Y25 F2000 ; fast wipe
+G1 X298 Y30 F2000 ; fast wipe
+G1 X296 Y25 Z1.5 F1000 ; slow wipe
+G1 X298 Y23 F1000 ; slow wipe
 G1 Z10 ; raise extruder
 M117 G - M175 Wiping Complete.			; progress indicator message on LCD
 G1 X0 Y0 F3000				; move toward first probe point
