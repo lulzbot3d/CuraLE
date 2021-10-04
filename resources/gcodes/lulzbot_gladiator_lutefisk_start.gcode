@@ -18,30 +18,30 @@ M117 G - M175 Moving to Position...			; progress indicator message on LCD
 G1 X295 Y100 Z10 F3000 ; move above wiper pad
 M109 R{material_wipe_temperature} 	; wait for extruder to reach wiping temp
 M117 G - M175 Wiping Nozzle...			; progress indicator message on LCD
-G1 Z1.5              ; lower nozzle
-G1 X295 Y95 F1000 ; slow wipe
+G1 Z0.5              ; lower nozzle
+G1 X297 Y95 F1000 ; slow wipe
+G1 X297 Y90 F1000 ; slow wipe
+G1 X297 Y85 F1000 ; slow wipe
 G1 X295 Y90 F1000 ; slow wipe
-G1 X295 Y85 F1000 ; slow wipe
-G1 X293 Y90 F1000 ; slow wipe
-G1 X295 Y80 F1000 ; slow wipe
-G1 X293 Y95 F1000 ; slow wipe
-G1 X295 Y75 F2000 ; fast wipe
-G1 X293 Y65 F2000 ; fast wipe
-G1 X295 Y70 F2000 ; fast wipe
-G1 X293 Y60 F2000 ; fast wipe
-G1 X295 Y55 F2000 ; fast wipe
-G1 X293 Y50 F2000 ; fast wipe
+G1 X297 Y80 F1000 ; slow wipe
+G1 X295 Y95 F1000 ; slow wipe
+G1 X297 Y75 F2000 ; fast wipe
+G1 X295 Y65 F2000 ; fast wipe
+G1 X297 Y70 F2000 ; fast wipe
+G1 X295 Y60 F2000 ; fast wipe
+G1 X297 Y55 F2000 ; fast wipe
+G1 X295 Y50 F2000 ; fast wipe
+G1 X297 Y40 F2000 ; fast wipe
+G1 X295 Y45 F2000 ; fast wipe
+G1 X297 Y35 F2000 ; fast wipe
 G1 X295 Y40 F2000 ; fast wipe
-G1 X293 Y45 F2000 ; fast wipe
-G1 X295 Y35 F2000 ; fast wipe
-G1 X293 Y40 F2000 ; fast wipe
-G1 X295 Y70 F2000 ; fast wipe
-G1 X293 Y30 Z2 F2000 ; fast wipe
-G1 X295 Y35 F2000 ; fast wipe
-G1 X293 Y25 F2000 ; fast wipe
-G1 X295 Y30 F2000 ; fast wipe
-G1 X293 Y25 Z1.5 F1000 ; slow wipe
-G1 X295 Y23 F1000 ; slow wipe
+G1 X297 Y70 F2000 ; fast wipe
+G1 X295 Y30 Z2 F2000 ; fast wipe
+G1 X297 Y35 F2000 ; fast wipe
+G1 X295 Y25 F2000 ; fast wipe
+G1 X297 Y30 F2000 ; fast wipe
+G1 X295 Y25 Z1.5 F1000 ; slow wipe
+G1 X297 Y23 F1000 ; slow wipe
 G1 Z10 ; raise extruder
 M117 G - M175 Wiping Complete.			; progress indicator message on LCD
 G1 X0 Y0 F3000				; move toward first probe point
