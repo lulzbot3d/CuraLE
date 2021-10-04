@@ -26,7 +26,7 @@
         "base_machine_name": "TAZ Pro XT",
         "preferred_material": "*PolyLite_PLA*",
         "user_toolhead_name": "Pro Dual | 0.50 mm | Hardened SST",
-        "firmware_last_version": "2.0.0.144.3",
+        "firmware_last_version": "2.0.0.144.4",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
         "default_category": "All"
     },
