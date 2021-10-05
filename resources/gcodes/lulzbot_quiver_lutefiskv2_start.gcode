@@ -18,7 +18,7 @@ M117 Q - M175v2 Moving to Position...			; progress indicator message on LCD
 G1 X295 Y100 Z10 F3000 ; move above wiper pad
 M109 R{material_wipe_temperature} 	; wait for extruder to reach wiping temp
 M117 Q - M175v2 Wiping Nozzle...			; progress indicator message on LCD
-G1 Z0.5           ; lower nozzle
+G1 Z1.5           ; lower nozzle
 G1 X295 Y95 F1000 ; slow wipe
 G1 X295 Y90 F1000 ; slow wipe
 G1 X295 Y85 F1000 ; slow wipe
