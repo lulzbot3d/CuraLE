@@ -23,7 +23,7 @@
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "taz_6_lutefisk_start"
+            "default_value_from_file": "taz_6_lutefiskv2_start"
         },
         "machine_end_gcode":
         {

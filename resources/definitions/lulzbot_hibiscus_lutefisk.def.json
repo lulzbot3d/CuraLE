@@ -32,7 +32,7 @@
     {
         "machine_start_gcode":
         {
-            "default_value_from_file": "mini_2_lutefisk_start"
+            "default_value_from_file": "mini_2_lutefiskv2_start"
         },
         "machine_end_gcode":
         {
