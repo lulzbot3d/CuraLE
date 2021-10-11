@@ -22,7 +22,7 @@ UM.Dialog
         anchors.bottom: buttonRow.top
         text: '
                 <p>Cura LulzBot Edition, a Free Software solution for Fused Filament Fabrication 3D printing, is distributed under the terms of the GNU Lesser General Public License (LGPLv3).</p>
-                <p>Copyright © 2017, 2018, 2019, 2020 Fargo Additive Manufacturing Equipment 3D, LLC. - Released under terms of the LGPLv3 License.</p>
+                <p>Copyright © 2017, 2018, 2019, 2020, 2021 Fargo Additive Manufacturing Equipment 3D, LLC. - Released under terms of the LGPLv3 License.</p>
                 <p>Copyright © 2014, 2015, 2016, 2017 Fargo Additive Manufacturing Equipment 3D, LLC. - Released under terms of the AGPLv3 License.</p>
 		<p>Derived from Cura, which was created by David Braam and Ultimaker. Copyright © 2013 David Braam - Released under terms of the AGPLv3 License.<p>
                 <p>This program is Free Software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
