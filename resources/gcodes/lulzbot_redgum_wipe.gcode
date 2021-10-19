@@ -9,33 +9,4 @@ G92 E0 ; set extruder position to 0
 M109 R{material_soften_temperature} ; soften filament before homing Z
 G28 ; Home all axis
 G1 E-30 F100 ; retract filament
-M109 R{material_wipe_temperature} ; wait for extruder to reach wiping temp
-G1 X-16 Y100 F3000 ; move above wiper pad
-G1 Z1 ; push nozzle into wiper
-G1 X-18 Y95 F1000 ; slow wipe
-G1 X-18 Y90 F1000 ; slow wipe
-G1 X-18 Y85 F1000 ; slow wipe
-G1 X-16 Y90 F1000 ; slow wipe
-G1 X-18 Y80 F1000 ; slow wipe
-G1 X-16 Y95 F1000 ; slow wipe
-G1 X-18 Y75 F2000 ; fast wipe
-G1 X-16 Y65 F2000 ; fast wipe
-G1 X-18 Y70 F2000 ; fast wipe
-G1 X-16 Y60 F2000 ; fast wipe
-G1 X-18 Y55 F2000 ; fast wipe
-G1 X-16 Y50 F2000 ; fast wipe
-G1 X-18 Y40 F2000 ; fast wipe
-G1 X-16 Y45 F2000 ; fast wipe
-G1 X-18 Y35 F2000 ; fast wipe
-G1 X-16 Y40 F2000 ; fast wipe
-G1 X-18 Y70 F2000 ; fast wipe
-G1 X-16 Y30 Z2 F2000 ; fast wipe
-G1 X-18 Y35 F2000 ; fast wipe
-G1 X-16 Y25 F2000 ; fast wipe
-G1 X-18 Y30 F2000 ; fast wipe
-G1 X-16 Y25 Z1.5 F1000 ; slow wipe
-G1 X-18 Y23 F1000 ; slow wipe
-G1 Z50 ; raise extruder
-G1 X140 ; move head to center of travel
-M104 S0 ; turn off hot end
-M117 Wiping Complete ; finish message
+G12                         ; wiping sequence
