@@ -24,7 +24,7 @@
         "base_machine_name": "TAZ Pro XT",
         "preferred_material": "*PolyLite_PLA*",
         "user_toolhead_name": "M175 v1 | 0.50 mm | Carbide Coated Copper",
-        "firmware_last_version": "2.0.0.144.5",
+        "firmware_last_version": "2.0.0.144.6",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/M175-tool-head-175-mm-single-extruder-05-mm",
         "default_category": "All"
     },
