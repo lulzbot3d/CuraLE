@@ -5,7 +5,7 @@ G92 E0     					; set extruder position to 0
 M117 Heating...         	; progress indicator message on LCD
 M109 R{material_soften_temperature} ; soften filament before homing Z
 G28 ; Home all axis
-G1 E-30 F100 ; retract filament
+G1 E-15 F100 ; retract filament
 M140 S{material_bed_temperature_layer_0}     	; start bed heating up
 M104 S{material_probe_temperature}     	        ; start extruder heating to probe temp
 M190 S{material_bed_temperature_layer_0}     	; wait for bed to reach printing temp
