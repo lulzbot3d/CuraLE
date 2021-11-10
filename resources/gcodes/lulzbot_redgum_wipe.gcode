@@ -8,5 +8,5 @@ M82 ; set extruder to absolute mode
 G92 E0 ; set extruder position to 0
 M109 R{material_soften_temperature} ; soften filament before homing Z
 G28 ; Home all axis
-G1 E-30 F100 ; retract filament
+G1 E-15 F100 ; retract filament
 G12                         ; wiping sequence
