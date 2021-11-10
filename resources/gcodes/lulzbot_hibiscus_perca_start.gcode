@@ -14,7 +14,7 @@ M117 Mini 2 Wiping...			; progress indicator message on LCD
 M109 R{material_soften_temperature} 	; soften filament before retraction
 G1 E-15 F75 				; retract filament
 G12                         ; wiping sequence
-G28 X0 Y0				; home X and Y
+G28 X0 Y0 F5000				; home X and Y
 M109 R{material_probe_temperature}	; wait for extruder to reach probe temp
 M204 S300				; set probing acceleration
 G29					; start auto-leveling sequence
