@@ -14,4 +14,5 @@ M109 R{material_soften_temperature} 	; soften filament before retraction
 M117 G - HS Retracting Filament...			; progress indicator message on LCD
 G1 E-15 F75 				; retract filament
 M117 G - HS Moving to Position...			; progress indicator message on LCD
+M109 R{material_wipe_temperature}                  ; wait for extruder to reach wiping temp
 G12                         ; wiping sequence

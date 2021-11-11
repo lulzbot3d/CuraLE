@@ -13,4 +13,5 @@ M117 Q - M175v2 Heating Up...			; progress indicator message on LCD
 M109 R{material_soften_temperature} 	; soften filament before retraction
 M117 Q - M175v2 Retracting Filament...			; progress indicator message on LCD
 G1 E-15 F75 				; retract filament
+M109 R{material_wipe_temperature}                  ; wait for extruder to reach wiping temp
 G12                         ; wiping sequence

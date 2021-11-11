@@ -15,4 +15,5 @@ M117 G - HS+ Retracting Filament...			; progress indicator message on LCD
 G1 E-15 F75 				; retract filament
 M117 G - HS+ Moving to Position...			; progress indicator message on LCD
 G1 X295 Y100 Z10 F3000 ; move above wiper pad
+M109 R{material_wipe_temperature}                  ; wait for extruder to reach wiping temp
 G12                         ; wiping sequence

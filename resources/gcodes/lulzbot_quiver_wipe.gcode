@@ -6,5 +6,6 @@ M104 S180 T1    ; set T1 temperature
 M109 R180 T0    ; wait for T0 to reach temp
 M109 R180 T1    ; wait for T1 to reach temp
 M107                                      ; turn off fan
+M109 R{material_wipe_temperature}                  ; wait for extruder to reach wiping temp
 G12                         ; wiping sequence
 G28                                       ; home all axis
