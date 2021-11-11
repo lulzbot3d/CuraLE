@@ -11,4 +11,5 @@ G1 X-19 Y258 F1000 ; move to safe homing position
 G28 Z ; home Z
 M109 R{material_soften_temperature} ; soften filament before homing Z
 G1 E-15 F100 ; retract filament
+M109 R{material_wipe_temperature}                  ; wait for extruder to reach wiping temp
 G12                         ; wiping sequence

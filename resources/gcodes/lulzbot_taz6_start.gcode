@@ -11,6 +11,7 @@ M140 S{material_bed_temperature_layer_0} ; start bed heating up
 M109 R{material_soften_temperature} ; soften filament before homing Z
 G28 ; Home all axis
 G1 E-15 F100 ; retract filament
+M109 R{material_wipe_temperature}                  ; wait for extruder to reach wiping temp
 G12                         ; wiping sequence
 M109 R{material_probe_temperature} ; wait for extruder to reach probe temp
 G1 X-10 Y293 F4000 ; move above first probe point
