@@ -9,4 +9,5 @@ G92 E0 ; set extruder position to 0
 M109 R{material_soften_temperature} ; soften filament before homing Z
 G28 ; Home all axis
 G1 E-30 F100 ; retract filament
+M109 R{material_wipe_temperature}                  ; wait for extruder to reach wiping temp
 G12                         ; wiping sequence

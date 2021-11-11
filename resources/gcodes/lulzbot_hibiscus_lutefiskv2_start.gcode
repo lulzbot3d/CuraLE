@@ -13,6 +13,7 @@ G0 X0 Y187 Z156 F200 			; move away from endstops
 M117 Mini 2 M175v2 Wiping...			; progress indicator message on LCD
 M109 R{material_soften_temperature} 	; soften filament before retraction
 G1 E-15 F75 				; retract filament
+M109 R{material_wipe_temperature}                  ; wait for extruder to reach wiping temp
 G12                         ; wiping sequence
 G1 Z10					; raise extruder
 G28 X0 Y0				; home X and Y
