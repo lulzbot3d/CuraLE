@@ -1,4 +1,13 @@
 ;This G-Code has been generated specifically for the LulzBot TAZ 6 with standard extruder
+;
+;The following lines can be uncommented for printer specific fine tuning
+;More information can be found at https://marlinfw.org/meta/gcode/
+;
+;M92 E420                 ;Set Axis Steps-per-unit
+;M301 P21.0 I1.78 D61.93  ;Set Hotend PID
+;M906 E960                ;TMC Motor Current
+;M206 Y4                  ;Set Home Offsets (default:4)
+;
 M73 P0 ; clear GLCD progress bar
 M75 ; start GLCD timer
 G26 ; clear potential 'probe fail' condition

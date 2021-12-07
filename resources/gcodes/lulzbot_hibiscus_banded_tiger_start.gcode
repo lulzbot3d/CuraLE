@@ -1,4 +1,12 @@
 ;This G-Code has been generated specifically for the LulzBot Mini 2 with HS 0.8mm Tool Head
+;
+;The following lines can be uncommented for printer specific fine tuning
+;More information can be found at https://marlinfw.org/meta/gcode/
+;
+;M92 E420                 ;Set Axis Steps-per-unit
+;M301 P21.0 I1.78 D61.93  ;Set Hotend PID
+;M906 E960                ;TMC Motor Current
+;
 M73 P0                  ; clear GLCD progress bar
 M75 					; Start GLCD Print Timer
 G26 					; clear potential 'probe fail' condition
