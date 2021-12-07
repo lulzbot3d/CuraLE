@@ -3,7 +3,7 @@
 ;The following lines can be uncommented for printer specific fine tuning
 ;More information can be found at https://marlinfw.org/meta/gcode/
 ;
-;M92 E420                 ;Set Axis Steps-per-unit
+;M92 E833                 ;Set Axis Steps-per-unit
 ;M301 P21.0 I1.78 D61.93  ;Set Hotend PID
 ;M906 E960                ;TMC Motor Current
 ;M206 Y4                  ;Set Home Offsets (default:4)
