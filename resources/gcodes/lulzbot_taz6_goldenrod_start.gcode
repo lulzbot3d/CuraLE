@@ -5,7 +5,7 @@
 ;
 ;M92 E420                 ;Set Axis Steps-per-unit
 ;M301 P21.0 I1.78 D61.93  ;Set Hotend PID
-;M906 E960                ;TMC Motor Current
+;M906 E160                ;Digipot Motor Current ((875mA-750)/5+135) = 160
 ;M206 Y0                  ;Set Home Offsets (default:0)
 ;
 M73 P0 ; clear GLCD progress bar
