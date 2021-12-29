@@ -1,4 +1,12 @@
 ;This G-Code has been generated specifically for the LulzBot Sidekick with a Universal Tool Head
+;
+;The following lines can be uncommented for printer specific fine tuning
+;More information can be found at https://marlinfw.org/meta/gcode/ (Note: current values are based on SE Tool Head)
+;
+;M92 E420                 ;Set Axis Steps-per-unit
+;M301 P21.0 I1.78 D61.93  ;Set Hotend PID
+;M906 E960                ;TMC Motor Current
+;
 G90 			            ; absolute coordinate
 M82     	            	; set extruder to absolute mode
 G92 E0     					; set extruder position to 0
