@@ -19,7 +19,9 @@ M140 S{material_bed_temperature_layer_0} ; start bed heating up
 G28 					; home all axes
 G0 X0 Y187 Z156 F200 			; move away from endstops
 M109 R{material_wipe_temperature}                  ; wait for extruder to reach wiping temp
+;M206 X0 Y0 Z0              ; uncomment to adjust wipe position (+X ~ nozzle moves left)(+Y ~ nozzle moves forward)(+Z ~ nozzle moves down)
 G12                         ; wiping sequence
+M206 X0 Y0 Z0               ;reseting stock nozzle position ### CAUTION: changing this line can affect print quality ###
 G28 X0 Y0				; home X and Y
 M109 R{material_probe_temperature}	; wait for extruder to reach probe temp
 M204 S300				; set probing acceleration
