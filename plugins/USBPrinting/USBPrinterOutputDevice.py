@@ -1527,7 +1527,7 @@ class PrintThread:
             # Set proper feedrate
             self.sendCommand("G1 F%f" % pos.f)
             # Re-home the nozzle
-            self.sendCommand("G28 X0 Y0")
+            # self.sendCommand("G28 X0 Y0") 
             # Position the toolhead to the correct position and feedrate again
             self.sendCommand("G1 X%f Y%f Z%f F%f" % (pos.x, pos.y, pos.z, pos.f))
             # Reset filament runout sensor
