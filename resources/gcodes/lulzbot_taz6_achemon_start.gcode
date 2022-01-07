@@ -24,7 +24,7 @@ G28 Z ; home Z
 G1 E-15 F100 ; retract filament
 ;M206 X0 Y0 Z0              ; uncomment to adjust wipe position (+X ~ nozzle moves left)(+Y ~ nozzle moves forward)(+Z ~ nozzle moves down)
 G12                         ; wiping sequence
-M206 X0 Y0 Z0               ;reseting stock nozzle position ### CAUTION: changing this line can affect print quality ###
+M206 X0 Y0 Z0               ; reseting stock nozzle position ### CAUTION: changing this line can affect print quality ###
 M109 R{material_probe_temperature} ; wait for extruder to reach probe temp
 G1 X-10 Y293 F4000 ; move above first probe point
 M204 S100 ; set probing acceleration

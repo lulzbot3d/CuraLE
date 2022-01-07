@@ -18,4 +18,4 @@ G1 X295 Y100 Z10 F3000 ; move above wiper pad
 M109 R{material_wipe_temperature}                  ; wait for extruder to reach wiping temp
 ;M206 X0 Y0 Z0              ; uncomment to adjust wipe position (+X ~ nozzle moves left)(+Y ~ nozzle moves forward)(+Z ~ nozzle moves down)
 G12                         ; wiping sequence
-M206 X0 Y0 Z0               ;reseting stock nozzle position ### CAUTION: changing this line can affect print quality ###
+M206 X0 Y0 Z0               ; reseting stock nozzle position ### CAUTION: changing this line can affect print quality ###
