@@ -1507,25 +1507,25 @@ class PrintThread:
         if isinstance(self._pauseState, self.PauseState):
             pos = self._pauseState
             if pos.f is None:
-                pos.f = 1200
+                pos.f = 1600
             if pos.e is None:
                 pos.e = 0
 
-            if pos.retraction > 0:
-                # Set E relative positioning
-                self.sendCommand("M83")
-                # Prime the nozzle when changing filament
-                self.sendCommand("G1 E%f F120" %  pos.retraction)  # Push the filament out
-                self.sendCommand("G1 E%f F120" % -pos.retraction)  # retract again
-                # Prime the nozzle again
-                self.sendCommand("G1 E%f F120" %  pos.retraction)
-                # Set E absolute positioning
-                self.sendCommand("M82")
-                # Set E absolute position to cancel out any extrude/retract that occured
-                self.sendCommand("G92 E%f" % pos.e)
+            # if pos.retraction > 0:
+            #     # Set E relative positioning
+            #     self.sendCommand("M83")
+            #     # Prime the nozzle when changing filament
+            #     self.sendCommand("G1 E%f F120" %  pos.retraction)  # Push the filament out
+            #     self.sendCommand("G1 E%f F120" % -pos.retraction)  # retract again
+            #     # Prime the nozzle again
+            #     self.sendCommand("G1 E%f F120" %  pos.retraction)
+            #     # Set E absolute positioning
+            #     self.sendCommand("M82")
+            #     # Set E absolute position to cancel out any extrude/retract that occured
+            #     self.sendCommand("G92 E%f" % pos.e)
 
             # Set proper feedrate
-            self.sendCommand("G1 F%f" % pos.f)
+            #self.sendCommand("G1 F%f" % pos.f)
             # Re-home the nozzle
             # self.sendCommand("G28 X0 Y0") 
             # Position the toolhead to the correct position and feedrate again
