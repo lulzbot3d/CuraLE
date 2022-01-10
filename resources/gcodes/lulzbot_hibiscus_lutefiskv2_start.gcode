@@ -22,7 +22,9 @@ M117 Mini 2 M175v2 Wiping...			; progress indicator message on LCD
 M109 R{material_soften_temperature} 	; soften filament before retraction
 G1 E-15 F75 				; retract filament
 M109 R{material_wipe_temperature}                  ; wait for extruder to reach wiping temp
+;M206 X0 Y0 Z0              ; uncomment to adjust wipe position (+X ~ nozzle moves left)(+Y ~ nozzle moves forward)(+Z ~ nozzle moves down)
 G12                         ; wiping sequence
+M206 X0 Y0 Z0               ; reseting stock nozzle position ### CAUTION: changing this line can affect print quality ###
 G1 Z10					; raise extruder
 G28 X0 Y0				; home X and Y
 M109 R{material_probe_temperature}	; wait for extruder to reach probe temp
@@ -38,5 +40,5 @@ M400					; wait for moves to finish
 M117 M175v2 Heating...				; progress indicator message on LCD
 M109 R{material_print_temperature_layer_0} ; wait for extruder to reach initial printing temp
 M190 R{material_bed_temperature_layer_0} ; wait for bed to reach printing temp
-G1 Z2 E0 F75				; prime tiny bit of filment into the nozzle
+G1 Z2 E0 F75				; prime tiny bit of filament into the nozzle
 M117 Mini 2 M175v2 Printing...		; progress indicator message on LCD
