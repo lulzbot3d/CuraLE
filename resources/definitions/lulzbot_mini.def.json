@@ -29,6 +29,7 @@
         "base_machine_name": "[Legacy] Mini 1",
         "user_toolhead_name": "Single Extruder",
         "firmware_toolhead_name": "SingleExtruder",
+        "firmware_last_version": "1.1.9.34",
         "has_optional_lcd": true
     },
     "overrides":
