@@ -22,6 +22,7 @@
         ],
         "category": "LulzBot",
         "firmware_toolhead_name": "DualExtruder",
+        "firmware_last_version": "2.0.0.144.6",
         "base_machine": "LulzBot TAZ ProXT",
         "base_machine_name": "TAZ Pro XT",
         "preferred_material": "*PolyLite_PLA*",
