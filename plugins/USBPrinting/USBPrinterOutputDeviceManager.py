@@ -1,25 +1,26 @@
 # Copyright (c) 2017 Ultimaker B.V.
 # Cura is released under the terms of the LGPLv3 or higher.
 
+import threading
+import time
+import serial.tools.list_ports
+from os import environ
+from re import search
+
+from PyQt5.QtCore import QObject, pyqtSignal
+
 from UM.Signal import Signal, signalemitter
-from .USBPrinterOutputDevice import USBPrinterOutputDevice
+from . import USBPrinterOutputDevice
 from UM.Application import Application
 from UM.Resources import Resources
 from UM.Logger import Logger
 from UM.PluginRegistry import PluginRegistry
 from UM.OutputDevice.OutputDevicePlugin import OutputDevicePlugin
-from cura.PrinterOutputDevice import ConnectionState
-from UM.Qt.ListModel import ListModel
-from UM.Message import Message
+from UM.i18n import i18nCatalog
 
-from cura.CuraApplication import CuraApplication
+from cura.PrinterOutput.PrinterOutputDevice import ConnectionState
 
-import threading
-import platform
-import time
-import os.path
-import serial.tools.list_ports
-from UM.Extension import Extension
+from . import USBPrinterOutputDevice
 
 from PyQt5.QtCore import QUrl, QObject, pyqtSlot, pyqtProperty, pyqtSignal, Qt
 from UM.i18n import i18nCatalog
@@ -28,9 +29,20 @@ i18n_catalog = i18nCatalog("cura")
 
 ##  Manager class that ensures that a usbPrinteroutput device is created for every connected USB printer.
 @signalemitter
-class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
-    def __init__(self, parent = None):
+class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
+    """Manager class that ensures that an USBPrinterOutput device is created for every connected USB printer."""
+
+    addUSBOutputDeviceSignal = Signal()
+    progressChanged = pyqtSignal()
+
+    def __init__(self, application, parent = None):
+        if USBPrinterOutputDeviceManager.__instance is not None:
+            raise RuntimeError("Try to create singleton '%s' more than once" % self.__class__.__name__)
+        USBPrinterOutputDeviceManager.__instance = self
+
         super().__init__(parent = parent)
+        self._application = application
+
         self._serial_port_list = []
         self._usb_output_devices = {}
         self._usb_output_devices_model = None
@@ -40,11 +52,11 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
         self._check_updates = True
         self._firmware_view = None
 
-        Application.getInstance().applicationShuttingDown.connect(self.stop)
-        self.addUSBOutputDeviceSignal.connect(self.addOutputDevice) #Because the model needs to be created in the same thread as the QMLEngine, we use a signal.
+        self._application.applicationShuttingDown.connect(self.stop)
+        # Because the model needs to be created in the same thread as the QMLEngine, we use a signal.
+        self.addUSBOutputDeviceSignal.connect(self.addOutputDevice)
 
-    addUSBOutputDeviceSignal = Signal()
-    connectionStateChanged = pyqtSignal()
+        self._application.globalContainerStackChanged.connect(self.updateUSBPrinterOutputDevices)
 
     progressChanged = pyqtSignal()
     firmwareUpdateChange = pyqtSignal()
@@ -54,10 +66,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
         progress = 0
         for printer_name, device in self._usb_output_devices.items(): # TODO: @UnusedVariable "printer_name"
             progress += device.progress
-        if len(self._usb_output_devices) > 0:
-            return progress / len(self._usb_output_devices)
-        else:
-            return progress
+        return progress / len(self._usb_output_devices)
 
     @pyqtProperty(int, notify = progressChanged)
     def errorCode(self):
@@ -97,8 +106,8 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
 
         self._firmware_view.show()
 
-    @pyqtSlot(str, bool)
-    def updateAllFirmware(self, file_name, update_eeprom):
+    @pyqtSlot(str)
+    def updateAllFirmware(self, file_name):
         if file_name.startswith("file://"):
             file_name = QUrl(file_name).toLocalFile()  # File dialogs prepend the path with file://, which we don't need / want
 
@@ -111,7 +120,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
         self.spawnFirmwareInterface("")
         for printer_connection in self._usb_output_devices:
             try:
-                self._usb_output_devices[printer_connection].updateFirmware(file_name, update_eeprom)
+                self._usb_output_devices[printer_connection].updateFirmware(file_name)
             except FileNotFoundError:
                 # Should only happen in dev environments where the resources/firmware folder is absent.
                 self._usb_output_devices[printer_connection].setProgress(100, 100)
@@ -120,7 +129,19 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
                     "Could not find firmware required for the printer at %s.") % printer_connection, title = i18n_catalog.i18nc("@info:title", "Printer Firmware")).show()
                 self._firmware_view.close()
 
+    def _updateThread(self):
+        while self._check_updates:
+            container_stack = self._application.getGlobalContainerStack()
+            if container_stack is None:
+                time.sleep(5)
                 continue
+            port_list = []  # Just an empty list; all USB devices will be removed.
+            if container_stack.getMetaDataEntry("supports_usb_connection"):
+                machine_file_formats = [file_type.strip() for file_type in container_stack.getMetaDataEntry("file_formats").split(";")]
+                if "text/x-gcode" in machine_file_formats:
+                    port_list = self.getSerialPortList(only_list_usb=True)
+            self._addRemovePorts(port_list)
+            time.sleep(5)
 
     @pyqtSlot(str, str, result = bool)
     def updateFirmwareBySerial(self, serial_port, file_name):
@@ -181,105 +202,6 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
         machine_with_heated_bed = {"ultimaker_original"       : "MarlinUltimaker-HBK-{baudrate}.hex",
                                    "ultimaker_original_dual"  : "MarlinUltimaker-HBK-{baudrate}-dual.hex",
                                    }
-        lulzbot_machines = {
-            "lulzbot_mini":                             "Marlin_Mini_SingleExtruder_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_mini_flexy":                         "Marlin_Mini_Flexystruder_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_mini_aerostruder":                    "Marlin_Mini_Aerostruder_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_mini_achemon":                         "Marlin_Mini_SmallLayer_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_mini_banded_tiger":                 "Marlin_Mini_HardenedSteel_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_mini_dingy_cutworm":            "Marlin_Mini_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_mini_cecropia":              "Marlin_Mini_SingleExtruderAeroV2_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_mini_lutefisk":              "Marlin_Mini_M175_2.0.0.144.1_8c651988.hex",
-
-            "lulzbot_taz5":                             "Marlin_TAZ5_SingleExtruder_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz5_flexy_v2":                      "Marlin_TAZ5_Flexystruder_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz5_moarstruder":                    "Marlin_TAZ5_Moarstruder_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz5_dual_v2":                     "Marlin_TAZ5_DualExtruderV2_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz5_flexy_dually_v2":                "Marlin_TAZ5_FlexyDually_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz5_dual_v3":                     "Marlin_TAZ5_DualExtruderV3_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz5_aerostruder":                    "Marlin_TAZ5_Aerostruder_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz5_achemon":                         "Marlin_TAZ5_SmallLayer_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz5_banded_tiger":                 "Marlin_TAZ5_HardenedSteel_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz5_dingy_cutworm":            "Marlin_TAZ5_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz5_cecropia":              "Marlin_TAZ5_SingleExtruderAeroV2_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz5_lutefisk":              "lulzbot_taz5_lutefisk.hex",
-
-            "lulzbot_taz6":                             "Marlin_TAZ6_SingleExtruder_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz6_flexy_v2":                      "Marlin_TAZ6_Flexystruder_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz6_moarstruder":                    "Marlin_TAZ6_Moarstruder_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz6_dual_v2":                     "Marlin_TAZ6_DualExtruderV2_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz6_flexy_dually_v2":                "Marlin_TAZ6_FlexyDually_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz6_dual_v3":                     "Marlin_TAZ6_DualExtruderV3_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz6_aerostruder":                    "Marlin_TAZ6_Aerostruder_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz6_achemon":                         "Marlin_TAZ6_SmallLayer_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz6_banded_tiger":                 "Marlin_TAZ6_HardenedSteel_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz6_dingy_cutworm":            "Marlin_TAZ6_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz6_cecropia":              "Marlin_TAZ6_SingleExtruderAeroV2_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_taz6_lutefisk":              "lulzbot_taz6_lutefisk.hex",
-
-            "lulzbot_hibiscus":                  "Marlin_Mini2_SingleExtruderAeroV2_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_hibiscus_achemon":                    "Marlin_Mini2_SmallLayer_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_hibiscus_banded_tiger":            "Marlin_Mini2_HardenedSteel_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_hibiscus_dingy_cutworm":       "Marlin_Mini2_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_hibiscus_goldenrod":                    "Marlin_Mini2_HardenedSteel_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_hibiscus_lutefisk":       "lulzbot_hibiscus_lutefisk.hex",
-
-            "lulzbot_quiver_achemon":                    "Marlin_TAZPro_SmallLayer_2.0.0.144_aded3b617.bin",
-            "lulzbot_quiver_banded_tiger":            "Marlin_TAZPro_HardenedSteel_2.0.0.144_aded3b617.bin",
-            "lulzbot_quiver_cecropia":         "Marlin_TAZPro_SingleExtruderAeroV2_2.0.0.144_aded3b617.bin",
-            "lulzbot_quiver_dingy_cutworm":       "Marlin_TAZPro_HardenedSteelPlus_2.0.0.144_aded3b617.bin",
-            "lulzbot_quiver_evergreen_bagworm":        "Marlin_TAZPro_DualExtruder_2.0.0.144_aded3b617.bin",
-            "lulzbot_quiver_goldenrod":            "Marlin_TAZPro_HardenedExtruder_2.0.0.144_aded3b617.bin",
-            "lulzbot_quiver_lutefisk":            "lulzbot_quiver_lutefisk.bin",
-
-            "lulzbot_redgum_goldenrod":      "Marlin_TAZWorkhorse_HardenedExtruder_2.0.0.144_aded3b617.hex",
-            "lulzbot_redgum_achemon":              "Marlin_TAZWorkhorse_SmallLayer_2.0.0.144_aded3b617.hex",
-            "lulzbot_redgum_banded_tiger":      "Marlin_TAZWorkhorse_HardenedSteel_2.0.0.144_aded3b617.hex",
-            "lulzbot_redgum_cecropia":   "Marlin_TAZWorkhorse_SingleExtruderAeroV2_2.0.0.144.hex",
-            "lulzbot_redgum_dingy_cutworm": "Marlin_TAZWorkhorse_HardenedSteelPlus_2.0.0.144_aded3b617.hex",
-            "lulzbot_redgum_yellowfin":        "Marlin_TAZWorkhorse_DualExtruderV3.1_2.0.0.144.hex",
-            "lulzbot_redgum_lutefisk":        "lulzbot_redgum_lutefisk.hex",
-
-            "lulzbot_gladiator_evergreen_bagworm":      "Marlin_ProXT_DualExtruder_2.0.0.144.1_78264b7f.bin",
-            "lulzbot_gladiator_goldenrod":      "Marlin_ProXT_HardenedExtruder_2.0.0.144.1_78264b7f.bin",
-            "lulzbot_gladiator_dingy_cutworm":      "Marlin_ProXT_HardenedSteelPlus_2.0.0.144.1_78264b7f.bin",
-            "lulzbot_gladiator_banded_tiger":      "Marlin_ProXT_HardenedSteel_2.0.0.144.1_78264b7f.bin",
-            "lulzbot_gladiator_lutefisk":      "Marlin_ProXT_M175_2.0.0.144.1_78264b7f.bin",
-            "lulzbot_gladiator_cecropia":      "Marlin_ProXT_SingleExtruderAeroV2_2.0.0.144.1_78264b7f.bin",
-            "lulzbot_gladiator_achemon":      "Marlin_ProXT_SmallLayer_2.0.0.144.1_78264b7f.bin",
-            
-
-            "lulzbot_kangaroo_paw":                     "Marlin_Bio_SingleExtruder_2.0.0.174_226bfbbb7.hex",
-        }
-
-        lulzbot_lcd_machines = {
-            "lulzbot_mini":                          "Marlin_MiniLCD_SingleExtruder_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_mini_flexy":                      "Marlin_MiniLCD_Flexystruder_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_mini_aerostruder":                 "Marlin_MiniLCD_Aerostruder_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_mini_achemon":                      "Marlin_MiniLCD_SmallLayer_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_mini_banded_tiger":              "Marlin_MiniLCD_HardenedSteel_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_mini_dingy_cutworm":         "Marlin_MiniLCD_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_mini_cecropia":           "Marlin_MiniLCD_SingleExtruderAeroV2_1.1.9.34_5f9c029d1.hex",
-            "lulzbot_mini_lutefisk":           "Marlin_MiniLCD_M175_2.0.0.144.1_8c651988.hex",
-        }
-        lulzbot_revision_machines = {
-            "lulzbot_quiver_achemon":                    "Marlin_TAZPro_SmallLayer_2.0.0.144_aded3b617.bin",
-            "lulzbot_quiver_banded_tiger":            "Marlin_TAZPro_HardenedSteel_2.0.0.144_aded3b617.bin",
-            "lulzbot_quiver_cecropia":         "Marlin_TAZPro_SingleExtruderAeroV2_2.0.0.144_aded3b617.bin",
-            "lulzbot_quiver_dingy_cutworm":       "Marlin_TAZPro_HardenedSteelPlus_2.0.0.144_aded3b617.bin",
-            "lulzbot_quiver_evergreen_bagworm":        "Marlin_TAZPro_DualExtruder_2.0.0.144_aded3b617.bin",
-            "lulzbot_quiver_goldenrod":            "Marlin_TAZPro_HardenedExtruder_2.0.0.144_aded3b617.bin",
-            "lulzbot_quiver_lutefisk":            "lulzbot_quiver_lutefisk.bin",
-
-            "lulzbot_redgum_goldenrod":      "Marlin_TAZWorkhorse_HardenedExtruder_2.0.0.144_aded3b617.hex",
-            "lulzbot_redgum_achemon":              "Marlin_TAZWorkhorse_SmallLayer_2.0.0.144_aded3b617.hex",
-            "lulzbot_redgum_banded_tiger":      "Marlin_TAZWorkhorse_HardenedSteel_2.0.0.144_aded3b617.hex",
-            "lulzbot_redgum_cecropia":   "Marlin_TAZWorkhorse_SingleExtruderAeroV2_2.0.0.144.hex",
-            "lulzbot_redgum_dingy_cutworm": "Marlin_TAZWorkhorse_HardenedSteelPlus_2.0.0.144_aded3b617.hex",
-            "lulzbot_redgum_yellowfin":        "Marlin_TAZWorkhorse_DualExtruderV3_2.0.0.144_aded3b617.hex",
-            "lulzbot_redgum_lutefisk":        "lulzbot_redgum_lutefisk.hex",
-        }
-
         ##TODO: Add check for multiple extruders
         hex_file = None
         if machine_id in machine_without_extras.keys():  # The machine needs to be defined here!
@@ -289,55 +211,53 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             else:
                 Logger.log("d", "Choosing basic firmware for machine %s.", machine_id)
                 hex_file = machine_without_extras[machine_id]  # Return "basic" firmware
-        elif machine_id in lulzbot_machines.keys():
-            machine_has_lcd = global_container_stack.getProperty("machine_has_lcd", "value")
-            revision_type = global_container_stack.getProperty("revision_type","value")
-            if machine_id in lulzbot_lcd_machines.keys() and machine_has_lcd:
-                Logger.log("d", "Found firmware with LCD for machine %s.", machine_id)
-                hex_file = lulzbot_lcd_machines[machine_id]
-            elif machine_id in lulzbot_revision_machines.keys() and revision_type:
-                Logger.log("d","Found firmware with Revision for machine %s.", machine_id)
-                hex_file = lulzbot_revision_machines[machine_id]
-            else:
-                Logger.log("d", "Found firmware for machine %s.", machine_id)
-                hex_file = lulzbot_machines[machine_id]
         else:
             Logger.log("w", "There is no firmware for machine %s.", machine_id)
 
         if hex_file:
-            try:
-                return Resources.getPath(CuraApplication.ResourceTypes.Firmware, hex_file.format(baudrate=baudrate))
-            except FileNotFoundError:
-                pass
-        Logger.log("w", "Could not find any firmware for machine %s.", machine_id)
-        return ""
+            return Resources.getPath(CuraApplication.ResourceTypes.Firmware, hex_file.format(baudrate=baudrate))
+        else:
+            Logger.log("w", "Could not find any firmware for machine %s.", machine_id)
+            return ""
 
     ##  Helper to identify serial ports (and scan for them)
     def _addRemovePorts(self, serial_ports):
-        if len(self._serial_port_list) == 0 and len(serial_ports) > 0:
-            # Hack to ensure its created in main thread
-            self.addUSBOutputDeviceSignal.emit(USBPrinterOutputDevice.SERIAL_AUTODETECT_PORT)
-        elif len(serial_ports) == 0:
-            for port, device in self._usb_output_devices.items():
-                device.close()
-            self._usb_output_devices = {}
-            self.getOutputDeviceManager().removeOutputDevice(USBPrinterOutputDevice.SERIAL_AUTODETECT_PORT)
+        # First, find and add all new or changed keys
+        for serial_port in list(serial_ports):
+            if serial_port not in self._serial_port_list:
+                self.addUSBOutputDeviceSignal.emit(serial_port)  # Hack to ensure its created in main thread
+                continue
         self._serial_port_list = list(serial_ports)
+
+        devices_to_remove = []
+        for port, device in self._usb_output_devices.items():
+            if port not in self._serial_port_list:
+                device.close()
+                devices_to_remove.append(port)
+
+        for port in devices_to_remove:
+            del self._usb_output_devices[port]
 
     ##  Because the model needs to be created in the same thread as the QMLEngine, we use a signal.
     def addOutputDevice(self, serial_port):
-        device = USBPrinterOutputDevice(serial_port)
+        device = USBPrinterOutputDevice.USBPrinterOutputDevice(serial_port)
         device.connectionStateChanged.connect(self._onConnectionStateChanged)
-        #device.connect()
+        self._usb_output_devices[serial_port] = device
+        device.connect()
         device.progressChanged.connect(self.progressChanged)
         device.firmwareUpdateChange.connect(self.firmwareUpdateChange)
         self._usb_output_devices[serial_port] = device
-        self.getOutputDeviceManager().addOutputDevice(device)
 
     ##  If one of the states of the connected devices change, we might need to add / remove them from the global list.
     def _onConnectionStateChanged(self, serial_port):
+        success = True
         try:
-            self.connectionStateChanged.emit()
+            if self._usb_output_devices[serial_port].connectionState == ConnectionState.connected:
+                self.getOutputDeviceManager().addOutputDevice(self._usb_output_devices[serial_port])
+            else:
+                success = success and self.getOutputDeviceManager().removeOutputDevice(serial_port)
+            if success:
+                self.connectionStateChanged.emit()
         except KeyError:
             Logger.log("w", "Connection state of %s changed, but it was not found in the list")
 
@@ -358,36 +278,37 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
         for port in serial.tools.list_ports.comports():
             if not isinstance(port, tuple):
                 port = (port.device, port.description, port.hwid)
+            if not port[2]:  # HWID may be None if the device is not USB or the system doesn't report the type.
+                continue
             if only_list_usb and not port[2].startswith("USB"):
                 continue
+
+            # To prevent cura from messing with serial ports of other devices,
+            # filter by regular expressions passed in as environment variables.
+            # Get possible patterns with python3 -m serial.tools.list_ports -v
+
+            # set CURA_DEVICENAMES=USB[1-9] -> e.g. not matching /dev/ttyUSB0
+            pattern = environ.get('CURA_DEVICENAMES')
+            if pattern and not search(pattern, port[0]):
+                continue
+
+            # set CURA_DEVICETYPES=CP2102 -> match a type of serial converter
+            pattern = environ.get('CURA_DEVICETYPES')
+            if pattern and not search(pattern, port[1]):
+                continue
+
+            # set CURA_DEVICEINFOS=LOCATION=2-1.4 -> match a physical port
+            # set CURA_DEVICEINFOS=VID:PID=10C4:EA60 -> match a vendor:product
+            pattern = environ.get('CURA_DEVICEINFOS')
+            if pattern and not search(pattern, port[2]):
+                continue
+
             base_list += [port[0]]
 
         return list(base_list)
 
-    @pyqtProperty("QVariantList", constant=True)
-    def portList(self):
-        return self.getSerialPortList()
+    __instance = None # type: USBPrinterOutputDeviceManager
 
-    @pyqtSlot(str, result=bool)
-    def sendCommandToCurrentPrinter(self, command):
-        try:
-            printer = Application.getInstance().getMachineManager().printerOutputDevices[0]
-        except:
-            return False
-        if type(printer) != USBPrinterOutputDevice:
-            return False
-        printer.sendCommand(command)
-        return True
-
-    @pyqtSlot(result=bool)
-    def connectToCurrentPrinter(self):
-        try:
-            printer = Application.getInstance().getMachineManager().printerOutputDevices[0]
-        except:
-            return False
-        if type(printer) != USBPrinterOutputDevice:
-            return False
-        printer.connect()
-        return True
-
-    _instance = None    # type: "USBPrinterOutputDeviceManager"
+    @classmethod
+    def getInstance(cls, *args, **kwargs) -> "USBPrinterOutputDeviceManager":
+        return cls.__instance

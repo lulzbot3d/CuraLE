@@ -1,14 +1,13 @@
 {
     "version": 2,
-    "name": "MAKEiT Pro-L",
+    "name": "Makeit Pro-L",
     "inherits": "fdmprinter",
     "metadata": {
         "visible": true,
-        "author": "NA",
-        "manufacturer": "NA",
+        "author": "unknown",
+        "manufacturer": "Makeit 3D",
         "file_formats": "text/x-gcode",
         "has_materials": false,
-        "supported_actions": [ "MachineSettingsAction", "UpgradeFirmware" ],
         "machine_extruder_trains":
         {
             "0": "makeit_l_dual_1st",
@@ -30,9 +29,6 @@
         "machine_center_is_zero": {
             "default_value": false
         },
-        "machine_nozzle_size": {
-            "default_value": 0.4
-        },
         "machine_head_with_fans_polygon":
         {
             "default_value": [
@@ -43,7 +39,7 @@
             ]
         },
         "gantry_height": {
-            "default_value": 330
+            "value": "330"
         },
         "machine_use_extruder_offset_to_offset_coords": {
             "default_value": true
@@ -69,9 +65,6 @@
         "prime_tower_position_y": {
             "value": "160"
         },
-        "material_diameter": {
-          "default_value": 1.75
-        },
         "layer_height": {
           "default_value": 0.2
         },
@@ -84,26 +77,11 @@
         "retraction_amount": {
           "default_value": 6
         },
-        "retraction_min_travel": {
-          "default_value": 1.5
-        },
-        "speed_travel": {
-          "default_value": 150
-        },
         "speed_print": {
           "default_value": 60
         },
         "wall_thickness": {
-          "default_value": 1.2
-        },
-        "bottom_thickness": {
-          "default_value": 0.2
-        },
-        "speed_layer_0": {
-          "default_value": 20
-        },
-        "speed_print_layer_0": {
-          "default_value": 20
+          "value": "1.2"
         },
         "cool_min_layer_time_fan_speed_max": {
           "default_value": 5

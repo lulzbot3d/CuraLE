@@ -1,4 +1,4 @@
-// Copyright (c) 2017 Ultimaker B.V.
+// Copyright (c) 2018 Ultimaker B.V.
 // Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.8
@@ -14,6 +14,10 @@ Item {
     id: base;
 
     height: UM.Theme.getSize("section").height
+    anchors.left: parent.left
+    anchors.right: parent.right
+    // To avoid overlapping with the scrollBars
+    anchors.rightMargin: 2 * UM.Theme.getSize("thin_margin").width
 
     property alias contents: controlContainer.children
     property alias hovered: mouse.containsMouse
@@ -30,6 +34,20 @@ Item {
     property var resolve: Cura.MachineManager.activeStackId != Cura.MachineManager.activeMachineId ? propertyProvider.properties.resolve : "None"
     property var stackLevels: propertyProvider.stackLevels
     property var stackLevel: stackLevels[0]
+    // A list of stack levels that will trigger to show the revert button
+    property var showRevertStackLevels: [0]
+    property bool resetButtonVisible: {
+        var is_revert_stack_level = false;
+        for (var i in base.showRevertStackLevels)
+        {
+            if (base.stackLevel == i)
+            {
+                is_revert_stack_level = true
+                break
+            }
+        }
+        return is_revert_stack_level && base.showRevertButton
+    }
 
     signal focusReceived()
     signal setActiveFocusToNextSetting(bool forward)
@@ -112,10 +130,12 @@ Item {
             anchors.right: settingControls.left;
             anchors.verticalCenter: parent.verticalCenter
 
+            height: UM.Theme.getSize("section").height;
+            verticalAlignment: Text.AlignVCenter;
 
             text: definition.label
             elide: Text.ElideMiddle;
-            renderType: Text.NativeRendering
+
             color: UM.Theme.getColor("setting_control_text");
             opacity: (definition.visible) ? 1 : 0.5
             // emphasize the setting if it has a value in the user or quality profile

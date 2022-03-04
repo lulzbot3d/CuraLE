@@ -11,7 +11,7 @@ from UM.i18n import i18nCatalog
 catalog = i18nCatalog("cura")
 
 # Ignore windows error popups. Fixes the whole "Can't open drive X" when user has an SD card reader.
-ctypes.windll.kernel32.SetErrorMode(1)
+ctypes.windll.kernel32.SetErrorMode(1) #type: ignore
 
 # WinAPI Constants that we need
 # Hardcoded here due to stupid WinDLL stuff that does not give us access to these values.
@@ -29,7 +29,7 @@ OPEN_EXISTING = 3 # [CodeStyle: Windows Enum value]
 
 # Setup the DeviceIoControl function arguments and return type.
 # See ctypes documentation for details on how to call C functions from python, and why this is important.
-ctypes.windll.kernel32.DeviceIoControl.argtypes = [
+ctypes.windll.kernel32.DeviceIoControl.argtypes = [ #type: ignore
     wintypes.HANDLE,                    # _In_          HANDLE hDevice
     wintypes.DWORD,                     # _In_          DWORD dwIoControlCode
     wintypes.LPVOID,                    # _In_opt_      LPVOID lpInBuffer
@@ -39,18 +39,26 @@ ctypes.windll.kernel32.DeviceIoControl.argtypes = [
     ctypes.POINTER(wintypes.DWORD),     # _Out_opt_     LPDWORD lpBytesReturned
     wintypes.LPVOID                     # _Inout_opt_   LPOVERLAPPED lpOverlapped
 ]
-ctypes.windll.kernel32.DeviceIoControl.restype = wintypes.BOOL
+ctypes.windll.kernel32.DeviceIoControl.restype = wintypes.BOOL #type: ignore
 
 
-## Removable drive support for windows
 class WindowsRemovableDrivePlugin(RemovableDrivePlugin.RemovableDrivePlugin):
+    """Removable drive support for windows"""
+
     def checkRemovableDrives(self):
         drives = {}
 
+        # The currently available disk drives, e.g.: bitmask = ...1100 <-- ...DCBA
         bitmask = ctypes.windll.kernel32.GetLogicalDrives()
-        # Check possible drive letters, from A to Z
+        # Since we are ignoring drives A and B, the bitmask has has to shift twice to the right
+        bitmask >>= 2
+        # Check possible drive letters, from C to Z
         # Note: using ascii_uppercase because we do not want this to change with locale!
-        for letter in string.ascii_uppercase:
+        # Skip A and B, since those drives are typically reserved for floppy disks.
+        # Those drives can theoretically be reassigned but it's safer to not check them for removable drives.
+        # Windows will also behave weirdly even with some of its internal functions if you do this (e.g. search indexing doesn't search it).
+        # Users that have removable drives in A or B will just have to save to file and select the drive there.
+        for letter in string.ascii_uppercase[2:]:
             drive = "{0}:/".format(letter)
 
             # Do we really want to skip A and B?

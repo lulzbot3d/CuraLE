@@ -1,5 +1,4 @@
 {
-    "id": "ord_extruder_0",
     "version": 2,
     "name": "0",
     "inherits": "fdmextruder",
@@ -14,6 +13,8 @@
             "maximum_value": "4"
         },
         "machine_nozzle_offset_x": { "default_value": 0.0 },
-        "machine_nozzle_offset_y": { "default_value": 0.0 }
+        "machine_nozzle_offset_y": { "default_value": 0.0 },
+        "machine_nozzle_size": { "default_value": 0.35 },
+        "material_diameter": { "default_value": 1.75 }
     }
 }

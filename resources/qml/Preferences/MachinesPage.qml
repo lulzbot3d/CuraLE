@@ -1,8 +1,8 @@
-// Copyright (c) 2016 Ultimaker B.V.
+// Copyright (c) 2018 Ultimaker B.V.
 // Cura is released under the terms of the LGPLv3 or higher.
 
-import QtQuick 2.1
-import QtQuick.Controls 1.1
+import QtQuick 2.7
+import QtQuick.Controls 1.4
 import QtQuick.Window 2.1
 
 import UM 1.2 as UM
@@ -23,8 +23,10 @@ UM.ManagementPage
 
     function activeMachineIndex()
     {
-        for(var i = 0; i < model.rowCount(); i++) {
-            if (model.getItem(i).id == Cura.MachineManager.activeMachineId) {
+        for(var i = 0; i < model.count; i++)
+        {
+            if (model.getItem(i).id == base.activeId)
+            {
                 return i;
             }
         }
@@ -34,35 +36,33 @@ UM.ManagementPage
     buttons: [
         Button
         {
+            id: activateMenuButton
             text: catalog.i18nc("@action:button", "Activate");
             iconName: "list-activate";
-            enabled: base.currentItem != null && base.currentItem.id != Cura.MachineManager.activeMaterialId
+            enabled: base.currentItem != null && base.currentItem.id != Cura.MachineManager.activeMachine.id
             onClicked: Cura.MachineManager.setActiveMachine(base.currentItem.id)
         },
         Button
         {
-            text: catalog.i18nc("@action:button", "Reset to default");
-            enabled: base.currentItem != null && Cura.MachineManager.isMachineChanged(base.currentItem.id);
-            onClicked: Cura.MachineManager.resetMachine(base.currentItem.id);
-        },
-        Button
-        {
+            id: addMenuButton
             text: catalog.i18nc("@action:button", "Add");
             iconName: "list-add";
-            onClicked: CuraApplication.requestAddPrinter()
+            onClicked: Cura.Actions.addMachine.trigger()
         },
         Button
         {
+            id: removeMenuButton
             text: catalog.i18nc("@action:button", "Remove");
             iconName: "list-remove";
-            enabled: base.currentItem != null && model.rowCount() > 1
+            enabled: base.currentItem != null && model.count > 1
             onClicked: confirmDialog.open();
         },
         Button
         {
+            id: renameMenuButton
             text: catalog.i18nc("@action:button", "Rename");
             iconName: "edit-rename";
-            enabled: base.currentItem != null
+            enabled: base.currentItem != null && base.currentItem.metadata.group_name == null
             onClicked: renameDialog.open();
         }
     ]
@@ -76,7 +76,7 @@ UM.ManagementPage
         {
             id: machineName
             text: base.currentItem && base.currentItem.name ? base.currentItem.name : ""
-            font: UM.Theme.getFont("large")
+            font: UM.Theme.getFont("large_bold")
             width: parent.width
             elide: Text.ElideRight
         }
@@ -84,12 +84,12 @@ UM.ManagementPage
         Flow
         {
             id: machineActions
-            visible: currentItem && currentItem.id == Cura.MachineManager.activeMachineId
+            visible: currentItem && currentItem.id == Cura.MachineManager.activeMachine.id
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: machineName.bottom
             anchors.topMargin: UM.Theme.getSize("default_margin").height
-            anchors.bottomMargin: UM.Theme.getSize("default_margin").height
+
             Repeater
             {
                 id: machineActionRepeater
@@ -97,37 +97,31 @@ UM.ManagementPage
 
                 Item
                 {
-                    width: childrenRect.width + 2 * screenScaleFactor
-                    height: childrenRect.height + 2 * screenScaleFactor
+                    width: Math.round(childrenRect.width + 2 * screenScaleFactor)
+                    height: childrenRect.height
                     Button
                     {
                         text: machineActionRepeater.model[index].label
                         onClicked:
                         {
-                            actionDialog.content = machineActionRepeater.model[index].displayItem;
-                            machineActionRepeater.model[index].displayItem.reset();
-                            actionDialog.title = machineActionRepeater.model[index].label;
-                            actionDialog.show();
+                            var currentItem = machineActionRepeater.model[index]
+                            actionDialog.loader.manager = currentItem
+                            actionDialog.loader.source = currentItem.qmlPath
+                            actionDialog.title = currentItem.label
+                            actionDialog.show()
                         }
                     }
                 }
             }
         }
+
         UM.Dialog
         {
             id: actionDialog
             property var content
-            //minimumWidth: 350 * Screen.devicePixelRatio;
-            //minimumHeight: 350 * Screen.devicePixelRatio;
-            minimumWidth: UM.Theme.getSize("modal_window_minimum").width * 0.5
-            minimumHeight: UM.Theme.getSize("modal_window_minimum").height * 0.5
-            width: minimumWidth
-            height: minimumHeight
             onContentChanged:
             {
                 contents = content;
-                width = minimumWidth
-                height = minimumHeight
                 content.onCompleted.connect(hide)
                 content.dialog = actionDialog
             }
@@ -215,23 +209,6 @@ UM.ManagementPage
                 visible: base.currentItem && base.currentItem.id == Cura.MachineManager.activeMachineId && machineInfo.printerAcceptsCommands
                 wrapMode: Text.WordWrap
             }
-            Label
-            {
-                text: catalog.i18nc("@label", "Firmware:")
-                visible: base.currentItem && base.currentItem.id == Cura.MachineManager.activeMachineId && machineInfo.printerAcceptsCommands
-            }
-            Label {
-                width: (parent.width * 0.7) | 0
-                text:
-                {
-                    if(!machineInfo.printerConnected) {
-                        return "";
-                    }
-                    return machineInfo.connectedPrinter.firmwareVersion;
-                }
-                visible: base.currentItem && base.currentItem.id == Cura.MachineManager.activeMachineId && machineInfo.printerAcceptsCommands
-                wrapMode: Text.WordWrap
-            }
         }
 
         Column {
@@ -273,11 +250,12 @@ UM.ManagementPage
 
         UM.ConfirmRemoveDialog
         {
-            id: confirmDialog;
-            object: base.currentItem && base.currentItem.name ? base.currentItem.name : "";
+            id: confirmDialog
+            object: base.currentItem && base.currentItem.name ? base.currentItem.name : ""
+            text: base.currentItem ? base.currentItem.removalWarning : "";
             onYes:
             {
-                Cura.MachineManager.removeMachine(base.currentItem.id);
+                Cura.MachineManager.removeMachine(base.currentItem.id)
                 if(!base.currentItem)
                 {
                     objectList.currentIndex = activeMachineIndex()

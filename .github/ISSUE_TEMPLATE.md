@@ -1,36 +1,49 @@
-<!--
-The following template is useful for filing new issues. Processing an issue will go much faster when this is filled out.
-Before filing, please check if the issue already exists (either open or closed).
+---
+name: Old Bug report
+about: Create a report to help us fix issues.
+title: ''
+labels: 'Type: Bug'
+assignees: ''
 
-It is also helpful to attach a project (.3MF) file and Cura log file so we can debug issues quicker.
-Information about how to find the log file can be found at https://github.com/Ultimaker/Cura/wiki/Cura-Preferences-and-Settings-Locations.
+---
+
+<!--
+Processing an issue will go much faster when this is filled out, and issues which do not use this template WILL BE REMOVED and no fix will be considered!
+
+Before filing, PLEASE check if the issue already exists (either open or closed) by using the search bar on the issues page. If it does, comment there. Even if it's closed, we can reopen it based on your comment.
+
+Also, please note the application version in the title of the issue. For example: "[3.2.1] Cannot connect to 3rd-party printer". Please do NOT write things like "Request:" or "[BUG]" in the title; this is what labels are for.
 
 Thank you for using Cura!
 -->
 
-**Application Version**
-<!-- The version of the application this issue occurs with -->
+**Application version**
+(The version of the application this issue occurs with.)
 
 **Platform**
-<!-- Information about the platform the issue occurs on -->
+(Information about the operating system the issue occurs on. Include at least the operating system and maybe GPU.)
 
-**Qt**
-<!-- The version of Qt used (not necessary if you're using the version from Ultimaker's website) -->
+**Printer**
+(Which printer was selected in Cura?)
 
-**PyQt**
-<!-- The version of PyQt used (not necessary if you're using the version from Ultimaker's website) -->
+**Reproduction steps**
+1. (Something you did.)
+2. (Something you did next.)
 
-**Display Driver**
-<!--  Video driver name and version -->
+**Screenshot(s)**
+(Image showing the problem, perhaps before/after images.) 
 
-**Steps to Reproduce**
-<!-- Add the steps needed that lead up to the issue (replace this text) -->
-
-**Actual Results**
-<!-- What happens after the above steps have been followed (replace this text) -->
+**Actual results**
+(What happens after the above steps have been followed.)
 
 **Expected results**
-<!-- What should happen after the above steps have been followed (replace this text) -->
+(What should happen after the above steps have been followed.)
 
-**Additional Information**
-<!-- Extra information relevant to the issue, like screenshots (replace this text) -->
+**Project file**
+(For slicing bugs, provide a project which clearly shows the bug, by going to File->Save. For big files you may need to use WeTransfer or similar file sharing sites.)
+
+**Log file**
+(See https://github.com/Ultimaker/Cura#logging-issues to find the log file to upload, or copy a relevant snippet from it.)
+
+**Additional information**
+(Extra information relevant to the issue.)

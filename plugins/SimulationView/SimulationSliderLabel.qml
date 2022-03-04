@@ -1,7 +1,6 @@
 // Copyright (c) 2017 Ultimaker B.V.
 // Cura is released under the terms of the LGPLv3 or higher.
-
-import QtQuick 2.2
+import QtQuick 2.5
 import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.1
@@ -20,14 +19,10 @@ UM.PointingRectangle {
     property int startFrom: 1
 
     target: Qt.point(parent.width, y + height / 2)
-    arrowSize: UM.Theme.getSize("default_arrow").width
+    arrowSize: UM.Theme.getSize("button_tooltip_arrow").height
     height: parent.height
-    width: valueLabel.width + UM.Theme.getSize("default_margin").width
+    width: valueLabel.width
     visible: false
-
-    // make sure the text field is focussed when pressing the parent handle
-    // needed to connect the key bindings when switching active handle
-    onVisibleChanged: if (visible) valueLabel.forceActiveFocus()
 
     color: UM.Theme.getColor("tool_panel_background")
     borderColor: UM.Theme.getColor("lining")
@@ -44,27 +39,35 @@ UM.PointingRectangle {
         anchors.fill: parent
     }
 
+    TextMetrics {
+        id:     maxValueMetrics
+        font:   valueLabel.font
+        text:   maximumValue + 1 // layers are 0 based, add 1 for display value
+
+    }
+
     TextField {
         id: valueLabel
 
         anchors {
-            left: parent.left
-            leftMargin: Math.floor(UM.Theme.getSize("default_margin").width / 2)
             verticalCenter: parent.verticalCenter
+            horizontalCenter: parent.horizontalCenter
+            alignWhenCentered: false
         }
 
-        width: 40 * screenScaleFactor
+        width: maxValueMetrics.width + UM.Theme.getSize("default_margin").width
         text: sliderLabelRoot.value + startFrom // the current handle value, add 1 because layers is an array
-        horizontalAlignment: TextInput.AlignRight
+        horizontalAlignment: TextInput.AlignHCenter
 
-        // key bindings, work when label is currenctly focused (active handle in LayerSlider)
+        // key bindings, work when label is currently focused (active handle in LayerSlider)
         Keys.onUpPressed: sliderLabelRoot.setValue(sliderLabelRoot.value + ((event.modifiers & Qt.ShiftModifier) ? 10 : 1))
         Keys.onDownPressed: sliderLabelRoot.setValue(sliderLabelRoot.value - ((event.modifiers & Qt.ShiftModifier) ? 10 : 1))
 
         style: TextFieldStyle {
-            textColor: UM.Theme.getColor("setting_control_text")
+            textColor: UM.Theme.getColor("text")
             font: UM.Theme.getFont("default")
-            background: Item { }
+            renderType: Text.NativeRendering
+            background: Item {  }
         }
 
         onEditingFinished: {
@@ -77,11 +80,12 @@ UM.PointingRectangle {
             if (valueLabel.text != "") {
                 // -startFrom because we need to convert back to an array structure
                 sliderLabelRoot.setValue(parseInt(valueLabel.text) - startFrom)
+
             }
         }
 
         validator: IntValidator {
-            bottom:startFrom
+            bottom: startFrom
             top: sliderLabelRoot.maximumValue + startFrom // +startFrom because maybe we want to start in a different value rather than 0
         }
     }
@@ -91,7 +95,7 @@ UM.PointingRectangle {
 
         anchors {
             left: parent.right
-            leftMargin: Math.floor(UM.Theme.getSize("default_margin").width / 2)
+            leftMargin: Math.round(UM.Theme.getSize("default_margin").width / 2)
             verticalCenter: parent.verticalCenter
         }
 

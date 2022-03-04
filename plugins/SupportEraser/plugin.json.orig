@@ -1,0 +1,12 @@
+{
+    "name": "Support Eraser",
+    "author": "Ultimaker B.V.",
+    "version": "1.0.1",
+    "description": "Creates an eraser mesh to block the printing of support in certain places",
+<<<<<<< HEAD
+    "api": 4,
+=======
+    "api": 7,
+>>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
+    "i18n-catalog": "cura"
+}

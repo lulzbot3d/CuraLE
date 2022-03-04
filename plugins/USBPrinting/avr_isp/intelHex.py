@@ -13,7 +13,7 @@ def readHex(filename):
     """
     data = []
     extra_addr = 0
-    f = io.open(filename, "r")
+    f = io.open(filename, "r", encoding = "utf-8")
     for line in f:
         line = line.strip()
         if len(line) < 1:
@@ -31,7 +31,7 @@ def readHex(filename):
         check_sum &= 0xFF
         if check_sum != 0:
             raise Exception("Checksum error in hex file: " + line)
-        
+
         if rec_type == 0:#Data record
             while len(data) < addr + rec_len:
                 data.append(0)

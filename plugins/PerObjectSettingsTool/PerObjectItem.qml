@@ -6,7 +6,9 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 
-import UM 1.2 as UM
+import UM 1.5 as UM
+
+import Cura 1.0 as Cura
 
 UM.TooltipArea
 {
@@ -16,7 +18,7 @@ UM.TooltipArea
     width: childrenRect.width;
     height: childrenRect.height;
 
-    CheckBox
+    UM.CheckBox
     {
         id: check
 
@@ -27,6 +29,17 @@ UM.TooltipArea
         {
             addedSettingsModel.setVisible(model.key, checked);
             UM.ActiveTool.forceUpdate();
+        }
+    }
+
+    // When the user removes settings from the list addedSettingsModel, we need to recheck if the
+    // setting is visible or not to show a mark in the CheckBox.
+    Connections
+    {
+        target: addedSettingsModel
+        function onVisibleCountChanged()
+        {
+            check.checked = addedSettingsModel.getVisible(model.key)
         }
     }
 }

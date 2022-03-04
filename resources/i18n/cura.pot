@@ -551,13 +551,7 @@ msgid ""
 "printer's configuration to match the job, for it to start printing."
 msgstr ""
 
-#: /home/ruben/Projects/Cura/plugins/CuraPrintClusterUpload/NetworkClusterPrinterOutputDevice.py:196
-msgctxt "@info:status"
-msgid ""
-"Sending new jobs (temporarily) blocked, still sending the previous print job."
-msgstr ""
-
-#: /home/ruben/Projects/Cura/plugins/CuraPrintClusterUpload/NetworkClusterPrinterOutputDevice.py:212
+#: /home/ruben/Projects/Cura/plugins/UM3NetworkPrinting/NetworkClusterPrinterOutputDevice.py:278
 msgctxt "@info:status"
 msgid ""
 "Unable to send new print job: this 3D printer is not (yet) set up to host a "
@@ -584,11 +578,6 @@ msgstr ""
 #: /home/ruben/Projects/Cura/plugins/UM3NetworkPrinting/NetworkClusterPrinterOutputDevice.py:424
 msgctxt "@info:tooltip"
 msgid "Opens the print jobs interface in your browser."
-msgstr ""
-
-#: /home/ruben/Projects/Cura/plugins/XmlMaterialProfile/__init__.py:13
-msgctxt "@label"
-msgid "Material Profiles"
 msgstr ""
 
 #: /home/ruben/Projects/Cura/plugins/UM3NetworkPrinting/NetworkClusterPrinterOutputDevice.py:489
@@ -1583,7 +1572,7 @@ msgstr ""
 
 #: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:64
 msgctxt "@label"
-msgid "Firmware update failed due to a communication error."
+msgid "Firmware update failed due to an communication error."
 msgstr ""
 
 #: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:67
@@ -2270,6 +2259,85 @@ msgstr ""
 
 #: /home/ruben/Projects/Cura/plugins/PluginBrowser/PluginBrowser.qml:220
 msgctxt "@label"
+msgid "Enter the IP address of your printer on the network."
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/plugins/UM3NetworkPrinting/resources/qml/MonitorContextMenu.qml:54
+msgctxt "@label"
+msgid "Move to top"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/plugins/UM3NetworkPrinting/resources/qml/MonitorContextMenu.qml:70
+msgctxt "@label"
+msgid "Delete"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/plugins/UM3NetworkPrinting/resources/qml/MonitorContextMenu.qml:100
+#: /home/clamboo/Desktop/Cura/resources/qml/MonitorButton.qml:290
+msgctxt "@label"
+msgid "Resume"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/plugins/UM3NetworkPrinting/resources/qml/MonitorContextMenu.qml:102
+msgctxt "@label"
+msgid "Pausing..."
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/plugins/UM3NetworkPrinting/resources/qml/MonitorContextMenu.qml:104
+msgctxt "@label"
+msgid "Resuming..."
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/plugins/UM3NetworkPrinting/resources/qml/MonitorContextMenu.qml:106
+#: /home/clamboo/Desktop/Cura/resources/qml/MonitorButton.qml:285
+#: /home/clamboo/Desktop/Cura/resources/qml/MonitorButton.qml:294
+msgctxt "@label"
+msgid "Pause"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/plugins/UM3NetworkPrinting/resources/qml/MonitorContextMenu.qml:124
+msgctxt "@label"
+msgid "Aborting..."
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/plugins/UM3NetworkPrinting/resources/qml/MonitorContextMenu.qml:124
+msgctxt "@label"
+msgid "Abort"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/plugins/UM3NetworkPrinting/resources/qml/MonitorContextMenu.qml:143
+msgctxt "@label %1 is the name of a print job."
+msgid "Are you sure you want to move %1 to the top of the queue?"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/plugins/UM3NetworkPrinting/resources/qml/MonitorContextMenu.qml:144
+msgctxt "@window:title"
+msgid "Move print job to top"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/plugins/UM3NetworkPrinting/resources/qml/MonitorContextMenu.qml:153
+msgctxt "@label %1 is the name of a print job."
+msgid "Are you sure you want to delete %1?"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/plugins/UM3NetworkPrinting/resources/qml/MonitorContextMenu.qml:154
+msgctxt "@window:title"
+msgid "Delete print job"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/plugins/UM3NetworkPrinting/resources/qml/MonitorContextMenu.qml:163
+msgctxt "@label %1 is the name of a print job."
+msgid "Are you sure you want to abort %1?"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/plugins/UM3NetworkPrinting/resources/qml/MonitorContextMenu.qml:164
+#: /home/clamboo/Desktop/Cura/resources/qml/MonitorButton.qml:336
+msgctxt "@window:title"
+msgid "Abort print"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/plugins/MonitorStage/MonitorMain.qml:100
+msgctxt "@info"
 msgid ""
 "This plugin contains a license.\n"
 "You need to accept this license to install this plugin.\n"
@@ -2345,6 +2413,11 @@ msgstr ""
 
 #: /home/ruben/Projects/Cura/plugins/UltimakerMachineActions/UpgradeFirmwareMachineAction.qml:38
 msgctxt "@label"
+msgid "Welcome to Ultimaker Cura"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/WelcomePages/WelcomeContent.qml:68
+msgctxt "@text"
 msgid ""
 "Firmware is the piece of software running directly on your 3D printer. This "
 "firmware controls the step motors, regulates the temperature and ultimately "
@@ -2353,6 +2426,86 @@ msgstr ""
 
 #: /home/ruben/Projects/Cura/plugins/UltimakerMachineActions/UpgradeFirmwareMachineAction.qml:48
 msgctxt "@label"
+msgid "Sign in to the Ultimaker platform"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/WelcomePages/CloudContent.qml:124
+msgctxt "@text"
+msgid "Add material settings and plugins from the Marketplace"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/WelcomePages/CloudContent.qml:154
+msgctxt "@text"
+msgid "Backup and sync your material settings and plugins"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/WelcomePages/CloudContent.qml:184
+msgctxt "@text"
+msgid "Share ideas and get help from 48,000+ users in the Ultimaker Community"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/WelcomePages/CloudContent.qml:202
+msgctxt "@button"
+msgid "Skip"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/WelcomePages/CloudContent.qml:214
+msgctxt "@text"
+msgid "Create a free Ultimaker Account"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/WelcomePages/AddLocalPrinterScrollView.qml:234
+msgctxt "@label"
+msgid "Manufacturer"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/WelcomePages/AddLocalPrinterScrollView.qml:251
+msgctxt "@label"
+msgid "Profile author"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/WelcomePages/AddLocalPrinterScrollView.qml:269
+msgctxt "@label"
+msgid "Printer name"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/WelcomePages/AddLocalPrinterScrollView.qml:278
+msgctxt "@text"
+msgid "Please name your printer"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/WelcomePages/AddNetworkPrinterScrollView.qml:43
+msgctxt "@label"
+msgid "There is no printer found over your network."
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/WelcomePages/AddNetworkPrinterScrollView.qml:182
+msgctxt "@label"
+msgid "Refresh"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/WelcomePages/AddNetworkPrinterScrollView.qml:193
+msgctxt "@label"
+msgid "Add printer by IP"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/WelcomePages/AddNetworkPrinterScrollView.qml:204
+msgctxt "@label"
+msgid "Add cloud printer"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/WelcomePages/AddNetworkPrinterScrollView.qml:241
+msgctxt "@label"
+msgid "Troubleshooting"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/WelcomePages/DataCollectionsContent.qml:24
+msgctxt "@label"
+msgid "Help us to improve Ultimaker Cura"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/WelcomePages/DataCollectionsContent.qml:57
+msgctxt "@text"
 msgid ""
 "The firmware shipping with new printers works, but new versions tend to have "
 "more features and improvements."
@@ -2549,6 +2702,54 @@ msgstr ""
 
 #: /home/ruben/Projects/Cura/resources/qml/DiscardOrKeepProfileChangesDialog.qml:57
 msgctxt "@text:window"
+msgid ""
+"We have found one or more project file(s) within the files you have "
+"selected. You can open only one project file at a time. We suggest to only "
+"import models from those files. Would you like to proceed?"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/Dialogs/OpenFilesIncludingProjectsDialog.qml:94
+msgctxt "@action:button"
+msgid "Import all as models"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/Dialogs/WorkspaceSummaryDialog.qml:16
+msgctxt "@title:window"
+msgid "Save Project"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/Dialogs/WorkspaceSummaryDialog.qml:174
+msgctxt "@action:label"
+msgid "Extruder %1"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/Dialogs/WorkspaceSummaryDialog.qml:190
+msgctxt "@action:label"
+msgid "%1 & material"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/Dialogs/WorkspaceSummaryDialog.qml:192
+msgctxt "@action:label"
+msgid "Material"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/Dialogs/WorkspaceSummaryDialog.qml:282
+msgctxt "@action:label"
+msgid "Don't show project summary on save again"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/Dialogs/WorkspaceSummaryDialog.qml:301
+msgctxt "@action:button"
+msgid "Save"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/Dialogs/DiscardOrKeepProfileChangesDialog.qml:16
+msgctxt "@title:window"
+msgid "Discard or Keep changes"
+msgstr ""
+
+#: /home/clamboo/Desktop/Cura/resources/qml/Dialogs/DiscardOrKeepProfileChangesDialog.qml:58
+msgctxt "@text:window, %1 is a profile name"
 msgid ""
 "You have customized some profile settings.\n"
 "Would you like to keep or discard those settings?"
@@ -3215,7 +3416,7 @@ msgstr ""
 #: /home/ruben/Projects/Cura/resources/qml/AboutDialog.qml:69
 msgctxt "@info:credit"
 msgid ""
-"Cura LulzBot Edition is maintained by Aleph Objects, Inc. for use with LulzBot 3D printers. It is derived from Cura, which is developed by Ultimaker B.V.\n"
+"Cura is developed by Ultimaker B.V. in cooperation with the community.\n"
 "Cura proudly uses the following open source projects:"
 msgstr ""
 

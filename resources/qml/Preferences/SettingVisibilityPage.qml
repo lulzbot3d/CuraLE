@@ -5,13 +5,17 @@ import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 
-import UM 1.2 as UM
+import QtQuick.Controls 2.3 as NewControls
+
+import UM 1.5 as UM
 
 import Cura 1.0 as Cura
 
 UM.PreferencesPage
 {
     title: catalog.i18nc("@title:tab", "Setting Visibility");
+
+    property QtObject settingVisibilityPresetsModel: CuraApplication.getSettingVisibilityPresetsModel()
 
     property int scrollToIndex: 0
 
@@ -23,7 +27,7 @@ UM.PreferencesPage
 
     function reset()
     {
-        UM.Preferences.resetPreference("general/visible_settings")
+        settingVisibilityPresetsModel.setActivePreset("basic")
     }
     resetEnabled: true;
 
@@ -32,7 +36,7 @@ UM.PreferencesPage
         id: base;
         anchors.fill: parent;
 
-        CheckBox
+        UM.CheckBox
         {
             id: toggleVisibleSettings
             anchors
@@ -42,13 +46,13 @@ UM.PreferencesPage
                 leftMargin: UM.Theme.getSize("default_margin").width
             }
             text: catalog.i18nc("@label:textbox", "Check all")
-            checkedState:
+            checkState:
             {
                 if(definitionsModel.visibleCount == definitionsModel.categoryCount)
                 {
                     return Qt.Unchecked
                 }
-                else if(definitionsModel.visibleCount == definitionsModel.rowCount(null))
+                else if(definitionsModel.visibleCount == definitionsModel.count)
                 {
                     return Qt.Checked
                 }
@@ -57,20 +61,19 @@ UM.PreferencesPage
                     return Qt.PartiallyChecked
                 }
             }
-            partiallyCheckedEnabled: true
 
             MouseArea
             {
                 anchors.fill: parent;
                 onClicked:
                 {
-                    if(parent.checkedState == Qt.Unchecked || parent.checkedState == Qt.PartiallyChecked)
+                    if(parent.checkState == Qt.Unchecked || parent.checkState == Qt.PartiallyChecked)
                     {
-                        definitionsModel.setAllVisible(true)
+                        definitionsModel.setAllExpandedVisible(true)
                     }
                     else
                     {
-                        definitionsModel.setAllVisible(false)
+                        definitionsModel.setAllExpandedVisible(false)
                     }
                 }
             }
@@ -85,12 +88,48 @@ UM.PreferencesPage
                 top: parent.top
                 left: toggleVisibleSettings.right
                 leftMargin: UM.Theme.getSize("default_margin").width
-                right: parent.right
+                right: visibilityPreset.left
+                rightMargin: UM.Theme.getSize("default_margin").width
             }
 
             placeholderText: catalog.i18nc("@label:textbox", "Filter...")
 
-            onTextChanged: definitionsModel.filter = {"i18n_label": "*" + text}
+            onTextChanged: definitionsModel.filter = {"i18n_label|i18n_description": "*" + text}
+        }
+
+        NewControls.ComboBox
+        {
+            id: visibilityPreset
+            width: 150 * screenScaleFactor
+            anchors
+            {
+                top: parent.top
+                right: parent.right
+                bottom: scrollView.top
+            }
+
+            model: settingVisibilityPresetsModel.items
+            textRole: "name"
+
+            currentIndex:
+            {
+                var idx = -1;
+                for(var i = 0; i < settingVisibilityPresetsModel.items.length; ++i)
+                {
+                    if(settingVisibilityPresetsModel.items[i].presetId == settingVisibilityPresetsModel.activePreset)
+                    {
+                        idx = i;
+                        break;
+                    }
+                }
+                return idx;
+            }
+
+            onActivated:
+            {
+                var preset_id = settingVisibilityPresetsModel.items[index].presetId
+                settingVisibilityPresetsModel.setActivePreset(preset_id)
+            }
         }
 
         ScrollView
@@ -114,19 +153,19 @@ UM.PreferencesPage
                 model: UM.SettingDefinitionsModel
                 {
                     id: definitionsModel
-                    containerId: Cura.MachineManager.activeDefinitionId
+                    containerId: Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.definition.id: ""
                     showAll: true
                     exclude: ["machine_settings", "command_line_settings"]
                     showAncestors: true
                     expanded: ["*"]
-                    visibilityHandler: UM.SettingPreferenceVisibilityHandler { }
+                    visibilityHandler: UM.SettingPreferenceVisibilityHandler {}
                 }
 
                 delegate: Loader
                 {
                     id: loader
 
-                    width: parent.width
+                    width: settingsListView.width
                     height: model.type != undefined ? UM.Theme.getSize("section").height : 0
 
                     property var definition: model

@@ -9,10 +9,15 @@ resources/i18n/en_US
 resources/i18n/en_7S
 resources/i18n/x-test
 resources/firmware
+resources/materials
+resources/images/whats_new
+resources/texts/whats_new
 CuraEngine.exe
 LC_MESSAGES
 .cache
 *.qmlc
+.mypy_cache
+.pytest_cache
 
 #MacOS
 .DS_Store
@@ -23,6 +28,7 @@ LC_MESSAGES
 *.lprof
 *~
 *.qm
+.directory
 .idea
 cura.desktop
 .vscode/settings.json
@@ -34,10 +40,12 @@ cura.desktop
 
 #Externally located plug-ins.
 plugins/cura-big-flame-graph
+plugins/cura-camera-position
 plugins/cura-god-mode-plugin
 plugins/cura-siemensnx-plugin
 plugins/CuraBlenderPlugin
 plugins/CuraCloudPlugin
+plugins/CuraDrivePlugin
 plugins/CuraLiveScriptingPlugin
 plugins/CuraOpenSCADPlugin
 plugins/CuraPrintProfileCreator
@@ -48,7 +56,15 @@ plugins/FlatProfileExporter
 plugins/GodMode
 plugins/OctoPrintPlugin
 plugins/ProfileFlattener
+plugins/SettingsGuide
+plugins/SettingsGuide2
+plugins/SVGToolpathReader
 plugins/X3GWriter
+plugins/CuraFlatPack
+plugins/CuraRemoteSupport
+plugins/ModelCutter
+plugins/PrintProfileCreator
+plugins/MultiPrintPlugin
 
 #Build stuff
 CMakeCache.txt
@@ -62,9 +78,16 @@ CuraVersion.py
 cmake_install.cmake
 
 #Debug
+*.gcode
 run.sh
 CuraEngine
 debug.html
 .scannerwork/
+CuraEngine
 
+/.coverage
 
+#Prevents import failures when plugin running tests
+plugins/__init__.py
+
+/venv

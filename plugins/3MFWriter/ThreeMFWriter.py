@@ -1,5 +1,6 @@
 # Copyright (c) 2015 Ultimaker B.V.
 # Uranium is released under the terms of the LGPLv3 or higher.
+from typing import Optional
 
 from UM.Mesh.MeshWriter import MeshWriter
 from UM.Math.Vector import Vector
@@ -9,10 +10,15 @@ from UM.Application import Application
 from UM.Scene.SceneNode import SceneNode
 
 from cura.CuraApplication import CuraApplication
+from cura.Utils.Threading import call_on_qt_thread
+from cura.Snapshot import Snapshot
+
+from PyQt5.QtCore import QBuffer
 
 import Savitar
 
 import numpy
+import datetime
 
 MYPY = False
 try:
@@ -24,6 +30,9 @@ except ImportError:
 
 import zipfile
 import UM.Application
+
+from UM.i18n import i18nCatalog
+catalog = i18nCatalog("cura")
 
 
 class ThreeMFWriter(MeshWriter):
@@ -37,7 +46,7 @@ class ThreeMFWriter(MeshWriter):
         }
 
         self._unit_matrix_string = self._convertMatrixToString(Matrix())
-        self._archive = None
+        self._archive = None  # type: Optional[zipfile.ZipFile]
         self._store_archive = False
 
     def _convertMatrixToString(self, matrix):
@@ -56,23 +65,28 @@ class ThreeMFWriter(MeshWriter):
         result += str(matrix._data[2, 3])
         return result
 
-    ##  Should we store the archive
-    #   Note that if this is true, the archive will not be closed.
-    #   The object that set this parameter is then responsible for closing it correctly!
     def setStoreArchive(self, store_archive):
+        """Should we store the archive
+
+        Note that if this is true, the archive will not be closed.
+        The object that set this parameter is then responsible for closing it correctly!
+        """
         self._store_archive = store_archive
 
-    ##  Convenience function that converts an Uranium SceneNode object to a SavitarSceneNode
-    #   \returns Uranium Scene node.
     def _convertUMNodeToSavitarNode(self, um_node, transformation = Matrix()):
+        """Convenience function that converts an Uranium SceneNode object to a SavitarSceneNode
+
+        :returns: Uranium Scene node.
+        """
         if not isinstance(um_node, SceneNode):
             return None
 
-        active_build_plate_nr = CuraApplication.getInstance().getBuildPlateModel().activeBuildPlate
+        active_build_plate_nr = CuraApplication.getInstance().getMultiBuildPlateModel().activeBuildPlate
         if um_node.callDecoration("getBuildPlateNumber") != active_build_plate_nr:
             return
 
         savitar_node = Savitar.SceneNode()
+        savitar_node.setName(um_node.getName())
 
         node_matrix = um_node.getLocalTransformation()
 
@@ -91,7 +105,7 @@ class ThreeMFWriter(MeshWriter):
         # Handle per object settings (if any)
         stack = um_node.callDecoration("getStack")
         if stack is not None:
-            changed_setting_keys = set(stack.getTop().getAllKeys())
+            changed_setting_keys = stack.getTop().getAllKeys()
 
             # Ensure that we save the extruder used for this object in a multi-extrusion setup
             if stack.getProperty("machine_extruder_count", "value") > 1:
@@ -99,7 +113,11 @@ class ThreeMFWriter(MeshWriter):
 
             # Get values for all changed settings & save them.
             for key in changed_setting_keys:
-                savitar_node.setSetting(key, str(stack.getProperty(key, "value")))
+                savitar_node.setSetting("cura:" + key, str(stack.getProperty(key, "value")))
+
+        # Store the metadata.
+        for key, value in um_node.metadata.items():
+            savitar_node.setSetting(key, value)
 
         for child_node in um_node.getChildren():
             # only save the nodes on the active build plate
@@ -135,7 +153,39 @@ class ThreeMFWriter(MeshWriter):
             relations_element = ET.Element("Relationships", xmlns = self._namespaces["relationships"])
             model_relation_element = ET.SubElement(relations_element, "Relationship", Target = "/3D/3dmodel.model", Id = "rel0", Type = "http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel")
 
+            # Attempt to add a thumbnail
+            snapshot = self._createSnapshot()
+            if snapshot:
+                thumbnail_buffer = QBuffer()
+                thumbnail_buffer.open(QBuffer.ReadWrite)
+                snapshot.save(thumbnail_buffer, "PNG")
+
+                thumbnail_file = zipfile.ZipInfo("Metadata/thumbnail.png")
+                # Don't try to compress snapshot file, because the PNG is pretty much as compact as it will get
+                archive.writestr(thumbnail_file, thumbnail_buffer.data())
+
+                # Add PNG to content types file
+                thumbnail_type = ET.SubElement(content_types, "Default", Extension = "png", ContentType = "image/png")
+                # Add thumbnail relation to _rels/.rels file
+                thumbnail_relation_element = ET.SubElement(relations_element, "Relationship", Target = "/Metadata/thumbnail.png", Id = "rel1", Type = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail")
+
             savitar_scene = Savitar.Scene()
+
+            metadata_to_store = CuraApplication.getInstance().getController().getScene().getMetaData()
+
+            for key, value in metadata_to_store.items():
+                savitar_scene.setMetaDataEntry(key, value)
+
+            current_time_string = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            if "Application" not in metadata_to_store:
+                # This might sound a bit strange, but this field should store the original application that created
+                # the 3mf. So if it was already set, leave it to whatever it was.
+                savitar_scene.setMetaDataEntry("Application", CuraApplication.getInstance().getApplicationDisplayName())
+            if "CreationDate" not in metadata_to_store:
+                savitar_scene.setMetaDataEntry("CreationDate", current_time_string)
+
+            savitar_scene.setMetaDataEntry("ModificationDate", current_time_string)
+
             transformation_matrix = Matrix()
             transformation_matrix._data[1, 1] = 0
             transformation_matrix._data[1, 2] = -1
@@ -173,6 +223,7 @@ class ThreeMFWriter(MeshWriter):
             archive.writestr(relations_file, b'<?xml version="1.0" encoding="UTF-8"?> \n' + ET.tostring(relations_element))
         except Exception as e:
             Logger.logException("e", "Error writing zip file")
+            self.setInformation(catalog.i18nc("@error:zip", "Error writing 3mf file."))
             return False
         finally:
             if not self._store_archive:
@@ -181,3 +232,17 @@ class ThreeMFWriter(MeshWriter):
                 self._archive = archive
 
         return True
+
+    @call_on_qt_thread  # must be called from the main thread because of OpenGL
+    def _createSnapshot(self):
+        Logger.log("d", "Creating thumbnail image...")
+        if not CuraApplication.getInstance().isVisible:
+            Logger.log("w", "Can't create snapshot when renderer not initialized.")
+            return None
+        try:
+            snapshot = Snapshot.snapshot(width = 300, height = 300)
+        except:
+            Logger.logException("w", "Failed to create snapshot image")
+            return None
+
+        return snapshot

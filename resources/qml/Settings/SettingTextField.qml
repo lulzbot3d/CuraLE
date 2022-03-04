@@ -13,11 +13,17 @@ SettingItem
 
     property string textBeforeEdit
     property bool textHasChanged
+    property bool focusGainedByClick: false
     onFocusReceived:
     {
         textHasChanged = false;
         textBeforeEdit = focusItem.text;
-        focusItem.selectAll();
+
+        if(!focusGainedByClick)
+        {
+            // select all text when tabbing through fields (but not when selecting a field with the mouse)
+            focusItem.selectAll();
+        }
     }
 
     contents: Rectangle
@@ -26,6 +32,7 @@ SettingItem
 
         anchors.fill: parent
 
+        radius: UM.Theme.getSize("setting_control_radius").width
         border.width: UM.Theme.getSize("default_lining").width
         border.color:
         {
@@ -35,6 +42,7 @@ SettingItem
             }
             switch(propertyProvider.properties.validationState)
             {
+                case "ValidatorState.Invalid":
                 case "ValidatorState.Exception":
                 case "ValidatorState.MinimumError":
                 case "ValidatorState.MaximumError":
@@ -58,6 +66,7 @@ SettingItem
             }
             switch(propertyProvider.properties.validationState)
             {
+                case "ValidatorState.Invalid":
                 case "ValidatorState.Exception":
                 case "ValidatorState.MinimumError":
                 case "ValidatorState.MaximumError":
@@ -75,19 +84,28 @@ SettingItem
 
         Rectangle
         {
-            anchors.fill: parent;
-            anchors.margins: UM.Theme.getSize("default_lining").width;
+            anchors.fill: parent
+            anchors.margins: Math.round(UM.Theme.getSize("default_lining").width)
             color: UM.Theme.getColor("setting_control_highlight")
-            opacity: !control.hovered ? 0 : propertyProvider.properties.validationState == "ValidatorState.Valid" ? 1.0 : 0.35;
+            opacity: !control.hovered ? 0 : propertyProvider.properties.validationState == "ValidatorState.Valid" ? 1.0 : 0.35
         }
 
         Label
         {
-            anchors.right: parent.right
-            anchors.rightMargin: UM.Theme.getSize("setting_unit_margin").width
-            anchors.verticalCenter: parent.verticalCenter
-            renderType: Text.NativeRendering
+            anchors
+            {
+                left: parent.left
+                leftMargin: Math.round(UM.Theme.getSize("setting_unit_margin").width)
+                right: parent.right
+                rightMargin: Math.round(UM.Theme.getSize("setting_unit_margin").width)
+                verticalCenter: parent.verticalCenter
+            }
+
             text: definition.unit
+            //However the setting value is aligned, align the unit opposite. That way it stays readable with right-to-left languages.
+            horizontalAlignment: (input.effectiveHorizontalAlignment == Text.AlignLeft) ? Text.AlignRight : Text.AlignLeft
+            textFormat: Text.PlainText
+            renderType: Text.NativeRendering
             color: UM.Theme.getColor("setting_unit")
             font: UM.Theme.getFont("default")
         }
@@ -141,6 +159,7 @@ SettingItem
                 {
                     base.focusReceived();
                 }
+                base.focusGainedByClick = false;
             }
 
             color: !enabled ? UM.Theme.getColor("setting_control_disabled_text") : UM.Theme.getColor("setting_control_text")
@@ -151,13 +170,18 @@ SettingItem
             maximumLength: (definition.type == "str" || definition.type == "[int]") ? -1 : 10;
             clip: true; //Hide any text that exceeds the width of the text box.
 
-            validator: RegExpValidator { regExp: (definition.type == "[int]") ? /^\[?(\s*-?[0-9]{0,9}\s*,)*(\s*-?[0-9]{0,9})\s*\]?$/ : (definition.type == "int") ? /^-?[0-9]{0,10}$/ : (definition.type == "float") ? /^-?[0-9]{0,9}[.,]?[0-9]{0,10}$/ : /^.*$/ } // definition.type property from parent loader used to disallow fractional number entry
+            // Since [int] & str don't have a max length, they need to be clipped (since clipping is expensive, this
+            // should be done as little as possible)
+            clip: definition.type == "str" || definition.type == "[int]"
+
+            validator: RegExpValidator { regExp: (definition.type == "[int]") ? /^\[?(\s*-?[0-9]{0,9}\s*,)*(\s*-?[0-9]{0,9})\s*\]?$/ : (definition.type == "int") ? /^-?[0-9]{0,10}$/ : (definition.type == "float") ? /^-?[0-9]{0,9}[.,]?[0-9]{0,3}$/ : /^.*$/ } // definition.type property from parent loader used to disallow fractional number entry
 
             Binding
             {
                 target: input
                 property: "text"
-                value:  {
+                value:
+                {
                     // Stacklevels
                     // 0: user  -> unsaved change
                     // 1: quality changes  -> saved change
@@ -166,18 +190,33 @@ SettingItem
                     // 4: variant
                     // 5: machine_changes
                     // 6: machine
-
-                    if ((base.resolve != "None" && base.resolve) && (stackLevel != 0)) {
+                    if ((base.resolve != "None" && base.resolve) && (stackLevel != 0) && (stackLevel != 1)) {
                         // We have a resolve function. Indicates that the setting is not settable per extruder and that
                         // we have to choose between the resolved value (default) and the global value
                         // (if user has explicitly set this).
-                        var num = base.resolve;
-                        return Math.round(num*1000)/1000;
+                        return base.resolve;
                     } else {
                         return propertyProvider.properties.value;
                     }
                 }
                 when: !input.activeFocus
+            }
+
+            MouseArea
+            {
+                id: mouseArea
+                anchors.fill: parent
+
+                cursorShape: Qt.IBeamCursor
+
+                onPressed: {
+                    if (!input.activeFocus)
+                    {
+                        base.focusGainedByClick = true
+                        input.forceActiveFocus()
+                    }
+                    mouse.accepted = false
+                }
             }
         }
     }

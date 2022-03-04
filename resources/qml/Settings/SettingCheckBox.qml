@@ -1,9 +1,9 @@
-// Copyright (c) 2015 Ultimaker B.V.
+// Copyright (c) 2018 Ultimaker B.V.
 // Uranium is released under the terms of the LGPLv3 or higher.
 
-import QtQuick 2.8
-import QtQuick.Layouts 1.1
-import QtQuick.Controls 2.1
+import QtQuick 2.7
+import QtQuick.Layouts 1.2
+import QtQuick.Controls 2.0
 
 import UM 1.2 as UM
 
@@ -28,37 +28,40 @@ SettingItem
             // 3: material  -> user changed material in materials page
             // 4: variant
             // 5: machine
-            var value;
-            if ((base.resolve != "None") && (stackLevel != 0) && (stackLevel != 1)) {
+            var value
+            if ((base.resolve !== undefined && base.resolve != "None") && (stackLevel != 0) && (stackLevel != 1))
+            {
                 // We have a resolve function. Indicates that the setting is not settable per extruder and that
                 // we have to choose between the resolved value (default) and the global value
                 // (if user has explicitly set this).
-                value = base.resolve;
-            } else {
-                value = propertyProvider.properties.value;
+                value = base.resolve
+            }
+            else
+            {
+                value = propertyProvider.properties.value
             }
 
             switch(value)
             {
                 case "True":
-                    return true;
+                    return true
                 case "False":
-                    return false;
+                    return false
                 default:
-                    return value;
+                    return (value !== undefined) ? value : false
             }
         }
 
         Keys.onSpacePressed:
         {
-            forceActiveFocus();
-            propertyProvider.setPropertyValue("value", !checked);
+            forceActiveFocus()
+            propertyProvider.setPropertyValue("value", !checked)
         }
 
         onClicked:
         {
-            forceActiveFocus();
-            propertyProvider.setPropertyValue("value", !checked);
+            forceActiveFocus()
+            propertyProvider.setPropertyValue("value", !checked)
         }
 
         Keys.onTabPressed:
@@ -72,9 +75,9 @@ SettingItem
 
         onActiveFocusChanged:
         {
-            if(activeFocus)
+            if (activeFocus)
             {
-                base.focusReceived();
+                base.focusReceived()
             }
         }
 
@@ -82,48 +85,73 @@ SettingItem
         {
             anchors
             {
-                top: parent.top
-                bottom: parent.bottom
+                verticalCenter: parent.verticalCenter
                 left: parent.left
             }
-            width: height
+            width: UM.Theme.getSize("checkbox").width
+            height: width
 
-            color:
-            {
-                if(!enabled)
-                {
-                    return UM.Theme.getColor("setting_control_disabled")
-                }
-                if(control.containsMouse || control.activeFocus)
-                {
-                    return UM.Theme.getColor("setting_control_highlight")
-                }
-                return UM.Theme.getColor("setting_control")
-            }
-
+            radius: UM.Theme.getSize("checkbox_radius").width
             border.width: UM.Theme.getSize("default_lining").width
+
             border.color:
             {
                 if(!enabled)
                 {
-                    return UM.Theme.getColor("setting_control_disabled_border")
+                    return UM.Theme.getColor("checkbox_border")
                 }
-                if(control.containsMouse || control.activeFocus)
+                switch (propertyProvider.properties.validationState)
                 {
-                    return UM.Theme.getColor("setting_control_border_highlight")
+                    case "ValidatorState.Invalid":
+                    case "ValidatorState.Exception":
+                    case "ValidatorState.MinimumError":
+                    case "ValidatorState.MaximumError":
+                        return UM.Theme.getColor("setting_validation_error");
+                    case "ValidatorState.MinimumWarning":
+                    case "ValidatorState.MaximumWarning":
+                        return UM.Theme.getColor("setting_validation_warning");
+                }
+                // Validation is OK.
+                if (control.containsMouse || control.activeFocus || hovered)
+                {
+                    return UM.Theme.getColor("checkbox_border_hover")
                 }
                 return UM.Theme.getColor("setting_control_border")
             }
 
-            UM.RecolorImage {
+            color: {
+                if (!enabled)
+                {
+                    return UM.Theme.getColor("checkbox_disabled")
+                }
+                switch (propertyProvider.properties.validationState)
+                {
+                    case "ValidatorState.Invalid":
+                    case "ValidatorState.Exception":
+                    case "ValidatorState.MinimumError":
+                    case "ValidatorState.MaximumError":
+                        return UM.Theme.getColor("setting_validation_error_background")
+                    case "ValidatorState.MinimumWarning":
+                    case "ValidatorState.MaximumWarning":
+                        return UM.Theme.getColor("setting_validation_warning_background")
+                }
+                // Validation is OK.
+                if (control.containsMouse || control.activeFocus)
+                {
+                    return UM.Theme.getColor("setting_control_highlight")
+                }
+                return UM.Theme.getColor("checkbox")
+            }
+
+            UM.RecolorImage
+            {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: parent.width / 2.5
-                height: parent.height / 2.5
-                sourceSize.width: width
+                height: UM.Theme.getSize("checkbox_mark").height
+                width: UM.Theme.getSize("checkbox_mark").width
                 sourceSize.height: width
                 color: !enabled ? UM.Theme.getColor("setting_control_disabled_text") : UM.Theme.getColor("setting_control_text");
-                source: UM.Theme.getIcon("check")
+                source: UM.Theme.getIcon("Check", "low")
                 opacity: control.checked ? 1 : 0
                 Behavior on opacity { NumberAnimation { duration: 100; } }
             }

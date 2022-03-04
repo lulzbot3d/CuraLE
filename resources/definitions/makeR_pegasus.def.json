@@ -1,15 +1,18 @@
 {
     "version": 2,
-    "name": "makeR Pegasus",
+    "name": "Maker Pegasus",
     "inherits": "fdmprinter",
     "metadata": {
         "visible": true,
-        "author": "makeR",
-        "manufacturer": "makeR",
+        "author": "Maker",
+        "manufacturer": "Maker",
         "file_formats": "text/x-gcode",
-        "icon": "icon_ultimaker2",
-        "platform": "makeR_pegasus_platform.stl",
-        "platform_offset": [-200, -10, 200]
+        "platform": "makeR_pegasus_platform.3mf",
+        "platform_offset": [-200, -10, 200],
+        "machine_extruder_trains":
+        {
+            "0": "makeR_pegasus_extruder_0"
+        }
     },
 
     "overrides": {
@@ -29,13 +32,7 @@
         "machine_center_is_zero": {
             "default_value": false
         },
-        "machine_nozzle_size": {
-            "default_value": 0.4
-        },
-        "material_diameter": {
-            "default_value": 2.85
-        },
-        "machine_head_polygon": {
+        "machine_head_with_fans_polygon": {
             "default_value": [
                 [-75, -18],
                 [-75, 35],
@@ -44,7 +41,7 @@
             ]
         },
         "gantry_height": {
-            "default_value": -25
+            "value": "25"
         },
         "machine_gcode_flavor": {
             "default_value": "RepRap (Marlin/Sprinter)"

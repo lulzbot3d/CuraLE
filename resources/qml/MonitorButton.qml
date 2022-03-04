@@ -1,5 +1,5 @@
-// Copyright (c) 2017 Ultimaker B.V.
-// Cura is released under the terms of the LGPLv3 or higher.
+//Copyright (c) 2018 Ultimaker B.V.
+//Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.2
 import QtQuick.Controls 1.1
@@ -13,19 +13,45 @@ import Cura 1.0 as Cura
 Item
 {
     id: base;
-    UM.I18nCatalog { id: catalog; name:"cura"}
+    UM.I18nCatalog { id: catalog; name: "cura"}
 
-    property bool printerConnected: Cura.MachineManager.printerOutputDevices.length != 0
+    height: childrenRect.height + UM.Theme.getSize("thick_margin").height
+
+    property bool printerConnected: Cura.MachineManager.printerConnected
     property bool printerAcceptsCommands: printerConnected && Cura.MachineManager.printerOutputDevices[0].acceptsCommands
-    property real progress: printerConnected ? Cura.MachineManager.printerOutputDevices[0].progress : 0
+    property var activePrinter: printerConnected ? Cura.MachineManager.printerOutputDevices[0].activePrinter : null
+    property var activePrintJob: activePrinter ? activePrinter.activePrintJob: null
+    property real progress:
+    {
+        if(!printerConnected)
+        {
+            return 0
+        }
+        if(activePrinter == null)
+        {
+            return 0
+        }
+        if(activePrintJob == null)
+        {
+            return 0
+        }
+        if(activePrintJob.timeTotal == 0)
+        {
+            return 0  // Prevent division by 0
+        }
+        return activePrintJob.timeElapsed / activePrintJob.timeTotal * 100
+    }
+
+    property int backendState: UM.Backend.state
 
     property bool showProgress: {
         // determine if we need to show the progress bar + percentage
-        if(!printerConnected || !printerAcceptsCommands) {
+        if(activePrintJob == null)
+        {
             return false;
         }
 
-        switch(Cura.MachineManager.printerOutputDevices[0].jobState)
+        switch(base.activePrintJob.state)
         {
             case "printing":
             case "paused":
@@ -46,20 +72,22 @@ Item
 
     property variant statusColor:
     {
-
-        if(!printerConnected || !printerAcceptsCommands ||
-          (printerConnected && UM.Backend.state == 1 && Cura.MachineManager.printerOutputDevices[0].jobState != "printing"))
+        if(!printerConnected || !printerAcceptsCommands)
             return UM.Theme.getColor("text");
 
-        switch(Cura.MachineManager.printerOutputDevices[0].printerState)
+
+        switch(activePrinter.state)
         {
             case "maintenance":
                 return UM.Theme.getColor("status_busy");
             case "error":
                 return UM.Theme.getColor("status_stopped");
         }
-
-        switch(Cura.MachineManager.printerOutputDevices[0].jobState)
+        if(base.activePrintJob == null)
+        {
+            return UM.Theme.getColor("text");
+        }
+        switch(base.activePrintJob.state)
         {
             case "printing":
             case "pre_print":
@@ -83,23 +111,26 @@ Item
 
     property bool activity: CuraApplication.platformActivity;
     property string fileBaseName
-
     property string statusText:
     {
-        var printerOutputDevice = Cura.MachineManager.printerOutputDevices[0]
-
-        if(!UM.Scene.hasObjectsOnBuildPlate && (!printerConnected || (printerConnected && !(printerOutputDevice.jobState == "printing"  || printerOutputDevice.jobState ==  "paused"  || printerOutputDevice.jobState ==  "resuming" || printerOutputDevice.jobState ==  "pausing"))))
-            return catalog.i18nc("@label:MonitorStatus", "Load a model file or verified G-code \nin the Prepare Window to begin a print.");
         if(!printerConnected)
             return catalog.i18nc("@label:MonitorStatus", "Not connected to a printer");
         if(!printerAcceptsCommands)
             return catalog.i18nc("@label:MonitorStatus", "Printer does not accept commands");
 
+        var printerOutputDevice = Cura.MachineManager.printerOutputDevices[0]
+
         if(printerOutputDevice.printerState == "maintenance")
         {
             return catalog.i18nc("@label:MonitorStatus", "In maintenance. Please check the printer");
         }
-        switch(printerOutputDevice.jobState)
+
+        if(base.activePrintJob == null)
+        {
+            return " "
+        }
+
+        switch(base.activePrintJob.state)
         {
             case "offline":
                 return catalog.i18nc("@label:MonitorStatus", "Lost connection with the printer");
@@ -123,27 +154,24 @@ Item
     Label
     {
         id: statusLabel
-        width: parent.width - 2 * UM.Theme.getSize("sidebar_margin").width
-        anchors.bottom: progressBar.top
+        width: parent.width - 2 * UM.Theme.getSize("thick_margin").width
+        anchors.top: parent.top
         anchors.left: parent.left
-        anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width
-        anchors.rightMargin: UM.Theme.getSize("sidebar_margin").width
-        anchors.bottomMargin: UM.Theme.getSize("sidebar_margin").height/2
+        anchors.leftMargin: UM.Theme.getSize("thick_margin").width
 
         color: base.statusColor
-        font: UM.Theme.getFont("large")
+        font: UM.Theme.getFont("large_bold")
         text: statusText
     }
 
     Label
     {
         id: percentageLabel
-        anchors.bottom: progressBar.top
+        anchors.top: parent.top
         anchors.right: progressBar.right
-        anchors.bottomMargin: UM.Theme.getSize("sidebar_margin").height/2
 
         color: base.statusColor
-        font: UM.Theme.getFont("large")
+        font: UM.Theme.getFont("large_bold")
         text: Math.round(progress) + "%"
         visible: showProgress
     }
@@ -170,7 +198,11 @@ Item
             {
                 return false;
             }
-            switch(Cura.MachineManager.printerOutputDevices[0].jobState)
+            if(base.activePrintJob == null)
+            {
+                return false
+            }
+            switch(base.activePrintJob.state)
             {
                 case "pausing":
                 case "resuming":
@@ -184,26 +216,26 @@ Item
         property string backgroundColor: UM.Theme.getColor("progressbar_background");
         property string controlColor: base.statusColor;
 
-        width: parent.width - 2 * UM.Theme.getSize("sidebar_margin").width;
+        width: parent.width - 2 * UM.Theme.getSize("thick_margin").width;
         height: UM.Theme.getSize("progressbar").height;
-        anchors.bottom: buttonsRow.top;
-        anchors.topMargin: UM.Theme.getSize("sidebar_margin").height / 4;
-        anchors.bottomMargin: UM.Theme.getSize("sidebar_margin").height
+        anchors.top: statusLabel.bottom;
+        anchors.topMargin: Math.round(UM.Theme.getSize("thick_margin").height / 4);
         anchors.left: parent.left;
-        anchors.leftMargin: UM.Theme.getSize("sidebar_margin").width;
+        anchors.leftMargin: UM.Theme.getSize("thick_margin").width;
     }
 
-    Row {
+    Row
+    {
         id: buttonsRow
         height: abortButton.height
-        anchors.bottom: parent.bottom
-        anchors.topMargin: UM.Theme.getSize("sidebar_margin").height
-        anchors.bottomMargin: UM.Theme.getSize("sidebar_margin").height
+        anchors.top: progressBar.bottom
+        anchors.topMargin: UM.Theme.getSize("thick_margin").height
         anchors.right: parent.right
-        anchors.rightMargin: UM.Theme.getSize("sidebar_margin").width
+        anchors.rightMargin: UM.Theme.getSize("thick_margin").width
         spacing: UM.Theme.getSize("default_margin").width
 
-        Row {
+        Row
+        {
             id: additionalComponentsRow
             spacing: UM.Theme.getSize("default_margin").width
         }
@@ -212,9 +244,10 @@ Item
             buttonsRow.updateAdditionalComponents("monitorButtons")
         }
 
-        Connections {
+        Connections
+        {
             target: CuraApplication
-            onAdditionalComponentsChanged: buttonsRow.updateAdditionalComponents("monitorButtons")
+            function onAdditionalComponentsChanged() { buttonsRow.updateAdditionalComponents("monitorButtons") }
         }
 
         function updateAdditionalComponents (areaId) {
@@ -223,33 +256,6 @@ Item
                     CuraApplication.additionalComponents["monitorButtons"][component].parent = additionalComponentsRow
                 }
             }
-        }
-
-
-        Button
-        {
-            id: printButton
-
-            height: UM.Theme.getSize("save_button_save_to_button").height
-
-            text: catalog.i18nc("@label:", "Start Print")
-
-            // 3 = Done, 5 = Disabled
-            enabled: (UM.Backend.state == 3 || UM.Backend.state == 5) && CuraApplication.platformActivity == true
-            visible: printerConnected && !(Cura.MachineManager.printerOutputDevices[0].jobState == "paused" || Cura.MachineManager.printerOutputDevices[0].jobState == "printing")
-            tooltip: "Print";
-
-            onClicked:
-            {
-                var active_machine_id = "Autodetect"
-                UM.OutputDeviceManager.setActiveDevice(active_machine_id);
-                //console.log( "-------------------UM.OutputDeviceManager.activeDevice : ", UM.OutputDeviceManager.activeDevice )
-                UM.OutputDeviceManager.requestWriteToDevice(UM.OutputDeviceManager.activeDevice, PrintInformation.jobName, { "filter_by_machine": true, "preferred_mimetype":Printer.preferredOutputMimetype })
-           }
-
-
-
-            style: UM.Theme.styles.sidebar_action_button
         }
 
         Button
@@ -261,57 +267,59 @@ Item
             property bool userClicked: false
             property string lastJobState: ""
 
-            visible: printerConnected && Cura.MachineManager.printerOutputDevices[0].canPause
-            enabled: (!userClicked) && printerConnected && Cura.MachineManager.printerOutputDevices[0].acceptsCommands &&
-                     (["paused", "printing"].indexOf(Cura.MachineManager.printerOutputDevices[0].jobState) >= 0)
+            visible: printerConnected && activePrinter != null &&activePrinter.canPause
+            enabled: (!userClicked) && printerConnected && printerAcceptsCommands && activePrintJob != null &&
+                     (["paused", "printing"].indexOf(activePrintJob.state) >= 0)
 
             text: {
-                var result = "";
-                if (!printerConnected)
+                if (!printerConnected || activePrintJob == null)
                 {
-                  return "";
+                   return catalog.i18nc("@label", "Pause");
                 }
                 var jobState = Cura.MachineManager.printerOutputDevices[0].jobState;
 
-                if (jobState == "paused")
+                if (activePrintJob.state == "paused")
                 {
-                    return catalog.i18nc("@label:", "Resume");
+                    return catalog.i18nc("@label", "Resume");
                 }
                 else
                 {
-                    return catalog.i18nc("@label:", "Pause");
+                    return catalog.i18nc("@label", "Pause");
                 }
             }
             onClicked:
             {
-                var current_job_state = Cura.MachineManager.printerOutputDevices[0].jobState
-                if(current_job_state == "paused")
+                if(activePrintJob == null)
                 {
-                    Cura.MachineManager.printerOutputDevices[0].setJobState("print");
+                    return // Do nothing!
                 }
-                else if(current_job_state == "printing")
+                if(activePrintJob.state == "paused")
                 {
-                    Cura.MachineManager.printerOutputDevices[0].setJobState("pause");
+                    activePrintJob.setState("print");
+                }
+                else if(activePrintJob.state == "printing")
+                {
+                    activePrintJob.setState("pause");
                 }
             }
 
-            style: UM.Theme.styles.sidebar_action_button
+            style: UM.Theme.styles.print_setup_action_button
         }
 
         Button
         {
             id: abortButton
 
-            visible: printerConnected && Cura.MachineManager.printerOutputDevices[0].canAbort
-            enabled: printerConnected && Cura.MachineManager.printerOutputDevices[0].acceptsCommands &&
-                     (["paused", "printing", "pre_print"].indexOf(Cura.MachineManager.printerOutputDevices[0].jobState) >= 0)
+            visible: printerConnected && activePrinter != null && activePrinter.canAbort
+            enabled: printerConnected && printerAcceptsCommands && activePrintJob != null &&
+                     (["paused", "printing", "pre_print"].indexOf(activePrintJob.state) >= 0)
 
             height: UM.Theme.getSize("save_button_save_to_button").height
 
-            text: catalog.i18nc("@label:", "Abort Print")
+            text: catalog.i18nc("@label", "Abort Print")
             onClicked: confirmationDialog.visible = true
 
-            style: UM.Theme.styles.sidebar_action_button
+            style: UM.Theme.styles.print_setup_action_button
         }
 
         MessageDialog
@@ -323,7 +331,7 @@ Item
             text: catalog.i18nc("@label", "Are you sure you want to abort the print?")
             standardButtons: StandardButton.Yes | StandardButton.No
             Component.onCompleted: visible = false
-            onYes: Cura.MachineManager.printerOutputDevices[0].setJobState("abort")
+            onYes: activePrintJob.setState("abort")
         }
     }
 }

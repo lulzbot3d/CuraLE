@@ -1,4 +1,4 @@
-// Copyright (c) 2017 Ultimaker B.V.
+// Copyright (c) 2018 Ultimaker B.V.
 // Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.8
@@ -31,6 +31,11 @@ Button
             } else {
                 return UM.Theme.getColor("setting_category");
             }
+            else if (base.hovered)
+            {
+                return UM.Theme.getColor("setting_category_hover")
+            }
+            return UM.Theme.getColor("setting_category")
         }
         Behavior on color { ColorAnimation { duration: 50; } }
         Rectangle
@@ -62,6 +67,7 @@ Button
     signal setActiveFocusToNextSetting(bool forward)
 
     property var focusItem: base
+    property bool expanded: definition.expanded
 
     //text: definition.label
 
@@ -79,7 +85,6 @@ Button
             }
             text: definition.label
             font: UM.Theme.getFont("setting_category")
-            renderType: Text.NativeRendering
             color:
             {
                 if (!base.enabled) {

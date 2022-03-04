@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2016 Richard Hughes <richard@hughsie.com> -->
+<component type="desktop">
+  <id>cura.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>AGPL-3.0 and CC-BY-SA-4.0</project_license>
+  <name>Cura LulzBot Edition</name>
+  <summary>The world's most advanced 3d printer software</summary>
+  <description>
+    <p>
+      Cura LulzBot Edition creates a seamless integration between hardware, software and
+      materials for the best 3D printing experience around.
+      Cura LulzBot Editionsupports the 3MF, OBJ and STL file formats and is available on
+      Windows, Mac and Linux.
+    </p>
+    <ul>
+      <li>Novices can start printing right away</li>
+      <li>Experts are able to customize 200 settings to achieve the best results</li>
+      <li>Optimized profiles for LulzBot printers</li>
+      <li>Print multiple objects at once with different settings for each object</li>
+      <li>Cura LulzBot Edition supports STL, 3MF and OBJ file formats</li>
+      <li>Open source and completely free</li>
+    </ul>
+  </description>
+  <url type="homepage">https://www.lulzbot.com/cura</url>
+  <translation type="gettext">Cura</translation>
+</component>

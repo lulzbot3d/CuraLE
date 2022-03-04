@@ -9,8 +9,9 @@ i18n_catalog = i18nCatalog("cura")
 def getMetaData():
     return {
         "view": {
-            "name": i18n_catalog.i18nc("@item:inmenu", "Solid View"),
-            "weight": 0
+            "name": i18n_catalog.i18nc("@item:inmenu", "Solid view"),
+            "weight": 0,
+            "visible": False
         }
     }
 
