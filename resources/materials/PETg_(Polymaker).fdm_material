@@ -11,6 +11,7 @@
     <version>1</version>
     <color_code>#4e9a06</color_code>
     <adhesion_info>Use glue stick.</adhesion_info>
+    <info_link>https://shop.lulzbot.com/polymaker-polylite-petg-filament?pk_campaign=software-cura</info_link>
   </metadata>
   <properties>
     <density>1.2</density>
