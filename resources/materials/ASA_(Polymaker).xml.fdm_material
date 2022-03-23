@@ -31,5 +31,77 @@
       <setting key="heated bed temperature">90.0</setting>
       <setting key="retraction speed">20.0</setting>
     </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_gladiator_goldenrod" />
+      <setting key="soften temperature">170.0</setting>
+      <setting key="probe temperature">160.0</setting>
+      <setting key="print temperature">245.0</setting>
+      <setting key="standby temperature">150.0</setting>
+      <setting key="wipe temperature">160.0</setting>
+      <setting key="print cooling">0.0</setting>
+      <setting key="retraction amount">1.0</setting>
+      <setting key="heated bed temperature">90.0</setting>
+      <setting key="retraction speed">20.0</setting>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_redgum_goldenrod" />
+      <setting key="soften temperature">170.0</setting>
+      <setting key="probe temperature">160.0</setting>
+      <setting key="print temperature">245.0</setting>
+      <setting key="standby temperature">150.0</setting>
+      <setting key="wipe temperature">160.0</setting>
+      <setting key="print cooling">0.0</setting>
+      <setting key="retraction amount">1.0</setting>
+      <setting key="heated bed temperature">90.0</setting>
+      <setting key="retraction speed">20.0</setting>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_hibiscus_goldenrod" />
+      <setting key="soften temperature">170.0</setting>
+      <setting key="probe temperature">160.0</setting>
+      <setting key="print temperature">245.0</setting>
+      <setting key="standby temperature">150.0</setting>
+      <setting key="wipe temperature">160.0</setting>
+      <setting key="print cooling">0.0</setting>
+      <setting key="retraction amount">1.0</setting>
+      <setting key="heated bed temperature">90.0</setting>
+      <setting key="retraction speed">20.0</setting>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_taz6_goldenrod" />
+      <setting key="soften temperature">170.0</setting>
+      <setting key="probe temperature">160.0</setting>
+      <setting key="print temperature">245.0</setting>
+      <setting key="standby temperature">150.0</setting>
+      <setting key="wipe temperature">160.0</setting>
+      <setting key="print cooling">0.0</setting>
+      <setting key="retraction amount">1.0</setting>
+      <setting key="heated bed temperature">90.0</setting>
+      <setting key="retraction speed">20.0</setting>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_sidekick_747_goldenrod" />
+      <setting key="soften temperature">170.0</setting>
+      <setting key="probe temperature">160.0</setting>
+      <setting key="print temperature">245.0</setting>
+      <setting key="standby temperature">150.0</setting>
+      <setting key="wipe temperature">160.0</setting>
+      <setting key="print cooling">0.0</setting>
+      <setting key="retraction amount">1.0</setting>
+      <setting key="heated bed temperature">90.0</setting>
+      <setting key="retraction speed">20.0</setting>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_sidekick_289_goldenrod" />
+      <setting key="soften temperature">170.0</setting>
+      <setting key="probe temperature">160.0</setting>
+      <setting key="print temperature">245.0</setting>
+      <setting key="standby temperature">150.0</setting>
+      <setting key="wipe temperature">160.0</setting>
+      <setting key="print cooling">0.0</setting>
+      <setting key="retraction amount">1.0</setting>
+      <setting key="heated bed temperature">90.0</setting>
+      <setting key="retraction speed">20.0</setting>
+    </machine>
   </settings>
 </fdmmaterial>
