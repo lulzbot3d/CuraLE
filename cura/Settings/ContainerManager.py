@@ -887,6 +887,8 @@ class ContainerManager(QObject):
 
         machine_materials = global_stack.getMetaDataEntry("has_machine_materials", False)
 
+        material_diameter = global_stack.getBottom().getProperty("material_diameter", "value")
+
         machine = """<machine>
       <machine_identifier product="%s" />
     </machine>""" % global_stack.getBottom().getId()
@@ -906,11 +908,12 @@ class ContainerManager(QObject):
     <GUID>%s</GUID>
   </metadata>
   <properties>
+    <diameter>%s</diameter>
   </properties>
   <settings>
     %s
   </settings>
-</fdmmaterial>""" % (new_id, str(uuid.uuid4()), machine if machine_materials else "")
+</fdmmaterial>""" % (new_id, str(uuid.uuid4()), material_diameter, machine if machine_materials else "")
 
         new_material = container_type(new_id)
         new_material.deserialize(base)
