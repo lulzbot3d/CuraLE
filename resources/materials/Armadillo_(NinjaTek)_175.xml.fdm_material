@@ -6,7 +6,7 @@
       <material>Armadillo (NinjaTek)</material>
       <color>Generic</color>
       <label>Armadillo (NinjaTek)</label>
-      <category>Experimental</category>
+      <category />
     </name>
     <adhesion_info>Use glue stick with PEI or print directly on glass.</adhesion_info>
     <definition>fdmprinter</definition>
