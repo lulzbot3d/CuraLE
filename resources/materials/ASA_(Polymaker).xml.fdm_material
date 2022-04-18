@@ -141,7 +141,7 @@
       <setting key="standby temperature">150.0</setting>
     </machine>
     <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_hibiscus_cecropia" />
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_hibiscus" />
       <setting key="retraction amount">1.5</setting>
       <setting key="wipe temperature">170.0</setting>
       <setting key="soften temperature">170.0</setting>
