@@ -11,7 +11,7 @@
     <compatible>True</compatible>
     <definition>fdmprinter</definition>
     <version>2</version>
-    <adhesion_info>Do not use PTFE tube.</adhesion_info>
+    <adhesion_info>Use glue stick with PEI or print directly on glass. Do not use Filament Guide Tube.</adhesion_info>
     <color_code>#00eeee</color_code>
     <description />
     <GUID>b71e2b90-d2fd-434b-bbac-6d3be46d1231</GUID>

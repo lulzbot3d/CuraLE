@@ -9,7 +9,7 @@
       <category />
     </name>
     <compatible>True</compatible>
-    <adhesion_info />
+    <adhesion_info>Use glue stick with PEI or print directly on glass. Do not use Filament Guide Tube.</adhesion_info>
     <description />
     <GUID>b4da7828-c6df-488c-8a5d-b5a77b15ac9c</GUID>
     <definition>fdmprinter</definition>
