@@ -2,10 +2,10 @@
 <fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
   <metadata>
     <name>
-      <brand>Experimental</brand>
+      <brand>Generic</brand>
       <material>Armadillo (NinjaTek)</material>
       <color>Generic</color>
-      <label>Armadillo (NinjaTek)</label>
+      <label>Armadillo (NinjaTek)[BETA]</label>
       <category />
     </name>
     <adhesion_info>Use glue stick with PEI or print directly on glass.</adhesion_info>

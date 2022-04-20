@@ -2,10 +2,10 @@
 <fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
   <metadata>
     <name>
-      <brand>Experimental</brand>
+      <brand>Generic</brand>
       <material>ASA (Polymaker)</material>
       <color />
-      <label>ASA (Polymaker)</label>
+      <label>ASA (Polymaker)[BETA]</label>
       <category />
     </name>
     <compatible>True</compatible>
