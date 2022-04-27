@@ -18,12 +18,12 @@
   </properties>
   <settings>
     <setting key="print temperature">240</setting>
-    <setting key="heated bed temperature">60</setting>
+    <setting key="heated bed temperature">110</setting>
     <setting key="standby temperature">175</setting>
     <setting key="soften temperature">170</setting>
     <setting key="probe temperature">170</setting>
     <setting key="wipe temperature">170</setting>
-    <setting key="part removal temperature">50</setting>
+    <setting key="part removal temperature">60</setting>
     <machine>
       <machine_identifier product="lulzbot_taz6_dual_v3"/>
       <metadata key="category">Supported</metadata>

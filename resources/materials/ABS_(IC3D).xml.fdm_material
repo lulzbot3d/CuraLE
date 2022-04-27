@@ -14,11 +14,11 @@
   </metadata>
   <properties>
     <density>1.07</density>
-    <diameter>2.875</diameter>
+    <diameter>2.85</diameter>
   </properties>
   <settings>
     <setting key="print temperature">240</setting>
-    <setting key="heated bed temperature">105</setting>
+    <setting key="heated bed temperature">110</setting>
     <setting key="standby temperature">200</setting>
     <setting key="soften temperature">170</setting>
     <setting key="probe temperature">170</setting>
