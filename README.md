@@ -12,7 +12,7 @@ For crashes and similar issues, please attach the following information:
 * The Cura GUI log file, located at
   * `%APPDATA%\cura-lulzbot\<Cura LE version>\cura.log` (Windows), or usually `C:\Users\\<your username>\AppData\Roaming\cura-lulzbot\<Cura LE version>\cura-lulzbot.log`
   * `$USER/Library/Application Support/cura-lulzbot/<Cura LE version>/cura-lulzbot.log` (OSX)
-  * `$USER/.local/share/cura/<Cura LE version>/cura.log` (Ubuntu/Linux)
+  * `$USER/.local/share/cura-lulzbot/<Cura LE version>/cura-lulzbot.log` (Ubuntu/Linux)
 
 If the Cura user interface still starts, you can also reach this directory from the application menu in Help -> Show settings folder
 
