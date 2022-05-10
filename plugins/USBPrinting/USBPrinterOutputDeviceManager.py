@@ -234,7 +234,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_quiver_banded_tiger":                "Marlin_TAZPro_Universal_2.0.0.144.7_4de29a9.bin",
             "lulzbot_quiver_cecropia":                    "Marlin_TAZPro_Universal_2.0.0.144.7_4de29a9.bin",
             "lulzbot_quiver_dingy_cutworm":               "Marlin_TAZPro_Universal_2.0.0.144.7_4de29a9.bin",
-            "lulzbot_quiver_evergreen_bagworm":        "Marlin_TAZPro_DUALEXTRUDER_2.0.0.144.6_e62591b.bin",
+            "lulzbot_quiver_evergreen_bagworm":        "Marlin_TAZPro_DUALEXTRUDER_2.0.0.144.5_2731681.bin",
             "lulzbot_quiver_goldenrod":                   "Marlin_TAZPro_Universal_2.0.0.144.7_4de29a9.bin",
             "lulzbot_quiver_lutefisk":                    "Marlin_TAZPro_Universal_2.0.0.144.7_4de29a9.bin",
             "lulzbot_quiver_perca":                       "Marlin_TAZPro_Universal_2.0.0.144.7_4de29a9.bin",
@@ -250,7 +250,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_redgum_perca":                  "Marlin_TAZWorkhorse_Universal_2.0.9.0.13_80a6628.hex",
             "lulzbot_redgum_lutefiskv1":                 "Marlin_TAZWorkhorse_M175_2.0.0.144.1_ffaa466.hex",
 
-            "lulzbot_gladiator_evergreen_bagworm":   "Marlin_TAZProXT_DUALEXTRUDER_2.0.0.144.6_e62591b.bin",
+            "lulzbot_gladiator_evergreen_bagworm":   "Marlin_TAZProXT_DUALEXTRUDER_2.0.0.144.5_2731681.bin",
             "lulzbot_gladiator_goldenrod":              "Marlin_TAZProXT_Universal_2.0.0.144.7_4de29a9.bin",
             "lulzbot_gladiator_dingy_cutworm":          "Marlin_TAZProXT_Universal_2.0.0.144.7_4de29a9.bin",
             "lulzbot_gladiator_banded_tiger":           "Marlin_TAZProXT_Universal_2.0.0.144.7_4de29a9.bin",
@@ -271,7 +271,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_sidekick_289_sk285" :                        "Marlin_289_SK285_2.0.9.0.10_b8da834.hex",
             "lulzbot_sidekick_289_lutefiskv1" :                      "Marlin_289_M175_2.0.6.6_b84f03e6.hex",
 
-            "lulzbot_sidekick_747_achemon" :                     "Marlin_747_SLSEHE_2.0.9.0.10_b8da834.hex", 
+            "lulzbot_sidekick_747_achemon" :                     "Marlin_747_SLSEHE_2.0.9.0.10_b8da834.hex",
             "lulzbot_sidekick_747_banded_tiger" :              "Marlin_747_HSHSPLUS_2.0.9.0.10_b8da834.hex",
             "lulzbot_sidekick_747_cecropia" :                    "Marlin_747_SLSEHE_2.0.9.0.10_b8da834.hex",
             "lulzbot_sidekick_747_dingy_cutworm" :             "Marlin_747_HSHSPLUS_2.0.9.0.10_b8da834.hex",
@@ -281,7 +281,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_sidekick_747_sk175" :                        "Marlin_747_SK175_2.0.9.0.10_b8da834.hex",
             "lulzbot_sidekick_747_sk285" :                        "Marlin_747_SK285_2.0.9.0.10_b8da834.hex",
             "lulzbot_sidekick_747_lutefiskv1" :                      "Marlin_747_M175_2.0.6.6_b84f03e6.hex",
-            
+
 
             "lulzbot_kangaroo_paw":                      "Marlin_Bio_SingleExtruder_2.0.0.175_6c8c1c0d.hex",
         }
