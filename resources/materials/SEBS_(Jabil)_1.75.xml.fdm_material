@@ -47,6 +47,27 @@
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_sidekick_747_lutefisk" />
     </machine>
     <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_quiver_lutefiskv1" />
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_hibiscus_lutefiskv1" />
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_redgum_lutefiskv1" />
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_gladiator_lutefiskv1" />
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_taz6_lutefiskv1" />
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_sidekick_289_lutefiskv1" />
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_sidekick_747_lutefiskv1" />
+    </machine>
+    <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_sidekick_289_sk175"/>
     </machine>
     <machine>

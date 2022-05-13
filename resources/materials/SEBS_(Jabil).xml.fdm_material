@@ -228,7 +228,33 @@
       <setting key="standby temperature">175.0</setting>
     </machine>
     <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_quiver_evergreen_bagworm" />
+      <setting key="print cooling">10.0</setting>
+      <setting key="heated bed temperature">70.0</setting>
+      <setting key="retraction speed">25.0</setting>
+      <setting key="part removal temperature">0.0</setting>
+      <setting key="probe temperature">160.0</setting>
+      <setting key="wipe temperature">180.0</setting>
+      <setting key="print temperature">245.0</setting>
+      <setting key="retraction amount">2.0</setting>
+      <setting key="soften temperature">180.0</setting>
+      <setting key="standby temperature">175.0</setting>
+    </machine>
+    <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_gladiator_goldenrod" />
+      <setting key="print cooling">10.0</setting>
+      <setting key="heated bed temperature">70.0</setting>
+      <setting key="retraction speed">25.0</setting>
+      <setting key="part removal temperature">0.0</setting>
+      <setting key="probe temperature">160.0</setting>
+      <setting key="wipe temperature">180.0</setting>
+      <setting key="print temperature">245.0</setting>
+      <setting key="retraction amount">2.0</setting>
+      <setting key="soften temperature">180.0</setting>
+      <setting key="standby temperature">175.0</setting>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_gladiator_evergreen_bagworm" />
       <setting key="print cooling">10.0</setting>
       <setting key="heated bed temperature">70.0</setting>
       <setting key="retraction speed">25.0</setting>
