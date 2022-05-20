@@ -1,11 +1,11 @@
 {
     "id": "LulzBot_TAZ5_aerostruder",
-    "name": "LulzBot TAZ 5 Aerostruder",
+    "name": "TAZ 5 Aerostruder",
     "inherits": "lulzbot_taz5",
     "version": 2,
     "metadata":
     {
-        "priority": "07",
+        "priority": "06",
         "machine_extruder_trains":
         {
             "0": "lulzbot_taz5_aerostruder_extruder"

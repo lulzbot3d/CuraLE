@@ -885,7 +885,7 @@ class ConnectThread:
                             "Wrong printer detected, starting a print with the incorrect printer selected may damage your printer.")
         elif check_firmware_status == self.CheckFirmwareStatus.WRONG_TOOLHEAD:
             self._parent.log("d", "Tried to connect to machine with wrong toolhead")
-            showWarning(self, "Wrong toolhead detected.", "Wrong toolhead detected. Please change this if it is not what you want.")
+            #showWarning(self, "Wrong toolhead detected.", "Wrong toolhead detected. Please change this if it is not what you want.")
             #self._parent.close()  # Unable to connect, wrap up.
             #self._parent.setConnectionState(ConnectionState.closed)
             Application.getInstance().getMachineManager().toolheadChanged.emit()
@@ -1494,7 +1494,7 @@ class PrintThread:
             self.sendCommand("G1 Z%f F3000" % parkZ)
 
         # Move the head away
-        self.sendCommand("G1 X%f Y%f F9000" % (parkX, parkY))
+        self.sendCommand("G1 Y%f F9000" % parkY)
 
         # Disable the E steppers
         self.sendCommand("M18 E")
@@ -1507,27 +1507,27 @@ class PrintThread:
         if isinstance(self._pauseState, self.PauseState):
             pos = self._pauseState
             if pos.f is None:
-                pos.f = 1200
+                pos.f = 1600
             if pos.e is None:
                 pos.e = 0
 
-            if pos.retraction > 0:
-                # Set E relative positioning
-                self.sendCommand("M83")
-                # Prime the nozzle when changing filament
-                self.sendCommand("G1 E%f F120" %  pos.retraction)  # Push the filament out
-                self.sendCommand("G1 E%f F120" % -pos.retraction)  # retract again
-                # Prime the nozzle again
-                self.sendCommand("G1 E%f F120" %  pos.retraction)
-                # Set E absolute positioning
-                self.sendCommand("M82")
-                # Set E absolute position to cancel out any extrude/retract that occured
-                self.sendCommand("G92 E%f" % pos.e)
+            # if pos.retraction > 0:
+            #     # Set E relative positioning
+            #     self.sendCommand("M83")
+            #     # Prime the nozzle when changing filament
+            #     self.sendCommand("G1 E%f F120" %  pos.retraction)  # Push the filament out
+            #     self.sendCommand("G1 E%f F120" % -pos.retraction)  # retract again
+            #     # Prime the nozzle again
+            #     self.sendCommand("G1 E%f F120" %  pos.retraction)
+            #     # Set E absolute positioning
+            #     self.sendCommand("M82")
+            #     # Set E absolute position to cancel out any extrude/retract that occured
+            #     self.sendCommand("G92 E%f" % pos.e)
 
             # Set proper feedrate
-            self.sendCommand("G1 F%f" % pos.f)
+            #self.sendCommand("G1 F%f" % pos.f)
             # Re-home the nozzle
-            self.sendCommand("G28 X0 Y0")
+            #self.sendCommand("G28 X0 Y0") 
             # Position the toolhead to the correct position and feedrate again
             self.sendCommand("G1 X%f Y%f Z%f F%f" % (pos.x, pos.y, pos.z, pos.f))
             # Reset filament runout sensor

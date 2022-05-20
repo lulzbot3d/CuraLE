@@ -90,10 +90,20 @@ Cura.MachineAction
                 cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
             }
         }
+        Label
+        {
+        id: upgradeText4
+            anchors.top: upgradeText3.bottom
+            anchors.topMargin: UM.Theme.getSize("default_margin").height
+            width: parent.width
+            wrapMode: Text.WordWrap
+            color: "red"
+            text: catalog.i18nc("@label", "If installing universal tool head firmware (2.0.9.X+), ensure that you select the installed tool head via your printers LCD prior to printing.")
+        }
         Row
         {
             id: buttonRow
-            anchors.top: upgradeText3.bottom
+            anchors.top: upgradeText4.bottom
             anchors.topMargin: UM.Theme.getSize("default_margin").height
             anchors.horizontalCenter: parent.horizontalCenter
             width: childrenRect.width

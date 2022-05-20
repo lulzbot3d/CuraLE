@@ -1,0 +1,50 @@
+CURA LULZBOT EDITION PATCHNOTES
+This file is a work-in-progress; some sections may be incomplete, especially older versions. Older version patch notes may be added over time. The file will be updated as
+new versions are released and will continue to be utilized as the project progresses.
+
+3.6.37:
+	Firmware Changes:
+		Reverting TAZ Pro Dual Extruder and TAZ Pro XT Dual Extruder firmware from 2.0.0.144.6 to 2.0.0.144.5
+			Reported issues with bed leveling that were not present in previous builds
+	Bug Fixes:
+		Fixed issue where creating a new material profile for 1.75mm Tool Heads didn't display the new profile in Cura
+	Material Profile Changes:
+		Added Jabil SEBS for all current model Tool Heads on all currently produced printers and the TAZ 6
+		Expanded Polymaker PolyCast to all SideKick 2.85mm Tool Heads
+		Expanded Chroma Strand ABS to all SideKick Tool Heads and to all SL Tool Heads
+		Expanded Polymaker ASA to SE Tool Heads on all compatible printers
+		Expanded NinjaTek Aramdillo to all H175 and SK175 Tool Heads
+		Expanded Polymaker CoPA to all HE Tool Heads and to SE and SK285 Tool Heads on the SideKicks
+		Expanded 3D-Fuel Pro PLA to SideKick M175 Tool Heads
+		Adjusted headed bed temperatures for Chroma Strand, IC3D, and Village Plastics ABS on Pro Dual printers
+
+
+3.6.36:
+	Bumped firmware version of TAZ 6 and TAZ Workhorse to 2.0.8.0.13:
+		Adjustment to X travel on Workhorse
+		Default status for Runout Sensor on TAZ 6 set to off
+	Minor changes to SideKick start gcode:
+		Start heating bed sooner leading to less downtime when starting a print
+	Material profile changes:
+		Added NinjaTek Armadillo for M175/v2 Tool Head on all compatible printers
+		Added Polymaker ASA for HE Tool Head on all compatible printers
+		Expanded some existing profiles for use on different printers with the same Tool Head
+		Issue resulting in existing Polymaker PETg profiles not appearing in Cura was resolved
+		Removed several discontinued materials
+
+
+3.6.35:
+	Functional MacOS build:
+		Should work on MacOS >= 10.14, in-house testing is very limited
+		Still some minor bugs to work out, but at the very minimum should be functional
+		All current Tool Heads and printers are included, no need to import
+	Bumped firmware version of TAZ 6, TAZ Workhorse, and Mini 2 to 2.0.9.0.12
+		Minor adjustments to temperature changes during G12 gcode command
+
+
+3.6.34:
+	[Undocumented]
+
+3.6.33:
+	Replaced ColorChange script with FilamentChange script in the PostProcessing plugin:
+		Improved accuracy when using the script

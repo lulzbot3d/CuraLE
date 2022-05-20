@@ -14,11 +14,11 @@
   </metadata>
   <properties>
     <density>1.07</density>
-    <diameter>2.875</diameter>
+    <diameter>2.85</diameter>
   </properties>
   <settings>
     <setting key="print temperature">240</setting>
-    <setting key="heated bed temperature">105</setting>
+    <setting key="heated bed temperature">110</setting>
     <setting key="standby temperature">200</setting>
     <setting key="soften temperature">170</setting>
     <setting key="probe temperature">170</setting>
@@ -38,6 +38,42 @@
     <machine>
       <machine_identifier product="lulzbot_taz5_flexy_dually_v2"/>
       <metadata key="category">Experimental</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_sk285"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_sk285"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_banded_tiger"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_banded_tiger"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_dingy_cutworm"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz6_aerostruder"/>
@@ -114,9 +150,6 @@
     </machine>
     <machine>
       <machine_identifier product="lulzbot_hibiscus_dingy_cutworm"/>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_hibiscus_goldenrod"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_quiver_evergreen_bagworm"/>

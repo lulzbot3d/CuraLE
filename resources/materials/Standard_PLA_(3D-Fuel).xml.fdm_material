@@ -36,6 +36,42 @@
       <metadata key="category">Supported</metadata>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_sidekick_289_sk285"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_sk285"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_banded_tiger"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_banded_tiger"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_dingy_cutworm"/>
+    </machine> 
+    <machine>
       <machine_identifier product="lulzbot_taz6_moarstruder"/>
     </machine>
     <machine>

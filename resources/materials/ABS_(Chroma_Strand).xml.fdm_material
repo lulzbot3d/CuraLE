@@ -3,7 +3,7 @@
   <metadata>
     <name>
       <brand>Generic</brand>
-      <material>ABS (Chroma Strand Labs)</material>
+      <material>ABS (Chroma Strand)</material>
       <color>Generic</color>
       <category>Intermediate</category>
     </name>
@@ -18,12 +18,12 @@
   </properties>
   <settings>
     <setting key="print temperature">240</setting>
-    <setting key="heated bed temperature">60</setting>
+    <setting key="heated bed temperature">110</setting>
     <setting key="standby temperature">175</setting>
     <setting key="soften temperature">170</setting>
     <setting key="probe temperature">170</setting>
     <setting key="wipe temperature">170</setting>
-    <setting key="part removal temperature">50</setting>
+    <setting key="part removal temperature">60</setting>
     <machine>
       <machine_identifier product="lulzbot_taz6_dual_v3"/>
       <metadata key="category">Supported</metadata>
@@ -157,6 +157,63 @@
     <machine>
       <machine_identifier product="lulzbot_redgum_yellowfin"/>
       <metadata key="category">Supported</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_sk285"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_sk285"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_banded_tiger"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_banded_tiger"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_hibiscus_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_achemon"/>
     </machine>
   </settings>
 </fdmmaterial>
