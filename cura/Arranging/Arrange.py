@@ -1,3 +1,6 @@
+from typing import Optional
+
+from UM.Decorators import deprecated
 from UM.Scene.Iterator.DepthFirstIterator import DepthFirstIterator
 from UM.Logger import Logger
 from UM.Math.Polygon import Polygon
@@ -12,23 +15,15 @@ from collections import namedtuple
 import numpy
 import copy
 
-
-##  Return object for  bestSpot
 LocationSuggestion = namedtuple("LocationSuggestion", ["x", "y", "penalty_points", "priority"])
 """Return object for  bestSpot"""
 
 
-##  The Arrange classed is used together with ShapeArray. Use it to find
-#   good locations for objects that you try to put on a build place.
-#   Different priority schemes can be defined so it alters the behavior while using
-#   the same logic.
 class Arrange:
     """
     The Arrange classed is used together with :py:class:`cura.Arranging.ShapeArray.ShapeArray`. Use it to find good locations for objects that you try to put
     on a build place. Different priority schemes can be defined so it alters the behavior while using the same logic.
-
     .. note::
-
        Make sure the scale is the same between :py:class:`cura.Arranging.ShapeArray.ShapeArray` objects and the :py:class:`cura.Arranging.Arrange.Arrange` instance.
     """
 
@@ -47,20 +42,12 @@ class Arrange:
         self._last_priority = 0
         self._is_empty = True
 
-    ##  Helper to create an Arranger instance
-    #
-    #   Either fill in scene_root and create will find all sliceable nodes by itself,
-    #   or use fixed_nodes to provide the nodes yourself.
-    #   \param scene_root   Root for finding all scene nodes
-    #   \param fixed_nodes  Scene nodes to be placed
     @classmethod
     @deprecated("Use the functions in Nest2dArrange instead", "4.8")
     def create(cls, scene_root = None, fixed_nodes = None, scale = 0.5, x = 350, y = 250, min_offset = 8) -> "Arrange":
         """Helper to create an :py:class:`cura.Arranging.Arrange.Arrange` instance
-
         Either fill in scene_root and create will find all sliceable nodes by itself, or use fixed_nodes to provide the
         nodes yourself.
-
         :param scene_root: Root for finding all scene nodes default = None
         :param fixed_nodes: Scene nodes to be placed default = None
         :param scale: default = 0.5
@@ -114,7 +101,6 @@ class Arrange:
     @deprecated("Use the functions in Nest2dArrange instead", "4.8")
     def findNodePlacement(self, node: SceneNode, offset_shape_arr: ShapeArray, hull_shape_arr: ShapeArray, step = 1) -> bool:
         """Find placement for a node (using offset shape) and place it (using hull shape)
-
         :param node: The node to be placed
         :param offset_shape_arr: shape array with offset, for placing the shape
         :param hull_shape_arr: shape array without offset, used to find location
@@ -147,8 +133,6 @@ class Arrange:
             node.setPosition(Vector(200, center_y, 100))
         return found_spot
 
-    ##  Fill priority, center is best. Lower value is better
-    #   This is a strategy for the arranger.
     def centerFirst(self):
         """Fill priority, center is best. Lower value is better. """
 
@@ -158,8 +142,6 @@ class Arrange:
         self._priority_unique_values = numpy.unique(self._priority)
         self._priority_unique_values.sort()
 
-    ##  Fill priority, back is best. Lower value is better
-    #   This is a strategy for the arranger.
     def backFirst(self):
         """Fill priority, back is best. Lower value is better """
 
@@ -170,7 +152,6 @@ class Arrange:
 
     def checkShape(self, x, y, shape_arr) -> Optional[numpy.ndarray]:
         """Return the amount of "penalty points" for polygon, which is the sum of priority
-
         :param x: x-coordinate to check shape
         :param y: y-coordinate to check shape
         :param shape_arr: the shape array object to place
@@ -202,7 +183,6 @@ class Arrange:
 
     def bestSpot(self, shape_arr, start_prio = 0, step = 1) -> LocationSuggestion:
         """Find "best" spot for ShapeArray
-
         :param shape_arr: shape array
         :param start_prio: Start with this priority value (and skip the ones before)
         :param step: Slicing value, higher = more skips = faster but less accurate
@@ -226,19 +206,20 @@ class Arrange:
                 projected_x = int((x - self._offset_x) / self._scale)
                 projected_y = int((y - self._offset_y) / self._scale)
 
-                # array to "world" coordinates
                 penalty_points = self.checkShape(projected_x, projected_y, shape_arr)
                 if penalty_points is not None:
                     return LocationSuggestion(x = projected_x, y = projected_y, penalty_points = penalty_points, priority = priority)
         return LocationSuggestion(x = None, y = None, penalty_points = None, priority = priority)  # No suitable location found :-(
 
-    ##  Place the object.
-    #   Marks the locations in self._occupied and self._priority
-    #   \param x x-coordinate
-    #   \param y y-coordinate
-    #   \param shape_arr ShapeArray object
-    #   \param update_empty updates the _is_empty, used when adding disallowed areas
     def place(self, x, y, shape_arr, update_empty = True):
+        """Place the object.
+        Marks the locations in self._occupied and self._priority
+        :param x:
+        :param y:
+        :param shape_arr:
+        :param update_empty: updates the _is_empty, used when adding disallowed areas
+        """
+
         x = int(self._scale * x)
         y = int(self._scale * y)
         offset_x = x + self._offset_x + shape_arr.offset_x
@@ -259,8 +240,7 @@ class Arrange:
 
         # Set priority to low (= high number), so it won't get picked at trying out.
         prio_slice = self._priority[min_y:max_y, min_x:max_x]
-        prio_slice[numpy.where(shape_arr.arr[
-            min_y - offset_y:max_y - offset_y, min_x - offset_x:max_x - offset_x] == 1)] = 999
+        prio_slice[new_occupied] = 999
 
     @property
     def isEmpty(self):

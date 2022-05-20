@@ -1880,17 +1880,10 @@ msgctxt "@backuplist:label"
 msgid "Profiles"
 msgstr "Perfis"
 
-<<<<<<< HEAD
-#: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:64
-msgctxt "@label"
-msgid "Firmware update failed due to a communication error."
-msgstr "A atualização de firmware falhou devido a um erro de comunicação."
-=======
 #: /home/clamboo/Desktop/Cura/plugins/CuraDrive/src/qml/components/BackupListItemDetails.qml:53
 msgctxt "@backuplist:label"
 msgid "Plugins"
 msgstr "Plug-ins"
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #: /home/clamboo/Desktop/Cura/plugins/CuraDrive/src/qml/components/BackupListFooter.qml:22
 msgctxt "@button"
@@ -6927,7 +6920,7 @@ msgstr "Verificador de Modelos"
 
 #~ msgctxt "@info:status"
 #~ msgid "Nothing to slice because none of the models fit the build volume or are assigned to a disabled extruder. Please scale or rotate models to fit, or enable an extruder."
-#~ msgstr "Sem conteúdo para seccionar porque nenhum dos modelos está dentro do volume de construção ou porque os mesmos estão atribuídos a um extrusor desativado. Dimensione ou rode os modelos para os adaptar ou ative o extrusor."
+#~ msgstr "Sem conteúdo para segmentar porque nenhum dos modelos está dentro do volume de construção ou porque os mesmos estão atribuídos a um extrusor desativado. Dimensione ou rode os modelos para os adaptar ou ative o extrusor."
 
 #~ msgctxt "@info:backup_status"
 #~ msgid "There was an error listing your backups."

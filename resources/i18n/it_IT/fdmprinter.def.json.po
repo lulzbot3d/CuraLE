@@ -4919,8 +4919,6 @@ msgid "After printing the prime tower with one nozzle, wipe the oozed material f
 msgstr "Dopo la stampa della torre di innesco con un ugello, pulisce il materiale fuoriuscito dall’altro ugello sulla torre di innesco."
 
 #: fdmprinter.def.json
-<<<<<<< HEAD
-=======
 msgctxt "prime_tower_brim_enable label"
 msgid "Prime Tower Brim"
 msgstr "Brim torre di innesco"
@@ -4931,7 +4929,6 @@ msgid "Prime-towers might need the extra adhesion afforded by a brim even if the
 msgstr "Le torri di innesco potrebbero richiedere un'adesione supplementare fornita da un bordo (brim), anche se il modello non lo prevede. Attualmente non può essere utilizzato con il tipo di adesione 'Raft'."
 
 #: fdmprinter.def.json
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 msgctxt "ooze_shield_enabled label"
 msgid "Enable Ooze Shield"
 msgstr "Abilitazione del riparo materiale fuoriuscito"

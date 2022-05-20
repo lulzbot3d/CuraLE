@@ -1179,17 +1179,10 @@ msgctxt "@info:tooltip"
 msgid "Print via USB"
 msgstr "Tulosta USB:n kautta"
 
-<<<<<<< HEAD
-#: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:64
-msgctxt "@label"
-msgid "Firmware update failed due to a communication error."
-msgstr "Laiteohjelmiston päivitys epäonnistui tietoliikennevirheen takia."
-=======
 #: /home/clamboo/Desktop/Cura/plugins/USBPrinting/USBPrinterOutputDevice.py:80
 msgctxt "@info:status"
 msgid "Connected via USB"
 msgstr "Yhdistetty USB:n kautta"
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #: /home/clamboo/Desktop/Cura/plugins/USBPrinting/USBPrinterOutputDevice.py:110
 msgctxt "@label"

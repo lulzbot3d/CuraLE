@@ -13,11 +13,7 @@ def getMetaData():
         "tool": {
             "name": i18n_catalog.i18nc("@label", "Per Model Settings"),
             "description": i18n_catalog.i18nc("@info:tooltip", "Configure Per Model Settings"),
-<<<<<<< HEAD
             "icon": "setting_per_object",
-=======
-            "icon": "MeshType",
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
             "tool_panel": "PerObjectSettingsPanel.qml",
             "weight": 3
         },

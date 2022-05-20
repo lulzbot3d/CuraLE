@@ -6686,16 +6686,9 @@ msgstr "模型检查器"
 #~ "您即将从 Cura 中删除所有打印机。此操作无法撤消。\n"
 #~ "是否确实要继续？"
 
-<<<<<<< HEAD
-#: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:64
-msgctxt "@label"
-msgid "Firmware update failed due to a communication error."
-msgstr "由于通信错误，导致固件升级失败。"
-=======
 #~ msgctxt "@action:ComboBox option"
 #~ msgid "Update"
 #~ msgstr "更新"
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #~ msgctxt "@action:ComboBox option"
 #~ msgid "Create new"

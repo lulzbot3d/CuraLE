@@ -4917,8 +4917,6 @@ msgid "After printing the prime tower with one nozzle, wipe the oozed material f
 msgstr "Veeg na het printen van de primepijler met één nozzle het doorgevoerde materiaal van de andere nozzle af aan de primepijler."
 
 #: fdmprinter.def.json
-<<<<<<< HEAD
-=======
 msgctxt "prime_tower_brim_enable label"
 msgid "Prime Tower Brim"
 msgstr "Brim primepijler"
@@ -4929,7 +4927,6 @@ msgid "Prime-towers might need the extra adhesion afforded by a brim even if the
 msgstr "Primepijlers hebben mogelijk de extra hechting van een brim nodig, ook als het model dit niet nodig heeft. Kan momenteel niet worden gebruikt met het hechtingstype 'Raft'."
 
 #: fdmprinter.def.json
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 msgctxt "ooze_shield_enabled label"
 msgid "Enable Ooze Shield"
 msgstr "Uitloopscherm Inschakelen"

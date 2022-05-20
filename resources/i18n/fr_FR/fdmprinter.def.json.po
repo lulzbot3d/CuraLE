@@ -4885,11 +4885,7 @@ msgstr "Volume minimum de la tour d'amorçage"
 #: fdmprinter.def.json
 msgctxt "prime_tower_min_volume description"
 msgid "The minimum volume for each layer of the prime tower in order to purge enough material."
-<<<<<<< HEAD
-msgstr "Le volume minimum pour chaque touche de la tour primaire afin de purger suffisamment de matériau."
-=======
 msgstr "Le volume minimum pour chaque touche de la tour d'amorçage afin de purger suffisamment de matériau."
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
@@ -4919,9 +4915,6 @@ msgstr "Essuyer le bec d'impression inactif sur la tour d'amorçage"
 #: fdmprinter.def.json
 msgctxt "prime_tower_wipe_enabled description"
 msgid "After printing the prime tower with one nozzle, wipe the oozed material from the other nozzle off on the prime tower."
-<<<<<<< HEAD
-msgstr "Après l'impression de la tour primaire à l'aide d'une buse, nettoyer le matériau qui suinte de l'autre buse sur la tour primaire."
-=======
 msgstr "Après l'impression de la tour d'amorçage à l'aide d'une buse, nettoyer le matériau qui suinte de l'autre buse sur la tour d'amorçage."
 
 #: fdmprinter.def.json
@@ -4933,7 +4926,6 @@ msgstr "Bordure de la tour d'amorçage"
 msgctxt "prime_tower_brim_enable description"
 msgid "Prime-towers might need the extra adhesion afforded by a brim even if the model doesn't. Presently can't be used with the 'Raft' adhesion-type."
 msgstr "Les tours d'amorçage peuvent avoir besoin de l'adhérence supplémentaire d'une bordure, même si le modèle n'en a pas besoin. Ne peut actuellement pas être utilisé avec le type d'adhérence « Raft » (radeau)."
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #: fdmprinter.def.json
 msgctxt "ooze_shield_enabled label"

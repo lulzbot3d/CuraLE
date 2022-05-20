@@ -30,7 +30,6 @@ def findNodePlacement(nodes_to_arrange: List["SceneNode"], build_volume: "BuildV
     :param fixed_nodes: List of nods that should not be moved, but should be used when deciding where the others nodes
                         are placed.
     :param factor: The library that we use is int based. This factor defines how accurate we want it to be.
-
     :return: tuple (found_solution_for_all, node_items)
         WHERE
         found_solution_for_all: Whether the algorithm found a place on the buildplate for all the objects
@@ -40,7 +39,7 @@ def findNodePlacement(nodes_to_arrange: List["SceneNode"], build_volume: "BuildV
 
     machine_width = build_volume.getWidth()
     machine_depth = build_volume.getDepth()
-    build_plate_bounding_box = Box(int(machine_width * factor), int(machine_depth * factor))
+    build_plate_bounding_box = Box(machine_width * factor, machine_depth * factor)
 
     if fixed_nodes is None:
         fixed_nodes = []
@@ -153,7 +152,6 @@ def arrange(nodes_to_arrange: List["SceneNode"],
                         are placed.
     :param factor: The library that we use is int based. This factor defines how accuracte we want it to be.
     :param add_new_nodes_in_scene: Whether to create new scene nodes before applying the transformations and rotations
-
     :return: found_solution_for_all: Whether the algorithm found a place on the buildplate for all the objects
     """
 

@@ -6529,16 +6529,9 @@ msgstr "Verificador de Modelo"
 #~ "Você está para remover todas as impressoras do Cura. Esta ação não pode ser defeita. \n"
 #~ "Tem certeza que quer continuar?"
 
-<<<<<<< HEAD
-#: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:64
-msgctxt "@label"
-msgid "Firmware update failed due to a communication error."
-msgstr "A atualização de firmware falhou devido a um erro de comunicação."
-=======
 #~ msgctxt "@action:ComboBox option"
 #~ msgid "Update"
 #~ msgstr "Atualizar"
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #~ msgctxt "@action:ComboBox option"
 #~ msgid "Create new"

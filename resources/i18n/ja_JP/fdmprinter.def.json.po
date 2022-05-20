@@ -5002,11 +5002,7 @@ msgstr "プライムタワー最小容積"
 #: fdmprinter.def.json
 msgctxt "prime_tower_min_volume description"
 msgid "The minimum volume for each layer of the prime tower in order to purge enough material."
-<<<<<<< HEAD
-msgstr "プライムタワーの各層の最小容積"
-=======
 msgstr "プライムタワーの各層の最小容積。"
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
@@ -5039,8 +5035,6 @@ msgid "After printing the prime tower with one nozzle, wipe the oozed material f
 msgstr "1本のノズルでプライムタワーを印刷した後、もう片方のノズルから滲み出した材料をプライムタワーが拭き取ります。"
 
 #: fdmprinter.def.json
-<<<<<<< HEAD
-=======
 msgctxt "prime_tower_brim_enable label"
 msgid "Prime Tower Brim"
 msgstr "プライムタワーブリム"
@@ -5051,7 +5045,6 @@ msgid "Prime-towers might need the extra adhesion afforded by a brim even if the
 msgstr "モデルがない場合でも、プライムタワーには、ブリムによって与えられる追加の付着が必要なことがあります。現在は「ラフト」密着型では使用できません。"
 
 #: fdmprinter.def.json
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 msgctxt "ooze_shield_enabled label"
 msgid "Enable Ooze Shield"
 msgstr "Ooze Shieldを有効にする"

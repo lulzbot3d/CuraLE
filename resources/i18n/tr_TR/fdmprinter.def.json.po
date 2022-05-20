@@ -4918,8 +4918,6 @@ msgid "After printing the prime tower with one nozzle, wipe the oozed material f
 msgstr "Bir nozül ile ilk direği yazdırdıktan sonra, diğer nozülden ilk direğe sızdırılan malzemeyi silin."
 
 #: fdmprinter.def.json
-<<<<<<< HEAD
-=======
 msgctxt "prime_tower_brim_enable label"
 msgid "Prime Tower Brim"
 msgstr "Astarlama Direği Kenarı"
@@ -4930,7 +4928,6 @@ msgid "Prime-towers might need the extra adhesion afforded by a brim even if the
 msgstr "Model ihtiyaç duymasa da astarlama direkleri bir kenarın sağladığı ekstra yapışkanlığa ihtiyaç duyabilir. Şu anda \"radye\" yapışma tipi ile birlikte kullanılamamaktadır."
 
 #: fdmprinter.def.json
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 msgctxt "ooze_shield_enabled label"
 msgid "Enable Ooze Shield"
 msgstr "Sızdırma Kalkanını Etkinleştir"

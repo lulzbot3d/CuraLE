@@ -4915,8 +4915,6 @@ msgid "After printing the prime tower with one nozzle, wipe the oozed material f
 msgstr "在用一个喷嘴打印装填塔后，从装填塔上的另一个喷嘴擦去渗出的材料。"
 
 #: fdmprinter.def.json
-<<<<<<< HEAD
-=======
 msgctxt "prime_tower_brim_enable label"
 msgid "Prime Tower Brim"
 msgstr "装填塔 Brim"
@@ -4927,7 +4925,6 @@ msgid "Prime-towers might need the extra adhesion afforded by a brim even if the
 msgstr "装填塔可能需要 Brim 提供额外附着力，无论模型是否需要。目前不可与 'Raft' 附着类型配合使用。"
 
 #: fdmprinter.def.json
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 msgctxt "ooze_shield_enabled label"
 msgid "Enable Ooze Shield"
 msgstr "启用渗出罩"

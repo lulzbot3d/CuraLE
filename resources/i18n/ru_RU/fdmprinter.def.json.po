@@ -4918,8 +4918,6 @@ msgid "After printing the prime tower with one nozzle, wipe the oozed material f
 msgstr "После печати черновой башни одним соплом, вытирает вытекший материал из другого сопла об эту башню."
 
 #: fdmprinter.def.json
-<<<<<<< HEAD
-=======
 msgctxt "prime_tower_brim_enable label"
 msgid "Prime Tower Brim"
 msgstr "Кайма черновой башни"
@@ -4930,7 +4928,6 @@ msgid "Prime-towers might need the extra adhesion afforded by a brim even if the
 msgstr "Для черновых башен может потребоваться дополнительная адгезия с помощью каймы, даже если для модели это не требуется. В данный момент не может использоваться с типом адгезии с подложкой."
 
 #: fdmprinter.def.json
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 msgctxt "ooze_shield_enabled label"
 msgid "Enable Ooze Shield"
 msgstr "Печатать защиту от капель"

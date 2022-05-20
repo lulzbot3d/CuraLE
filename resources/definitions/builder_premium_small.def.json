@@ -50,11 +50,6 @@
         "prime_tower_position_y": { "value": "178" },
         "prime_tower_wipe_enabled": { "default_value": false },
         "prime_tower_min_volume": { "default_value": 50 },
-<<<<<<< HEAD
-		
-=======
-
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
         "prime_blob_enable": { "enabled": true },
 
         "acceleration_enabled": { "value": "True" },

@@ -2166,7 +2166,7 @@ msgstr "Aggiornamento firmware non riuscito a causa di un errore sconosciuto."
 
 #: /home/clamboo/Desktop/Cura/plugins/FirmwareUpdater/FirmwareUpdaterMachineAction.qml:149
 msgctxt "@label"
-msgid "Firmware update failed due to a communication error."
+msgid "Firmware update failed due to an communication error."
 msgstr "Aggiornamento firmware non riuscito a causa di un errore di comunicazione."
 
 #: /home/clamboo/Desktop/Cura/plugins/FirmwareUpdater/FirmwareUpdaterMachineAction.qml:151

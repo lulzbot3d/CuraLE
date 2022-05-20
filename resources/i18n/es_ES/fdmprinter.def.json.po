@@ -4918,8 +4918,6 @@ msgid "After printing the prime tower with one nozzle, wipe the oozed material f
 msgstr "Tras imprimir la torre auxiliar con una tobera, limpie el material rezumado de la otra tobera de la torre auxiliar."
 
 #: fdmprinter.def.json
-<<<<<<< HEAD
-=======
 msgctxt "prime_tower_brim_enable label"
 msgid "Prime Tower Brim"
 msgstr "Borde de la torre auxiliar"
@@ -4930,7 +4928,6 @@ msgid "Prime-towers might need the extra adhesion afforded by a brim even if the
 msgstr "Puede que las torres auxiliares necesiten la adherencia adicional que proporciona un borde, aunque no sea requisito del modelo. Actualmente, no se puede usar con el tipo de adherencia «balsa»."
 
 #: fdmprinter.def.json
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 msgctxt "ooze_shield_enabled label"
 msgid "Enable Ooze Shield"
 msgstr "Activar placa de rezumado"

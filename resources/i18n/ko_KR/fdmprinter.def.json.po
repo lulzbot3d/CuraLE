@@ -3932,11 +3932,6 @@ msgid "Support Join Distance"
 msgstr "서포트 Join 거리"
 
 #: fdmprinter.def.json
-<<<<<<< HEAD
-msgctxt "prime_tower_position_x label"
-msgid "Prime Tower X Position"
-msgstr "프라임 타워 X 위치"
-=======
 msgctxt "support_join_distance description"
 msgid "The maximum distance between support structures in the X/Y directions. When separate structures are closer together than this value, the structures merge into one."
 msgstr "X/Y 방향으로 지지대 구조물 사이의 최대 거리입니다. 별도의 구조가 이 값보다 가깝게 있으면 구조가 하나로 합쳐집니다."
@@ -3950,7 +3945,6 @@ msgstr "수평 확장 서포트"
 msgctxt "support_offset description"
 msgid "Amount of offset applied to all support polygons in each layer. Positive values can smooth out the support areas and result in more sturdy support."
 msgstr "각 레이어의 모든 서포트 다각형에 적용된 오프셋의 양입니다. 양수 값을 사용하면 서포트 영역이 원활 해지며 보다 견고한 서포트가 됩니다."
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #: fdmprinter.def.json
 msgctxt "support_infill_sparse_thickness label"
@@ -3988,11 +3982,6 @@ msgid "Minimum Support Area"
 msgstr "최소 서포트 지역"
 
 #: fdmprinter.def.json
-<<<<<<< HEAD
-msgctxt "ooze_shield_enabled label"
-msgid "Enable Ooze Shield"
-msgstr "Ooze Shield 사용"
-=======
 msgctxt "minimum_support_area description"
 msgid "Minimum area size for support polygons. Polygons which have an area smaller than this value will not be generated."
 msgstr "서포트 영역에 대한 최소 지역 크기. 이 값보다 작은 지역을 갖는 영역은 생성되지 않습니다."
@@ -4016,7 +4005,6 @@ msgstr "서포트 지붕 사용"
 msgctxt "support_roof_enable description"
 msgid "Generate a dense slab of material between the top of support and the model. This will create a skin between the model and support."
 msgstr "서포트 상단과 모델 사이에 조밀 한 슬래브를 생성하십시오. 그러면 모델과 서포트 사이에 스킨이 만들어집니다."
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #: fdmprinter.def.json
 msgctxt "support_bottom_enable label"

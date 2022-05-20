@@ -1,12 +1,6 @@
 Cura
 ====
-<<<<<<< HEAD
-Lulzbot-Cura is a re-work of Cura 3.2 (https://github.com/Ultimaker/Cura/tree/3.2) with modified tooling code.
-=======
-Ultimaker Cura is a state-of-the-art slicer application to prepare your 3D models for printing with a 3D printer. With hundreds of settings and hundreds of community-managed print profiles, Ultimaker Cura is sure to lead your next project to a success.
-
-![Screenshot](cura-logo.PNG)
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
+Lulzbot-Cura is a re-work of Cura 4.13 (https://github.com/Ultimaker/Cura) with modified tooling code.
 
 Logging Issues
 ------------
@@ -24,17 +18,7 @@ For additional support, you could also ask in the [#cura channel](https://web.li
 
 Dependencies
 ------------
-<<<<<<< HEAD
 
-* [Uranium](https://github.com/Ultimaker/Uranium)
-  Cura is built on top of the Uranium framework.
-* [CuraEngine](https://github.com/Ultimaker/CuraEngine)
-  This will be needed at runtime to perform the actual slicing.
-* [PySerial](https://github.com/pyserial/pyserial)
-  Only required for USB printing support.
-* [python-zeroconf](https://github.com/jstasiak/python-zeroconf)
-  Only required to detect mDNS-enabled printers
-=======
 * [Uranium](https://github.com/Ultimaker/Uranium) Cura is built on top of the Uranium framework.
 * [CuraEngine](https://github.com/Ultimaker/CuraEngine) This will be needed at runtime to perform the actual slicing.
 * [fdm_materials](https://github.com/Ultimaker/fdm_materials) Required to load a printer that has swappable material profiles.
@@ -44,17 +28,13 @@ Dependencies
 For a list of required Python packages, with their recommended version, see `requirements.txt`.
 
 This list is not exhaustive at the moment, please check the links in the next section for more details.
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
+
 
 Build scripts
 -------------
-Please check out [cura-build](https://github.com/Ultimaker/cura-build) for detailed building instructions.
 
-<<<<<<< HEAD
-=======
 If you want to build the entire environment from scratch before building Cura as well, [cura-build-environment](https://github.com/Ultimaker/cura-build) might be a starting point before cura-build. (Again, see cura-build for more details.)
 
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 Running from Source
 -------------
 Please check our [Wiki page](https://github.com/Ultimaker/Cura/wiki/Running-Cura-from-Source) for details about running Cura from source.

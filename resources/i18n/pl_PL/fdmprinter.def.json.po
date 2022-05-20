@@ -5398,11 +5398,6 @@ msgid "Infill Travel Optimization"
 msgstr "Optymalizacja Ruchów Jałowych Wypełnienia"
 
 #: fdmprinter.def.json
-<<<<<<< HEAD
-msgctxt "prime_tower_position_x label"
-msgid "Prime Tower X Position"
-msgstr "Pozycja Wieży Czyszcz. X"
-=======
 msgctxt "infill_enable_travel_optimization description"
 msgid "When enabled, the order in which the infill lines are printed is optimized to reduce the distance travelled. The reduction in travel time achieved very much depends on the model being sliced, infill pattern, density, etc. Note that, for some models that have many small areas of infill, the time to slice the model may be greatly increased."
 msgstr "Kiedy włączone, kolejność drukowania linii wypełnienia jest optymalizowana tak, aby zredukować odległości ruchów jałowych. Osiągnięta redukcja czasu ruchów jałowych zależy od ciętego modelu, wzory wypełnienia, gęstości itd. Zauważ, że dla niektórych modeli, które mają małe obszary wypełnienia, czas ciecia modelu może się bardzo wydłużyć."
@@ -5416,7 +5411,6 @@ msgstr "Auto Temperatura"
 msgctxt "material_flow_dependent_temperature description"
 msgid "Change the temperature for each layer automatically with the average flow speed of that layer."
 msgstr "Zmień temperaturę każdej warstwy automatycznie przy średniej prędkości przepływu tej warstwy."
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #: fdmprinter.def.json
 msgctxt "material_flow_temp_graph label"
@@ -5454,11 +5448,6 @@ msgid "Support Chunk Size"
 msgstr "Wielkość Kawałka Podpory"
 
 #: fdmprinter.def.json
-<<<<<<< HEAD
-msgctxt "ooze_shield_enabled label"
-msgid "Enable Ooze Shield"
-msgstr "Włącz Osłonę Wycierającą"
-=======
 msgctxt "support_skip_zag_per_mm description"
 msgid "Leave out a connection between support lines once every N millimeter to make the support structure easier to break away."
 msgstr "Pomiń połączenie pomiędzy liniami podpory co N milimetrów, aby struktura podpory była łatwiejsza do odłamania."
@@ -5482,7 +5471,6 @@ msgstr "Włącz Osłonę Przeciwwiatrową"
 msgctxt "draft_shield_enabled description"
 msgid "This will create a wall around the model, which traps (hot) air and shields against exterior airflow. Especially useful for materials which warp easily."
 msgstr "Powoduje to powstanie osłony wokół modelu, która wyłapuje (gorące) powietrze i osłania przed ruchami powietrza. Szczególnie przydatna w przypadku materiałów, które łatwo się rozwarstwiają."
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #: fdmprinter.def.json
 msgctxt "draft_shield_dist label"

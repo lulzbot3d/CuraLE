@@ -4885,15 +4885,8 @@ msgstr "換料塔最小體積"
 
 #: fdmprinter.def.json
 msgctxt "prime_tower_min_volume description"
-<<<<<<< HEAD
-msgid ""
-"The minimum volume for each layer of the prime tower in order to purge "
-"enough material."
-msgstr "為了清除足夠的耗材，換料塔每層的最小體積。"
-=======
 msgid "The minimum volume for each layer of the prime tower in order to purge enough material."
 msgstr "為了清除足夠的線材，換料塔每層的最小體積。"
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #: fdmprinter.def.json
 msgctxt "prime_tower_position_x label"
@@ -4922,12 +4915,6 @@ msgstr "在換料塔上擦拭非作用中的噴頭"
 
 #: fdmprinter.def.json
 msgctxt "prime_tower_wipe_enabled description"
-<<<<<<< HEAD
-msgid ""
-"After printing the prime tower with one nozzle, wipe the oozed material from "
-"the other nozzle off on the prime tower."
-msgstr "在一個噴頭列印換料塔後，在換料塔上擦拭另一個噴頭滲出的耗材。"
-=======
 msgid "After printing the prime tower with one nozzle, wipe the oozed material from the other nozzle off on the prime tower."
 msgstr "在一個噴頭列印換料塔後，在換料塔上擦拭另一個噴頭滲出的線材。"
 
@@ -4940,7 +4927,6 @@ msgstr "換料塔邊緣"
 msgctxt "prime_tower_brim_enable description"
 msgid "Prime-towers might need the extra adhesion afforded by a brim even if the model doesn't. Presently can't be used with the 'Raft' adhesion-type."
 msgstr "即使模型沒有開啟邊緣功能，裝填塔也列印邊緣以提供額外的附著力。目前無法與「木筏」的平台附著類型同時使用。"
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #: fdmprinter.def.json
 msgctxt "ooze_shield_enabled label"

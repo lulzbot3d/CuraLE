@@ -5045,8 +5045,6 @@ msgctxt "prime_tower_wipe_enabled description"
 msgid "After printing the prime tower with one nozzle, wipe the oozed material from the other nozzle off on the prime tower."
 msgstr "Após a impressão da torre de preparação com um nozzle, limpe o material que vazou do nozzle para a torre de preparação."
 
-<<<<<<< HEAD
-=======
 #: fdmprinter.def.json
 msgctxt "prime_tower_brim_enable label"
 msgid "Prime Tower Brim"
@@ -5057,7 +5055,6 @@ msgctxt "prime_tower_brim_enable description"
 msgid "Prime-towers might need the extra adhesion afforded by a brim even if the model doesn't. Presently can't be used with the 'Raft' adhesion-type."
 msgstr "As torres de preparação poderão necessitar de uma aderência adicional concedida por uma aba, ainda que o modelo não o necessite. Atualmente, não é possível utilizá-la com o tipo de aderência \"Raft\"."
 
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 # rever!
 #: fdmprinter.def.json
 msgctxt "ooze_shield_enabled label"

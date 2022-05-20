@@ -434,12 +434,6 @@ msgctxt "@action:button"
 msgid "Show detailed crash report"
 msgstr "Показать подробный отчет о сбое"
 
-<<<<<<< HEAD
-#: /home/ruben/Projects/Cura/plugins/UM3NetworkPrinting/NetworkPrinterOutputDevice.py:873
-msgctxt "@info:status"
-msgid "Sending data to printer"
-msgstr "Отправка данных на принтер"
-=======
 #: /home/clamboo/Desktop/Cura/cura/CrashHandler.py:129
 msgctxt "@action:button"
 msgid "Show configuration folder"
@@ -449,7 +443,6 @@ msgstr "Показать конфигурационный каталог"
 msgctxt "@action:button"
 msgid "Backup and Reset Configuration"
 msgstr "Резервное копирование и сброс конфигурации"
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #: /home/clamboo/Desktop/Cura/cura/CrashHandler.py:171
 msgctxt "@title:window"
@@ -525,24 +518,9 @@ msgstr "<li>Версия OpenGL: {version}</li>"
 
 #: /home/clamboo/Desktop/Cura/cura/CrashHandler.py:268
 #, python-brace-format
-<<<<<<< HEAD
-msgid "{printer_name} is reserved to print '{job_name}'. Please change the printer's configuration to match the job, for it to start printing."
-msgstr "{printer_name} назначен для печати '{job_name}'. Пожалуйста, измените конфигурацию принтера, чтобы она соответствовала заданию."
-
-#: /home/ruben/Projects/Cura/plugins/CuraPrintClusterUpload/NetworkClusterPrinterOutputDevice.py:196
-msgctxt "@info:status"
-msgid "Sending new jobs (temporarily) blocked, still sending the previous print job."
-msgstr "Отправка новых заданий (временно) заблокирована, идёт отправка предыдущего задания."
-
-#: /home/ruben/Projects/Cura/plugins/CuraPrintClusterUpload/NetworkClusterPrinterOutputDevice.py:212
-msgctxt "@info:status"
-msgid "Unable to send new print job: this 3D printer is not (yet) set up to host a group of connected Ultimaker 3 printers."
-msgstr "Невозможно отправить новое задание: данный 3D принтер (ещё) не настроен на управление группой подключенных принтеров Ultimaker 3."
-=======
 msgctxt "@label OpenGL vendor"
 msgid "<li>OpenGL Vendor: {vendor}</li>"
 msgstr "<li>Поставщик OpenGL: {vendor}</li>"
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #: /home/clamboo/Desktop/Cura/cura/CrashHandler.py:269
 #, python-brace-format
@@ -565,24 +543,10 @@ msgctxt "@action:button"
 msgid "Send report"
 msgstr "Отправить отчёт"
 
-<<<<<<< HEAD
-#: /home/ruben/Projects/Cura/plugins/XmlMaterialProfile/__init__.py:13
-msgctxt "@label"
-msgid "Material Profiles"
-msgstr "Профили материалов"
-
-#: /home/ruben/Projects/Cura/plugins/UM3NetworkPrinting/NetworkClusterPrinterOutputDevice.py:489
-#: /home/ruben/Projects/Cura/plugins/UM3NetworkPrinting/DiscoverUM3Action.qml:239
-#: /home/ruben/Projects/Cura/plugins/UM3NetworkPrinting/PrinterInfoBlock.qml:47
-msgctxt "@label"
-msgid "Unknown"
-msgstr "Неизвестный"
-=======
 #: /home/clamboo/Desktop/Cura/cura/OAuth2/AuthorizationService.py:216
 msgctxt "@info"
 msgid "Unable to start a new sign in process. Check if another sign in attempt is still active."
 msgstr "Невозможно начать новый вход в систему. Проверьте, возможно другой сеанс еще не завершен."
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #: /home/clamboo/Desktop/Cura/cura/OAuth2/AuthorizationService.py:277
 msgctxt "@info"
@@ -6564,16 +6528,9 @@ msgstr "Средство проверки моделей"
 #~ msgid "<ul>{}</ul>To establish a connection, please visit the <a href='https://mycloud.ultimaker.com/'>Ultimaker Digital Factory</a>."
 #~ msgstr "<ul>{}</ul>Чтобы установить подключение, перейдите на сайт <a href='https://mycloud.ultimaker.com/'>Ultimaker Digital Factory</a>."
 
-<<<<<<< HEAD
-#: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:64
-msgctxt "@label"
-msgid "Firmware update failed due to a communication error."
-msgstr "Обновление прошивки не удалось из-за ошибки связи."
-=======
 #~ msgctxt "@label ({} is printer name)"
 #~ msgid "{} will be removed until the next account sync. <br> To remove {} permanently, visit <a href='https://mycloud.ultimaker.com/'>Ultimaker Digital Factory</a>. <br><br>Are you sure you want to remove {} temporarily?"
 #~ msgstr "{} будет удален до следующей синхронизации учетной записи. <br> Чтобы удалить {} без возможности восстановления, перейдите на сайт <a href='https://mycloud.ultimaker.com/'>Ultimaker Digital Factory</a>. <br><br>Действительно удалить {} временно?"
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #~ msgctxt "@label"
 #~ msgid ""
@@ -7848,18 +7805,9 @@ msgstr "Обновление прошивки не удалось из-за ош
 #~ msgid "&Settings"
 #~ msgstr "Параметры"
 
-<<<<<<< HEAD
-#: /home/ruben/Projects/Cura/resources/qml/AboutDialog.qml:69
-msgctxt "@info:credit"
-msgid ""
-"Cura LulzBot Edition is maintained by Aleph Objects, Inc. for use with LulzBot 3D printers. It is derived from Cura, which is developed by Ultimaker B.V.\n"
-"Cura proudly uses the following open source projects:"
-msgstr "Cura разработана компанией Ultimaker B.V. совместно с сообществом.\nCura использует следующие проекты с открытым исходным кодом:"
-=======
 #~ msgctxt "@title:menu menubar:toplevel"
 #~ msgid "&Toolbox"
 #~ msgstr "&Панель инструментов"
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #~ msgctxt "@action:button"
 #~ msgid "Open File"
@@ -9395,6 +9343,10 @@ msgstr "Cura разработана компанией Ultimaker B.V. совме
 #~ msgctxt "@info"
 #~ msgid "Cura collects anonymised slicing statistics. You can disable this in preferences"
 #~ msgstr "Cura собирает анонимную статистику о нарезке модели. Вы можете отключить это в настройках"
+
+#~ msgctxt "@label"
+#~ msgid "Material Profiles"
+#~ msgstr "Профили материалов"
 
 #~ msgctxt "@info:whatsthis"
 #~ msgid "Provides capabilities to read and write XML-based material profiles."

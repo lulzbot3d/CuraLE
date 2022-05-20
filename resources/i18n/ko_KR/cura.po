@@ -2066,7 +2066,7 @@ msgstr "알 수 없는 오류로 인해 펌웨어 업데이트에 실패했습�
 
 #: /home/clamboo/Desktop/Cura/plugins/FirmwareUpdater/FirmwareUpdaterMachineAction.qml:149
 msgctxt "@label"
-msgid "Firmware update failed due to a communication error."
+msgid "Firmware update failed due to an communication error."
 msgstr "통신 오류로 인해 펌웨어 업데이트에 실패했습니다."
 
 #: /home/clamboo/Desktop/Cura/plugins/FirmwareUpdater/FirmwareUpdaterMachineAction.qml:151

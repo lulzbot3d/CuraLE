@@ -6318,10 +6318,6 @@ msgid ""
 msgstr ""
 
 #: fdmprinter.def.json
-<<<<<<< HEAD
-msgctxt "prime_tower_position_x label"
-msgid "Prime Tower X Position"
-=======
 msgctxt "minimum_polygon_circumference label"
 msgid "Minimum Polygon Circumference"
 msgstr ""
@@ -6338,7 +6334,6 @@ msgstr ""
 #: fdmprinter.def.json
 msgctxt "support_skip_some_zags label"
 msgid "Break Up Support In Chunks"
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 msgstr ""
 
 #: fdmprinter.def.json
@@ -6385,10 +6380,6 @@ msgid ""
 msgstr ""
 
 #: fdmprinter.def.json
-<<<<<<< HEAD
-msgctxt "ooze_shield_enabled label"
-msgid "Enable Ooze Shield"
-=======
 msgctxt "draft_shield_dist label"
 msgid "Draft Shield X/Y Distance"
 msgstr ""
@@ -6413,7 +6404,6 @@ msgstr ""
 #: fdmprinter.def.json
 msgctxt "draft_shield_height_limitation option full"
 msgid "Full"
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 msgstr ""
 
 #: fdmprinter.def.json

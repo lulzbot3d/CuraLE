@@ -6476,16 +6476,9 @@ msgstr "模器檢查器"
 #~ msgid "Could not find a quality type {0} for the current configuration."
 #~ msgstr "無法為目前設定找到品質類型 {0}。"
 
-<<<<<<< HEAD
-#: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:64
-msgctxt "@label"
-msgid "Firmware update failed due to a communication error."
-msgstr "由於通訊錯誤，導致韌體更新失敗。"
-=======
 #~ msgctxt "info:status"
 #~ msgid "Adding printer {} ({}) from your account"
 #~ msgstr "從你的帳號新增印表機 {} （{}）"
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #~ msgctxt "info:hidden list items"
 #~ msgid "<li>... and {} others</li>"
@@ -9094,11 +9087,3 @@ msgstr "由於通訊錯誤，導致韌體更新失敗。"
 #~ msgctxt "name"
 #~ msgid "X3G Writer"
 #~ msgstr "X3G 寫入器"
-<<<<<<< HEAD
-
-#Added manually to fix a string that was changed after string freeze.
-msgctxt "@item:inlistbox"
-msgid "Layer view"
-msgstr "分層檢視"
-=======
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336

@@ -6528,16 +6528,9 @@ msgstr "Modell-Prüfer"
 #~ "Es werden gleich alle Drucker aus Cura entfernt. Dieser Vorgang kann nicht rückgängig gemacht werden. \n"
 #~ "Möchten Sie wirklich fortfahren?"
 
-<<<<<<< HEAD
-#: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:64
-msgctxt "@label"
-msgid "Firmware update failed due to a communication error."
-msgstr "Die Firmware-Aktualisierung ist aufgrund eines Kommunikationsfehlers fehlgeschlagen."
-=======
 #~ msgctxt "@action:ComboBox option"
 #~ msgid "Update"
 #~ msgstr "Aktualisierung"
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #~ msgctxt "@action:ComboBox option"
 #~ msgid "Create new"

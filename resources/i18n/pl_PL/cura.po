@@ -6466,17 +6466,10 @@ msgctxt "name"
 msgid "Ultimaker Network Connection"
 msgstr "Połączenie sieciowe Ultimaker"
 
-<<<<<<< HEAD
-#: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:64
-msgctxt "@label"
-msgid "Firmware update failed due to a communication error."
-msgstr "Aktualizacja oprogramowania nie powiodła się z powodu błędu komunikacji."
-=======
 #: TrimeshReader/plugin.json
 msgctxt "description"
 msgid "Provides support for reading model files."
 msgstr "Zapewnia wsparcie dla czytania plików modeli."
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #: TrimeshReader/plugin.json
 msgctxt "name"

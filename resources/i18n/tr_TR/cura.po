@@ -6506,16 +6506,9 @@ msgstr "Model Kontrol Edici"
 #~ msgid "Printers added from Digital Factory:<ul>{}</ul>"
 #~ msgstr "Digital Factory'den eklenen yazıcılar:<ul>{}</ul>"
 
-<<<<<<< HEAD
-#: /home/ruben/Projects/Cura/plugins/USBPrinting/FirmwareUpdateWindow.qml:64
-msgctxt "@label"
-msgid "Firmware update failed due to a communication error."
-msgstr "Bir iletişim hatası nedeniyle aygıt yazılımı güncellemesi başarısız oldu."
-=======
 #~ msgctxt "info:status"
 #~ msgid "<ul>{}</ul>To establish a connection, please visit the <a href='https://mycloud.ultimaker.com/'>Ultimaker Digital Factory</a>."
 #~ msgstr "<ul>{}</ul>Bağlantı kurmak için lütfen <a href='https://mycloud.ultimaker.com/'>Ultimaker Digital Factory</a> bölümünü ziyaret edin."
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #~ msgctxt "@label ({} is printer name)"
 #~ msgid "{} will be removed until the next account sync. <br> To remove {} permanently, visit <a href='https://mycloud.ultimaker.com/'>Ultimaker Digital Factory</a>. <br><br>Are you sure you want to remove {} temporarily?"

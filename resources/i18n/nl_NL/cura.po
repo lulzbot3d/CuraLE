@@ -2166,7 +2166,7 @@ msgstr "Firmware-update mislukt door een onbekende fout."
 
 #: /home/clamboo/Desktop/Cura/plugins/FirmwareUpdater/FirmwareUpdaterMachineAction.qml:149
 msgctxt "@label"
-msgid "Firmware update failed due to a communication error."
+msgid "Firmware update failed due to an communication error."
 msgstr "Firmware-update mislukt door een communicatiefout."
 
 #: /home/clamboo/Desktop/Cura/plugins/FirmwareUpdater/FirmwareUpdaterMachineAction.qml:151

@@ -5419,11 +5419,6 @@ msgid "Flow Temperature Graph"
 msgstr "Gráfico de Fluxo de Temperatura"
 
 #: fdmprinter.def.json
-<<<<<<< HEAD
-msgctxt "prime_tower_position_x label"
-msgid "Prime Tower X Position"
-msgstr "Posição X da Torre de Purga"
-=======
 msgctxt "material_flow_temp_graph description"
 msgid "Data linking material flow (in mm3 per second) to temperature (degrees Celsius)."
 msgstr "Dados relacionando fluxo de material (em mm³ por segundo) a temperatura (graus Celsius)."
@@ -5437,7 +5432,6 @@ msgstr "Mínima Circunferência do Polígono"
 msgctxt "minimum_polygon_circumference description"
 msgid "Polygons in sliced layers that have a circumference smaller than this amount will be filtered out. Lower values lead to higher resolution mesh at the cost of slicing time. It is meant mostly for high resolution SLA printers and very tiny 3D models with a lot of details."
 msgstr "Polígonos em camadas fatiadas que tiverem uma circunferência menor que esta quantia serão excluídos. Menores valores levam a malha de maior resolução ao custo de tempo de fatiamento. Serve melhor para impressoras SLA de alta resolução e pequenos modelos 3D com muitos detalhes."
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #: fdmprinter.def.json
 msgctxt "support_skip_some_zags label"
@@ -5475,11 +5469,6 @@ msgid "Enable Draft Shield"
 msgstr "Habilitar Cobertura de Trabalho"
 
 #: fdmprinter.def.json
-<<<<<<< HEAD
-msgctxt "ooze_shield_enabled label"
-msgid "Enable Ooze Shield"
-msgstr "Habilitar Cobertura de Escorrimento"
-=======
 msgctxt "draft_shield_enabled description"
 msgid "This will create a wall around the model, which traps (hot) air and shields against exterior airflow. Especially useful for materials which warp easily."
 msgstr "Isto criará uma parede em volta do modelo que aprisiona ar quente da mesa e protege contra fluxo de ar do exterior. Especialmente útil para materiais que sofrem bastante warp e impressoras 3D que não são cobertas."
@@ -5503,7 +5492,6 @@ msgstr "Limitação da Cobertura de Trabalho"
 msgctxt "draft_shield_height_limitation description"
 msgid "Set the height of the draft shield. Choose to print the draft shield at the full height of the model or at a limited height."
 msgstr "Estabelece a altura da cobertura de trabalho. Escolha imprimir a cobertura na altura total dos modelos ou até uma altura limitada."
->>>>>>> 84d9d5bec40c7f7a0220af099f2dc5e437760336
 
 #: fdmprinter.def.json
 msgctxt "draft_shield_height_limitation option full"
