@@ -8,6 +8,7 @@ new versions are released and will continue to be utilized as the project progre
 			Reported issues with bed leveling that were not present in previous builds
 	Bug Fixes:
 		Fixed issue where creating a new material profile for 1.75mm Tool Heads didn't display the new profile in Cura
+		Fixed some issues where M1 chip equipped Macs were unable to use functionality requring use of USB ports (USB printing, firmware flashing, etc.)
 	Material Profile Changes:
 		Added Jabil SEBS for all current model Tool Heads on all currently produced printers and the TAZ 6
 		Expanded Polymaker PolyCast to all SideKick 2.85mm Tool Heads

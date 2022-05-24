@@ -2,7 +2,7 @@ Cura LulzBot Edition
 ====
 Cura LulzBot Edition is a re-work of [Cura 3.6 by Ultimaker](https://github.com/Ultimaker/Cura/tree/3.6) with modified tooling code for ease of use with LulzBot brand printers.
 
-This repository is being used for current LulzBot builds as of Q2 2022. In the future this repository will likely be merged into [cura-lulzbot](https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot) in order to avoid confusion and to make the creation and tracking of issues and development easier.
+As of May 2022, this is once again the repository being used for Cura LulzBot Edition builds.
 
 Logging Issues
 ------------
@@ -23,7 +23,7 @@ Dependencies
 To keep versioning consistent for the build script, forks had been made of most major dependencies. Linked are first the main repository for each given project followed by the repository for the fork used for the LulzBot Edition build.
 
 * [Uranium](https://github.com/Ultimaker/Uranium)
-  * [LulzBot Fork](https://gitlab.com/lulzbot3d/cura-le/curaengine)
+  * [LulzBot Fork](https://gitlab.com/lulzbot3d/cura-le/uranium)
 
 Cura is built on top of the Uranium framework.
 
@@ -33,7 +33,7 @@ Cura is built on top of the Uranium framework.
 This will be needed at runtime to perform the actual slicing.
 
 * [PySerial](https://github.com/pyserial/pyserial)
-   * [LulzBot Fork](https://gitlab.com/lulzbot3d/cura-le/curaengine)
+   * [LulzBot Fork](https://gitlab.com/lulzbot3d/cura-le/pyserial)
 
 Only required for USB printing support.
 
