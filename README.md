@@ -28,7 +28,7 @@ To keep versioning consistent for the build script, forks had been made of most 
 Cura is built on top of the Uranium framework.
 
 * [CuraEngine](https://github.com/Ultimaker/CuraEngine)
-  * [LulzBot Fork](https://gitlab.com/lulzbot3d/cura-le/curaengine)
+  * [LulzBot Fork](https://gitlab.com/lulzbot3d/cura-le/cura-engine-le)
 
 This will be needed at runtime to perform the actual slicing.
 
