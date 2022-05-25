@@ -49,3 +49,26 @@ new versions are released and will continue to be utilized as the project progre
 3.6.33:
 	Replaced ColorChange script with FilamentChange script in the PostProcessing plugin:
 		Improved accuracy when using the script
+
+3.6.25:
+	Added new printers
+		LulzBot TAZ SideKick
+			289 - 162 x 162 x 181mm build volume
+			747 - 231 x 231 x 248mm build volume
+	Added Tool Heads
+		SK285 and SK175
+			SideKick printers only
+			3D Titan Aero extruder modified for use on SideKicks
+		H175
+			All current LulzBot printers + TAZ 6
+			E3D's Direct Hemera with V6 HotEnd
+		HE Tool Head and profiles added to Mini 2
+	Material profile changes
+		Altered PolyDissolve fan height and minimum speed on Dual V3 Tool Head
+		Improved filament quality consistency when using the same Tool Head on different LulzBot printers
+	Firmware Changes
+		Upped Marlin to be more in-line with upstream, 2.0.6
+		Added Universal firmware for easy Tool Head swapping
+		Bilinear Bed leveling
+		Faster Probing
+		New LCD UI
