@@ -23,7 +23,7 @@ set(CURA_APP_NAME "cura" CACHE STRING "Short name of Cura, used for configuratio
 set(CURA_APP_DISPLAY_NAME "Ultimaker Cura" CACHE STRING "Display name of Cura")
 set(CURA_VERSION "master" CACHE STRING "Version name of Cura")
 set(CURA_BUILDTYPE "" CACHE STRING "Build type of Cura, eg. 'PPA'")
-configure_file(${CMAKE_SOURCE_DIR}/cura.desktop.in ${CMAKE_BINARY_DIR}/cura.desktop @ONLY)
+configure_file(${CMAKE_SOURCE_DIR}/cura-lulzbot.desktop.in ${CMAKE_BINARY_DIR}/cura-lulzbot.desktop @ONLY)
 configure_file(cura/CuraVersion.py.in CuraVersion.py @ONLY)
 
 
