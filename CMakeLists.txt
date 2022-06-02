@@ -74,7 +74,7 @@ if(NOT APPLE AND NOT WIN32)
         install(FILES ${CMAKE_BINARY_DIR}/CuraVersion.py
             DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages/cura)
     endif()
-    install(FILES ${CMAKE_BINARY_DIR}/cura.desktop
+    install(FILES ${CMAKE_BINARY_DIR}/cura-lulzbot.desktop
             DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
     install(FILES ${CMAKE_SOURCE_DIR}/resources/images/cura-icon.png
             DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/128x128/apps/)
