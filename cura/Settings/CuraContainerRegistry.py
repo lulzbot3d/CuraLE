@@ -538,8 +538,8 @@ class CuraContainerRegistry(ContainerRegistry):
     def _convertContainerStack(self, container: ContainerStack) -> Union[ExtruderStack.ExtruderStack, GlobalStack.GlobalStack]:
         """Convert an "old-style" pure ContainerStack to either an Extruder or Global stack."""
 
-            if definition:
-                return definition
+        if definition:
+            return definition
         return None
 
     ##  Returns true if the current machine requires its own materials

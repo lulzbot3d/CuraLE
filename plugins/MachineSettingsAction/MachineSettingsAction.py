@@ -42,8 +42,8 @@ class MachineSettingsAction(MachineAction):
 
         self._container_registry = ContainerRegistry.getInstance()
         self._container_registry.containerAdded.connect(self._onContainerAdded)
-        self._container_registry.containerRemoved.connect(self._onContainerRemoved)
-        Application.getInstance().globalContainerStackChanged.connect(self._onGlobalContainerChanged)
+        # self._container_registry.containerRemoved.connect(self._onContainerRemoved)
+        # Application.getInstance().globalContainerStackChanged.connect(self._onGlobalContainerChanged)
 
         # The machine settings dialog blocks auto-slicing when it's shown, and re-enables it when it's finished.
         self._backend = self._application.getBackend()
@@ -97,26 +97,26 @@ class MachineSettingsAction(MachineAction):
             self._backend.enableTimer()
             self._backend.tickle()
 
-    containerIndexChanged = pyqtSignal()
+    #containerIndexChanged = pyqtSignal()
 
-    @pyqtProperty(int, notify = containerIndexChanged)
-    def containerIndex(self):
-        return self._container_index
+    # @pyqtProperty(int, notify = containerIndexChanged)
+    # def containerIndex(self):
+    #     return self._container_index
 
-    def _onGlobalContainerChanged(self):
-        self._global_container_stack = Application.getInstance().getGlobalContainerStack()
+    # def _onGlobalContainerChanged(self):
+    #     self._global_container_stack = Application.getInstance().getGlobalContainerStack()
 
-        # This additional emit is needed because we cannot connect a UM.Signal directly to a pyqtSignal
-        self.globalContainerChanged.emit()
+    #     # This additional emit is needed because we cannot connect a UM.Signal directly to a pyqtSignal
+    #     self.globalContainerChanged.emit()
 
-    globalContainerChanged = pyqtSignal()
+    #globalContainerChanged = pyqtSignal()
 
-    @pyqtProperty(int, notify = globalContainerChanged)
-    def definedExtruderCount(self):
-        if not self._global_container_stack:
-            return 0
+    # @pyqtProperty(int, notify = globalContainerChanged)
+    # def definedExtruderCount(self):
+    #     if not self._global_container_stack:
+    #         return 0
 
-        return len(self._global_container_stack.getMetaDataEntry("machine_extruder_trains"))
+    #     return len(self._global_container_stack.getMetaDataEntry("machine_extruder_trains"))
 
     @pyqtSlot(int)
     def setMachineExtruderCount(self, extruder_count: int) -> None:

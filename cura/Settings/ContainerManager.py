@@ -6,7 +6,7 @@ import urllib.parse
 import uuid
 from typing import Any, cast, Dict, List, TYPE_CHECKING, Union
 
-from PyQt5.QtCore import QObject, QUrl
+from PyQt5.QtCore import QObject, QUrl, QVariant
 from PyQt5.QtWidgets import QMessageBox
 from UM.Util import parseBool
 

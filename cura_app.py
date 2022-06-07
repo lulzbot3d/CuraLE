@@ -201,8 +201,8 @@ elif sys.stdout and not sys.stdout.closed:
 from cura.CuraApplication import CuraApplication
 
 # This pre-start up check is needed to determine if we should start the application at all.
-if not cura.CuraApplication.CuraApplication.preStartUp(parser = parser, parsed_command_line = known_args):
-    sys.exit(0)
+#if not cura.CuraApplication.CuraApplication.preStartUp(parser = parser, parsed_command_line = known_args):
+#    sys.exit(0)
 
 # WORKAROUND: CURA-6739
 # The CTM file loading module in Trimesh requires the OpenCTM library to be dynamically loaded. It uses

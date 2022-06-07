@@ -1,5 +1,7 @@
 # Copyright (c) 2020 Ultimaker B.V.
+# Copyright (c) Fargo Additive Machinery Equipment 3D
 # Cura is released under the terms of the LGPLv3 or higher.
+# TODO: Fix this guy, super broken.
 
 from .avr_isp import stk500v2, ispBase, intelHex
 import serial   # type: ignore
@@ -499,23 +501,23 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         elif self._connection_state == ConnectionState.connected:
             self._sendCommand(cmd)
 
-                    if extruder_nr >= len(self._printers[0].extruders):
-                        Logger.log("w", "Printer reports more temperatures than the number of configured extruders")
-                        continue
+            if extruder_nr >= len(self._printers[0].extruders):
+                Logger.log("w", "Printer reports more temperatures than the number of configured extruders")
+                continue
 
-                    extruder = self._printers[0].extruders[extruder_nr]
-                    if match[1]:
-                        extruder.updateHotendTemperature(float(match[1]))
-                    if match[2]:
-                        extruder.updateTargetHotendTemperature(float(match[2]))
+            extruder = self._printers[0].extruders[extruder_nr]
+            if match[1]:
+                extruder.updateHotendTemperature(float(match[1]))
+            if match[2]:
+                extruder.updateTargetHotendTemperature(float(match[2]))
 
-                bed_temperature_matches = re.findall(b"B: ?(\d+\.?\d*)\s*\/?(\d+\.?\d*)?", line)
-                if bed_temperature_matches:
-                    match = bed_temperature_matches[0]
-                    if match[0]:
-                        self._printers[0].updateBedTemperature(float(match[0]))
-                    if match[1]:
-                        self._printers[0].updateTargetBedTemperature(float(match[1]))
+            bed_temperature_matches = re.findall(b"B: ?(\d+\.?\d*)\s*\/?(\d+\.?\d*)?", line)
+            if bed_temperature_matches:
+                match = bed_temperature_matches[0]
+                if match[0]:
+                    self._printers[0].updateBedTemperature(float(match[0]))
+                if match[1]:
+                    self._printers[0].updateTargetBedTemperature(float(match[1]))
 
         self.setJobName(file_name)
         self._print_estimated_time = int(Application.getInstance().getPrintInformation().currentPrintTime.getDisplayString(DurationFormat.Format.Seconds))

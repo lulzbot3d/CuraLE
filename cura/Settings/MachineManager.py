@@ -255,15 +255,15 @@ class MachineManager(QObject):
     def _onGlobalContainerChanged(self) -> None:
         """Triggered when the global container stack is changed in CuraApplication."""
 
-            if old_index != int(position):
-                extruder_manager.setActiveExtruderIndex(int(position))
-            else:
-                old_index = None
-            Logger.log("d", "Setting hotend variant of hotend %s to %s" % (position, hotend_id))
-            self.setActiveVariant(hotend_id)
+        if old_index != int(position):
+            extruder_manager.setActiveExtruderIndex(int(position))
+        else:
+            old_index = None
+        Logger.log("d", "Setting hotend variant of hotend %s to %s" % (position, hotend_id))
+        self.setActiveVariant(hotend_id)
 
-            if old_index is not None:
-                extruder_manager.setActiveExtruderIndex(old_index)
+        if old_index is not None:
+            extruder_manager.setActiveExtruderIndex(old_index)
         self._auto_hotends_changed = {}  # Processed all of them now.
 
     def _onGlobalContainerChanged(self):
