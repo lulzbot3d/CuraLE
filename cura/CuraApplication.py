@@ -124,7 +124,6 @@ from . import CameraAnimation
 from . import CuraActions
 from . import CuraSplashScreen
 from . import PlatformPhysics
-from . import PrintInformation
 from . import PrintJobPreviewImageProvider
 
 
