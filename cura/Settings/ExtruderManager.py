@@ -29,8 +29,7 @@ class ExtruderManager(QObject):
 
     def __init__(self, parent = None):
         """Registers listeners and such to listen to changes to the extruders."""
-        Logger.log("i","Howdy Ho!")
-        Logger.log("i",str(ExtruderManager.__instance))
+        
         if ExtruderManager.__instance is not None:
             raise RuntimeError("Try to create singleton '%s' more than once" % self.__class__.__name__)
         ExtruderManager.__instance = self
