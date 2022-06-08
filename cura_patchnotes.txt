@@ -2,6 +2,12 @@ CURA LULZBOT EDITION PATCHNOTES
 This file is a work-in-progress; some sections may be incomplete, especially older versions. Older version patch notes may be added over time. The file will be updated as
 new versions are released and will continue to be utilized as the project progresses.
 
+3.6.38: (In-Progress)
+	Material Profile Changes:
+		Added some missing Village Plastics ABS profiles on the Workhorse with SE
+		Expanded PolyMide PA6 filaments to all current printers with SE, HE, and SK285 Tool Heads
+		Expanded Taulman Bridge Nylon filament to the SideKick's SE, HE, and SK285 Tool Heads
+
 3.6.37:
 	Firmware Changes:
 		Reverting TAZ Pro Dual Extruder and TAZ Pro XT Dual Extruder firmware from 2.0.0.144.6 to 2.0.0.144.5
