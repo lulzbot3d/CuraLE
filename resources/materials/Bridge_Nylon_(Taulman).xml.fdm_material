@@ -115,5 +115,17 @@
     <machine>
       <machine_identifier product="lulzbot_gladiator_goldenrod"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_goldenrod"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_cecropia"/>
+    </machine>
   </settings>
 </fdmmaterial>
