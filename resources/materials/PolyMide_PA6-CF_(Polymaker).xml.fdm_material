@@ -20,10 +20,55 @@
   <properties />
   <settings>
     <machine>
+      <machine_identifier product="lulzbot_redgum_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_hibiscus"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_sk285"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_sk285"/>
+    </machine>
+    <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_redgum_goldenrod" />
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_redgum_cecropia"/>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_hibiscus_goldenrod" />
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_gladiator_goldenrod" />
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_quiver_goldenrod" />
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_sidekick_289_goldenrod" />
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_sidekick_747_goldenrod" />
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_taz6_goldenrod" />
     </machine>
     <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_quiver_evergreen_bagworm" />
