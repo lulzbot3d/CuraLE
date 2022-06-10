@@ -13,7 +13,7 @@ Menu
     title: catalog.i18nc("@label:category menu label", "Material")
 
     property int extruderIndex: 0
-    property string currentRootMaterialId
+    property string currentRootMaterialId:
     // property bool printerConnected: Cura.MachineManager.printerOutputDevices.length != 0
     // property bool isClusterPrinter:
     {
@@ -69,8 +69,8 @@ Menu
             onTriggered: Cura.MachineManager.setMaterial(extruderIndex, model.container_node)
             exclusiveGroup: favoriteGroup  // One favorite and one item from the others can be active at the same time.
         }
-        // onObjectAdded: menu.insertItem(index, object)
-        // onObjectRemoved: menu.removeItem(index)
+        onObjectAdded: menu.insertItem(index, object)
+        onObjectRemoved: menu.removeItem(index)
     }
 
     MenuSeparator {}
@@ -95,8 +95,8 @@ Menu
             onObjectAdded: genericMenu.insertItem(index, object)
             onObjectRemoved: genericMenu.removeItem(index)
         }
-        onObjectAdded: menu.insertItem(index, object)
-        onObjectRemoved: menu.removeItem(object)
+        // onObjectAdded: menu.insertItem(index, object)
+        // onObjectRemoved: menu.removeItem(object)
     }
 
     MenuSeparator {}
