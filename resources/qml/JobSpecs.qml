@@ -29,28 +29,30 @@ Item
     {
         if (!activity)
         {
-            if (base.fileBaseName == "")
-            {
-                base.fileBaseName = name;
-            }
-        }
-    }
-
-    onActivityChanged: {
-        if (activity == true && base.fileBaseName == ''){
-            //this only runs when you open a file from the terminal (or something that works the same way; for example when you drag a file on the icon in MacOS or use 'open with' on Windows)
-            base.fileBaseName = PrintInformation.baseName; //get the fileBaseName from PrintInformation.py because this saves the filebase when the file is opened using the terminal (or something alike)
-            PrintInformation.setBaseName(base.fileBaseName);
-        }
-        if (activity == true && base.fileBaseName != ''){
-            //this runs in all other cases where there is a mesh on the buildplate (activity == true). It uses the fileBaseName from the hasMesh signal
-            PrintInformation.setBaseName(base.fileBaseName);
-        }
-        if (activity == false){
+            // if (base.fileBaseName == "")
+            // {
+            //     base.fileBaseName = name;
+            // }
             //When there is no mesh in the buildplate; the printJobTextField is set to an empty string so it doesn't set an empty string as a jobName (which is later used for saving the file)
             PrintInformation.baseName = ""
         }
     }
+
+    // onActivityChanged: {
+    //     if (activity == true && base.fileBaseName == ''){
+    //         //this only runs when you open a file from the terminal (or something that works the same way; for example when you drag a file on the icon in MacOS or use 'open with' on Windows)
+    //         base.fileBaseName = PrintInformation.baseName; //get the fileBaseName from PrintInformation.py because this saves the filebase when the file is opened using the terminal (or something alike)
+    //         PrintInformation.setBaseName(base.fileBaseName);
+    //     }
+    //     if (activity == true && base.fileBaseName != ''){
+    //         //this runs in all other cases where there is a mesh on the buildplate (activity == true). It uses the fileBaseName from the hasMesh signal
+    //         PrintInformation.setBaseName(base.fileBaseName);
+    //     }
+    //     if (activity == false){
+    //         //When there is no mesh in the buildplate; the printJobTextField is set to an empty string so it doesn't set an empty string as a jobName (which is later used for saving the file)
+    //         PrintInformation.baseName = ""
+    //     }
+    // }
 
     Item
     {
@@ -79,15 +81,13 @@ Item
                 {
                     UM.RecolorImage
                     {
-                        UM.RecolorImage
-                        {
-                            width: UM.Theme.getSize("save_button_specs_icons").width;
-                            height: UM.Theme.getSize("save_button_specs_icons").height;
-                            sourceSize.width: width;
-                            sourceSize.height: width;
-                            color: control.hovered ? UM.Theme.getColor("text_scene_hover") : UM.Theme.getColor("text_scene");
-                            source: UM.Theme.getIcon("pencil");
-                            isBorderVisible: true
+                        width: UM.Theme.getSize("save_button_specs_icons").width;
+                        height: UM.Theme.getSize("save_button_specs_icons").height;
+                        sourceSize.width: width;
+                        sourceSize.height: width;
+                        color: control.hovered ? UM.Theme.getColor("small_button_text_hover") : UM.Theme.getColor("small_button_text");
+                        source: UM.Theme.getIcon("Pen");
+                        // isBorderVisible: true
                         }
                     }
                 }
@@ -120,19 +120,19 @@ Item
                     var new_name = text == "" ? catalog.i18nc("@text Print job name", "Untitled") : text
                     PrintInformation.setJobName(new_name, true)
                 }
-                validator: RegExpValidator {
-                    regExp: /^[^\\ \/ \*\?\|\[\]]*$/
-                }
-                style: TextFieldStyle{
-                    //textColor: UM.Theme.getColor("setting_control_text");
-                    //textColor: UM.Theme.getColor("text_green");
-                    textColor: UM.Theme.getColor("text_dark_green");
-                    font: UM.Theme.getFont("default_bold");
-                    background: Rectangle {
-                        opacity: 100
-                        border.width: 0
-                        color: UM.Theme.getColor("job_specs_background")
-                    }
+                printJobTextfield.focus = false
+            }
+
+            validator: RegExpValidator {
+                regExp: /^[^\\ \/ \*\?\|\[\]]*$/
+            }
+            
+            style: TextFieldStyle{
+                textColor: UM.Theme.getColor("text_scene");
+                font: UM.Theme.getFont("default");
+                background: Rectangle {
+                    opacity: 100
+                    border.width: 0
                 }
             }
         }
