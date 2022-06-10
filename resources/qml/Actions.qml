@@ -25,7 +25,7 @@ Item
     property alias viewLeftSideCamera: viewLeftSideCameraAction;
     property alias viewRightSideCamera: viewRightSideCameraAction;
 
-    property alias expandSidebar: expandSidebarAction;
+    // property alias expandSidebar: expandSidebarAction;
 
     property alias deleteSelection: deleteSelectionAction;
     property alias centerSelection: centerSelectionAction;
@@ -61,7 +61,7 @@ Item
 
     property alias preferences: preferencesAction;
 
-    property alias showEngineLog: showEngineLogAction;
+    // property alias showEngineLog: showEngineLogAction;
     property alias showProfileFolder: showProfileFolderAction;
     property alias documentation: documentationAction;
     property alias showTroubleshooting: showTroubleShootingAction
@@ -75,7 +75,7 @@ Item
     property alias configureSettingVisibility: configureSettingVisibilityAction
 
     property alias browsePackages: browsePackagesAction
-    property alias openMarketplace: openMarketplaceAction
+    // property alias openMarketplace: openMarketplaceAction
 
     UM.I18nCatalog{id: catalog; name: "cura"}
 
@@ -225,7 +225,7 @@ Item
     Action
     {
         id: updateProfileAction;
-        enabled: !Cura.MachineManager.stacksHaveErrors && Cura.MachineManager.hasUserSettings && !Cura.MachineManager.isReadOnly(Cura.MachineManager.activeQualityId)
+        enabled: !Cura.MachineManager.stacksHaveErrors && Cura.MachineManager.hasUserSettings && !Cura.MachineManager.activeQualityChangesGroup != null
         text: catalog.i18nc("@action:inmenu menubar:profile","&Update profile with current settings/overrides");
         onTriggered: Cura.ContainerManager.updateQualityChanges();
     }
@@ -300,7 +300,7 @@ Item
         text: catalog.i18nc("@action:inmenu menubar:edit", "Delete Selected");
         enabled: UM.Controller.toolsEnabled && UM.Selection.hasSelection;
         iconName: "edit-delete";
-        shortcut: StandardKey.Delete;
+        shortcut: StandardKey.Delete | "Backspace"
         onTriggered: CuraActions.deleteSelection();
     }
 
@@ -467,13 +467,13 @@ Item
         shortcut: StandardKey.New
     }
 
-    Action
-    {
-        id: showEngineLogAction;
-        text: catalog.i18nc("@action:inmenu menubar:help","Show Engine &Log...");
-        iconName: "view-list-text";
-        shortcut: StandardKey.WhatsThis;
-    }
+    // Action
+    // {
+    //     id: showEngineLogAction;
+    //     text: catalog.i18nc("@action:inmenu menubar:help","Show Engine &Log...");
+    //     iconName: "view-list-text";
+    //     shortcut: StandardKey.WhatsThis;
+    // }
 
     Action
     {
@@ -489,24 +489,31 @@ Item
         iconName: "configure"
     }
 
+    // Action
+    // {
+    //     id: browsePluginsAction
+    //     text: catalog.i18nc("@action:menu", "Browse plugins...")
+    //     iconName: "plugins_browse"
+    // }
+
     Action
     {
-        id: browsePluginsAction
-        text: catalog.i18nc("@action:menu", "Browse plugins...")
+        id: browsePackagesAction
+        text: catalog.i18nc("@action:menu", "&Marketplace")
         iconName: "plugins_browse"
     }
 
-    Action
-    {
-        id: configurePluginsAction
-        text: catalog.i18nc("@action:menu", "Installed plugins...");
-        iconName: "plugins_configure"
-    }
+    // Action
+    // {
+    //     id: configurePluginsAction
+    //     text: catalog.i18nc("@action:menu", "Installed plugins...");
+    //     iconName: "plugins_configure"
+    // }
 
-    Action
-    {
-        id: expandSidebarAction;
-        text: catalog.i18nc("@action:inmenu menubar:view","Expand/Collapse Sidebar");
-        shortcut: "Ctrl+E";
-    }
+    // Action
+    // {
+    //     id: expandSidebarAction;
+    //     text: catalog.i18nc("@action:inmenu menubar:view","Expand/Collapse Sidebar");
+    //     shortcut: "Ctrl+E";
+    // }
 }

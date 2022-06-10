@@ -13,8 +13,9 @@ Menu
     title: catalog.i18nc("@label:category menu label", "Material")
 
     property int extruderIndex: 0
-    property bool printerConnected: Cura.MachineManager.printerOutputDevices.length != 0
-    property bool isClusterPrinter:
+    property string currentRootMaterialId
+    // property bool printerConnected: Cura.MachineManager.printerOutputDevices.length != 0
+    // property bool isClusterPrinter:
     {
         var value = Cura.MachineManager.currentRootMaterialId[extruderIndex]
         return (value === undefined) ? "" : value
@@ -68,8 +69,8 @@ Menu
             onTriggered: Cura.MachineManager.setMaterial(extruderIndex, model.container_node)
             exclusiveGroup: favoriteGroup  // One favorite and one item from the others can be active at the same time.
         }
-        onObjectAdded: menu.insertItem(index, object)
-        onObjectRemoved: menu.removeItem(index)
+        // onObjectAdded: menu.insertItem(index, object)
+        // onObjectRemoved: menu.removeItem(index)
     }
 
     MenuSeparator {}
@@ -144,105 +145,131 @@ Menu
         onObjectRemoved: menu.removeItem(object)
     }
 
-    ListModel
+    ExclusiveGroup
     {
-        id: genericMaterialsModel
-        Component.onCompleted: populateMenuModels()
+        id: group
     }
 
-    ListModel
+    ExclusiveGroup
     {
-        id: brandModel
+        id: favoriteGroup
     }
 
-    //: Model used to populate the brandModel
-    Cura.MaterialsModel
+    MenuSeparator {}
+
+    MenuItem
     {
-        id: materialsModel
-        filter: materialFilter()
-        onModelReset: populateMenuModels()
-        onDataChanged: populateMenuModels()
+        action: Cura.Actions.manageMaterials
+    }
+    
+    MenuSeparator {}
+
+    MenuItem // This one probably isn't relevant to us 
+    {
+        action: Cura.Actions.marketplaceMaterials
     }
 
-    ExclusiveGroup { id: group }
+    // vvv====== OLD ======vvv //
 
-    MenuSeparator { }
+    // ListModel
+    // {
+    //     id: genericMaterialsModel
+    //     Component.onCompleted: populateMenuModels()
+    // }
 
-    MenuItem { action: Cura.Actions.manageMaterials }
+    // ListModel
+    // {
+    //     id: brandModel
+    // }
 
-    function materialFilter()
-    {
-        var result = { "type": "material", "approximate_diameter": Math.round(materialDiameterProvider.properties.value).toString() };
-        if(Cura.MachineManager.filterMaterialsByMachine)
-        {
-            result.definition = Cura.MachineManager.activeQualityDefinitionId;
-            if(Cura.MachineManager.hasVariants)
-            {
-                result.variant = Cura.MachineManager.activeQualityVariantId;
-            }
-        }
-        else
-        {
-            result.definition = "fdmprinter";
-            result.compatible = true; //NB: Only checks for compatibility in global version of material, but we don't have machine-specific materials anyway.
-        }
-        return result;
-    }
+    // //: Model used to populate the brandModel
+    // Cura.MaterialsModel
+    // {
+    //     id: materialsModel
+    //     filter: materialFilter()
+    //     onModelReset: populateMenuModels()
+    //     onDataChanged: populateMenuModels()
+    // }
 
-    function populateMenuModels()
-    {
-        // Create a structure of unique brands and their material-types
-        genericMaterialsModel.clear()
-        brandModel.clear();
+    // ExclusiveGroup { id: group }
 
-        var items = materialsModel.items;
-        var materialsByBrand = {};
-        for (var i in items) {
-            var brandName = items[i]["metadata"]["brand"];
-            var materialName = items[i]["metadata"]["material"];
+    // MenuSeparator { }
 
-            if (brandName == "Generic")
-            {
-                // Add to top section
-                var materialId = items[i].id;
-                genericMaterialsModel.append({
-                    id: materialId,
-                    name: items[i].name
-                });
-            }
-            else
-            {
-                // Add to per-brand, per-material menu
-                if (!materialsByBrand.hasOwnProperty(brandName))
-                {
-                    materialsByBrand[brandName] = {};
-                }
-                if (!materialsByBrand[brandName].hasOwnProperty(materialName))
-                {
-                    materialsByBrand[brandName][materialName] = [];
-                }
-                materialsByBrand[brandName][materialName].push({
-                    id: items[i].id,
-                    name: items[i].name
-                });
-            }
-        }
+    // MenuItem { action: Cura.Actions.manageMaterials }
 
-        for (var brand in materialsByBrand)
-        {
-            var materialsByBrandModel = [];
-            var materials = materialsByBrand[brand];
-            for (var material in materials)
-            {
-                materialsByBrandModel.push({
-                    name: material,
-                    colors: materials[material]
-                })
-            }
-            brandModel.append({
-                name: brand,
-                materials: materialsByBrandModel
-            });
-        }
-    }
+    // function materialFilter()
+    // {
+    //     var result = { "type": "material", "approximate_diameter": Math.round(materialDiameterProvider.properties.value).toString() };
+    //     if(Cura.MachineManager.filterMaterialsByMachine)
+    //     {
+    //         result.definition = Cura.MachineManager.activeQualityDefinitionId;
+    //         if(Cura.MachineManager.hasVariants)
+    //         {
+    //             result.variant = Cura.MachineManager.activeQualityVariantId;
+    //         }
+    //     }
+    //     else
+    //     {
+    //         result.definition = "fdmprinter";
+    //         result.compatible = true; //NB: Only checks for compatibility in global version of material, but we don't have machine-specific materials anyway.
+    //     }
+    //     return result;
+    // }
+
+    // function populateMenuModels()
+    // {
+    //     // Create a structure of unique brands and their material-types
+    //     genericMaterialsModel.clear()
+    //     brandModel.clear();
+
+    //     var items = materialsModel.items;
+    //     var materialsByBrand = {};
+    //     for (var i in items) {
+    //         var brandName = items[i]["metadata"]["brand"];
+    //         var materialName = items[i]["metadata"]["material"];
+
+    //         if (brandName == "Generic")
+    //         {
+    //             // Add to top section
+    //             var materialId = items[i].id;
+    //             genericMaterialsModel.append({
+    //                 id: materialId,
+    //                 name: items[i].name
+    //             });
+    //         }
+    //         else
+    //         {
+    //             // Add to per-brand, per-material menu
+    //             if (!materialsByBrand.hasOwnProperty(brandName))
+    //             {
+    //                 materialsByBrand[brandName] = {};
+    //             }
+    //             if (!materialsByBrand[brandName].hasOwnProperty(materialName))
+    //             {
+    //                 materialsByBrand[brandName][materialName] = [];
+    //             }
+    //             materialsByBrand[brandName][materialName].push({
+    //                 id: items[i].id,
+    //                 name: items[i].name
+    //             });
+    //         }
+    //     }
+
+    //     for (var brand in materialsByBrand)
+    //     {
+    //         var materialsByBrandModel = [];
+    //         var materials = materialsByBrand[brand];
+    //         for (var material in materials)
+    //         {
+    //             materialsByBrandModel.push({
+    //                 name: material,
+    //                 colors: materials[material]
+    //             })
+    //         }
+    //         brandModel.append({
+    //             name: brand,
+    //             materials: materialsByBrandModel
+    //         });
+    //     }
+    // }
 }
