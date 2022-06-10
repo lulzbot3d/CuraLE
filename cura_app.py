@@ -62,7 +62,7 @@ if with_sentry_sdk:
     # Errors to be ignored by Sentry
     ignore_errors = [KeyboardInterrupt, MemoryError]
     try:
-        sentry_sdk.init("https://5034bf0054fb4b889f82896326e79b13@sentry.io/1821564",
+        sentry_sdk.init("https://fe9eb14f0ed44aa9b73016bf13443421@o1281016.ingest.sentry.io/6486008",
                         before_send = CrashHandler.sentryBeforeSend,
                         environment = sentry_env,
                         release = "cura%s" % ApplicationMetadata.CuraVersion,

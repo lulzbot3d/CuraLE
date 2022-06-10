@@ -289,7 +289,7 @@ class CuraApplication(QtApplication):
         self._package_manager_class = CuraPackageManager
 
         from UM.CentralFileStorage import CentralFileStorage
-        CentralFileStorage.setIsEnterprise(ApplicationMetadata.IsEnterpriseVersion)
+        # CentralFileStorage.setIsEnterprise(ApplicationMetadata.IsEnterpriseVersion)
         # Resources.setIsEnterprise(ApplicationMetadata.IsEnterpriseVersion)
 
     @pyqtProperty(str, constant=True)
@@ -349,6 +349,7 @@ class CuraApplication(QtApplication):
     def initialize(self) -> None:
         self.__addExpectedResourceDirsAndSearchPaths()  # Must be added before init of super
 
+        #super().initialize(ApplicationMetadata.IsEnterpriseVersion)
         super().initialize()
 
         self._preferences.addPreference("cura/single_instance", False)
@@ -647,7 +648,7 @@ class CuraApplication(QtApplication):
 
         if not self.getIsHeadLess():
             try:
-                self.setWindowIcon(QIcon(Resources.getPath(Resources.Images, "cura-icon.png")))
+                self.setWindowIcon(QIcon(Resources.getPath(Resources.Images, "cura.ico")))
             except FileNotFoundError:
                 Logger.log("w", "Unable to find the window icon.")
 
@@ -1011,7 +1012,7 @@ class CuraApplication(QtApplication):
         :py:class:`Uranium.UM.PluginRegistry`
         """
 
-        self._plugin_registry.setCheckIfTrusted(ApplicationMetadata.IsEnterpriseVersion)
+        # self._plugin_registry.setCheckIfTrusted(ApplicationMetadata.IsEnterpriseVersion)
 
         self._plugin_registry.addType("profile_reader", self._addProfileReader)
         self._plugin_registry.addType("profile_writer", self._addProfileWriter)
@@ -1195,7 +1196,7 @@ class CuraApplication(QtApplication):
         
         # I don't believe we'll be offering an Enterprise version but we'll slap these lines in
         # just to keep things running smoothly and probably clean it out later down the road.
-        self.getTheme().setCheckIfTrusted(ApplicationMetadata.IsEnterpriseVersion)
+        # self.getTheme().setCheckIfTrusted(ApplicationMetadata.IsEnterpriseVersion)
 
         # Initialize UI state
         controller.setActiveStage("PrepareStage")

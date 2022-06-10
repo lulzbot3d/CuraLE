@@ -19,10 +19,10 @@ import "WelcomePages"
 UM.MainWindow
 {
     id: base
-    //: Cura application window title
-    title: catalog.i18nc("@title:window","Ultimaker Cura");
-    viewportRect: Qt.rect(0, 0, (base.width - sidebar.width) / base.width, 1.0)
-    property bool showPrintMonitor: false
+    // //: Cura application window title
+    // title: catalog.i18nc("@title:window","Ultimaker Cura");
+    // viewportRect: Qt.rect(0, 0, (base.width - sidebar.width) / base.width, 1.0)
+    // property bool showPrintMonitor: false
 
     // Cura application window title
     title:
@@ -95,7 +95,7 @@ UM.MainWindow
         // shortcut will activate properly because one of its parents is a window.
         //
         // This has been fixed for QtQuick Controls 2 since the Shortcut item has a context property.
-        Cura.Actions.parent = backgroundItem
+        // Cura.Actions.parent = backgroundItem
         CuraApplication.purgeWindows()
     }
 
@@ -237,27 +237,27 @@ UM.MainWindow
                 top: applicationMenu.bottom
             }
 
-            Menu
-            {
-                //: Help menu
-                title: catalog.i18nc("@title:menu menubar:toplevel","&Help");
+        //     Menu
+        //     {
+        //         //: Help menu
+        //         title: catalog.i18nc("@title:menu menubar:toplevel","&Help");
 
-                MenuItem { action: Cura.Actions.showProfileFolder; }
-                MenuItem { action: Cura.Actions.documentation; }
-                MenuItem { action: Cura.Actions.reportBug; }
-                MenuSeparator { }
-                MenuItem { action: Cura.Actions.about; }
-            }
-        }
+        //         MenuItem { action: Cura.Actions.showProfileFolder; }
+        //         MenuItem { action: Cura.Actions.documentation; }
+        //         MenuItem { action: Cura.Actions.reportBug; }
+        //         MenuSeparator { }
+        //         MenuItem { action: Cura.Actions.about; }
+        //     }
+        // }
 
-        UM.SettingPropertyProvider
-        {
-            id: machineExtruderCount
+        // UM.SettingPropertyProvider
+        // {
+        //     id: machineExtruderCount
 
-            containerStackId: Cura.MachineManager.activeMachineId
-            key: "machine_extruder_count"
-            watchedProperties: [ "value" ]
-            storeIndex: 0
+        //     containerStackId: Cura.MachineManager.activeMachineId
+        //     key: "machine_extruder_count"
+        //     watchedProperties: [ "value" ]
+        //     storeIndex: 0
         }
 
         Item
@@ -344,7 +344,7 @@ UM.MainWindow
                     bottom: parent.bottom
                     margins: UM.Theme.getSize("default_margin").width
                 }
-                action: Cura.Actions.open;
+                // action: Cura.Actions.open;
             }
 
             Toolbar
@@ -356,17 +356,17 @@ UM.MainWindow
                 property int mouseX: base.mouseX
                 property int mouseY: base.mouseY
 
-                anchors {
-                    top: openFileButton.bottom;
-                    topMargin: UM.Theme.getSize("window_margin").height;
-                    left: parent.left;
-                }
-            }
+            //     anchors {
+            //         top: openFileButton.bottom;
+            //         topMargin: UM.Theme.getSize("window_margin").height;
+            //         left: parent.left;
+            //     }
+            // }
 
-            ObjectsList
-            {
-                id: objectsList;
-                visible: UM.Preferences.getValue("cura/use_multi_build_plate");
+            // ObjectsList
+            // {
+            //     id: objectsList;
+            //     visible: UM.Preferences.getValue("cura/use_multi_build_plate");
                 anchors
                 {
                     verticalCenter: parent.verticalCenter
@@ -398,9 +398,10 @@ UM.MainWindow
                     bottom: parent.bottom
                 }
 
-                width: initialWidth
-                x: base.width - sidebar.width
-                source: UM.Controller.activeStage.sidebarComponent
+                // width: initialWidth
+                // x: base.width - sidebar.width
+                // source: UM.Controller.activeStage.sidebarComponent
+                source: UM.Controller.activeStage != null ? UM.Controller.activeStage.mainComponent : ""
 
                 onLoaded: {
                     if (main.item.safeArea !== undefined){
@@ -418,8 +419,8 @@ UM.MainWindow
 
                 anchors
                 {
-                    top: topbar.bottom
-                    bottom: parent.bottom
+                    // top: topbar.bottom
+                    // bottom: parent.bottom
                     left: parent.left
                     right: parent.right
                     top: parent.top
@@ -503,7 +504,6 @@ UM.MainWindow
                 }
             }
         }
-    }
 
         PrintSetupTooltip
         {
@@ -541,11 +541,11 @@ UM.MainWindow
         }
     }
 
-    WorkspaceSummaryDialog
-    {
-        id: saveWorkspaceDialog
-        onYes: UM.OutputDeviceManager.requestWriteToDevice("local_file", PrintInformation.jobName, { "filter_by_machine": false, "file_type": "workspace" })
-    }
+    // WorkspaceSummaryDialog
+    // {
+    //     id: saveWorkspaceDialog
+    //     onYes: UM.OutputDeviceManager.requestWriteToDevice("local_file", PrintInformation.jobName, { "filter_by_machine": false, "file_type": "workspace" })
+    // }
 
     Connections
     {
@@ -854,9 +854,20 @@ UM.MainWindow
         id: askOpenAsProjectOrModelsDialog
     }
 
-    EngineLog
+    // EngineLog
+    // {
+    //     id: engineLog;
+    // }
+    
+    Connections
     {
-        id: engineLog;
+        target: CuraApplication
+        function onOpenProjectFile(project_file, add_to_recent_files)
+        {
+            askOpenAsProjectOrModelsDialog.fileUrl = project_file;
+            askOpenAsProjectOrModelsDialog.addToRecent = add_to_recent_files;
+            askOpenAsProjectOrModelsDialog.show();
+        }
     }
 
     Connections
@@ -870,41 +881,45 @@ UM.MainWindow
                 path = path.replace(/\\/g,"/");
             }
             Qt.openUrlExternally(path);
-        }
-    }
-
-    AddMachineDialog
-    {
-        id: addMachineDialog
-        onMachineAdded:
-        {
-            machineActionsWizard.firstRun = addMachineDialog.firstRun
-            machineActionsWizard.start(id)
-        }
-    }
-
-    // Dialog to handle first run machine actions
-    UM.Wizard
-    {
-        id: machineActionsWizard;
-
-        title: catalog.i18nc("@title:window", "Add Printer")
-        property var machine;
-        minimumWidth: UM.Theme.getSize("modal_window_minimum").width*0.6
-        minimumHeight: UM.Theme.getSize("modal_window_minimum").height*0.6
-        width: minimumWidth
-        height: minimumHeight
-        function start(id)
-        {
-            var actions = Cura.MachineActionManager.getFirstStartActions(id)
-            resetPages() // Remove previous pages
-
-            for (var i = 0; i < actions.length; i++)
+            if(Qt.platform.os == "linux")
             {
                 Qt.openUrlExternally(UM.Resources.getPath(UM.Resources.Resources, ""));
             }
         }
     }
+
+    // AddMachineDialog
+    // {
+    //     id: addMachineDialog
+    //     onMachineAdded:
+    //     {
+    //         machineActionsWizard.firstRun = addMachineDialog.firstRun
+    //         machineActionsWizard.start(id)
+    //     }
+    // }
+
+    // Dialog to handle first run machine actions
+    // UM.Wizard
+    // {
+    //     id: machineActionsWizard;
+
+    //     title: catalog.i18nc("@title:window", "Add Printer")
+    //     property var machine;
+    //     minimumWidth: UM.Theme.getSize("modal_window_minimum").width*0.6
+    //     minimumHeight: UM.Theme.getSize("modal_window_minimum").height*0.6
+    //     width: minimumWidth
+    //     height: minimumHeight
+    //     function start(id)
+    //     {
+    //         var actions = Cura.MachineActionManager.getFirstStartActions(id)
+    //         resetPages() // Remove previous pages
+
+    //         for (var i = 0; i < actions.length; i++)
+    //         {
+    //             Qt.openUrlExternally(UM.Resources.getPath(UM.Resources.Resources, ""));
+    //         }
+    //     }
+    // }
 
     MessageDialog
     {
@@ -935,14 +950,22 @@ UM.MainWindow
         }
     }
 
-    DiscardOrKeepProfileChangesDialog
+    // DiscardOrKeepProfileChangesDialog
+    // {
+    //     id: discardOrKeepProfileChangesDialog
+    // }
+
+    Component
     {
-        id: discardOrKeepProfileChangesDialog
+        id: discardOrKeepProfileChangesDialogComponent
+        DiscardOrKeepProfileChangesDialog { }
     }
+
     Loader
     {
         id: discardOrKeepProfileChangesDialogLoader
     }
+    
     Connections
     {
         target: CuraApplication
