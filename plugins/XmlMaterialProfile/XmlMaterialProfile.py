@@ -11,7 +11,6 @@ import xml.etree.ElementTree as ET
 from UM.PluginRegistry import PluginRegistry
 from UM.Resources import Resources
 from UM.Logger import Logger
-from cura.CuraApplication import CuraApplication
 
 import UM.Dictionary
 from UM.Settings.InstanceContainer import InstanceContainer
@@ -119,7 +118,6 @@ class XmlMaterialProfile(InstanceContainer):
         for container in containers:
             container.setName(new_name)
 
-    ##  Overridden from InstanceContainer, to set dirty to base file as well.
     def setDirty(self, dirty):
         """Overridden from InstanceContainer, to set dirty to base file as well."""
 
@@ -166,16 +164,6 @@ class XmlMaterialProfile(InstanceContainer):
             if key in metadata:
                 del metadata[key]
         properties = metadata.pop("properties", {})
-
-        # Metadata properties that should not be serialized.
-        metadata.pop("status", "")
-        metadata.pop("variant", "")
-        metadata.pop("type", "")
-        metadata.pop("base_file", "")
-        metadata.pop("approximate_diameter", "")
-        metadata.pop("id", "")
-        metadata.pop("container_type", "")
-        metadata.pop("name", "")
 
         ## Begin Name Block
         builder.start("name", {}) # type: ignore
@@ -436,7 +424,6 @@ class XmlMaterialProfile(InstanceContainer):
     @staticmethod
     def _combineElement(first, second):
         # Create a mapping from tag name to element.
-
         mapping = {}
         for element in first:
             key = XmlMaterialProfile._createKey(element)
@@ -491,7 +478,6 @@ class XmlMaterialProfile(InstanceContainer):
 
         return version * 1000000 + setting_version
 
-    ##  Overridden from InstanceContainer
     def deserialize(self, serialized, file_name = None):
         """Overridden from InstanceContainer"""
 
@@ -669,10 +655,8 @@ class XmlMaterialProfile(InstanceContainer):
                 for machine_id in machine_id_list:
                     definitions = ContainerRegistry.getInstance().findDefinitionContainersMetadata(id = machine_id)
                     if not definitions:
-                        Logger.log("w", "No definition found for machine ID %s", machine_id)
                         continue
 
-                    Logger.log("d", "Found definition for machine ID %s", machine_id)
                     definition = definitions[0]
 
                     machine_manufacturer = identifier.get("manufacturer", definition.get("manufacturer", "Unknown")) #If the XML material doesn't specify a manufacturer, use the one in the actual printer definition.
@@ -1085,16 +1069,10 @@ class XmlMaterialProfile(InstanceContainer):
         id_list = {name.lower().replace(" ", ""),  # simply removing all spaces
                    name.lower().replace(" ", "_"),  # simply replacing all spaces with underscores
                    "_".join(merged_name_parts),
-                   name.replace(" ", ""),
-                   name.replace(" ", "_")
                    }
         id_list = list(id_list)
         return id_list
 
-    ##  Gets a mapping from product names in the XML files to their definition
-    #   IDs.
-    #
-    #   This loads the mapping from a file.
     @classmethod
     def getProductIdMap(cls) -> Dict[str, List[str]]:
         """Gets a mapping from product names in the XML files to their definition IDs.
@@ -1193,21 +1171,3 @@ def _indent(elem, level = 0):
 # before the last }
 def _tag_without_namespace(element):
     return element.tag[element.tag.rfind("}") + 1:]
-
-#While loading XML profiles, some of these profiles don't know what variant
-#they belong to. We'd like to search by the machine ID and the variant's
-#name, but we don't know the variant's ID. Not all variants have been loaded
-#yet so we can't run a filter on the name and machine. The ID is unknown
-#so we can't lazily load the variant either. So we have to wait until all
-#the rest is loaded properly and then assign the correct variant to the
-#material files that were missing it.
-_with_missing_variants = []
-def _fillMissingVariants():
-    registry = ContainerRegistry.getInstance()
-    for variant_metadata in _with_missing_variants:
-        variants = registry.findContainersMetadata(definition = variant_metadata["definition"], name = variant_metadata["variant"])
-        if not variants:
-            Logger.log("w", "Could not find variant for variant-specific material {material_id}.".format(material_id = variant_metadata["id"]))
-            continue
-        variant_metadata["variant"] = variants[0]["id"]
-ContainerRegistry.allMetadataLoaded.connect(_fillMissingVariants)

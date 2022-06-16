@@ -110,14 +110,6 @@ SettingItem
             font: UM.Theme.getFont("default")
         }
 
-        MouseArea
-        {
-            id: mouseArea
-            anchors.fill: parent;
-            //hoverEnabled: true;
-            cursorShape: Qt.IBeamCursor
-        }
-
         TextInput
         {
             id: input
@@ -168,7 +160,7 @@ SettingItem
             selectByMouse: true;
 
             maximumLength: (definition.type == "str" || definition.type == "[int]") ? -1 : 10;
-            clip: true; //Hide any text that exceeds the width of the text box.
+            //clip: true; //Hide any text that exceeds the width of the text box.
 
             // Since [int] & str don't have a max length, they need to be clipped (since clipping is expensive, this
             // should be done as little as possible)

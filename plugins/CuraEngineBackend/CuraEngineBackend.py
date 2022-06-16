@@ -12,15 +12,11 @@ from typing import Any, cast, Dict, List, Optional, Set, TYPE_CHECKING
 from PyQt5.QtGui import QDesktopServices, QImage
 
 from UM.Backend.Backend import Backend, BackendState
-from UM.Application import Application
 from UM.Scene.SceneNode import SceneNode
-from UM.Preferences import Preferences
 from UM.Signal import Signal
 from UM.Logger import Logger
 from UM.Message import Message
 from UM.PluginRegistry import PluginRegistry
-from UM.Resources import Resources
-from UM.Settings.Validator import ValidatorState #To find if a setting is in an error state. We can't slice then.
 from UM.Platform import Platform
 from UM.Qt.Duration import DurationFormat
 from UM.Scene.Iterator.DepthFirstIterator import DepthFirstIterator
@@ -64,7 +60,7 @@ class CuraEngineBackend(QObject, Backend):
         executable_name = "CuraEngine"
         if Platform.isWindows():
             executable_name += ".exe"
-        default_engine_location = executable_name
+        self._default_engine_location = executable_name
 
         search_path = [
             os.path.abspath(os.path.dirname(sys.executable)),
@@ -78,35 +74,33 @@ class CuraEngineBackend(QObject, Backend):
         for path in search_path:
             engine_path = os.path.join(path, executable_name)
             if os.path.isfile(engine_path):
-                default_engine_location = engine_path
+                self._default_engine_location = engine_path
                 break
 
-        if Platform.isLinux() and not default_engine_location:
+        if Platform.isLinux() and not self._default_engine_location:
             if not os.getenv("PATH"):
                 raise OSError("There is something wrong with your Linux installation.")
             for pathdir in cast(str, os.getenv("PATH")).split(os.pathsep):
                 execpath = os.path.join(pathdir, executable_name)
                 if os.path.exists(execpath):
-                    default_engine_location = execpath
+                    self._default_engine_location = execpath
                     break
 
         application = CuraApplication.getInstance() #type: CuraApplication
         self._multi_build_plate_model = None #type: Optional[MultiBuildPlateModel]
         self._machine_error_checker = None #type: Optional[MachineErrorChecker]
 
-        if not default_engine_location:
+        if not self._default_engine_location:
             raise EnvironmentError("Could not find CuraEngine")
 
-        Logger.log("i", "Found CuraEngine at: %s", default_engine_location)
+        Logger.log("i", "Found CuraEngine at: %s", self._default_engine_location)
 
-        default_engine_location = os.path.abspath(default_engine_location)
-        application.getPreferences().addPreference("backend/location", default_engine_location)
+        self._default_engine_location = os.path.abspath(self._default_engine_location)
+        application.getPreferences().addPreference("backend/location", self._default_engine_location)
 
         # Workaround to disable layer view processing if layer view is not active.
         self._layer_view_active = False #type: bool
         self._onActiveViewChanged()
-        self._stored_layer_data = []
-        self._stored_optimized_layer_data = {}  # key is build plate number, then arrays are stored until they go to the ProcessSlicesLayersJob
 
         self._stored_layer_data = []  # type: List[Arcus.PythonMessage]
         self._stored_optimized_layer_data = {}  # type: Dict[int, List[Arcus.PythonMessage]] # key is build plate number, then arrays are stored until they go to the ProcessSlicesLayersJob
@@ -241,7 +235,6 @@ class CuraEngineBackend(QObject, Backend):
     slicingStarted = Signal()
     """Emitted when the slicing process starts."""
 
-    ##  Emitted when the slicing process is aborted forcefully.
     slicingCancelled = Signal()
     """Emitted when the slicing process is aborted forcefully."""
 
@@ -260,7 +253,6 @@ class CuraEngineBackend(QObject, Backend):
         if self._error_message:
             self._error_message.hide()
 
-    ##  Manually triggers a reslice
     @pyqtSlot()
     def forceSlice(self) -> None:
         """Manually triggers a reslice"""
@@ -321,7 +313,6 @@ class CuraEngineBackend(QObject, Backend):
                 self.slice()
             return
 
-        self._stored_layer_data = []
         self._stored_optimized_layer_data[build_plate_to_be_sliced] = []
         if application.getPrintInformation() and build_plate_to_be_sliced == active_build_plate:
             application.getPrintInformation().setToZeroPrintInformation(build_plate_to_be_sliced)
@@ -598,8 +589,6 @@ class CuraEngineBackend(QObject, Backend):
             if source_build_plate_number is not None:
                 build_plate_changed.add(source_build_plate_number)
 
-        build_plate_changed.discard(None)
-        build_plate_changed.discard(-1)  # object not on build plate
         if not build_plate_changed:
             return
 
@@ -615,9 +604,6 @@ class CuraEngineBackend(QObject, Backend):
                 self._build_plates_to_be_sliced.append(build_plate_number)
             self.printDurationMessage.emit(source_build_plate_number, {}, [])
         self.processingProgress.emit(0.0)
-        self.backendStateChange.emit(BackendState.NotStarted)
-        # if not self._use_timer:
-            # With manually having to slice, we want to clear the old invalid layer data.
         self._clearLayerData(build_plate_changed)
 
         self._invokeSlice()
@@ -683,7 +669,6 @@ class CuraEngineBackend(QObject, Backend):
         self.stopSlicing()
         self.markSliceAll()
         self.processingProgress.emit(0.0)
-        self.backendStateChange.emit(BackendState.NotStarted)
         if not self._use_timer:
             # With manually having to slice, we want to clear the old invalid layer data.
             self._clearLayerData()
@@ -700,7 +685,6 @@ class CuraEngineBackend(QObject, Backend):
 
         elif property == "validationState":
             if self._use_timer:
-                self._is_error_check_scheduled = True
                 self._change_timer.stop()
 
     def _onStackErrorCheckFinished(self) -> None:
@@ -988,7 +972,6 @@ class CuraEngineBackend(QObject, Backend):
         if self._global_container_stack:
             self._global_container_stack.propertyChanged.disconnect(self._onSettingChanged)
             self._global_container_stack.containersChanged.disconnect(self._onChanged)
-            extruders = list(self._global_container_stack.extruders.values())
 
             for extruder in self._global_container_stack.extruderList:
                 extruder.propertyChanged.disconnect(self._onSettingChanged)

@@ -13,24 +13,13 @@ from UM.Scene.Iterator.DepthFirstIterator import DepthFirstIterator
 from UM.Settings.InstanceContainer import InstanceContainer
 from UM.Settings.Interfaces import ContainerInterface
 from UM.Signal import Signal
-
-from PyQt5.QtCore import QObject, pyqtProperty, pyqtSignal, QTimer
 from UM.FlameProfiler import pyqtSlot
-from PyQt5.QtWidgets import QMessageBox
 from UM import Util
-
-from UM.Application import Application
-from UM.Preferences import Preferences
 from UM.Logger import Logger
 from UM.Message import Message
-from UM.Decorators import deprecated
 
-from UM.Settings.ContainerRegistry import ContainerRegistry
-from UM.Settings.ContainerStack import ContainerStack
-from UM.Settings.InstanceContainer import InstanceContainer
 from UM.Settings.SettingFunction import SettingFunction
 from UM.Signal import postponeSignals, CompressTechnique
-import UM.FlameProfiler
 
 import cura.CuraApplication  # Imported like this to prevent circular references.
 from UM.Util import parseBool
@@ -104,7 +93,6 @@ class MachineManager(QObject):
         extruder_manager.activeExtruderChanged.connect(self.activeQualityChanged)
 
         self.globalContainerChanged.connect(self.activeStackChanged)
-        self.globalValueChanged.connect(self.activeStackValueChanged)
         ExtruderManager.getInstance().activeExtruderChanged.connect(self.activeStackChanged)
         self.activeStackChanged.connect(self.activeStackValueChanged)
 
@@ -155,7 +143,6 @@ class MachineManager(QObject):
     activeStackChanged = pyqtSignal()  # Emitted whenever the active extruder stack is changed (ie: when switching the active extruder tab or changing between printers)
     extruderChanged = pyqtSignal()  # Emitted whenever an extruder is activated or deactivated or the default extruder changes.
 
-    globalValueChanged = pyqtSignal()  # Emitted whenever a value inside global container is changed.
     activeStackValueChanged = pyqtSignal()  # Emitted whenever a value inside the active stack is changed.
     activeStackValidationChanged = pyqtSignal()  # Emitted whenever a validation inside active container is changed
     stacksValidationChanged = pyqtSignal()  # Emitted whenever a validation is changed
@@ -196,9 +183,7 @@ class MachineManager(QObject):
         for printer_output_device in self._application.getOutputDeviceManager().getOutputDevices():
             if isinstance(printer_output_device, PrinterOutputDevice):
                 self._printer_output_devices.append(printer_output_device)
-                printer_output_device.hotendIdChanged.connect(self._onHotendIdChanged)
-                printer_output_device.materialIdChanged.connect(self._onMaterialIdChanged)
-
+                
         self.outputDevicesChanged.emit()
 
     @pyqtProperty(QObject, notify = currentConfigurationChanged)
@@ -255,18 +240,6 @@ class MachineManager(QObject):
     def _onGlobalContainerChanged(self) -> None:
         """Triggered when the global container stack is changed in CuraApplication."""
 
-        if old_index != int(position):
-            extruder_manager.setActiveExtruderIndex(int(position))
-        else:
-            old_index = None
-        Logger.log("d", "Setting hotend variant of hotend %s to %s" % (position, hotend_id))
-        self.setActiveVariant(hotend_id)
-
-        if old_index is not None:
-            extruder_manager.setActiveExtruderIndex(old_index)
-        self._auto_hotends_changed = {}  # Processed all of them now.
-
-    def _onGlobalContainerChanged(self):
         if self._global_container_stack:
             try:
                 self._global_container_stack.containersChanged.disconnect(self._onContainersChanged)
@@ -317,8 +290,6 @@ class MachineManager(QObject):
 
     def _onActiveExtruderStackChanged(self) -> None:
         self.blurSettings.emit()  # Ensure no-one has focus.
-        old_active_container_stack = self._active_container_stack
-
         self._active_container_stack = ExtruderManager.getInstance().getActiveExtruderStack()
 
     def __emitChangedSignals(self) -> None:
@@ -337,9 +308,6 @@ class MachineManager(QObject):
         if property_name == "value":
             # Notify UI items, such as the "changed" star in profile pull down menu.
             self.activeStackValueChanged.emit()
-
-        elif property_name == "validationState":
-            self._error_check_timer.start()
 
     @pyqtSlot(str)
     def setActiveMachine(self, stack_id: Optional[str]) -> None:
@@ -472,22 +440,10 @@ class MachineManager(QObject):
     def hasUserSettings(self) -> bool:
         return self._num_user_settings != 0
 
-        if self._global_container_stack.getTop().findInstances():
-            return True
-
-        stacks = list(ExtruderManager.getInstance().getMachineExtruders(self._global_container_stack.getId()))
-        for stack in stacks:
-            if stack.getTop().findInstances():
-                return True
-
-        return False
-
-    @pyqtProperty(int, notify = activeStackValueChanged)
+    @pyqtProperty(int, notify = numUserSettingsChanged)
     def numUserSettings(self) -> int:
         return self._num_user_settings
 
-    ##  Delete a user setting from the global stack and all extruder stacks.
-    #   \param key \type{str} the name of the key to delete
     @pyqtSlot(str)
     def clearUserSettingAllCurrentStacks(self, key: str) -> None:
         """Delete a user setting from the global stack and all extruder stacks.
@@ -522,9 +478,6 @@ class MachineManager(QObject):
         for container in send_emits_containers:
             container.sendPostponedEmits()
 
-    ##  Check if none of the stacks contain error states
-    #   Note that the _stacks_have_errors is cached due to performance issues
-    #   Calling _checkStack(s)ForErrors on every change is simply too expensive
     @pyqtProperty(bool, notify = stacksValidationChanged)
     def stacksHaveErrors(self) -> bool:
         """Check if none of the stacks contain error states
@@ -599,7 +552,6 @@ class MachineManager(QObject):
     def activeStackId(self) -> str:
         if self._active_container_stack:
             return self._active_container_stack.getId()
-
         return ""
 
     @pyqtProperty(QObject, notify = activeStackChanged)
@@ -607,46 +559,11 @@ class MachineManager(QObject):
         return self._active_container_stack
 
     @pyqtProperty(str, notify = activeMaterialChanged)
-    def activeMaterialName(self) -> str:
-        if self._active_container_stack:
-            material = self._active_container_stack.material
-            if material:
-                return material.getName()
-
-        return ""
-
-    @pyqtProperty("QVariantList", notify=activeVariantChanged)
-    def activeVariantNames(self) -> List[str]:
-        result = []
-
-        active_stacks = ExtruderManager.getInstance().getActiveGlobalAndExtruderStacks()
-        if active_stacks is not None:
-            for stack in active_stacks:
-                variant_container = stack.variant
-                if variant_container and variant_container != self._empty_variant_container:
-                    result.append(variant_container.getName())
-
-        return result
-
-    @pyqtProperty("QVariantList", notify = activeMaterialChanged)
-    def activeMaterialNames(self) -> List[str]:
-        result = []
-
-        active_stacks = ExtruderManager.getInstance().getActiveGlobalAndExtruderStacks()
-        if active_stacks is not None:
-            for stack in active_stacks:
-                material_container = stack.material
-                if material_container and material_container != self._empty_material_container:
-                    result.append(material_container.getName())
-        return result
-
-    @pyqtProperty(str, notify=activeMaterialChanged)
     def activeMaterialId(self) -> str:
         if self._active_container_stack:
             material = self._active_container_stack.material
             if material:
                 return material.getId()
-
         return ""
 
     @pyqtProperty(float, notify = activeQualityGroupChanged)
@@ -691,17 +608,6 @@ class MachineManager(QObject):
             return False
         return active_quality_group.is_available
 
-    ##  Gets the layer height of the currently active quality profile.
-    #
-    #   This is indicated together with the name of the active quality profile.
-    #
-    #   \return The layer height of the currently active quality profile. If
-    #   there is no quality profile, this returns 0.
-    @pyqtProperty(float, notify=activeQualityChanged)
-    def activeQualityLayerHeight(self) -> float:
-        if not self._global_container_stack:
-            return 0
-
     @pyqtProperty(bool, notify = activeQualityGroupChanged)
     def isActiveQualityExperimental(self) -> bool:
         global_container_stack = self._application.getGlobalContainerStack()
@@ -736,25 +642,7 @@ class MachineManager(QObject):
             category = extruder.intent.getMetaDataEntry("intent_category", "default")
             if category != active_intent_category:
                 result.append(str(int(extruder.getMetaDataEntry("position")) + 1))
-
-    @pyqtProperty(str, notify=activeQualityChanged)
-    def globalQualityId(self) -> str:
-        if self._global_container_stack:
-            quality = self._global_container_stack.qualityChanges
-            if quality and not isinstance(quality, type(self._empty_quality_changes_container)):
-                return quality.getId()
-            quality = self._global_container_stack.quality
-            if quality:
-                return quality.getId()
-        return ""
-
-    @pyqtProperty(str, notify = activeQualityChanged)
-    def activeQualityType(self) -> str:
-        if self._active_container_stack:
-            quality = self._active_container_stack.quality
-            if quality:
-                return quality.getMetaDataEntry("quality_type")
-        return ""
+        return result
 
     @pyqtProperty(bool, notify = activeQualityChanged)
     def isCurrentSetupSupported(self) -> bool:
@@ -767,7 +655,7 @@ class MachineManager(QObject):
 
         if not self._global_container_stack:
             return False
-        for stack in [self._global_container_stack] + list(self._global_container_stack.extruders.values()):
+        for stack in [self._global_container_stack] + self._global_container_stack.extruderList:
             for container in stack.getContainers():
                 if not container:
                     return False
@@ -778,26 +666,11 @@ class MachineManager(QObject):
     @pyqtSlot(str)
     def copyValueToExtruders(self, key: str) -> None:
         """Copy the value of the setting of the current extruder to all other extruders as well as the global container."""
-
-    @pyqtProperty(str, notify = activeQualityChanged)
-    def activeQualityChangesId(self) -> str:
-        if self._active_container_stack:
-            quality_changes = self._active_container_stack.qualityChanges
-            if quality_changes and not isinstance(quality_changes, type(self._empty_quality_changes_container)):
-                return quality_changes.getId()
-        return ""
-
-    ## Check if a container is read_only
-    @pyqtSlot(str, result = bool)
-    def isReadOnly(self, container_id: str) -> bool:
-        return ContainerRegistry.getInstance().isReadOnly(container_id)
-
-    ## Copy the value of the setting of the current extruder to all other extruders as well as the global container.
-    @pyqtSlot(str)
-    def copyValueToExtruders(self, key: str):
+        
+        if self._active_container_stack is None or self._global_container_stack is None:
+            return
         new_value = self._active_container_stack.getProperty(key, "value")
-        extruder_stacks = [stack for stack in ExtruderManager.getInstance().getMachineExtruders(self._global_container_stack.getId())]
-
+        
         # Check in which stack the value has to be replaced
         for extruder_stack in self._global_container_stack.extruderList:
             if extruder_stack != self._active_container_stack and extruder_stack.getProperty(key, "value") != new_value:
@@ -1072,8 +945,8 @@ class MachineManager(QObject):
                 if extruder_stack:
                     extruder_stack.userChanges.setProperty(setting_key, "value", global_user_container.getProperty(setting_key, "value"))
                 else:
-                    if not old_quality_changes:
-                        new_quality_id = candidate_quality.getId()
+                    Logger.log("e", "Unable to find extruder on position %s", extruder_position)
+                global_user_container.removeInstance(setting_key)
 
         # Signal that the global stack has changed
         self._application.globalContainerStackChanged.emit()

@@ -18,6 +18,7 @@ import os
 if sys.platform != "linux":  # Turns out the Linux build _does_ use this, but we're not making an Enterprise release for that system anyway.
     os.environ["QT_PLUGIN_PATH"] = ""  # Security workaround: Don't need it, and introduces an attack vector, so set to nul.
     os.environ["QML2_IMPORT_PATH"] = ""  # Security workaround: Don't need it, and introduces an attack vector, so set to nul.
+    os.environ["QT_OPENGL_DLL"] = ""
 
 from PyQt5.QtNetwork import QSslConfiguration, QSslSocket
 
@@ -51,8 +52,8 @@ if with_sentry_sdk:
         sentry_env = "development"  # Master is always a development version.
     elif "beta" in ApplicationMetadata.CuraVersion or "BETA" in ApplicationMetadata.CuraVersion:
         sentry_env = "beta"
-    elif "alpha" in ApplicationMetadata.CuraVersion or "ALPHA" in ApplicationMetadata.CuraVersion:
-        sentry_env = "alpha"
+    # elif "alpha" in ApplicationMetadata.CuraVersion or "ALPHA" in ApplicationMetadata.CuraVersion:
+    #     sentry_env = "alpha"
     try:
         if ApplicationMetadata.CuraVersion.split(".")[2] == "99":
             sentry_env = "nightly"
@@ -91,9 +92,6 @@ if not known_args["debug"]:
         os.makedirs(dirpath, exist_ok = True)
         sys.stdout = open(os.path.join(dirpath, "stdout.log"), "w", encoding = "utf-8")
         sys.stderr = open(os.path.join(dirpath, "stderr.log"), "w", encoding = "utf-8")
-
-import platform
-import faulthandler
 
 # WORKAROUND: GITHUB-88 GITHUB-385 GITHUB-612
 if Platform.isLinux(): # Needed for platform.linux_distribution, which is not available on Windows and OSX
@@ -187,8 +185,8 @@ def exceptHook(hook_type, value, traceback):
 # first seems to prevent Sip from going into a state where it
 # tries to create PyQt objects on a non-main thread.
 #import Arcus #@UnusedImport
-import cura.CuraApplication
-import cura.Settings.CuraContainerRegistry
+# import cura.CuraApplication
+# import cura.Settings.CuraContainerRegistry
 
 # Set exception hook to use the crash dialog handler
 sys.excepthook = exceptHook
@@ -199,10 +197,6 @@ elif sys.stdout and not sys.stdout.closed:
     faulthandler.enable(file = sys.stdout, all_threads = True)
 
 from cura.CuraApplication import CuraApplication
-
-# This pre-start up check is needed to determine if we should start the application at all.
-#if not cura.CuraApplication.CuraApplication.preStartUp(parser = parser, parsed_command_line = known_args):
-#    sys.exit(0)
 
 # WORKAROUND: CURA-6739
 # The CTM file loading module in Trimesh requires the OpenCTM library to be dynamically loaded. It uses

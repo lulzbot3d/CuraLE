@@ -8,7 +8,7 @@ import QtQuick.Controls.Styles 1.1
 
 import QtQuick.Controls 2.3 as NewControls
 
-import UM 1.5 as UM
+import UM 1.1 as UM
 import Cura 1.1 as Cura
 
 UM.PreferencesPage
@@ -16,8 +16,6 @@ UM.PreferencesPage
     //: General configuration page title
     title: catalog.i18nc("@title:tab", "General")
     id: generalPreferencesPage
-
-    width: parent.width
 
     function setDefaultLanguage(languageCode)
     {
@@ -118,14 +116,13 @@ UM.PreferencesPage
         UM.Preferences.resetPreference("cura/choice_on_open_project")
         setDefaultOpenProjectOption(UM.Preferences.getValue("cura/choice_on_open_project"))
 
-        if (plugins.find("id", "SliceInfoPlugin") > -1) {
-            UM.Preferences.resetPreference("info/send_slice_info")
-            sendDataCheckbox.checked = boolCheck(UM.Preferences.getValue("info/send_slice_info"))
-        }
-        if (plugins.find("id", "UpdateChecker") > -1) {
-            UM.Preferences.resetPreference("info/automatic_update_check")
-            checkUpdatesCheckbox.checked = boolCheck(UM.Preferences.getValue("info/automatic_update_check"))
-        }
+        UM.Preferences.resetPreference("info/send_slice_info")
+        sendDataCheckbox.checked = boolCheck(UM.Preferences.getValue("info/send_slice_info"))
+        UM.Preferences.resetPreference("info/automatic_update_check")
+        checkUpdatesCheckbox.checked = boolCheck(UM.Preferences.getValue("info/automatic_update_check"))
+        UM.Preferences.resetPreference("info/latest_update_source")
+        UM.Preferences.resetPreference("info/automatic_plugin_update_check")
+        pluginNotificationsUpdateCheckbox.checked = boolCheck(UM.Preferences.getValue("info/automatic_plugin_update_check"))
     }
 
     ScrollView
@@ -133,13 +130,8 @@ UM.PreferencesPage
         width: parent.width
         height: parent.height
 
-        flickableItem.flickableDirection: Flickable.VerticalFlick;
-
         Column
         {
-            //: Model used to check if a plugin exists
-            UM.PluginsModel { id: plugins }
-
             //: Language selection label
             UM.I18nCatalog{id: catalog; name:"cura"}
 
@@ -153,46 +145,54 @@ UM.PreferencesPage
             {
                 id: interfaceGrid
                 columns: 4
+                width: parent.width
 
                 Label
                 {
                     id: languageLabel
-                    text: catalog.i18nc("@label","Language:")
-                    anchors.verticalCenter: languageComboBox.verticalCenter
+                    text: "Language:"
                 }
 
-                ComboBox
+                ListModel
                 {
-                    id: languageComboBox
-                    model: ListModel
+                    id: languageList
+
+                    Component.onCompleted:
                     {
-                        id: languageList
+                        append({ text: "English", code: "en_US" })
+                        append({ text: "Čeština", code: "cs_CZ" })
+                        append({ text: "Deutsch", code: "de_DE" })
+                        append({ text: "Español", code: "es_ES" })
+                        //Finnish is disabled for being incomplete: append({ text: "Suomi", code: "fi_FI" })
+                        append({ text: "Français", code: "fr_FR" })
+                        append({ text: "Italiano", code: "it_IT" })
+                        append({ text: "日本語", code: "ja_JP" })
+                        append({ text: "한국어", code: "ko_KR" })
+                        append({ text: "Nederlands", code: "nl_NL" })
+                        //Apparently Polish is incomplete: append({ text: "Polski", code: "pl_PL" })
+                        append({ text: "Português do Brasil", code: "pt_BR" })
+                        append({ text: "Português", code: "pt_PT" })
+                        append({ text: "Русский", code: "ru_RU" })
+                        append({ text: "Türkçe", code: "tr_TR" })
+                        append({ text: "简体中文", code: "zh_CN" })
+                        append({ text: "正體字", code: "zh_TW" })
 
-                        Component.onCompleted: {
-                            append({ text: "English", code: "en_US" })
-                            append({ text: "Deutsch", code: "de_DE" })
-                            append({ text: "Español", code: "es_ES" })
-                            //Finnish is disabled for being incomplete: append({ text: "Suomi", code: "fi_FI" })
-                            append({ text: "Français", code: "fr_FR" })
-                            append({ text: "Italiano", code: "it_IT" })
-                            append({ text: "日本語", code: "ja_JP" })
-                            append({ text: "한국어", code: "ko_KR" })
-                            append({ text: "Nederlands", code: "nl_NL" })
-                            append({ text: "Polski", code: "pl_PL" })
-                            append({ text: "Português do Brasil", code: "pt_BR" })
-                            append({ text: "Português", code: "pt_PT" })
-                            append({ text: "Русский", code: "ru_RU" })
-                            append({ text: "Türkçe", code: "tr_TR" })
-                            append({ text: "简体中文", code: "zh_CN" })
-                            append({ text: "正體字", code: "zh_TW" })
-
-                            var date_object = new Date();
-                            if (date_object.getUTCMonth() == 8 && date_object.getUTCDate() == 19) //Only add Pirate on the 19th of September.
-                            {
-                                append({ text: "Pirate", code: "en_7S" })
-                            }
+                        // yar date_object be new Date();
+                        var date_object = new Date();
+                        if (date_object.getUTCMonth() == 8 && date_object.getUTCDate() == 19) //Only add Pirate on the 19th of September.
+                        {
+                            append({ text: "Pirate", code: "en_7S" })
                         }
                     }
+                }
+
+                NewControls.ComboBox
+                {
+                    id: languageComboBox
+
+                    textRole: "text"
+                    model: languageList
+                    Layout.fillWidth: true
 
                     currentIndex:
                     {
@@ -206,27 +206,12 @@ UM.PreferencesPage
                         }
                     }
                     onActivated: UM.Preferences.setValue("general/language", model.get(index).code)
-
-                    Component.onCompleted:
-                    {
-                        // Because ListModel is stupid and does not allow using qsTr() for values.
-                        for(var i = 0; i < languageList.count; ++i)
-                        {
-                            languageList.setProperty(i, "text", catalog.i18n(languageList.get(i).text));
-                        }
-
-                        // Glorious hack time. ComboBox does not update the text properly after changing the
-                        // model. So change the indices around to force it to update.
-                        currentIndex += 1;
-                        currentIndex -= 1;
-                    }
                 }
 
                 Label
                 {
                     id: currencyLabel
                     text: catalog.i18nc("@label","Currency:")
-                    anchors.verticalCenter: currencyField.verticalCenter
                 }
 
                 TextField
@@ -240,23 +225,17 @@ UM.PreferencesPage
                 {
                     id: themeLabel
                     text: catalog.i18nc("@label","Theme:")
-                    anchors.verticalCenter: themeComboBox.verticalCenter
                 }
 
-                ComboBox
+                ListModel
                 {
-                    id: themeComboBox
+                    id: themeList
 
-                    model: ListModel
-                    {
-                        id: themeList
-
-                        Component.onCompleted: {
-                            var themes = UM.Theme.getThemes()
-                            for (var i = 0; i < themes.length; i++)
-                            {
-                                append({ text: themes[i].name.toString(), code: themes[i].id.toString() });
-                            }
+                    Component.onCompleted: {
+                        var themes = UM.Theme.getThemes()
+                        for (var i = 0; i < themes.length; i++)
+                        {
+                            append({ text: themes[i].name.toString(), code: themes[i].id.toString() });
                         }
                     }
                 }
@@ -282,26 +261,8 @@ UM.PreferencesPage
                         return 0;
                     }
                     onActivated: UM.Preferences.setValue("general/theme", model.get(index).code)
-
-                    Component.onCompleted:
-                    {
-                        // Because ListModel is stupid and does not allow using qsTr() for values.
-                        for(var i = 0; i < themeList.count; ++i)
-                        {
-                            themeList.setProperty(i, "text", catalog.i18n(themeList.get(i).text));
-                        }
-
-                        // Glorious hack time. ComboBox does not update the text properly after changing the
-                        // model. So change the indices around to force it to update.
-                        currentIndex += 1;
-                        currentIndex -= 1;
-                    }
-
                 }
             }
-
-
-
 
             Label
             {
@@ -327,7 +288,7 @@ UM.PreferencesPage
 
                 text: catalog.i18nc("@info:tooltip","Slice automatically when changing settings.")
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: autoSliceCheckbox
                     checked: boolCheck(UM.Preferences.getValue("general/auto_slice"))
@@ -357,7 +318,7 @@ UM.PreferencesPage
 
                 text: catalog.i18nc("@info:tooltip", "Highlight unsupported areas of the model in red. Without support these areas will not print properly.")
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: showOverhangCheckbox
 
@@ -373,11 +334,10 @@ UM.PreferencesPage
             {
                 width: childrenRect.width;
                 height: childrenRect.height;
-                text: catalog.i18nc("@info:tooltip","Moves the camera so the model is in the center of the view when a model is selected")
 
                 text: catalog.i18nc("@info:tooltip", "Highlight missing or extraneous surfaces of the model using warning signs. The toolpaths will often be missing parts of the intended geometry.")
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: showXrayErrorCheckbox
 
@@ -394,7 +354,7 @@ UM.PreferencesPage
                 height: childrenRect.height;
                 text: catalog.i18nc("@info:tooltip", "Moves the camera so the model is in the center of the view when a model is selected")
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: centerOnSelectCheckbox
                     text: catalog.i18nc("@action:button","Center camera when item is selected");
@@ -409,7 +369,7 @@ UM.PreferencesPage
                 height: childrenRect.height;
                 text: catalog.i18nc("@info:tooltip", "Should the default zoom behavior of cura be inverted?")
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: invertZoomCheckbox
                     text: catalog.i18nc("@action:button", "Invert the direction of camera zoom.");
@@ -430,7 +390,7 @@ UM.PreferencesPage
                 height: childrenRect.height;
                 text: zoomToMouseCheckbox.enabled ? catalog.i18nc("@info:tooltip", "Should zooming move in the direction of the mouse?") : catalog.i18nc("@info:tooltip", "Zooming towards the mouse is not supported in the orthographic perspective.")
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: zoomToMouseCheckbox
                     text: catalog.i18nc("@action:button", "Zoom toward mouse direction")
@@ -461,7 +421,7 @@ UM.PreferencesPage
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip", "Should models on the platform be moved so that they no longer intersect?")
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: pushFreeCheckbox
                     text: catalog.i18nc("@option:check", "Ensure models are kept apart")
@@ -475,7 +435,7 @@ UM.PreferencesPage
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip", "Should models on the platform be moved down to touch the build plate?")
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: dropDownCheckbox
                     text: catalog.i18nc("@option:check", "Automatically drop models to the build plate")
@@ -492,7 +452,7 @@ UM.PreferencesPage
 
                 text: catalog.i18nc("@info:tooltip","Show caution message in g-code reader.")
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: gcodeShowCautionCheckbox
 
@@ -509,7 +469,7 @@ UM.PreferencesPage
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip", "Should layer be forced into compatibility mode?")
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: forceLayerViewCompatibilityModeCheckbox
                     text: catalog.i18nc("@option:check", "Force layer view compatibility mode (restart required)")
@@ -524,7 +484,7 @@ UM.PreferencesPage
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip", "Should Cura open at the location it was closed?")
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: restoreWindowPositionCheckbox
                     text: catalog.i18nc("@option:check", "Restore window position on start")
@@ -599,7 +559,7 @@ UM.PreferencesPage
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip","Should opening files from the desktop or external applications open in the same instance of Cura?")
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: singleInstanceCheckbox
                     text: catalog.i18nc("@option:check","Use a single instance of Cura")
@@ -615,7 +575,7 @@ UM.PreferencesPage
                 text: catalog.i18nc("@info:tooltip","Should the build plate be cleared before loading a new model in the single instance of Cura?")
                 enabled: singleInstanceCheckbox.checked
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: singleInstanceClearBeforeLoadCheckbox
                     text: catalog.i18nc("@option:check","Clear buildplate before loading model into the single instance")
@@ -630,7 +590,7 @@ UM.PreferencesPage
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip","Should models be scaled to the build volume if they are too large?")
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: scaleToFitCheckbox
                     text: catalog.i18nc("@option:check","Scale large models")
@@ -645,7 +605,7 @@ UM.PreferencesPage
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip","An model may appear extremely small if its unit is for example in meters rather than millimeters. Should these models be scaled up?")
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: scaleTinyCheckbox
                     text: catalog.i18nc("@option:check","Scale extremely small models")
@@ -660,7 +620,7 @@ UM.PreferencesPage
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip","Should models be selected after they are loaded?")
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: selectModelsOnLoadCheckbox
                     text: catalog.i18nc("@option:check","Select models when loaded")
@@ -675,7 +635,7 @@ UM.PreferencesPage
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip", "Should a prefix based on the printer name be added to the print job name automatically?")
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: prefixJobNameCheckbox
                     text: catalog.i18nc("@option:check", "Add machine prefix to job name")
@@ -690,7 +650,7 @@ UM.PreferencesPage
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip", "Should a summary be shown when saving a project file?")
 
-                UM.CheckBox
+                CheckBox
                 {
                     text: catalog.i18nc("@option:check", "Show summary dialog when saving project")
                     checked: boolCheck(UM.Preferences.getValue("cura/dialog_on_project_save"))
@@ -827,7 +787,6 @@ UM.PreferencesPage
             Label
             {
                 font.bold: true
-                visible: checkUpdatesCheckbox.visible || sendDataCheckbox.visible
                 text: catalog.i18nc("@label","Privacy")
             }
             UM.TooltipArea
@@ -836,7 +795,7 @@ UM.PreferencesPage
                 height: visible ? childrenRect.height : 0
                 text: catalog.i18nc("@info:tooltip", "Should anonymous data about your print be sent to Ultimaker? Note, no models, IP addresses or other personally identifiable information is sent or stored.")
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: sendDataCheckbox
                     text: catalog.i18nc("@option:check","Send (anonymous) print information")
@@ -923,7 +882,7 @@ UM.PreferencesPage
                 height: visible ? childrenRect.height : 0
                 text: catalog.i18nc("@info:tooltip", "Should an automatic check for new plugins be done every time Cura is started? It is highly recommended that you do not disable this!")
 
-                UM.CheckBox
+                CheckBox
                 {
                     id: pluginNotificationsUpdateCheckbox
                     text: catalog.i18nc("@option:check", "Get notifications for plugin updates")
@@ -975,8 +934,6 @@ UM.PreferencesPage
                     sendDataCheckbox.checked = boolCheck(UM.Preferences.getValue("info/send_slice_info"))
                 }
             }
-
-
         }
     }
 }

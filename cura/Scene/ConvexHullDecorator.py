@@ -1,4 +1,4 @@
-# Copyright (c) 2016 Ultimaker B.V.
+# Copyright (c) 2020 Ultimaker B.V.
 # Cura is released under the terms of the LGPLv3 or higher.
 
 from PyQt5.QtCore import QTimer
@@ -80,7 +80,6 @@ class ConvexHullDecorator(SceneNodeDecorator):
 
         self._onChanged()
 
-    ## Force that a new (empty) object is created upon copy.
     def __deepcopy__(self, memo):
         """Force that a new (empty) object is created upon copy."""
 
@@ -98,15 +97,12 @@ class ConvexHullDecorator(SceneNodeDecorator):
         if hull is None:
             return None
 
-        if self._global_stack and self._node:
-            # Parent can be None if node is just loaded.
-            if self._global_stack.getProperty("print_sequence", "value") == "one_at_a_time" and (self._node.getParent() is None or not self._node.getParent().callDecoration("isGroup")):
-                hull = hull.getMinkowskiHull(Polygon(numpy.array(self._global_stack.getProperty("machine_head_polygon", "value"), numpy.float32)))
-                hull = self._add2DAdhesionMargin(hull)
-        return hull
+        return self._add2DAdhesionMargin(hull)
 
-    ##  Get the convex hull of the node with the full head size
-    def getConvexHullHeadFull(self):
+    def getConvexHull(self) -> Optional[Polygon]:
+        """Get the unmodified 2D projected convex hull of the node (if any) 
+        In case of one-at-a-time, this includes adhesion and head+fans clearance
+        """
         if self._node is None:
             return None
         if self._node.callDecoration("isNonPrintingMesh"):
@@ -120,18 +116,18 @@ class ConvexHullDecorator(SceneNodeDecorator):
             hull = self._add2DAdhesionMargin(hull)
             return hull
 
-    ##  Get convex hull of the object + head size
-    #   In case of printing all at once this is the same as the convex hull.
-    #   For one at the time this is area with intersection of mirrored head
-    def getConvexHullHead(self):
+        return self._compute2DConvexHull()
+
+    def getConvexHullHeadFull(self) -> Optional[Polygon]:
+        """For one at a time this is the convex hull of the node with the full head size
+        In case of printing all at once this is None.
+        """
         if self._node is None:
             return None
 
-        if self._global_stack:
-            if self._global_stack.getProperty("print_sequence", "value") == "one_at_a_time" and (self._node.getParent() is None or not self._node.getParent().callDecoration("isGroup")):
-                head_with_fans = self._compute2DConvexHeadMin()
-                head_with_fans_with_adhesion_margin = self._add2DAdhesionMargin(head_with_fans)
-                return head_with_fans_with_adhesion_margin
+        if self._isSingularOneAtATimeNode():
+            return self._compute2DConvexHeadFull()
+
         return None
 
     @staticmethod
@@ -209,14 +205,13 @@ class ConvexHullDecorator(SceneNodeDecorator):
                 self._convex_hull_node = None
             return
 
-        convex_hull = self.getConvexHull()
         if self._convex_hull_node:
             self._convex_hull_node.setParent(None)
-        hull_node = ConvexHullNode.ConvexHullNode(self._node, convex_hull, self._raft_thickness, root)
+        hull_node = ConvexHullNode.ConvexHullNode(self._node, self.getPrintingArea(), self._raft_thickness, self._root)
         self._convex_hull_node = hull_node
 
-    def _onSettingValueChanged(self, key, property_name):
-        if property_name != "value": #Not the value that was changed.
+    def _onSettingValueChanged(self, key: str, property_name: str) -> None:
+        if property_name != "value": # Not the value that was changed.
             return
 
         if key in self._affected_settings:

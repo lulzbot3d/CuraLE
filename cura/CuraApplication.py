@@ -189,7 +189,7 @@ class CuraApplication(QtApplication):
                          tray_icon_name = "cura-icon-32.png", #if not ApplicationMetadata.IsAlternateVersion else "cura-icon-32_wip.png",
                          **kwargs)
 
-        self.default_theme = "cura-light"
+        self.default_theme = "lulzbot-new"
 
         self.change_log_url = "https://ultimaker.com/ultimaker-cura-latest-features?utm_source=cura&utm_medium=software&utm_campaign=cura-update-features"
         self.beta_change_log_url = "https://ultimaker.com/ultimaker-cura-beta-features?utm_source=cura&utm_medium=software&utm_campaign=cura-update-features"
@@ -1545,7 +1545,7 @@ class CuraApplication(QtApplication):
         is_block_slicing_node = False
         active_build_plate = self.getMultiBuildPlateModel().activeBuildPlate
 
-        # print_information = self.getPrintInformation()
+        print_information = self.getPrintInformation()
         for node in DepthFirstIterator(self.getController().getScene().getRoot()):
             if (
                 not issubclass(type(node), CuraSceneNode) or
