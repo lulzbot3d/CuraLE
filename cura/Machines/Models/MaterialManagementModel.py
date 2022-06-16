@@ -16,7 +16,7 @@ from UM.Signal import postponeSignals, CompressTechnique
 import cura.CuraApplication  # Imported like this to prevent cirmanagecular imports.
 from cura.Machines.ContainerTree import ContainerTree
 from cura.Settings.CuraContainerRegistry import CuraContainerRegistry  # To find the sets of materials belonging to each other, and currently loaded extruder stacks.
-from cura.UltimakerCloud.CloudMaterialSync import CloudMaterialSync
+# from cura.UltimakerCloud.CloudMaterialSync import CloudMaterialSync
 
 if TYPE_CHECKING:
     from cura.Machines.MaterialNode import MaterialNode
@@ -33,7 +33,7 @@ class MaterialManagementModel(QObject):
 
     def __init__(self, parent: Optional[QObject] = None) -> None:
         super().__init__(parent = parent)
-        self._material_sync = CloudMaterialSync(parent=self)
+        # self._material_sync = CloudMaterialSync(parent=self)
         self._checkIfNewMaterialsWereInstalled()
 
     def _checkIfNewMaterialsWereInstalled(self) -> None:
@@ -330,5 +330,6 @@ class MaterialManagementModel(QObject):
         """
         Opens the window to sync all materials.
         """
-        self._material_sync.openSyncAllWindow()
+        # self._material_sync.openSyncAllWindow()
+        return
 

@@ -24,7 +24,7 @@
     <setting key="probe temperature">140</setting>
     <setting key="wipe temperature">140</setting>
     <setting key="part removal temperature">45</setting>
-    <machine>
+    <!--<machine>
       <machine_identifier product="lulzbot_taz6_dual_v3"/>
       <metadata key="category">Supported</metadata>
     </machine>
@@ -101,10 +101,10 @@
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz5_aerostruder"/>
-    </machine>
+    </machine>-->
     <machine>
       <machine_identifier product="lulzbot_hibiscus"/>
-    </machine>
+    </machine><!--
     <machine>
       <machine_identifier product="lulzbot_quiver_evergreen_bagworm"/>
     </machine>
@@ -184,6 +184,6 @@
     <machine>
       <machine_identifier product="lulzbot_redgum_yellowfin"/>
       <metadata key="category">Supported</metadata>
-    </machine>
+    </machine>-->
   </settings>
 </fdmmaterial>

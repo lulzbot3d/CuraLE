@@ -38,7 +38,7 @@ from cura.Settings.ExtruderStack import ExtruderStack
 from cura.Settings.cura_empty_instance_containers import (empty_definition_changes_container, empty_variant_container,
                                                           empty_material_container, empty_quality_container,
                                                           empty_quality_changes_container, empty_intent_container)
-from cura.UltimakerCloud.UltimakerCloudConstants import META_UM_LINKED_TO_ACCOUNT
+#from cura.UltimakerCloud.UltimakerCloudConstants import META_UM_LINKED_TO_ACCOUNT
 
 from .CuraStackBuilder import CuraStackBuilder
 
@@ -520,18 +520,18 @@ class MachineManager(QObject):
         # A network connection is only available if any output device is actually a network connected device.
         return any(d.connectionType == ConnectionType.NetworkConnection for d in self._printer_output_devices)
 
-    @pyqtProperty(bool, notify = printerConnectedStatusChanged)
-    def activeMachineHasCloudConnection(self) -> bool:
-        # A cloud connection is only available if any output device actually is a cloud connected device.
-        return any(d.connectionType == ConnectionType.CloudConnection for d in self._printer_output_devices)
+    #@pyqtProperty(bool, notify = printerConnectedStatusChanged)
+    #def activeMachineHasCloudConnection(self) -> bool:
+    #    # A cloud connection is only available if any output device actually is a cloud connected device.
+    #    return any(d.connectionType == ConnectionType.CloudConnection for d in self._printer_output_devices)
 
-    @pyqtProperty(bool, notify = printerConnectedStatusChanged)
-    def activeMachineHasCloudRegistration(self) -> bool:
-        return self.activeMachine is not None and ConnectionType.CloudConnection in self.activeMachine.configuredConnectionTypes
+    #@pyqtProperty(bool, notify = printerConnectedStatusChanged)
+    #def activeMachineHasCloudRegistration(self) -> bool:
+    #    return self.activeMachine is not None and ConnectionType.CloudConnection in self.activeMachine.configuredConnectionTypes
 
-    @pyqtProperty(bool, notify = printerConnectedStatusChanged)
-    def activeMachineIsUsingCloudConnection(self) -> bool:
-        return self.activeMachineHasCloudConnection and not self.activeMachineHasNetworkConnection
+    #@pyqtProperty(bool, notify = printerConnectedStatusChanged)
+    #def activeMachineIsUsingCloudConnection(self) -> bool:
+    #    return self.activeMachineHasCloudConnection and not self.activeMachineHasNetworkConnection
 
     def activeMachineNetworkKey(self) -> str:
         if self._global_container_stack:
