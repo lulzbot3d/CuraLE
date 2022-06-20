@@ -1,8 +1,8 @@
-// Copyright (c) 2016 Ultimaker B.V.
-// Uranium is released under the terms of the LGPLv3 or higher.
+// Copyright (c) 2018 Ultimaker B.V.
+// Cura is released under the terms of the LGPLv3 or higher.
 
-import QtQuick 2.8
-import QtQuick.Controls 2.1
+import QtQuick 2.7
+import QtQuick.Controls 2.0
 
 import UM 1.1 as UM
 import Cura 1.0 as Cura
@@ -24,10 +24,12 @@ SettingItem
         id: control
         anchors.fill: parent
 
-        model: Cura.ExtrudersModel
+        model: base.extrudersWithOptionalModel
+
+        Connections
         {
-            onModelChanged: control.color = getItem(control.currentIndex).color
-            addOptionalExtruder: true
+            target: base.extrudersWithOptionalModel
+            function onModelChanged() { control.color = base.extrudersWithOptionalModel.getItem(control.currentIndex).color }
         }
 
         textRole: "name"
@@ -86,14 +88,7 @@ SettingItem
             when: control.model.items.length > 0
         }
 
-        MouseArea
-        {
-            anchors.fill: parent
-            acceptedButtons: Qt.NoButton
-            onWheel: wheel.accepted = true;
-        }
-
-        property string color: "#fff"
+        property string color: "transparent"
 
         Binding
         {
@@ -101,22 +96,22 @@ SettingItem
             // explicit binding here otherwise we do not handle value changes after the model changes.
             target: control
             property: "color"
-            value: control.currentText != "" ? control.model.getItem(control.currentIndex).color : ""
+            value: control.currentText != "" ? control.model.getItem(control.currentIndex).color : "transparent"
         }
 
         indicator: UM.RecolorImage
         {
             id: downArrow
             x: control.width - width - control.rightPadding
-            y: control.topPadding + (control.availableHeight - height) / 2
+            y: control.topPadding + Math.round((control.availableHeight - height) / 2)
 
-            source: UM.Theme.getIcon("arrow_bottom")
+            source: UM.Theme.getIcon("ChevronSingleDown")
             width: UM.Theme.getSize("standard_arrow").width
             height: UM.Theme.getSize("standard_arrow").height
             sourceSize.width: width + 5 * screenScaleFactor
             sourceSize.height: width + 5 * screenScaleFactor
 
-            color: UM.Theme.getColor("setting_control_text");
+            color: UM.Theme.getColor("setting_control_button");
         }
 
         background: Rectangle
@@ -173,7 +168,6 @@ SettingItem
                 width: height
                 radius: Math.round(width / 2)
                 anchors.right: parent.right
-                anchors.rightMargin: downArrow.width + UM.Theme.getSize("setting_unit_margin").width
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.rightMargin: UM.Theme.getSize("thin_margin").width
 

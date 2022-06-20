@@ -18,7 +18,6 @@ from typing import Any, cast, Dict, List, Optional, TYPE_CHECKING, Union
 
 if TYPE_CHECKING:
     from cura.Settings.ExtruderStack import ExtruderStack
-    from cura.Settings.GlobalStack import GlobalStack
 
 
 class ExtruderManager(QObject):
@@ -28,8 +27,7 @@ class ExtruderManager(QObject):
     """
 
     def __init__(self, parent = None):
-        """Registers listeners and such to listen to changes to the extruders."""
-        
+        """Registers listeners and such to listen to changes to the extruders.""" 
         if ExtruderManager.__instance is not None:
             raise RuntimeError("Try to create singleton '%s' more than once" % self.__class__.__name__)
         ExtruderManager.__instance = self
@@ -41,29 +39,17 @@ class ExtruderManager(QObject):
         # Per machine, a dictionary of extruder container stack IDs. Only for separately defined extruders.
         self._extruder_trains = {}  # type: Dict[str, Dict[str, "ExtruderStack"]]
         self._active_extruder_index = -1  # Indicates the index of the active extruder stack. -1 means no active extruder stack
-        # self._selected_object_extruders = []
-        # self._global_container_stack_definition_id = None
-        # self._addCurrentMachineExtruders()
 
         # TODO; I have no idea why this is a union of ID's and extruder stacks. This needs to be fixed at some point.
         self._selected_object_extruders = []  # type: List[Union[str, "ExtruderStack"]]
 
         Selection.selectionChanged.connect(self.resetSelectedObjectExtruders)
 
-    ##  Signal to notify other components when the list of extruders for a machine definition changes.
     extrudersChanged = pyqtSignal(QVariant)
     """Signal to notify other components when the list of extruders for a machine definition changes."""
 
-    ## Signal to notify other components when the global container stack is switched to a definition
-    #  that has different extruders than the previous global container stack
-    globalContainerStackDefinitionChanged = pyqtSignal()
-
-    ##  Notify when the user switches the currently active extruder.
     activeExtruderChanged = pyqtSignal()
     """Notify when the user switches the currently active extruder."""
-
-    ## The signal notifies subscribers if extruders are added
-    # extrudersAdded = pyqtSignal()
 
     @pyqtProperty(str, notify = activeExtruderChanged)
     def activeExtruderStackId(self) -> Optional[str]:
@@ -81,16 +67,6 @@ class ExtruderManager(QObject):
             return self._extruder_trains[self._application.getGlobalContainerStack().getId()][str(self.activeExtruderIndex)].getId()
         except KeyError:  # Extruder index could be -1 if the global tab is selected, or the entry doesn't exist if the machine definition is wrong.
             return None
-
-    # ##  Return extruder count according to extruder trains.
-    # @pyqtProperty(int, notify = extrudersChanged)
-    # def extruderCount(self):
-    #     if not Application.getInstance().getGlobalContainerStack():
-    #         return 0  # No active machine, so no extruders.
-    #     try:
-    #         return len(self._extruder_trains[Application.getInstance().getGlobalContainerStack().getId()])
-    #     except KeyError:
-    #         return 0
 
     @pyqtProperty("QVariantMap", notify = extrudersChanged)
     def extruderIds(self) -> Dict[str, str]:
@@ -119,20 +95,9 @@ class ExtruderManager(QObject):
     def activeExtruderIndex(self) -> int:
         return self._active_extruder_index
 
-    ##  Gets the extruder name of an extruder of the currently active machine.
-    #
-    #   \param index The index of the extruder whose name to get.
-    # @pyqtSlot(int, result = str)
-    # def getExtruderName(self, index):
-    #     try:
-    #         return list(self.getActiveExtruderStacks())[index].getName()
-    #     except IndexError:
-    #         return ""
-
     selectedObjectExtrudersChanged = pyqtSignal()
     """Emitted whenever the selectedObjectExtruders property changes."""
 
-    ##  Provides a list of extruder IDs used by the current selected objects.
     @pyqtProperty("QVariantList", notify = selectedObjectExtrudersChanged)
     def selectedObjectExtruders(self) -> List[Union[str, "ExtruderStack"]]:
         """Provides a list of extruder IDs used by the current selected objects."""
@@ -293,22 +258,6 @@ class ExtruderManager(QObject):
             if support_roof_enabled:
                 used_extruder_stack_ids.add(self.extruderIds[self.extruderValueWithDefault(str(global_stack.getProperty("support_roof_extruder_nr", "value")))])
 
-        # # The platform adhesion extruders.
-        # used_adhesion_extruders = set()
-        # adhesion_type = global_stack.getProperty("adhesion_type", "value")
-        # if adhesion_type == "skirt" and (global_stack.getProperty("skirt_line_count", "value") > 0 or global_stack.getProperty("skirt_brim_minimal_length", "value") > 0):
-        #     used_adhesion_extruders.add("skirt_brim_extruder_nr")  # There's a skirt.
-        # if (adhesion_type == "brim" or global_stack.getProperty("prime_tower_brim_enable", "value")) and (global_stack.getProperty("brim_line_count", "value") > 0 or global_stack.getProperty("skirt_brim_minimal_length", "value") > 0):
-        #     used_adhesion_extruders.add("skirt_brim_extruder_nr")  # There's a brim or prime tower brim.
-        # if adhesion_type == "raft":
-        #     used_adhesion_extruders.add("raft_base_extruder_nr")
-        #     if global_stack.getProperty("raft_interface_layers", "value") > 0:
-        #         used_adhesion_extruders.add("raft_interface_extruder_nr")
-        #     if global_stack.getProperty("raft_surface_layers", "value") > 0:
-        #         used_adhesion_extruders.add("raft_surface_extruder_nr")
-        # for extruder_setting in used_adhesion_extruders:
-        #     extruder_str_nr = str(global_stack.getProperty(extruder_setting, "value"))
-
         # The platform adhesion extruder. Not used if using none.
         if global_stack.getProperty("adhesion_type", "value") != "none" or (
                 global_stack.getProperty("prime_tower_brim_enable", "value") and
@@ -318,6 +267,7 @@ class ExtruderManager(QObject):
                 extruder_str_nr = self._application.getMachineManager().defaultExtruderPosition
             if extruder_str_nr in self.extruderIds:
                 used_extruder_stack_ids.add(self.extruderIds[extruder_str_nr])
+        
         try:
             return [container_registry.findContainerStacks(id = stack_id)[0] for stack_id in used_extruder_stack_ids]
         except IndexError:  # One or more of the extruders was not found.
@@ -335,11 +285,6 @@ class ExtruderManager(QObject):
         global_stack = application.getGlobalContainerStack()
 
         # Starts with the adhesion extruder.
-        # adhesion_type = global_stack.getProperty("adhesion_type", "value")
-        # if adhesion_type in {"skirt", "brim"}:
-        #     return global_stack.getProperty("skirt_brim_extruder_nr", "value")
-        # if adhesion_type == "raft":
-        #     return global_stack.getProperty("raft_base_extruder_nr", "value")
         if global_stack.getProperty("adhesion_type", "value") != "none":
             return global_stack.getProperty("adhesion_extruder_nr", "value")
 
@@ -476,10 +421,6 @@ class ExtruderManager(QObject):
             Logger.log("w", "Could not find the variant %s", active_variant_name)
             return True
         active_variant_node = machine_node.variants[active_variant_name]
-        # try:
-        #     active_material_node = active_variant_node.materials[extruder_stack.material.getMetaDataEntry("base_file")]
-        # except KeyError:  # The material in this stack is not a supported material (e.g. wrong filament diameter, as loaded from a project file).
-        #     return False
         active_material_node = active_variant_node.materials[extruder_stack.material.getMetaDataEntry("base_file")]
 
         active_material_node_qualities = active_material_node.qualities
@@ -487,55 +428,6 @@ class ExtruderManager(QObject):
             return False
         return list(active_material_node_qualities.keys())[0] != "empty_quality"
 
-        #return result
-
-    ##  Get all extruder values for a certain setting. This function will skip the user settings container.
-    #
-    #   This is exposed to SettingFunction so it can be used in value functions.
-    #
-    #   \param key The key of the setting to retrieve values for.
-    #
-    #   \return A list of values for all extruders. If an extruder does not have a value, it will not be in the list.
-    #           If no extruder has the value, the list will contain the global value.
-    # @staticmethod
-    # def getDefaultExtruderValues(key):
-    #     global_stack = Application.getInstance().getGlobalContainerStack()
-    #     context = PropertyEvaluationContext(global_stack)
-    #     context.context["evaluate_from_container_index"] = 1  # skip the user settings container
-    #     context.context["override_operators"] = {
-    #         "extruderValue": ExtruderManager.getDefaultExtruderValue,
-    #         "extruderValues": ExtruderManager.getDefaultExtruderValues,
-    #         "resolveOrValue": ExtruderManager.getDefaultResolveOrValue
-    #     }
-
-    #     result = []
-    #     for extruder in ExtruderManager.getInstance().getMachineExtruders(global_stack.getId()):
-    #         # only include values from extruders that are "active" for the current machine instance
-    #         if int(extruder.getMetaDataEntry("position")) >= global_stack.getProperty("machine_extruder_count", "value", context = context):
-    #             continue
-
-    #         value = extruder.getRawProperty(key, "value", context = context)
-
-    #         if value is None:
-    #             continue
-
-    #         if isinstance(value, SettingFunction):
-    #             value = value(extruder, context = context)
-
-    #         result.append(value)
-
-    #     if not result:
-    #         result.append(global_stack.getProperty(key, "value", context = context))
-
-    #     return result
-
-    ##  Get all extruder values for a certain setting.
-    #
-    #   This is exposed to qml for display purposes
-    #
-    #   \param key The key of the setting to retrieve values for.
-    #
-    #   \return String representing the extruder values
     @pyqtSlot(str, result="QVariant")
     def getInstanceExtruderValues(self, key: str) -> List:
         """Get all extruder values for a certain setting.

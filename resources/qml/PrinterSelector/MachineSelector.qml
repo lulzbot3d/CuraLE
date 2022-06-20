@@ -12,22 +12,14 @@ Cura.ExpandablePopup
     id: machineSelector
 
     property bool isNetworkPrinter: Cura.MachineManager.activeMachineHasNetworkConnection
-    property bool isConnectedCloudPrinter: Cura.MachineManager.activeMachineHasCloudConnection
-    property bool isCloudRegistered: Cura.MachineManager.activeMachineHasCloudRegistration
+    // property bool isConnectedCloudPrinter: Cura.MachineManager.activeMachineHasCloudConnection
+    // property bool isCloudRegistered: Cura.MachineManager.activeMachineHasCloudRegistration
     property bool isGroup: Cura.MachineManager.activeMachineIsGroup
 
     readonly property string connectionStatus: {
         if (isNetworkPrinter)
         {
             return "printer_connected"
-        }
-        else if (isConnectedCloudPrinter && Cura.API.connectionStatus.isInternetReachable)
-        {
-            return "printer_cloud_connected"
-        }
-        else if (isCloudRegistered)
-        {
-            return "printer_cloud_not_available"
         }
         else
         {
@@ -95,10 +87,6 @@ Cura.ExpandablePopup
             {
                 return UM.Theme.getIcon("PrinterTriple", "medium")
             }
-            else if (isNetworkPrinter || isCloudRegistered)
-            {
-                return UM.Theme.getIcon("Printer", "medium")
-            }
             else
             {
                 return ""
@@ -140,7 +128,7 @@ Cura.ExpandablePopup
 
             color: connectionStatus == "printer_cloud_not_available" ? UM.Theme.getColor("cloud_unavailable") : UM.Theme.getColor("primary")
 
-            visible: isNetworkPrinter || isCloudRegistered
+            visible: false
 
             // Make a themable circle in the background so we can change it in other themes
             Rectangle

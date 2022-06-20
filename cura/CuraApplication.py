@@ -52,8 +52,8 @@ from UM.Workspace.WorkspaceReader import WorkspaceReader
 
 import cura.Settings.cura_empty_instance_containers
 from cura import ApplicationMetadata
-from cura.API import CuraAPI
-from cura.API.Account import Account
+# from cura.API import CuraAPI
+# from cura.API.Account import Account
 from cura.Arranging.Arrange import Arrange
 from cura.Arranging.ArrangeObjectsJob import ArrangeObjectsJob
 from cura.Arranging.ArrangeObjectsAllBuildPlatesJob import ArrangeObjectsAllBuildPlatesJob
@@ -161,6 +161,7 @@ class CuraApplication(QtApplication):
                          **kwargs)
 
         self.default_theme = "lulzbot-new"
+        # self.default_theme = "cura-light"
 
         self.change_log_url = "https://ultimaker.com/ultimaker-cura-latest-features?utm_source=cura&utm_medium=software&utm_campaign=cura-update-features"
         self.beta_change_log_url = "https://ultimaker.com/ultimaker-cura-beta-features?utm_source=cura&utm_medium=software&utm_campaign=cura-update-features"
@@ -218,7 +219,7 @@ class CuraApplication(QtApplication):
 
         self._quality_profile_drop_down_menu_model = None
         self._custom_quality_profile_drop_down_menu_model = None
-        self._cura_API = CuraAPI(self)
+        # self._cura_API = CuraAPI(self)
 
         self._physics = None
         self._volume = None
@@ -846,7 +847,7 @@ class CuraApplication(QtApplication):
         self._setting_visibility_presets_model = SettingVisibilityPresetsModel(self.getPreferences(), parent = self)
 
         # Initialize Cura API
-        self._cura_API.initialize()
+        # self._cura_API.initialize()
         self.processEvents()
         self._output_device_manager.start()
         self._welcome_pages_model.initialize()
@@ -1126,8 +1127,8 @@ class CuraApplication(QtApplication):
             self._custom_quality_profile_drop_down_menu_model = CustomQualityProfilesDropDownMenuModel(self)
         return self._custom_quality_profile_drop_down_menu_model
 
-    def getCuraAPI(self, *args, **kwargs) -> "CuraAPI":
-        return self._cura_API
+    # def getCuraAPI(self, *args, **kwargs) -> "CuraAPI":
+    #     return self._cura_API
 
     def registerObjects(self, engine):
         """Registers objects for the QML engine to use.
@@ -1204,9 +1205,9 @@ class CuraApplication(QtApplication):
 
         qmlRegisterType(PrinterOutputDevice, "Cura", 1, 0, "PrinterOutputDevice")
 
-        from cura.API import CuraAPI
-        qmlRegisterSingletonType(CuraAPI, "Cura", 1, 1, "API", self.getCuraAPI)
-        qmlRegisterUncreatableType(Account, "Cura", 1, 0, "AccountSyncState", "Could not create AccountSyncState")
+        # from cura.API import CuraAPI
+        # qmlRegisterSingletonType(CuraAPI, "Cura", 1, 1, "API", self.getCuraAPI)
+        # qmlRegisterUncreatableType(Account, "Cura", 1, 0, "AccountSyncState", "Could not create AccountSyncState")
 
         # As of Qt5.7, it is necessary to get rid of any ".." in the path for the singleton to work.
         actions_url = QUrl.fromLocalFile(os.path.abspath(Resources.getPath(CuraApplication.ResourceTypes.QmlFiles, "Actions.qml")))

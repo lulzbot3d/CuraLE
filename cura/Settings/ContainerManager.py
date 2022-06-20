@@ -1,4 +1,4 @@
-# Copyright (c) 2017 Ultimaker B.V.
+# Copyright (c) 2021 Ultimaker B.V.
 # Cura is released under the terms of the LGPLv3 or higher.
 
 import os
@@ -6,9 +6,8 @@ import urllib.parse
 import uuid
 from typing import Any, cast, Dict, List, TYPE_CHECKING, Union
 
-from PyQt5.QtCore import QObject, QUrl, QVariant
+from PyQt5.QtCore import QObject, QUrl
 from PyQt5.QtWidgets import QMessageBox
-from UM.Util import parseBool
 
 from UM.i18n import i18nCatalog
 from UM.FlameProfiler import pyqtSlot
@@ -21,7 +20,6 @@ from UM.Settings.ContainerRegistry import ContainerRegistry
 from UM.Settings.ContainerStack import ContainerStack
 from UM.Settings.DefinitionContainer import DefinitionContainer
 from UM.Settings.InstanceContainer import InstanceContainer
-from cura.QualityManager import QualityManager
 
 import cura.CuraApplication
 from cura.Machines.ContainerTree import ContainerTree
@@ -36,11 +34,6 @@ if TYPE_CHECKING:
 
 catalog = i18nCatalog("cura")
 
-##  Manager class that contains common actions to deal with containers in Cura.
-#
-#   This is primarily intended as a class to be able to perform certain actions
-#   from within QML. We want to be able to trigger things like removing a container
-#   when a certain action happens. This can be done through this class.
 class ContainerManager(QObject):
     """Manager class that contains common actions to deal with containers in Cura.
 
@@ -48,22 +41,6 @@ class ContainerManager(QObject):
     from within QML. We want to be able to trigger things like removing a container
     when a certain action happens. This can be done through this class.
     """
-
-    ##  Create a duplicate of the specified container
-    #
-    #   This will create and add a duplicate of the container corresponding
-    #   to the container ID.
-    #
-    #   \param container_id \type{str} The ID of the container to duplicate.
-    #
-    #   \return The ID of the new container, or an empty string if duplication failed.
-    @pyqtSlot(str, result = str)
-    def duplicateContainer(self, container_id):
-        #TODO: It should be able to duplicate a container of which only the metadata is known.
-        containers = self._container_registry.findContainers(id = container_id)
-        if not containers:
-            Logger.log("w", "Could duplicate container %s because it was not found.", container_id)
-            return ""
 
     def __init__(self, application: "CuraApplication") -> None:
         if ContainerManager.__instance is not None:
@@ -129,7 +106,7 @@ class ContainerManager(QObject):
         sub_item_changed = False
         if entries:
             root_name = entries.pop(0)
-            root = container.getMetaDataEntry(root_name)
+            root = root_material.getMetaDataEntry(root_name)
 
             item = root
             for _ in range(len(entries)):
@@ -167,101 +144,6 @@ class ContainerManager(QObject):
         :return: A string list with name filters.
         """
 
-        return True
-
-    ##  Get a setting property of the specified container.
-    #
-    #   This will get the specified property of the specified setting of the
-    #   specified container.
-    #
-    #   \param container_id The ID of the container to get the setting property
-    #   of.
-    #   \param setting_key The key of the setting to get the property of.
-    #   \param property_name The property to obtain.
-    #   \return The value of the specified property. The type of this property
-    #   value depends on the type of the property. For instance, the "value"
-    #   property of an integer setting will be a Python int, but the "value"
-    #   property of an enum setting will be a Python str.
-    @pyqtSlot(str, str, str, result = QVariant)
-    def getContainerProperty(self, container_id: str, setting_key: str, property_name: str):
-        containers = self._container_registry.findContainers(id = container_id)
-        if not containers:
-            Logger.log("w", "Could not get properties of container %s because it was not found.", container_id)
-            return ""
-        container = containers[0]
-
-        return container.getProperty(setting_key, property_name)
-
-    ##  Set the name of the specified container.
-    @pyqtSlot(str, str, result = bool)
-    def setContainerName(self, container_id, new_name):
-        if self._container_registry.isReadOnly(container_id):
-            Logger.log("w", "Cannot set name of read-only container %s.", container_id)
-            return False
-
-        containers = self._container_registry.findContainers(id = container_id) #We need to get the full container, not just metadata, since we need to know whether it's read-only.
-        if not containers:
-            Logger.log("w", "Could not set name of container %s because it was not found.", container_id)
-            return False
-
-        containers[0].setName(new_name)
-
-        return True
-
-    ##  Find instance containers matching certain criteria.
-    #
-    #   This effectively forwards to
-    #   ContainerRegistry::findInstanceContainersMetadata.
-    #
-    #   \param criteria A dict of key - value pairs to search for.
-    #
-    #   \return A list of container IDs that match the given criteria.
-    @pyqtSlot("QVariantMap", result = "QVariantList")
-    def findInstanceContainers(self, criteria):
-        return [entry["id"] for entry in self._container_registry.findInstanceContainersMetadata(**criteria)]
-
-    @pyqtSlot(str, result = bool)
-    def isContainerUsed(self, container_id):
-        Logger.log("d", "Checking if container %s is currently used", container_id)
-        # check if this is a material container. If so, check if any material with the same base is being used by any
-        # stacks.
-        container_ids_to_check = [container_id]
-        container_results = self._container_registry.findInstanceContainersMetadata(id = container_id, type = "material")
-        if container_results:
-            this_container = container_results[0]
-            material_base_file = this_container["id"]
-            if "base_file" in this_container:
-                material_base_file = this_container["base_file"]
-            # check all material container IDs with the same base
-            material_containers = self._container_registry.findInstanceContainersMetadata(base_file = material_base_file,
-                                                                                  type = "material")
-            if material_containers:
-                container_ids_to_check = [container["id"] for container in material_containers]
-
-        all_stacks = self._container_registry.findContainerStacks()
-        for stack in all_stacks:
-            for used_container_id in container_ids_to_check:
-                if used_container_id in [child.getId() for child in stack.getContainers()]:
-                    Logger.log("d", "The container is in use by %s", stack.getId())
-                    return True
-        return False
-
-    @pyqtSlot(str, result = str)
-    def makeUniqueName(self, original_name):
-        return self._container_registry.uniqueName(original_name)
-
-    ##  Get a list of string that can be used as name filters for a Qt File Dialog
-    #
-    #   This will go through the list of available container types and generate a list of strings
-    #   out of that. The strings are formatted as "description (*.extension)" and can be directly
-    #   passed to a nameFilters property of a Qt File Dialog.
-    #
-    #   \param type_name Which types of containers to list. These types correspond to the "type"
-    #                    key of the plugin metadata.
-    #
-    #   \return A string list with name filters.
-    @pyqtSlot(str, result = "QStringList")
-    def getContainerNameFilters(self, type_name):
         if not self._container_name_filters:
             self._updateContainerNameFilters()
 
@@ -273,15 +155,6 @@ class ContainerManager(QObject):
         filters.append("All Files (*)")
         return filters
 
-    ##  Export a container to a file
-    #
-    #   \param container_id The ID of the container to export
-    #   \param file_type The type of file to save as. Should be in the form of "description (*.extension, *.ext)"
-    #   \param file_url_or_string The URL where to save the file.
-    #
-    #   \return A dictionary containing a key "status" with a status code and a key "message" with a message
-    #           explaining the status.
-    #           The status code can be one of "error", "cancelled", "success"
     @pyqtSlot(str, str, QUrl, result = "QVariantMap")
     def exportContainer(self, container_id: str, file_type: str, file_url_or_string: Union[QUrl, str]) -> Dict[str, str]:
         """Export a container to a file
@@ -351,12 +224,6 @@ class ContainerManager(QObject):
         Logger.info("Successfully exported container to {path}".format(path = file_url))
         return {"status": "success", "message": "Successfully exported container", "path": file_url}
 
-    ##  Imports a profile from a file
-    #
-    #   \param file_url A URL that points to the file to import.
-    #
-    #   \return \type{Dict} dict with a 'status' key containing the string 'success' or 'error', and a 'message' key
-    #       containing a message for the user
     @pyqtSlot(QUrl, result = "QVariantMap")
     def importMaterialContainer(self, file_url_or_string: Union[QUrl, str]) -> Dict[str, str]:
         """Imports a profile from a file
@@ -412,12 +279,6 @@ class ContainerManager(QObject):
 
         return {"status": "success", "message": "Successfully imported container {0}".format(container.getName())}
 
-    ##  Update the current active quality changes container with the settings from the user container.
-    #
-    #   This will go through the active global stack and all active extruder stacks and merge the changes from the user
-    #   container into the quality_changes container. After that, the user container is cleared.
-    #
-    #   \return \type{bool} True if successful, False if not.
     @pyqtSlot(result = bool)
     def updateQualityChanges(self) -> bool:
         """Update the current active quality changes container with the settings from the user container.
@@ -467,7 +328,6 @@ class ContainerManager(QObject):
 
         return True
 
-    ##  Clear the top-most (user) containers of the active stacks.
     @pyqtSlot()
     def clearUserContainers(self) -> None:
         """Clear the top-most (user) containers of the active stacks."""
@@ -592,69 +452,6 @@ class ContainerManager(QObject):
     @pyqtSlot(QUrl, result = "QVariantMap")
     def importProfile(self, file_url: QUrl) -> Dict[str, str]:
         """Import single profile, file_url does not have to end with curaprofile"""
-
-    ##  Create a quality changes container for a specified quality container.
-    #
-    #   \param quality_container The quality container to create a changes container for.
-    #   \param new_name The name of the new quality_changes container.
-    #   \param machine_definition The machine definition this quality changes container is specific to.
-    #   \param extruder_id
-    #
-    #   \return A new quality_changes container with the specified container as base.
-    def _createQualityChanges(self, quality_container, new_name, machine_definition, extruder_id):
-        base_id = machine_definition.getId() if extruder_id is None else extruder_id
-
-        # Create a new quality_changes container for the quality.
-        quality_changes = InstanceContainer(self._createUniqueId(base_id, new_name))
-        quality_changes.setName(new_name)
-        quality_changes.addMetaDataEntry("type", "quality_changes")
-        quality_changes.addMetaDataEntry("quality_type", quality_container.getMetaDataEntry("quality_type"))
-
-        # If we are creating a container for an extruder, ensure we add that to the container
-        if extruder_id is not None:
-            quality_changes.addMetaDataEntry("extruder", extruder_id)
-
-        # If the machine specifies qualities should be filtered, ensure we match the current criteria.
-        if not machine_definition.getMetaDataEntry("has_machine_quality"):
-            quality_changes.setDefinition("fdmprinter")
-        else:
-            quality_changes.setDefinition(QualityManager.getInstance().getParentMachineDefinition(machine_definition).getId())
-
-        from cura.CuraApplication import CuraApplication
-        quality_changes.addMetaDataEntry("setting_version", CuraApplication.SettingVersion)
-        return quality_changes
-
-
-    ##  Import profiles from a list of file_urls.
-    #   Each QUrl item must end with .curaprofile, or it will not be imported.
-    #
-    #   \param QVariant<QUrl>, essentially a list with QUrl objects.
-    #   \return Dict with keys status, text
-    @pyqtSlot("QVariantList", result="QVariantMap")
-    def importProfiles(self, file_urls):
-        status = "ok"
-        results = {"ok": [], "error": []}
-        for file_url in file_urls:
-            if not file_url.isValid():
-                continue
-            path = file_url.toLocalFile()
-            if not path:
-                continue
-            if not path.endswith(".curaprofile"):
-                continue
-
-            single_result = self._container_registry.importProfile(path)
-            if single_result["status"] == "error":
-                status = "error"
-            results[single_result["status"]].append(single_result["message"])
-
-        return {
-            "status": status,
-            "message": "\n".join(results["ok"] + results["error"])}
-
-    ##  Import single profile, file_url does not have to end with curaprofile
-    @pyqtSlot(QUrl, result="QVariantMap")
-    def importProfile(self, file_url):
         if not file_url.isValid():
             return {"status": "error", "message": catalog.i18nc("@info:status", "Invalid file URL:") + " " + str(file_url)}
         path = file_url.toLocalFile()

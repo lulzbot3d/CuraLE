@@ -1,13 +1,13 @@
-# Copyright (c) 2017 Ultimaker B.V.
+# Copyright (c) 2021 Ultimaker B.V.
 # Cura is released under the terms of the LGPLv3 or higher.
 
 import os
-import os.path
 import re
 import configparser
 
 from typing import Any, cast, Dict, Optional, List, Union, Tuple
 from PyQt5.QtWidgets import QMessageBox
+from trimesh import available_formats
 
 from UM.Decorators import override
 from UM.Settings.ContainerFormatError import ContainerFormatError
@@ -16,7 +16,6 @@ from UM.Settings.ContainerRegistry import ContainerRegistry
 from UM.Settings.ContainerStack import ContainerStack
 from UM.Settings.InstanceContainer import InstanceContainer
 from UM.Settings.SettingInstance import SettingInstance
-from UM.Application import Application
 from UM.Logger import Logger
 from UM.Message import Message
 from UM.Platform import Platform
@@ -27,8 +26,6 @@ from cura.ReaderWriters.ProfileWriter import ProfileWriter
 
 from . import ExtruderStack
 from . import GlobalStack
-from .ContainerManager import ContainerManager
-from .ExtruderManager import ExtruderManager
 
 import cura.CuraApplication
 from cura.Settings.cura_empty_instance_containers import empty_quality_container
@@ -41,6 +38,7 @@ from .DatabaseHandlers.QualityDatabaseHandler import QualityDatabaseHandler
 from .DatabaseHandlers.VariantDatabaseHandler import VariantDatabaseHandler
 
 catalog = i18nCatalog("cura")
+
 
 class CuraContainerRegistry(ContainerRegistry):
     def __init__(self, *args, **kwargs):
@@ -146,7 +144,6 @@ class CuraContainerRegistry(ContainerRegistry):
                     return False
 
         profile_writer = self._findProfileWriter(extension, description)
-
         try:
             if profile_writer is None:
                 raise Exception("Unable to find a profile writer")
@@ -217,13 +214,6 @@ class CuraContainerRegistry(ContainerRegistry):
 
         plugin_registry = PluginRegistry.getInstance()
         extension = file_name.split(".")[-1]
-
-        global_container_stack = Application.getInstance().getGlobalContainerStack()
-        if not global_container_stack:
-            return
-
-        machine_extruders = list(ExtruderManager.getInstance().getMachineExtruders(global_container_stack.getId()))
-        machine_extruders.sort(key = lambda k: k.getMetaDataEntry("position"))
 
         for plugin_id, meta_data in self._getIOPlugins("profile_reader"):
             if meta_data["profile_reader"][0]["extension"] != extension:
@@ -352,8 +342,15 @@ class CuraContainerRegistry(ContainerRegistry):
                     else:  # More extruders in the imported file than in the machine.
                         continue  # Delete the additional profiles.
 
-                    result = self._configureProfile(profile, profile_id, new_name)
-                    if result is not None:
+                    configuration_successful, message = self._configureProfile(profile, profile_id, new_name, expected_machine_definition)
+                    if configuration_successful:
+                        additional_message = message
+                    else:
+                        # Remove any profiles that were added.
+                        for profile_id in profile_ids_added + [profile.getId()]:
+                            self.removeContainer(profile_id)
+                        if not message:
+                            message = ""
                         return {"status": "error", "message": catalog.i18nc(
                                 "@info:status Don't translate the XML tag <filename>!",
                                 "Failed to import profile from <filename>{0}</filename>:",
@@ -373,7 +370,7 @@ class CuraContainerRegistry(ContainerRegistry):
         return {"status": "error", "message": catalog.i18nc("@info:status", "Profile {0} has an unknown file type or is corrupted.", file_name)}
 
     @override(ContainerRegistry)
-    def load(self):
+    def load(self) -> None:
         super().load()
         self._registerSingleExtrusionMachinesExtruderStacks()
         self._connectUpgradedExtruderStacksToMachines()
@@ -462,15 +459,10 @@ class CuraContainerRegistry(ContainerRegistry):
         if not quality_type:
             return False, catalog.i18nc("@info:status", "Profile is missing a quality type.")
 
-        quality_type_criteria = {"quality_type": quality_type}
-        if self._machineHasOwnQualities():
-            profile.setDefinition(self._activeQualityDefinition().getId())
-            if self._machineHasOwnMaterials():
-                active_material_id = self._activeMaterialId()
-                if active_material_id and active_material_id != "empty":  # only update if there is an active material
-                    profile.addMetaDataEntry("material", active_material_id)
-                    quality_type_criteria["material"] = active_material_id
-
+        global_stack = cura.CuraApplication.CuraApplication.getInstance().getGlobalContainerStack()
+        if not global_stack:
+            return False, catalog.i18nc("@info:status", "There is no active printer yet.")
+        
         definition_id = ContainerTree.getInstance().machines[global_stack.definition.getId()].quality_definition
         profile.setDefinition(definition_id)
 
@@ -484,10 +476,8 @@ class CuraContainerRegistry(ContainerRegistry):
         # Check to make sure the imported profile actually makes sense in context of the current configuration.
         # This prevents issues where importing a "draft" profile for a machine without "draft" qualities would report as
         # successfully imported but then fail to show up.
-        from cura.QualityManager import QualityManager
-        qualities = QualityManager.getInstance()._getFilteredContainersForStack(machine_definition, materials, **quality_type_criteria)
-        if not qualities:
-            return catalog.i18nc("@info:status", "Could not find a quality type {0} for the current configuration.", quality_type)
+        available_quality_groups_dict = {name: quality_group for name, quality_group in ContainerTree.getInstance().getCurrentQualityGroups().items() if quality_group.is_available}
+        all_quality_groups_dict = ContainerTree.getInstance().getCurrentQualityGroups()
 
         # If the quality type doesn't exist at all in the quality_groups of this machine, reject the profile
         if quality_type not in all_quality_groups_dict:
@@ -538,36 +528,6 @@ class CuraContainerRegistry(ContainerRegistry):
     def _convertContainerStack(self, container: ContainerStack) -> Union[ExtruderStack.ExtruderStack, GlobalStack.GlobalStack]:
         """Convert an "old-style" pure ContainerStack to either an Extruder or Global stack."""
 
-        if definition:
-            return definition
-        return None
-
-    ##  Returns true if the current machine requires its own materials
-    #   \return True if the current machine requires its own materials
-    def _machineHasOwnMaterials(self):
-        global_container_stack = Application.getInstance().getGlobalContainerStack()
-        if global_container_stack:
-            return global_container_stack.getMetaDataEntry("has_materials", False)
-        return False
-
-    ##  Gets the ID of the active material
-    #   \return the ID of the active material or the empty string
-    def _activeMaterialId(self):
-        global_container_stack = Application.getInstance().getGlobalContainerStack()
-        if global_container_stack and global_container_stack.material:
-            return global_container_stack.material.getId()
-        return ""
-
-    ##  Returns true if the current machine requires its own quality profiles
-    #   \return true if the current machine requires its own quality profiles
-    def _machineHasOwnQualities(self):
-        global_container_stack = Application.getInstance().getGlobalContainerStack()
-        if global_container_stack:
-            return parseBool(global_container_stack.getMetaDataEntry("has_machine_quality", False))
-        return False
-
-    ##  Convert an "old-style" pure ContainerStack to either an Extruder or Global stack.
-    def _convertContainerStack(self, container):
         assert type(container) == ContainerStack
 
         container_type = container.getMetaDataEntry("type")
@@ -577,7 +537,6 @@ class CuraContainerRegistry(ContainerRegistry):
 
         Logger.log("d", "Converting ContainerStack {stack} to {type}", stack = container.getId(), type = container_type)
 
-        new_stack = None
         if container_type == "extruder_train":
             new_stack = ExtruderStack.ExtruderStack(container.getId())
         else:
@@ -592,14 +551,14 @@ class CuraContainerRegistry(ContainerRegistry):
 
         return new_stack
 
-    def _registerSingleExtrusionMachinesExtruderStacks(self):
+    def _registerSingleExtrusionMachinesExtruderStacks(self) -> None:
         machines = self.findContainerStacks(type = "machine", machine_extruder_trains = {"0": "fdmextruder"})
         for machine in machines:
             extruder_stacks = self.findContainerStacks(type = "extruder_train", machine = machine.getId())
             if not extruder_stacks:
                 self.addExtruderStackForSingleExtrusionMachine(machine, "fdmextruder")
 
-    def _onContainerAdded(self, container):
+    def _onContainerAdded(self, container: ContainerInterface) -> None:
         # We don't have all the machines loaded in the beginning, so in order to add the missing extruder stack
         # for single extrusion machines, we subscribe to the containerAdded signal, and whenever a global stack
         # is added, we check to see if an extruder stack needs to be added.
@@ -707,14 +666,12 @@ class CuraContainerRegistry(ContainerRegistry):
             variant = empty_variant
         extruder_stack.variant = variant
 
-        material_id = "default"
         if machine.material.getId() not in ("empty", "empty_material"):
             material = machine.material
         else:
             material = empty_material
         extruder_stack.material = material
 
-        quality_id = "default"
         if machine.quality.getId() not in ("empty", "empty_quality"):
             quality = machine.quality
         else:
