@@ -4,8 +4,8 @@
 # ---------
 # General constants used in Cura
 # ---------
-DEFAULT_CURA_APP_NAME = "cura"
-DEFAULT_CURA_DISPLAY_NAME = "Ultimaker Cura"
+DEFAULT_CURA_APP_NAME = "curale"
+DEFAULT_CURA_DISPLAY_NAME = "Cura LulzBot Edition"
 DEFAULT_CURA_VERSION = "master"
 DEFAULT_CURA_BUILD_TYPE = ""
 DEFAULT_CURA_DEBUG_MODE = False
@@ -46,10 +46,6 @@ except ImportError:
 # Various convenience flags indicating what kind of Cura build it is.
 __ENTERPRISE_VERSION_TYPE = "enterprise"
 IsEnterpriseVersion = CuraBuildType.lower() == __ENTERPRISE_VERSION_TYPE
-IsAlternateVersion = CuraBuildType.lower() not in [DEFAULT_CURA_BUILD_TYPE, __ENTERPRISE_VERSION_TYPE]
-# NOTE: IsAlternateVersion is to make it possibile to have 'non-numbered' versions, at least as presented to the user.
-#       (Internally, it'll still have some sort of version-number, but the user is never meant to see it in the GUI).
-#       Warning: This will also change (some of) the icons/splash-screen to the 'work in progress' alternatives!
 
 try:
     from cura.CuraVersion import CuraAppDisplayName  # type: ignore

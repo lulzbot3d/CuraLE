@@ -21,7 +21,6 @@ from cura.Machines.ContainerTree import ContainerTree
 from cura.Scene.BuildPlateDecorator import BuildPlateDecorator
 from cura.Scene.ConvexHullDecorator import ConvexHullDecorator
 from cura.Scene.CuraSceneNode import CuraSceneNode
-from cura.Scene.BuildPlateDecorator import BuildPlateDecorator
 from cura.Scene.SliceableObjectDecorator import SliceableObjectDecorator
 from cura.Scene.ZOffsetDecorator import ZOffsetDecorator
 from cura.Settings.ExtruderManager import ExtruderManager
@@ -50,10 +49,6 @@ class ThreeMFReader(MeshReader):
 
         self._supported_extensions = [".3mf"]
         self._root = None
-        self._namespaces = {
-            "3mf": "http://schemas.microsoft.com/3dmanufacturing/core/2015/02",
-            "cura": "http://software.ultimaker.com/xml/cura/3mf/2015/10"
-        }
         self._base_name = ""
         self._unit = None
         self._empty_project = False
@@ -207,7 +202,6 @@ class ThreeMFReader(MeshReader):
     def _read(self, file_name: str) -> Union[SceneNode, List[SceneNode]]:
         self._empty_project = False
         result = []
-        self._object_count = 0  # Used to name objects as there is no node name yet.
         # The base object of 3mf is a zipped archive.
         try:
             archive = zipfile.ZipFile(file_name, "r")

@@ -3,6 +3,7 @@ certifi==2019.11.28
 cffi==1.14.1
 chardet==3.0.4
 colorlog
+comtypes==1.1.7
 cryptography==3.4.8
 decorator==4.4.0
 idna==2.8
@@ -28,6 +29,7 @@ python-utils==2.3.0
 pywin32==303
 scipy==1.8.0rc2
 sentry-sdk==0.13.5
+shapely[vectorized]==1.8.0
 six==1.12.0
 trimesh==3.9.36
 twisted==21.2.0

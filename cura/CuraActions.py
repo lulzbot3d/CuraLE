@@ -1,20 +1,21 @@
-# Copyright (c) 2017 Ultimaker B.V.
+# Copyright (c) 2018 Ultimaker B.V.
 # Cura is released under the terms of the LGPLv3 or higher.
 
 from PyQt5.QtCore import QObject, QUrl
 from PyQt5.QtGui import QDesktopServices
-from UM.FlameProfiler import pyqtSlot
+from typing import List, cast
 
 from UM.Event import CallFunctionEvent
+from UM.FlameProfiler import pyqtSlot
 from UM.Application import Application
 from UM.Math.Vector import Vector
 from UM.Scene.Selection import Selection
 from UM.Scene.Iterator.BreadthFirstIterator import BreadthFirstIterator
 from UM.Operations.GroupedOperation import GroupedOperation
 from UM.Operations.RemoveSceneNodeOperation import RemoveSceneNodeOperation
-from UM.Operations.SetTransformOperation import SetTransformOperation
 from UM.Operations.TranslateOperation import TranslateOperation
 
+import cura.CuraApplication
 from cura.Operations.SetParentOperation import SetParentOperation
 from cura.MultiplyObjectsJob import MultiplyObjectsJob
 from cura.Settings.SetObjectExtruderOperation import SetObjectExtruderOperation
@@ -23,26 +24,26 @@ from cura.Settings.ExtruderManager import ExtruderManager
 from cura.Operations.SetBuildPlateNumberOperation import SetBuildPlateNumberOperation
 
 from UM.Logger import Logger
+from UM.Scene.SceneNode import SceneNode
 
 
 class CuraActions(QObject):
-    def __init__(self, parent = None):
+    def __init__(self, parent: QObject = None) -> None:
         super().__init__(parent)
 
     @pyqtSlot()
-    def openDocumentation(self):
+    def openDocumentation(self) -> None:
         # Starting a web browser from a signal handler connected to a menu will crash on windows.
         # So instead, defer the call to the next run of the event loop, since that does work.
         # Note that weirdly enough, only signal handlers that open a web browser fail like that.
-        event = CallFunctionEvent(self._openUrl, [QUrl("http://ultimaker.com/en/support/software")], {})
-        Application.getInstance().functionEvent(event)
+        event = CallFunctionEvent(self._openUrl, [QUrl("http://lulzbot.com/support/cura")], {})
+        cura.CuraApplication.CuraApplication.getInstance().functionEvent(event)
 
     @pyqtSlot()
-    def openBugReportPage(self):
-        event = CallFunctionEvent(self._openUrl, [QUrl("http://github.com/Ultimaker/Cura/issues")], {})
-        Application.getInstance().functionEvent(event)
+    def openBugReportPage(self) -> None:
+        event = CallFunctionEvent(self._openUrl, [QUrl("http://gitlab.com/lulzbot3d/cura-le/cura-lulzbot/~/issues")], {})
+        cura.CuraApplication.CuraApplication.getInstance().functionEvent(event)
 
-    ##  Reset camera position and direction to default
     @pyqtSlot()
     def homeCamera(self) -> None:
         """Reset camera position and direction to default"""
@@ -55,9 +56,9 @@ class CuraActions(QObject):
             camera.setPerspective(True)
             camera.lookAt(Vector(0, 0, 0))
 
-    ##  Center all objects in the selection
     @pyqtSlot()
     def centerSelection(self) -> None:
+        """Center all objects in the selection"""
         operation = GroupedOperation()
         for node in Selection.getAllSelectedObjects():
             current_node = node
@@ -78,9 +79,6 @@ class CuraActions(QObject):
             operation.addOperation(center_operation)
         operation.push()
 
-    ##  Multiply all objects in the selection
-    #
-    #   \param count The number of times to multiply the selection.
     @pyqtSlot(int)
     def multiplySelection(self, count: int) -> None:
         """Multiply all objects in the selection
@@ -92,13 +90,14 @@ class CuraActions(QObject):
         job = MultiplyObjectsJob(Selection.getAllSelectedObjects(), count, min_offset = max(min_offset, 8))
         job.start()
 
-    ##  Delete all selected objects.
     @pyqtSlot()
     def deleteSelection(self) -> None:
-        if not Application.getInstance().getController().getToolsEnabled():
+        """Delete all selected objects."""
+
+        if not cura.CuraApplication.CuraApplication.getInstance().getController().getToolsEnabled():
             return
 
-        removed_group_nodes = []
+        removed_group_nodes = [] #type: List[SceneNode]
         op = GroupedOperation()
         nodes = Selection.getAllSelectedObjects()
         for node in nodes:
@@ -112,26 +111,23 @@ class CuraActions(QObject):
                     op.addOperation(RemoveSceneNodeOperation(group_node))
 
             # Reset the print information
-            Application.getInstance().getController().getScene().sceneChanged.emit(node)
+            cura.CuraApplication.CuraApplication.getInstance().getController().getScene().sceneChanged.emit(node)
 
         op.push()
 
-    ##  Set the extruder that should be used to print the selection.
-    #
-    #   \param extruder_id The ID of the extruder stack to use for the selected objects.
     @pyqtSlot(str)
     def setExtruderForSelection(self, extruder_id: str) -> None:
+        """Set the extruder that should be used to print the selection.
+
+        :param extruder_id: The ID of the extruder stack to use for the selected objects.
+        """
         operation = GroupedOperation()
 
         nodes_to_change = []
         for node in Selection.getAllSelectedObjects():
-            # Do not change any nodes that already have the right extruder set.
-            if node.callDecoration("getActiveExtruder") == extruder_id:
-                continue
-
             # If the node is a group, apply the active extruder to all children of the group.
             if node.callDecoration("isGroup"):
-                for grouped_node in BreadthFirstIterator(node):
+                for grouped_node in BreadthFirstIterator(node): #type: ignore
                     if grouped_node.callDecoration("getActiveExtruder") == extruder_id:
                         continue
 
@@ -190,29 +186,19 @@ class CuraActions(QObject):
     @pyqtSlot()
     def openFilamentsPage(self):
         event = CallFunctionEvent(self._openUrl, [QUrl("https://www.lulzbot.com/store/filament")], {})
-        Application.getInstance().functionEvent(event)
+        cura.CuraApplication.CuraApplication.getInstance().functionEvent(event)
 
     @pyqtSlot()
     def openPrintersPage(self):
         event = CallFunctionEvent(self._openUrl, [QUrl("https://www.lulzbot.com/store/printers")], {})
-        Application.getInstance().functionEvent(event)
+        cura.CuraApplication.CuraApplication.getInstance().functionEvent(event)
 
     @pyqtSlot()
     def openToolheadsPage(self):
         event = CallFunctionEvent(self._openUrl, [QUrl("https://www.lulzbot.com/store/tool-heads")], {})
-        Application.getInstance().functionEvent(event)
+        cura.CuraApplication.CuraApplication.getInstance().functionEvent(event)
 
     @pyqtSlot()
     def openPartsPage(self):
         event = CallFunctionEvent(self._openUrl, [QUrl("https://www.lulzbot.com/store/parts")], {})
-        Application.getInstance().functionEvent(event)
-
-    @pyqtSlot()
-    def openMerchandisePage(self):
-        event = CallFunctionEvent(self._openUrl, [QUrl("https://www.lulzbot.com/store/merchandise")], {})
-        Application.getInstance().functionEvent(event)
-
-    @pyqtSlot(str)
-    def openLink(self, link):
-        event = CallFunctionEvent(self._openUrl, [QUrl(link)], {})
-        Application.getInstance().functionEvent(event)
+        cura.CuraApplication.CuraApplication.getInstance().functionEvent(event)

@@ -7,7 +7,6 @@ import configparser
 
 from typing import Any, cast, Dict, Optional, List, Union, Tuple
 from PyQt5.QtWidgets import QMessageBox
-from trimesh import available_formats
 
 from UM.Decorators import override
 from UM.Settings.ContainerFormatError import ContainerFormatError

@@ -5,7 +5,7 @@ from typing import Type, TYPE_CHECKING, Optional, List
 from io import BlockingIOError
 import keyring
 from keyring.backend import KeyringBackend
-from keyring.errors import NoKeyringError, PasswordSetError, KeyringLocked, KeyringError
+from keyring.errors import NoKeyringError, PasswordSetError, KeyringLocked
 
 from UM.Logger import Logger
 
@@ -52,10 +52,6 @@ class KeyringAttribute:
             except UnicodeDecodeError:
                 self._store_secure = False
                 Logger.log("w", "The password retrieved from the keyring cannot be used because it contains characters that cannot be decoded.")
-                return getattr(instance, self._name)
-            except KeyringError:
-                self._store_secure = False
-                Logger.logException("w", "Unknown keyring error.")
                 return getattr(instance, self._name)
         else:
             return getattr(instance, self._name)

@@ -11,7 +11,6 @@ import Arcus #For typing.
 from PyQt5.QtCore import QCoreApplication
 
 from UM.Job import Job
-from UM.Application import Application
 from UM.Logger import Logger
 from UM.Scene.SceneNode import SceneNode
 from UM.Settings.ContainerStack import ContainerStack #For typing.
@@ -45,7 +44,6 @@ class StartJobResult(IntEnum):
     ObjectsWithDisabledExtruder = 8
 
 
-##  Formatter class that handles token expansion in start/end gcod
 class GcodeStartEndFormatter(Formatter):
     """Formatter class that handles token expansion in start/end gcode"""
 
@@ -64,10 +62,6 @@ class GcodeStartEndFormatter(Formatter):
             try:
                 extruder_nr = int(key_fragments[1])
             except ValueError:
-                extruder_nr = -1
-
-            key_fragments = [fragment.strip() for fragment in key.split(',')]
-            if len(key_fragments) == 2:
                 try:
                     extruder_nr = int(kwargs["-1"][key_fragments[1]]) # get extruder_nr values from the global stack #TODO: How can you ever provide the '-1' kwarg?
                 except (KeyError, ValueError):
