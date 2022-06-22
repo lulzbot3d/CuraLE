@@ -10,17 +10,14 @@ import numpy
 from UM.Backend import Backend
 from UM.Job import Job
 from UM.Logger import Logger
-from UM.Math.AxisAlignedBox import AxisAlignedBox
 from UM.Math.Vector import Vector
 from UM.Message import Message
 from cura.Scene.CuraSceneNode import CuraSceneNode
 from UM.i18n import i18nCatalog
-from UM.Preferences import Preferences
 
 from cura.CuraApplication import CuraApplication
 from cura.LayerDataBuilder import LayerDataBuilder
 from cura.LayerDataDecorator import LayerDataDecorator
-from cura.PrintStatisticsDecorator import PrintStatisticsDecorator
 from cura.LayerPolygon import LayerPolygon
 from cura.Scene.CuraSceneNode import CuraSceneNode
 from cura.Scene.GCodeListDecorator import GCodeListDecorator
@@ -28,7 +25,7 @@ from cura.Settings.ExtruderManager import ExtruderManager
 
 catalog = i18nCatalog("cura")
 
-PositionOptional = NamedTuple("PositionOptional", [("x", Optional[float]), ("y", Optional[float]), ("z", Optional[float]), ("f", Optional[float]), ("e", Optional[float])])
+PositionOptional = NamedTuple("Position", [("x", Optional[float]), ("y", Optional[float]), ("z", Optional[float]), ("f", Optional[float]), ("e", Optional[float])])
 Position = NamedTuple("Position", [("x", float), ("y", float), ("z", float), ("f", float), ("e", List[float])])
 
 
@@ -64,10 +61,6 @@ class FlavorParser:
         self._layer_data_builder = LayerDataBuilder()
         self._is_absolute_positioning = True    # It can be absolute (G90) or relative (G91)
         self._is_absolute_extrusion = True  # It can become absolute (M82, default) or relative (M83)
-        self._total_move_length = 0
-        self._extrusion_retraction_length = 0
-        self._extrusion_max_amounts = [0]
-        self._extrusion_saved_value = [0]
 
     @staticmethod
     def _getValue(line: str, code: str) -> Optional[Union[str, int, float]]:
@@ -331,14 +324,9 @@ class FlavorParser:
         self._filament_diameter = global_stack.extruderList[self._extruder_number].getProperty("material_diameter", "value")
 
         scene_node = CuraSceneNode()
-        # Override getBoundingBox function of the sceneNode, as this node should return a bounding box, but there is no
-        # real data to calculate it from.
-        scene_node.getBoundingBox = self._getNullBoundingBox
 
         gcode_list = []
         self._is_layers_in_file = False
-
-        Logger.log("d", "Opening file %s" % file_name)
 
         self._extruder_offsets = self._extruderOffsets()  # dict with index the extruder number. can be empty
 

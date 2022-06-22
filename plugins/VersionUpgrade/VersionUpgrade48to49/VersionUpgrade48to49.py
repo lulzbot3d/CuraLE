@@ -7,7 +7,7 @@ import io
 import json
 
 from UM.VersionUpgrade import VersionUpgrade
-from cura.API import Account
+# from cura.API import Account
 
 
 class VersionUpgrade48to49(VersionUpgrade):
@@ -36,10 +36,10 @@ class VersionUpgrade48to49(VersionUpgrade):
 
         # If the account scope in 4.8 is outdated, delete it so that the user is enforced to log in again and get the
         # correct permissions.
-        if "ultimaker_auth_data" in parser["general"]:
-            ultimaker_auth_data = json.loads(parser["general"]["ultimaker_auth_data"])
-            if set(Account.CLIENT_SCOPES.split(" ")) - set(ultimaker_auth_data["scope"].split(" ")):
-                parser["general"]["ultimaker_auth_data"] = "{}"
+        #if "ultimaker_auth_data" in parser["general"]:
+        #    ultimaker_auth_data = json.loads(parser["general"]["ultimaker_auth_data"])
+        #    if set(Account.CLIENT_SCOPES.split(" ")) - set(ultimaker_auth_data["scope"].split(" ")):
+        #        parser["general"]["ultimaker_auth_data"] = "{}"
 
         result = io.StringIO()
         parser.write(result)
