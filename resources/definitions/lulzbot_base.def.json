@@ -5,7 +5,7 @@
     "version": 2,
     "metadata":
     {
-        "manufacturer": "Fargo Additive Machinery Equipment 3D, LLC",
+        "manufacturer": "Fargo Additive Manufacturing Equipment 3D, LLC",
         "first_start_actions":
         [
             "MachineSettingsAction"
@@ -14,7 +14,7 @@
         "file_formats": "text/x-gcode;application/x-stl-ascii;application/x-stl-binary;application/x-wavefront-obj;application/x3g",
         "visible": false,
         "has_materials": true,
-        "author": "Aleph Objects, Inc.",
+        "author": "Fargo Additive Manufacturing Equipment 3D, LLC",
         "has_machine_materials": true,
         "has_machine_quality": true,
         "required_actions": ["ChangeToolHead"],

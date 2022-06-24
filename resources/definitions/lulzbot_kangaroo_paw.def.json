@@ -1,0 +1,56 @@
+{
+    "id": "lulzbot_kangaroo_paw",
+    "name": "LulzBot Bio",
+    "inherits": "lulzbot_kangaroo_paw_base",
+    "version": 2,
+    "metadata":
+    {
+        "machine_priority": "99",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_kangaroo_paw_extruder"
+        },
+        "type": "machine",
+        "category": "LulzBot",
+        "firmware_toolhead_name": "SingleExtruder",
+        "preferred_material": "*Sodium_Alginate*",
+        "preferred_quality": "*High Detail*",
+        "file_formats": "text/x-gcode",
+        "visible": true,
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/?pk_campaign=software-cura",
+        "base_machine": "lulzbot_kangaroo_paw_base",
+        "base_machine_name": "LulzBot Bio",
+        "user_toolhead_name": "Syringe Pump",
+        "default_extrusion_rate": 60
+    },
+    "overrides":
+    {
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_kangaroo_paw_start"
+        },
+        "machine_end_gcode":       
+        {
+            "default_value_from_file": "lulzbot_kangaroo_paw_end"
+        },
+        "machine_head_polygon": {
+            "default_value": [
+                [0, 162],
+                [0, 0],
+                [162, 162],
+                [162, 0]
+            ]
+        },
+        "machine_abort_gcode":
+        {
+            "default_value": "G28 Z"
+        },
+        "machine_level_x_axis_gcode":
+        {
+            "default_value_from_file": "lulzbot_hibiscus_level_x_axis"
+        },
+         "machine_center_is_zero": {
+            "default_value": true
+        }
+    }
+}

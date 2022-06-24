@@ -1,0 +1,262 @@
+{
+    "id": "lulzbot_kangaroo_paw_base",
+    "name": "LulzBot Bio",
+    "inherits": "lulzbot_base",
+    "version": 2,
+    "metadata":
+    {
+        "type": "machine",
+        "platform": "lulzbot_kangaroo_paw.stl",
+        "platform_offset":
+        [
+            -100,
+            -13,
+            100
+        ],
+        "file_formats": "text/x-gcode",
+        "visible": false,
+        "syringe_printer": true,
+        "printer_info_link": "https://www.lulzbot.com/store/printers/?pk_campaign=software-cura",
+        "firmware_last_version": "2.0.0.174",
+        "default_eeprom_state": false
+    },
+    "overrides":
+    {
+        "firmware_machine_type":
+        {
+            "resolve": "'LulzBot Bio'"
+        },
+        "machine_disallowed_areas": { "default_value": [
+            [[85,85],[85,77],[77,85]],
+            [[-85,85],[-85,77],[-77,85]],
+            [[85,-85],[85,-77],[77,-85]],
+            [[-85,-85],[-85,-77],[-77,-85]]
+        ]},
+        "machine_name":
+        {
+            "default_value": "LulzBot Bio"
+        },
+        "machine_heated_bed":
+        {
+            "default_value": true
+        },
+        "machine_width":
+        {
+            "default_value": 162
+        },
+        "machine_depth":
+        {
+            "default_value": 162
+        },
+        "machine_height":
+        {
+            "default_value": 180
+        },
+	"machine_has_lcd":
+        {
+        "type": "bool",
+        "default_value": true,
+        "enabled": true,
+        "label": "LCD",
+        "description": "LCD"
+        },
+        "machine_center_is_zero":
+        {
+            "default_value": false
+        },
+        "machine_nozzle_size":
+        {
+            "default_value": 0.5
+        },
+        "machine_gcode_flavor":
+        {
+            "default_value": "RepRap (Marlin/Sprinter)"
+        },
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_hibiscus_start"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_hibiscus_end"
+        },
+        "machine_wipe_gcode":
+        {
+            "default_value_from_file": "lulzbot_hibiscus_wipe"
+        },
+        "machine_level_x_axis_gcode":
+        {
+            "default_value_from_file": "lulzbot_hibiscus_level_x_axis"
+        },
+        "machine_acceleration":
+        {
+            "default_value": 1000
+        },
+        "acceleration_print":
+        {
+            "default_value": 1000
+        },
+        "acceleration_infill":
+        {
+            "default_value": 1000
+        },
+        "acceleration_wall":
+        {
+            "default_value": 1000
+        },
+        "acceleration_wall_0":
+        {
+            "default_value": 1000
+        },
+        "acceleration_wall_x":
+        {
+            "default_value": 1000
+        },
+        "acceleration_topbottom":
+        {
+            "default_value": 1000
+        },
+        "acceleration_support":
+        {
+            "default_value": 1000
+        },
+        "acceleration_support_infill":
+        {
+            "default_value": 1000
+        },
+        "acceleration_support_interface":
+        {
+            "default_value": 1000
+        },
+        "acceleration_prime_tower":
+        {
+            "default_value": 1000
+        },
+        "acceleration_travel":
+        {
+            "default_value": 1000,
+            "value": "acceleration_print if magic_spiralize else 2000"
+        },
+        "acceleration_layer_0":
+        {
+            "default_value": 1000
+        },
+        "acceleration_print_layer_0":
+        {
+            "default_value": 1000
+        },
+        "acceleration_travel_layer_0":
+        {
+            "default_value": 1000
+        },
+        "acceleration_skirt_brim":
+        {
+            "default_value": 1000
+        },
+        "jerk_print":
+        {
+            "default_value": 20
+        },
+        "jerk_infill":
+        {
+            "default_value": 20
+        },
+        "jerk_wall":
+        {
+            "default_value": 20
+        },
+        "jerk_wall_0":
+        {
+            "default_value": 20
+        },
+        "jerk_wall_x":
+        {
+            "default_value": 20
+        },
+        "jerk_topbottom":
+        {
+            "default_value": 20
+        },
+        "jerk_support":
+        {
+            "default_value": 20
+        },
+        "jerk_support_infill":
+        {
+            "default_value": 20
+        },
+        "jerk_support_interface":
+        {
+            "default_value": 20
+        },
+        "jerk_prime_tower":
+        {
+            "default_value": 20
+        },
+        "jerk_travel":
+        {
+            "default_value": 20,
+            "value": "jerk_print if magic_spiralize else 20"
+        },
+        "jerk_layer_0":
+        {
+            "default_value": 20
+        },
+        "jerk_print_layer_0":
+        {
+            "default_value": 20
+        },
+        "jerk_travel_layer_0":
+        {
+            "default_value": 20
+        },
+        "jerk_skirt_brim":
+        {
+            "default_value": 20
+        },
+        "prime_tower_position_x":
+        {
+            "default_value": 20
+        },
+        "prime_tower_position_y":
+        {
+            "default_value": 20
+        },
+        "machine_baudrate":
+        {
+            "default_value": "250000"
+        },
+        "machine_max_feedrate_x":
+        {
+            "default_value": 800
+        },
+        "machine_max_feedrate_y":
+        {
+            "default_value": 800
+        },
+        "machine_max_feedrate_z":
+        {
+            "default_value": 8
+        },
+        "machine_max_feedrate_e":
+        {
+            "default_value": 40
+        },
+        "machine_max_acceleration_x":
+        {
+            "default_value": 9000
+        },
+        "machine_max_acceleration_y":
+        {
+            "default_value": 9000
+        },
+        "machine_max_acceleration_z":
+        {
+            "default_value": 100
+        },
+        "machine_max_acceleration_e":
+        {
+            "default_value": 10000
+        }
+    }
+}

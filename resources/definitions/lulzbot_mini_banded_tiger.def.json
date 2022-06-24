@@ -1,0 +1,33 @@
+{
+    "id": "lulzbot_mini_banded_tiger",
+    "name": "LulzBot Mini | HS | 0.8 mm",
+    "inherits": "lulzbot_mini",
+    "version": 2,
+    "metadata":
+    {
+        "priority": "04",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_mini_banded_tiger_extruder"
+        },
+        "type": "machine",
+        "visible": true,
+        "user_toolhead_name": "HS | 0.8 mm",
+        "firmware_toolhead_name": "HardenedSteel"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "LulzBot Mini | HS | 0.8 mm"
+        },
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_mini_banded_tiger_start"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_mini_end"
+        }
+    }
+}

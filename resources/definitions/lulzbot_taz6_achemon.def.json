@@ -1,0 +1,34 @@
+{
+    "id": "LulzBot_TAZ6_Achemon",
+    "name": "LulzBot TAZ 6 | SL | 0.25 mm (Micro)",
+    "inherits": "lulzbot_taz6",
+    "version": 2,
+    "metadata":
+    {
+        "priority": "03",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_taz6_achemon_extruder"
+        },
+        "type": "machine",
+        "visible": true,
+        "user_toolhead_name": "SL | 0.25 mm (Micro)",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/sl-tool-head-small-layer-micro-025-mm?pk_campaign=software-cura",
+        "firmware_toolhead_name": "SmallLayer"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "LulzBot TAZ 6 | SL | 0.25 mm (Micro)"
+        },
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_taz6_achemon_start"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_taz6_end"
+        }
+    }
+}

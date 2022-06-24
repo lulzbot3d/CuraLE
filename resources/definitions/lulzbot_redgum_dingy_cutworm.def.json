@@ -1,0 +1,64 @@
+{
+    "id": "lulzbot_redgum_dingy_cutworm",
+    "name": "TAZ Workhorse | HS+ | 1.2mm",
+    "inherits": "lulzbot_redgum_base",
+    "version": 2,
+    "metadata":
+    {
+        "type": "machine",
+        "visible": true,
+        "priority": "04",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_redgum_dingy_cutworm"
+        },
+        "supported_actions": ["MachineSettingsAction"],
+        "firmware_toolhead_name": "HardenedSteelPlus",
+        "base_machine": "LulzBot TAZ Workhorse",
+        "base_machine_name": "LulzBot TAZ Workhorse",
+        "preferred_material": "*PolyLite_PLA*",
+        "user_toolhead_name": "HS+ | 1.2mm",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-hs-plus-tool-head-hardened-steel-1_2-mm?pk_campaign=software-cura",
+        "default_category": "All"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "LulzBot Workhorse HS+"
+        },
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_redgum_dingy_cutworm_start"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_redgum_dingy_cutworm_end"
+        },
+        "machine_level_x_axis_gcode":
+        {
+            "default_value_from_file": "lulzbot_quiver_level_x_axis"
+        },
+        "machine_extruder_count": {
+            "default_value": 1
+        },
+        "machine_width":
+        {
+            "default_value": 282
+        },
+        "machine_depth":
+        {
+            "default_value": 282
+        },
+        "machine_height":
+        {
+            "default_value": 286
+        },
+        "machine_wipe_gcode":
+        {
+            "default_value_from_file": "lulzbot_redgum_dingy_cutworm_wipe"
+        },
+        "layer_start_x": { "value": "100" },
+        "layer_start_y": { "value": "100" }
+    }
+}
