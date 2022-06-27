@@ -5,7 +5,7 @@ from UM.Signal import signalemitter
 from UM.Message import Message
 from UM.Util import parseBool
 
-from cura.PrinterOutputDevice import PrinterOutputDevice, ConnectionState
+from cura.PrinterOutput.PrinterOutputDevice import PrinterOutputDevice, ConnectionState
 
 from PyQt5.QtNetwork import QHttpMultiPart, QHttpPart, QNetworkRequest, QNetworkAccessManager, QNetworkReply
 from PyQt5.QtCore import QUrl, QTimer, pyqtSignal, pyqtProperty, pyqtSlot, QCoreApplication
@@ -441,7 +441,7 @@ class OctoPrintOutputDevice(PrinterOutputDevice):
                     last_process_events = time()
 
             job_name = Application.getInstance().getPrintInformation().jobName.strip()
-            if job_name is "":
+            if job_name == "":
                 job_name = "untitled_print"
             file_name = "%s.gcode" % job_name
 

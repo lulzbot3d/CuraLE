@@ -3,6 +3,6 @@
     "author": "fieldOfView",
     "version": "3.2.2",
     "description": "Enables networked printing and monitoring with OctoPrint",
-    "api": 4,
+    "api": "7.9.0",
     "i18n-catalog": "cura"
 }

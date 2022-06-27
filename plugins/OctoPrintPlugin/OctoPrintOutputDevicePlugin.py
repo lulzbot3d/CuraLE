@@ -28,7 +28,7 @@ class OctoPrintOutputDevicePlugin(OutputDevicePlugin):
         Application.getInstance().globalContainerStackChanged.connect(self.reCheckConnections)
 
         # Load custom instances from preferences
-        self._preferences = Preferences.getInstance()
+        self._preferences = Application.getInstance().getPreferences()
         self._preferences.addPreference("octoprint/manual_instances", "{}")
 
         try:
