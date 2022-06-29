@@ -100,7 +100,8 @@ class ConvexHullDecorator(SceneNodeDecorator):
         return self._add2DAdhesionMargin(hull)
 
     def getConvexHull(self) -> Optional[Polygon]:
-        """Get the unmodified 2D projected convex hull of the node (if any) 
+        """Get the unmodified 2D projected convex hull of the node (if any)
+
         In case of one-at-a-time, this includes adhesion and head+fans clearance
         """
         if self._node is None:
@@ -119,7 +120,7 @@ class ConvexHullDecorator(SceneNodeDecorator):
         return self._compute2DConvexHull()
 
     def getConvexHullHeadFull(self) -> Optional[Polygon]:
-        """For one at a time this is the convex hull of the node with the full head size
+        """For one at the time this is the convex hull of the node with the full head size
         In case of printing all at once this is None.
         """
         if self._node is None:
@@ -211,7 +212,7 @@ class ConvexHullDecorator(SceneNodeDecorator):
         self._convex_hull_node = hull_node
 
     def _onSettingValueChanged(self, key: str, property_name: str) -> None:
-        if property_name != "value": # Not the value that was changed.
+        if property_name != "value":  # Not the value that was changed.
             return
 
         if key in self._affected_settings:

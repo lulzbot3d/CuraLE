@@ -11,7 +11,7 @@ from UM.Util import parseBool
 from cura.PrinterOutput.PrinterOutputDevice import ConnectionType
 from cura.Settings.CuraContainerRegistry import CuraContainerRegistry
 from cura.Settings.GlobalStack import GlobalStack
-from cura.UltimakerCloud.UltimakerCloudConstants import META_CAPABILITIES  # To filter on the printer's capabilities.
+# from cura.UltimakerCloud.UltimakerCloudConstants import META_CAPABILITIES  # To filter on the printer's capabilities.
 
 
 class GlobalStacksModel(ListModel):
@@ -130,7 +130,7 @@ class GlobalStacksModel(ListModel):
             if self._filter_online_only and not is_online:
                 continue
 
-            capabilities = set(container_stack.getMetaDataEntry(META_CAPABILITIES, "").split(","))
+            capabilities = set(container_stack.getMetaDataEntry("capabilities", "").split(","))
             if set(self._filter_capabilities) - capabilities:  # Not all required capabilities are met.
                 continue
 

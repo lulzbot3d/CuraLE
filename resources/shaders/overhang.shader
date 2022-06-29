@@ -152,9 +152,11 @@ fragment41core =
     }
 
 [defaults]
-u_ambientColor = [0.15, 0.15, 0.15, 1.0]
+// u_ambientColor = [0.15, 0.15, 0.15, 1.0]
+u_ambientColor = [0.3, 0.3, 0.3, 1.0]
 u_diffuseColor = [1.0, 0.79, 0.14, 1.0]
-u_specularColor = [0.2, 0.2, 0.2, 1.0]
+// u_specularColor = [0.2, 0.2, 0.2, 1.0]
+u_specularColor = [0.4, 0.4, 0.4, 1.0]
 u_overhangColor = [1.0, 0.0, 0.0, 1.0]
 u_faceColor = [0.0, 0.0, 1.0, 1.0]
 u_shininess = 20.0

@@ -46,7 +46,7 @@ class TextManager(QObject):
                         line = line.replace("[", "")
                         line = line.replace("]", "")
                         open_version = Version(line)
-                        if open_version > Version([14, 99, 99]): # Bit of a hack: We released the 15.x.x versions before 2.x
+                        if open_version > Version([14, 99, 99]):  # Bit of a hack: We released the 15.x.x versions before 2.x
                             open_version = Version([0, open_version.getMinor(), open_version.getRevision(), open_version.getPostfixVersion()])
                         open_header = ""
                         change_logs_dict[open_version] = collections.OrderedDict()
