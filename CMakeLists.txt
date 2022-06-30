@@ -6,8 +6,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/
 
 include(GNUInstallDirs)
 
-set(URANIUM_DIR "${CMAKE_SOURCE_DIR}/../Uranium" CACHE DIRECTORY "The location of the Uranium repository")
-set(URANIUM_SCRIPTS_DIR "${URANIUM_DIR}/scripts" CACHE DIRECTORY "The location of the scripts directory of the Uranium repository")
+set(URANIUM_DIR "${CMAKE_SOURCE_DIR}/../uranium" CACHE DIRECTORY "The location of the uranium repository")
+set(URANIUM_SCRIPTS_DIR "${URANIUM_DIR}/scripts" CACHE DIRECTORY "The location of the scripts directory of the uranium repository")
 
 # Tests
 include(CuraTests)
@@ -19,8 +19,8 @@ endif()
 
 option(GENERATE_TRANSLATIONS "Should the translations be generated?" ON)
 
-set(CURA_APP_NAME "cura" CACHE STRING "Short name of Cura, used for configuration folder")
-set(CURA_APP_DISPLAY_NAME "Ultimaker Cura" CACHE STRING "Display name of Cura")
+set(CURA_APP_NAME "cura-le" CACHE STRING "Short name of Cura, used for configuration folder")
+set(CURA_APP_DISPLAY_NAME "Cura LulzBot Edition" CACHE STRING "Display name of Cura")
 set(CURA_VERSION "master" CACHE STRING "Version name of Cura")
 set(CURA_BUILDTYPE "" CACHE STRING "Build type of Cura, eg. 'PPA'")
 configure_file(${CMAKE_SOURCE_DIR}/cura-lulzbot.desktop.in ${CMAKE_BINARY_DIR}/cura-lulzbot.desktop @ONLY)
