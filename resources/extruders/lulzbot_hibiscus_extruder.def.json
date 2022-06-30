@@ -1,11 +1,11 @@
 {
+    "id": "lulzbot_hibiscus_extruder",
     "version": 2,
-    "name": "SE",
+    "name": "Hot End",
     "inherits": "fdmextruder",
     "metadata": {
         "machine": "lulzbot_hibiscus",
-        "position": "0",
-        "quality_definition": "lulzbot_hibiscus_extruder"
+        "position": "0"
     },
 
     "overrides": {

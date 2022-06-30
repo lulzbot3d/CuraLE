@@ -1,11 +1,11 @@
 {
     "id": "LulzBot_Taz5_MOARstruder",
-    "name": "LulzBot TAZ 5 MOARstruder",
+    "name": "TAZ 5 MOARstruder",
     "inherits": "lulzbot_taz5",
     "version": 2,
     "metadata":
     {
-        "priority": "08",
+        "priority": "07",
         "machine_extruder_trains":
         {
             "0": "lulzbot_taz5_moarstruder_extruder"

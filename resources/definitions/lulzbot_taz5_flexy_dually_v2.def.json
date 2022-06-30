@@ -1,6 +1,6 @@
 {
     "id": "LulzBot_Taz5_Flexy_Dually_v2",
-    "name": "LulzBot TAZ 5 FlexyDually v2",
+    "name": "TAZ 5 FlexyDually v2",
     "inherits": "lulzbot_taz5",
     "version": 2,
     "metadata":

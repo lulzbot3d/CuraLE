@@ -1,7 +1,7 @@
 {
     "id": "LulzBot_TAZ5_Twoolhead",
-    "name": "LulzBot TAZ 5 Twoolhead",
-    "inherits": "lulzbot_taz5",
+    "name": "Twoolhead TAZ 5",
+    "inherits": "lulzbot_taz_base",
     "version": 2,
     "metadata":
     {

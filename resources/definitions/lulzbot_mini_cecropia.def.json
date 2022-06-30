@@ -1,18 +1,18 @@
 {
     "id": "lulzbot_mini_cecropia",
-    "name": "LulzBot Mini | SE | 0.5 mm",
+    "name": "LulzBot Mini | SE | 0.50 mm",
     "inherits": "lulzbot_mini",
     "version": 2,
     "metadata":
     {
-        "priority": "02",
+        "priority": "01",
         "machine_extruder_trains":
         {
             "0": "lulzbot_mini_cecropia_extruder"
         },
         "type": "machine",
         "visible": true,
-        "user_toolhead_name": "SE | 0.5 mm (Aero v2)",
+        "user_toolhead_name": "SE | 0.50 mm | Nickel Plated Copper",
         "firmware_toolhead_name": "SingleExtruderAeroV2"
     },
     "overrides":

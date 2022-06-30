@@ -1,18 +1,18 @@
 {
     "id": "lulzbot_taz5_achemon",
-    "name": "LulzBot TAZ 5 | SL | 0.25 mm (Micro)",
+    "name": "TAZ 5 | SL | 0.25 mm",
     "inherits": "lulzbot_taz5",
     "version": 2,
     "metadata":
     {
-        "priority": "03",
+        "priority": "02",
         "machine_extruder_trains":
         {
             "0": "lulzbot_taz5_achemon_extruder"
         },
         "type": "machine",
         "visible": true,
-        "user_toolhead_name": "SL | 0.25 mm (Micro)",
+        "user_toolhead_name": "SL | 0.25 mm | Nickel Plated Copper",
         "firmware_toolhead_name": "SmallLayer"
     },
     "overrides":
