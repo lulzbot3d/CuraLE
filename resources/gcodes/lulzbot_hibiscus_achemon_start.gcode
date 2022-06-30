@@ -1,4 +1,12 @@
 ;This G-Code has been generated specifically for the LulzBot Mini 2 with SL 0.25mm Tool Head
+;
+;The following lines can be uncommented for printer specific fine tuning
+;More information can be found at https://marlinfw.org/meta/gcode/
+;
+;M92 E420                 ;Set Axis Steps-per-unit
+;M301 P21.0 I1.78 D61.93  ;Set Hotend PID
+;M906 E960                ;TMC Motor Current
+;
 M73 P0                  ; clear GLCD progress bar
 M75 					; Start GLCD Print Timer
 G26 					; clear potential 'probe fail' condition
@@ -10,39 +18,10 @@ G92 E0 					; set extruder position to 0
 M140 S{material_bed_temperature_layer_0} ; start bed heating up
 G28 					; home all axes
 G0 X0 Y187 Z156 F200 			; move away from endstops
-M117 Mini 2 Wiping...			; progress indicator message on LCD
-M109 R{material_soften_temperature} 	; soften filament before retraction
-G1 E-15 F75 				; retract filament
-M109 R{material_wipe_temperature} 	; wait for extruder to reach wiping temp
-G1 X45 Y176 F11520 			; move above wiper pad
-G1 Z0 F1200 				; push nozzle into wiper
-G1 X45 Y178 Z-.5 F4000		; wiping
-G1 X55 Y176 Z-.5 F4000		; wiping
-G1 X45 Y177 Z0 F4000		; wiping
-G1 X55 Y176 F4000		; wiping
-G1 X45 Y178 F4000		; wiping
-G1 X55 Y176 F4000		; wiping
-G1 X45 Y178 F4000		; wiping
-G1 X55 Y176 F4000		; wiping
-G1 X60 Y178 F4000		; wiping
-G1 X80 Y176 F4000		; wiping
-G1 X60 Y178 F4000		; wiping
-G1 X80 Y176 F4000		; wiping
-G1 X60 Y178 F4000		; wiping
-G1 X90 Y176 F4000		; wiping
-G1 X80 Y178 F4000		; wiping
-G1 X100 Y176 F4000		; wiping
-G1 X80 Y178 F4000		; wiping
-G1 X100 Y176 F4000		; wiping
-G1 X80 Y178 F4000		; wiping
-G1 X100 Y176 F4000		; wiping
-G1 X110 Y178 F4000		; wiping
-G1 X100 Y176 F4000		; wiping
-G1 X110 Y178 F4000		; wiping
-G1 X100 Y176 F4000		; wiping
-G1 X110 Y178 F4000		; wiping
-G1 X115 Y176 Z-0.5 F1000	; wiping
-G1 Z10					; raise extruder
+M109 R{material_wipe_temperature}                  ; wait for extruder to reach wiping temp
+;M206 X0 Y0 Z0              ; uncomment to adjust wipe position (+X ~ nozzle moves left)(+Y ~ nozzle moves forward)(+Z ~ nozzle moves down)
+G12                         ; wiping sequence
+M206 X0 Y0 Z0               ; reseting stock nozzle position ### CAUTION: changing this line can affect print quality ###
 G28 X0 Y0				; home X and Y
 M109 R{material_probe_temperature}	; wait for extruder to reach probe temp
 M204 S300				; set probing acceleration
@@ -57,5 +36,5 @@ M400					; wait for moves to finish
 M117 Heating...				; progress indicator message on LCD
 M109 R{material_print_temperature_layer_0} ; wait for extruder to reach initial printing temp
 M190 R{material_bed_temperature_layer_0} ; wait for bed to reach printing temp
-G1 Z2 E0 F75				; prime tiny bit of filment into the nozzle
+G1 Z2 E0 F75				; prime tiny bit of filament into the nozzle
 M117 Mini 2 Printing...		; progress indicator message on LCD
