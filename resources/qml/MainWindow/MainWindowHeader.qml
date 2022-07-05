@@ -83,62 +83,62 @@ Item
         ExclusiveGroup { id: mainWindowHeaderMenuGroup }
     }
 
-    Controls2.Button
-    {
-        id: marketplaceButton
-        height: Math.round(0.5 * UM.Theme.getSize("main_window_header").height)
-        anchors
-        {
-            verticalCenter: parent.verticalCenter
-            right: applicationSwitcher.left
-            rightMargin: UM.Theme.getSize("default_margin").width
-        }
+    // Controls2.Button
+    // {
+    //     id: marketplaceButton
+    //     height: Math.round(0.5 * UM.Theme.getSize("main_window_header").height)
+    //     anchors
+    //     {
+    //         verticalCenter: parent.verticalCenter
+    //         right: applicationSwitcher.left
+    //         rightMargin: UM.Theme.getSize("default_margin").width
+    //     }
 
-        hoverEnabled: true
-        onClicked: Cura.Actions.openMarketplace.trigger()
+    //     hoverEnabled: true
+    //     onClicked: Cura.Actions.openMarketplace.trigger()
 
-        contentItem: Label
-        {
-            text: "Marketplace" //Ultimaker considers this a product name, so it shouldn't be translated.
-            font: UM.Theme.getFont("default")
-            color: UM.Theme.getColor("primary_text")
-            width: contentWidth
-            verticalAlignment: Text.AlignVCenter
-        }
+    //     contentItem: Label
+    //     {
+    //         text: "Marketplace" //Ultimaker considers this a product name, so it shouldn't be translated.
+    //         font: UM.Theme.getFont("default")
+    //         color: UM.Theme.getColor("primary_text")
+    //         width: contentWidth
+    //         verticalAlignment: Text.AlignVCenter
+    //     }
 
-        background: Rectangle
-        {
-            radius: UM.Theme.getSize("action_button_radius").width
-            color: UM.Theme.getColor("main_window_header_background")
-            border.width: UM.Theme.getSize("default_lining").width
-            border.color: UM.Theme.getColor("primary_text")
+    //     background: Rectangle
+    //     {
+    //         radius: UM.Theme.getSize("action_button_radius").width
+    //         color: UM.Theme.getColor("main_window_header_background")
+    //         border.width: UM.Theme.getSize("default_lining").width
+    //         border.color: UM.Theme.getColor("primary_text")
 
-            Rectangle
-            {
-                anchors.fill: parent
-                radius: parent.radius
-                color: UM.Theme.getColor("primary_text")
-                opacity: marketplaceButton.hovered ? 0.2 : 0
-                Behavior on opacity { NumberAnimation { duration: 100 } }
-            }
-        }
+    //         Rectangle
+    //         {
+    //             anchors.fill: parent
+    //             radius: parent.radius
+    //             color: UM.Theme.getColor("primary_text")
+    //             opacity: marketplaceButton.hovered ? 0.2 : 0
+    //             Behavior on opacity { NumberAnimation { duration: 100 } }
+    //         }
+    //     }
 
-        Cura.NotificationIcon
-        {
-            anchors
-            {
-                horizontalCenter: parent.right
-                verticalCenter: parent.top
-            }
-            visible: CuraApplication.getPackageManager().packagesWithUpdate.length > 0
+    //     Cura.NotificationIcon
+    //     {
+    //         anchors
+    //         {
+    //             horizontalCenter: parent.right
+    //             verticalCenter: parent.top
+    //         }
+    //         visible: CuraApplication.getPackageManager().packagesWithUpdate.length > 0
 
-            labelText:
-            {
-                const itemCount = CuraApplication.getPackageManager().packagesWithUpdate.length
-                return itemCount > 9 ? "9+" : itemCount
-            }
-        }
-    }
+    //         labelText:
+    //         {
+    //             const itemCount = CuraApplication.getPackageManager().packagesWithUpdate.length
+    //             return itemCount > 9 ? "9+" : itemCount
+    //         }
+    //     }
+    // }
 
     ApplicationSwitcher
     {
@@ -146,19 +146,20 @@ Item
         anchors
         {
             verticalCenter: parent.verticalCenter
-            right: accountWidget.left
-            rightMargin: UM.Theme.getSize("default_margin").width
-        }
-    }
-
-    AccountWidget
-    {
-        id: accountWidget
-        anchors
-        {
-            verticalCenter: parent.verticalCenter
+            // right: accountWidget.left
             right: parent.right
             rightMargin: UM.Theme.getSize("default_margin").width
         }
     }
+
+    // AccountWidget
+    // {
+    //     id: accountWidget
+    //     anchors
+    //     {
+    //         verticalCenter: parent.verticalCenter
+    //         right: parent.right
+    //         rightMargin: UM.Theme.getSize("default_margin").width
+    //     }
+    // }
 }
