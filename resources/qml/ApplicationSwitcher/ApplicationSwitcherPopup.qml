@@ -21,7 +21,7 @@ Popup
     contentItem: Grid
     {
         id: ultimakerPlatformLinksGrid
-        columns: 3
+        columns: 2
         spacing: UM.Theme.getSize("default_margin").width
 
         Repeater
@@ -29,66 +29,31 @@ Popup
             model:
             [
                 {
-                    displayName: catalog.i18nc("@label:button", "My printers"),
-                    thumbnail: UM.Theme.getIcon("PrinterTriple", "high"),
-                    description: catalog.i18nc("@tooltip:button", "Monitor printers in Ultimaker Digital Factory."),
-                    link: "https://digitalfactory.ultimaker.com/app/printers?utm_source=cura&utm_medium=software&utm_campaign=switcher-digital-factory-printers",
-                    DFAccessRequired: true
-                },
-                {
-                    displayName: "Digital Library", //Not translated, since it's a brand name.
-                    thumbnail: UM.Theme.getIcon("Library", "high"),
-                    description: catalog.i18nc("@tooltip:button", "Create print projects in Digital Library."),
-                    link: "https://digitalfactory.ultimaker.com/app/library?utm_source=cura&utm_medium=software&utm_campaign=switcher-library",
-                    DFAccessRequired: true
-                },
-                {
-                    displayName: catalog.i18nc("@label:button", "Print jobs"),
-                    thumbnail: UM.Theme.getIcon("FoodBeverages"),
-                    description: catalog.i18nc("@tooltip:button", "Monitor print jobs and reprint from your print history."),
-                    link: "https://digitalfactory.ultimaker.com/app/print-jobs?utm_source=cura&utm_medium=software&utm_campaign=switcher-digital-factory-printjobs",
-                    DFAccessRequired: true
-                },
-                {
-                    displayName: "Ultimaker Marketplace", //Not translated, since it's a brand name.
-                    thumbnail: UM.Theme.getIcon("Shop", "high"),
-                    description: catalog.i18nc("@tooltip:button", "Extend Ultimaker Cura with plugins and material profiles."),
-                    link: "https://marketplace.ultimaker.com/?utm_source=cura&utm_medium=software&utm_campaign=switcher-marketplace-materials",
-                    DFAccessRequired: false
-                },
-                {
-                    displayName: "Ultimaker Academy", //Not translated, since it's a brand name.
-                    thumbnail: UM.Theme.getIcon("Knowledge"),
-                    description: catalog.i18nc("@tooltip:button", "Become a 3D printing expert with Ultimaker e-learning."),
-                    link: "https://academy.ultimaker.com/?utm_source=cura&utm_medium=software&utm_campaign=switcher-academy",
-                    DFAccessRequired: false
-                },
-                {
-                    displayName: catalog.i18nc("@label:button", "Ultimaker support"),
+                    displayName: catalog.i18nc("@label:button", "LulzBot\nSupport"),
                     thumbnail: UM.Theme.getIcon("Help", "high"),
-                    description: catalog.i18nc("@tooltip:button", "Learn how to get started with Ultimaker Cura."),
-                    link: "https://support.ultimaker.com/?utm_source=cura&utm_medium=software&utm_campaign=switcher-support",
+                    description: catalog.i18nc("@tooltip:button", "Contact LulzBot support."),
+                    link: "https://lulzbot.com/support/contact-us",
                     DFAccessRequired: false
                 },
                 {
-                    displayName: catalog.i18nc("@label:button", "Ask a question"),
+                    displayName: catalog.i18nc("@label:button", "Ask the Community"),
                     thumbnail: UM.Theme.getIcon("Speak", "high"),
-                    description: catalog.i18nc("@tooltip:button", "Consult the Ultimaker Community."),
-                    link: "https://community.ultimaker.com/?utm_source=cura&utm_medium=software&utm_campaign=switcher-community",
+                    description: catalog.i18nc("@tooltip:button", "Discuss with the LulzBot Community."),
+                    link: "https://forum.lulzbot.com/",
                     DFAccessRequired: false
                 },
                 {
-                    displayName: catalog.i18nc("@label:button", "Report a bug"),
+                    displayName: catalog.i18nc("@label:button", "Report a Bug"),
                     thumbnail: UM.Theme.getIcon("Bug", "high"),
                     description: catalog.i18nc("@tooltip:button", "Let developers know that something is going wrong."),
-                    link: "https://github.com/Ultimaker/Cura/issues/new/choose",
+                    link: "https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot/-/issues/new",
                     DFAccessRequired: false
                 },
                 {
-                    displayName: "Ultimaker.com", //Not translated, since it's a URL.
+                    displayName: "LulzBot Homepage", //Not translated, since it's a URL.
                     thumbnail: UM.Theme.getIcon("Browser"),
-                    description: catalog.i18nc("@tooltip:button", "Visit the Ultimaker website."),
-                    link: "https://ultimaker.com/?utm_source=cura&utm_medium=software&utm_campaign=switcher-umwebsite",
+                    description: catalog.i18nc("@tooltip:button", "Visit the LulzBot website."),
+                    link: "https://lulzbot.com/",
                     DFAccessRequired: false
                 }
             ]
@@ -99,7 +64,7 @@ Popup
                 iconSource: modelData.thumbnail
                 tooltipText: modelData.description
                 isExternalLink: true
-                visible: modelData.DFAccessRequired ? Cura.API.account.isLoggedIn & Cura.API.account.additionalRights["df_access"] : true
+                visible: true
 
                 onClicked: Qt.openUrlExternally(modelData.link)
             }
