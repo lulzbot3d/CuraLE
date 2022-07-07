@@ -34,5 +34,7 @@ class QualityDatabaseHandler(DatabaseMetadataContainerController):
         :param metadata: The container metadata
         """
         if "global_quality" not in metadata:
-            metadata["global_quality"] = "False"
+            metadata["global_quality"] = "True"
+        elif metadata["global_quality"] == "":
+            metadata["global_quality"] = "True"
         return super().groomMetadata(metadata)
