@@ -105,14 +105,14 @@ Item
 
         onClicked: base.contextMenuRequested()
 
-        onEntered: 
+        onEntered:
         {
             hoverTimer.start()
         }
 
-        onExited: 
+        onExited:
         {
-            if(controlContainer.item && controlContainer.item.hovered) 
+            if(controlContainer.item && controlContainer.item.hovered)
             {
                 return
             }
@@ -120,7 +120,7 @@ Item
             base.hideTooltip()
         }
 
-        Timer 
+        Timer
         {
             id: hoverTimer
             interval: 500
@@ -128,7 +128,7 @@ Item
 
             onTriggered:
             {
-                base.showTooltip(base.tooltipText)
+                base.showTooltip(base.createTooltipText())
             }
         }
 
@@ -159,7 +159,7 @@ Item
             height: UM.Theme.getSize("small_button_icon").height
             spacing: Math.round(UM.Theme.getSize("thick_margin").height / 2)
 
-            anchors 
+            anchors
             {
                 right: controlContainer.left
                 rightMargin: Math.round(UM.Theme.getSize("thick_margin").width / 2)
@@ -173,7 +173,7 @@ Item
                 visible: (!definition.settable_per_extruder || String(globalPropertyProvider.properties.limit_to_extruder) != "-1") && base.showLinkedSettingIcon
 
                 anchors.top: parent.top
-                anchors.bottom: parent.bottom                
+                anchors.bottom: parent.bottom
                 height: UM.Theme.getSize("small_button_icon").height
                 width: height
 
@@ -182,25 +182,25 @@ Item
 
                 iconSource: UM.Theme.getIcon("Link")
 
-                onEntered: 
+                onEntered:
                 {
                     hoverTimer.stop()
                     var tooltipText = catalog.i18nc("@label", "This setting is always shared between all extruders. Changing it here will change the value for all extruders.")
-                    if ((resolve !== "None") && (stackLevel !== 0)) 
+                    if ((resolve !== "None") && (stackLevel !== 0))
                     {
                         // We come here if a setting has a resolve and the setting is not manually edited.
                         tooltipText += " " + catalog.i18nc("@label", "The value is resolved from conflicting extruder-specific values ") + " [" + Cura.ExtruderManager.getInstanceExtruderValues(definition.key) + "]."
                     }
                     base.showTooltip(tooltipText)
                 }
-                onExited: base.showTooltip(base.tooltipText)
+                onExited: base.showTooltip(base.createTooltipText())
             }
 
             UM.SimpleButton
             {
                 id: revertButton
 
-                visible: base.resetButtonVisible 
+                visible: base.resetButtonVisible
 
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
@@ -212,26 +212,26 @@ Item
 
                 iconSource: UM.Theme.getIcon("ArrowReset")
 
-                onClicked: 
+                onClicked:
                 {
                     revertButton.focus = true
 
-                    if (externalResetHandler) 
+                    if (externalResetHandler)
                     {
                         externalResetHandler(propertyProvider.key)
-                    } 
-                    else 
+                    }
+                    else
                     {
                         Cura.MachineManager.clearUserSettingAllCurrentStacks(propertyProvider.key)
                     }
                 }
 
                 onEntered:
-                { 
+                {
                     hoverTimer.stop()
                     base.showTooltip(catalog.i18nc("@label", "This setting has a value that is different from the profile.\n\nClick to restore the value of the profile.")) 
                 }
-                onExited: base.showTooltip(base.createtooltipText)
+                onExited: base.showTooltip(base.createTooltipText())
             }
 
             UM.SimpleButton
@@ -283,15 +283,15 @@ Item
                     {
                         return false
                     }
-                    return Cura.SettingInheritanceManager.getOverrides(definition.key, globalPropertyProvider.properties.limit_to_extruder)
+                    return Cura.SettingInheritanceManager.hasOverrides(definition.key, globalPropertyProvider.properties.limit_to_extruder)
                 }
-                
+
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 height: UM.Theme.getSize("small_button_icon").height
                 width: height
 
-                onClicked: 
+                onClicked:
                 {
                     focus = true
 
@@ -330,7 +330,7 @@ Item
                 iconSource: UM.Theme.getIcon("Function")
 
                 onEntered: { hoverTimer.stop(); base.showTooltip(catalog.i18nc("@label", "This setting is normally calculated, but it currently has an absolute value set.\n\nClick to restore the calculated value.")) }
-                onExited: base.showTooltip(base.createtooltipText())
+                onExited: base.showTooltip(base.createTooltipText())
             }
         }
 

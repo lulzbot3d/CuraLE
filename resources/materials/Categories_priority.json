@@ -1,0 +1,10 @@
+{
+    "All": 0,
+    "Beginner": 1,
+    "Advanced": 2,
+    "Intermediate": 3,
+    "Expert": 4,
+    "Experimental": 5,
+    "Supported": 6
+
+}

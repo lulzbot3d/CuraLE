@@ -80,29 +80,31 @@ class MaterialNode(ContainerNode):
                 # such as "generic_pla_ultimaker_s5_AA_0.4". So we search with the "base_file" which is the material_root_id.
             else:
                 qualities = container_registry.findInstanceContainersMetadata(type = "quality", definition = self.variant.machine.quality_definition, material = self.base_file)
-            if not qualities:
-                my_material_type = self.material_type
-                if self.variant.machine.has_variants:
-                    qualities_any_material = container_registry.findInstanceContainersMetadata(type = "quality",
-                                                                                               definition = self.variant.machine.quality_definition,
-                                                                                               variant = self.variant.variant_name)
-                else:
-                    qualities_any_material = container_registry.findInstanceContainersMetadata(type = "quality", definition = self.variant.machine.quality_definition)
+            # if not qualities:
+            #     my_material_type = self.material_type
+            #     if self.variant.machine.has_variants:
+            #         qualities_any_material = container_registry.findInstanceContainersMetadata(type = "quality",
+            #                                                                                    definition = self.variant.machine.quality_definition,
+            #                                                                                    variant = self.variant.variant_name)
+            #     else:
+            #         print("HEYO " + my_material_type)
+            #         print(self.base_file)
+                #     qualities_any_material = container_registry.findInstanceContainersMetadata(type = "quality", definition = self.variant.machine.quality_definition)
 
-                all_material_base_files = {material_metadata["base_file"] for material_metadata in container_registry.findInstanceContainersMetadata(type = "material", material = my_material_type)}
+                # all_material_base_files = {material_metadata["base_file"] for material_metadata in container_registry.findInstanceContainersMetadata(type = "material", material = my_material_type)}
 
-                qualities.extend((quality for quality in qualities_any_material if quality.get("material") in all_material_base_files))
+                # qualities.extend((quality for quality in qualities_any_material if quality.get("material") in all_material_base_files))
 
-                if not qualities:  # No quality profiles found. Go by GUID then.
-                    my_guid = self.guid
-                    for material_metadata in container_registry.findInstanceContainersMetadata(type = "material", guid = my_guid):
-                        qualities.extend((quality for quality in qualities_any_material if quality["material"] == material_metadata["base_file"]))
+                # if not qualities:  # No quality profiles found. Go by GUID then.
+                #     my_guid = self.guid
+                #     for material_metadata in container_registry.findInstanceContainersMetadata(type = "material", guid = my_guid):
+                #         qualities.extend((quality for quality in qualities_any_material if quality["material"] == material_metadata["base_file"]))
 
-                if not qualities:
+                # if not qualities:
                     # There are still some machines that should use global profiles in the extruder, so do that now.
                     # These are mostly older machines that haven't received updates (so single extruder machines without specific qualities
                     # but that do have materials and profiles specific to that machine)
-                    qualities.extend([quality for quality in qualities_any_material if quality.get("global_quality", "False") != "False"])
+                #     qualities.extend([quality for quality in qualities_any_material if quality.get("global_quality", "False") != "False"])
 
         for quality in qualities:
             quality_id = quality["id"]

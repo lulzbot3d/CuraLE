@@ -14,6 +14,7 @@ from cura.Machines.QualityChangesGroup import QualityChangesGroup  # To construc
 from cura.Machines.QualityGroup import QualityGroup  # To construct groups of quality profiles that belong together.
 from cura.Machines.QualityNode import QualityNode
 from cura.Machines.VariantNode import VariantNode
+from cura.Machines.MaterialNode import MaterialNode
 import UM.FlameProfiler
 
 
@@ -148,7 +149,7 @@ class MachineNode(ContainerNode):
         for quality_changes_group in groups_by_name.values():
             if quality_changes_group.quality_type not in quality_groups:
                 if quality_changes_group.quality_type == "not_supported":
-                    # Quality changes based on an empty profile are always available. 
+                    # Quality changes based on an empty profile are always available.
                     quality_changes_group.is_available = True
                 else:
                     quality_changes_group.is_available = False
@@ -191,7 +192,9 @@ class MachineNode(ContainerNode):
                 self.variants["empty"] = VariantNode("empty_variant", machine = self)
 
         # Find the global qualities for this printer.
-        global_qualities = container_registry.findInstanceContainersMetadata(type = "quality", definition = self.quality_definition, global_quality = "True")  # First try specific to this printer.
+        # global_qualities = container_registry.findInstanceContainersMetadata(type = "quality", definition = self.quality_definition, global_quality = "True")  # First try specific to this printer.
+        # I'm just going to pretend that everything is global, since for our purposes this seems to work out for the best
+        global_qualities = container_registry.findInstanceContainersMetadata(type = "quality", definition = self.quality_definition)
         if not global_qualities:  # This printer doesn't override the global qualities.
             global_qualities = container_registry.findInstanceContainersMetadata(type = "quality", definition = "fdmprinter", global_quality = "True")  # Otherwise pick the global global qualities.
             if not global_qualities:  # There are no global qualities either?! Something went very wrong, but we'll not crash and properly fill the tree.

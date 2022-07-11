@@ -3,9 +3,10 @@
   <metadata>
     <name>
       <brand>Polymaker</brand>
-      <material>PolyLite PLA (1.75)</material>
+      <material>PLA</material>
       <color>Generic</color>
       <category>Beginner</category>
+      <label>PolyLite PLA</label>
     </name>
     <GUID>4a93345b-114d-40f9-9781-40216df0e2b4</GUID>
     <version>25</version>
