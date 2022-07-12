@@ -602,7 +602,7 @@ class CuraApplication(QtApplication):
     @pyqtSlot(bool)
     def setNeedToShowUserAgreement(self, set_value: bool = True) -> None:
         self.getPreferences().setValue("general/accepted_user_agreement", str(not set_value))
-    
+
     @pyqtSlot(str, str)
     def writeToLog(self, severity: str, message: str) -> None:
         Logger.log(severity, message)
@@ -786,7 +786,7 @@ class CuraApplication(QtApplication):
         if not hasattr(sys, "frozen"):
             self._plugin_registry.addPluginLocation(os.path.join(os.path.abspath(os.path.dirname(__file__)), "..", "plugins"))
             self._plugin_registry.preloaded_plugins.append("ConsoleLogger")
-            
+
         # SentryLogger gives us the ability to crash a bit more gracefully and in a way that can be analyzed
         # so it's meant to be loaded in as soon as possible.
         self._plugin_registry.preloaded_plugins.append("SentryLogger")
@@ -945,7 +945,7 @@ class CuraApplication(QtApplication):
         self._qml_import_paths.append(Resources.getPath(self.ResourceTypes.QmlFiles))
         self._setLoadingHint(self._i18n_catalog.i18nc("@info:progress", "Initializing engine..."))
         self.initializeEngine()
-        
+
         # I don't believe we'll be offering an Enterprise version but we'll slap these lines in
         # just to keep things running smoothly and probably clean it out later down the road.
         # self.getTheme().setCheckIfTrusted(ApplicationMetadata.IsEnterpriseVersion)

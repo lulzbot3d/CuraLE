@@ -71,6 +71,49 @@
                     "settable_per_extruder": false,
                     "settable_per_meshgroup": false
                 },
+                "machine_wipe_gcode":
+                {
+                    "label": "Wipe G-code",
+                    "description": "Gcode for wiping Tool Head nozzle on wiper pad to clear debris",
+                    "type": "str",
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": false,
+                    "settable_per_meshgroup": false
+                },
+                "machine_abort_gcode":
+                {
+                    "label": "Abort GCode",
+                    "description": "",
+                    "type": "str",
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": false,
+                    "settable_per_meshgroup": false
+                },
+                "machine_level_x_axis_gcode":
+                {
+                    "label": "Level X Axis GCode",
+                    "description": "Gcode for forcing the x-axis into the top or bottom of the printer in order to level the ends.",
+                    "type": "str",
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": false,
+                    "settable_per_meshgroup": false
+                },
+                "machine_port":
+                {
+                    "label": "Machine Port",
+                    "description": "Port",
+                    "default_value": "AUTO",
+                    "type": "str",
+                    "enabled": false
+                },
+                "machine_baudrate":
+                {
+                    "label": "Machine Baudrate",
+                    "description": "Baudrate",
+                    "default_value": "AUTO",
+                    "type": "str",
+                    "enabled": false
+                },
                 "material_guid":
                 {
                     "label": "Material GUID",
@@ -993,6 +1036,17 @@
                     "default_value": 100.0,
                     "minimum_value": "0.001",
                     "maximum_value_warning": "150",
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true
+                },
+                "backlash_fading_distance":
+                {
+                    "label": "Backlash Fading Distance",
+                    "description": "Distance from the buildplate at which to completely fade out backlash compensation. This option requires M425 g-code on the firmware side",
+                    "type": "float",
+                    "unit": "mm",
+                    "default_value": 0.0,
+                    "minimum_value": 0.0,
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 }

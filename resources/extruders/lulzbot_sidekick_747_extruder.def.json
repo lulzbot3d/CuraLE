@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_sidekick_747_extruder",
-    "version": 1,
+    "version": 2,
     "name": "Hot End",
     "inherits": "fdmextruder",
     "metadata": {
