@@ -11,8 +11,8 @@
             "0": "lulzbot_sidekick_747_extruder"
         },
         "type": "machine",
-        "platform": "Sidekick_747_bed.STL",  
-        
+        "platform": "Sidekick_747_bed.stl",
+
         "preferred_material": "*PolyLite_PLA*",
         "preferred_quality": "*Standard*",
         "file_formats": "text/x-gcode",
@@ -25,7 +25,7 @@
     },
     "overrides":
     {
-        
+
         "machine_name":
         {
             "default_value": "LulzBot TAZ SideKick 747"

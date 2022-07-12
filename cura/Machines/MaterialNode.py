@@ -87,24 +87,22 @@ class MaterialNode(ContainerNode):
             #                                                                                    definition = self.variant.machine.quality_definition,
             #                                                                                    variant = self.variant.variant_name)
             #     else:
-            #         print("HEYO " + my_material_type)
-            #         print(self.base_file)
-                #     qualities_any_material = container_registry.findInstanceContainersMetadata(type = "quality", definition = self.variant.machine.quality_definition)
+            #        qualities_any_material = container_registry.findInstanceContainersMetadata(type = "quality", definition = self.variant.machine.quality_definition)
+            #
+            #     all_material_base_files = {material_metadata["base_file"] for material_metadata in container_registry.findInstanceContainersMetadata(type = "material", material = my_material_type)}
 
-                # all_material_base_files = {material_metadata["base_file"] for material_metadata in container_registry.findInstanceContainersMetadata(type = "material", material = my_material_type)}
-
-                # qualities.extend((quality for quality in qualities_any_material if quality.get("material") in all_material_base_files))
-
-                # if not qualities:  # No quality profiles found. Go by GUID then.
-                #     my_guid = self.guid
-                #     for material_metadata in container_registry.findInstanceContainersMetadata(type = "material", guid = my_guid):
-                #         qualities.extend((quality for quality in qualities_any_material if quality["material"] == material_metadata["base_file"]))
-
-                # if not qualities:
-                    # There are still some machines that should use global profiles in the extruder, so do that now.
-                    # These are mostly older machines that haven't received updates (so single extruder machines without specific qualities
-                    # but that do have materials and profiles specific to that machine)
-                #     qualities.extend([quality for quality in qualities_any_material if quality.get("global_quality", "False") != "False"])
+            #     qualities.extend((quality for quality in qualities_any_material if quality.get("material") in all_material_base_files))
+            #
+            #     if not qualities:  # No quality profiles found. Go by GUID then.
+            #         my_guid = self.guid
+            #         for material_metadata in container_registry.findInstanceContainersMetadata(type = "material", guid = my_guid):
+            #             qualities.extend((quality for quality in qualities_any_material if quality["material"] == material_metadata["base_file"]))
+            #
+            #     if not qualities:
+            #       # There are still some machines that should use global profiles in the extruder, so do that now.
+            #       # These are mostly older machines that haven't received updates (so single extruder machines without specific qualities
+            #       # but that do have materials and profiles specific to that machine)
+            #       qualities.extend([quality for quality in qualities_any_material if quality.get("global_quality", "False") != "False"])
 
         for quality in qualities:
             quality_id = quality["id"]

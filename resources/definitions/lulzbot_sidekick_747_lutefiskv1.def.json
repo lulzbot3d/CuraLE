@@ -11,7 +11,7 @@
             "0": "lulzbot_sidekick_747_lutefiskv1_extruder"
         },
         "type": "machine",
-        "platform": "Sidekick_747_bed.STL",
+        "platform": "Sidekick_747_bed.stl",
         
         "preferred_material": "*PolyLite_PLA*",
         "preferred_quality": "*Standard*",
