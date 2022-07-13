@@ -60,7 +60,7 @@
     </machine>
 
     <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_redgum_goldenrod" />
+      <machine_identifier product="lulzbot_redgum_goldenrod" />
       <setting key="probe temperature">140</setting>
       <setting key="wipe temperature">140</setting>
       <setting key="part removal temperature">45</setting>
@@ -84,7 +84,6 @@
     <machine>
       <machine_identifier product="lulzbot_sidekick_289_goldenrod"/>
     </machine>
-
     <machine>
       <machine_identifier product="lulzbot_sidekick_747_sk285"/>
     </machine>

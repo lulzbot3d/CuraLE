@@ -10,7 +10,7 @@
         "priority": "00",
         "machine_extruder_trains":
         {
-            "0": "lulzbot_quiver_evergreen_bagowrm_1st",
+            "0": "lulzbot_quiver_evergreen_bagworm_1st",
             "1": "lulzbot_quiver_evergreen_bagworm_2nd"
         },
         "platform": "quiver_bed.stl",
@@ -25,7 +25,7 @@
         "firmware_last_version": "2.0.0.144.5",
         "base_machine": "LulzBot TAZ Pro",
         "base_machine_name": "TAZ Pro",
-        "preferred_material": "*PolyLite_PLA*",
+        "preferred_material": "PolyLite_PLA",
         "user_toolhead_name": "Pro Dual | 0.50 mm | Hardened SST",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
         "default_category": "All"
