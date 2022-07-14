@@ -1,8 +1,8 @@
-// Copyright (c) 2017 Ultimaker B.V.
+// Copyright (c) 2021 Ultimaker B.V.
 // Cura is released under the terms of the LGPLv3 or higher.
 
-import QtQuick 2.8
-import QtQuick.Controls 2.1
+import QtQuick 2.7
+import QtQuick.Controls 2.0
 
 import UM 1.1 as UM
 
@@ -117,9 +117,9 @@ SettingItem
             anchors
             {
                 left: parent.left
-                leftMargin: UM.Theme.getSize("setting_unit_margin").width
+                leftMargin: Math.round(UM.Theme.getSize("setting_unit_margin").width)
                 right: parent.right
-                rightMargin: UM.Theme.getSize("setting_unit_margin").width
+                rightMargin: Math.round(UM.Theme.getSize("setting_unit_margin").width)
                 verticalCenter: parent.verticalCenter
             }
             renderType: Text.NativeRendering
@@ -155,12 +155,11 @@ SettingItem
             }
 
             color: !enabled ? UM.Theme.getColor("setting_control_disabled_text") : UM.Theme.getColor("setting_control_text")
-            font: UM.Theme.getFont("default");
+            font: UM.Theme.getFont("default")
 
-            selectByMouse: true;
+            selectByMouse: true
 
-            maximumLength: (definition.type == "str" || definition.type == "[int]") ? -1 : 10;
-            //clip: true; //Hide any text that exceeds the width of the text box.
+            maximumLength: (definition.type == "str" || definition.type == "[int]") ? -1 : 10
 
             // Since [int] & str don't have a max length, they need to be clipped (since clipping is expensive, this
             // should be done as little as possible)
@@ -182,13 +181,15 @@ SettingItem
                     // 4: variant
                     // 5: machine_changes
                     // 6: machine
-                    if ((base.resolve != "None" && base.resolve) && (stackLevel != 0) && (stackLevel != 1)) {
+                    if ((base.resolve != "None" && base.resolve) && (stackLevel != 0) && (stackLevel != 1))
+                    {
                         // We have a resolve function. Indicates that the setting is not settable per extruder and that
                         // we have to choose between the resolved value (default) and the global value
                         // (if user has explicitly set this).
-                        return base.resolve;
-                    } else {
-                        return propertyProvider.properties.value;
+                        return base.resolve
+                    }
+                    else {
+                        return propertyProvider.properties.value
                     }
                 }
                 when: !input.activeFocus
