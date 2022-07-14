@@ -37,10 +37,11 @@ Item
             right: parent.right
         }
 
-        text: "<p><b>Disclaimer by Ultimaker</b></p>"
+        text: "<h2><b>Disclaimer</b></h2>"
             + "<p>Please read this disclaimer carefully.</p>"
-            + "<p>Except when otherwise stated in writing, Ultimaker provides any Ultimaker software or third party software \"As is\" without warranty of any kind. The entire risk as to the quality and performance of Ultimaker software is with you.</p>"
-            + "<p>Unless required by applicable law or agreed to in writing, in no event will Ultimaker be liable to you for damages, including any general, special, incidental, or consequential damages arising out of the use or inability to use any Ultimaker software or third party software.</p>"
+            + "<p>Cura LulzBot Edition was created using source code for Ultimaker Cura released under the LGPLv3 or higher. All disclaimers relating to this software also apply to Ultimaker."
+            + "<p>FAME3D provides this software \"As is\" without warranty of any kind. The entire risk as to the quality and performance of this software is with you, the user.</p>"
+            + "<p>Unless required by applicable law or agreed to in writing, in no event will FAME3D be liable to you for damages, including any general, special, incidental, or consequential damages arising out of the use or inability to use any FAME3D software or third party software.</p>"
         textFormat: Text.RichText
         wrapMode: Text.WordWrap
         font: UM.Theme.getFont("medium")

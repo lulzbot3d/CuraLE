@@ -142,6 +142,7 @@ Item
         id: settingVisibilityPresetsMenu
         x: settingVisibilityMenu.x
         y: settingVisibilityMenu.y
+        width: 0
         onCollapseAllCategories:
         {
             settingsSearchTimer.stop()

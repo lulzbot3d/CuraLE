@@ -195,25 +195,4 @@ Item
             }
         }
     }
-
-    // show the Marketplace
-    Connections
-    {
-        target: Cura.Actions.openMarketplace
-        function onTriggered()
-        {
-            curaExtensions.callExtensionMethod("Marketplace", "show")
-        }
-    }
-
-    // Show the Marketplace dialog at the materials tab
-    Connections
-    {
-        target: Cura.Actions.marketplaceMaterials
-        function onTriggered()
-        {
-            curaExtensions.callExtensionMethod("Marketplace", "show")
-            curaExtensions.callExtensionMethod("Marketplace", "setVisibleTabToMaterials")
-        }
-    }
 }

@@ -20,7 +20,7 @@
         [
             "MachineSettingsAction"
         ],
-	"preferred_material": "*PolyLite_PLA*",
+	"preferred_material": "PolyLite_PLA",
         "preferred_quality": "*Standard*",
         "category": "LulzBot + Community Developed Add-Ons",
         "visible": true,

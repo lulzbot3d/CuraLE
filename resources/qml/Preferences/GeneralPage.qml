@@ -121,8 +121,8 @@ UM.PreferencesPage
         UM.Preferences.resetPreference("info/automatic_update_check")
         checkUpdatesCheckbox.checked = boolCheck(UM.Preferences.getValue("info/automatic_update_check"))
         UM.Preferences.resetPreference("info/latest_update_source")
-        UM.Preferences.resetPreference("info/automatic_plugin_update_check")
-        pluginNotificationsUpdateCheckbox.checked = boolCheck(UM.Preferences.getValue("info/automatic_plugin_update_check"))
+        // UM.Preferences.resetPreference("info/automatic_plugin_update_check")
+        // pluginNotificationsUpdateCheckbox.checked = boolCheck(UM.Preferences.getValue("info/automatic_plugin_update_check"))
     }
 
     ScrollView
@@ -784,37 +784,6 @@ UM.PreferencesPage
                 width: UM.Theme.getSize("default_margin").height
             }
 
-            Label
-            {
-                font.bold: true
-                text: catalog.i18nc("@label","Privacy")
-            }
-            UM.TooltipArea
-            {
-                width: childrenRect.width
-                height: visible ? childrenRect.height : 0
-                text: catalog.i18nc("@info:tooltip", "Should anonymous data about your print be sent to Ultimaker? Note, no models, IP addresses or other personally identifiable information is sent or stored.")
-
-                CheckBox
-                {
-                    id: sendDataCheckbox
-                    text: catalog.i18nc("@option:check","Send (anonymous) print information")
-                    checked: boolCheck(UM.Preferences.getValue("info/send_slice_info"))
-                    onCheckedChanged: UM.Preferences.setValue("info/send_slice_info", checked)
-                }
-
-                Button
-                {
-                    id: showMoreInfo
-                    anchors.top: sendDataCheckbox.bottom
-                    text: catalog.i18nc("@action:button", "More information")
-                    onClicked:
-                    {
-                        CuraApplication.showMoreInformationDialogForAnonymousDataCollection();
-                    }
-                }
-            }
-
             Item
             {
                 //: Spacer
@@ -876,20 +845,20 @@ UM.PreferencesPage
                     onClicked: UM.Preferences.setValue("info/latest_update_source", "beta")
                 }
             }
-            UM.TooltipArea
-            {
-                width: childrenRect.width
-                height: visible ? childrenRect.height : 0
-                text: catalog.i18nc("@info:tooltip", "Should an automatic check for new plugins be done every time Cura is started? It is highly recommended that you do not disable this!")
+            // UM.TooltipArea
+            // {
+            //     width: childrenRect.width
+            //     height: visible ? childrenRect.height : 0
+            //     text: catalog.i18nc("@info:tooltip", "Should an automatic check for new plugins be done every time Cura is started? It is highly recommended that you do not disable this!")
 
-                CheckBox
-                {
-                    id: pluginNotificationsUpdateCheckbox
-                    text: catalog.i18nc("@option:check", "Get notifications for plugin updates")
-                    checked: boolCheck(UM.Preferences.getValue("info/automatic_plugin_update_check"))
-                    onCheckedChanged: UM.Preferences.setValue("info/automatic_plugin_update_check", checked)
-                }
-            }
+            //     CheckBox
+            //     {
+            //         id: pluginNotificationsUpdateCheckbox
+            //         text: catalog.i18nc("@option:check", "Get notifications for plugin updates")
+            //         checked: boolCheck(UM.Preferences.getValue("info/automatic_plugin_update_check"))
+            //         onCheckedChanged: UM.Preferences.setValue("info/automatic_plugin_update_check", checked)
+            //     }
+            // }
 
 
             /* Multi-buildplate functionality is disabled because it's broken. See CURA-4975 for the ticket to remove it.

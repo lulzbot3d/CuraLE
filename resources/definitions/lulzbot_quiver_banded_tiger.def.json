@@ -22,7 +22,7 @@
         "category": "LulzBot",
         "base_machine": "LulzBot TAZ Pro",
         "base_machine_name": "TAZ Pro",
-        "preferred_material": "*PolyLite_PLA*",
+        "preferred_material": "PolyLite_PLA",
         "user_toolhead_name": "HS | 0.80 mm | Hardened SST",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/hs-tool-head-hardened-steel-08-mm?pk_campaign=software-cura",
         "default_category": "All"

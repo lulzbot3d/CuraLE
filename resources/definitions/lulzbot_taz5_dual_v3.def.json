@@ -14,7 +14,7 @@
             "1": "lulzbot_taz5_dual_v3_2nd"
         },
         "firmware_toolhead_name": "DualExtruder v3",
-        "preferred_material": "*PolyLite_PLA*",
+        "preferred_material": "PolyLite_PLA",
         "default_category": "Supported"
     },
     "overrides":

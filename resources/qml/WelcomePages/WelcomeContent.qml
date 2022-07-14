@@ -53,7 +53,7 @@ Item
             id: titleLabel
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
-            text: catalog.i18nc("@label", "Welcome to Ultimaker Cura")
+            text: catalog.i18nc("@label", "Welcome to Cura LulzBot Edition!")
             color: UM.Theme.getColor("primary_button")
             font: UM.Theme.getFont("huge_bold")
             renderType: Text.NativeRendering
@@ -65,7 +65,7 @@ Item
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
             width: titleLabel.width + 2 * UM.Theme.getSize("thick_margin").width
-            text: catalog.i18nc("@text", "Please follow these steps to set up Ultimaker Cura. This will only take a few moments.")
+            text: catalog.i18nc("@text", "Please follow these steps to set up Cura LE. This will only take a few moments.")
             wrapMode: Text.Wrap
             font: UM.Theme.getFont("medium")
             color: UM.Theme.getColor("text")

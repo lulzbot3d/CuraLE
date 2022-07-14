@@ -14,7 +14,7 @@
             -18,
             0
         ],
-        "preferred_material": "*PolyLite_PLA*",
+        "preferred_material": "PolyLite_PLA",
         "preferred_quality": "*Standard*",
         "file_formats": "text/x-gcode",
         "visible": false,

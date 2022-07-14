@@ -6,6 +6,8 @@ import threading
 from typing import Any, Dict, Optional, Set, TYPE_CHECKING, List
 import uuid
 
+import inspect
+
 from PyQt5.QtCore import pyqtProperty, pyqtSlot, pyqtSignal
 
 from UM.Decorators import deprecated, override
