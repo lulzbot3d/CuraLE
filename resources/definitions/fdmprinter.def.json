@@ -3203,7 +3203,7 @@
                     "description": "The speed at which the vertical Z movement is made for Z Hops. This is typically lower than the print speed since the build plate or machine's gantry is harder to move.",
                     "unit": "mm/s",
                     "type": "float",
-                    "default_value": 10,
+                    "default_value": 3,
                     "minimum_value": "0",
                     "maximum_value": "machine_max_feedrate_z",
                     "settable_per_mesh": false,
@@ -5371,7 +5371,7 @@
                         "raft": "Raft",
                         "none": "None"
                     },
-                    "default_value": "brim",
+                    "default_value": "skirt",
                     "resolve": "extruderValue(adhesion_extruder_nr, 'adhesion_type')",
                     "settable_per_mesh": false,
                     "settable_per_extruder": false
