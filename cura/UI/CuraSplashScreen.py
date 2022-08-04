@@ -59,18 +59,19 @@ class CuraSplashScreen(QSplashScreen):
         painter.setRenderHint(QPainter.Antialiasing)
         painter.setRenderHint(QPainter.Antialiasing, True)
 
-        version = Application.getInstance().getVersion().split("-")
+        # version = Application.getInstance().getVersion().split("-")
+        version = "4.0.0-Beta".split("-")
 
         # Draw version text
         font = QFont()  # Using system-default font here
-        font.setPixelSize(18)
+        font.setPixelSize(24)
         painter.setFont(font)
         painter.drawText(420, 105 + self._version_y_offset, round(330 * self._scale), round(230 * self._scale), Qt.AlignLeft | Qt.AlignTop, version[0])
         if len(version) > 1:
-            font.setPixelSize(16)
+            font.setPixelSize(26)
             painter.setFont(font)
-            painter.setPen(QColor(200, 200, 200, 255))
-            painter.drawText(247, 105 + self._version_y_offset, round(330 * self._scale), round(255 * self._scale), Qt.AlignLeft | Qt.AlignTop, version[1])
+            painter.setPen(QColor(0, 0, 0, 255))
+            painter.drawText(500, 435 + self._version_y_offset, round(330 * self._scale), round(255 * self._scale), Qt.AlignLeft | Qt.AlignTop, version[1])
         painter.setPen(QColor(255, 255, 255, 255))
 
         # Draw the loading image
