@@ -59,8 +59,7 @@ class CuraSplashScreen(QSplashScreen):
         painter.setRenderHint(QPainter.Antialiasing)
         painter.setRenderHint(QPainter.Antialiasing, True)
 
-        # version = Application.getInstance().getVersion().split("-")
-        version = "4.0.0-Beta".split("-")
+        version = Application.getInstance().getVersion().split("-")
 
         # Draw version text
         font = QFont()  # Using system-default font here
