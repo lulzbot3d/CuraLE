@@ -12,7 +12,7 @@
         {
             "0": "lulzbot_gladiator_perca_extruder"
         },
-        "platform": "gladiator_bed.stl",
+        "platform": "quiver_bed.stl",
         "platform_offset":
         [
             0,
