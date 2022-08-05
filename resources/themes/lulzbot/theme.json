@@ -199,7 +199,7 @@
         "buildplate_grid_minor": [230, 230, 231, 255],
         "button": [193, 216, 47, 255],
         "button_active": [120, 136, 20, 255],
-        "button_active_hover": [120, 136, 190, 255],
+        "button_active_hover": [120, 136, 20, 255],
         "button_disabled": [102, 102, 102, 255],
         "button_disabled_lighter": [204, 204, 204, 255],
         "button_disabled_text": [102, 102, 102, 255],
@@ -230,14 +230,14 @@
         "disabled": [229, 229, 229, 255],
         "disabled_axis": [127, 127, 127, 255],
         "disallowed_area": [0, 0, 0, 40],
-        
+
         "error": [255, 140, 0, 255],
         "error_area": [255, 0, 0, 127],
         "error_badge_background": [255, 255, 255, 255],
         "extruder_button_material_border": [255, 255, 255, 255],
         "extruder_disabled": [255, 255, 255, 102],
 
-        "favorites_header_bar": [245,245,245,255],
+        "favorites_header_bar": [245, 245, 245, 255],
         "favorites_header_hover": [245, 245, 245, 255],
         "favorites_header_text": [31, 36, 39, 255],
         "favorites_header_text_hover": [31, 36, 39, 255],
@@ -341,9 +341,9 @@
 
         "primary": [120, 136, 20, 255],
         "primary_button": [193, 216, 47, 255],
-        "primary_button_hover": [16, 70, 156, 255],
-        "primary_button_shadow": [27, 95, 202, 255],
-        "primary_button_text": [255, 255, 255, 255],
+        "primary_button_hover": [120, 136, 20, 255],
+        "primary_button_shadow": [120, 136, 20, 255],
+        "primary_button_text": [0, 0, 0, 255],
         "primary_hover": [242, 248, 200, 255],
         "primary_shadow": [64, 47, 205, 255],
         "primary_text": [255, 255, 255, 255],
@@ -374,9 +374,9 @@
         "scrollbar_handle_down": [120, 136, 20, 255],
         "secondary": [245, 245, 245, 255],
         "secondary_button": [255, 255, 255, 255],
-        "secondary_button_hover": [232, 240, 253, 255],
+        "secondary_button_hover": [216, 230, 131, 255],
         "secondary_button_shadow": [216, 216, 216, 255],
-        "secondary_button_text": [25, 110, 240, 255],
+        "secondary_button_text": [0, 0, 0, 255],
         "secondary_shadow": [216, 216, 216, 255],
         "setting_category": [242, 248, 200, 255],
         "setting_category_disabled": [255, 255, 255, 255],
@@ -523,7 +523,7 @@
 
         "y_axis": [0, 0, 255, 255],
 
-        "z_axis": [0, 255, 0, 255]        
+        "z_axis": [0, 255, 0, 255]
     },
 
     "sizes": {
@@ -644,7 +644,7 @@
         "progressbar_control": [8.0, 0.75],
 
         "radio_button": [1.3, 1.3],
-        "rating_star": [1.0, 1.0],    
+        "rating_star": [1.0, 1.0],
 
         "save_button_text_margin": [0.3, 0.6],
         "save_button_save_to_button": [0.3, 2.7],

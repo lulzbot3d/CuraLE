@@ -68,9 +68,10 @@ ComboBox
     contentItem: Label
     {
         id: contentLabel
-        leftPadding: UM.Theme.getSize("setting_unit_margin").width + UM.Theme.getSize("default_margin").width
+        anchors.left: parent.left
+        anchors.leftMargin: UM.Theme.getSize("setting_unit_margin").width
+        anchors.verticalCenter: parent.verticalCenter
         anchors.right: downArrow.left
-        wrapMode: Text.NoWrap
         text:
         {
             if (control.delegateModel.count == 0)
@@ -84,8 +85,11 @@ ComboBox
         }
 
         textFormat: Text.PlainText
+        renderType: Text.NativeRendering
+        font: UM.Theme.getFont("default")
         color: control.currentIndex == -1 ? UM.Theme.getColor("setting_control_disabled_text") : UM.Theme.getColor("setting_control_text")
         elide: Text.ElideRight
+        verticalAlignment: Text.AlignVCenter
     }
 
     popup: Popup
