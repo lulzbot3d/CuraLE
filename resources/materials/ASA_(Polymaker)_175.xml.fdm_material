@@ -19,6 +19,7 @@
   </metadata>
   <properties>
     <diameter>1.75</diameter>
+    <density>1.13</density>
   </properties>
   <settings>
     <setting key="soften temperature">170.0</setting>

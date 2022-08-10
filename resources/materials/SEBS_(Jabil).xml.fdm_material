@@ -17,7 +17,10 @@
     <version>1</version>
     <color_code>#fbff08</color_code>
   </metadata>
-  <properties />
+  <properties>
+    <density>1.05</density>
+    <diameter>2.85</diameter>
+  </properties>
   <settings>
     <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_hibiscus" />

@@ -4,7 +4,7 @@
     <name>
       <brand>Generic</brand>
       <material>CoPA (Polymaker)</material>
-      <color>Green</color>
+      <color>Black</color>
       <label>CoPA (Polymaker)</label>
       <category />
     </name>
@@ -17,7 +17,10 @@
     <adhesion_info>Use Glue Stick</adhesion_info>
     <color_code>#8ad163</color_code>
   </metadata>
-  <properties />
+  <properties>
+    <diameter>2.85</diameter>
+    <density>1.12</density>
+  </properties>
   <settings>
     <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_redgum_goldenrod" />

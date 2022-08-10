@@ -17,7 +17,10 @@
     <adhesion_info>Use Glue Stick</adhesion_info>
     <color_code>#5500ff</color_code>
   </metadata>
-  <properties />
+  <properties>
+    <density>1.17</density>
+    <diameter>2.85</diameter>
+  </properties>
   <settings>
     <machine>
       <machine_identifier product="lulzbot_redgum_cecropia"/>

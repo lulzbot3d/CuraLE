@@ -16,7 +16,9 @@
     <compatible>True</compatible>
     <adhesion_info>Use directly on clean PEI.</adhesion_info>
   </metadata>
-  <properties />
+  <properties>
+    <diameter>2.85</diameter>
+  </properties>
   <settings>
     <setting key="retraction amount">7.0</setting>
     <setting key="wipe temperature">180.0</setting>

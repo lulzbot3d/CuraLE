@@ -17,7 +17,10 @@
     <GUID>4e3f8e3e-fc5e-464a-87c0-2af6945864fe</GUID>
     <extruder_disabled>False</extruder_disabled>
   </metadata>
-  <properties />
+  <properties>
+    <diameter>2.85</diameter>
+    <density>1.13</density>
+  </properties>
   <settings>
     <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_quiver_goldenrod" />
