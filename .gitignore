@@ -26,6 +26,7 @@ LC_MESSAGES
 .idea
 cura.desktop
 .vscode/settings.json
+.vs
 
 # Eclipse+PyDev
 .project
