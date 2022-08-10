@@ -19,6 +19,7 @@
   </metadata>
   <properties>
     <diameter>2.85</diameter>
+    <density>1.22</density>
   </properties>
   <settings>
     <setting key="print cooling">100.0</setting>
