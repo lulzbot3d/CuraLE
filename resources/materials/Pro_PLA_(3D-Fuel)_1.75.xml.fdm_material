@@ -24,25 +24,28 @@
     <setting key="probe temperature">140</setting>
     <setting key="wipe temperature">140</setting>
     <setting key="part removal temperature">45</setting>
-     <machine>
+    <machine>
       <machine_identifier product="lulzbot_hibiscus_lutefisk"/>
     </machine>
-     <machine>
+    <machine>
       <machine_identifier product="lulzbot_quiver_lutefisk"/>
     </machine>
-     <machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_lutefisk"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_gladiator_lutefisk"/>
     </machine>
-     <machine>
+    <machine>
       <machine_identifier product="lulzbot_redgum_lutefisk"/>
     </machine>
-     <machine>
+    <machine>
       <machine_identifier product="lulzbot_mini_lutefisk"/>
     </machine>
-     <machine>
+    <machine>
       <machine_identifier product="lulzbot_taz6_lutefisk"/>
     </machine>
-     <machine>
+    <machine>
       <machine_identifier product="lulzbot_taz5_lutefisk"/>
     </machine>
     <machine>
@@ -60,31 +63,34 @@
     <machine>
       <machine_identifier product="lulzbot_taz6_lutefiskv1"/>
     </machine>
-     <machine>
+    <machine>
       <machine_identifier product="lulzbot_hibiscus_lutefiskv1"/>
     </machine>
-     <machine>
+    <machine>
       <machine_identifier product="lulzbot_quiver_lutefiskv1"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_gladiator_lutefiskv1"/>
     </machine>
-     <machine>
+    <machine>
       <machine_identifier product="lulzbot_redgum_lutefiskv1"/>
     </machine>
       <machine>
       <machine_identifier product="lulzbot_hibiscus_perca"/>
     </machine>
-     <machine>
+    <machine>
       <machine_identifier product="lulzbot_quiver_perca"/>
     </machine>
-     <machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_perca"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_gladiator_perca"/>
     </machine>
-     <machine>
+    <machine>
       <machine_identifier product="lulzbot_redgum_perca"/>
     </machine>
-     <machine>
+    <machine>
       <machine_identifier product="lulzbot_taz6_perca"/>
     </machine>
   </settings>

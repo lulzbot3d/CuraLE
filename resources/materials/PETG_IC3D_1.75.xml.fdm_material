@@ -28,8 +28,11 @@
     <machine>
       <machine_identifier product="lulzbot_hibiscus_lutefisk"/>
     </machine>
-     <machine>
+    <machine>
       <machine_identifier product="lulzbot_quiver_lutefisk"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_lutefisk"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_gladiator_lutefisk"/>
@@ -82,8 +85,11 @@
     <machine>
       <machine_identifier product="lulzbot_hibiscus_perca"/>
     </machine>
-     <machine>
+    <machine>
       <machine_identifier product="lulzbot_quiver_perca"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_perca"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_gladiator_perca"/>

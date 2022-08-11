@@ -100,6 +100,15 @@
       <machine_identifier product="lulzbot_quiver_goldenrod"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_longship_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_achemon"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_goldenrod"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_gladiator_achemon"/>
     </machine>
     <machine>

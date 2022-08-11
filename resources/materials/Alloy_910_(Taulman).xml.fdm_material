@@ -97,6 +97,12 @@
       <machine_identifier product="lulzbot_quiver_goldenrod"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_longship_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_goldenrod"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_gladiator_evergreen_bagworm"/>
     </machine>
     <machine>

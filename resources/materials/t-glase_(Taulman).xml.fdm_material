@@ -119,5 +119,11 @@
     <machine>
       <machine_identifier product="lulzbot_redgum_yellowfin"/>
     </machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_goldenrod"/>
+    </machine>
   </settings>
 </fdmmaterial>

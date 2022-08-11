@@ -74,6 +74,9 @@
       <machine_identifier product="lulzbot_quiver_banded_tiger"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_longship_banded_tiger"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_gladiator_dingy_cutworm"/>
     </machine>
     <machine>
@@ -92,6 +95,9 @@
       <machine_identifier product="lulzbot_quiver_goldenrod"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_longship_goldenrod"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_redgum_banded_tiger"/>
     </machine>
     <machine>
@@ -99,6 +105,9 @@
     </machine>
     <machine>
       <machine_identifier product="lulzbot_quiver_dingy_cutworm"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_dingy_cutworm"/>
     </machine>
   </settings>
 </fdmmaterial>

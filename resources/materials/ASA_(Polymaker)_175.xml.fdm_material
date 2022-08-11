@@ -69,6 +69,12 @@
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_quiver_lutefisk" />
     </machine>
     <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_longship_perca" />
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_longship_lutefisk" />
+    </machine>
+    <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_redgum_perca" />
     </machine>
     <machine>

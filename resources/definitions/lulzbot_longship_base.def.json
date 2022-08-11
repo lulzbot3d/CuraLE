@@ -1,5 +1,5 @@
 {
-    "id": "lulzbot_longboat_base",
+    "id": "lulzbot_longship_base",
     "name": "LulzBot TAZ Pro Long Bed",
     "inherits": "lulzbot_base",
     "version": 2,
@@ -14,13 +14,32 @@
         "firmware_last_version": "2.0.0.144.7",
         "machine_priority": "05",
         "default_eeprom_state": false,
-        "has_revision":true
+        "has_revision":true,
+        "platform": "longship_bed.stl",
+        "platform_offset":
+        [
+            0,
+            -25,
+            0
+        ]
     },
     "overrides":
     {
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_longship_start"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_longship_end"
+        },
+        "machine_level_x_axis_gcode":
+        {
+            "default_value_from_file": "lulzbot_quiver_level_x_axis"
+        },
         "firmware_machine_type":
         {
-            "resolve": "'LulzBot TAZ Pro' if revision_type else 'LulzBot TAZ Pro Rev B'"
+            "resolve": "'LulzBot TAZ Pro Long Bed' if revision_type else 'LulzBot TAZ Pro Rev B'"
         },
         "machine_baudrate":
         {
@@ -33,6 +52,18 @@
         "machine_center_is_zero":
         {
             "default_value": false
+        },
+        "machine_width":
+        {
+            "default_value": 282
+        },
+        "machine_depth":
+        {
+            "default_value": 582
+        },
+        "machine_height":
+        {
+            "default_value": 286
         },
         "machine_nozzle_size":
         {

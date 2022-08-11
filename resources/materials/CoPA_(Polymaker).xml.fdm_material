@@ -29,6 +29,9 @@
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_quiver_goldenrod" />
     </machine>
     <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_longship_goldenrod" />
+    </machine>
+    <machine>
       <machine_identifier manufacturer="Aleph Objects, Inc." product="lulzbot_gladiator_goldenrod" />
     </machine>
     <machine>
@@ -60,6 +63,9 @@
     </machine>
     <machine>
       <machine_identifier product="lulzbot_quiver_cecropia"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_cecropia"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_gladiator_cecropia"/>
