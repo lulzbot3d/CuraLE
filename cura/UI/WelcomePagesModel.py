@@ -258,6 +258,7 @@ class WelcomePagesModel(ListModel):
                            "page_url": self._getBuiltinWelcomePagePath("UserAgreementContent.qml"),
                            },
                           {"id": "add_network_or_local_printer",
+                           # "page_url": self._getBuiltinWelcomePagePath("AddMachineDialog.qml"),
                            "page_url": self._getBuiltinWelcomePagePath("AddNetworkOrLocalPrinterContent.qml"),
                            "next_page_id": "machine_actions",
                            },
@@ -309,10 +310,6 @@ class WelcomePagesModel(ListModel):
 
         :return: True if the user is not logged in, False if he/she is
         """
-        # Import CuraApplication locally or else it fails
-        # from cura.CuraApplication import CuraApplication
-        # api = CuraApplication.getInstance().getCuraAPI()
-        # return not api.account.isLoggedIn
         return False
 
     def addPage(self) -> None:

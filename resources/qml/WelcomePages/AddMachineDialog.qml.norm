@@ -15,7 +15,7 @@ import Cura 1.0 as Cura
 UM.Dialog
 {
     id: base
-    title: catalog.i18nc("@title:window", "Add Printer you stupid idiot")
+    title: catalog.i18nc("@title:window", "Add Printer")
     property bool firstRun: false
     property string preferredCategory: ""
     property string activeCategory: preferredCategory
@@ -286,7 +286,7 @@ UM.Dialog
                             id: machineDefinitionsModel
                             filter: { "visible": true }
                             sectionProperty: "category"
-                            preferredSectionValue: preferredCategory
+                            preferredSections: preferredCategory
                         }
 
                         section.property: "section"

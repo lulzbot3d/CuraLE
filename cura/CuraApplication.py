@@ -114,6 +114,10 @@ from cura.UI.WelcomePagesModel import WelcomePagesModel
 from cura.UI.WhatsNewPagesModel import WhatsNewPagesModel
 from cura.Utils.NetworkingUtil import NetworkingUtil
 
+from cura.Machines.Models.LulzBotPrintersModel import LulzBotPrintersModel
+from cura.Machines.Models.LulzBotToolheadsModel import LulzBotToolheadsModel
+
+
 from .AutoSave import AutoSave
 from . import BuildVolume
 from . import CameraAnimation
@@ -1191,6 +1195,11 @@ class CuraApplication(QtApplication):
         qmlRegisterType(NozzleModel, "Cura", 1, 0, "NozzleModel")
         qmlRegisterType(IntentModel, "Cura", 1, 6, "IntentModel")
         qmlRegisterType(IntentCategoryModel, "Cura", 1, 6, "IntentCategoryModel")
+
+        self.processEvents()
+        qmlRegisterType(LulzBotPrintersModel, "Cura", 1, 0, "LulzBotPrintersModel")
+        qmlRegisterType(LulzBotToolheadsModel, "Cura", 1, 0, "LulzBotToolheadsModel")
+
 
         self.processEvents()
         qmlRegisterType(MaterialSettingsVisibilityHandler, "Cura", 1, 0, "MaterialSettingsVisibilityHandler")
