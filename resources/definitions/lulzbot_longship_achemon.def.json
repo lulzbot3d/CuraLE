@@ -1,0 +1,35 @@
+{
+    "id": "lulzbot_longship_achemon",
+    "name": "TAZ Pro Long Bed | SL | 0.25 mm",
+    "inherits": "lulzbot_longship_base",
+    "version": 2,
+    "metadata":
+    {
+        "type": "machine",
+        "visible": true,
+        "priority": "02",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_longship_achemon_extruder"
+        },
+        "category": "LulzBot",
+        "base_machine": "LulzBot TAZ Pro Long Bed",
+        "base_machine_name": "TAZ Pro Long Bed",
+        "preferred_material": "*PolyLite_PLA*",
+        "user_toolhead_name": "SL | 0.25 mm | Nickel Plated Copper",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/sl-tool-head-small-layer-micro-025-mm?pk_campaign=software-cura",
+        "default_category": "All"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "LulzBot Pro Long Bed | SL | 0.25mm (Micro)"
+        },
+        "machine_extruder_count": {
+            "default_value": 1
+        },
+        "layer_start_x": { "value": "100" },
+        "layer_start_y": { "value": "100" }
+    }
+}

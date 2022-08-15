@@ -1,0 +1,35 @@
+{
+    "id": "lulzbot_longship_cecropia",
+    "name": "TAZ Pro Long Bed | SE | 0.50 mm",
+    "inherits": "lulzbot_longship_base",
+    "version": 2,
+    "metadata":
+    {
+        "type": "machine",
+        "visible": true,
+        "priority": "01",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_longship_cecropia_extruder"
+        },
+        "category": "LulzBot",
+        "base_machine": "LulzBot TAZ Pro Long Bed",
+        "base_machine_name": "TAZ Pro Long Bed",
+        "preferred_material": "*PolyLite_PLA*",
+        "user_toolhead_name": "SE | 0.50 mm | Nickel Plated Copper",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/se-tool-head-single-extruder-05-mm?pk_campaign=software-cura",
+        "default_category": "All"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "LulzBot Pro Long Bed Single Extruder SE"
+        },
+        "machine_extruder_count": {
+            "default_value": 1
+        },
+        "layer_start_x": { "value": "100" },
+        "layer_start_y": { "value": "100" }
+    }
+}

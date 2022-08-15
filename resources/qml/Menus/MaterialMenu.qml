@@ -161,13 +161,6 @@ Menu
     {
         action: Cura.Actions.manageMaterials
     }
-    
-    MenuSeparator {}
-
-    MenuItem // This one probably isn't relevant to us 
-    {
-        action: Cura.Actions.marketplaceMaterials
-    }
 
     // vvv====== OLD ======vvv //
 

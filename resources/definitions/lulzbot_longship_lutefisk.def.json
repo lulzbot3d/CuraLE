@@ -1,0 +1,39 @@
+{
+    "id": "lulzbot_longship_lutefisk",
+    "name": "TAZ Pro Long Bed | M175 v2 | 0.50 mm",
+    "inherits": "lulzbot_longship_base",
+    "version": 2,
+    "metadata":
+    {
+        "type": "machine",
+        "visible": true,
+        "priority": "06",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_longship_lutefisk_extruder"
+        },
+        "category": "LulzBot",
+        "base_machine": "LulzBot TAZ Pro Long Bed",
+        "base_machine_name": "TAZ Pro Long Bed",
+        "preferred_material": "*PolyLite_PLA*",
+        "user_toolhead_name": "M175 v2 | 0.50 mm | Carbide Coated Copper",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
+        "default_category": "All"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "LulzBot Pro Long Bed | M175 v2 | 0.5mm"
+        },
+        "machine_extruder_count": {
+            "default_value": 1
+        },
+        "layer_start_x": { "value": "100" },
+        "layer_start_y": { "value": "100" },
+        "material_diameter":
+        {
+            "default_value": 1.75
+        }
+    }
+}
