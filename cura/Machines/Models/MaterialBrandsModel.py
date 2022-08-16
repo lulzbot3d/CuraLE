@@ -40,6 +40,11 @@ class MaterialBrandsModel(BaseMaterialsModel):
             if bool(container_node.getMetaDataEntry("removed", False)):
                 continue
 
+            # Only add results for the current printer
+            global_stack = self._machine_manager.activeMachine
+            if container_node.getMetaDataEntry("definition", "fdmprinter") != global_stack.definition.id:
+                continue
+
             # Add brands we haven't seen yet to the dict, skipping generics
             brand = container_node.getMetaDataEntry("brand", "")
             if brand.lower() == "generic":

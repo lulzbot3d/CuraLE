@@ -25,7 +25,7 @@
     <setting key="wipe temperature">0</setting>
     <setting key="part removal temperature">0</setting>
     <machine>
-      <machine_identifier product="lulzbot_kangaroo_paw"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment LLC." product="lulzbot_kangaroo_paw"/>
     </machine>
   </settings>
 </fdmmaterial>
