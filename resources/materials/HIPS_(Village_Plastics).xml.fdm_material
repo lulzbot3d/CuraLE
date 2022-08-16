@@ -3,30 +3,35 @@
   <metadata>
     <name>
       <brand>Keene Village Plastics</brand>
-      <material>ABS</material>
+      <material>HIPS</material>
       <color>Generic</color>
-      <category>Intermediate</category>
+      <category>Expert</category>
     </name>
-    <GUID>f8786edb-7a9f-40fa-a861-76633d250ada</GUID>
+    <GUID>b27b936d-324f-4a29-ad99-f95244d8d4f7</GUID>
     <version>1</version>
-    <color_code>#fa8072</color_code>
-    <info_link>https://www.lulzbot.com/store/filament/abs?pk_campaign=software-cura</info_link>
+    <color_code>#98FB98</color_code>
+    <info_link>https://www.lulzbot.com/store/filament/hips?pk_campaign=software-cura</info_link>
+    <adhesion_info>Use glue stick.</adhesion_info>
+    <description>Soluble in D-Limonene</description>
   </metadata>
   <properties>
-    <density>1.06</density>
+    <density>1.04</density>
     <diameter>2.85</diameter>
   </properties>
   <settings>
     <setting key="print temperature">240</setting>
     <setting key="heated bed temperature">110</setting>
-    <setting key="standby temperature">170</setting>
-    <setting key="soften temperature">175</setting>
+    <setting key="standby temperature">175</setting>
+    <setting key="soften temperature">170</setting>
     <setting key="probe temperature">170</setting>
     <setting key="wipe temperature">170</setting>
-    <setting key="part removal temperature">60</setting>
+    <setting key="part removal temperature">50</setting>
     <machine>
       <machine_identifier product="lulzbot_taz6_dual_v3"/>
       <metadata key="category">Supported</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_moarstruder"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz5_dual_v3"/>
@@ -36,34 +41,19 @@
       <machine_identifier product="lulzbot_taz6_moarstruder"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_taz6_goldenrod"/>
+      <machine_identifier product="lulzbot_taz6_aerostruder"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz6_flexy_dually_v2"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_taz6_dual_v2"/>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_taz5_flexy_dually_v2"/>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_taz5_moarstruder"/>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_taz5_dual_v2"/>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_taz6_aerostruder"/>
+      <machine_identifier product="lulzbot_taz6"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz6_cecropia"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_mini"/>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_mini_cecropia"/>
+      <machine_identifier product="lulzbot_taz6_goldenrod"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz5"/>
@@ -72,10 +62,20 @@
       <machine_identifier product="lulzbot_taz5_cecropia"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_taz5_flexy_dually_v2"/>
+      <metadata key="category">Experimental</metadata>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_mini_aerostruder"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_taz6"/>
+      <machine_identifier product="lulzbot_taz6_dual_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz5_dual_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_mini"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz5_aerostruder"/>
@@ -97,19 +97,17 @@
       <machine_identifier product="lulzbot_longship_cecropia"/>
     </machine>
     <machine>
+      <machine_identifier product="lulzbot_mini_cecropia"/>
+    </machine>
+    <machine>
       <machine_identifier product="lulzbot_taz6_twoolhead"/>
     </machine>
     <machine>
       <machine_identifier product="lulzbot_taz5_twoolhead"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_redgum_cecropia"/>
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_gladiator_cecropia"/>
-    </machine>
-    <machine>
       <machine_identifier product="lulzbot_redgum_yellowfin"/>
+      <metadata key="category">Supported</metadata>
     </machine>
   </settings>
 </fdmmaterial>
