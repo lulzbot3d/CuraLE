@@ -15,7 +15,7 @@
         "machine_priority": "05",
         "default_eeprom_state": false,
         "has_revision":true,
-        "platform": "longship_bed_v3.stl",
+        "platform": "longship_bed.stl",
         "platform_offset":
         [
             0,
