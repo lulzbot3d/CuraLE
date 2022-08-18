@@ -240,6 +240,14 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin, Extension):
             "lulzbot_quiver_perca":                       "Marlin_TAZPro_Universal_2.0.0.144.7_4de29a9.bin",
             "lulzbot_quiver_lutefiskv1":                     "Marlin_TAZPro_M175v1_2.0.0.144.6_e62591b.bin",
 
+            "lulzbot_longship_achemon":                     "Marlin_TAZPro_LongBed_2.0.0.144.5_ffae58f0.bin",
+            "lulzbot_longship_banded_tiger":                "Marlin_TAZPro_LongBed_2.0.0.144.5_ffae58f0.bin",
+            "lulzbot_longship_cecropia":                    "Marlin_TAZPro_LongBed_2.0.0.144.5_ffae58f0.bin",
+            "lulzbot_longship_dingy_cutworm":               "Marlin_TAZPro_LongBed_2.0.0.144.5_ffae58f0.bin",
+            "lulzbot_longship_goldenrod":                   "Marlin_TAZPro_LongBed_2.0.0.144.5_ffae58f0.bin",
+            "lulzbot_longship_lutefisk":                    "Marlin_TAZPro_LongBed_2.0.0.144.5_ffae58f0.bin",
+            "lulzbot_longship_perca":                       "Marlin_TAZPro_LongBed_2.0.0.144.5_ffae58f0.bin",
+
             "lulzbot_redgum_goldenrod":              "Marlin_TAZWorkhorse_Universal_2.0.9.0.13_80a6628.hex",
             "lulzbot_redgum_achemon":                "Marlin_TAZWorkhorse_Universal_2.0.9.0.13_80a6628.hex",
             "lulzbot_redgum_banded_tiger":           "Marlin_TAZWorkhorse_Universal_2.0.9.0.13_80a6628.hex",
