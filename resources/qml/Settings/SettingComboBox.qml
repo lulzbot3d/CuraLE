@@ -7,6 +7,7 @@ import QtQuick.Controls 2.3
 import UM 1.3 as UM
 import Cura 1.1 as Cura
 
+
 SettingItem
 {
     id: base
@@ -19,88 +20,6 @@ SettingItem
         textRole: "value"
 
         anchors.fill: parent
-
-        MouseArea
-        {
-            anchors.fill: parent
-            acceptedButtons: Qt.NoButton
-            onWheel: wheel.accepted = true
-        }
-
-        background: Rectangle
-        {
-            color:
-            {
-                if (!enabled) {
-                    return UM.Theme.getColor("setting_control_disabled")
-                }
-
-                if (control.hovered || control.activeFocus) {
-                    return UM.Theme.getColor("setting_control_highlight")
-                }
-
-                return UM.Theme.getColor("setting_control")
-            }
-
-            border.width: UM.Theme.getSize("default_lining").width
-            border.color:
-            {
-                if (!enabled) {
-                    return UM.Theme.getColor("setting_control_disabled_border")
-                }
-
-                if (control.hovered || control.activeFocus) {
-                    return UM.Theme.getColor("setting_control_border_highlight")
-                }
-
-                return UM.Theme.getColor("setting_control_border")
-            }
-        }
-
-        indicator: UM.RecolorImage
-        {
-            id: downArrow
-            x: control.width - width - control.rightPadding
-            y: control.topPadding + (control.availableHeight - height) / 2
-
-            source: UM.Theme.getIcon("arrow_bottom")
-            width: UM.Theme.getSize("standard_arrow").width
-            height: UM.Theme.getSize("standard_arrow").height
-            sourceSize.width: width + 5 * screenScaleFactor
-            sourceSize.height: width + 5 * screenScaleFactor
-
-            color: UM.Theme.getColor("setting_control_text")
-        }
-
-        contentItem: Label
-        {
-            anchors.left: parent.left
-            anchors.leftMargin: UM.Theme.getSize("setting_unit_margin").width
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.right: downArrow.left
-
-            text: control.currentText
-            font: UM.Theme.getFont("default")
-            color: !enabled ? UM.Theme.getColor("setting_control_disabled_text") : UM.Theme.getColor("setting_control_text")
-            elide: Text.ElideRight
-            verticalAlignment: Text.AlignVCenter
-        }
-
-        delegate: ItemDelegate
-        {
-            width: control.width
-            height: control.height
-            highlighted: control.highlightedIndex == index
-
-            contentItem: Text
-            {
-                text: modelData.value
-                color: control.contentItem.color
-                font: UM.Theme.getFont("default")
-                elide: Text.ElideRight
-                verticalAlignment: Text.AlignVCenter
-            }
-        }
 
         onActivated:
         {
