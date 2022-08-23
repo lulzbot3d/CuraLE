@@ -84,19 +84,19 @@ Item
                         {
                             id: printerSelectionRepeater
                             model: Cura.LulzBotPrintersModel {}
-                            delegate: RadioButton
+                            delegate: Cura.RadioButton
                             {
                                 text: model.name
                                 ButtonGroup.group: printerGroup
                                 checked: model.index == 0
-                                onClicked: { printerSelection.selectedIndex = model.index; printerSelection.lcd = model.lcd;printerSelection.revision = model.revision; printerSelection.baseMachine = model.id }
-
+                                onClicked: { printerSelection.selectedIndex = model.index; printerSelection.lcd = model.lcd;printerSelection.revision = model.revision; printerSelection.baseMachine = model.id; }
                             }
 
                             Component.onCompleted: {printerSelection.lcd = model.getItem(0).lcd;printerSelection.revision = model.getItem(0).revision; printerSelection.baseMachine = model.getItem(0).id}
                         }
                     }
                 }
+
                 GroupBox
                 {
                     id: toolheadSelection
@@ -110,27 +110,23 @@ Item
 
                     property int selectedIndex: 0
 
-                    ScrollView
+                    Column
                     {
-                        width: parent.width
-                        height: parent.height
 
-                        Column
+                        Repeater
                         {
-                            Repeater
+                            model: Cura.LulzBotToolheadsModel { id: toolheadsModel; baseMachineProperty: printerSelection.baseMachine }
+                            delegate: Cura.RadioButton
                             {
-                                model: Cura.LulzBotToolheadsModel { id: toolheadsModel; baseMachineProperty: printerSelection.baseMachine }
-                                delegate: RadioButton
-                                {
-                                    text: model.toolhead
-                                    ButtonGroup.group: toolheadGroup
-                                    checked: model.index == 0
-                                    onCheckedChanged: { if(checked) {toolheadSelection.selectedIndex = model.index; machineName.text = model.name }}
-                                }
+                                text: model.toolhead
+                                ButtonGroup.group: toolheadGroup
+                                checked: model.index == 0
+                                onCheckedChanged: { if(checked) {toolheadSelection.selectedIndex = model.index; machineName.text = model.name }}
                             }
                         }
                     }
                 }
+
                 GroupBox
                 {
                     id: lcdSelection
@@ -149,7 +145,7 @@ Item
                         Repeater
                         {
                             model: ["Yes", "No"]
-                            delegate: RadioButton
+                            delegate: Cura.RadioButton
                             {
                                 text: modelData
                                 ButtonGroup.group: lcdGroup
@@ -196,6 +192,7 @@ Item
     TextField
     {
         id: machineName
+        anchors.top: nextButton.top
         anchors.right: nextButton.left
         anchors.left: printerLabel.right
         anchors.bottom: parent.bottom

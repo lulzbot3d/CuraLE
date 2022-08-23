@@ -438,7 +438,7 @@
         "small_button_active": [120, 136, 20, 255],
         "small_button_active_hover": [120, 136, 20, 255],
         "small_button_text": [31, 36, 39, 197],
-        "small_button_text_hover": [255, 255, 255, 255],
+        "small_button_text_hover": [0, 0, 0, 255],
         "small_button_text_active": [255, 255, 255, 255],
         "small_button_text_active_hover": [255, 255, 255, 255],
         "status_offline": [0, 0, 0, 255],

@@ -30,7 +30,6 @@ Item
     DropDownWidget
     {
         id: addLocalPrinterDropDown
-
         anchors.top: titleLabel.bottom
         anchors.left: parent.left
         anchors.right: parent.right

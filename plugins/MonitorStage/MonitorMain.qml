@@ -11,7 +11,8 @@ Rectangle
 {
     id: viewportOverlay
 
-    property bool isConnected: Cura.MachineManager.activeMachineHasNetworkConnection || Cura.MachineManager.activeMachineHasCloudConnection
+    // property bool isConnected: Cura.MachineManager.activeMachineHasNetworkConnection || Cura.MachineManager.activeMachineHasCloudConnection
+    property bool isConnected: true
     property bool isNetworkConfigurable:
     {
         if(Cura.MachineManager.activeMachine === null)
@@ -73,7 +74,7 @@ Rectangle
         property real maximumWidth: parent.width
         property real maximumHeight: parent.height
 
-        sourceComponent: Cura.MachineManager.printerOutputDevices.length > 0 ? Cura.MachineManager.printerOutputDevices[0].monitorItem : null
+        sourceComponent: Cura.MachineManager.printerOutputDevices.length >= 0 ? Cura.MachineManager.printerOutputDevices[0].monitorItem : null
     }
 
     // CASE 2 & 3: Empty states
