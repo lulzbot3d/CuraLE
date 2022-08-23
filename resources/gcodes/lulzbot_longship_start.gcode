@@ -1,3 +1,4 @@
+; This g-code was specifically generated for the LulzBot TAZ Pro Long Bed with Universal Tool Head
 M73 P0                  ; clear LCD progress bar
 M75                     ; Start LCD Print Timer
 G26                     ; clear potential 'probe fail' condition
