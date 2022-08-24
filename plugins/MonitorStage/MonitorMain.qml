@@ -11,8 +11,7 @@ Rectangle
 {
     id: viewportOverlay
 
-    // property bool isConnected: Cura.MachineManager.activeMachineHasNetworkConnection || Cura.MachineManager.activeMachineHasCloudConnection
-    property bool isConnected: true
+    property bool isConnected: Cura.MachineManager.activeMachineHasNetworkConnection || Cura.MachineManager.activeMachineHasCloudConnection
     property bool isNetworkConfigurable:
     {
         if(Cura.MachineManager.activeMachine === null)

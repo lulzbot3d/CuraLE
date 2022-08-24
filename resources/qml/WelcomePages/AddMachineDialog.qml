@@ -32,8 +32,8 @@ Item
             {
                 base.visible = true //false
                 var item = toolheadsModel.getItem(toolheadSelection.selectedIndex).id
-                Cura.MachineManager.addMachine(machineName.text, item, lcdSelection.selectedIndex == 0 ? true: false,true/*revisionSelection.selectedIndex == 0 ? true: false*/)
-                base.machineAdded(item)
+                var success = Cura.MachineManager.addMachine(item, machineName.text, lcdSelection.selectedIndex == 0 ? true: false,true/*revisionSelection.selectedIndex == 0 ? true: false*/)
+                return success
             }
 
             function update()
@@ -54,6 +54,23 @@ Item
                     {
                         item.checked = false
                     }
+                }
+            }
+
+            function updateToolheads()
+            {
+                for (var i = 0; i < toolheadSelectionRepeater.count; i++)
+                {
+                    var item = toolheadSelectionRepeater.itemAt(i)
+                    if (i==0)
+                    {
+                        item.checked = true
+                    }
+                    else
+                    {
+                        item.checked = false
+                    }
+                    item.checkedChanged()
                 }
             }
 
@@ -89,7 +106,7 @@ Item
                                 text: model.name
                                 ButtonGroup.group: printerGroup
                                 checked: model.index == 0
-                                onClicked: { printerSelection.selectedIndex = model.index; printerSelection.lcd = model.lcd;printerSelection.revision = model.revision; printerSelection.baseMachine = model.id; }
+                                onClicked: { printerSelection.selectedIndex = model.index; printerSelection.lcd = model.lcd; printerSelection.revision = model.revision; printerSelection.baseMachine = model.id; printerSelectorLoader.item.updateToolheads(); }
                             }
 
                             Component.onCompleted: {printerSelection.lcd = model.getItem(0).lcd;printerSelection.revision = model.getItem(0).revision; printerSelection.baseMachine = model.getItem(0).id}
@@ -115,6 +132,7 @@ Item
 
                         Repeater
                         {
+                            id: toolheadSelectionRepeater
                             model: Cura.LulzBotToolheadsModel { id: toolheadsModel; baseMachineProperty: printerSelection.baseMachine }
                             delegate: Cura.RadioButton
                             {
@@ -234,8 +252,7 @@ Item
         {
             // Printer name cannot be empty
             const localPrinterItem = printerSelectorLoader.item
-            const isPrinterNameValid = isPrinterNameValid
-            return localPrinterItem != null && isPrinterNameValid
+            return localPrinterItem != null
         }
 
         text: base.currentItem.next_page_button_text
@@ -243,8 +260,7 @@ Item
         {
             // Create a local printer
             const localPrinterItem = printerSelectorLoader.item.addMachine()
-            const printerName = "Dummy Printer"
-            if(Cura.MachineManager.addMachine(localPrinterItem.id, printerName))
+            if(localPrinterItem)
             {
                 base.showNextPage()
             }
