@@ -259,7 +259,6 @@ class WelcomePagesModel(ListModel):
                            },
                           {"id": "add_network_or_local_printer",
                            "page_url": self._getBuiltinWelcomePagePath("AddMachineDialog.qml"),
-                           # "page_url": self._getBuiltinWelcomePagePath("AddNetworkOrLocalPrinterContent.qml"),
                            "next_page_id": "machine_actions",
                            },
                           {"id": "machine_actions",

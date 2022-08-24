@@ -409,7 +409,6 @@ class MachineManager(QObject):
         else:
             Logger.log("w", "Failed creating a new machine!")
             return False
-        print("This returns true")
         return True
 
     def _checkStacksHaveErrors(self) -> bool:
