@@ -43,7 +43,6 @@ G1 X-9 Y-9 ; move above first probe point
 M204 S100 ; set probing acceleration
 G29       ; start auto-leveling sequence
 M420 S1   ; activate bed level matrix
-
 M204 S500 ; restore standard acceleration
 G1 X0 Y0 Z15 F5000 ; move up off last probe point
 G4 S1 ; pause

@@ -31,7 +31,6 @@ G1 X-10 Y293 F4000 ; move above first probe point
 M204 S100 ; set probing acceleration
 G29       ; start auto-leveling sequence
 M420 S1   ; enable leveling matrix
-
 M204 S500 ; restore standard acceleration
 G1 X0 Y0 Z15 F5000 ; move up off last probe point
 G4 S1 ; pause

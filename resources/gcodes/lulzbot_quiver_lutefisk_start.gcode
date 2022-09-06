@@ -49,7 +49,6 @@ M109 R{material_probe_temperature}	; wait for extruder to reach probe temp
 M204 S300				; set probing acceleration
 G29       ; start auto-leveling sequence
 M420 S1   ; enable leveling matrix
-
 M204 S2000				; restore standard acceleration
 G1 X5 Y15 Z10 F5000			; move up off last probe point
 G4 S1					; pause
