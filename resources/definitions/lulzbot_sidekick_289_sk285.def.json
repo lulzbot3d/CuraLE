@@ -21,7 +21,25 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_sidekick_289_base",
         "base_machine_name": "TAZ Sidekick 289",
-        "user_toolhead_name": "SK285 | 0.50 mm | Brass"
+        "user_toolhead_name": "SK285 | 0.50 mm | Brass",
+        "firmware_update_info": {
+            "id": "lulzbot_sidekick_289_sk285",
+            "if": { "has_optional_lcd": true },
+            "then": {
+                "check_urls":
+                [
+                    "https://firmware.lulzbot.com/SideKick289/LCD/Universal/current.version"
+                ],
+                "update_url": "https://firmware.lulzbot.com/SideKick289/LCD/Universal/SK289LCDUniversalFirmware"
+            },
+            "else": {
+                "check_urls":
+                [
+                    "https://firmware.lulzbot.com/SideKick289/NoLCD/SK285/current.version"
+                ],
+                "update_url": "https://firmware.lulzbot.com/SideKick289/NoLCD/SK285/SK289SK285Firmware"
+            }
+        }
     },
     "overrides":
     {

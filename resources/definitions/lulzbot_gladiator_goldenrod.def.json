@@ -25,7 +25,15 @@
         "preferred_material": "PolyLite_PLA",
         "user_toolhead_name": "HE | 0.50 mm | Hardened SST",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/he-tool-head-285-mm-hardened-steel-05-mm",
-        "default_category": "All"
+        "default_category": "All",
+        "firmware_update_info": {
+            "id": "lulzbot_gladiator_goldenrod",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZProXT/Universal/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZProXT/Universal/TAZProXTUniversalFirmware"
+        }
     },
     "overrides":
     {

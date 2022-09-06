@@ -26,7 +26,15 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
         "user_toolhead_name": "SL | 0.25 mm | Nickel Plated Copper",
-        "default_extrusion_rate": 60
+        "default_extrusion_rate": 60,
+        "firmware_update_info": {
+            "id": "lulzbot_hibiscus_achemon",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/Mini2/Universal/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/Mini2/Universal/Mini2UniversalFirmware"
+        }
     },
     "overrides":
     {

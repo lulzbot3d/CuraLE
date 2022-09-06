@@ -22,16 +22,17 @@
         "category": "LulzBot",
         "base_machine": "LulzBot TAZ Pro",
         "base_machine_name": "TAZ Pro",
-        "preferred_material": "PolyLite_PLA",
+        "preferred_material": "Standard_PLA_(3D-Fuel)",
         "user_toolhead_name": "SE | 0.50 mm | Nickel Plated Copper",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/se-tool-head-single-extruder-05-mm?pk_campaign=software-cura",
         "default_category": "All",
         "firmware_update_info": {
+            "id": "lulzbot_quiver_cecropia",
             "check_urls":
             [
-                "https://firmware.lulzbot.com"
+                "https://firmware.lulzbot.com/TAZPro/Universal/current.version"
             ],
-            "update_url": "https://firmware.lulzbot.com"
+            "update_url": "https://firmware.lulzbot.com/TAZPro/Universal/TAZProUniversalFirmware"
         }
     },
     "overrides":

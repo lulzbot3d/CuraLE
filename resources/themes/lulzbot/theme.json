@@ -284,6 +284,7 @@
         "message_background": [120, 136, 20, 255],
         "message_background_error": [255, 0, 0, 255],
         "message_close": [102, 102, 102, 255],
+        "message_close_hover": [255, 255, 255, 0],
         "message_text": [255, 255, 255, 255],
         "message_border": [120, 136, 20, 255],
         "message_button": [255, 255, 255, 255],

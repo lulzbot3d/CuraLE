@@ -22,7 +22,25 @@
         "base_machine": "lulzbot_sidekick_289_base",
         "base_machine_name": "TAZ Sidekick 289",
         "user_toolhead_name": "HS | 0.80 mm | Hardened SST",
-        "default_extrusion_rate": 60
+        "default_extrusion_rate": 60,
+        "firmware_update_info": {
+            "id": "lulzbot_sidekick_289_banded_tiger",
+            "if": { "has_optional_lcd": true },
+            "then": {
+                "check_urls":
+                [
+                    "https://firmware.lulzbot.com/SideKick289/LCD/Universal/current.version"
+                ],
+                "update_url": "https://firmware.lulzbot.com/SideKick289/LCD/Universal/SK289LCDUniversalFirmware"
+            },
+            "else": {
+                "check_urls":
+                [
+                    "https://firmware.lulzbot.com/SideKick289/NoLCD/HS-HS+/current.version"
+                ],
+                "update_url": "https://firmware.lulzbot.com/SideKick289/NoLCD/HS-HS+/SK289HSHSPlusFirmware"
+            }
+        }
     },
     "overrides":
     {
