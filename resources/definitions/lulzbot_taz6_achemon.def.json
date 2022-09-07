@@ -1,5 +1,5 @@
 {
-    "id": "LulzBot_TAZ6_Achemon",
+    "id": "lulzbot_taz6_achemon",
     "name": "TAZ 6 | SL | 0.25 mm",
     "inherits": "lulzbot_taz6",
     "version": 2,
@@ -13,8 +13,15 @@
         "type": "machine",
         "visible": true,
         "user_toolhead_name": "SL | 0.25 mm | Nickel Plated Copper",
-        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/sl-tool-head-small-layer-micro-025-mm?pk_campaign=software-cura"
-        
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/sl-tool-head-small-layer-micro-025-mm?pk_campaign=software-cura",
+        "firmware_update_info": {
+            "id": "lulzbot_taz6_achemon",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZ6/Universal/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZ6/Universal/TAZ6UniversalFirmware"
+        }
     },
     "overrides":
     {

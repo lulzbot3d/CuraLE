@@ -20,7 +20,15 @@
         "base_machine": "lulzbot_kangaroo_paw_base",
         "base_machine_name": "LulzBot Bio",
         "user_toolhead_name": "Syringe Pump",
-        "default_extrusion_rate": 60
+        "default_extrusion_rate": 60,
+        "firmware_update_info": {
+            "id": "lulzbot_kangaroo_paw",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/Bio/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/Bio/BioFirmware"
+        }
     },
     "overrides":
     {

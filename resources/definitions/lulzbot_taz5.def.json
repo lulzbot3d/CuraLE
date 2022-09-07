@@ -1,5 +1,5 @@
 {
-    "id": "LulzBot_TAZ5",
+    "id": "lulzbot_taz5",
     "name": "LulzBot TAZ 5",
     "inherits": "lulzbot_taz_base",
     "version": 2,
@@ -23,7 +23,15 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-single-extruder-tool-head-v21",
         "base_machine": "lulzbot_taz_5",
         "base_machine_name": "[Legacy] TAZ 5",
-        "firmware_toolhead_name": "SingleExtruder"
+        "firmware_toolhead_name": "SingleExtruder",
+        "firmware_update_info": {
+            "id": "lulzbot_taz5_moarstruder",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZ5/LegacyToolHeads/SingleExtruder(Default)/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZ5/LegacyToolHeads/SingleExtruder(Default)/TAZ5SingleExtruderFirmware"
+        }
     },
     "overrides":
     {

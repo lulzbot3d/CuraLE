@@ -1,5 +1,5 @@
 {
-    "id": "LulzBot_Taz5_Dual_v2",
+    "id": "lulzbot_taz5_dual_v2",
     "name": "TAZ 5 DualExtruder v2",
     "inherits": "lulzbot_taz5",
     "version": 2,
@@ -15,7 +15,15 @@
         },
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-dual-extruder-tool-head-v2",
         "firmware_toolhead_name": "DualExtruder v2",
-        "nozzle_offsetting_for_disallowed_areas": false
+        "nozzle_offsetting_for_disallowed_areas": false,
+        "firmware_update_info": {
+            "id": "lulzbot_taz5_dual_v2",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZ5/LegacyToolHeads/DualExtruderV2/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZ5/LegacyToolHeads/DualExtruderV2/TAZ5DualV2Firmware"
+        }
     },
     "overrides":
     {

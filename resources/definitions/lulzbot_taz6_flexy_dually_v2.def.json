@@ -1,5 +1,5 @@
 {
-    "id": "LulzBot_Taz6_Flexy_Dually_v2",
+    "id": "lulzbot_taz6_flexy_dually_v2",
     "name": "TAZ 6 FlexyDually v2",
     "inherits": "lulzbot_taz6",
     "version": 2,
@@ -17,7 +17,15 @@
         "firmware_toolhead_name": "FlexyDually v2",
         "user_toolhead_name": "FlexyDually v2",
         "nozzle_offsetting_for_disallowed_areas": false,
-        "firmware_last_version": "1.1.9.34"
+        "firmware_last_version": "1.1.9.34",
+        "firmware_update_info": {
+            "id": "lulzbot_taz6_flexy_dually_v2",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZ6/FlexyDually/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZ6/FlexyDually/TAZ6FlexyDuallyFirmware"
+        }
     },
     "overrides":
     {

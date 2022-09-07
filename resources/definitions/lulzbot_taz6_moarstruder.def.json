@@ -1,5 +1,5 @@
 {
-    "id": "LulzBot_Taz6_MOARstruder",
+    "id": "lulzbot_taz6_moarstruder",
     "name": "TAZ 6 MOARstruder",
     "inherits": "lulzbot_taz6",
     "version": 2,
@@ -15,7 +15,15 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-moarstruder-tool-head?pk_campaign=software-cura",
         "firmware_toolhead_name": "MOARstruder",
         "user_toolhead_name": "MOARstruder",
-        "firmware_last_version": "1.1.9.34"
+        "firmware_last_version": "1.1.9.34",
+        "firmware_update_info": {
+            "id": "lulzbot_taz6_moarstruder",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZ6/Moarstruder/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZ6/Moarstruder/TAZ6MoarstruderFirmware"
+        }
     },
     "overrides":
     {

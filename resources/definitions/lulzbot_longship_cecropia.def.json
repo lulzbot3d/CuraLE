@@ -18,7 +18,15 @@
         "preferred_material": "*PolyLite_PLA*",
         "user_toolhead_name": "SE | 0.50 mm | Nickel Plated Copper",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/se-tool-head-single-extruder-05-mm?pk_campaign=software-cura",
-        "default_category": "All"
+        "default_category": "All",
+        "firmware_update_info": {
+            "id": "lulzbot_longship_cecropia",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZProLongBed/Universal/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZPro/Universal/TAZProLongBedUniversalFirmware"
+        }
     },
     "overrides":
     {

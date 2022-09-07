@@ -12,7 +12,6 @@
         },
         "type": "machine",
         "platform": "Sidekick_747_bed.stl",
-        
         "preferred_material": "PolyLite_PLA",
         "preferred_quality": "*Standard*",
         "file_formats": "text/x-gcode",
@@ -22,7 +21,20 @@
         "base_machine": "lulzbot_sidekick_747_base",
         "base_machine_name": "TAZ Sidekick 747",
         "user_toolhead_name": "H175 | 0.50 mm | Nickel Plated Copper",
-        "default_extrusion_rate": 60
+        "default_extrusion_rate": 60,
+        "firmware_update_info": {
+            "id": "lulzbot_sidekick_747_perca",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/SideKick747/LCD/Universal/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/SideKick747/LCD/Universal/SK747LCDUniversalFirmware",
+            "no_lcd_check_urls":
+            [
+                "https://firmware.lulzbot.com/SideKick747/NoLCD/H175/current.version"
+            ],
+            "no_lcd_update_url": "https://firmware.lulzbot.com/SideKick747/NoLCD/H175/SK747H175Firmware"
+        }
     },
     "overrides":
     {

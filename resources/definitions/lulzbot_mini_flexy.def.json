@@ -1,5 +1,5 @@
 {
-    "id": "LulzBot_Mini_Flexy",
+    "id": "lulzbot_mini_flexy",
     "name": "LulzBot Mini Flexystruder",
     "inherits": "lulzbot_mini",
     "version": 2,
@@ -14,7 +14,20 @@
         "visible": true,
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-mini-flexystruder-tool-head-v2",
         "user_toolhead_name": "Flexystruder v2",
-        "firmware_toolhead_name": "Flexystruder"
+        "firmware_toolhead_name": "Flexystruder",
+        "firmware_update_info": {
+            "id": "lulzbot_mini_flexy",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/Mini/LCD/Flexystruder/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/Mini/LCD/Flexystruder/MiniLCDFlexyFirmware",
+            "no_lcd_check_urls":
+            [
+                "https://firmware.lulzbot.com/Mini/NoLCD/Flexystruder/current.version"
+            ],
+            "no_lcd_update_url": "https://firmware.lulzbot.com/Mini/NoLCD/Flexystruder/MiniFlexyFirmware"
+        }
     },
     "overrides":
     {

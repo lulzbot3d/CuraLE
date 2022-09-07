@@ -1,5 +1,5 @@
 {
-    "id": "LulzBot_Taz6_Dual_v3",
+    "id": "lulzbot_taz6_dual_v3",
     "name": "TAZ 6 DualExtruder v3",
     "inherits": "lulzbot_taz6",
     "version": 2,
@@ -18,7 +18,15 @@
         "user_toolhead_name": "DualExtruder v3",
         "preferred_material": "PolyLite_PLA",
         "default_category": "Supported",
-        "firmware_last_version": "1.1.9.34"
+        "firmware_last_version": "1.1.9.34",
+        "firmware_update_info": {
+            "id": "lulzbot_taz6_dual_v3",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZ6/DualExtruderV3/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZ6/DualExtruderV3/TAZ6DualV3Firmware"
+        }
     },
     "overrides":
     {

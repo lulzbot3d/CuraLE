@@ -1,5 +1,5 @@
 {
-    "id": "LulzBot_TAZ5_aerostruder",
+    "id": "lulzbot_taz5_aerostruder",
     "name": "TAZ 5 Aerostruder",
     "inherits": "lulzbot_taz5",
     "version": 2,
@@ -13,7 +13,15 @@
         "type": "machine",
         "visible": true,
         "user_toolhead_name": "Aerostruder v1",
-        "firmware_toolhead_name": "Aerostruder"
+        "firmware_toolhead_name": "Aerostruder",
+        "firmware_update_info": {
+            "id": "lulzbot_taz5_aerostruder",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZ5/LegacyToolHeads/Aerostruder/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZ5/LegacyToolHeads/Aerostruder/TAZ5AeroFirmware"
+        }
     },
     "overrides":
     {

@@ -13,7 +13,20 @@
         "type": "machine",
         "visible": true,
         "user_toolhead_name": "SL | 0.25 mm | Nickel Plated Copper",
-        "firmware_toolhead_name": "SmallLayer"
+        "firmware_toolhead_name": "SmallLayer",
+        "firmware_update_info": {
+            "id": "lulzbot_mini_achemon",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/Mini/LCD/SL/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/Mini/LCD/SL/MiniLCDSLFirmware",
+            "no_lcd_check_urls":
+            [
+                "https://firmware.lulzbot.com/Mini/NoLCD/SL/current.version"
+            ],
+            "no_lcd_update_url": "https://firmware.lulzbot.com/Mini/NoLCD/SL/MiniSLFirmware"
+        }
     },
     "overrides":
     {

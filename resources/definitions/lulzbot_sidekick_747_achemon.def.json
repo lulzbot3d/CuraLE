@@ -25,7 +25,20 @@
         "base_machine_name": "TAZ Sidekick 747",
         "user_toolhead_name": "SL | 0.25 mm | Nickel Plated Copper",
         "default_extrusion_rate": 60,
-        "default_category": "All"
+        "default_category": "All",
+        "firmware_update_info": {
+            "id": "lulzbot_sidekick_747_achemon",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/SideKick747/LCD/Universal/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/SideKick747/LCD/Universal/SK747LCDUniversalFirmware",
+            "no_lcd_check_urls":
+            [
+                "https://firmware.lulzbot.com/SideKick747/NoLCD/SL-SE-HE/current.version"
+            ],
+            "no_lcd_update_url": "https://firmware.lulzbot.com/SideKick747/NoLCD/SL-SE-HE/SK747SLSEHEFirmware"
+        }
     },
     "overrides":
     {

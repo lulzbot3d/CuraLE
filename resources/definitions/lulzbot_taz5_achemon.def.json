@@ -13,7 +13,15 @@
         "type": "machine",
         "visible": true,
         "user_toolhead_name": "SL | 0.25 mm | Nickel Plated Copper",
-        "firmware_toolhead_name": "SmallLayer"
+        "firmware_toolhead_name": "SmallLayer",
+        "firmware_update_info": {
+            "id": "lulzbot_taz5_achemon",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZ5/CurrentToolHeads/SL/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZ5/CurrentToolHeads/SL/TAZ5SLFirmware"
+        }
     },
     "overrides":
     {

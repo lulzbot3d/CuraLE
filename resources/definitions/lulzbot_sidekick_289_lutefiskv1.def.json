@@ -26,21 +26,16 @@
         "default_extrusion_rate": 60,
         "firmware_update_info": {
             "id": "lulzbot_sidekick_289_lutefiskv1",
-            "if": { "has_optional_lcd": true },
-            "then": {
-                "check_urls":
-                [
-                    "https://firmware.lulzbot.com/SideKick289/LCD/M175v1/current.version"
-                ],
-                "update_url": "https://firmware.lulzbot.com/SideKick289/LCD/M175v1/SK289LCDM175Firmware"
-            },
-            "else": {
-                "check_urls":
-                [
-                    "https://firmware.lulzbot.com/SideKick289/NoLCD/M175v1/current.version"
-                ],
-                "update_url": "https://firmware.lulzbot.com/SideKick289/NoLCD/M175v1/SK289M175v1Firmware"
-            }
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/SideKick289/LCD/M175v1/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/SideKick289/LCD/M175v1/SK289LCDM175Firmware",
+            "no_lcd_check_urls":
+            [
+                "https://firmware.lulzbot.com/SideKick289/NoLCD/M175v1/current.version"
+            ],
+            "no_lcd_update_url": "https://firmware.lulzbot.com/SideKick289/NoLCD/M175v1/SK289M175v1Firmware"
         }
     },
     "overrides":

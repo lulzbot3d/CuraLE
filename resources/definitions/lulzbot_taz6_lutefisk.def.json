@@ -13,7 +13,15 @@
         "type": "machine",
         "visible": true,
         "user_toolhead_name": "M175 v2 | 0.50 mm | Carbide Coated Copper",
-        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/se-tool-head-single-extruder-05-mm?pk_campaign=software-cura"
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/se-tool-head-single-extruder-05-mm?pk_campaign=software-cura",
+        "firmware_update_info": {
+            "id": "lulzbot_taz6_lutefisk",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZ6/Universal/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZ6/Universal/TAZ6UniversalFirmware"
+        }
     },
     "overrides":
     {

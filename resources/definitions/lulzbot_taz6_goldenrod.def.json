@@ -13,7 +13,15 @@
         "type": "machine",
         "visible": true,
         "user_toolhead_name": "HE | 0.50 mm | Hardened SST",
-        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/he-tool-head-285-mm-hardened-steel-05-mm"
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/he-tool-head-285-mm-hardened-steel-05-mm",
+        "firmware_update_info": {
+            "id": "lulzbot_taz6_goldenrod",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZ6/Universal/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZ6/Universal/TAZ6UniversalFirmware"
+        }
     },
     "overrides":
     {

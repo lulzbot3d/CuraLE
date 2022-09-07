@@ -19,7 +19,15 @@
         "preferred_material": "PolyLite_PLA",
         "user_toolhead_name": "H175 | 0.50 mm | Nickel Plated Copper",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
-        "default_category": "All"
+        "default_category": "All",
+        "firmware_update_info": {
+            "id": "lulzbot_redgum_perca",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZWorkhorse/Universal/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZWorkhorse/Universal/TAZWorkhorseUniversalFirmware"
+        }
     },
     "overrides":
     {

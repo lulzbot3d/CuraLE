@@ -1,5 +1,5 @@
 {
-    "id": "LulzBot_Taz6_Flexy_v2",
+    "id": "lulzbot_taz6_flexy_v2",
     "name": "TAZ 6 Flexystruder v2",
     "inherits": "lulzbot_taz6",
     "version": 2,
@@ -15,7 +15,15 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-flexystruder-tool-head-v2?pk_campaign=software-cura",
         "user_toolhead_name": "Flexystruder v2",
         "firmware_toolhead_name": "Flexystruder",
-        "firmware_last_version": "1.1.9.34"
+        "firmware_last_version": "1.1.9.34",
+        "firmware_update_info": {
+            "id": "lulzbot_taz6_flexy_v2",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZ6/Flexystruder/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZ6/Flexystruder/TAZ6FlexystruderFirmware"
+        }
     },
     "overrides":
     {

@@ -12,7 +12,6 @@
         },
         "type": "machine",
         "platform": "Sidekick_289_bed.stl",
-        
         "preferred_material": "PolyLite_PLA",
         "preferred_quality": "*Standard*",
         "file_formats": "text/x-gcode",
@@ -25,21 +24,16 @@
         "default_extrusion_rate": 60,
         "firmware_update_info": {
             "id": "lulzbot_sidekick_289_banded_tiger",
-            "if": { "has_optional_lcd": true },
-            "then": {
-                "check_urls":
-                [
-                    "https://firmware.lulzbot.com/SideKick289/LCD/Universal/current.version"
-                ],
-                "update_url": "https://firmware.lulzbot.com/SideKick289/LCD/Universal/SK289LCDUniversalFirmware"
-            },
-            "else": {
-                "check_urls":
-                [
-                    "https://firmware.lulzbot.com/SideKick289/NoLCD/HS-HS+/current.version"
-                ],
-                "update_url": "https://firmware.lulzbot.com/SideKick289/NoLCD/HS-HS+/SK289HSHSPlusFirmware"
-            }
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/SideKick289/LCD/Universal/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/SideKick289/LCD/Universal/SK289LCDUniversalFirmware",
+            "no_lcd_check_urls":
+            [
+                "https://firmware.lulzbot.com/SideKick289/NoLCD/HS-HS+/current.version"
+            ],
+            "no_lcd_update_url": "https://firmware.lulzbot.com/SideKick289/NoLCD/HS-HS+/SK289HSHSPlusFirmware"
         }
     },
     "overrides":

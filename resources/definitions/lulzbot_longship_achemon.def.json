@@ -18,7 +18,15 @@
         "preferred_material": "*PolyLite_PLA*",
         "user_toolhead_name": "SL | 0.25 mm | Nickel Plated Copper",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/sl-tool-head-small-layer-micro-025-mm?pk_campaign=software-cura",
-        "default_category": "All"
+        "default_category": "All",
+        "firmware_update_info": {
+            "id": "lulzbot_longship_achemon",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZProLongBed/Universal/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZPro/Universal/TAZProLongBedUniversalFirmware"
+        }
     },
     "overrides":
     {

@@ -1,5 +1,5 @@
 {
-    "id": "LulzBot_Hibiscus_lutefiskv1",
+    "id": "lulzbot_hibiscus_lutefiskv1",
     "name": "LulzBot Mini 2 | M175 v1 | 0.50 mm",
     "inherits": "lulzbot_hibiscus",
     "version": 2,
@@ -27,7 +27,15 @@
         "base_machine": "lulzbot_hibiscus",
         "firmware_last_version": "2.0.0.144.1",
         "user_toolhead_name": "M175 v1 | 0.50 mm | Carbide Coated Copper",
-        "default_extrusion_rate": 60
+        "default_extrusion_rate": 60,
+        "firmware_update_info": {
+            "id": "lulzbot_hibiscus_lutefiskv1",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/Mini2/M175v1/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/Mini2/M175v1/Mini2M175Firmware"
+        }
     },
     "overrides":
     {

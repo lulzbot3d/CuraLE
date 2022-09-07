@@ -1,5 +1,5 @@
 {
-    "id": "LulzBot_Taz5_Flexy_v2",
+    "id": "lulzbot_taz5_flexy_v2",
     "name": "TAZ 5 Flexystruder v2",
     "inherits": "lulzbot_taz5",
     "version": 2,
@@ -14,7 +14,15 @@
         "visible": true,
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-flexystruder-tool-head-v2",
         "user_toolhead_name": "Flexystruder v2",
-        "firmware_toolhead_name": "Flexystruder"
+        "firmware_toolhead_name": "Flexystruder",
+        "firmware_update_info": {
+            "id": "lulzbot_taz5_flexy_v2",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZ5/LegacyToolHeads/Flexystruder/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZ5/LegacyToolHeads/Flexystruder/TAZ5FlexystruderFirmware"
+        }
     },
     "overrides":
     {

@@ -18,7 +18,15 @@
         "preferred_material": "PolyLite_PLA",
         "user_toolhead_name": "HS+ | 1.20 mm | Hardened SST",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-hs-plus-tool-head-hardened-steel-1_2-mm?pk_campaign=software-cura",
-        "default_category": "All"
+        "default_category": "All",
+        "firmware_update_info": {
+            "id": "lulzbot_redgum_dingy_cutworm",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZWorkhorse/Universal/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZWorkhorse/Universal/TAZWorkhorseUniversalFirmware"
+        }
     },
     "overrides":
     {

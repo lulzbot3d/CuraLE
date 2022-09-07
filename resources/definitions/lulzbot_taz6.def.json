@@ -1,5 +1,5 @@
 {
-    "id": "LulzBot_TAZ6",
+    "id": "lulzbot_taz6",
     "name": "LulzBot TAZ 6",
     "inherits": "lulzbot_taz_base",
     "version": 2,
@@ -24,7 +24,15 @@
         "base_machine": "lulzbot_taz_6",
         "base_machine_name": "[Legacy] TAZ 6",
         "firmware_last_version": "2.0.9.0.13",
-        "user_toolhead_name": "Single Extruder"
+        "user_toolhead_name": "Single Extruder",
+        "firmware_update_info": {
+            "id": "lulzbot_taz6",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZ6/Universal/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZ6/Universal/TAZ6UniversalFirmware"
+        }
     },
     "overrides":
     {

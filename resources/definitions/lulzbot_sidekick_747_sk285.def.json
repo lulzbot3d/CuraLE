@@ -21,7 +21,20 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_sidekick_747_base",
         "base_machine_name": "TAZ Sidekick 747",
-        "user_toolhead_name": "SK285 | 0.50 mm | Brass"
+        "user_toolhead_name": "SK285 | 0.50 mm | Brass",
+        "firmware_update_info": {
+            "id": "lulzbot_sidekick_747_sk285",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/SideKick747/LCD/Universal/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/SideKick747/LCD/Universal/SK747LCDUniversalFirmware",
+            "no_lcd_check_urls":
+            [
+                "https://firmware.lulzbot.com/SideKick747/NoLCD/SK285/current.version"
+            ],
+            "no_lcd_update_url": "https://firmware.lulzbot.com/SideKick747/NoLCD/SK285/SK747SK285Firmware"
+        }
     },
     "overrides":
     {

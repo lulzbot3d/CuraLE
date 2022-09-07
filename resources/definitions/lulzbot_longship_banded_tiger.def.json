@@ -18,7 +18,15 @@
         "preferred_material": "*PolyLite_PLA*",
         "user_toolhead_name": "HS | 0.80 mm | Hardened SST",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/hs-tool-head-hardened-steel-08-mm?pk_campaign=software-cura",
-        "default_category": "All"
+        "default_category": "All",
+        "firmware_update_info": {
+            "id": "lulzbot_longship_banded_tiger",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZProLongBed/Universal/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZPro/Universal/TAZProLongBedUniversalFirmware"
+        }
     },
     "overrides":
     {

@@ -1,5 +1,5 @@
 {
-    "id": "LulzBot_Hibiscus_Dingy_Cutworm",
+    "id": "lulzbot_hibiscus_dingy_cutworm",
     "name": "LulzBot Mini 2 | HS+ | 1.20 mm",
     "inherits": "lulzbot_hibiscus",
     "version": 2,
@@ -26,7 +26,15 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
         "user_toolhead_name": "HS+ | 1.20 mm | Hardened SST",
-        "default_extrusion_rate": 60
+        "default_extrusion_rate": 60,
+        "firmware_update_info": {
+            "id": "lulzbot_hibiscus_dingy_cutworm",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/Mini2/Universal/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/Mini2/Universal/Mini2UniversalFirmware"
+        }
     },
     "overrides":
     {

@@ -17,6 +17,7 @@
         "author": "Fargo Additive Manufacturing Equipment LLC.",
         "has_machine_materials": true,
         "has_machine_quality": true,
+        "has_optional_lcd": false,
         "required_actions": ["ChangeToolHead"],
         "firmware_update_info": {
             "check_urls":

@@ -1,5 +1,5 @@
 {
-    "id": "LulzBot_Hibiscus",
+    "id": "lulzbot_hibiscus",
     "name": "LulzBot Mini 2 | SE | 0.50 mm",
     "inherits": "lulzbot_base",
     "version": 2,
@@ -28,7 +28,15 @@
         "base_machine": "lulzbot_hibiscus",
         "base_machine_name": "LulzBot Mini 2",
         "firmware_last_version": "2.0.9.0.12",
-        "user_toolhead_name": "SE | 0.50 mm | Nickel Plated Copper"
+        "user_toolhead_name": "SE | 0.50 mm | Nickel Plated Copper",
+        "firmware_update_info": {
+            "id": "lulzbot_hibiscus",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/Mini2/Universal/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/Mini2/Universal/Mini2UniversalFirmware"
+        }
     },
     "overrides":
     {
