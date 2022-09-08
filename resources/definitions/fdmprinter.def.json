@@ -914,17 +914,6 @@
                             "maximum_value_warning": "150",
                             "settable_per_mesh": false,
                             "settable_per_extruder": true
-                        },
-                        "backlash_fading_distance":
-                        {
-                            "label": "Backlash Fading Distance",
-                            "description": "Distance from the buildplate at which to completely fade out backlash compensation. This option requires M425 g-code on the firmware side",
-                            "type": "float",
-                            "unit": "mm",
-                            "default_value": 0.0,
-                            "minimum_value": 0.0,
-                            "settable_per_mesh": false,
-                            "settable_per_extruder": true
                         }
                     }
                 }

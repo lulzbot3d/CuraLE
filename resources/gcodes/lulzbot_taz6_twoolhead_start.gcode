@@ -77,8 +77,6 @@
 	G28 XY                              ; home X and Y
 	M204 S100                           ; set probing acceleration
 	G29                                 ; start auto-leveling sequence
-    M425 Z			     ; use measured Z backlash for compensation
-	M425 Z F0		     ; turn off measured Z backlash compensation. (if activated in the quality settings, this command will automatically be ignored)
 	M204 S350                           ; restore standard acceleration
 	G1 Z15 F5000                        ; move up off last probe point
 	G4 S1                               ; pause
