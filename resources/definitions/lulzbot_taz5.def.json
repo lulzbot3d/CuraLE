@@ -23,7 +23,8 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-single-extruder-tool-head-v21",
         "base_machine": "lulzbot_taz_5",
         "base_machine_name": "[Legacy] TAZ 5",
-        "firmware_toolhead_name": "SingleExtruder"
+        "firmware_toolhead_name": "SingleExtruder",
+        "firmware_last_version": "1.1.9.34"
     },
     "overrides":
     {
