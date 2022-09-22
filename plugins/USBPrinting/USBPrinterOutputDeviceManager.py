@@ -7,7 +7,7 @@ import serial.tools.list_ports
 from os import environ
 from re import search
 
-from PyQt5.QtCore import QObject, pyqtSignal
+from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
 
 from UM.Signal import Signal, signalemitter
 from UM.OutputDevice.OutputDevicePlugin import OutputDevicePlugin
@@ -38,10 +38,13 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         self._serial_port_list = []
         self._usb_output_devices = {}
         self._usb_output_devices_model = None
-        self._update_thread = threading.Thread(target = self._updateThread)
+        self._update_thread = threading.Thread()
+
+        self.createUpdateThread()
+
         self._update_thread.setDaemon(True)
 
-        self._check_updates = True
+        self._check_updates = False
 
         self._application.applicationShuttingDown.connect(self.stop)
         # Because the model needs to be created in the same thread as the QMLEngine, we use a signal.
@@ -55,12 +58,31 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
             if isinstance(device, USBPrinterOutputDevice.USBPrinterOutputDevice):
                 device.resetDeviceSettings()
 
+    def createUpdateThread(self):
+        self._update_thread = threading.Thread(target = self._updateThread)
+
     def start(self):
-        self._check_updates = True
+        # self._check_updates = True
         self._update_thread.start()
 
     def stop(self, store_data: bool = True):
         self._check_updates = False
+
+    @pyqtSlot()
+    def pushedConnectButton(self):
+        print("Woah!")
+        self._check_updates = True
+        if not self._update_thread.is_alive():
+            self.createUpdateThread()
+            self._update_thread.start()
+
+    @pyqtSlot()
+    def pushedDisconnectButton(self):
+        self.stop()
+
+    @pyqtSlot()
+    def connecting(self):
+        return self._check_updates
 
     def _onConnectionStateChanged(self, serial_port):
         if serial_port not in self._usb_output_devices:
@@ -85,6 +107,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
                     port_list = self.getSerialPortList(only_list_usb=True)
             self._addRemovePorts(port_list)
             time.sleep(5)
+        print("Aiiiieeeee!!")
 
     def _addRemovePorts(self, serial_ports):
         """Helper to identify serial ports (and scan for them)"""
