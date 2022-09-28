@@ -21,22 +21,7 @@ Rectangle
         return Cura.MachineManager.activeMachine.supportsNetworkConnection
     }
 
-    property bool isNetworkConfigured:
-    {
-        // Readability:
-        var connectedTypes = [2, 3];
-        var types = Cura.MachineManager.activeMachine.configuredConnectionTypes
-
-        // Check if configured connection types includes either 2 or 3 (LAN or cloud)
-        for (var i = 0; i < types.length; i++)
-        {
-            if (connectedTypes.indexOf(types[i]) >= 0)
-            {
-                return true
-            }
-        }
-        return false
-    }
+    property bool isNetworkConfigured: false
 
     color: UM.Theme.getColor("viewport_overlay")
     anchors.fill: parent

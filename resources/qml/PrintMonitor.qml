@@ -134,12 +134,6 @@ Item
             visible: activePrinter != null ? activePrinter.canControlManually : false
         }
 
-            Label
-            {
-                text: catalog.i18nc("@label", "Jog Position")
-                color: UM.Theme.getColor("setting_control_text")
-                font: UM.Theme.getFont("default")
-
         MonitorSection
         {
             label: catalog.i18nc("@label", "Active print")
@@ -163,7 +157,6 @@ Item
             width: base.width
             visible: activePrinter != null
         }
-    }
 
         MonitorItem
         {

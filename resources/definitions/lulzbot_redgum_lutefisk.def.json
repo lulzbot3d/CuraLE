@@ -36,7 +36,7 @@
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "lulzbot_redgum_lutefiskv2_start"
+            "default_value_from_file": "lulzbot_redgum_goldenrod_start"
         },
         "machine_end_gcode":
         {

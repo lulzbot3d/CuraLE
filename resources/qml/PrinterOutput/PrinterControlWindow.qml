@@ -136,13 +136,13 @@ UM.Dialog
             {
                 base.sendCommand();
             }
-            style: UM.Theme.styles.print_monitor_control_button
+            style: UM.Theme.styles.monitor_button_style
         },
         Button
         {
             text: catalog.i18nc("@action:button","Close");
             onClicked: base.visible = false;
-            style: UM.Theme.styles.print_monitor_control_button
+            style: UM.Theme.styles.monitor_button_style
         }
     ]
 

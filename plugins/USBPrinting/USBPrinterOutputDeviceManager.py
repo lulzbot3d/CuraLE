@@ -12,6 +12,7 @@ from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
 from UM.Signal import Signal, signalemitter
 from UM.OutputDevice.OutputDevicePlugin import OutputDevicePlugin
 from UM.i18n import i18nCatalog
+from UM.Logger import Logger
 
 from cura.PrinterOutput.PrinterOutputDevice import ConnectionState
 
@@ -40,7 +41,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         self._usb_output_devices_model = None
         self._update_thread = threading.Thread()
 
-        self.createUpdateThread()
+        self.createUpdateThread() # Sets up the thread properly
 
         self._update_thread.setDaemon(True)
 
@@ -59,6 +60,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
                 device.resetDeviceSettings()
 
     def createUpdateThread(self):
+        # Sets _update_thread to a new Thread object
         self._update_thread = threading.Thread(target = self._updateThread)
 
     def start(self):
@@ -68,18 +70,28 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
     def stop(self, store_data: bool = True):
         self._check_updates = False
 
+    # Method to start searching for and connecting to printers
     @pyqtSlot()
     def pushedConnectButton(self):
-        print("Woah!")
+        # Set thread to loop, recreate thread and start it
         self._check_updates = True
         if not self._update_thread.is_alive():
             self.createUpdateThread()
             self._update_thread.start()
 
+    # Method to disconnect printers
     @pyqtSlot()
     def pushedDisconnectButton(self):
         self.stop()
+        print("USB Devices " + str(self._usb_output_devices))
+        print("Serial Ports: " + str(self._serial_port_list))
+        for port, device in self._usb_output_devices.items():
+            device.close()
+            self._serial_port_list.remove(port)
+        print("USB Devices After: " + str(self._usb_output_devices))
+        print("Serial Ports After: " + str(self._serial_port_list))
 
+    # Function to return whether Cura is searching for a printer
     @pyqtSlot()
     def connecting(self):
         return self._check_updates
@@ -107,7 +119,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
                     port_list = self.getSerialPortList(only_list_usb=True)
             self._addRemovePorts(port_list)
             time.sleep(5)
-        print("Aiiiieeeee!!")
+        Logger.log("i", "Update thread stopped")
 
     def _addRemovePorts(self, serial_ports):
         """Helper to identify serial ports (and scan for them)"""

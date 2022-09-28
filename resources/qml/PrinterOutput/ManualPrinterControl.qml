@@ -53,6 +53,50 @@ Item
             width: base.width
         }
 
+        Label
+        {
+            text: " "
+        }
+
+        Row
+        {
+            id: baseControls
+
+            width: base.width - 2 * UM.Theme.getSize("default_margin").width
+            height: childrenRect.height + UM.Theme.getSize("default_margin").width
+            anchors.left: parent.left
+            anchors.topMargin: UM.Theme.getSize("default_margin").height * 100
+            anchors.leftMargin: UM.Theme.getSize("default_margin").width
+            spacing: UM.Theme.getSize("default_margin").width
+
+            Button
+            {
+                height: UM.Theme.getSize("setting_control").height
+                width: height*2 + UM.Theme.getSize("default_margin").width
+                text: "Disconnect"
+                onClicked:
+                {
+                    OutputDeviceHeader.pressedConnect = false
+                    Cura.USBPrinterOutputDeviceManager.pushedDisconnectButton()
+                }
+                style: UM.Theme.styles.monitor_checkable_button_style
+            }
+
+            Button
+            {
+                height: UM.Theme.getSize("setting_control").height
+                width: height*2 + UM.Theme.getSize("default_margin").width
+                text: catalog.i18nc("@label", "Console")
+                onClicked:
+                {
+                    //connectedPrinter.messageFromPrinter.disconnect(printer_control.receive)
+                    // connectedPrinter.messageFromPrinter.connect(printer_control.receive)
+                    printer_control.visible = true;
+                }
+                style: UM.Theme.styles.monitor_checkable_button_style
+            }
+        }
+
         Row
         {
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
@@ -401,6 +445,18 @@ Item
                 }
             }
         }
+
+        PrinterControlWindow
+	    {
+	        id: printer_control
+	        onCommand:
+	        {
+	            if (!Cura.USBPrinterManager.sendCommandToCurrentPrinter(command))
+	            {
+	                receive("i", "Error: Printer not connected")
+	            }
+	        }
+	    }
 
         ListModel
         {

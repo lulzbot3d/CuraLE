@@ -345,7 +345,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                             self._gcode_position = int(line.split()[1])
 
     def _setFirmwareName(self, name):
-        new_name = re.findall(r"FIRMWARE_NAME:(.*);", str(name))
+        new_name = re.findall(r"FIRMWARE_NAME:([^\s]+)", str(name))
         if new_name:
             self._firmware_name = new_name[0]
             Logger.log("i", "USB output device Firmware name: %s", self._firmware_name)
