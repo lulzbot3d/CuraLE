@@ -22,11 +22,11 @@ class FirmwareUpdater(QObject):
 
         self._output_device = output_device
 
-        self._update_firmware_thread = Thread(target=self._updateFirmware, daemon=True, name = "FirmwareUpdateThread")
-
         self._firmware_file = ""
         self._firmware_progress = 0
         self._firmware_update_state = FirmwareUpdateState.idle
+
+        self._update_firmware_thread = Thread()
 
     def updateFirmware(self, firmware_file: Union[str, QUrl]) -> None:
         # the file path could be url-encoded.
@@ -38,6 +38,15 @@ class FirmwareUpdater(QObject):
         if self._firmware_file == "":
             self._setFirmwareUpdateState(FirmwareUpdateState.firmware_not_found_error)
             return
+
+        firmware_file_extension = self._firmware_file.split(".")[-1]
+
+        if firmware_file_extension == "hex":
+            self._update_firmware_thread = Thread(target=self._updateFirmwareAvr, daemon=True, name = "FirmwareUpdateThread")
+        elif firmware_file_extension == "bin":
+            self._update_firmware_thread = Thread(target=self._updateFirmwareBossapy, daemon=True, name = "FirmwareUpdateThread")
+        else:
+            Logger.log("e", "File type unknown/unsupported" + firmware_file_extension)
 
         self._setFirmwareUpdateState(FirmwareUpdateState.updating)
         try:

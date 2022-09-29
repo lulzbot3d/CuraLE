@@ -96,7 +96,7 @@ Cura.MachineAction
     {
         id: customFirmwareDialog
         title: catalog.i18nc("@title:window", "Select custom firmware")
-        nameFilters:  "Firmware image files (*.hex)"
+        nameFilters:  "Firmware image files (*.hex *.bin)"
         selectExisting: true
         onAccepted:
         {

@@ -83,13 +83,9 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
     @pyqtSlot()
     def pushedDisconnectButton(self):
         self.stop()
-        print("USB Devices " + str(self._usb_output_devices))
-        print("Serial Ports: " + str(self._serial_port_list))
         for port, device in self._usb_output_devices.items():
             device.close()
             self._serial_port_list.remove(port)
-        print("USB Devices After: " + str(self._usb_output_devices))
-        print("Serial Ports After: " + str(self._serial_port_list))
 
     # Function to return whether Cura is searching for a printer
     @pyqtSlot()

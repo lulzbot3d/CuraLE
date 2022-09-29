@@ -17,7 +17,8 @@ from cura.PrinterOutput.Models.PrintJobOutputModel import PrintJobOutputModel
 from cura.PrinterOutput.GenericOutputController import GenericOutputController
 
 from .AutoDetectBaudJob import AutoDetectBaudJob
-from .AvrFirmwareUpdater import AvrFirmwareUpdater
+# from .AvrFirmwareUpdater import AvrFirmwareUpdater
+from .LulzFirmwareUpdater import LulzFirmwareUpdater
 
 from io import StringIO #To write the g-code output.
 from queue import Queue
@@ -37,6 +38,7 @@ catalog = i18nCatalog("cura")
 
 
 class USBPrinterOutputDevice(PrinterOutputDevice):
+
     def __init__(self, serial_port: str, baud_rate: Optional[int] = None) -> None:
         super().__init__(serial_port, connection_type = ConnectionType.UsbConnection)
         self.setName(catalog.i18nc("@item:inmenu", "USB printing"))
@@ -86,7 +88,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._command_received.set()
 
         self._firmware_name_requested = False
-        self._firmware_updater = AvrFirmwareUpdater(self)
+        self._firmware_updater = LulzFirmwareUpdater(self)
 
         plugin_path = PluginRegistry.getInstance().getPluginPath("USBPrinting")
         if plugin_path:
