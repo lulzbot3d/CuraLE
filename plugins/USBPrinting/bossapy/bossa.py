@@ -51,7 +51,7 @@ class BOSSA():
             self.close()
         Logger.log("d", "...Trying to connect with bootloader on %s", str(port) )
         try:
-            self.serial = Serial(str(port), 921600 , timeout=1, writeTimeout=10000)
+            self.serial = Serial(str(port), speed, timeout=1, writeTimeout=10000)
         except SerialException:
             raise Exception("Failed to open serial port in bootloader mode")
         except:

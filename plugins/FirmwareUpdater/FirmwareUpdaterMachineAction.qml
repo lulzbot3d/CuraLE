@@ -67,7 +67,7 @@ Cura.MachineAction
             {
                 id: manualUpgradeButton
                 text: catalog.i18nc("@action:button", "Upload custom Firmware");
-                enabled: canUpdateFirmware
+                enabled: true //canUpdateFirmware
                 onClicked:
                 {
                     customFirmwareDialog.open()
@@ -101,7 +101,8 @@ Cura.MachineAction
         onAccepted:
         {
             updateProgressDialog.visible = true;
-            activeOutputDevice.updateFirmware(fileUrl);
+            // activeOutputDevice.updateFirmware(fileUrl);
+            Cura.USBPrinterOutputDeviceManager.updateFirmware(fileUrl);
         }
     }
 

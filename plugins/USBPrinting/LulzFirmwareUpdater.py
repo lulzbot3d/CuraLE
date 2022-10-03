@@ -74,27 +74,30 @@ class LulzFirmwareUpdater(FirmwareUpdater):
 
     def _updateFirmwareBossapy(self) -> None:
 
+        Logger.log("i", "Loading BIN firmware file: " + self._firmware_file)
+
         programmer = bossa.BOSSA()
         programmer.progress_callback = self._onFirmwareProgress
 
         # Ensure that other connections are closed.
-        if self._output_device.isConnected():
-            self._output_device.close()
-            Logger.log("i", "Closing existing connection...")
+        # if self._output_device.isConnected():
+        #     self._output_device.close()
+        #     Logger.log("i", "Closing existing connection...")
+        #     sleep(1)
 
         self._detectSerialPort(bootloader=False)
 
+        # try:
+        #     programmer.reset(self._output_device._serial_port)
+        # except Exception:
+        #     Logger.log("e", "Programmer reset failure")
+        #     programmer.close()
+        #     pass
+
         try:
             programmer.connect(self._firmware_serial_port)
-        except:
+        except Exception:
             programmer.close()
-            self._detectSerialPort(bootloader=True)
-            try:
-                programmer.connect(self._firmware_serial_port)
-            except Exception:
-                programmer.close
-                Logger.log("e", "Well that didn't work")
-                pass
 
         # Give programmer some time to connect. Might need more in some cases, but this worked in all tested cases.
         sleep(1)
@@ -123,15 +126,15 @@ class LulzFirmwareUpdater(FirmwareUpdater):
     # Older code, might still be useful for BOSSA?
     def _detectSerialPort(self, bootloader=False):
         import serial.tools.list_ports
-        # self._serial_port = None
-        # if platform.system() == "Linux":
-        #     baud_rate = 115200
-        # else:
-        baud_rate = CuraApplication.getInstance().getGlobalContainerStack().getProperty("machine_baudrate", "value")
+        self._serial_port = None
+        if platform.system() == "Linux":
+            baud_rate = 115200
+        else:
+            baud_rate = CuraApplication.getInstance().getGlobalContainerStack().getProperty("machine_baudrate", "value")
         if bootloader:
             for port in serial.tools.list_ports.comports():
                 if port.vid == 0x03EB:
-                    self.log("i", "Detected bootloader on %s." % port.device)
+                    Logger.log("i", "Detected bootloader on %s." % port.device)
                     self._firmware_serial_port = port.device
                     return
         else:

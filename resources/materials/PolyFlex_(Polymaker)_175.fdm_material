@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='utf-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Polymaker</brand>
+      <material>TPU</material>
+      <color />
+      <label>Polyflex</label>
+      <category />
+    </name>
+    <version>1</version>
+    <description></description>
+    <compatible>True</compatible>
+    <extruder_disabled>False</extruder_disabled>
+    <color_code>#fbff06</color_code>
+    <GUID>38155011-eb7b-49de-bfc7-56d62acfca53</GUID>
+    <definition>fdmprinter</definition>
+    <adhesion_info>Use glue stick with PEI or print directly on glass.</adhesion_info>
+  </metadata>
+  <properties>
+    <density>1.21</density>
+    <diameter>1.75</diameter>
+  </properties>
+  <settings>
+    <setting key="print cooling">50.0</setting>
+    <setting key="standby temperature">150.0</setting>
+    <setting key="retraction speed">15.0</setting>
+    <setting key="print temperature">220.0</setting>
+    <setting key="part removal temperature">0.0</setting>
+    <setting key="heated bed temperature">60.0</setting>
+    <setting key="wipe temperature">160.0</setting>
+    <setting key="retraction amount">3.0</setting>
+    <setting key="probe temperature">150.0</setting>
+    <setting key="soften temperature">150.0</setting>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_sk175" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_lutefisk" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_perca" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_sk175" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_lutefisk" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_perca" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_hibiscus_sk175" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_hibiscus_lutefisk" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_hibiscus_perca" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_sk175" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_lutefisk" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_perca" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_sk175" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_lutefisk" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_perca" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_sk175" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_lutefisk" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_perca" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_sk175" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_lutefisk" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_perca" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_sk175" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_lutefisk" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_perca" />
+    </machine>
+  </settings>
+</fdmmaterial>
