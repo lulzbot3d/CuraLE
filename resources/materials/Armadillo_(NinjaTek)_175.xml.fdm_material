@@ -34,15 +34,6 @@
       <machine_identifier product="lulzbot_gladiator_lutefisk" />
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_redgum_lutefiskv1" />
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_sidekick_747_lutefiskv1" />
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_sidekick_289_lutefiskv1" />
-    </machine>
-    <machine>
       <machine_identifier product="lulzbot_gladiator_perca" />
     </machine>
     <machine>
@@ -52,16 +43,10 @@
       <machine_identifier product="lulzbot_sidekick_747_perca" />
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_taz6_lutefiskv1" />
-    </machine>
-    <machine>
       <machine_identifier product="lulzbot_sidekick_747_lutefisk" />
     </machine>
     <machine>
       <machine_identifier product="lulzbot_hibiscus_perca" />
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_quiver_lutefiskv1" />
     </machine>
     <machine>
       <machine_identifier product="lulzbot_quiver_perca" />
@@ -88,13 +73,7 @@
       <machine_identifier product="lulzbot_longship_lutefisk" />
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_hibiscus_lutefiskv1" />
-    </machine>
-    <machine>
       <machine_identifier product="lulzbot_redgum_lutefisk" />
-    </machine>
-    <machine>
-      <machine_identifier product="lulzbot_gladiator_lutefiskv1" />
     </machine>
     <machine>
       <machine_identifier product="lulzbot_sidekick_289_lutefisk" />
