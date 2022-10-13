@@ -57,14 +57,24 @@ class BOSSA():
         except:
             raise Exception("Unexpected error while connecting to serial port:" + port + ":" + str(sys.exc_info()[0]))
 
-
         if not self.isConnected():
             raise Exception("Failed to enter BOSSA bootloader")
+
+        for n in range(0, 2):
+            self.serial.setDTR(True)
+            time.sleep(0.1)
+            self.serial.setDTR(False)
+            time.sleep(0.1)
+        time.sleep(0.2)
+
+        self.serial.flushInput()
+        self.serial.flushOutput()
 
         self.samba = Samba(self.serial)
 
         self.samba.SetBinary()
         cid = self.samba.chipId()
+        print("We made it past the Chip ID section!")
         Logger.log("d", "...ChipID = " + hex(cid))
 
         # Read the sam-ba version to detect if extended commands are available

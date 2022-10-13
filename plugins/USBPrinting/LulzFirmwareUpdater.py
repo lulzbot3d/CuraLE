@@ -23,6 +23,7 @@ class LulzFirmwareUpdater(FirmwareUpdater):
         super().__init__(output_device)
 
     _firmware_serial_port = None
+    _output_device_list = []
 
     def _updateFirmwareAvr(self) -> None:
         try:
@@ -37,11 +38,15 @@ class LulzFirmwareUpdater(FirmwareUpdater):
         programmer.progress_callback = self._onFirmwareProgress
 
         # Ensure that other connections are closed.
-        if self._output_device.isConnected():
-            self._output_device.close()
+        for output_device in self._usb_output_devices.values():
+            self._output_device_list.append(output_device)
+            if output_device.isConnected():
+                output_device.close()
+
+        self._detectSerialPort(bootloader=False)
 
         try:
-            programmer.connect(self._output_device._serial_port)
+            programmer.connect(self._firmware_serial_port)
         except:
             programmer.close()
             Logger.logException("e", "Failed to update firmware")
@@ -67,9 +72,6 @@ class LulzFirmwareUpdater(FirmwareUpdater):
 
         programmer.close()
 
-        # Try to re-connect with the machine again, which must be done on the Qt thread, so we use call later.
-        CuraApplication.getInstance().callLater(self._output_device.connect)
-
         self._cleanupAfterUpdate()
 
     def _updateFirmwareBossapy(self) -> None:
@@ -80,10 +82,10 @@ class LulzFirmwareUpdater(FirmwareUpdater):
         programmer.progress_callback = self._onFirmwareProgress
 
         # Ensure that other connections are closed.
-        # if self._output_device.isConnected():
-        #     self._output_device.close()
-        #     Logger.log("i", "Closing existing connection...")
-        #     sleep(1)
+        for output_device in self._usb_output_devices.values():
+            self._output_device_list.append(output_device)
+            if output_device.isConnected():
+                output_device.close()
 
         self._detectSerialPort(bootloader=False)
 
