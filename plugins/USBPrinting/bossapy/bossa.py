@@ -51,30 +51,20 @@ class BOSSA():
             self.close()
         Logger.log("d", "...Trying to connect with bootloader on %s", str(port) )
         try:
-            self.serial = Serial(str(port), speed, timeout=1, writeTimeout=10000)
+            self.serial = Serial(str(port), 921600 , timeout=1, writeTimeout=10000)
         except SerialException:
             raise Exception("Failed to open serial port in bootloader mode")
         except:
             raise Exception("Unexpected error while connecting to serial port:" + port + ":" + str(sys.exc_info()[0]))
 
+
         if not self.isConnected():
             raise Exception("Failed to enter BOSSA bootloader")
-
-        for n in range(0, 2):
-            self.serial.setDTR(True)
-            time.sleep(0.1)
-            self.serial.setDTR(False)
-            time.sleep(0.1)
-        time.sleep(0.2)
-
-        self.serial.flushInput()
-        self.serial.flushOutput()
 
         self.samba = Samba(self.serial)
 
         self.samba.SetBinary()
         cid = self.samba.chipId()
-        print("We made it past the Chip ID section!")
         Logger.log("d", "...ChipID = " + hex(cid))
 
         # Read the sam-ba version to detect if extended commands are available
@@ -121,9 +111,9 @@ class BOSSA():
                 data = firmware_file.read(page_size)
                 self.flash.loadBuffer(data)
                 self.flash.writePage(page)
-
+        
         # TODO: Verify
-
+        
         Logger.log("d", "...Set boot flash true ")
         self.flash.setBootFlash(True)
 
@@ -135,9 +125,10 @@ class BOSSA():
 
         # Wait for 5secs for port to re-appear
         time.sleep(5)
-
+        
         return
 
+ 
     def close(self):
         if self.serial is not None:
             self.serial.close()

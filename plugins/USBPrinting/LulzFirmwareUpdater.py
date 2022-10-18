@@ -39,7 +39,7 @@ class LulzFirmwareUpdater(FirmwareUpdater):
 
         # Ensure that other connections are closed.
         for output_device in self._usb_output_devices.values():
-            self._output_device_list.append(output_device)
+            # self._output_device_list.append(output_device)
             if output_device.isConnected():
                 output_device.close()
 
@@ -78,28 +78,36 @@ class LulzFirmwareUpdater(FirmwareUpdater):
 
         Logger.log("i", "Loading BIN firmware file: " + self._firmware_file)
 
-        programmer = bossa.BOSSA()
-        programmer.progress_callback = self._onFirmwareProgress
-
         # Ensure that other connections are closed.
         for output_device in self._usb_output_devices.values():
-            self._output_device_list.append(output_device)
+            # self._output_device_list.append(output_device)
             if output_device.isConnected():
                 output_device.close()
 
-        self._detectSerialPort(bootloader=False)
+        self._detectSerialPort()
 
-        # try:
-        #     programmer.reset(self._output_device._serial_port)
-        # except Exception:
-        #     Logger.log("e", "Programmer reset failure")
-        #     programmer.close()
-        #     pass
+        programmer = bossa.BOSSA()
+        programmer.progress_callback = self._onFirmwareProgress
+
+        try:
+            programmer.reset(self._firmware_serial_port)
+        except Exception:
+            Logger.log("e", "Programmer reset failure")
+            programmer.close()
+            pass
 
         try:
             programmer.connect(self._firmware_serial_port)
         except Exception:
             programmer.close()
+            Logger.log("e", "Programmer connection failure")
+            self._detectSerialPort(bootloader=True)
+            try:
+                programmer.connect(self._firmware_serial_port)
+            except Exception:
+                Logger.log("e", "Programmer connection failure with bootloader=True")
+                programmer.close()
+                pass
 
         # Give programmer some time to connect. Might need more in some cases, but this worked in all tested cases.
         sleep(1)

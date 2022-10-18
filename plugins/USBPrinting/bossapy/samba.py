@@ -18,6 +18,7 @@ class Samba():
         self.serial.flush()
         self.serial.read(2) #Expects b'\n\r' here
 
+
     def write(self, addr, data):
         cmd = str.encode("S" + str('%0*x' % (8,addr)) + "," + str('%0*x' % (8,len(data)))  + "#")
         try:
@@ -33,7 +34,7 @@ class Samba():
             raise Exception("write failed")
 
         # Logger.log("d", "...Write to addr=" + hex(addr) + " of " + str(size) + " bytes")
-
+    
     def go(self, addr):
         cmd = str.encode("G" + str('%0*x' % (8,addr)) + "#")
         try:
@@ -57,29 +58,23 @@ class Samba():
 
     def chipId(self):
         #Read the ARM reset vector
-        print("Checkpoint 0")
         vector = self.readWord(0x0)
-        print("Checkpoint 1")
 
         if ((vector & 0xff000000) == 0xea000000):
             return self.readWord(0xfffff240)
         # Else use the Atmel SAM3 or SAM4 or SAMD registers
-        print("Checkpoint 2")
 
         # The M0+, M3 and M4 have the CPUID register at a common addresss 0xe000ed00
         cpuid_reg = self.readWord(0xe000ed00)
         part_no = cpuid_reg & 0x0000fff0
-        print("Checkpoint 3")
 
         # Check if it is Cortex M0+
         if (part_no == 0xC600):
             return self.readWord(0x41002018) & 0xFFFF00FF
-        print("Checkpoint 4")
         # Else assume M3 or M4
         cid = self.readWord(0x400e0740)
         if (cid == 0x0):
             cid = self.readWord(0x400e0940)
-        print("Checkpoint 5, nothing failed??")
 
         return cid
 
@@ -96,23 +91,16 @@ class Samba():
         time.sleep(0.1)
 
     def readWord(self, address):
-        print("Address before and after")
-        print(address)
-        # cmd = str.encode("w" + str('%0*x' % (8,address)) + ",4#")
-        cmd = ("w" + str('%0*x' % (8,address)) + ",4#").encode()
-        print(cmd)
+        cmd = str.encode("w" + str('%0*x' % (8,address)) + ",4#")
         try:
             self.serial.write(cmd)
             self.serial.flush()
         except SerialTimeoutException:
             raise Exception("readWord failed")
-        print("The write worked")
         s = self.serial.read(4)
-        print("This is what we read, apparently: " + str(s))
         if len(s) < 1:
             raise Exception("readWord timeout")
         value = struct.unpack("<L", s)[0]
-        print("we're unpacked")
         # Logger.log("d", "...Read from addr=" + hex(address) + "[" + hex(value)+ "]")
         return value
 
