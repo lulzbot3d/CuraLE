@@ -128,9 +128,6 @@ class LulzFirmwareUpdater(FirmwareUpdater):
 
         programmer.close()
 
-        # Try to re-connect with the machine again, which must be done on the Qt thread, so we use call later.
-        CuraApplication.getInstance().callLater(self._output_device.connect)
-
         self._cleanupAfterUpdate()
 
     # Older code, might still be useful for BOSSA?

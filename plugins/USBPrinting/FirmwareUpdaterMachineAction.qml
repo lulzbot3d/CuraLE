@@ -28,7 +28,7 @@ Cura.MachineAction
         Label
         {
             width: parent.width
-            text: catalog.i18nc("@title", "Update Firmware")
+            text: catalog.i18nc("@title", "<b>Update Firmware</b>")
             wrapMode: Text.WordWrap
             font.pointSize: 18
         }
@@ -43,7 +43,38 @@ Cura.MachineAction
         {
             width: parent.width
             wrapMode: Text.WordWrap
-            text: catalog.i18nc("@label", "The firmware shipping with new printers works, but new versions tend to have more features and improvements.");
+            text: catalog.i18nc("@label", "Your LulzBot 3D Printer ships from our factory ready to help you Make Everything, right out of the box. Get the latest features and the most performance out of your LulzBot 3D Printer by keeping your firmware updated.")
+        }
+
+        Label
+        {
+            width: parent.width
+            wrapMode: Text.WordWrap
+            color: "red"
+            text: catalog.i18nc("@label", "
+                <font color=\"red\"><b>WARNING:</b> The firmware updating process will overwrite certain parameters. Restore the tuned values by following the steps below after the firmware update is complete.</font><br>")
+
+        }
+
+        Label
+        {
+            width: parent.width
+            wrapMode: Text.WordWrap
+            color: "red"
+            text: catalog.i18nc("@label", "Please have the following recorded <u>before</u> upgrading firmware:
+                <ul type=\"bullet\">
+                    <li>Extruder steps per unit
+                        (<a href='https://www.lulzbot.com/learn/tutorials/firmware-flashing-through-cura#get-esteps'>E-steps</a>)
+                    <li>Z-axis offset
+                        (<a href='https://www.lulzbot.com/learn/tutorials/Z-axis-offset#get-offset'>Z-offset</a>)
+                </ul>")
+                onLinkActivated: Qt.openUrlExternally(link)
+            MouseArea
+            {
+                anchors.fill: parent
+                acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
+                cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+            }
         }
 
         Row
@@ -56,7 +87,7 @@ Cura.MachineAction
             {
                 id: autoUpgradeButton
                 text: catalog.i18nc("@action:button", "Automatically upgrade Firmware");
-                enabled: parent.firmwareName != "" && canUpdateFirmware
+                enabled: parent.firmwareName != ""
                 onClicked:
                 {
                     updateProgressDialog.visible = true;
@@ -67,20 +98,12 @@ Cura.MachineAction
             {
                 id: manualUpgradeButton
                 text: catalog.i18nc("@action:button", "Upload custom Firmware");
-                enabled: true //canUpdateFirmware
+                enabled: true //we can always update firmware now :)
                 onClicked:
                 {
                     customFirmwareDialog.open()
                 }
             }
-        }
-
-        Label
-        {
-            width: parent.width
-            wrapMode: Text.WordWrap
-            visible: !printerConnected && !updateProgressDialog.visible
-            text: catalog.i18nc("@label", "Firmware can not be updated because there is no connection with the printer.");
         }
 
         Label
@@ -143,9 +166,9 @@ Cura.MachineAction
                         case 0:
                             return ""; //Not doing anything (eg; idling)
                         case 1:
-                            return catalog.i18nc("@label","Updating firmware.");
+                            return catalog.i18nc("@label","Updating firmware...");
                         case 2:
-                            return catalog.i18nc("@label","Firmware update completed.");
+                            return catalog.i18nc("@label","Firmware update completed!");
                         case 3:
                             return catalog.i18nc("@label","Firmware update failed due to an unknown error.");
                         case 4:

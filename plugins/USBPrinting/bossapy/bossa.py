@@ -99,6 +99,8 @@ class BOSSA():
         file_size = os.path.getsize(firmware_file_name)
         page_size = self.flash.pageSize()
         num_pages = int( (file_size + page_size - 1) / page_size)
+        num_progress = (num_pages / 2) * 3
+        num_wait = num_progress - num_pages
         if num_pages > self.flash.numPages():
             raise Exception("FileSizeError")
         Logger.log("d", "...Write " + str(file_size) + " bytes to flash ( " + str(num_pages) +" pages )")
@@ -111,9 +113,11 @@ class BOSSA():
                 data = firmware_file.read(page_size)
                 self.flash.loadBuffer(data)
                 self.flash.writePage(page)
-        
+                if self.progress_callback is not None:
+                    self.progress_callback(page + 1, num_progress)
+
         # TODO: Verify
-        
+
         Logger.log("d", "...Set boot flash true ")
         self.flash.setBootFlash(True)
 
@@ -124,11 +128,13 @@ class BOSSA():
         self.close()
 
         # Wait for 5secs for port to re-appear
-        time.sleep(5)
-        
+        # But make it kinda look like something is happening
+        for i in range(1, 41):
+            time.sleep(0.125)
+            self.progress_callback(((num_wait/40)*i) + num_pages, num_progress)
+
         return
 
- 
     def close(self):
         if self.serial is not None:
             self.serial.close()
