@@ -29,6 +29,7 @@
         "user_toolhead_name": "Pro Dual | 0.50 mm | Hardened SST",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
         "default_category": "All",
+        "firmware_file": "Marlin_TAZPro_DUALEXTRUDER_2.0.0.144.5_2731681.bin",
         "firmware_update_info": {
             "id": "lulzbot_quiver_evergreen_bagworm",
             "check_urls":

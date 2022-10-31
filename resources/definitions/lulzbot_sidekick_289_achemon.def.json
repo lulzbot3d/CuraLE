@@ -22,6 +22,7 @@
         "base_machine_name": "TAZ Sidekick 289",
         "user_toolhead_name": "SL | 0.25 mm | Nickel Plated Copper",
         "default_extrusion_rate": 60,
+        "firmware_file_no_lcd": "Marlin_289_SLSEHE_2.0.9.0.14_2aed11e.hex",
         "firmware_update_info": {
             "id": "lulzbot_sidekick_289_achemon",
             "check_urls":

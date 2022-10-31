@@ -15,6 +15,8 @@
         "user_toolhead_name": "M175 | 0.50 mm | Carbide Coated Copper",
         "firmware_last_version": "2.0.0.144.1",
         "firmware_toolhead_name": "lutefisk",
+        "firmware_file": "Marlin_MiniLCD_M175_2.0.0.144.1_8c651988.hex",
+        "firmware_file_no_lcd": "Marlin_Mini_M175_2.0.0.144.1_8c651988.hex",
         "firmware_update_info": {
             "id": "LulzBot_Mini_lutefisk",
             "check_urls":

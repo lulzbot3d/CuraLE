@@ -15,6 +15,8 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-mini-flexystruder-tool-head-v2",
         "user_toolhead_name": "Flexystruder v2",
         "firmware_toolhead_name": "Flexystruder",
+        "firmware_file": "Marlin_MiniLCD_Flexystruder_1.1.9.34_5f9c029d1.hex",
+        "firmware_file_no_lcd": "Marlin_Mini_Flexystruder_1.1.9.34_5f9c029d1.hex",
         "firmware_update_info": {
             "id": "lulzbot_mini_flexy",
             "check_urls":

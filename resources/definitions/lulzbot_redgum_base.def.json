@@ -19,7 +19,8 @@
         "firmware_last_version": "2.0.9.0.13",
         "machine_priority": "04",
         "default_eeprom_state": false,
-        "has_revision":true
+        "has_revision":true,
+        "firmware_file": "Marlin_TAZWorkhorse_Universal_2.0.9.0.13_80a6628.hex"
     },
     "overrides":
     {

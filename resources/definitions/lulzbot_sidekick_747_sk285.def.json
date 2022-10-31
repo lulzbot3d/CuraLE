@@ -22,6 +22,7 @@
         "base_machine": "lulzbot_sidekick_747_base",
         "base_machine_name": "TAZ Sidekick 747",
         "user_toolhead_name": "SK285 | 0.50 mm | Brass",
+        "firmware_file_no_lcd": "Marlin_747_SK285_2.0.9.0.14_2aed11e.hex",
         "firmware_update_info": {
             "id": "lulzbot_sidekick_747_sk285",
             "check_urls":

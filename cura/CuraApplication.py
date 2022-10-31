@@ -166,8 +166,8 @@ class CuraApplication(QtApplication):
 
         self.default_theme = "lulzbot"
 
-        self.change_log_url = "https://ultimaker.com/ultimaker-cura-latest-features?utm_source=cura&utm_medium=software&utm_campaign=cura-update-features"
-        self.beta_change_log_url = "https://ultimaker.com/ultimaker-cura-beta-features?utm_source=cura&utm_medium=software&utm_campaign=cura-update-features"
+        self.change_log_url = ""
+        self.beta_change_log_url = ""
 
         self._boot_loading_time = time.time()
 
@@ -579,6 +579,8 @@ class CuraApplication(QtApplication):
         preferences.addPreference("cura/expanded_types", "")
 
         preferences.addPreference("general/accepted_user_agreement", False)
+
+        preferences.addPreference("general/is_first_run", True)
 
         for key in [
             "dialog_load_path",  # dialog_save_path is in LocalFileOutputDevicePlugin

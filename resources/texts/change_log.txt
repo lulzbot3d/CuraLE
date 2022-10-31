@@ -1,1 +1,2 @@
-Quite a lot quite frankly
+[4.0.0]
+* Quite a lot quite frankly

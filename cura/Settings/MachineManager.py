@@ -1,6 +1,7 @@
 # Copyright (c) 2021 Ultimaker B.V.
 # Cura is released under the terms of the LGPLv3 or higher.
 
+import os
 import time
 import re
 import unicodedata
@@ -17,7 +18,8 @@ from UM.FlameProfiler import pyqtSlot
 from UM import Util
 from UM.Logger import Logger
 from UM.Message import Message
-
+from UM.Application import Application
+from UM.Resources import Resources
 from UM.Settings.SettingFunction import SettingFunction
 from UM.Signal import postponeSignals, CompressTechnique
 
@@ -393,7 +395,7 @@ class MachineManager(QObject):
 
     @pyqtSlot(str, result=bool)
     @pyqtSlot(str, str, result = bool)
-    def addMachine(self, definition_id: str, name: Optional[str] = None) -> bool:
+    def addMachine(self, definition_id: str, name: Optional[str] = None, lcd=True) -> bool:
         Logger.log("i", "Trying to add a machine with the definition id [%s]", definition_id)
         if name is None:
             definitions = CuraContainerRegistry.getInstance().findDefinitionContainers(id = definition_id)
@@ -404,8 +406,15 @@ class MachineManager(QObject):
 
         new_stack = CuraStackBuilder.createMachine(cast(str, name), definition_id)
         if new_stack:
+            if new_stack.getMetaDataEntry("has_optional_lcd", False):
+                new_stack.setProperty("machine_has_lcd", "value", lcd, "definition_changes")
             # Instead of setting the global container stack here, we set the active machine and so the signals are emitted
             self.setActiveMachine(new_stack.getId())
+            if Application.getInstance().getPreferences().getValue("general/is_first_run"):
+                model_will_be_loaded = "rocktopus.stl"
+                Application.getInstance()._openFile(os.path.join(Resources.getPath(Resources.Meshes), model_will_be_loaded))
+                Application.getInstance().getPreferences().setValue("general/is_first_run", False)
+
         else:
             Logger.log("w", "Failed creating a new machine!")
             return False
@@ -519,19 +528,6 @@ class MachineManager(QObject):
     def activeMachineHasNetworkConnection(self) -> bool:
         # A network connection is only available if any output device is actually a network connected device.
         return any(d.connectionType == ConnectionType.NetworkConnection for d in self._printer_output_devices)
-
-    #@pyqtProperty(bool, notify = printerConnectedStatusChanged)
-    #def activeMachineHasCloudConnection(self) -> bool:
-    #    # A cloud connection is only available if any output device actually is a cloud connected device.
-    #    return any(d.connectionType == ConnectionType.CloudConnection for d in self._printer_output_devices)
-
-    #@pyqtProperty(bool, notify = printerConnectedStatusChanged)
-    #def activeMachineHasCloudRegistration(self) -> bool:
-    #    return self.activeMachine is not None and ConnectionType.CloudConnection in self.activeMachine.configuredConnectionTypes
-
-    #@pyqtProperty(bool, notify = printerConnectedStatusChanged)
-    #def activeMachineIsUsingCloudConnection(self) -> bool:
-    #    return self.activeMachineHasCloudConnection and not self.activeMachineHasNetworkConnection
 
     def activeMachineNetworkKey(self) -> str:
         if self._global_container_stack:

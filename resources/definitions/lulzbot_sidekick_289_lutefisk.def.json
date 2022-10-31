@@ -22,6 +22,7 @@
         "base_machine_name": "TAZ Sidekick 289",
         "user_toolhead_name": "M175 v2 | 0.50 mm | Carbide Coated Copper",
         "default_extrusion_rate": 60,
+        "firmware_file_no_lcd": "Marlin_289_M175v2_2.0.9.0.14_2aed11e.hex",
         "firmware_update_info": {
             "id": "lulzbot_sidekick_289_lutefisk",
             "check_urls":
