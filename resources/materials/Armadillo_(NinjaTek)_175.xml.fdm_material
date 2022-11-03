@@ -5,7 +5,7 @@
       <brand>NinjaTek</brand>
       <material>TPU</material>
       <color>Blue</color>
-      <label>Armadillo 75A</label>
+      <label>Armadillo 75D</label>
       <category />
     </name>
     <adhesion_info>Use glue stick with PEI or print directly on glass.</adhesion_info>
@@ -20,7 +20,7 @@
   </metadata>
   <properties>
     <diameter>1.75</diameter>
-    <density>1.2</density>
+    <density>1.18</density>
   </properties>
   <settings>
     <setting key="print temperature">225</setting>
