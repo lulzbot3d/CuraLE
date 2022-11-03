@@ -2,6 +2,7 @@
 # Cura is released under the terms of the LGPLv3 or higher.
 
 import os
+from time import sleep
 
 from UM.i18n import i18nCatalog
 from UM.Logger import Logger
@@ -17,7 +18,6 @@ from cura.PrinterOutput.Models.PrintJobOutputModel import PrintJobOutputModel
 from cura.PrinterOutput.GenericOutputController import GenericOutputController
 
 from .AutoDetectBaudJob import AutoDetectBaudJob
-# from .AvrFirmwareUpdater import AvrFirmwareUpdater
 from .LulzFirmwareUpdater import LulzFirmwareUpdater
 
 from io import StringIO #To write the g-code output.
@@ -181,7 +181,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     def _autoDetectFinished(self, job: AutoDetectBaudJob):
         result = job.getResult()
         if result is not None:
-            self.setBaudRate(result)
+            self.setBaudRate(result[0])
+            self._serial = result[1]
             self.connect()  # Try to connect (actually create serial, etc)
 
     def setBaudRate(self, baud_rate: int):

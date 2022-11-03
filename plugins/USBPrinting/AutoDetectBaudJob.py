@@ -18,11 +18,11 @@ class AutoDetectBaudJob(Job):
     def __init__(self, serial_port: int) -> None:
         super().__init__()
         self._serial_port = serial_port
-        self._all_baud_rates = [115200, 250000, 500000, 230400, 76800, 57600, 38400, 19200, 9600]
+        self._all_baud_rates = [250000, 115200, 500000, 230400, 76800, 57600, 38400, 19200, 9600]
 
     def run(self) -> None:
         Logger.log("d", "Auto detect baud rate started.")
-        wait_response_timeouts = [3, 15, 30]
+        wait_response_timeouts = [5, 15, 30]
         wait_bootloader_times = [1.5, 5, 15]
         write_timeout = 3
         read_timeout = 3
@@ -75,10 +75,10 @@ class AutoDetectBaudJob(Job):
                     # with size limit seems to fix this.
                     line = serial.read_until(size = 100)
                     if b"ok" in line and b"T:" in line:
-                        self.setResult(baud_rate)
+                        self.setResult([baud_rate, serial])
                         Logger.log("d", "Detected baud rate {baud_rate} on serial {serial} on retry {retry} with after {time_elapsed:0.2f} seconds.".format(
                             serial = self._serial_port, baud_rate = baud_rate, retry = retry, time_elapsed = time() - start_timeout_time))
-                        serial.close() # close serial port so it can be opened by the USBPrinterOutputDevice
+                        #serial.close() # close serial port so it can be opened by the USBPrinterOutputDevice
                         return
 
                     serial.write(b"M105\n")

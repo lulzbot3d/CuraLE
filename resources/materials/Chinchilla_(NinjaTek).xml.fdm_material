@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='utf-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>NinjaTek</brand>
+      <material>TPU</material>
+      <color>Blue</color>
+      <label>Chinchilla 75A</label>
+      <category />
+    </name>
+    <compatible>True</compatible>
+    <description />
+    <color_code>#13adff</color_code>
+    <GUID>e2a55b2a-2d03-4006-bbcb-cc15080489bf</GUID>
+    <version>1</version>
+    <adhesion_info />
+    <definition>fdmprinter</definition>
+    <extruder_disabled>False</extruder_disabled>
+  </metadata>
+  <properties>
+    <diameter>2.85</diameter>
+    <density>1.13</density>
+  </properties>
+  <settings>
+    <setting key="retraction amount">1.5</setting>
+    <setting key="heated bed temperature">40.0</setting>
+    <setting key="wipe temperature">180.0</setting>
+    <setting key="part removal temperature">0.0</setting>
+    <setting key="soften temperature">170.0</setting>
+    <setting key="standby temperature">150.0</setting>
+    <setting key="print temperature">230.0</setting>
+    <setting key="probe temperature">160.0</setting>
+    <setting key="print cooling">60.0</setting>
+    <setting key="retraction speed">25.0</setting>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_cecropia" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_banded_tiger" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_dingy_cutworm" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_goldenrod" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_sk285" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_cecropia" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_banded_tiger" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_dingy_cutworm" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_goldenrod" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_sk285" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_hibiscus" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_hibiscus_banded_tiger" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_hibiscus_dingy_cutworm" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_hibiscus_goldenrod" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_cecropia" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_banded_tiger" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_dingy_cutworm" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_goldenrod" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_evergreen_bagworm" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_cecropia" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_banded_tiger" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_dingy_cutworm" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_goldenrod" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_evergreen_bagworm" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_cecropia" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_banded_tiger" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_dingy_cutworm" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_goldenrod" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_cecropia" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_banded_tiger" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_dingy_cutworm" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_taz6_goldenrod" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_cecropia" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_banded_tiger" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_dingy_cutworm" />
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_goldenrod" />
+    </machine>
+  </settings>
+</fdmmaterial>
