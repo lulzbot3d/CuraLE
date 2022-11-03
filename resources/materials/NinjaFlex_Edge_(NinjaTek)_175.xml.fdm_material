@@ -19,7 +19,7 @@
   </metadata>
   <properties>
     <diameter>1.75</diameter>
-    <density>1.08<density>
+    <density>1.08</density>
   </properties>
   <settings>
     <setting key="probe temperature">160.0</setting>
