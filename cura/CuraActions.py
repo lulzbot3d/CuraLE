@@ -41,7 +41,7 @@ class CuraActions(QObject):
 
     @pyqtSlot()
     def openBugReportPage(self) -> None:
-        event = CallFunctionEvent(self._openUrl, [QUrl("http://gitlab.com/lulzbot3d/cura-le/cura-lulzbot/~/issues")], {})
+        event = CallFunctionEvent(self._openUrl, [QUrl("https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot/-/issues/new")], {})
         cura.CuraApplication.CuraApplication.getInstance().functionEvent(event)
 
     @pyqtSlot()
