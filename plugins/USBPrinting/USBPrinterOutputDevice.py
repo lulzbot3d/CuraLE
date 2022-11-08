@@ -3,6 +3,7 @@
 
 import os
 from time import sleep
+from enum import IntEnum
 
 from UM.i18n import i18nCatalog
 from UM.Logger import Logger
@@ -436,3 +437,10 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         print_job.updateTimeTotal(estimated_time)
 
         self._gcode_position += 1
+
+class PrinterConnectionState(IntEnum):
+    disconnected = 0
+    scanning_for_printer = 1
+    connecting = 2
+    connected = 3
+    connection_error = 4
