@@ -196,6 +196,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     def connect(self):
         self._firmware_name = None  # after each connection ensure that the firmware name is removed
 
+        self.setConnectionState(ConnectionState.Connecting)
+
         if self._baud_rate is None:
             if self._use_auto_detect:
                 auto_detect_job = AutoDetectBaudJob(self._serial_port)
@@ -207,9 +209,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 self._serial = Serial(str(self._serial_port), self._baud_rate, timeout=self._timeout, writeTimeout=self._timeout)
             except SerialException:
                 Logger.warning("An exception occurred while trying to create serial connection.")
+                self.setConnectionState(ConnectionState.Error)
                 return
             except OSError as e:
                 Logger.warning("The serial device is suddenly unavailable while trying to create a serial connection: {err}".format(err = str(e)))
+                self.setConnectionState(ConnectionState.Error)
                 return
         CuraApplication.getInstance().globalContainerStackChanged.connect(self._onGlobalContainerStackChanged)
         self._onGlobalContainerStackChanged()
@@ -437,10 +441,3 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         print_job.updateTimeTotal(estimated_time)
 
         self._gcode_position += 1
-
-class PrinterConnectionState(IntEnum):
-    disconnected = 0
-    scanning_for_printer = 1
-    connecting = 2
-    connected = 3
-    connection_error = 4

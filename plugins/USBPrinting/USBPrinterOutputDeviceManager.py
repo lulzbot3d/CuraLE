@@ -19,7 +19,7 @@ from UM.Logger import Logger
 
 from cura.CuraApplication import CuraApplication
 from cura.PrinterOutput.PrinterOutputDevice import ConnectionState
-from cura.PrinterOutput.FirmwareUpdater import FirmwareUpdater
+# from cura.PrinterOutput.FirmwareUpdater import FirmwareUpdater
 from plugins.USBPrinting.LulzFirmwareUpdater import LulzFirmwareUpdater
 
 from . import USBPrinterOutputDevice
@@ -200,7 +200,8 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
             self.getOutputDeviceManager().removeOutputDevice(serial_port)
 
     def _updateThread(self):
-        while self._check_updates:
+        tries = 0
+        while self._check_updates and tries < 10:
             container_stack = self._application.getGlobalContainerStack()
             if container_stack is None:
                 time.sleep(5)
@@ -211,7 +212,8 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
                 if "text/x-gcode" in machine_file_formats:
                     port_list = self.getSerialPortList(only_list_usb=True)
             self._addRemovePorts(port_list)
-            time.sleep(5)
+            time.sleep(2)
+            tries += 1
         Logger.log("i", "Update thread stopped")
 
     def _addRemovePorts(self, serial_ports):

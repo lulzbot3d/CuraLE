@@ -34,13 +34,13 @@ class ConnectionState(IntEnum):
     Connected = 2
     Busy = 3
     Error = 4
+    Searching = 5
+    Timeout = 6
 
 
 class ConnectionType(IntEnum):
     NotConnected = 0
     UsbConnection = 1
-    NetworkConnection = 2
-    CloudConnection = 3
 
 
 @signalemitter
