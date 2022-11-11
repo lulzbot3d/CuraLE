@@ -19,9 +19,9 @@ class VersionUpgrade35to40(VersionUpgrade):
         parser["general"]["version"] = "4"
         parser["metadata"]["setting_version"] = "6"
 
-        if parser["metadata"].get("um_network_key") is not None or parser["metadata"].get("octoprint_api_key") is not None:
-            # Set the connection type if um_network_key or the octoprint key is set.
-            parser["metadata"]["connection_type"] = str(ConnectionType.NetworkConnection.value)
+        # if parser["metadata"].get("um_network_key") is not None or parser["metadata"].get("octoprint_api_key") is not None:
+        #     # Set the connection type if um_network_key or the octoprint key is set.
+        #     parser["metadata"]["connection_type"] = str(ConnectionType.NetworkConnection.value)
 
         if "metadata" in parser:
             for old_name, new_name in renamed_configurations.items():
