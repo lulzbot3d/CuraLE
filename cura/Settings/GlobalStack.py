@@ -133,9 +133,9 @@ class GlobalStack(CuraContainerStack):
     def hasRemoteConnection(self) -> bool:
         has_remote_connection = False
 
-        for connection_type in self.configuredConnectionTypes:
-            has_remote_connection |= connection_type in [ConnectionType.NetworkConnection.value,
-                                                         ConnectionType.CloudConnection.value]
+        # for connection_type in self.configuredConnectionTypes:
+        #     has_remote_connection |= connection_type in [ConnectionType.NetworkConnection.value,
+        #                                                  ConnectionType.CloudConnection.value]
         return has_remote_connection
 
     def addConfiguredConnectionType(self, connection_type: int) -> None:

@@ -278,6 +278,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
             if b"FIRMWARE_NAME:" in line:
                 self._setFirmwareName(line)
+                self._getPrinterName(line)
 
             if self._last_temperature_request is None or time() > self._last_temperature_request + self._timeout:
                 # Timeout, or no request has been sent at all.
@@ -360,6 +361,21 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         else:
             self._firmware_name = "Unknown"
             Logger.log("i", "Unknown USB output device Firmware name: %s", str(name))
+
+    def _getPrinterName(self, name):
+        print(name)
+        printer_name = re.findall(r"(?<=MACHINE_TYPE:)(.*)(?=EXTRUDER_COUNT:)", str(name))
+        if printer_name:
+            self._printer_name = printer_name[0].strip()
+            Logger.log("i", "USB output device printer type: %s", self._printer_name)
+            current_printer = CuraApplication.getInstance().getGlobalContainerStack().getName()
+            if self._printer_name in current_printer:
+                Logger.log("i", "USB printer matches currently selected printer")
+            else:
+                Logger.log("e", "USB printer does NOT match currently selected printer! This could potentially result in damage and failed prints.")
+        else:
+            self._printer_name = "Unknown"
+            Logger.log("i", "Couldn't find a printer name.")
 
     def getFirmwareName(self):
         return self._firmware_name

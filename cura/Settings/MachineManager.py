@@ -527,7 +527,8 @@ class MachineManager(QObject):
     @pyqtProperty(bool, notify = printerConnectedStatusChanged)
     def activeMachineHasNetworkConnection(self) -> bool:
         # A network connection is only available if any output device is actually a network connected device.
-        return any(d.connectionType == ConnectionType.NetworkConnection for d in self._printer_output_devices)
+        # return any(d.connectionType == ConnectionType.NetworkConnection for d in self._printer_output_devices)
+        return False
 
     def activeMachineNetworkKey(self) -> str:
         if self._global_container_stack:

@@ -99,6 +99,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
 
         self._firmware_updater = None  # type: Optional[FirmwareUpdater]
         self._firmware_name = None  # type: Optional[str]
+        self._printer_name = None
         self._address = ""  # type: str
         self._connection_text = ""  # type: str
         self.printersChanged.connect(self._onPrintersChanged)

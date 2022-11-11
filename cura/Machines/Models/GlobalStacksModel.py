@@ -119,9 +119,9 @@ class GlobalStacksModel(ListModel):
 
             has_remote_connection = False
 
-            for connection_type in container_stack.configuredConnectionTypes:
-                has_remote_connection |= connection_type in [ConnectionType.NetworkConnection.value,
-                                                             ConnectionType.CloudConnection.value]
+            # for connection_type in container_stack.configuredConnectionTypes:
+            #     has_remote_connection |= connection_type in [ConnectionType.NetworkConnection.value,
+            #                                                  ConnectionType.CloudConnection.value]
 
             if parseBool(container_stack.getMetaDataEntry("hidden", False)):
                 continue
