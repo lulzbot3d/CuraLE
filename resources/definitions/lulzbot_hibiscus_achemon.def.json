@@ -18,8 +18,8 @@
             -11,
             100
         ],
-        "preferred_material": "PolyLite_PLA",
-        "preferred_quality": "*High Detail*",
+        "preferred_material": "PolyLite_PLA_(Polymaker)",
+        "preferred_quality_type": "high detail",
         "file_formats": "text/x-gcode",
         "visible": true,
         "printer_info_link": "https://www.lulzbot.com/store/printers/",

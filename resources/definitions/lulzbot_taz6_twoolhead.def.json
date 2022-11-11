@@ -20,8 +20,8 @@
         [
             "MachineSettingsAction"
         ],
-	"preferred_material": "PolyLite_PLA",
-        "preferred_quality": "*Standard*",
+	"preferred_material": "PolyLite_PLA_(Polymaker)",
+        "preferred_quality_type": "standard",
         "category": "LulzBot + Community Developed Add-Ons",
         "visible": true,
         "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-taz-6?pk_campaign=software-cura",

@@ -20,7 +20,7 @@
             100
         ],
         "preferred_material": "PolyLite_PLA_(Polymaker)",
-        "preferred_quality": "PolyLite_PLA_(Polymaker)_Standard_mini",
+        "preferred_quality_type": "standard",
         "file_formats": "text/x-gcode",
         "visible": true,
         "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-mini",

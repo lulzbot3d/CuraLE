@@ -22,7 +22,7 @@
         "category": "LulzBot",
         "base_machine": "LulzBot TAZ Pro",
         "base_machine_name": "TAZ Pro",
-        "preferred_material": "PolyLite_PLA",
+        "preferred_material": "PolyLite_PLA_(Polymaker)_175",
         "user_toolhead_name": "M175 v2 | 0.50 mm | Carbide Coated Copper",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
         "default_category": "All",

@@ -22,7 +22,7 @@
         "category": "LulzBot",
         "base_machine": "LulzBot TAZ ProXT",
         "base_machine_name": "TAZ Pro XT",
-        "preferred_material": "PolyLite_PLA",
+        "preferred_material": "PolyLite_PLA_(Polymaker)",
         "user_toolhead_name": "HE | 0.50 mm | Hardened SST",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/he-tool-head-285-mm-hardened-steel-05-mm",
         "default_category": "All",

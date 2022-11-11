@@ -15,7 +15,7 @@
         "supported_actions": ["MachineSettingsAction"],
         "base_machine": "LulzBot TAZ Workhorse",
         "base_machine_name": "TAZ Workhorse",
-        "preferred_material": "PolyLite_PLA",
+        "preferred_material": "PolyLite_PLA_(Polymaker)",
         "user_toolhead_name": "HS+ | 1.20 mm | Hardened SST",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-hs-plus-tool-head-hardened-steel-1_2-mm?pk_campaign=software-cura",
         "default_category": "All",

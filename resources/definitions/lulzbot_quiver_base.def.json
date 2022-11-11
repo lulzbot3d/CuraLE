@@ -7,7 +7,7 @@
     {
         "type": "machine",
         "preferred_material": "pla",
-        "preferred_quality": "standard",
+        "preferred_quality_type": "standard",
         "file_formats": "text/x-gcode",
         "visible": false,
         "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-taz-pro?pk_campaign=software-cura",

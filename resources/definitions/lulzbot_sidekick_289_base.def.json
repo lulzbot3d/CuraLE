@@ -15,7 +15,7 @@
             0
         ],
         "preferred_material": "PolyLite_PLA",
-        "preferred_quality": "*Standard*",
+        "preferred_quality_type": "*Standard*",
         "file_formats": "text/x-gcode",
         "visible": false,
         "printer_info_link": "https://www.lulzbot.com/store/printers/",

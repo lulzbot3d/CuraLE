@@ -13,7 +13,7 @@
         "category": "LulzBot",
         "firmware_toolhead_name": "SingleExtruder",
         "preferred_material": "*Sodium_Alginate*",
-        "preferred_quality": "*High Detail*",
+        "preferred_quality_type": "*High Detail*",
         "file_formats": "text/x-gcode",
         "visible": true,
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/?pk_campaign=software-cura",

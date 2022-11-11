@@ -15,7 +15,7 @@
         "category": "LulzBot",
         "base_machine": "LulzBot TAZ Pro Long Bed",
         "base_machine_name": "TAZ Pro Long Bed",
-        "preferred_material": "*PolyLite_PLA*",
+        "preferred_material": "PolyLite_PLA_(Polymaker)",
         "user_toolhead_name": "SL | 0.25 mm | Nickel Plated Copper",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/sl-tool-head-small-layer-micro-025-mm?pk_campaign=software-cura",
         "default_category": "All",
