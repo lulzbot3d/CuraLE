@@ -376,6 +376,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         else:
             self._printer_name = "Unknown"
             Logger.log("i", "Couldn't find a printer name.")
+            Logger.log("e", "USB printer could not be determined to match the currently selected printer! Proceed with caution!")
 
     def getFirmwareName(self):
         return self._firmware_name

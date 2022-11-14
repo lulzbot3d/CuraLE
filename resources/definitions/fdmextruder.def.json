@@ -63,6 +63,16 @@
                     "settable_per_meshgroup": false,
                     "settable_globally": false
                 },
+                "extruder_disallowed_areas":
+                {
+                    "label": "Disallowed areas",
+                    "description": "A list of polygons with areas the exturder is not allowed to enter.",
+                    "type": "polygons",
+                    "default_value": [],
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true,
+                    "settable_per_meshgroup": false
+                },
                 "machine_nozzle_offset_y":
                 {
                     "label": "Nozzle Y Offset",

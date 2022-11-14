@@ -1,6 +1,7 @@
 # Copyright (c) 2021 Ultimaker B.V.
 # Cura is released under the terms of the LGPLv3 or higher.
 
+from dis import dis
 import numpy
 import math
 
@@ -907,7 +908,13 @@ class BuildVolume(SceneNode):
         if self._global_container_stack is None:
             return {}
 
-        for area in self._global_container_stack.getProperty("machine_disallowed_areas", "value"):
+        disallowed_areas = []
+        disallowed_areas += self._global_container_stack.getProperty("machine_disallowed_areas", "value")
+
+        for extruder in used_extruders:
+            disallowed_areas += extruder.getProperty("extruder_disallowed_areas", "value")
+
+        for area in disallowed_areas:
             if len(area) == 0:
                 continue  # Numpy doesn't deal well with 0-length arrays, since it can't determine the dimensionality of them.
             polygon = Polygon(numpy.array(area, numpy.float32))
