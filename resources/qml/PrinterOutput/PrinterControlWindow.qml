@@ -15,15 +15,17 @@ UM.Dialog
     id: base
     title: catalog.i18nc("@title:window","Printer control")
     modality: Qt.NonModal;
-    minimumWidth: 500 * screenScaleFactor
-    minimumHeight: 400 * screenScaleFactor
+    minimumWidth: 800 * screenScaleFactor
+    minimumHeight: 640 * screenScaleFactor
     width: minimumWidth
     height: minimumHeight
     signal command(string command)
-    signal receive(string type, string command)
+    signal receive(string command)
 
     property var history_list: []
     property var current_history_index: -1
+
+    property var activePrinter: null
 
     property var locale: Qt.locale()
 
@@ -34,7 +36,7 @@ UM.Dialog
         {
             cmd = cmd.toUpperCase();
             history_list.push(cmd);
-            base.command(cmd);
+            activePrinter.sendRawCommand(cmd)
             command_field.text = "";
             current_history_index = -1;
             command_log.append("> [" + new Date().toLocaleTimeString(locale, "hh:mm:ss") + "] " + cmd);
@@ -135,14 +137,16 @@ UM.Dialog
             onClicked:
             {
                 base.sendCommand();
+                event.accepted = true;
             }
-            style: UM.Theme.styles.monitor_button_style
+            //style: UM.Theme.styles.monitor_button_style
         },
         Button
         {
             text: catalog.i18nc("@action:button","Close");
             onClicked: base.visible = false;
-            style: UM.Theme.styles.monitor_button_style
+            //style: UM.Theme.styles.small_tool_button
+            width: 100
         }
     ]
 

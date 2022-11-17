@@ -89,8 +89,8 @@ Item
                 text: catalog.i18nc("@label", "Console")
                 onClicked:
                 {
-                    //connectedPrinter.messageFromPrinter.disconnect(printer_control.receive)
-                    // connectedPrinter.messageFromPrinter.connect(printer_control.receive)
+                    connectedPrinter.messageFromPrinter.disconnect(printer_control.receive)
+                    connectedPrinter.messageFromPrinter.connect(printer_control.receive)
                     printer_control.visible = true;
                 }
                 style: UM.Theme.styles.monitor_checkable_button_style
@@ -449,6 +449,7 @@ Item
         PrinterControlWindow
 	    {
 	        id: printer_control
+            activePrinter: printerModel
 	        onCommand:
 	        {
 	            if (!Cura.USBPrinterManager.sendCommandToCurrentPrinter(command))

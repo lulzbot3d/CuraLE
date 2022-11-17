@@ -21,6 +21,8 @@ from cura.PrinterOutput.GenericOutputController import GenericOutputController
 from .AutoDetectBaudJob import AutoDetectBaudJob
 from .LulzFirmwareUpdater import LulzFirmwareUpdater
 
+from PyQt5.QtCore import pyqtSignal
+
 from io import StringIO #To write the g-code output.
 from queue import Queue
 from serial import Serial, SerialException, SerialTimeoutException
@@ -39,6 +41,8 @@ catalog = i18nCatalog("cura")
 
 
 class USBPrinterOutputDevice(PrinterOutputDevice):
+
+    messageFromPrinter = pyqtSignal(str)
 
     def __init__(self, serial_port: str, baud_rate: Optional[int] = None) -> None:
         super().__init__(serial_port, connection_type = ConnectionType.UsbConnection)
@@ -87,6 +91,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         # Event to indicate that an "ok" was received from the printer after sending a command.
         self._command_received = Event()
         self._command_received.set()
+
+        ## self.messageFromPrinter.connect(self._update)
 
         self._firmware_name_requested = False
         self._firmware_updater = LulzFirmwareUpdater(self)
@@ -269,7 +275,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         while self._connection_state == ConnectionState.Connected and self._serial is not None:
             try:
                 line = self._serial.readline()
-            except:
+                decoded_line = line.decode()
+                if decoded_line != "":
+                    self.messageFromPrinter.emit(decoded_line)
+            except Exception as e:
+                print(e)
                 continue
 
             if not self._firmware_name_requested:
