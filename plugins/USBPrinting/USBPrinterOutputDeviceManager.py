@@ -19,7 +19,6 @@ from UM.Logger import Logger
 
 from cura.CuraApplication import CuraApplication
 from cura.PrinterOutput.PrinterOutputDevice import ConnectionState
-# from cura.PrinterOutput.FirmwareUpdater import FirmwareUpdater
 from plugins.USBPrinting.LulzFirmwareUpdater import LulzFirmwareUpdater
 
 from . import USBPrinterOutputDevice

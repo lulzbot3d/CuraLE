@@ -277,7 +277,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 line = self._serial.readline()
                 decoded_line = line.decode()
                 if decoded_line != "":
-                    self.messageFromPrinter.emit(decoded_line)
+                    self.messageFromPrinter.emit(decoded_line.strip('\n'))
             except Exception as e:
                 print(e)
                 continue

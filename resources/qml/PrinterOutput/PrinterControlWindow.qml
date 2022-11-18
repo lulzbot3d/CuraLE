@@ -39,7 +39,7 @@ UM.Dialog
             activePrinter.sendRawCommand(cmd)
             command_field.text = "";
             current_history_index = -1;
-            command_log.append("> [" + new Date().toLocaleTimeString(locale, "hh:mm:ss") + "] " + cmd);
+            command_log.append(">>> [" + new Date().toLocaleTimeString(locale, "hh:mm:ss") + "] " + cmd);
         }
         command_field.forceActiveFocus();
     }
@@ -48,7 +48,7 @@ UM.Dialog
     {
         if(filterCheckbox.checked || !(command.indexOf(" T:") >= 0 || command.indexOf("ok ") >= 0))
         {
-            command_log.append("< [" + new Date().toLocaleTimeString(locale, "hh:mm:ss") + "] " + command)
+            command_log.append("<<< [" + new Date().toLocaleTimeString(locale, "hh:mm:ss") + "] " + command)
         }
     }
 
