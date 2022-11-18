@@ -244,6 +244,7 @@ class CuraApplication(QtApplication):
         self._currently_loading_files = []
         self._non_sliceable_extensions = []
         self._additional_components = {}  # Components to add to certain areas in the interface
+        self._print_monitor_additional_sections = []
 
         self._open_file_queue = []  # A list of files to open (after the application has started)
 
@@ -266,18 +267,6 @@ class CuraApplication(QtApplication):
         from UM.CentralFileStorage import CentralFileStorage
         # CentralFileStorage.setIsEnterprise(ApplicationMetadata.IsEnterpriseVersion)
         # Resources.setIsEnterprise(ApplicationMetadata.IsEnterpriseVersion)
-
-    #@pyqtProperty(str, constant=True)
-    #def ultimakerCloudApiRootUrl(self) -> str:
-    #    return UltimakerCloudConstants.CuraCloudAPIRoot
-
-    #@pyqtProperty(str, constant = True)
-    #def ultimakerCloudAccountRootUrl(self) -> str:
-    #    return UltimakerCloudConstants.CuraCloudAccountAPIRoot
-
-    #@pyqtProperty(str, constant=True)
-    #def ultimakerDigitalFactoryUrl(self) -> str:
-    #    return UltimakerCloudConstants.CuraDigitalFactoryURL
 
     def addCommandLineOptions(self):
         """Adds command line options to the command line parser.
@@ -742,6 +731,16 @@ class CuraApplication(QtApplication):
             self._message_box_callback(button, *self._message_box_callback_arguments)
             self._message_box_callback = None
             self._message_box_callback_arguments = []
+
+    def registerPrintMonitorAdditionalCategory(self, name, path):
+        self._print_monitor_additional_sections.append({"name": name, "path": path})
+        self.printMonitorAdditionalSectionsChanged.emit()
+
+    printMonitorAdditionalSectionsChanged = pyqtSignal()
+
+    @pyqtProperty("QVariantList", notify=printMonitorAdditionalSectionsChanged)
+    def printMonitorAdditionalSections(self):
+        return self._print_monitor_additional_sections
 
     def enableSave(self, enable: bool):
         self._enable_save = enable

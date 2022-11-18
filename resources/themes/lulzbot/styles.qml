@@ -806,4 +806,97 @@ QtObject
             label: Item { }
         }
     }
+
+    property Component print_monitor_control_button: Component {
+        ButtonStyle
+        {
+            background: Rectangle
+                {
+                    border.width: UM.Theme.getSize("default_lining").width
+                    implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
+                    border.color:
+                    {
+                        if(typeof control == "undefined")
+                        {
+                            return UM.Theme.getColor("action_button_disabled_border");
+                        }
+                        else if(!control.enabled)
+                        {
+                            return UM.Theme.getColor("action_button_disabled_border");
+                        }
+                        else if(control.pressed)
+                        {
+                            return UM.Theme.getColor("action_button_active_border");
+                        }
+                        else if(control.hovered)
+                        {
+                            return UM.Theme.getColor("action_button_hovered_border");
+                        }
+                        else
+                        {
+                            return UM.Theme.getColor("action_button_border");
+                        }
+                    }
+                    color:
+                    {
+                        if(!control)
+                        {
+                            return UM.Theme.getColor("action_button_disabled");
+                        }
+                        else if(!control.enabled)
+                        {
+                            return UM.Theme.getColor("action_button_disabled");
+                        }
+                        else if(control.pressed)
+                        {
+                            return UM.Theme.getColor("action_button_active");
+                        }
+                        else if(control.hovered)
+                        {
+                            return UM.Theme.getColor("action_button_hovered");
+                        }
+                        else
+                        {
+                            return UM.Theme.getColor("action_button");
+                        }
+                    }
+                    Behavior on color
+                    {
+                        ColorAnimation
+                        {
+                            duration: 50
+                        }
+                    }
+
+                    Label
+                    {
+                        id: actualLabel
+                        anchors.centerIn: parent
+                        color:
+                        {
+                            if(!control)
+                            {
+                                return UM.Theme.getColor("action_button_disabled_text");
+                            }
+                            else if(!control.enabled)
+                            {
+                                return UM.Theme.getColor("action_button_disabled_text");
+                            }
+                            else if(control.pressed)
+                            {
+                                return UM.Theme.getColor("action_button_active_text");
+                            }
+                            else if(control.hovered)
+                            {
+                                return UM.Theme.getColor("action_button_hovered_text");
+                            }
+                            else
+                            {
+                                return UM.Theme.getColor("action_button_text");
+                            }
+                        }
+                    }
+                }
+        }
+    }
 }

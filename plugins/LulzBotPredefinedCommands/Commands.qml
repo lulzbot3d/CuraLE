@@ -16,7 +16,7 @@ Item
         GridLayout
         {
             id: predefinedButtons
-            columns: 3
+            columns: 4
             rows: 3
             rowSpacing: 1
             columnSpacing: 1
@@ -117,10 +117,10 @@ Item
                 Layout.preferredHeight: UM.Theme.getSize("section").height
                 enabled:
                 {
-                     var name = Cura.MachineManager.activeMachineName
-                     if(name.includes("Aerostruder"))
+                    var name = Cura.MachineManager.activeMachineName
+                    if(name.includes("Aerostruder"))
                     {
-                         return connectedPrinter && false;
+                        return connectedPrinter && false;
                     }
                     else
                     {
@@ -140,7 +140,7 @@ Item
             {
                 text: "Motors off"
                 Layout.row: 3
-                Layout.column: 2
+                Layout.column: 1
                 Layout.preferredWidth: parent.width/3 - predefinedButtons.columnSpacing*7
                 Layout.preferredHeight: UM.Theme.getSize("section").height
 
@@ -156,7 +156,7 @@ Item
             {
                 text: "Level X Axis"
                 Layout.row: 3
-                Layout.column: 3
+                Layout.column: 2
                 Layout.preferredWidth: parent.width/3 - predefinedButtons.columnSpacing*7
                 Layout.preferredHeight: UM.Theme.getSize("section").height
 
