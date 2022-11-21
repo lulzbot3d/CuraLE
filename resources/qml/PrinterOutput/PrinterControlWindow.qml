@@ -133,19 +133,22 @@ UM.Dialog
         Button
         {
             text: catalog.i18nc("@action:button","Send Command");
-
+            anchors
+            {
+                rightMargin: 10
+            }
             onClicked:
             {
                 base.sendCommand();
                 event.accepted = true;
             }
-            //style: UM.Theme.styles.monitor_button_style
+            style: UM.Theme.styles.print_monitor_control_button
         },
         Button
         {
             text: catalog.i18nc("@action:button","Close");
             onClicked: base.visible = false;
-            //style: UM.Theme.styles.small_tool_button
+            style: UM.Theme.styles.print_monitor_control_button
             width: 100
         }
     ]

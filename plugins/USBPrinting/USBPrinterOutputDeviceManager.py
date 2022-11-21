@@ -1,6 +1,7 @@
 # Copyright (c) 2020 Ultimaker B.V.
 # Cura is released under the terms of the LGPLv3 or higher.
 
+from multiprocessing.connection import Connection
 import time
 import serial.tools.list_ports
 import platform
@@ -13,6 +14,7 @@ from threading import Thread
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot, QUrl, pyqtProperty
 
 from UM.Signal import Signal, signalemitter
+from UM.Message import Message
 from UM.OutputDevice.OutputDevicePlugin import OutputDevicePlugin
 from UM.i18n import i18nCatalog
 from UM.Logger import Logger
@@ -195,6 +197,13 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         changed_device = self._usb_output_devices[serial_port]
         if changed_device.connectionState == ConnectionState.Connected:
             self.getOutputDeviceManager().addOutputDevice(changed_device)
+        elif changed_device.connectionState == ConnectionState.Error:
+            self.pushedDisconnectButton()
+            wrong_printer_message = Message(
+                i18n_catalog.i18nc("@info:status", "Printer found through USB does not match active printer!"),
+                title = i18n_catalog.i18nc("@info:title", "Incorrect Printer!"),
+                message_type = Message.MessageType.WARNING)
+            wrong_printer_message.show()
         else:
             self.getOutputDeviceManager().removeOutputDevice(serial_port)
 

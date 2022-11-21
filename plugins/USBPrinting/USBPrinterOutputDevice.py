@@ -1,6 +1,7 @@
 # Copyright (c) 2020 Ultimaker B.V.
 # Cura is released under the terms of the LGPLv3 or higher.
 
+from multiprocessing.sharedctypes import Value
 import os
 from time import sleep
 from enum import IntEnum
@@ -288,7 +289,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
             if b"FIRMWARE_NAME:" in line:
                 self._setFirmwareName(line)
-                self._getPrinterName(line)
+                try:
+                    self._getPrinterName(line)
+                except ValueError:
+                    self.setConnectionState(ConnectionState.Error)
+                    break
 
             if self._last_temperature_request is None or time() > self._last_temperature_request + self._timeout:
                 # Timeout, or no request has been sent at all.
@@ -383,6 +388,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 Logger.log("i", "USB printer matches currently selected printer")
             else:
                 Logger.log("e", "USB printer does NOT match currently selected printer! This could potentially result in damage and failed prints.")
+                raise ValueError("Machine mismatch!")
         else:
             self._printer_name = "Unknown"
             Logger.log("i", "Couldn't find a printer name.")
