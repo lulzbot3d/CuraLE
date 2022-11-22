@@ -1,2 +1,3 @@
-[4.0.0]
-* Quite a lot quite frankly
+[4.13.0-Beta v1]
+* Updated to be more in-line with upstream Cura as of Ultimaker Cura 4.13
+* A more in-depth patch-notes will be created as we approach a full launch
