@@ -29,20 +29,20 @@ class SettingVisibilityPresetsModel(QObject):
 
         self._populate()
 
-        basic_item = self.getVisibilityPresetById("basic")
-        if basic_item is not None:
-            basic_visibile_settings = ";".join(basic_item.settings)
+        advanced_item = self.getVisibilityPresetById("advanced")
+        if advanced_item is not None:
+            advanced_visible_settings = ";".join(advanced_item.settings)
         else:
             Logger.log("w", "Unable to find the basic visibility preset.")
-            basic_visibile_settings = ""
+            advanced_visible_settings = ""
 
         self._preferences = preferences
 
         # Preference to store which preset is currently selected
-        self._preferences.addPreference("cura/active_setting_visibility_preset", "basic")
+        self._preferences.addPreference("cura/active_setting_visibility_preset", "advanced")
 
         # Preference that stores the "custom" set so it can always be restored (even after a restart)
-        self._preferences.addPreference("cura/custom_visible_settings", basic_visibile_settings)
+        self._preferences.addPreference("cura/custom_visible_settings", advanced_visible_settings)
         self._preferences.preferenceChanged.connect(self._onPreferencesChanged)
 
         self._active_preset_item = self.getVisibilityPresetById(self._preferences.getValue("cura/active_setting_visibility_preset"))

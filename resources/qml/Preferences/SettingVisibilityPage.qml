@@ -27,7 +27,7 @@ UM.PreferencesPage
 
     function reset()
     {
-        settingVisibilityPresetsModel.setActivePreset("basic")
+        settingVisibilityPresetsModel.setActivePreset("advanced")
     }
     resetEnabled: true;
 
