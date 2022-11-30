@@ -1,3 +1,6 @@
-[4.13.0-Beta v1]
+[4.13.0-Beta v1.1]
+* Updated default settings to the "Advanced" preset instead of "Basic"
+
+[4.13.0-Beta v1.0]
 * Updated to be more in-line with upstream Cura as of Ultimaker Cura 4.13
 * A more in-depth patch-notes will be created as we approach a full launch
