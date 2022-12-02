@@ -185,7 +185,7 @@ class MachineManager(QObject):
         for printer_output_device in self._application.getOutputDeviceManager().getOutputDevices():
             if isinstance(printer_output_device, PrinterOutputDevice):
                 self._printer_output_devices.append(printer_output_device)
-                
+
         self.outputDevicesChanged.emit()
 
     @pyqtProperty(QObject, notify = currentConfigurationChanged)
@@ -407,7 +407,9 @@ class MachineManager(QObject):
         new_stack = CuraStackBuilder.createMachine(cast(str, name), definition_id)
         if new_stack:
             if new_stack.getMetaDataEntry("has_optional_lcd", False):
-                new_stack.setProperty("machine_has_lcd", "value", lcd, "definition_changes")
+                # new_stack.setProperty("machine_has_lcd", "value", lcd, "definition_changes")
+                # Optional LCD code is currently a bit of a mess, that needs to be fixed. For now just get these working for slicing.
+                pass
             # Instead of setting the global container stack here, we set the active machine and so the signals are emitted
             self.setActiveMachine(new_stack.getId())
             if Application.getInstance().getPreferences().getValue("general/is_first_run"):
