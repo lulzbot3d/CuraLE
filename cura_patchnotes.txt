@@ -1,0 +1,143 @@
+CURA LULZBOT EDITION PATCHNOTES
+This file is a work-in-progress; some sections may be incomplete, especially older versions. Older version patch notes may be added over time. The file will be updated as
+new versions are released and will continue to be utilized as the project progresses.
+
+4.13.0-BETAv1.2:
+	Bug Fixes:
+		Fixed missing start and end gcode scripts on some configurations
+		Fixed issue that caused application to crash upon creating a Mini 1 machine
+		Fixed issue that caused a crash when creating a Workhorse with HS+ Tool Head
+
+4.13.0-BETAv1.1:
+	Changes:
+		Changed default settings view to use Advanced settings instead of Basic
+			Should be more in-line with the settings view from 3.6
+
+4.13.0-BETAv1.0:
+	Updated main branch to upstream Cura 4.13 work
+		Full descriptive patchnotes for this still need to be written
+		Lots of changes, including improved stability and a new look
+
+3.6.38: (In-Progress)
+	Printer Changes:
+		Added the TAZ Pro Long Bed printer
+			TAZ Pro with a substantially longer y-axis that allows for seamless long prints.
+		Removed the M175v1 Tool Head
+			Tool Head's existence was confusing for users, especially since it had it's own slightly altered firmware.
+			Anyone with a M175v1 can easily upgrade to a v2, and most if not all already should have.
+	Firmware Changes:
+		SideKicks firmware updated from 2.0.9.0.10 to 2.0.9.0.14
+			Changed default z-offset to -1.23 to reduce chances of the nozzle digging into the bed on first print
+		TAZ Pro and TAZ Pro XT updated from 2.0.0.144.7 to 2.0.0.144.8
+			Y axis minimum position updated to avoid hitting
+	Material Profile Changes:
+		Added 2.85mm profiles for SE, HE, HS, and Dual Tool Heads for NinjaTek Armadillo
+		Added 1.75mm profiles for Polymaker PolyFlex
+		Added some missing Village Plastics ABS profiles on the Workhorse with SE
+		Added Polymaker ASA 1.75mm to all 1.75 Tool Heads on all current printers
+		Added NinjaTek Cheetah to all currently supported Tool Head/printer combinations
+		Added NinjaTek Edge to all currently supported Tool Head/printer combinations
+		Added NinjaTek Chinchilla to all 2.85mm Tool Heads with the exception of the SL
+			- Chinchilla does not behave well with small nozzles or 1.75mm Tool Heads
+			- Due to the difficulty creating high quality print settings on these nozzles, we shall exclude them for now
+		Expanded PolyMide PA6 filaments to all current printers with SE, HE, and SK285 Tool Heads
+		Expanded Taulman Bridge Nylon filament to the SideKick's SE, HE, and SK285 Tool Heads
+		Slightly altered NinjaFlex profiles on HE and Dual Tool Heads for more consistency
+		Modified profiles for PolyDissolve S1
+			- Default Printing Temp from 220 to 235
+			- Printing Temp from 220 to 235
+			- Printing Temp Initial Layer from 220 to 235
+			- Initial Printing Temp from 215 to 235
+			- Final Printing Temp from 215 to 235
+			- Build Plate Temp from 45 to 60
+			- Build Plate Temp Initial Layer from 55 to 60
+			- Support Speed from 45 to 20
+			- Support Infill Speed from 45 to 20
+			- Support Interface Speed from 45 to 17
+			- Support  Roof Speed from 45 to 17
+			- Support Floor Speed from 45 to 17
+			- Regular Fan Speed from 35 to 15
+			- Maximum Fan Speed from 35 to 20
+			- Support Overall Angle from 60 to 30
+			- Support Density from 20 to 40
+			- Support Interface Density from 50 to 80
+			- Support Interface Pattern from Lines to Zig Zag
+			- Enable Prime Tower from "not Checked" to "Checked"
+			- Found that the use of the prime tower helps the purging of the filament that sits in the nozzle/heat block
+	Other changes:
+		Disabled Auto Slice by default
+		Updated splash screen
+		Removed lines from start gcodes regarding backlash compensation
+		Fixed issue with Bio Infill percentage being at a fixed value
+		Altered TAZ Pro/XT Dual start gcodes slightly to avoid handles on flex plate
+
+3.6.37:
+	Firmware Changes:
+		Reverting TAZ Pro Dual Extruder and TAZ Pro XT Dual Extruder firmware from 2.0.0.144.6 to 2.0.0.144.5
+			Reported issues with bed leveling that were not present in previous builds
+	Bug Fixes:
+		Fixed issue where creating a new material profile for 1.75mm Tool Heads didn't display the new profile in Cura
+		Fixed some issues where M1 chip equipped Macs were unable to use functionality requring use of USB ports (USB printing, firmware flashing, etc.)
+	Material Profile Changes:
+		Added Jabil SEBS for all current model Tool Heads on all currently produced printers and the TAZ 6
+		Expanded Polymaker PolyCast to all SideKick 2.85mm Tool Heads
+		Expanded Chroma Strand ABS to all SideKick Tool Heads and to all SL Tool Heads
+		Expanded Polymaker ASA to SE Tool Heads on all compatible printers
+		Expanded NinjaTek Aramdillo to all H175 and SK175 Tool Heads
+		Expanded Polymaker CoPA to all HE Tool Heads and to SE and SK285 Tool Heads on the SideKicks
+		Expanded 3D-Fuel Pro PLA to SideKick M175 Tool Heads
+		Adjusted headed bed temperatures for Chroma Strand, IC3D, and Village Plastics ABS on Pro Dual printers
+
+
+3.6.36:
+	Bumped firmware version of TAZ 6 and TAZ Workhorse to 2.0.8.0.13:
+		Adjustment to X travel on Workhorse
+		Default status for Runout Sensor on TAZ 6 set to off
+	Minor changes to SideKick start gcode:
+		Start heating bed sooner leading to less downtime when starting a print
+	Material profile changes:
+		Added NinjaTek Armadillo for M175/v2 Tool Head on all compatible printers
+		Added Polymaker ASA for HE Tool Head on all compatible printers
+		Expanded some existing profiles for use on different printers with the same Tool Head
+		Issue resulting in existing Polymaker PETg profiles not appearing in Cura was resolved
+		Removed several discontinued materials
+
+
+3.6.35:
+	Functional MacOS build:
+		Should work on MacOS >= 10.14, in-house testing is very limited
+		Still some minor bugs to work out, but at the very minimum should be functional
+		All current Tool Heads and printers are included, no need to import
+	Bumped firmware version of TAZ 6, TAZ Workhorse, and Mini 2 to 2.0.9.0.12
+		Minor adjustments to temperature changes during G12 gcode command
+
+
+3.6.34:
+	[Undocumented]
+
+3.6.33:
+	Replaced ColorChange script with FilamentChange script in the PostProcessing plugin:
+		Improved accuracy when using the script
+
+3.6.25:
+	Added new printers
+		LulzBot TAZ SideKick
+			289 - 162 x 162 x 181mm build volume
+			747 - 231 x 231 x 248mm build volume
+	Added Tool Heads
+		SK285 and SK175
+			SideKick printers only
+			3D Titan Aero extruder modified for use on SideKicks
+		H175
+			All current LulzBot printers + TAZ 6
+			E3D's Direct Hemera with V6 HotEnd
+		HE Tool Head and profiles added to Mini 2
+	Material profile changes
+		Altered PolyDissolve fan height and minimum speed on Dual V3 Tool Head
+		Improved filament quality consistency when using the same Tool Head on different LulzBot printers
+	Firmware Changes
+		Upped Marlin to be more in-line with upstream, 2.0.6
+		Added Universal firmware for easy Tool Head swapping
+		Bilinear Bed leveling
+		Faster Probing
+		New LCD UI
