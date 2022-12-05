@@ -2,6 +2,7 @@
 * Fixed missing start and end gcode scripts on some configurations
 * Fixed issue that caused application to crash upon creating a Mini 1 machine
 * Fixed issue that caused a crash when creating a Workhorse with HS+ Tool Head
+* Fixed broken quality profiles for NinjaFlex Edge on M175v2 Tool Heads
 
 [4.13.0-Beta v1.1]
 * Updated default settings to the "Advanced" preset instead of "Basic"
