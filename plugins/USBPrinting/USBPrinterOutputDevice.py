@@ -292,7 +292,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 try:
                     self._getPrinterName(line)
                 except ValueError:
-                    self.setConnectionState(ConnectionState.Error)
+                    self.setConnectionState(ConnectionState.WrongMachine)
                     break
 
             if self._last_temperature_request is None or time() > self._last_temperature_request + self._timeout:
@@ -384,8 +384,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self._printer_name = printer_name[0].strip()
             Logger.log("i", "USB output device printer type: %s", self._printer_name)
             current_printer = CuraApplication.getInstance().getGlobalContainerStack().getName()
+            allow_wrong_connection = CuraApplication.getInstance().getPreferences().getValue("cura/allow_connection_to_wrong_machine")
             if self._printer_name in current_printer:
                 Logger.log("i", "USB printer matches currently selected printer")
+            elif allow_wrong_connection:
+                Logger.log("w", "USB printer does NOT match currently selected printer, but user has elected to proceed.")
             else:
                 Logger.log("e", "USB printer does NOT match currently selected printer! This could potentially result in damage and failed prints.")
                 raise ValueError("Machine mismatch!")
