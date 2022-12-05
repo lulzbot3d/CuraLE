@@ -36,6 +36,7 @@ class ConnectionState(IntEnum):
     Error = 4
     Searching = 5
     Timeout = 6
+    WrongMachine = 7
 
 
 class ConnectionType(IntEnum):
@@ -127,7 +128,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
         Returns whether we could theoretically send commands to this printer.
         :return: `True` if we are connected, or `False` if not.
         """
-        return self.connectionState != ConnectionState.Closed and self.connectionState != ConnectionState.Error
+        return self.connectionState != ConnectionState.Closed and self.connectionState != ConnectionState.Error and self.connectionState != ConnectionState.WrongMachine
 
     def setConnectionState(self, connection_state: "ConnectionState") -> None:
         """

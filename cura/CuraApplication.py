@@ -537,6 +537,8 @@ class CuraApplication(QtApplication):
 
         preferences.addPreference("cura/active_mode", "simple")
 
+        preferences.addPreference("cura/allow_connection_to_wrong_machine", False)
+
         preferences.addPreference("cura/categories_expanded", "")
         preferences.addPreference("cura/jobname_prefix", True)
         preferences.addPreference("cura/select_models_on_load", False)

@@ -5,6 +5,7 @@ import QtQuick 2.10
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.1
+import QtQuick.Dialogs 1.2
 
 import QtQuick.Controls 2.3 as NewControls
 
@@ -123,6 +124,9 @@ UM.PreferencesPage
         UM.Preferences.resetPreference("info/latest_update_source")
         // UM.Preferences.resetPreference("info/automatic_plugin_update_check")
         // pluginNotificationsUpdateCheckbox.checked = boolCheck(UM.Preferences.getValue("info/automatic_plugin_update_check"))
+
+        UM.Preferences.resetPreference("cura/allow_connection_to_wrong_machine")
+        wrongPrinterConnectionCheckbox.checked = boolCheck(UM.Preferences.getValue("cura/allow_connection_to_wrong_machine"))
     }
 
     ScrollView
@@ -773,6 +777,65 @@ UM.PreferencesPage
                             return index;
                         }
                         onActivated: UM.Preferences.setValue("cura/choice_on_profile_override", model.get(index).code)
+                    }
+                }
+            }
+
+            Item
+            {
+                //: Spacer
+                height: UM.Theme.getSize("default_margin").height
+                width: UM.Theme.getSize("default_margin").height
+            }
+
+            Item
+            {
+                //: Spacer
+                height: UM.Theme.getSize("default_margin").height
+                width: UM.Theme.getSize("default_margin").height
+            }
+
+            Label
+            {
+                font.bold: true
+                text: catalog.i18nc("@label","Developer settings")
+            }
+
+            UM.TooltipArea {
+                width: childrenRect.width
+                height: childrenRect.height
+                text: catalog.i18nc("@info:tooltip","Should cura allow connection to wrong/custom printer?")
+
+                MessageDialog
+                {
+                    id: wrongPrinterDialog
+                    title: catalog.i18nc("@label","Warning")
+                    text: catalog.i18nc("@label","Do you really want to allow connections to wrong/custom printers? It may harm your machine.")
+                    standardButtons: StandardButton.Yes | StandardButton.No
+                    function resetValue()
+                    {
+                        wrongPrinterConnectionCheckbox.checked = false
+                        UM.Preferences.setValue("cura/allow_connection_to_wrong_machine", false)
+                    }
+                    onRejected: resetValue()
+                    onNo: resetValue()
+                }
+
+                CheckBox
+                {
+                    id: wrongPrinterConnectionCheckbox
+                    text: catalog.i18nc("@option:check","Allow connection to wrong printers")
+                    checked: boolCheck(UM.Preferences.getValue("cura/allow_connection_to_wrong_machine"))
+                    onCheckedChanged:
+                    {
+                        UM.Preferences.setValue("cura/allow_connection_to_wrong_machine", checked)
+                    }
+                    onClicked:
+                    {
+                        if(checked)
+                        {
+                            wrongPrinterDialog.visible = true
+                        }
                     }
                 }
             }

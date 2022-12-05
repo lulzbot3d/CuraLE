@@ -197,7 +197,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         changed_device = self._usb_output_devices[serial_port]
         if changed_device.connectionState == ConnectionState.Connected:
             self.getOutputDeviceManager().addOutputDevice(changed_device)
-        elif changed_device.connectionState == ConnectionState.Error:
+        elif changed_device.connectionState == ConnectionState.WrongMachine:
             self.pushedDisconnectButton()
             wrong_printer_message = Message(
                 i18n_catalog.i18nc("@info:status", "Printer found through USB does not match active printer!"),
