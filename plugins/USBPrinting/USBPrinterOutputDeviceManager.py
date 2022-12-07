@@ -21,8 +21,8 @@ from UM.Logger import Logger
 
 from cura.CuraApplication import CuraApplication
 from cura.PrinterOutput.PrinterOutputDevice import ConnectionState
-from plugins.USBPrinting.LulzFirmwareUpdater import LulzFirmwareUpdater
 
+from . import LulzFirmwareUpdater
 from . import USBPrinterOutputDevice
 
 i18n_catalog = i18nCatalog("cura")
