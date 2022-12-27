@@ -3,6 +3,10 @@ This file is a work-in-progress; some sections may be incomplete, especially old
 new versions are released and will continue to be utilized as the project progresses.
 
 4.13.0-BETAv1.2:
+	Changes:
+		"Ensure models are kept apart" is now checked by default
+
+4.13.0-BETAv1.2:
 	Bug Fixes:
 		Fixed missing start and end gcode scripts on some configurations
 		Fixed issue that caused application to crash upon creating a Mini 1 machine
