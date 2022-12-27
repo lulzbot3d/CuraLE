@@ -1,5 +1,6 @@
 [4.13.0-Beta v1.3]
 * "Ensure models are kept apart" setting is now checked by default
+* "No Material" is now listed under "Dual Extrusion" as a brand name for the time being
 
 [4.13.0-Beta v1.2]
 * Fixed missing start and end gcode scripts on some configurations
