@@ -1,3 +1,6 @@
+[4.13.0-Beta v1.3]
+* "Ensure models are kept apart" setting is now checked by default
+
 [4.13.0-Beta v1.2]
 * Fixed missing start and end gcode scripts on some configurations
 * Fixed issue that caused application to crash upon creating a Mini 1 machine
