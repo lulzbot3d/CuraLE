@@ -21,31 +21,32 @@ Item
     implicitWidth: parent.width
     implicitHeight: childrenRect.height
 
+    function checkEnabled()
+    {
+        if (printerModel == null)
+        {
+            return false; //Can't control the printer if not connected
+        }
+
+        if (!connectedDevice.acceptsCommands)
+        {
+            return false; //Not allowed to do anything.
+        }
+
+        if(activePrintJob == null)
+        {
+            return true
+        }
+
+        if (activePrintJob.state == "printing" || activePrintJob.state == "resuming" || activePrintJob.state == "pausing" || activePrintJob.state == "error" || activePrintJob.state == "offline")
+        {
+            return false; //Printer is in a state where it can't react to manual control
+        }
+        return true;
+    }
+
     Column
     {
-        enabled:
-        {
-            if (printerModel == null)
-            {
-                return false; //Can't control the printer if not connected
-            }
-
-            if (!connectedDevice.acceptsCommands)
-            {
-                return false; //Not allowed to do anything.
-            }
-
-            if(activePrintJob == null)
-            {
-                return true
-            }
-
-            if (activePrintJob.state == "printing" || activePrintJob.state == "resuming" || activePrintJob.state == "pausing" || activePrintJob.state == "error" || activePrintJob.state == "offline")
-            {
-                return false; //Printer is in a state where it can't react to manual control
-            }
-            return true;
-        }
 
         MonitorSection
         {
@@ -74,6 +75,7 @@ Item
                 height: UM.Theme.getSize("setting_control").height
                 width: height*2 + UM.Theme.getSize("default_margin").width
                 text: "Disconnect"
+                enabled: checkEnabled()
                 onClicked:
                 {
                     OutputDeviceHeader.pressedConnect = false
@@ -87,6 +89,7 @@ Item
                 height: UM.Theme.getSize("setting_control").height
                 width: height*2 + UM.Theme.getSize("default_margin").width
                 text: catalog.i18nc("@label", "Console")
+                enabled: true
                 onClicked:
                 {
                     connectedPrinter.messageFromPrinter.disconnect(printer_control.receive)
@@ -105,6 +108,8 @@ Item
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
 
             spacing: UM.Theme.getSize("default_margin").width
+
+            enabled: checkEnabled()
 
             Label
             {
@@ -295,6 +300,8 @@ Item
             spacing: UM.Theme.getSize("default_margin").width
 
             property real currentDistance: 10
+
+            enabled: checkEnabled()
 
             Label
             {
