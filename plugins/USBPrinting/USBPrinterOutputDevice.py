@@ -66,7 +66,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
         self._baud_rate = baud_rate
 
-        self._all_baud_rates = [115200, 250000, 500000, 230400, 76800, 57600, 38400, 19200, 9600]
+        self._all_baud_rates = [115200, 250000, 76800, 57600, 38400, 19200, 9600]
 
         # Instead of using a timer, we really need the update to be as a thread, as reading from serial can block.
         self._update_thread = Thread(target = self._update, daemon = True, name = "USBPrinterUpdate")
@@ -295,14 +295,46 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                     self.setConnectionState(ConnectionState.WrongMachine)
                     break
 
+            if b"//action:" in line:
+                if b"out_of_filament" in line:
+                    #self._parent._error_message = Message(catalog.i18nc("@info:status", "Filament run out or filament jam."))
+                    #self._parent._error_message.show()
+                    break
+
+                if b"pause" in line:
+                    self.pausePrint()
+
+                if b"resume" in line:
+                    self.resumePrint()
+
+                if b"cancel" in line:
+                    self.cancelPrint()
+
+                if b"disconnect" in line:
+                    self.close()
+
+            if line.startswith(b"Error:"):
+                # Oh YEAH, consistency.
+                # Marlin reports a MIN/MAX temp error as "Error:x\n: Extruder switched off. MAXTEMP triggered !\n"
+                # But a bed temp error is reported as "Error: Temperature heated bed switched off. MAXTEMP triggered !!"
+                # So we can have an extra newline in the most common case. Awesome work people.
+                if re.match(b"Error:[0-9]\n", line):
+                    line = line.rstrip() + self._serial.readline().decode()
+
+                # Skip the communication errors, as those get corrected.
+                if b"Extruder switched off" in line or b"Temperature heated bed switched off" in line or b"Something is wrong, please turn off the printer." in line:
+                    self.setConnectionState(ConnectionState.Error)
+                    self.cancelPrint()
+                    self.close()
+
             if self._last_temperature_request is None or time() > self._last_temperature_request + self._timeout:
                 # Timeout, or no request has been sent at all.
                 if not self._printer_busy: # Don't flood the printer with temperature requests while it is busy
                     self.sendCommand("M105")
                     self._last_temperature_request = time()
 
-            if re.search(b"[B|T\d*]: ?\d+\.?\d*", line):  # Temperature message. 'T:' for extruder and 'B:' for bed
-                extruder_temperature_matches = re.findall(b"T(\d*): ?(\d+\.?\d*)\s*\/?(\d+\.?\d*)?", line)
+            if re.search(br"[B|T\d*]: ?\d+\.?\d*", line):  # Temperature message. 'T:' for extruder and 'B:' for bed
+                extruder_temperature_matches = re.findall(br"T(\d*): ?(\d+\.?\d*)\s*\/?(\d+\.?\d*)?", line)
                 # Update all temperature values
                 matched_extruder_nrs = []
                 for match in extruder_temperature_matches:
@@ -324,7 +356,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                     if match[2]:
                         extruder.updateTargetHotendTemperature(float(match[2]))
 
-                bed_temperature_matches = re.findall(b"B: ?(\d+\.?\d*)\s*\/?(\d+\.?\d*)?", line)
+                bed_temperature_matches = re.findall(br"B: ?(\d+\.?\d*)\s*\/?(\d+\.?\d*)?", line)
                 if bed_temperature_matches:
                     match = bed_temperature_matches[0]
                     if match[0]:
