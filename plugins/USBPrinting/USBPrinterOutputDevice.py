@@ -311,7 +311,10 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                     self.cancelPrint()
 
                 if b"disconnect" in line:
-                    self.close()
+                    self.setConnectionState(ConnectionState.Closed)
+
+                if b"poweroff" in line:
+                    self.setConnectionState(ConnectionState.Error)
 
             if line.startswith(b"Error:"):
                 # Oh YEAH, consistency.
@@ -324,8 +327,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 # Skip the communication errors, as those get corrected.
                 if b"Extruder switched off" in line or b"Temperature heated bed switched off" in line or b"Something is wrong, please turn off the printer." in line:
                     self.setConnectionState(ConnectionState.Error)
-                    self.cancelPrint()
-                    self.close()
 
             if self._last_temperature_request is None or time() > self._last_temperature_request + self._timeout:
                 # Timeout, or no request has been sent at all.
