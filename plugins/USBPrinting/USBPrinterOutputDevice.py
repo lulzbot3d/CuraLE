@@ -312,9 +312,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
                 if b"disconnect" in line:
                     self.setConnectionState(ConnectionState.Closed)
+                    break
 
                 if b"poweroff" in line:
                     self.setConnectionState(ConnectionState.Error)
+                    break
 
             if line.startswith(b"Error:"):
                 # Oh YEAH, consistency.

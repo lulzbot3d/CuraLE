@@ -205,14 +205,14 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
                 title = i18n_catalog.i18nc("@info:title", "Incorrect Printer!"),
                 message_type = Message.MessageType.WARNING)
             wrong_printer_message.show()
-        elif changed_device.connectionState == ConnectionState.Closed:
-            self.pushedDisconnectButton()
-            closed_printer_message = Message(
-                i18n_catalog.i18nc("@info:status", "Printer connection closed by printer."),
-                title = i18n_catalog.i18nc("@info:title", "Connection Closed"),
-                message_type = Message.MessageType.NEUTRAL)
-            closed_printer_message.show()
-            print("closed")
+        ### This section probably causes issues and I'm not entirely sure that you can disconnect from the printer interface anyways
+        # elif changed_device.connectionState == ConnectionState.Closed:
+        #     self.pushedDisconnectButton()
+        #     closed_printer_message = Message(
+        #         i18n_catalog.i18nc("@info:status", "Printer connection closed by printer."),
+        #         title = i18n_catalog.i18nc("@info:title", "Connection Closed"),
+        #         message_type = Message.MessageType.NEUTRAL)
+        #     closed_printer_message.show()
         elif changed_device.connectionState == ConnectionState.Error:
             self.pushedDisconnectButton()
             error_printer_message = Message(
@@ -220,7 +220,6 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
                 title = i18n_catalog.i18nc("@info:title", "Printer Error!"),
                 message_type = Message.MessageType.ERROR)
             error_printer_message.show()
-            print("errored")
         else:
             self.getOutputDeviceManager().removeOutputDevice(serial_port)
 
