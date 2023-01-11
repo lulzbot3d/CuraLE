@@ -2,6 +2,8 @@
 * "Ensure models are kept apart" setting is now checked by default
 * "No Material" is now listed under "Dual Extrusion" as a brand name for the time being
 * "Console" button on the Monitor screen is now enabled during a print
+* Cura LE will once again react to LCD printer pauses, resumes, and stops
+* Cura LE will now recognize a printer error has occured during a print and will drop the connection
 
 [4.13.0-Beta v1.2]
 * Fixed missing start and end gcode scripts on some configurations

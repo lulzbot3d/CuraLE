@@ -7,6 +7,8 @@ new versions are released and will continue to be utilized as the project progre
 		"Ensure models are kept apart" is now checked by default
 		"No Material" material is now listed under the brand "Dual Extrusion" for the time being
 		"Console" button on Monitor page is now enabled during USB printing
+		Cura LE now understands LCD Pause, Resume, ane Stop commands
+		Cura LE should now automatically disconnect from the printer when a printer error occurs
 
 4.13.0-BETAv1.2:
 	Bug Fixes:

@@ -183,7 +183,8 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         self.stop()
         for port, device in self._usb_output_devices.items():
             device.close()
-            self._serial_port_list.remove(port)
+            if port in self._serial_port_list:
+                self._serial_port_list.remove(port)
 
     # Function to return whether Cura is searching for a printer
     @pyqtSlot()
@@ -204,6 +205,21 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
                 title = i18n_catalog.i18nc("@info:title", "Incorrect Printer!"),
                 message_type = Message.MessageType.WARNING)
             wrong_printer_message.show()
+        ### This section probably causes issues and I'm not entirely sure that you can disconnect from the printer interface anyways
+        # elif changed_device.connectionState == ConnectionState.Closed:
+        #     self.pushedDisconnectButton()
+        #     closed_printer_message = Message(
+        #         i18n_catalog.i18nc("@info:status", "Printer connection closed by printer."),
+        #         title = i18n_catalog.i18nc("@info:title", "Connection Closed"),
+        #         message_type = Message.MessageType.NEUTRAL)
+        #     closed_printer_message.show()
+        elif changed_device.connectionState == ConnectionState.Error:
+            self.pushedDisconnectButton()
+            error_printer_message = Message(
+                i18n_catalog.i18nc("@info:status", "Printer encountered an error, connection closed!"),
+                title = i18n_catalog.i18nc("@info:title", "Printer Error!"),
+                message_type = Message.MessageType.ERROR)
+            error_printer_message.show()
         else:
             self.getOutputDeviceManager().removeOutputDevice(serial_port)
 
