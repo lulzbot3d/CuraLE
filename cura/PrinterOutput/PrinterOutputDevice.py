@@ -42,6 +42,8 @@ class ConnectionState(IntEnum):
 class ConnectionType(IntEnum):
     NotConnected = 0
     UsbConnection = 1
+    NetworkConnection = 2
+    CloudConnection = 3
 
 
 @signalemitter
