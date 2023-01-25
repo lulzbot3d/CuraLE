@@ -4,10 +4,8 @@ from typing import Optional, TYPE_CHECKING
 
 from PyQt5.QtCore import QObject, pyqtProperty
 
-from cura.API.Backups import Backups
 from cura.API.ConnectionStatus import ConnectionStatus
 from cura.API.Interface import Interface
-from cura.API.Account import Account
 
 if TYPE_CHECKING:
     from cura.CuraApplication import CuraApplication
@@ -41,10 +39,6 @@ class CuraAPI(QObject):
     def __init__(self, application: Optional["CuraApplication"] = None) -> None:
         super().__init__(parent = CuraAPI._application)
 
-        self._account = Account(self._application)
-
-        self._backups = Backups(self._application)
-
         self._connectionStatus = ConnectionStatus()
 
         # Interface API
@@ -54,20 +48,18 @@ class CuraAPI(QObject):
         self._account.initialize()
 
     @pyqtProperty(QObject, constant = True)
-    def account(self) -> "Account":
+    def account(self):
         """Accounts API"""
-
-        return self._account
+        raise NotImplementedError("Ultimaker accounts are not supported!")
 
     @pyqtProperty(QObject, constant = True)
     def connectionStatus(self) -> "ConnectionStatus":
         return self._connectionStatus
 
     @property
-    def backups(self) -> "Backups":
+    def backups(self):
         """Backups API"""
-
-        return self._backups
+        raise NotImplementedError("Ultimaker backups are not supported!")
 
     @property
     def interface(self) -> "Interface":
