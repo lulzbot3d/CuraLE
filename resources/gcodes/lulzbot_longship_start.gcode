@@ -13,7 +13,7 @@ M204 S300                ; set probing acceleration
 G29                    ; start auto-leveling sequence
 M420 S1                     ; enable leveling matrix
 M425 Z                         ; use measured Z backlash for compensation
-M425 f1                     ; turn off measured Z backlash compensation. (if activated in the quality settings, this command will automatically be ignored)
+M425 F1                     ; turn off measured Z backlash compensation. (if activated in the quality settings, this command will automatically be ignored)
 M204 S2000                ; restore standard acceleration
 G1 X5 Y15 Z10 F5000            ; move up off last probe point
 G4 S1                    ; pause
@@ -22,4 +22,4 @@ M117 Heating...                ; progress indicator message on LCD
 M109 R{material_print_temperature_layer_0} ; wait for extruder to reach initial printing temp
 M190 R{material_bed_temperature_layer_0} ; wait for bed to reach printing temp
 G1 Z2 E0 F75                ; prime tiny bit of filament into the nozzle
-M117 Q - MAG + Printing...        ; progress indicator message on LCD
+M117 Long Bed Printing...        ; progress indicator message on LCD
