@@ -60,10 +60,6 @@
         {
             "default_value": 586
         },
-        "machine_wipe_gcode":
-        {
-            "default_value_from_file": "lulzbot_gladiator_cecropia_wipe"
-        },
         "layer_start_x": { "value": "100" },
         "layer_start_y": { "value": "100" }
     }

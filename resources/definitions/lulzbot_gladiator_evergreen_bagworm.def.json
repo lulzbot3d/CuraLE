@@ -53,6 +53,10 @@
         {
             "default_value_from_file": "lulzbot_gladiator_evergreen_bagworm_end"
         },
+        "machine_wipe_gcode":
+        {
+            "default_value_from_file": "lulzbot_quiver_evergreen_bagworm_wipe"
+        },
         "machine_extruder_count": {
             "default_value": 2
         },
@@ -67,10 +71,6 @@
         "machine_height":
         {
             "default_value": 586
-        },
-        "machine_wipe_gcode":
-        {
-            "default_value_from_file": "lulzbot_quiver_evergreen_bagworm_wipe"
         },
         "layer_start_x": { "value": "100" },
         "layer_start_y": { "value": "100" }
