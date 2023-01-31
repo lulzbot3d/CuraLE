@@ -522,9 +522,9 @@ class MachineManager(QObject):
         group_size = int(self.activeMachine.getMetaDataEntry("group_size", "-1"))
         return group_size > 1
 
-    @pyqtProperty(bool, notify = printerConnectedStatusChanged)
-    def activeMachineIsLinkedToCurrentAccount(self) -> bool:
-        return parseBool(self.activeMachine.getMetaDataEntry(META_UM_LINKED_TO_ACCOUNT, "True"))
+    # @pyqtProperty(bool, notify = printerConnectedStatusChanged)
+    # def activeMachineIsLinkedToCurrentAccount(self) -> bool:
+    #     return parseBool(self.activeMachine.getMetaDataEntry(META_UM_LINKED_TO_ACCOUNT, "True"))
 
     @pyqtProperty(bool, notify = printerConnectedStatusChanged)
     def activeMachineHasNetworkConnection(self) -> bool:
@@ -665,11 +665,11 @@ class MachineManager(QObject):
     @pyqtSlot(str)
     def copyValueToExtruders(self, key: str) -> None:
         """Copy the value of the setting of the current extruder to all other extruders as well as the global container."""
-        
+
         if self._active_container_stack is None or self._global_container_stack is None:
             return
         new_value = self._active_container_stack.getProperty(key, "value")
-        
+
         # Check in which stack the value has to be replaced
         for extruder_stack in self._global_container_stack.extruderList:
             if extruder_stack != self._active_container_stack and extruder_stack.getProperty(key, "value") != new_value:

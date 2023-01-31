@@ -2,6 +2,10 @@ CURA LULZBOT EDITION PATCHNOTES
 This file is a work-in-progress; some sections may be incomplete, especially older versions. Older version patch notes may be added over time. The file will be updated as
 new versions are released and will continue to be utilized as the project progresses.
 
+4.13.0-BETAv1.4:
+	Major changes:
+		Reimplemented the OctoPrint plugin
+
 4.13.0-BETAv1.3:
 	Changes:
 		"Ensure models are kept apart" is now checked by default

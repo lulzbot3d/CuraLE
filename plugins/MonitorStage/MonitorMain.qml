@@ -93,7 +93,10 @@ Rectangle
             anchors.horizontalCenter: parent.horizontalCenter
             visible: true
             text: catalog.i18nc("@info", "Connect!")
-            enabled: true
+            enabled:
+            {
+                true
+            }
             onClicked:
             {
                 Cura.USBPrinterOutputDeviceManager.pushedConnectButton()

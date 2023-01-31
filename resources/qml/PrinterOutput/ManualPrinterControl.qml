@@ -75,7 +75,7 @@ Item
                 height: UM.Theme.getSize("setting_control").height
                 width: height*2 + UM.Theme.getSize("default_margin").width
                 text: "Disconnect"
-                enabled: checkEnabled()
+                enabled: checkEnabled() && connectedPrinter.connectionType == 1
                 onClicked:
                 {
                     OutputDeviceHeader.pressedConnect = false
@@ -89,7 +89,7 @@ Item
                 height: UM.Theme.getSize("setting_control").height
                 width: height*2 + UM.Theme.getSize("default_margin").width
                 text: catalog.i18nc("@label", "Console")
-                enabled: true
+                enabled: connectedPrinter.connectionType == 1
                 onClicked:
                 {
                     connectedPrinter.messageFromPrinter.disconnect(printer_control.receive)
