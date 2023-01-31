@@ -52,8 +52,6 @@ from UM.Workspace.WorkspaceReader import WorkspaceReader
 
 import cura.Settings.cura_empty_instance_containers
 from cura import ApplicationMetadata
-# from cura.API import CuraAPI
-# from cura.API.Account import Account
 from cura.Arranging.Arrange import Arrange
 from cura.Arranging.ArrangeObjectsJob import ArrangeObjectsJob
 from cura.Arranging.ArrangeObjectsAllBuildPlatesJob import ArrangeObjectsAllBuildPlatesJob
@@ -872,7 +870,7 @@ class CuraApplication(QtApplication):
 
         self.started = True
         self.initializationFinished.emit()
-        Logger.log("d", "Booting Cura took %s seconds", time.time() - self._boot_loading_time)
+        Logger.log("d", "Booting Cura LE took %s seconds", time.time() - self._boot_loading_time)
 
         # For now use a timer to postpone some things that need to be done after the application and GUI are
         # initialized, for example opening files because they may show dialogs which can be closed due to incomplete

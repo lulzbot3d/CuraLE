@@ -40,7 +40,7 @@ class CuraSplashScreen(QSplashScreen):
     def updateLoadingImage(self):
         if self._to_stop:
             return
-        time_since_last_update = time.time() - self._last_update_time
+        time_since_last_update = min(time.time() - self._last_update_time, 300) # This prevents exceedingly large time values
         self._last_update_time = time.time()
         # Since we don't know how much time actually passed, check how many intervals of 50 we had.
         self._loading_image_rotation_angle -= 10 * (time_since_last_update * 1000 / 50)
