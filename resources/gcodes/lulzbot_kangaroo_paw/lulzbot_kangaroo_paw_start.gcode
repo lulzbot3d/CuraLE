@@ -1,6 +1,6 @@
 ;This G-Code has been generated specifically for the LulzBot Mini 2 Kangaroopaw
-M82                          ;absolute extrusion mode
-M221 S100
+M82                          ; absolute extrusion mode
+M221 S100                    ; set flow percentage
 M73 P0                       ; clear GLCD progress bar
 M75                          ; Start GLCD Print Timer
 M420 S0                      ; disable leveling matrix

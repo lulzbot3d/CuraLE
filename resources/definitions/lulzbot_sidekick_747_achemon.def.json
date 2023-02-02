@@ -5,7 +5,7 @@
     "version": 2,
     "metadata":
     {
-        
+
         "priority": "03",
         "machine_extruder_trains":
         {
@@ -13,7 +13,7 @@
         },
         "type": "machine",
         "platform": "Sidekick_747_bed.stl",
-        
+
         "supported_actions": ["MachineSettingsAction"],
         "preferred_material": "PolyLite_PLA_(Polymaker)",
         "preferred_quality_type": "*High Detail*",
@@ -43,9 +43,5 @@
     },
     "overrides":
     {
-        "machine_name":
-        {
-            "default_value": "LulzBot TAZ SideKick 747 Achemon"
-        }
     }
 }

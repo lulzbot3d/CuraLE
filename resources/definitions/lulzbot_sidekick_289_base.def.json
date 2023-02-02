@@ -29,15 +29,15 @@
     {
         "machine_start_gcode":
         {
-            "default_value_from_file": "lulzbot_sidekick_start"
+            "default_value_from_file": "lulzbot_sidekick/lulzbot_sidekick_start"
         },
         "machine_end_gcode":
         {
-            "default_value_from_file": "lulzbot_sidekick_289_end"
+            "default_value_from_file": "lulzbot_sidekick/lulzbot_sidekick_289_end"
         },
         "machine_level_x_axis_gcode":
         {
-            "default_value_from_file": "lulzbot_sidekick_level_x_axis"
+            "default_value_from_file": "lulzbot_sidekick/lulzbot_sidekick_level_x_axis"
         },
         "machine_heated_bed":
         {
@@ -57,11 +57,11 @@
         },
         "machine_has_lcd":
         {
-        "type": "bool",
-        "default_value": true,
-        "enabled": true,
-        "label": "LCD",
-        "description": "LCD"
+            "type": "bool",
+            "default_value": true,
+            "enabled": true,
+            "label": "LCD",
+            "description": "LCD"
         },
         "machine_center_is_zero":
         {

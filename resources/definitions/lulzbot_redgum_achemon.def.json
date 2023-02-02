@@ -36,15 +36,7 @@
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "lulzbot_redgum_achemon_start"
-        },
-        "machine_end_gcode":
-        {
-            "default_value_from_file": "lulzbot_redgum_achemon_end"
-        },
-        "machine_level_x_axis_gcode":
-        {
-            "default_value_from_file": "lulzbot_quiver_level_x_axis"
+            "default_value_from_file": "lulzbot_redgum/lulzbot_redgum_achemon_start"
         },
         "machine_extruder_count": {
             "default_value": 1

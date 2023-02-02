@@ -36,11 +36,11 @@
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "lulzbot_taz6_dual_v3_start"
+            "default_value_from_file": "lulzbot_taz6/lulzbot_taz6_dual_v3_start"
         },
         "machine_end_gcode":
         {
-            "default_value_from_file": "lulzbot_taz6_dual_end"
+            "default_value_from_file": "lulzbot_taz6/lulzbot_taz6_dual_end"
         },
         "machine_extruder_count": {
             "default_value": 2

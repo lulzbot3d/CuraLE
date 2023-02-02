@@ -28,15 +28,15 @@
     {
         "machine_start_gcode":
         {
-            "default_value_from_file": "lulzbot_longship_start"
+            "default_value_from_file": "lulzbot_longship/lulzbot_longship_start"
         },
         "machine_end_gcode":
         {
-            "default_value_from_file": "lulzbot_longship_end"
+            "default_value_from_file": "lulzbot_longship/lulzbot_longship_end"
         },
         "machine_level_x_axis_gcode":
         {
-            "default_value_from_file": "lulzbot_quiver_level_x_axis"
+            "default_value_from_file": "lulzbot_quiver/lulzbot_quiver_level_x_axis"
         },
         "firmware_machine_type":
         {

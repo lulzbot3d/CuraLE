@@ -34,14 +34,6 @@
     },
     "overrides":
     {
-        "machine_start_gcode":
-        {
-            "default_value_from_file": "lulzbot_kangaroo_paw_start"
-        },
-        "machine_end_gcode":
-        {
-            "default_value_from_file": "lulzbot_kangaroo_paw_end"
-        },
         "machine_head_polygon": {
             "default_value": [
                 [0, 162],
@@ -53,10 +45,6 @@
         "machine_abort_gcode":
         {
             "default_value": "G28 Z"
-        },
-        "machine_level_x_axis_gcode":
-        {
-            "default_value_from_file": "lulzbot_hibiscus_level_x_axis"
         },
          "machine_center_is_zero": {
             "default_value": true

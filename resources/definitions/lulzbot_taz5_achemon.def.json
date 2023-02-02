@@ -31,11 +31,7 @@
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "lulzbot_taz5_achemon_start"
-        },
-        "machine_end_gcode":
-        {
-            "default_value_from_file": "lulzbot_taz5_end"
+            "default_value_from_file": "lulzbot_taz5/lulzbot_taz5_achemon_start"
         }
     }
 }
