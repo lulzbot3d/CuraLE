@@ -37,7 +37,7 @@
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "llulzbot_redgum/ulzbot_redgum_perca_start"
+            "default_value_from_file": "lulzbot_redgum/lulzbot_redgum_perca_start"
         },
         "machine_extruder_count": {
             "default_value": 1
