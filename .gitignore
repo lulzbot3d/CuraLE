@@ -1,7 +1,7 @@
 # Compiled and generated things.
 build
 *.pyc
-__pycache__
+__pycache__/
 *.mo
 docs/html
 *.log
