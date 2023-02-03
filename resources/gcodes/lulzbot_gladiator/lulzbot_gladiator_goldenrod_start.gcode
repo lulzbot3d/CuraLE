@@ -1,4 +1,4 @@
-;This G-Code has been generated specifically for LulzBot TAZ ProXT with SE Tool Head
+;This G-Code has been generated specifically for LulzBot TAZ Pro XT with HE Tool Head
 ;
 ;The following lines can be uncommented for printer specific fine tuning
 ;More information can be found at https://marlinfw.org/meta/gcode/
@@ -18,11 +18,11 @@ G92 E0 					; set extruder position to 0
 M140 S{material_bed_temperature_layer_0} ; start bed heating up
 G28 					; home all axes
 G0 X145 Y187 Z156 F3000 			; move away from endstops
-M117 G - SE Heating Up...			; progress indicator message on LCD
+M117 G - HE Heating Up...			; progress indicator message on LCD
 M109 R{material_soften_temperature} 	; soften filament before retraction
-M117 G - SE Retracting Filament...			; progress indicator message on LCD
+M117 G - HE Retracting Filament...			; progress indicator message on LCD
 G1 E-15 F75 				; retract filament
-M117 G - SE Moving to Position...			; progress indicator message on LCD
+M117 G - HE Moving to Position...			; progress indicator message on LCD
 M109 R{material_wipe_temperature}                  ; wait for extruder to reach wiping temp
 ;M206 X0 Y0 Z0              ; uncomment to adjust wipe position (+X ~ nozzle moves left)(+Y ~ nozzle moves forward)(+Z ~ nozzle moves down)
 G12                         ; wiping sequence
@@ -42,4 +42,4 @@ M117 Heating...				; progress indicator message on LCD
 M109 R{material_print_temperature_layer_0}	; wait for extruder to reach initial printing temp
 M190 R{material_bed_temperature_layer_0} ; wait for bed to reach printing temp
 G1 Z2 E0 F75				; prime tiny bit of filament into the nozzle
-M117 G - SE Printing...		; progress indicator message on LCD
+M117 G - HE Printing...		; progress indicator message on LCD

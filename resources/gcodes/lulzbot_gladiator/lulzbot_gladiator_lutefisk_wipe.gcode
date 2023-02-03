@@ -1,4 +1,4 @@
-;This G-Code has been generated specifically for G - M175
+;This G-Code has been generated specifically for LulzBot TAZ Pro XT with M175 Tool Head
 M73 P0                  ; clear LCD progress bar
 M75 					; Start LCD Print Timer
 G26 					; clear potential 'probe fail' condition

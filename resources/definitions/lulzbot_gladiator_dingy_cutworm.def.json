@@ -43,7 +43,7 @@
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "lulzbot_gladiator_dingy_cutworm_start"
+            "default_value_from_file": "lulzbot_gladiator/lulzbot_gladiator_dingy_cutworm_start"
         },
         "machine_extruder_count": {
             "default_value": 1

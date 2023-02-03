@@ -1,6 +1,6 @@
+; This profile is designed specifically for the LulzBot TAZ Pro XT with Dual Extruder Tool Head
 T0
 M82 ;absolute extrusion mode
-; This profile is designed specifically for the LulzBot TAZ Pro with Dual Extruder Tool Head
 M73 P0                                    ; clear GLCD progress bar
 M75			     	          ; start GLCD timer
 M107                                      ; disable fans

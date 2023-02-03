@@ -38,11 +38,7 @@
         },
         "machine_start_gcode":
         {
-            "default_value_from_file": "lulzbot_mini_aerostruder_start"
-        },
-        "machine_end_gcode":
-        {
-            "default_value_from_file": "lulzbot_mini_end"
+            "default_value_from_file": "lulzbot_mini/lulzbot_mini_aerostruder_start"
         }
     }
 }

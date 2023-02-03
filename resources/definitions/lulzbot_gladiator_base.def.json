@@ -29,15 +29,15 @@
         },
         "machine_end_gcode":
         {
-            "default_value_from_file": "lulzbot_gladiator_end"
+            "default_value_from_file": "lulzbot_gladiator/lulzbot_gladiator_end"
         },
         "machine_level_x_axis_gcode":
         {
-            "default_value_from_file": "lulzbot_gladiator_level_x_axis"
+            "default_value_from_file": "lulzbot_gladiator/lulzbot_gladiator_level_x_axis"
         },
         "machine_wipe_gcode":
         {
-            "default_value_from_file": "lulzbot_gladiator_wipe"
+            "default_value_from_file": "lulzbot_gladiator/lulzbot_gladiator_wipe"
         },
         "machine_heated_bed":
         {
