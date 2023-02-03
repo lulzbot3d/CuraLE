@@ -98,7 +98,7 @@ class OctoPrintOutputDevicePlugin(OutputDevicePlugin):
         self._preferences = Application.getInstance().getPreferences()
         self._preferences.addPreference("octoprint/manual_instances", "{}")
 
-        self._preferences.addPreference("octoprint/use_zeroconf", True)
+        self._preferences.addPreference("octoprint/use_zeroconf", False)
 
         try:
             self._manual_instances = json.loads(
