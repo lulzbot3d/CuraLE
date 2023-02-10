@@ -39,7 +39,7 @@ The TranslateTool contains the TranslateToolHandle, which draws the arrow handle
 
 ### ScaleTool
 
-This tool allows the user to scale the selected object(s). The ScaleTool is activated once the user presses the Scale icon in the tool sidebar or hits the shortcut (S) while an object is selected. 
+This tool allows the user to scale the selected object(s). The ScaleTool is activated once the user presses the Scale icon in the tool sidebar or hits the shortcut (S) while an object is selected.
 
 ![Scale Tool](images/scale_tool.jpg)
 
@@ -47,7 +47,7 @@ The ScaleTool contains the ScaleToolHandle, which draws the box handles on the s
 
 ### RotateTool
 
-This tool allows the user to rotate the selected object(s). The RotateTool is activated once the user presses the Rotate icon in the tool sidebar or hits the shortcut (R) while an object is selected. 
+This tool allows the user to rotate the selected object(s). The RotateTool is activated once the user presses the Rotate icon in the tool sidebar or hits the shortcut (R) while an object is selected.
 
 ![Rotate Tool](images/rotate_tool.jpg)
 
@@ -56,7 +56,7 @@ The RotateTool contains the RotateToolHandle, which draws the donuts (tori) and 
 
 ### MirrorTool
 
-This tool allows the user to mirror the selected object(s) in the required direction. The MirrorTool is activated once the user presses the Mirror icon in the tool sidebar or hits the shortcut (M) while an object is selected. 
+This tool allows the user to mirror the selected object(s) in the required direction. The MirrorTool is activated once the user presses the Mirror icon in the tool sidebar or hits the shortcut (M) while an object is selected.
 
 ![Mirror Tool](images/mirror_tool.jpg)
 

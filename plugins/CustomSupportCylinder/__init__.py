@@ -6,7 +6,7 @@ try:
     from PyQt6.QtCore import QT_VERSION_STR
 except ImportError:
     VERSION_QT5 = True
-    
+
 from . import CustomSupportsCylinder
 
 from UM.i18n import i18nCatalog
@@ -24,7 +24,7 @@ def getMetaData():
             "description": i18n_catalog.i18nc("@info:tooltip", "Add 6 types of custom support"),
             "icon": "tool_icon.svg",
             "tool_panel": QmlFile,
-            "weight": 8
+            "weight": 4
         }
     }
 
