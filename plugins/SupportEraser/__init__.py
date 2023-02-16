@@ -12,7 +12,7 @@ def getMetaData():
             "name": i18n_catalog.i18nc("@label", "Support Blocker"),
             "description": i18n_catalog.i18nc("@info:tooltip", "Create a volume in which supports are not printed."),
             "icon": "tool_icon.svg",
-            "weight": 4
+            "weight": 5
         }
     }
 
