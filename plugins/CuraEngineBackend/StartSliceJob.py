@@ -373,6 +373,18 @@ class StartSliceJob(Job):
         result["day"] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][int(time.strftime("%w"))]
         result["initial_extruder_nr"] = CuraApplication.getInstance().getExtruderManager().getInitialExtruderNr()
 
+        # Multiple extruder settings
+        for extruder_stack in ExtruderManager.getInstance().getMachineExtruders(CuraApplication.getInstance().getGlobalContainerStack().getId()):
+            num = extruder_stack.getMetaDataEntry("position")
+            for key in extruder_stack.getAllKeys():
+                if extruder_stack.getProperty(key, "settable_per_extruder") == False:
+                    continue
+                if key in ["material_soften_temperature", "material_wipe_temperature", "material_probe_temperature",
+                           "material_print_temperature_layer_0",
+                           "material_print_temperature"]:
+                    result["%s_%s" % (key, num)] = extruder_stack.getProperty(key, "value")
+
+
         return result
 
     def _cacheAllExtruderSettings(self):
