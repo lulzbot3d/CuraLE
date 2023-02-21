@@ -10,6 +10,8 @@ new versions are released and will continue to be utilized as the project progre
 		Added back in "Scale to Max" button
 			Button does not function exactly as expected as present, but appears to work
 			the same as it did in 3.6. This will be looked at again.
+	Bug Fixes:
+		Corrected issue with TAZ Pro start gcode variables not being correctly assigned
 
 4.13.0-BETAv1.3:
 	Changes:

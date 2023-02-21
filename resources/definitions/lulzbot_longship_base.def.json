@@ -12,6 +12,7 @@
         "visible": false,
         "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-taz-pro?pk_campaign=software-cura",
         "firmware_last_version": "2.0.0.144.7",
+        "firmware_file": "Pro_LongBed/TAZPro_LongBed_BLTouch_2.0.0.144.8.bin",
         "machine_priority": "05",
         "default_eeprom_state": false,
         "has_revision":true,
@@ -21,8 +22,7 @@
             0,
             -7,
             0
-        ],
-        "firmware_file": ""
+        ]
     },
     "overrides":
     {

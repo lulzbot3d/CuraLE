@@ -15,7 +15,7 @@
         "machine_priority": "06",
         "default_eeprom_state": false,
         "has_revision":true,
-        "firmware_file": "Marlin_TAZProXT_Universal_2.0.0.144.8_c17a8cc.bin"
+        "firmware_file": "Pro_XT/Marlin_TAZProXT_Universal_2.0.0.144.8_c17a8cc.bin"
     },
     "overrides":
     {

@@ -29,7 +29,7 @@
         "default_category": "All",
         "firmware_toolhead_name": "DualExtruder",
         "firmware_last_version": "2.0.0.144.5",
-        "firmware_file": "Marlin_TAZProXT_DUALEXTRUDER_2.0.0.144.5_2731681.bin",
+        "firmware_file": "Pro_XT/Marlin_TAZProXT_DUALEXTRUDER_2.0.0.144.5_2731681.bin",
         "firmware_update_info": {
             "id": "lulzbot_gladiator_evergreen_bagworm",
             "check_urls":

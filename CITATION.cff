@@ -1,11 +1,28 @@
-# YAML 1.2
----
-authors: 
-cff-version: "1.1.0"
-date-released: 2022-08-01
-license: "LGPL-3.0"
-message: "If you use this software, please cite it using these metadata."
-repository-code: "https://github.com/ultimaker/cura/"
-title: "Cura LulzBot Edition"
-version: "4.0.0"
-...
+cff-version: 1.2.0
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+title: Cura LulzBot Edition
+abstract: >-
+  Fork of Ultimaker Cura 3D slicer software for LulzBot
+  brand 3D printers.
+authors:
+  - name: Fargo Additive Manufacturing Equipment 3D, LLC
+contact:
+  - email: it@lulzbot.com
+    name: "LulzBot IT"
+url: 'https://lulzbot.com/support/cura'
+repository-code: 'https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot'
+license: LGPL-3.0
+license-url: "https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot/-/blob/main/LICENSE"
+version: 4.13
+date-released: '2023-01-01'
+references:
+  - authors:
+      - name: Ultimaker B.V.
+    type: software
+    title: Ultimaker Cura
+    version: 4.13.1
+    repository-code: https://github.com/Ultimaker/Cura/tree/4.13
+    license: LGPL-3.0

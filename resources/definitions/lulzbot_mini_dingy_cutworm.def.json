@@ -14,8 +14,8 @@
         "visible": true,
         "user_toolhead_name": "HS+ | 1.20 mm | Hardened SST",
         "firmware_toolhead_name": "HardenedSteelPlus",
-        "firmware_file": "Marlin_MiniLCD_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex",
-        "firmware_file_no_lcd": "Marlin_Mini_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex",
+        "firmware_file": "Mini/Marlin_MiniLCD_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex",
+        "firmware_file_no_lcd": "Mini/Marlin_Mini_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex",
         "firmware_update_info": {
             "id": "lulzbot_mini_achemon",
             "check_urls":

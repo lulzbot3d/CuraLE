@@ -21,6 +21,7 @@
         "user_toolhead_name": "Dual Extruder v3",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-dual-extruder-v3-tool-head?pk_campaign=software-cura",
         "firmware_last_version": "2.0.0.144",
+        "firmware_file": "Workhorse/Marlin_TAZWorkhorse_DualExtruderV3.1_2.0.0.144.hex",
         "default_category": "All",
         "firmware_update_info": {
             "id": "lulzbot_redgum_yellowfin",

@@ -31,8 +31,8 @@
         "firmware_toolhead_name": "SingleExtruder",
         "firmware_last_version": "1.1.9.34",
         "has_optional_lcd": true,
-        "firmware_file": "Marlin_MiniLCD_SingleExtruder_1.1.9.34_5f9c029d1.hex",
-        "firmware_file_no_lcd": "Marlin_Mini_SingleExtruder_1.1.9.34_5f9c029d1.hex",
+        "firmware_file": "Mini/Marlin_MiniLCD_SingleExtruder_1.1.9.34_5f9c029d1.hex",
+        "firmware_file_no_lcd": "Mini/Marlin_Mini_SingleExtruder_1.1.9.34_5f9c029d1.hex",
         "firmware_update_info": {
             "id": "lulzbot_mini_achemon",
             "check_urls":

@@ -19,6 +19,7 @@
         "preferred_material": "PolyLite_PLA_(Polymaker)",
         "default_category": "Supported",
         "firmware_last_version": "1.1.9.34",
+        "firmware_file": "TAZ6/Marlin_TAZ6_DualExtruderV3_1.1.9.34_5f9c029d1.hex",
         "firmware_update_info": {
             "id": "lulzbot_taz6_dual_v3",
             "check_urls":

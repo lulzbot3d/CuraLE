@@ -22,7 +22,7 @@
         "base_machine_name": "TAZ Sidekick 747",
         "user_toolhead_name": "SK175 | 0.50 mm | Brass",
         "default_extrusion_rate": 60,
-        "firmware_file_no_lcd": "Marlin_747_SK175_2.0.9.0.14_2aed11e.hex",
+        "firmware_file_no_lcd": "747/Marlin_747_SK175_2.0.9.0.14_2aed11e.hex",
         "firmware_update_info": {
             "id": "lulzbot_sidekick_747_sk175",
             "check_urls":

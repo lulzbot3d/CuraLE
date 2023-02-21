@@ -16,6 +16,8 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-flexydually-tool-head-v2",
         "firmware_toolhead_name": "FlexyDually v2",
         "nozzle_offsetting_for_disallowed_areas": false,
+        "firmware_last_version": "1.1.9.34",
+        "firmware_file": "TAZ5/Marlin_TAZ5_FlexyDually_1.1.9.34_5f9c029d1.hex",
         "firmware_update_info": {
             "id": "lulzbot_taz5_flexy_dually_v2",
             "check_urls":

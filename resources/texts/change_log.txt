@@ -2,7 +2,8 @@
 * Reimplemented the OctoPrint plugin
 * Reimplemented a Custom Supports plugin
 * Added ability to input accurate values in rotation tool
-* Added "Scale to Max" button, though functionality needs work.
+* Added "Scale to Max" button, though functionality needs work
+* Corrected issue that caused missing temperature values in Dual Extruder gcode files
 
 [4.13.0-Beta v1.3]
 * "Ensure models are kept apart" setting is now checked by default

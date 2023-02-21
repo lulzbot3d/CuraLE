@@ -22,7 +22,7 @@
         "user_toolhead_name": "Syringe Pump",
         "default_extrusion_rate": 60,
         "firmware_last_version": "2.0.0.175",
-        "firmware_file": "Marlin_Bio_SingleExtruder_2.0.0.175_6c8c1c0d.hex",
+        "firmware_file": "Bio/Marlin_Bio_SingleExtruder_2.0.0.175_6c8c1c0d.hex",
         "firmware_update_info": {
             "id": "lulzbot_kangaroo_paw",
             "check_urls":
