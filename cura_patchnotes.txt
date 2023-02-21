@@ -11,7 +11,11 @@ new versions are released and will continue to be utilized as the project progre
 			Button does not function exactly as expected as present, but appears to work
 			the same as it did in 3.6. This will be looked at again.
 	Bug Fixes:
+		Added missing firmware files and refactored firmware file location organization
 		Corrected issue with TAZ Pro start gcode variables not being correctly assigned
+		Corrected naming issue with Polymaker PolyFlex 1.75mm filament.
+	Minor changes:
+		Updated citation file to reflect project.
 
 4.13.0-BETAv1.3:
 	Changes:

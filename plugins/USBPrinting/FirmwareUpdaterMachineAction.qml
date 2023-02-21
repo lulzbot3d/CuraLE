@@ -101,6 +101,7 @@ Cura.MachineAction
                 enabled: true //we can always update firmware now :)
                 onClicked:
                 {
+                    console.log(customFirmwareDialog.folder)
                     customFirmwareDialog.open()
                 }
             }
@@ -120,11 +121,11 @@ Cura.MachineAction
         id: customFirmwareDialog
         title: catalog.i18nc("@title:window", "Select custom firmware")
         nameFilters:  "Firmware image files (*.hex *.bin)"
+        folder: "../../resources/firmware"
         selectExisting: true
         onAccepted:
         {
             updateProgressDialog.visible = true;
-            // activeOutputDevice.updateFirmware(fileUrl);
             Cura.USBPrinterOutputDeviceManager.updateFirmware(fileUrl);
         }
     }

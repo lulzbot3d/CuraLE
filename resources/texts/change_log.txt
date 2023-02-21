@@ -3,7 +3,9 @@
 * Reimplemented a Custom Supports plugin
 * Added ability to input accurate values in rotation tool
 * Added "Scale to Max" button, though functionality needs work
+* Fixed some firmware file locations and added a couple missing files
 * Corrected issue that caused missing temperature values in Dual Extruder gcode files
+* Corrected naming issue with PolyFlex 1.75mm filament
 
 [4.13.0-Beta v1.3]
 * "Ensure models are kept apart" setting is now checked by default
