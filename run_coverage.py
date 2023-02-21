@@ -19,4 +19,3 @@ for path in all_paths:
 args.append(".")
 args.append("-x")
 pytest.main(args)
-

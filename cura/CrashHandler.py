@@ -247,7 +247,7 @@ class CrashHandler:
                 scope.set_tag("os_version", platform.version())
                 scope.set_tag("locale_os", self.data["locale_os"])
                 scope.set_tag("locale_cura", self.cura_locale)
-                scope.set_tag("is_enterprise", ApplicationMetadata.IsEnterpriseVersion)
+                scope.set_tag("is_enterprise", False)
 
                 scope.set_context("plugins", self.data["plugins"])
 

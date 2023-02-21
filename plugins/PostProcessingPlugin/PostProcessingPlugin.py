@@ -173,22 +173,6 @@ class PostProcessingPlugin(QObject, Extension):
         :param path: Path to check for scripts.
         """
 
-        if ApplicationMetadata.IsEnterpriseVersion:
-            # Delete all __pycache__ not in installation folder, as it may present a security risk.
-            # It prevents this very strange scenario (should already be prevented on enterprise because signed-fault):
-            #  - Copy an existing script from the postprocessing-script folder to the appdata scripts folder.
-            #  - Also copy the entire __pycache__ folder from the first to the last location.
-            #  - Leave the __pycache__ as is, but write malicious code just before the class begins.
-            #  - It'll execute, despite that the script has not been signed.
-            # It's not known if these reproduction steps are minimal, but it does at least happen in this case.
-            install_prefix = os.path.abspath(CuraApplication.getInstance().getInstallPrefix())
-            try:
-                is_in_installation_path = os.path.commonpath([install_prefix, path]).startswith(install_prefix)
-            except ValueError:
-                is_in_installation_path = False
-            if not is_in_installation_path:
-                TrustBasics.removeCached(path)
-
         scripts = pkgutil.iter_modules(path = [path])
         """Load all scripts in the scripts folders"""
         for loader, script_name, ispkg in scripts:
@@ -397,23 +381,4 @@ class PostProcessingPlugin(QObject, Extension):
     @staticmethod
     def _isScriptAllowed(file_path: str) -> bool:
         """Checks whether the given file is allowed to be loaded"""
-        if not ApplicationMetadata.IsEnterpriseVersion:
-            # No signature needed
-            return True
-
-        dir_path = os.path.split(file_path)[0]  # type: str
-        plugin_path = PluginRegistry.getInstance().getPluginPath("PostProcessingPlugin")
-        assert plugin_path is not None  # appease mypy
-        bundled_path = os.path.join(plugin_path, "scripts")
-        if dir_path == bundled_path:
-            # Bundled scripts are trusted.
-            return True
-
-        trust_instance = Trust.getInstanceOrNone()
-        if trust_instance is not None and Trust.signatureFileExistsFor(file_path):
-            if trust_instance.signedFileCheck(file_path):
-                return True
-
-        return False  # Default verdict should be False, being the most secure fallback
-
-
+        return True

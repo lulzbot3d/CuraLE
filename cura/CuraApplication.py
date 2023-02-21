@@ -263,8 +263,6 @@ class CuraApplication(QtApplication):
         self._package_manager_class = CuraPackageManager
 
         from UM.CentralFileStorage import CentralFileStorage
-        # CentralFileStorage.setIsEnterprise(ApplicationMetadata.IsEnterpriseVersion)
-        # Resources.setIsEnterprise(ApplicationMetadata.IsEnterpriseVersion)
 
     def addCommandLineOptions(self):
         """Adds command line options to the command line parser.
@@ -311,7 +309,6 @@ class CuraApplication(QtApplication):
     def initialize(self) -> None:
         self.__addExpectedResourceDirsAndSearchPaths()  # Must be added before init of super
 
-        #super().initialize(ApplicationMetadata.IsEnterpriseVersion)
         super().initialize()
 
         self._preferences.addPreference("cura/single_instance", False)
@@ -776,8 +773,6 @@ class CuraApplication(QtApplication):
         :py:class:`Uranium.UM.PluginRegistry`
         """
 
-        # self._plugin_registry.setCheckIfTrusted(ApplicationMetadata.IsEnterpriseVersion)
-
         self._plugin_registry.addType("profile_reader", self._addProfileReader)
         self._plugin_registry.addType("profile_writer", self._addProfileWriter)
 
@@ -950,10 +945,6 @@ class CuraApplication(QtApplication):
         self._qml_import_paths.append(Resources.getPath(self.ResourceTypes.QmlFiles))
         self._setLoadingHint(self._i18n_catalog.i18nc("@info:progress", "Initializing engine..."))
         self.initializeEngine()
-
-        # I don't believe we'll be offering an Enterprise version but we'll slap these lines in
-        # just to keep things running smoothly and probably clean it out later down the road.
-        # self.getTheme().setCheckIfTrusted(ApplicationMetadata.IsEnterpriseVersion)
 
         # Initialize UI state
         controller.setActiveStage("PrepareStage")

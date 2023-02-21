@@ -1,3 +1,5 @@
+## NOT CONFIGURED FOR LULZBOT USE ##
+
 FROM ultimaker/cura-build-environment:1
 
 # Environment vars for easy configuration

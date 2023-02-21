@@ -19,6 +19,9 @@ mock_plugin_registry = MagicMock()
 mock_plugin_registry.getPluginPath = MagicMock(return_value = "mocked_plugin_path")
 
 
+# This file will likely not work due to the removal of IsEnterpriseVersion.
+# The vulnerability being tested for here here may need to be addressed
+
 # noinspection PyProtectedMember
 @patch("cura.ApplicationMetadata.IsEnterpriseVersion", False)
 def test_community_user_script_allowed():

@@ -48,7 +48,7 @@ if with_sentry_sdk:
     if hasattr(sys, "frozen"):
         sentry_env = "production"  # A frozen build has the possibility to be a "real" distribution.
 
-    if ApplicationMetadata.CuraVersion == "master":
+    if ApplicationMetadata.CuraVersion == "main":
         sentry_env = "development"  # Master is always a development version.
     elif "beta" in ApplicationMetadata.CuraVersion or "BETA" in ApplicationMetadata.CuraVersion:
         sentry_env = "beta"
@@ -234,7 +234,7 @@ if Platform.isLinux() and getattr(sys, "frozen", False):
 # even worse, it crashes when switching to the "Preview" pane.
 if Platform.isLinux():
     os.environ["QT_QUICK_CONTROLS_STYLE"] = "default"
-    
+
 if ApplicationMetadata.CuraDebugMode:
     ssl_conf = QSslConfiguration.defaultConfiguration()
     ssl_conf.setPeerVerifyMode(QSslSocket.VerifyNone)

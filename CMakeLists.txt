@@ -19,10 +19,10 @@ endif()
 
 option(GENERATE_TRANSLATIONS "Should the translations be generated?" ON)
 
-set(CURA_APP_NAME "cura-le" CACHE STRING "Short name of Cura, used for configuration folder")
-set(CURA_APP_DISPLAY_NAME "Cura LulzBot Edition" CACHE STRING "Display name of Cura")
-set(CURA_VERSION "master" CACHE STRING "Version name of Cura")
-set(CURA_BUILDTYPE "" CACHE STRING "Build type of Cura, eg. 'PPA'")
+set(CURA_APP_NAME "CuraLE" CACHE STRING "Short name of Cura LulzBot Edition, used for configuration folder")
+set(CURA_APP_DISPLAY_NAME "Cura LulzBot Edition" CACHE STRING "Display name of Cura LE")
+set(CURA_VERSION "BETA" CACHE STRING "Version name of Cura LE")
+set(CURA_BUILDTYPE "" CACHE STRING "Build type of Cura LE, eg. 'PPA'")
 configure_file(${CMAKE_SOURCE_DIR}/cura-lulzbot.desktop.in ${CMAKE_BINARY_DIR}/cura-lulzbot.desktop @ONLY)
 configure_file(cura/CuraVersion.py.in CuraVersion.py @ONLY)
 

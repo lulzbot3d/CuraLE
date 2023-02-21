@@ -4,9 +4,9 @@
 # ---------
 # General constants used in Cura
 # ---------
-DEFAULT_CURA_APP_NAME = "curale"
+DEFAULT_CURA_APP_NAME = "CuraLE"
 DEFAULT_CURA_DISPLAY_NAME = "Cura LulzBot Edition"
-DEFAULT_CURA_VERSION = "master"
+DEFAULT_CURA_VERSION = "main"
 DEFAULT_CURA_BUILD_TYPE = ""
 DEFAULT_CURA_DEBUG_MODE = False
 
@@ -42,17 +42,10 @@ try:
 except ImportError:
     CuraDebugMode = DEFAULT_CURA_DEBUG_MODE
 
-# CURA-6569
-# Various convenience flags indicating what kind of Cura build it is.
-__ENTERPRISE_VERSION_TYPE = "enterprise"
-IsEnterpriseVersion = CuraBuildType.lower() == __ENTERPRISE_VERSION_TYPE
-
 try:
     from cura.CuraVersion import CuraAppDisplayName  # type: ignore
     if CuraAppDisplayName == "":
         CuraAppDisplayName = DEFAULT_CURA_DISPLAY_NAME
-    if IsEnterpriseVersion:
-        CuraAppDisplayName = CuraAppDisplayName + " Enterprise"
 
 except ImportError:
     CuraAppDisplayName = DEFAULT_CURA_DISPLAY_NAME
