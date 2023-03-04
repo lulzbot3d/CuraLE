@@ -57,10 +57,10 @@ Item
 
         property var extrudersModel: CuraApplication.getExtrudersModel()
 
-        OutputDeviceHeader
-        {
-            outputDevice: connectedDevice
-        }
+        // OutputDeviceHeader
+        // {
+        //     outputDevice: connectedDevice
+        // }
 
         Rectangle
         {
@@ -98,14 +98,15 @@ Item
 
         HeatedBedBox
         {
-            visible:
-            {
-                if(activePrinter != null && activePrinter.bedTemperature != -1)
-                {
-                    return true
-                }
-                return false
-            }
+            // visible:
+            // {
+                // if(activePrinter != null && activePrinter.bedTemperature != -1)
+                // {
+                //     return true
+                // }
+                // return false
+            // }
+            visible: true
             printerModel: activePrinter
         }
 
@@ -131,7 +132,8 @@ Item
         ManualPrinterControl
         {
             printerModel: activePrinter
-            visible: activePrinter != null ? activePrinter.canControlManually : false
+            // visible: activePrinter != null ? activePrinter.canControlManually : false
+            visible: true
         }
 
         function loadSection(label, path)

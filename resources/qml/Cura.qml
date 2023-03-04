@@ -19,10 +19,8 @@ import "WelcomePages"
 UM.MainWindow
 {
     id: base
-    // //: Cura application window title
-    // title: catalog.i18nc("@title:window","Ultimaker Cura");
-    // viewportRect: Qt.rect(0, 0, (base.width - sidebar.width) / base.width, 1.0)
-    // property bool showPrintMonitor: false
+
+    viewportRect: Qt.rect(0, 0, (base.width - sidebar.width) / base.width, 1.0)
 
     // Cura application window title
     title:
@@ -236,19 +234,7 @@ UM.MainWindow
                 right: parent.right
                 top: applicationMenu.bottom
             }
-
-        //     Menu
-        //     {
-        //         //: Help menu
-        //         title: catalog.i18nc("@title:menu menubar:toplevel","&Help");
-
-        //         MenuItem { action: Cura.Actions.showProfileFolder; }
-        //         MenuItem { action: Cura.Actions.documentation; }
-        //         MenuItem { action: Cura.Actions.reportBug; }
-        //         MenuSeparator { }
-        //         MenuItem { action: Cura.Actions.about; }
-        //     }
-        // }
+        }
 
         // UM.SettingPropertyProvider
         // {
@@ -258,7 +244,7 @@ UM.MainWindow
         //     key: "machine_extruder_count"
         //     watchedProperties: [ "value" ]
         //     storeIndex: 0
-        }
+        // }
 
         Item
         {
@@ -540,12 +526,6 @@ UM.MainWindow
             setPage(0);
         }
     }
-
-    // WorkspaceSummaryDialog
-    // {
-    //     id: saveWorkspaceDialog
-    //     onYes: UM.OutputDeviceManager.requestWriteToDevice("local_file", PrintInformation.jobName, { "filter_by_machine": false, "file_type": "workspace" })
-    // }
 
     Connections
     {

@@ -22,21 +22,15 @@ from UM.Logger import Logger
 from cura.CuraApplication import CuraApplication
 from cura.PrinterOutput.PrinterOutputDevice import ConnectionState
 
-from . import LulzFirmwareUpdater
-from . import USBPrinterOutputDevice
+from .USBPrinterOutputDevice import USBPrinterOutputDevice
 
 i18n_catalog = i18nCatalog("cura")
-
 
 @signalemitter
 class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
     """Manager class that ensures that an USBPrinterOutput device is created for every connected USB printer."""
 
     addUSBOutputDeviceSignal = Signal()
-    progressChanged = pyqtSignal()
-
-    firmwareProgressChanged = pyqtSignal()
-    firmwareUpdateStateChanged = pyqtSignal()
 
     def __init__(self, application, parent = None):
         if USBPrinterOutputDeviceManager.__instance is not None:
@@ -55,15 +49,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
 
         self._update_thread.setDaemon(True)
 
-        #~~~~ Firmware Updater Variables ~~~~~~~
-        self._firmware_file = ""
-        self._firmware_progress = 0
-        self._firmware_update_state = FirmwareUpdateState.idle
-
-        self._update_firmware_thread = Thread()
-        #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-        self._check_updates = False
+        self._check_updates = True
 
         self._application.applicationShuttingDown.connect(self.stop)
         # Because the model needs to be created in the same thread as the QMLEngine, we use a signal.
@@ -71,7 +57,6 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
 
         self._application.globalContainerStackChanged.connect(self.updateUSBPrinterOutputDevices)
 
-    # Older code, might still be useful for BOSSA? ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def getSerialPortList(self, only_list_usb = False):
         """Create a list of serial ports on the system.
 
@@ -114,47 +99,12 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
 
         return list(base_list)
 
-    def _detectSerialPort(self, bootloader=False):
-        import serial.tools.list_ports
-        self._serial_port = None
-        if platform.system() == "Linux":
-            baud_rate = 115200
-        else:
-            baud_rate = CuraApplication.getInstance().getGlobalContainerStack().getProperty("machine_baudrate", "value")
-        if bootloader:
-            for port in serial.tools.list_ports.comports():
-                if port.vid == 0x03EB:
-                    Logger.log("i", "Detected bootloader on %s." % port.device)
-                    self._firmware_serial_port = port.device
-                    return
-        else:
-            for port in serial.tools.list_ports.comports():
-                if port.vid in [0x03EB, 0x27B1]:
-                    Logger.log("i", "Trying to detect 3D printer on %s." % port.device)
-                    self._firmware_serial_port = port.device
-                    # Let's try to open the serial connection and read Temperature
-                    try:
-                        serial_connection = serial.Serial(str(self._firmware_serial_port), baud_rate, timeout=3, writeTimeout=10000)
-                    except:
-                        continue
-                    if serial_connection :
-                        # We found the serial port, now let's try to write and read from it
-                        try:
-                            serial_connection.write(b"\n")
-                        except serial.SerialException:
-                            serial_connection.close()
-                            continue
-                        serial_connection.close()
-                        return
-        self._firmware_serial_port = None
-        Logger.log("i", "No 3D printers detected")
-
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     # The method updates/reset the USB settings for all connected USB devices
     def updateUSBPrinterOutputDevices(self):
         for device in self._usb_output_devices.values():
-            if isinstance(device, USBPrinterOutputDevice.USBPrinterOutputDevice):
+            if isinstance(device, USBPrinterOutputDevice):
                 device.resetDeviceSettings()
 
     def createUpdateThread(self):
@@ -171,20 +121,14 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
     # Method to start searching for and connecting to printers
     @pyqtSlot()
     def pushedConnectButton(self):
-        # Set thread to loop, recreate thread and start it
-        self._check_updates = True
-        if not self._update_thread.is_alive():
-            self.createUpdateThread()
-            self._update_thread.start()
+        return
 
     # Method to disconnect printers
+    # Ooh, this should probably exist as part of the actual devices, since I think we could actually do multiple connections potentially
     @pyqtSlot()
     def pushedDisconnectButton(self):
-        self.stop()
         for port, device in self._usb_output_devices.items():
             device.close()
-            if port in self._serial_port_list:
-                self._serial_port_list.remove(port)
 
     # Function to return whether Cura is searching for a printer
     @pyqtSlot(result = bool)
@@ -219,8 +163,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
             self.getOutputDeviceManager().removeOutputDevice(serial_port)
 
     def _updateThread(self):
-        tries = 0
-        while self._check_updates and tries < 10:
+        while self._check_updates:
             container_stack = self._application.getGlobalContainerStack()
             if container_stack is None:
                 time.sleep(5)
@@ -232,9 +175,6 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
                     port_list = self.getSerialPortList(only_list_usb=True)
             self._addRemovePorts(port_list)
             time.sleep(2)
-            tries += 1
-        Logger.log("i", "Update thread stopped")
-        self.stop()
 
     def _addRemovePorts(self, serial_ports):
         """Helper to identify serial ports (and scan for them)"""
@@ -242,92 +182,25 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         # First, find and add all new or changed keys
         for serial_port in list(serial_ports):
             if serial_port not in self._serial_port_list:
-                self.addUSBOutputDeviceSignal.emit(serial_port)  # Hack to ensure its created in main thread
+                # self.addUSBOutputDeviceSignal.emit(serial_port)  # Hack to ensure its created in main thread
                 continue
         self._serial_port_list = list(serial_ports)
 
         for port, device in self._usb_output_devices.items():
             if port not in self._serial_port_list:
-                device.close()
+                # device.close()
+                continue
 
     def addOutputDevice(self, serial_port):
         """Because the model needs to be created in the same thread as the QMLEngine, we use a signal."""
 
-        device = USBPrinterOutputDevice.USBPrinterOutputDevice(serial_port)
+        device = USBPrinterOutputDevice(serial_port)
         device.connectionStateChanged.connect(self._onConnectionStateChanged)
-        self._usb_output_devices[serial_port] = device
-        device.connect()
-
-    @pyqtSlot(str)
-    def updateFirmware(self, firmware_file: Union[str, QUrl]) -> None:
-        # the file path could be url-encoded.
-        if firmware_file.startswith("file://"):
-            self._firmware_file = QUrl(firmware_file).toLocalFile()
-        else:
-            self._firmware_file = firmware_file
-
-        if self._firmware_file == "":
-            self._setFirmwareUpdateState(FirmwareUpdateState.firmware_not_found_error)
-            return
-
-        firmware_file_extension = self._firmware_file.split(".")[-1]
-
-        if firmware_file_extension == "hex":
-            self._update_firmware_thread = Thread(target=lambda: LulzFirmwareUpdater._updateFirmwareAvr(self), daemon=True, name = "FirmwareUpdateThread")
-        elif firmware_file_extension == "bin":
-            self._update_firmware_thread = Thread(target=lambda: LulzFirmwareUpdater._updateFirmwareBossapy(self), daemon=True, name = "FirmwareUpdateThread")
-        else:
-            Logger.log("e", "File type unknown/unsupported" + firmware_file_extension)
-
-        self._setFirmwareUpdateState(FirmwareUpdateState.updating)
-
-        try:
-            self._update_firmware_thread.start()
-        except RuntimeError:
-            Logger.warning("Could not start the update thread, since it's still running!")
-
-
-    def _updateFirmware(self) -> None:
-        raise NotImplementedError("_updateFirmware needs to be implemented")
-
-    def _cleanupAfterUpdate(self) -> None:
-        """Cleanup after a successful update"""
-
-        # Clean up for next attempt.
-        self._update_firmware_thread = Thread(target=self._updateFirmware, daemon=True, name = "FirmwareUpdateThread")
-        self._firmware_file = ""
-        self._onFirmwareProgress(100)
-        self._setFirmwareUpdateState(FirmwareUpdateState.completed)
-
-    @pyqtProperty(int, notify = firmwareProgressChanged)
-    def firmwareProgress(self) -> int:
-        return self._firmware_progress
-
-    @pyqtProperty(int, notify=firmwareUpdateStateChanged)
-    def firmwareUpdateState(self) -> "FirmwareUpdateState":
-        return self._firmware_update_state
-
-    def _setFirmwareUpdateState(self, state: "FirmwareUpdateState") -> None:
-        if self._firmware_update_state != state:
-            self._firmware_update_state = state
-            self.firmwareUpdateStateChanged.emit()
-
-    def _onFirmwareProgress(self, progress: int, max_progress: int = 100) -> None:
-        self._firmware_progress = int(progress * 100 / max_progress)   # Convert to scale of 0-100
-        self.firmwareProgressChanged.emit()
+        # self._usb_output_devices[serial_port] = device
+        # device.connect()
 
     __instance = None # type: USBPrinterOutputDeviceManager
 
     @classmethod
     def getInstance(cls, *args, **kwargs) -> "USBPrinterOutputDeviceManager":
         return cls.__instance
-
-
-class FirmwareUpdateState(IntEnum):
-    idle = 0
-    updating = 1
-    completed = 2
-    unknown_error = 3
-    communication_error = 4
-    io_error = 5
-    firmware_not_found_error = 6

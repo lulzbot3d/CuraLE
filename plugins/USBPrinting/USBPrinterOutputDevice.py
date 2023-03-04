@@ -3,7 +3,7 @@
 
 from multiprocessing.sharedctypes import Value
 import os
-from time import sleep
+from time import sleep, time
 from enum import IntEnum
 
 from UM.i18n import i18nCatalog
@@ -47,7 +47,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     def __init__(self, serial_port: str, baud_rate: Optional[int] = None) -> None:
         super().__init__(serial_port, connection_type = ConnectionType.UsbConnection)
-        self.setName(catalog.i18nc("@item:inmenu", "USB printing"))
+        self.setName(catalog.i18nc("@item:inmenu", "USB Printing"))
         self.setShortDescription(catalog.i18nc("@action:button Preceded by 'Ready to'.", "Print via USB"))
         self.setDescription(catalog.i18nc("@info:tooltip", "Print via USB"))
         self.setIconName("print")
@@ -92,8 +92,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         # Event to indicate that an "ok" was received from the printer after sending a command.
         self._command_received = Event()
         self._command_received.set()
-
-        ## self.messageFromPrinter.connect(self._update)
 
         self._firmware_name_requested = False
         self._firmware_updater = LulzFirmwareUpdater(self)
@@ -222,21 +220,25 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 Logger.warning("The serial device is suddenly unavailable while trying to create a serial connection: {err}".format(err = str(e)))
                 self.setConnectionState(ConnectionState.Error)
                 return
+        self._checkFirmware()
         CuraApplication.getInstance().globalContainerStackChanged.connect(self._onGlobalContainerStackChanged)
         self._onGlobalContainerStackChanged()
         self.setConnectionState(ConnectionState.Connected)
         self._update_thread.start()
 
     def _onGlobalContainerStackChanged(self):
+        print("Yeehaw, stack changed!")
         container_stack = CuraApplication.getInstance().getGlobalContainerStack()
         if container_stack is None:
             return
         num_extruders = container_stack.getProperty("machine_extruder_count", "value")
+        print("Number of Extruders: " + num_extruders)
         # Ensure that a printer is created.
         controller = GenericOutputController(self)
         controller.setCanUpdateFirmware(True)
         self._printers = [PrinterOutputModel(output_controller = controller, number_of_extruders = num_extruders)]
         self._printers[0].updateName(container_stack.getName())
+        print(self._printers)
 
     def close(self):
         super().close()
@@ -272,6 +274,77 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             Logger.logException("w", "An unexpected exception occurred while writing to the serial.")
             self.setConnectionState(ConnectionState.Error)
 
+    def _checkFirmware(self):
+        self.sendCommand("\nM115")
+        timeout = time.time() + 2
+        reply = self._serial.readline()
+        while b"FIRMWARE_NAME" not in reply and time.time() < timeout:
+            reply = self._serial.readline()
+
+        if b"FIRMWARE_NAME" not in reply:
+            Logger.log("w", "Printer did not return firmware name")
+            self.setConnectionState(ConnectionState.Timeout)
+
+        firmware_string = reply.decode()
+        values = {m[0] : m[1] for m in re.findall("([A-Z_]+)\:(.*?)(?= [A-Z_]+\:|$)", firmware_string)}
+
+        global_container_stack = CuraApplication.getInstance().getGlobalContainerStack()
+
+        class CheckValueStatus(IntEnum):
+            OK = 0
+            MISSING_VALUE_IN_REPLY = 1
+            WRONG_VALUE = 2
+            MISSING_VALUE_IN_DEFINITION = 3
+
+
+        def checkValue(fw_key, profile_key, exact_match = True, search_in_properties = False):
+            expected_value = global_container_stack.getProperty(profile_key, "value") if search_in_properties else\
+                global_container_stack.getMetaDataEntry(profile_key, None)
+            if expected_value is None:
+                self._parent.log("d", "Missing %s in profile. Skipping check." % profile_key)
+                return CheckValueStatus.MISSING_VALUE_IN_DEFINITION
+            elif not fw_key in values:
+                self._parent.log("d", "Missing %s in firmware string: %s" % (fw_key, firmware_string))
+                return CheckValueStatus.MISSING_VALUE_IN_REPLY
+            elif exact_match and values[fw_key] != expected_value:
+                self._parent.log("e", "Expected that %s was %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
+                return CheckValueStatus.WRONG_VALUE
+            elif not exact_match and not values[fw_key].search(expected_value):
+                self._parent.log("e", "Expected that %s contained %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
+                return CheckValueStatus.WRONG_VALUE
+            return CheckValueStatus.OK
+
+        list_to_check = [
+            {
+                "reply_key": "MACHINE_TYPE",
+                "definition_key": "firmware_machine_type",
+                "on_fail": self.CheckFirmwareStatus.WRONG_MACHINE,
+                "search_in_properties": True
+            },
+            {
+                "reply_key": "EXTRUDER_TYPE",
+                "definition_key": "firmware_toolhead_name",
+                "on_fail": self.CheckFirmwareStatus.WRONG_TOOLHEAD
+            },
+            {
+                "reply_key": "FIRMWARE_VERSION",
+                "definition_key": "firmware_last_version",
+                "on_fail": self.CheckFirmwareStatus.FIRMWARE_OUTDATED
+            }
+        ]
+
+        for option in list_to_check:
+            result = checkValue(option["reply_key"], option["definition_key"], option.get("exact_match", True), option.get("search_in_properties", False))
+            if result != CheckValueStatus.OK:
+                if result == CheckValueStatus.MISSING_VALUE_IN_DEFINITION:
+                    pass
+                elif result == CheckValueStatus.MISSING_VALUE_IN_REPLY:
+                    return self.CheckFirmwareStatus.FIRMWARE_OUTDATED
+                else:
+                    return option["on_fail"]
+
+        return self.CheckFirmwareStatus.OK
+
     def _update(self):
         while self._connection_state == ConnectionState.Connected and self._serial is not None:
             try:
@@ -282,18 +355,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             except Exception as e:
                 print(e)
                 continue
-
-            if not self._firmware_name_requested:
-                self._firmware_name_requested = True
-                self.sendCommand("M115")
-
-            if b"FIRMWARE_NAME:" in line:
-                self._setFirmwareName(line)
-                try:
-                    self._getPrinterName(line)
-                except ValueError:
-                    self.setConnectionState(ConnectionState.WrongMachine)
-                    break
 
             if b"//action:" in line:
                 if b"out_of_filament" in line:

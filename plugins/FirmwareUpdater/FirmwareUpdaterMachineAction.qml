@@ -101,7 +101,6 @@ Cura.MachineAction
                 enabled: true //we can always update firmware now :)
                 onClicked:
                 {
-                    console.log(customFirmwareDialog.folder)
                     customFirmwareDialog.open()
                 }
             }
@@ -126,7 +125,7 @@ Cura.MachineAction
         onAccepted:
         {
             updateProgressDialog.visible = true;
-            Cura.USBPrinterOutputDeviceManager.updateFirmware(fileUrl);
+            manager.firmwareUpdater.updateFirmware(fileUrl);
         }
     }
 
@@ -156,13 +155,13 @@ Cura.MachineAction
                 }
 
                 text: {
-                    //if(manager.firmwareUpdater == null)
-                    if (Cura.USBPrinterOutputDeviceManager == null)
+                    if(manager.firmwareUpdater == null)
+                    //if (Cura.USBPrinterOutputDeviceManager == null)
                     {
                         return "";
                     }
-                    //switch (manager.firmwareUpdater.firmwareUpdateState)
-                    switch (Cura.USBPrinterOutputDeviceManager.firmwareUpdateState)
+                    switch (manager.firmwareUpdater.firmwareUpdateState)
+                    //switch (Cura.USBPrinterOutputDeviceManager.firmwareUpdateState)
                     {
                         case 0:
                             return ""; //Not doing anything (eg; idling)
@@ -187,19 +186,19 @@ Cura.MachineAction
             ProgressBar
             {
                 id: prog
-                // value: (manager.firmwareUpdater != null) ? manager.firmwareUpdater.firmwareProgress : 0
-                value: (Cura.USBPrinterOutputDeviceManager != null) ? Cura.USBPrinterOutputDeviceManager.firmwareProgress : 0
+                value: (manager.firmwareUpdater != null) ? manager.firmwareUpdater.firmwareProgress : 0
+                //value: (Cura.USBPrinterOutputDeviceManager != null) ? Cura.USBPrinterOutputDeviceManager.firmwareProgress : 0
                 minimumValue: 0
                 maximumValue: 100
                 indeterminate:
                 {
-                    // if(manager.firmwareUpdater == null)
-                    if(Cura.USBPrinterOutputDeviceManager == null)
+                    if(manager.firmwareUpdater == null)
+                    //if(Cura.USBPrinterOutputDeviceManager == null)
                     {
                         return false;
                     }
-                    // return manager.firmwareUpdater.firmwareProgress < 1 && manager.firmwareUpdater.firmwareProgress > 0;
-                    return Cura.USBPrinterOutputDeviceManager.firmwareProgress < 1 && Cura.USBPrinterOutputDeviceManager.firmwareProgress > 0;
+                    return manager.firmwareUpdater.firmwareProgress < 1 && manager.firmwareUpdater.firmwareProgress > 0;
+                    //return Cura.USBPrinterOutputDeviceManager.firmwareProgress < 1 && Cura.USBPrinterOutputDeviceManager.firmwareProgress > 0;
                 }
                 anchors
                 {
@@ -213,8 +212,8 @@ Cura.MachineAction
             Button
             {
                 text: catalog.i18nc("@action:button","Close");
-                // enabled: (manager.firmwareUpdater != null) ? manager.firmwareUpdater.firmwareUpdateState != 1 : true;
-                enabled: (Cura.USBPrinterOutputDeviceManager != null) ? Cura.USBPrinterOutputDeviceManager.firmwareUpdateState != 1 : true;
+                enabled: (manager.firmwareUpdater != null) ? manager.firmwareUpdater.firmwareUpdateState != 1 : true;
+                //enabled: (Cura.USBPrinterOutputDeviceManager != null) ? Cura.USBPrinterOutputDeviceManager.firmwareUpdateState != 1 : true;
                 onClicked: updateProgressDialog.visible = false;
             }
         ]

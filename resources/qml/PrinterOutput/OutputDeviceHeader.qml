@@ -83,11 +83,5 @@ Item
             style: UM.Theme.styles.monitor_checkable_button_style
         }
 
-        // Label
-        // {
-        //     id: outputDeviceConnectionState
-        //     text: catalog.i18nc("@info:status", "Yadda")
-        // }
-
     }
 }

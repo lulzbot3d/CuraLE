@@ -54,14 +54,17 @@ class FirmwareUpdater(QObject):
         except RuntimeError:
             Logger.warning("Could not start the update thread, since it's still running!")
 
-    def _updateFirmware(self) -> None:
-        raise NotImplementedError("_updateFirmware needs to be implemented")
+    def _updateFirmwareAvr(self) -> None:
+        raise NotImplementedError("_updateFirmwareAvr needs to be implemented")
+
+    def _updateFirmwareBossapy(self) -> None:
+        raise NotImplementedError("_updateFirmwareBossapy needs to be implemented")
 
     def _cleanupAfterUpdate(self) -> None:
         """Cleanup after a successful update"""
-
+        print("FirmwareUpdater")
         # Clean up for next attempt.
-        self._update_firmware_thread = Thread(target=self._updateFirmware, daemon=True, name = "FirmwareUpdateThread")
+        self._update_firmware_thread = Thread()
         self._firmware_file = ""
         self._onFirmwareProgress(100)
         self._setFirmwareUpdateState(FirmwareUpdateState.completed)
@@ -93,4 +96,3 @@ class FirmwareUpdateState(IntEnum):
     communication_error = 4
     io_error = 5
     firmware_not_found_error = 6
-

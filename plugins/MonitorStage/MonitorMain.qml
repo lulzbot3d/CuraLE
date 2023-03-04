@@ -46,6 +46,51 @@ Rectangle
         anchors.fill: parent
     }
 
+    // Loader originally went here
+
+    // // CASE 2: Empty states
+    // Column
+    // {
+    //     anchors
+    //     {
+    //         top: parent.top
+    //         topMargin: UM.Theme.getSize("monitor_empty_state_offset").height
+    //         horizontalCenter: parent.horizontalCenter
+    //     }
+    //     width: UM.Theme.getSize("monitor_empty_state_size").width
+    //     spacing: UM.Theme.getSize("default_margin").height
+    //     visible: monitorViewComponent.sourceComponent == null
+
+    //     // CASE 2: CAN MONITOR & NOT CONNECTED
+    //     Label
+    //     {
+    //         id: noConnectionLabel
+    //         anchors.horizontalCenter: parent.horizontalCenter
+    //         visible: !isNetworkConfigurable
+    //         text: catalog.i18nc("@info", "In order to monitor your print from Cura LE, please connect the printer.")
+    //         font: UM.Theme.getFont("medium")
+    //         color: UM.Theme.getColor("text")
+    //         wrapMode: Text.WordWrap
+    //         width: contentWidth
+    //     }
+
+    //     Button
+    //     {
+    //         id: connectButton
+    //         anchors.horizontalCenter: parent.horizontalCenter
+    //         visible: true
+    //         text: catalog.i18nc("@info", "Connect!")
+    //         enabled:
+    //         {
+    //             true
+    //         }
+    //         onClicked:
+    //         {
+    //             Cura.USBPrinterOutputDeviceManager.pushedConnectButton()
+    //         }
+    //     }
+    // }
+
     // CASE 1: CAN MONITOR & CONNECTED
     Loader
     {
@@ -58,49 +103,6 @@ Rectangle
         property real maximumWidth: parent.width
         property real maximumHeight: parent.height
 
-        sourceComponent: Cura.MachineManager.printerOutputDevices.length >= 0 ? Cura.MachineManager.printerOutputDevices[0].monitorItem : null
-    }
-
-    // CASE 2 & 3: Empty states
-    Column
-    {
-        anchors
-        {
-            top: parent.top
-            topMargin: UM.Theme.getSize("monitor_empty_state_offset").height
-            horizontalCenter: parent.horizontalCenter
-        }
-        width: UM.Theme.getSize("monitor_empty_state_size").width
-        spacing: UM.Theme.getSize("default_margin").height
-        visible: monitorViewComponent.sourceComponent == null
-
-        // CASE 2: CAN MONITOR & NOT CONNECTED
-        Label
-        {
-            id: noConnectionLabel
-            anchors.horizontalCenter: parent.horizontalCenter
-            visible: !isNetworkConfigurable
-            text: catalog.i18nc("@info", "In order to monitor your print from Cura LE, please connect the printer.")
-            font: UM.Theme.getFont("medium")
-            color: UM.Theme.getColor("text")
-            wrapMode: Text.WordWrap
-            width: contentWidth
-        }
-
-        Button
-        {
-            id: connectButton
-            anchors.horizontalCenter: parent.horizontalCenter
-            visible: true
-            text: catalog.i18nc("@info", "Connect!")
-            enabled:
-            {
-                true
-            }
-            onClicked:
-            {
-                Cura.USBPrinterOutputDeviceManager.pushedConnectButton()
-            }
-        }
+        sourceComponent: Cura.MachineManager.printerOutputDevices.length > 0 ? Cura.MachineManager.printerOutputDevices[0].monitorItem : null
     }
 }
