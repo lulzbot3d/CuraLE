@@ -115,7 +115,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             return
 
         application.setConfirmExitDialogCallback(self._onConfirmExitDialogResult)
-        application.showConfirmExitDialog.emit(catalog.i18nc("@label", "A USB print is in progress, closing Cura will stop this print. Are you sure?"))
+        application.showConfirmExitDialog.emit(catalog.i18nc("@label", "A USB print is in progress, closing Cura LE will stop this print. Are you sure?"))
 
     def _onConfirmExitDialogResult(self, result: bool) -> None:
         if result:
@@ -140,7 +140,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
         if self._is_printing:
             message = Message(text = catalog.i18nc("@message",
-                                                   "A print is still in progress. Cura cannot start another print via USB until the previous print has completed."),
+                                                   "A print is still in progress. Cura LE cannot start another print via USB until the previous print has completed."),
                               title = catalog.i18nc("@message", "Print in Progress"),
                               message_type = Message.MessageType.ERROR)
             message.show()

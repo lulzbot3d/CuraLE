@@ -57,10 +57,10 @@ Item
 
         property var extrudersModel: CuraApplication.getExtrudersModel()
 
-        // OutputDeviceHeader
-        // {
-        //     outputDevice: connectedDevice
-        // }
+        OutputDeviceHeader
+        {
+            outputDevice: connectedDevice
+        }
 
         Rectangle
         {
@@ -159,7 +159,8 @@ Item
         {
             label: catalog.i18nc("@label", "Active print")
             width: base.width
-            visible: activePrinter != null
+            // visible: activePrinter != null
+            visible: true
         }
 
 
@@ -168,7 +169,8 @@ Item
             label: catalog.i18nc("@label", "Job Name")
             value: activePrintJob != null ? activePrintJob.name : ""
             width: base.width
-            visible: activePrinter != null
+            // visible: activePrinter != null
+            visible: true
         }
 
         MonitorItem
@@ -176,7 +178,8 @@ Item
             label: catalog.i18nc("@label", "Printing Time")
             value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal) : ""
             width: base.width
-            visible: activePrinter != null
+            // visible: activePrinter != null
+            visible: true
         }
 
         MonitorItem

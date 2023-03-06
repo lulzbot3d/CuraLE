@@ -176,13 +176,13 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
             self._addRemovePorts(port_list)
             time.sleep(2)
 
-    def _addRemovePorts(self, serial_ports):
+    def _addRemovePorts(self, serial_ports): # Hey future me, line 185 needs to be refined. We need that model regardless of a serial port.
         """Helper to identify serial ports (and scan for them)"""
 
         # First, find and add all new or changed keys
         for serial_port in list(serial_ports):
             if serial_port not in self._serial_port_list:
-                # self.addUSBOutputDeviceSignal.emit(serial_port)  # Hack to ensure its created in main thread
+                self.addUSBOutputDeviceSignal.emit(serial_port)  # Hack to ensure its created in main thread
                 continue
         self._serial_port_list = list(serial_ports)
 
@@ -196,7 +196,8 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
 
         device = USBPrinterOutputDevice(serial_port)
         device.connectionStateChanged.connect(self._onConnectionStateChanged)
-        # self._usb_output_devices[serial_port] = device
+        self._usb_output_devices[serial_port] = device
+        self.getOutputDeviceManager().addOutputDevice(device)
         # device.connect()
 
     __instance = None # type: USBPrinterOutputDeviceManager

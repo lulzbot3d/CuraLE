@@ -68,7 +68,8 @@ Item
 
         Button
         {
-            visible: outputDevice == null
+            // visible: outputDevice == null
+            visible: true
             height: UM.Theme.getSize("setting_control").height
             width: height*2 + UM.Theme.getSize("default_margin").width
             anchors.top: printerNotConnectedLabel.bottom
