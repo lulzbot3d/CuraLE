@@ -89,7 +89,7 @@ Item
                 height: UM.Theme.getSize("setting_control").height
                 width: height*2 + UM.Theme.getSize("default_margin").width
                 text: catalog.i18nc("@label", "Console")
-                enabled: connectedPrinter.connectionType == 1
+                enabled: connectedPrinter != null ? connectedPrinter.connectionType == 1 : false
                 onClicked:
                 {
                     connectedPrinter.messageFromPrinter.disconnect(printer_control.receive)
