@@ -103,6 +103,9 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             Logger.log("e", "Cannot create Monitor QML view: cannot find plugin path for plugin [USBPrinting]")
             self._monitor_view_qml_path = ""
 
+        self._onGlobalContainerStackChanged()
+
+        CuraApplication.getInstance().globalContainerStackChanged.connect(self._onGlobalContainerStackChanged)
         CuraApplication.getInstance().getOnExitCallbackManager().addCallback(self._checkActivePrintingUponAppExit)
 
     # This is a callback function that checks if there is any printing in progress via USB when the application tries
@@ -221,24 +224,20 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 self.setConnectionState(ConnectionState.Error)
                 return
         self._checkFirmware()
-        CuraApplication.getInstance().globalContainerStackChanged.connect(self._onGlobalContainerStackChanged)
         self._onGlobalContainerStackChanged()
         self.setConnectionState(ConnectionState.Connected)
         self._update_thread.start()
 
     def _onGlobalContainerStackChanged(self):
-        print("Yeehaw, stack changed!")
         container_stack = CuraApplication.getInstance().getGlobalContainerStack()
         if container_stack is None:
             return
         num_extruders = container_stack.getProperty("machine_extruder_count", "value")
-        print("Number of Extruders: " + num_extruders)
         # Ensure that a printer is created.
         controller = GenericOutputController(self)
         controller.setCanUpdateFirmware(True)
         self._printers = [PrinterOutputModel(output_controller = controller, number_of_extruders = num_extruders)]
         self._printers[0].updateName(container_stack.getName())
-        print(self._printers)
 
     def close(self):
         super().close()
