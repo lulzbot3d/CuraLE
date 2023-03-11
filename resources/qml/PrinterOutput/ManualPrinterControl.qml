@@ -16,7 +16,17 @@ Item
 {
     property var printerModel: null
     property var activePrintJob: printerModel != null ? printerModel.activePrintJob : null
-    property var connectedPrinter: Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null
+    property var availablePrinter: Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null
+    property var connectedDevice:
+    {
+        if (availablePrinter != null)
+        {
+            return availablePrinter.acceptsCommands ? availablePrinter : null
+        }
+        else
+        {
+            return null
+        }
 
     implicitWidth: parent.width
     implicitHeight: childrenRect.height
@@ -28,7 +38,7 @@ Item
             return false; //Can't control the printer if not connected
         }
 
-        if (!connectedDevice.acceptsCommands)
+        if (connectedDevice == null)
         {
             return false; //Not allowed to do anything.
         }
@@ -74,8 +84,28 @@ Item
             {
                 height: UM.Theme.getSize("setting_control").height
                 width: height*2 + UM.Theme.getSize("default_margin").width
+                text: "Connect"
+                enabled: availablePrinter != null
+                onClicked: Cura.USBPrinterOutputDeviceManager.pushedConnectButton()
+                style: UM.Theme.styles.monitor_checkable_button_style
+            }
+
+            Button
+            {
+                height: UM.Theme.getSize("setting_control").height
+                width: height*2 + UM.Theme.getSize("default_margin").width
                 text: "Disconnect"
-                enabled: checkEnabled() && connectedPrinter.connectionType == 1
+                enabled:
+                {
+                    if (availablePrinter != null ? availablePrinter.connectionType == 1 : false)
+                    {
+                        checkEnabled()
+                    }
+                    else
+                    {
+                        return false
+                    }
+                }
                 onClicked:
                 {
                     OutputDeviceHeader.pressedConnect = false
@@ -89,11 +119,11 @@ Item
                 height: UM.Theme.getSize("setting_control").height
                 width: height*2 + UM.Theme.getSize("default_margin").width
                 text: catalog.i18nc("@label", "Console")
-                enabled: connectedPrinter != null ? connectedPrinter.connectionType == 1 : false
+                enabled: availablePrinter != null ? availablePrinter.connectionType == 1 : false
                 onClicked:
                 {
-                    connectedPrinter.messageFromPrinter.disconnect(printer_control.receive)
-                    connectedPrinter.messageFromPrinter.connect(printer_control.receive)
+                    availablePrinter.messageFromPrinter.disconnect(printer_control.receive)
+                    availablePrinter.messageFromPrinter.connect(printer_control.receive)
                     printer_control.visible = true;
                 }
                 style: UM.Theme.styles.monitor_checkable_button_style

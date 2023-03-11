@@ -13,7 +13,6 @@ Item
     implicitWidth: parent.width
     implicitHeight: Math.floor(childrenRect.height + UM.Theme.getSize("default_margin").height * 2)
     property var outputDevice: null
-    property var pressedConnect: false
 
     Connections
     {
@@ -65,24 +64,5 @@ Item
             anchors.top: parent.top
             anchors.topMargin: UM.Theme.getSize("default_margin").height
         }
-
-        Button
-        {
-            // visible: outputDevice == null
-            visible: true
-            height: UM.Theme.getSize("setting_control").height
-            width: height*2 + UM.Theme.getSize("default_margin").width
-            anchors.top: printerNotConnectedLabel.bottom
-            anchors.left: parent.left
-            anchors.topMargin: UM.Theme.getSize("default_margin").height
-            anchors.leftMargin: UM.Theme.getSize("default_margin").width
-            text: "Connect"
-            onClicked:
-            {
-                Cura.USBPrinterOutputDeviceManager.pushedConnectButton()
-            }
-            style: UM.Theme.styles.monitor_checkable_button_style
-        }
-
     }
 }

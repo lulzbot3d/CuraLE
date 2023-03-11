@@ -80,7 +80,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._print_start_time = None  # type: Optional[float]
         self._print_estimated_time = None  # type: Optional[int]
 
-        self._accepts_commands = True
+        self._accepts_commands = False
 
         self._paused = False
         self._printer_busy = False  # When printer is preheating and waiting (M190/M109), or when waiting for action on the printer
@@ -226,6 +226,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._checkFirmware()
         self._onGlobalContainerStackChanged()
         self.setConnectionState(ConnectionState.Connected)
+        self._setAcceptsCommands(True)
         self._update_thread.start()
 
     def _onGlobalContainerStackChanged(self):
@@ -241,6 +242,9 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     def close(self):
         super().close()
+
+        self._setAcceptsCommands(False)
+
         if self._serial is not None:
             self._serial.close()
 

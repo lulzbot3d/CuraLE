@@ -522,10 +522,6 @@ class MachineManager(QObject):
         group_size = int(self.activeMachine.getMetaDataEntry("group_size", "-1"))
         return group_size > 1
 
-    # @pyqtProperty(bool, notify = printerConnectedStatusChanged)
-    # def activeMachineIsLinkedToCurrentAccount(self) -> bool:
-    #     return parseBool(self.activeMachine.getMetaDataEntry(META_UM_LINKED_TO_ACCOUNT, "True"))
-
     @pyqtProperty(bool, notify = printerConnectedStatusChanged)
     def activeMachineHasNetworkConnection(self) -> bool:
         # A network connection is only available if any output device is actually a network connected device.
