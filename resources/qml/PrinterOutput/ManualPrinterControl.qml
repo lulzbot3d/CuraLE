@@ -27,6 +27,7 @@ Item
         {
             return null
         }
+    }
 
     implicitWidth: parent.width
     implicitHeight: childrenRect.height
@@ -45,7 +46,7 @@ Item
 
         if(activePrintJob == null)
         {
-            return true
+            return true;
         }
 
         if (activePrintJob.state == "printing" || activePrintJob.state == "resuming" || activePrintJob.state == "pausing" || activePrintJob.state == "error" || activePrintJob.state == "offline")

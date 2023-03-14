@@ -131,7 +131,6 @@ Item
         ManualPrinterControl
         {
             printerModel: activePrinter
-            // visible: activePrinter != null ? activePrinter.canControlManually : false
             visible: true
         }
 
@@ -158,7 +157,6 @@ Item
         {
             label: catalog.i18nc("@label", "Active print")
             width: base.width
-            // visible: activePrinter != null
             visible: true
         }
 

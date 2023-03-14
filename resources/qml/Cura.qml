@@ -838,7 +838,7 @@ UM.MainWindow
     // {
     //     id: engineLog;
     // }
-    
+
     Connections
     {
         target: CuraApplication
@@ -945,7 +945,7 @@ UM.MainWindow
     {
         id: discardOrKeepProfileChangesDialogLoader
     }
-    
+
     Connections
     {
         target: CuraApplication
