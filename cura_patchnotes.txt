@@ -16,6 +16,7 @@ new versions are released and will continue to be utilized as the project progre
 		Corrected naming issue with Polymaker PolyFlex 1.75mm filament.
 	Minor changes:
 		Updated citation file to reflect project.
+		Updated links on the "About" dialog menu
 
 4.13.0-BETAv1.3:
 	Changes:

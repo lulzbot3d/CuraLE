@@ -82,7 +82,7 @@ UM.Dialog
         width: parent.width
 
         //: About dialog application author note
-        text: catalog.i18nc("@info:credit","Cura is developed by Ultimaker B.V. in cooperation with the community.\nCura proudly uses the following open source projects:")
+        text: catalog.i18nc("@info:credit","Cura LulzBot Edition is a derivative work (developed by Fargo Additive Manufacturing Equipment 3D) of Cura, developed by Ultimaker B.V., modified specifically for use with LulzBot brand printers in cooperation with the community.\n\nCura LulzBot Edition proudly uses the following open source projects:")
         font: UM.Theme.getFont("system")
         wrapMode: Text.WordWrap
         anchors.top: description.bottom
@@ -132,9 +132,9 @@ UM.Dialog
             }
             Component.onCompleted:
             {
-                projectsModel.append({ name: "Cura", description: catalog.i18nc("@label", "Graphical user interface"), license: "LGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot" });
+                projectsModel.append({ name: "Cura LE", description: catalog.i18nc("@label", "Graphical user interface"), license: "LGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot" });
                 projectsModel.append({ name: "Uranium", description: catalog.i18nc("@label", "Application framework"), license: "LGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/uranium" });
-                projectsModel.append({ name: "CuraEngine", description: catalog.i18nc("@label", "G-code generator"), license: "AGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/cura-engine-le" });
+                projectsModel.append({ name: "CuraEngine LE", description: catalog.i18nc("@label", "G-code generator"), license: "AGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/cura-engine-le" });
                 projectsModel.append({ name: "libArcus", description: catalog.i18nc("@label", "Interprocess communication library"), license: "LGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/libarcus" });
 
                 projectsModel.append({ name: "Python", description: catalog.i18nc("@label", "Programming language"), license: "Python", url: "https://www.python.org/downloads/release/python-3810/" });
