@@ -17,6 +17,8 @@ new versions are released and will continue to be utilized as the project progre
 	Minor changes:
 		Updated citation file to reflect project.
 		Updated links on the "About" dialog menu
+		Removed unused M425 commands from all start gcode files
+		Updated included TAZ Pro Long Bed firmware file to 2.0.0.144.10
 
 4.13.0-BETAv1.3:
 	Changes:
