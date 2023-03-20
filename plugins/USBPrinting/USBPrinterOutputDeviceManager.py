@@ -51,10 +51,6 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         self._usb_output_devices_model = None
         self._update_thread = Thread()
 
-        self.createUpdateThread() # Sets up the thread properly
-
-        self._update_thread.setDaemon(True)
-
         #~~~~ Firmware Updater Variables ~~~~~~~
         self._firmware_file = ""
         self._firmware_progress = 0
@@ -154,16 +150,13 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
     # The method updates/reset the USB settings for all connected USB devices
     def updateUSBPrinterOutputDevices(self):
         for device in self._usb_output_devices.values():
-            if isinstance(device, USBPrinterOutputDevice.USBPrinterOutputDevice):
+            if isinstance(device, USBPrinterOutputDevice):
                 device.resetDeviceSettings()
 
     def createUpdateThread(self):
         # Sets _update_thread to a new Thread object
         self._update_thread = Thread(target = self._updateThread)
-
-    def start(self):
-        # self._check_updates = True
-        self._update_thread.start()
+        # self._update_thread.setDaemon(True)
 
     def stop(self, store_data: bool = True):
         self._check_updates = False
@@ -220,6 +213,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
 
     def _updateThread(self):
         tries = 0
+        Logger.log("i", "Update thread started")
         while self._check_updates and tries < 10:
             container_stack = self._application.getGlobalContainerStack()
             if container_stack is None:
@@ -253,7 +247,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
     def addOutputDevice(self, serial_port):
         """Because the model needs to be created in the same thread as the QMLEngine, we use a signal."""
 
-        device = USBPrinterOutputDevice.USBPrinterOutputDevice(serial_port)
+        device = USBPrinterOutputDevice(serial_port)
         device.connectionStateChanged.connect(self._onConnectionStateChanged)
         self._usb_output_devices[serial_port] = device
         device.connect()

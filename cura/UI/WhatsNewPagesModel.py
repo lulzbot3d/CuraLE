@@ -36,7 +36,8 @@ class WhatsNewPagesModel(WelcomePagesModel):
         result = {}  # type: Dict[int, str]
         highest = -1
         try:
-            folder_path = Resources.getPath(resource_type, "whats_new")
+            # folder_path = Resources.getPath(resource_type, "whats_new")
+            folder_path = "" # TODO: create some "what's new" content
             for _, _, files in os.walk(folder_path):
                 for filename in files:
                     basename = os.path.basename(filename)
