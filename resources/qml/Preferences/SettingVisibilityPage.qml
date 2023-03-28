@@ -7,7 +7,7 @@ import QtQuick.Controls.Styles 1.1
 
 import QtQuick.Controls 2.3 as NewControls
 
-import UM 1.5 as UM
+import UM 1.2 as UM
 
 import Cura 1.0 as Cura
 
@@ -36,7 +36,7 @@ UM.PreferencesPage
         id: base;
         anchors.fill: parent;
 
-        UM.CheckBox
+        CheckBox
         {
             id: toggleVisibleSettings
             anchors
@@ -46,7 +46,7 @@ UM.PreferencesPage
                 leftMargin: UM.Theme.getSize("default_margin").width
             }
             text: catalog.i18nc("@label:textbox", "Check all")
-            checkState:
+            checkedState:
             {
                 if(definitionsModel.visibleCount == definitionsModel.categoryCount)
                 {
@@ -67,7 +67,7 @@ UM.PreferencesPage
                 anchors.fill: parent;
                 onClicked:
                 {
-                    if(parent.checkState == Qt.Unchecked || parent.checkState == Qt.PartiallyChecked)
+                    if(parent.checkedState == Qt.Unchecked || parent.checkedState == Qt.PartiallyChecked)
                     {
                         definitionsModel.setAllExpandedVisible(true)
                     }
