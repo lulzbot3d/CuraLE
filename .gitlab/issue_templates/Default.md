@@ -5,7 +5,7 @@ Before filing, PLEASE check if the issue already exists (either open or closed) 
 
 Please give the issue a descriptive name, but keep it concise. Things like "BUG" or "SUGGESTION" should be left out and labels can be used instead.
 
-Provide the information requestion by each section to the best of your abilities, if you find a section to not be relevant, please use your best judgement.
+Provide the information requested by each section to the best of your abilities, if you find a section to not be relevant, please use your best judgement.
 
 Thank you for using Cura LulzBot Edition!
 -->
