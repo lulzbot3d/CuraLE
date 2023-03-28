@@ -13,7 +13,7 @@ def getMetaData():
             "author": "Victor Larchenko",
             "version": "1.0",
             "description": i18n_catalog.i18nc("@info:whatsthis", "Allows subdividing meshes in cura."),
-            "api": 3
+            "api": "7.9.0"
         }
     }
 
