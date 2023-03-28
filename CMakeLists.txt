@@ -94,4 +94,4 @@ else()
             DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages/cura)
 endif()
 
-include(CPackConfig.cmake)
+# include(CPackConfig.cmake)

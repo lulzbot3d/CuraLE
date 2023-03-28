@@ -6,6 +6,9 @@
 * Fixed some firmware file locations and added a couple missing files
 * Corrected issue that caused missing temperature values in Dual Extruder gcode files
 * Corrected naming issue with PolyFlex 1.75mm filament
+* Adjusted the About dialog to use more relevant links
+* Removed outdated M425 commands from remaining gcode files
+* Updated included firmware file for TAZ Pro Long Bed to 2.0.0.144.10
 
 [4.13.0-Beta v1.3]
 * "Ensure models are kept apart" setting is now checked by default

@@ -33,7 +33,7 @@ class SettingVisibilityPresetsModel(QObject):
         if advanced_item is not None:
             advanced_visible_settings = ";".join(advanced_item.settings)
         else:
-            Logger.log("w", "Unable to find the basic visibility preset.")
+            Logger.log("w", "Unable to find the advanced visibility preset.")
             advanced_visible_settings = ""
 
         self._preferences = preferences

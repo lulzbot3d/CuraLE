@@ -113,10 +113,10 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
     def createUpdateThread(self):
         # Sets _update_thread to a new Thread object
         self._update_thread = Thread(target = self._updateThread)
+        # self._update_thread.setDaemon(True)
 
     def start(self):
-        # self._check_updates = True
-        self._update_thread.start()
+        return
 
     def stop(self, store_data: bool = True):
         self._check_updates = False

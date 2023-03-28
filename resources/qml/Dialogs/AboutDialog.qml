@@ -82,7 +82,7 @@ UM.Dialog
         width: parent.width
 
         //: About dialog application author note
-        text: catalog.i18nc("@info:credit","Cura is developed by Ultimaker B.V. in cooperation with the community.\nCura proudly uses the following open source projects:")
+        text: catalog.i18nc("@info:credit","Cura LulzBot Edition is a derivative work (developed by Fargo Additive Manufacturing Equipment 3D) of Cura, developed by Ultimaker B.V., modified specifically for use with LulzBot brand printers in cooperation with the community.\n\nCura LulzBot Edition proudly uses the following open source projects:")
         font: UM.Theme.getFont("system")
         wrapMode: Text.WordWrap
         anchors.top: description.bottom
@@ -132,37 +132,37 @@ UM.Dialog
             }
             Component.onCompleted:
             {
-                projectsModel.append({ name: "Cura", description: catalog.i18nc("@label", "Graphical user interface"), license: "LGPLv3", url: "https://github.com/Ultimaker/Cura" });
-                projectsModel.append({ name: "Uranium", description: catalog.i18nc("@label", "Application framework"), license: "LGPLv3", url: "https://github.com/Ultimaker/Uranium" });
-                projectsModel.append({ name: "CuraEngine", description: catalog.i18nc("@label", "G-code generator"), license: "AGPLv3", url: "https://github.com/Ultimaker/CuraEngine" });
-                projectsModel.append({ name: "libArcus", description: catalog.i18nc("@label", "Interprocess communication library"), license: "LGPLv3", url: "https://github.com/Ultimaker/libArcus" });
+                projectsModel.append({ name: "Cura LE", description: catalog.i18nc("@label", "Graphical user interface"), license: "LGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot" });
+                projectsModel.append({ name: "Uranium", description: catalog.i18nc("@label", "Application framework"), license: "LGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/uranium" });
+                projectsModel.append({ name: "CuraEngine LE", description: catalog.i18nc("@label", "G-code generator"), license: "AGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/cura-engine-le" });
+                projectsModel.append({ name: "libArcus", description: catalog.i18nc("@label", "Interprocess communication library"), license: "LGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/libarcus" });
 
-                projectsModel.append({ name: "Python", description: catalog.i18nc("@label", "Programming language"), license: "Python", url: "http://python.org/" });
-                projectsModel.append({ name: "Qt5", description: catalog.i18nc("@label", "GUI framework"), license: "LGPLv3", url: "https://www.qt.io/" });
-                projectsModel.append({ name: "PyQt", description: catalog.i18nc("@label", "GUI framework bindings"), license: "GPL", url: "https://riverbankcomputing.com/software/pyqt" });
-                projectsModel.append({ name: "SIP", description: catalog.i18nc("@label", "C/C++ Binding library"), license: "GPL", url: "https://riverbankcomputing.com/software/sip" });
+                projectsModel.append({ name: "Python", description: catalog.i18nc("@label", "Programming language"), license: "Python", url: "https://www.python.org/downloads/release/python-3810/" });
+                projectsModel.append({ name: "Qt5", description: catalog.i18nc("@label", "GUI framework"), license: "LGPLv3", url: "https://doc.qt.io/qt-5.15/" });
+                projectsModel.append({ name: "PyQt", description: catalog.i18nc("@label", "GUI framework bindings"), license: "GPL", url: "https://gitlab.com/lulzbot3d/cura-le/pyqt5_gpl" });
+                projectsModel.append({ name: "SIP", description: catalog.i18nc("@label", "C/C++ Binding library"), license: "GPLv2 & GPLv3 & SIP", url: "https://riverbankcomputing.com/software/sip" });
                 projectsModel.append({ name: "Protobuf", description: catalog.i18nc("@label", "Data interchange format"), license: "BSD", url: "https://developers.google.com/protocol-buffers" });
-                projectsModel.append({ name: "SciPy", description: catalog.i18nc("@label", "Support library for scientific computing"), license: "BSD-new", url: "https://www.scipy.org/" });
-                projectsModel.append({ name: "NumPy", description: catalog.i18nc("@label", "Support library for faster math"), license: "BSD", url: "http://www.numpy.org/" });
-                projectsModel.append({ name: "NumPy-STL", description: catalog.i18nc("@label", "Support library for handling STL files"), license: "BSD", url: "https://github.com/WoLpH/numpy-stl" });
-                projectsModel.append({ name: "Trimesh", description: catalog.i18nc("@label", "Support library for handling triangular meshes"), license: "MIT", url: "https://trimsh.org" });
-                projectsModel.append({ name: "libSavitar", description: catalog.i18nc("@label", "Support library for handling 3MF files"), license: "LGPLv3", url: "https://github.com/ultimaker/libsavitar" });
-                projectsModel.append({ name: "libCharon", description: catalog.i18nc("@label", "Support library for file metadata and streaming"), license: "LGPLv3", url: "https://github.com/ultimaker/libcharon" });
-                projectsModel.append({ name: "PySerial", description: catalog.i18nc("@label", "Serial communication library"), license: "Python", url: "http://pyserial.sourceforge.net/" });
-                projectsModel.append({ name: "python-zeroconf", description: catalog.i18nc("@label", "ZeroConf discovery library"), license: "LGPL", url: "https://github.com/jstasiak/python-zeroconf" });
+                projectsModel.append({ name: "SciPy", description: catalog.i18nc("@label", "Support library for scientific computing"), license: "BSD-new", url: "https://github.com/scipy/scipy/tree/v1.8.0rc2" });
+                projectsModel.append({ name: "NumPy", description: catalog.i18nc("@label", "Support library for faster math"), license: "BSD", url: "https://github.com/numpy/numpy/tree/v1.21.5" });
+                projectsModel.append({ name: "NumPy-STL", description: catalog.i18nc("@label", "Support library for handling STL files"), license: "BSD", url: "https://github.com/WoLpH/numpy-stl/tree/v2.10.1" });
+                projectsModel.append({ name: "Trimesh", description: catalog.i18nc("@label", "Support library for handling triangular meshes"), license: "MIT", url: "https://github.com/mikedh/trimesh/blob/3.9.36/docs/index.rst" });
+                projectsModel.append({ name: "libSavitar", description: catalog.i18nc("@label", "Support library for handling 3MF files"), license: "LGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/libsavitar/-/tree/main" });
+                projectsModel.append({ name: "libCharon", description: catalog.i18nc("@label", "Support library for file metadata and streaming"), license: "LGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/libcharon" });
+                projectsModel.append({ name: "PySerial", description: catalog.i18nc("@label", "Serial communication library"), license: "PSF and BSD-3-Clause", url: "https://github.com/pyserial/pyserial/tree/v3.4" });
+                projectsModel.append({ name: "python-zeroconf", description: catalog.i18nc("@label", "ZeroConf discovery library"), license: "LGPL", url: "https://github.com/python-zeroconf/python-zeroconf/tree/0.31.0" });
                 projectsModel.append({ name: "Clipper", description: catalog.i18nc("@label", "Polygon clipping library"), license: "Boost", url: "http://www.angusj.com/delphi/clipper.php" });
-                projectsModel.append({ name: "Pyclipper", description: catalog.i18nc("@label", "Python bindings for Clipper"), license: "MIT", url: "https://github.com/fonttools/pyclipper" });
-                projectsModel.append({ name: "mypy", description: catalog.i18nc("@Label", "Static type checker for Python"), license: "MIT", url: "http://mypy-lang.org/" });
-                projectsModel.append({ name: "certifi", description: catalog.i18nc("@Label", "Root Certificates for validating SSL trustworthiness"), license: "MPL", url: "https://github.com/certifi/python-certifi" });
-                projectsModel.append({ name: "cryptography", description: catalog.i18nc("@Label", "Root Certificates for validating SSL trustworthiness"), license: "APACHE and BSD", url: "https://cryptography.io/" });
-                projectsModel.append({ name: "Sentry", description: catalog.i18nc("@Label", "Python Error tracking library"), license: "BSD 2-Clause 'Simplified'", url: "https://sentry.io/for/python/" });
+                projectsModel.append({ name: "Pyclipper", description: catalog.i18nc("@label", "Python bindings for Clipper"), license: "MIT", url: "https://github.com/fonttools/pyclipper/tree/1.3.0.post2" });
+                projectsModel.append({ name: "mypy", description: catalog.i18nc("@Label", "Static type checker for Python"), license: "MIT", url: "https://github.com/python/mypy/tree/v0.740" });
+                projectsModel.append({ name: "certifi", description: catalog.i18nc("@Label", "Root Certificates for validating SSL trustworthiness"), license: "MPL", url: "https://github.com/certifi/python-certifi/tree/2019.11.28" });
+                projectsModel.append({ name: "cryptography", description: catalog.i18nc("@Label", "Root Certificates for validating SSL trustworthiness"), license: "APACHE and BSD", url: "https://github.com/pyca/cryptography/tree/3.4.8" });
+                projectsModel.append({ name: "Sentry", description: catalog.i18nc("@Label", "Python Error tracking library"), license: "MIT", url: "https://github.com/getsentry/sentry-python/tree/0.13.5" });
                 projectsModel.append({ name: "libnest2d", description: catalog.i18nc("@label", "Polygon packing library, developed by Prusa Research"), license: "LGPL", url: "https://github.com/tamasmeszaros/libnest2d" });
                 projectsModel.append({ name: "pynest2d", description: catalog.i18nc("@label", "Python bindings for libnest2d"), license: "LGPL", url: "https://github.com/Ultimaker/pynest2d" });
-                projectsModel.append({ name: "keyring", description: catalog.i18nc("@label", "Support library for system keyring access"), license: "MIT", url: "https://github.com/jaraco/keyring" });
-                projectsModel.append({ name: "pywin32", description: catalog.i18nc("@label", "Python extensions for Microsoft Windows"), license: "PSF", url: "https://github.com/mhammond/pywin32" });
-                projectsModel.append({ name: "Noto Sans", description: catalog.i18nc("@label", "Font"), license: "Apache 2.0", url: "https://www.google.com/get/noto/" });
-                projectsModel.append({ name: "Font-Awesome-SVG-PNG", description: catalog.i18nc("@label", "SVG icons"), license: "SIL OFL 1.1", url: "https://github.com/encharm/Font-Awesome-SVG-PNG" });
-                projectsModel.append({ name: "AppImageKit", description: catalog.i18nc("@label", "Linux cross-distribution application deployment"), license: "MIT", url: "https://github.com/AppImage/AppImageKit" });
+                projectsModel.append({ name: "keyring", description: catalog.i18nc("@label", "Support library for system keyring access"), license: "MIT", url: "https://github.com/jaraco/keyring/tree/v23.0.1" });
+                projectsModel.append({ name: "pywin32", description: catalog.i18nc("@label", "Python extensions for Microsoft Windows"), license: "PSF", url: "https://github.com/mhammond/pywin32/tree/b303" });
+                projectsModel.append({ name: "Noto Sans", description: catalog.i18nc("@label", "Font"), license: "SIL OFL 1.1", url: "https://www.google.com/get/noto/" });
+                projectsModel.append({ name: "Font-Awesome-SVG-PNG", description: catalog.i18nc("@label", "SVG icons"), license: "MIT", url: "https://github.com/encharm/Font-Awesome-SVG-PNG" });
+                projectsModel.append({ name: "AppImageKit", description: catalog.i18nc("@label", "Linux cross-distribution application deployment"), license: "MIT", url: "https://github.com/AppImage/AppImageKit/releases/tag/12" });
             }
         }
     }
