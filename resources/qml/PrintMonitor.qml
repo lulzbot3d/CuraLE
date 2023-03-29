@@ -46,7 +46,7 @@ Item
     }
 
     property var connectedDevice: Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null
-    property var activePrinter: connectedDevice != null ? connectedDevice.activePrinter : null
+    property var activePrinter: connectedDevice != null && connectedDevice.address != "None" ? connectedDevice.activePrinter : null
     property var activePrintJob: activePrinter != null ? activePrinter.activePrintJob: null
 
     Column
@@ -157,7 +157,7 @@ Item
         {
             label: catalog.i18nc("@label", "Active print")
             width: base.width
-            visible: true
+            visible: activePrintJob != null
         }
 
 

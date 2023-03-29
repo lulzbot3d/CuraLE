@@ -36,13 +36,24 @@ Item
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.margins: UM.Theme.getSize("default_margin").width
-            text: outputDevice != null ? outputDevice.activePrinter.name : ""
+            text: outputDevice != null && outputDevice.address != "None" ? outputDevice.activePrinter.name : ""
         }
 
         Label
         {
             id: outputDeviceAddressLabel
-            text: (outputDevice != null && outputDevice.address != null) ? outputDevice.address : ""
+            text:
+            {
+                if(outputDevice != null && outputDevice.address != null)
+                {
+                    if(outputDevice.address == "None")
+                    {
+                        "No USB Devices Available" // Change this to check if there are any valid serial ports
+                    }
+                    else { outputDevice.address }
+                }
+                else { "No Output Device Address" }
+            }
             font: UM.Theme.getFont("default_bold")
             color: UM.Theme.getColor("text_inactive")
             anchors.top: outputDeviceNameLabel.bottom
@@ -53,9 +64,9 @@ Item
         Label
         {
             id: printerNotConnectedLabel
-            text: outputDevice != null ? "" : catalog.i18nc("@info:status", "The printer is not connected.")
+            text: outputDevice != null && outputDevice.address != "None" ? "" : catalog.i18nc("@info:status", "No printers are connected.")
             color: outputDevice != null && outputDevice.acceptsCommands ? UM.Theme.getColor("setting_control_text") : UM.Theme.getColor("setting_control_disabled_text")
-            font: UM.Theme.getFont("default")
+            font: UM.Theme.getFont("large_bold")
             wrapMode: Text.WordWrap
             anchors.left: parent.left
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
