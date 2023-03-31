@@ -186,6 +186,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
             if serial_port not in list(serial_ports):
                 Logger.log("d", "Serial port disappeared: %s, removing output device...", serial_port)
                 self.removeUSBOutputDeviceSignal.emit(serial_port)
+                continue
         self._serial_port_list = list(serial_ports)
 
         for port, device in self._usb_output_devices.items():

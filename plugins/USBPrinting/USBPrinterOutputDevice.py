@@ -46,7 +46,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     messageFromPrinter = pyqtSignal(str)
 
     def __init__(self, serial_port: str, baud_rate: Optional[int] = None) -> None:
-        super().__init__(serial_port, connection_type = ConnectionType.UsbConnection)
+        super().__init__(serial_port, connection_type = ConnectionType.NotConnected)
         self.setName(catalog.i18nc("@item:inmenu", "USB Printing"))
         self.setShortDescription(catalog.i18nc("@action:button Preceded by 'Ready to'.", "Print via USB"))
         self.setDescription(catalog.i18nc("@info:tooltip", "Print via USB"))
@@ -202,6 +202,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._baud_rate = baud_rate
 
     def connect(self):
+
+        if self._serial_port is "None":
+            Logger.log("w", "There was an attempt to connect to the 'None' printer!")
+            Logger.log("w", "The 'None' printer is a placeholder for when no serial devices are detected.")
+
         self._firmware_name = None  # after each connection ensure that the firmware name is removed
 
         self.setConnectionState(ConnectionState.Connecting)
