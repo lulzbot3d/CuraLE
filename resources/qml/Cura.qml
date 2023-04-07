@@ -20,7 +20,7 @@ UM.MainWindow
 {
     id: base
 
-    viewportRect: Qt.rect(0, 0, (base.width - sidebar.width) / base.width, 1.0)
+    viewportRect: Qt.rect(0, 0, 1.0, 1.0)
 
     // Cura application window title
     title:
@@ -384,9 +384,6 @@ UM.MainWindow
                     bottom: parent.bottom
                 }
 
-                // width: initialWidth
-                // x: base.width - sidebar.width
-                // source: UM.Controller.activeStage.sidebarComponent
                 source: UM.Controller.activeStage != null ? UM.Controller.activeStage.mainComponent : ""
 
                 onLoaded: {

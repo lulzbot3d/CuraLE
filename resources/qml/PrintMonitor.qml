@@ -45,7 +45,8 @@ Item
         return finalTime;
     }
 
-    property var connectedDevice: Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null
+    property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
+    property var connectedDevice: outputDeviceCount >= 1 ? Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1] : null
     property var activePrinter: connectedDevice != null && connectedDevice.address != "None" ? connectedDevice.activePrinter : null
     property var activePrintJob: activePrinter != null ? activePrinter.activePrintJob: null
 

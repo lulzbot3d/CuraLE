@@ -184,6 +184,10 @@ class MachineManager(QObject):
         self._printer_output_devices = []
         for printer_output_device in self._application.getOutputDeviceManager().getOutputDevices():
             if isinstance(printer_output_device, PrinterOutputDevice):
+                # TODO: implement the correct machine variables so this check actually works
+                # if this is the current selected printer's preferred serial port:
+                #     hold on to this output device and add it at the end.
+                # else:
                 self._printer_output_devices.append(printer_output_device)
 
         self.outputDevicesChanged.emit()

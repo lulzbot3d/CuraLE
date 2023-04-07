@@ -13,13 +13,14 @@ Item
     implicitWidth: parent.width
     implicitHeight: Math.floor(childrenRect.height + UM.Theme.getSize("default_margin").height * 2)
     property var outputDevice: null
+    property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
 
     Connections
     {
         target: Cura.MachineManager
         function onGlobalContainerChanged()
         {
-            outputDevice = Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null;
+            outputDevice = outputDeviceCount >= 1 ? Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1] : null;
         }
     }
 

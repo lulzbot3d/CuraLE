@@ -158,7 +158,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
             self.getOutputDeviceManager().removeOutputDevice(serial_port)
 
     def _updateThread(self):
-        Logger.log("d", "USBPrinterOutputDevice update thread started...")
+        Logger.log("d", "USB Output Device discovery thread started...")
         while self._check_updates:
             container_stack = self._application.getGlobalContainerStack()
             if container_stack is None:
@@ -171,7 +171,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
                     port_list = self.getSerialPortList(only_list_usb=True)
             self._addRemovePorts(port_list)
             time.sleep(2)
-        Logger.log("d", "USBPrinterOutputDevice update thread stopped.")
+        Logger.log("d", "USB Output Device discovery update thread stopped.")
 
     def _addRemovePorts(self, serial_ports):
         """Helper to identify serial ports (and scan for them)"""
@@ -204,9 +204,9 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
 
     def removeOutputDevice(self, serial_port):
 
-        # device = self._usb_output_devices.pop(serial_port)
-        # device.close()
-        # self.getOutputDeviceManager().removeOutputDevice(serial_port)
+        device = self._usb_output_devices.pop(serial_port)
+        device.close()
+        self.getOutputDeviceManager().removeOutputDevice(serial_port)
         return
 
     __instance = None # type: USBPrinterOutputDeviceManager
