@@ -61,6 +61,7 @@ Item
         OutputDeviceHeader
         {
             outputDevice: connectedDevice
+            activeDevice: activePrinter
         }
 
         Rectangle

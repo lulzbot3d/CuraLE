@@ -16,7 +16,8 @@ Item
 {
     property var printerModel: null
     property var activePrintJob: printerModel != null ? printerModel.activePrintJob : null
-    property var availablePrinter: Cura.MachineManager.printerOutputDevices.length > 1 ? Cura.MachineManager.printerOutputDevices[0] : null
+    property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
+    property var availablePrinter: outputDeviceCount >= 1 ? Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1] : null
     property var connectedDevice:
     {
         if (availablePrinter != null)
@@ -86,7 +87,7 @@ Item
                 height: UM.Theme.getSize("setting_control").height
                 width: height*2 + UM.Theme.getSize("default_margin").width
                 text: "Connect"
-                enabled: availablePrinter != null // This needs to be changed to check for valid serial ports
+                enabled: availablePrinter != null && availablePrinter.address != "None" // This needs to be changed to check for valid serial ports
                 onClicked: Cura.USBPrinterOutputDeviceManager.pushedConnectButton() // May need to be changed to a different function
                 style: UM.Theme.styles.monitor_checkable_button_style
             }
@@ -120,7 +121,7 @@ Item
                 height: UM.Theme.getSize("setting_control").height
                 width: height*2 + UM.Theme.getSize("default_margin").width
                 text: catalog.i18nc("@label", "Console")
-                enabled: availablePrinter.acceptsCommands ? availablePrinter.connectionType == 1 : false
+                enabled: availablePrinter.acceptsCommands ? availablePrinter.connectionState == 2 : false
                 onClicked:
                 {
                     availablePrinter.messageFromPrinter.disconnect(printer_control.receive)

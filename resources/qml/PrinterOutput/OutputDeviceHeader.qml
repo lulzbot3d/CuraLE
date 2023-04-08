@@ -12,8 +12,9 @@ Item
 {
     implicitWidth: parent.width
     implicitHeight: Math.floor(childrenRect.height + UM.Theme.getSize("default_margin").height * 2)
-    property var outputDevice: null
     property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
+    property var outputDevice: null
+    property var activeDevice: null
 
     Connections
     {
@@ -37,7 +38,17 @@ Item
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.margins: UM.Theme.getSize("default_margin").width
-            text: outputDevice != null && outputDevice.address != "None" ? outputDevice.activePrinter.name : ""
+            text:
+            {
+                if(outputDevice != null && outputDevice.address != "None")
+                {
+                    if(activeDevice.connectionState == 2)
+                    {
+                        outputDevice.activePrinter.name
+                    }
+                }
+                else { "" }
+            }
         }
 
         Label
@@ -50,6 +61,10 @@ Item
                     if(outputDevice.address == "None")
                     {
                         "No USB Devices Available" // Change this to check if there are any valid serial ports
+                    }
+                    if(availableDevice.connectionState == 0)
+                    {
+                        "USB Devices Available!"
                     }
                     else { outputDevice.address }
                 }
