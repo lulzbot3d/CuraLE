@@ -2,6 +2,16 @@ CURA LULZBOT EDITION PATCHNOTES
 This file is a work-in-progress; some sections may be incomplete, especially older versions. Older version patch notes may be added over time. The file will be updated as
 new versions are released and will continue to be utilized as the project progresses.
 
+4.13.0-BETAvX.X (In Development):
+	Additions:
+		Re-added the ability to change filament diameter in the custom settings
+	Bug Fixes:
+		Fixed Seg-Fault crash common in the settings preference menu when scrolling too quickly
+	Minor changes:
+		Made several more common useful settings visible by default in the advanced settings view
+	Planned:
+		Rework of printer tethering -> cleaner system for firmware flashing
+
 4.13.0-BETAv1.4:
 	Additions:
 		Reimplemented the OctoPrint plugin
