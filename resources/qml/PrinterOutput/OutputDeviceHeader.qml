@@ -47,7 +47,7 @@ Item
                         outputDevice.activePrinter.name
                     }
                 }
-                else { "" }
+                else { " " }
             }
         }
 
@@ -62,7 +62,7 @@ Item
                     {
                         "No USB Devices Available" // Change this to check if there are any valid serial ports
                     }
-                    if(availableDevice.connectionState == 0)
+                    if (activeDevice != null && activeDevice.connectionState == 0)
                     {
                         "USB Devices Available!"
                     }
