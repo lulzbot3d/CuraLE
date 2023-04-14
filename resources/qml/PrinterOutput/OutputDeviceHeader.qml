@@ -42,12 +42,35 @@ Item
             {
                 if(outputDevice != null && outputDevice.address != "None")
                 {
-                    if(activeDevice.connectionState == 2)
+                    if(activeDevice != null)
                     {
-                        outputDevice.activePrinter.name
+                        var connectionState = outputDevice.connectionState
+                        switch(connectionState)
+                        {
+                            case 0:
+                            case 1:
+                                "No USB Printer Connected"
+                                break;
+                            case 2:
+                                "Connected on port " + outputDevice.activePrinter.name
+                                break;
+                            case 3:
+                                "Printer Busy"
+                                break;
+                            case 4:
+                                "Connection Error!"
+                                break;
+                            case 6:
+                                "Connection Timeout"
+                                break;
+                            default:
+                                "Unknown Connection State"
+                                break;
+                        }
                     }
+                    else{ "Unexpected Device State" }
                 }
-                else { " " }
+                else { "No USB Printers Connected" }
             }
         }
 
@@ -60,11 +83,15 @@ Item
                 {
                     if(outputDevice.address == "None")
                     {
-                        "No USB Devices Available" // Change this to check if there are any valid serial ports
+                        "No USB Devices Available"
                     }
-                    if (activeDevice != null && activeDevice.connectionState == 0)
+                    else if(activeDevice != null && outputDevice.connectionState == 0)
                     {
                         "USB Devices Available!"
+                    }
+                    else if(activeDevice != null && outputDevice.connectionState == 1)
+                    {
+                        "Attempting Connection..."
                     }
                     else { outputDevice.address }
                 }
@@ -77,19 +104,5 @@ Item
             anchors.margins: UM.Theme.getSize("default_margin").width
         }
 
-        Label
-        {
-            id: printerNotConnectedLabel
-            text: outputDevice != null && outputDevice.address != "None" ? "" : catalog.i18nc("@info:status", "No printers are connected.")
-            color: outputDevice != null && outputDevice.acceptsCommands ? UM.Theme.getColor("setting_control_text") : UM.Theme.getColor("setting_control_disabled_text")
-            font: UM.Theme.getFont("large_bold")
-            wrapMode: Text.WordWrap
-            anchors.left: parent.left
-            anchors.leftMargin: UM.Theme.getSize("default_margin").width
-            anchors.right: parent.right
-            anchors.rightMargin: UM.Theme.getSize("default_margin").width
-            anchors.top: parent.top
-            anchors.topMargin: UM.Theme.getSize("default_margin").height
-        }
     }
 }

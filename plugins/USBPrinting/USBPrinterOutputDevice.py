@@ -22,7 +22,7 @@ from cura.PrinterOutput.GenericOutputController import GenericOutputController
 from .AutoDetectBaudJob import AutoDetectBaudJob
 from .LulzFirmwareUpdater import LulzFirmwareUpdater
 
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSignal, pyqtSlot
 
 from io import StringIO #To write the g-code output.
 from queue import Queue
@@ -201,6 +201,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
         self._baud_rate = baud_rate
 
+    @pyqtSlot()
     def connect(self):
 
         if self._serial_port is "None":

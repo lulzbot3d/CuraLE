@@ -87,8 +87,8 @@ Item
                 height: UM.Theme.getSize("setting_control").height
                 width: height*2 + UM.Theme.getSize("default_margin").width
                 text: "Connect"
-                enabled: availablePrinter != null && availablePrinter.address != "None" // This needs to be changed to check for valid serial ports
-                onClicked: Cura.USBPrinterOutputDeviceManager.pushedConnectButton() // May need to be changed to a different function
+                enabled: availablePrinter != null && availablePrinter.address != "None"
+                onClicked: availablePrinter.connect()
                 style: UM.Theme.styles.monitor_checkable_button_style
             }
 

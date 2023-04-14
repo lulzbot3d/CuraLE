@@ -79,7 +79,7 @@ Item
                 Repeater
                 {
                     id: extrudersRepeater
-                    model: activePrinter != null ? activePrinter.extruders : null
+                    model: activePrinter == null ? null : connectedDevice.connectionState == 2 ? activePrinter.extruders : null
 
                     ExtruderBox
                     {
@@ -168,7 +168,8 @@ Item
             label: catalog.i18nc("@label", "Job Name")
             value: activePrintJob != null ? activePrintJob.name : ""
             width: base.width
-            visible: activePrinter != null
+            //visible: activePrinter != null
+            visible: activePrintJob != null
         }
 
         MonitorItem
@@ -176,7 +177,8 @@ Item
             label: catalog.i18nc("@label", "Printing Time")
             value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal) : ""
             width: base.width
-            visible: activePrinter != null
+            //visible: activePrinter != null
+            visible: activePrintJob != null
         }
 
         MonitorItem
