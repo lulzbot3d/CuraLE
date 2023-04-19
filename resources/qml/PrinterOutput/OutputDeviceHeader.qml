@@ -52,7 +52,7 @@ Item
                                 "No USB Printer Connected"
                                 break;
                             case 2:
-                                "Connected on port " + outputDevice.activePrinter.name
+                                outputDevice.activePrinter.name
                                 break;
                             case 3:
                                 "Printer Busy"
@@ -85,15 +85,15 @@ Item
                     {
                         "No USB Devices Available"
                     }
-                    else if(activeDevice != null && outputDevice.connectionState == 0)
+                    else if(outputDevice.connectionState == 0)
                     {
                         "USB Devices Available!"
                     }
-                    else if(activeDevice != null && outputDevice.connectionState == 1)
+                    else if(outputDevice.connectionState == 1)
                     {
                         "Attempting Connection..."
                     }
-                    else { outputDevice.address }
+                    else { "Connected on port: " + outputDevice.address }
                 }
                 else { "No Output Device Address" }
             }

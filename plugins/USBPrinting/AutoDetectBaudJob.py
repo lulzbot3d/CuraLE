@@ -76,7 +76,7 @@ class AutoDetectBaudJob(Job):
                     line = serial.read_until(size = 100)
                     if b"ok" in line and b"T:" in line:
                         self.setResult([baud_rate, serial])
-                        Logger.log("d", "Detected baud rate {baud_rate} on serial {serial} on retry {retry} with after {time_elapsed:0.2f} seconds.".format(
+                        Logger.log("d", "Detected baud rate {baud_rate} on serial {serial} on retry {retry} after {time_elapsed:0.2f} seconds.".format(
                             serial = self._serial_port, baud_rate = baud_rate, retry = retry, time_elapsed = time() - start_timeout_time))
                         #serial.close() # close serial port so it can be opened by the USBPrinterOutputDevice
                         return

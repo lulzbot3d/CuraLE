@@ -118,28 +118,14 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         # self._check_updates = False
         return
 
-    # Method to start searching for and connecting to printers
-    @pyqtSlot()
-    def pushedConnectButton(self):
-        return
-
-    # Method to disconnect printers
-    # Ooh, this should probably exist as part of the actual devices, since I think we could actually do multiple connections potentially
-    @pyqtSlot()
-    def pushedDisconnectButton(self):
-        for port, device in self._usb_output_devices.items():
-            device.close()
-
     def _onConnectionStateChanged(self, serial_port):
         if serial_port not in self._usb_output_devices:
             return
 
         changed_device = self._usb_output_devices[serial_port]
-        if changed_device.connectionState == ConnectionState.Connected:
-            self.getOutputDeviceManager().addOutputDevice(changed_device)
 
-        elif changed_device.connectionState == ConnectionState.WrongMachine:
-            self.pushedDisconnectButton()
+        if changed_device.connectionState == ConnectionState.WrongMachine:
+            # Should disconnect the device
             wrong_printer_message = Message(
                 i18n_catalog.i18nc("@info:status", "Printer found through USB does not match active printer!"),
                 title = i18n_catalog.i18nc("@info:title", "Incorrect Printer!"),
@@ -147,15 +133,12 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
             wrong_printer_message.show()
 
         elif changed_device.connectionState == ConnectionState.Error:
-            self.pushedDisconnectButton()
+            # Should disconnect the device
             error_printer_message = Message(
                 i18n_catalog.i18nc("@info:status", "Printer encountered an error, connection closed!"),
                 title = i18n_catalog.i18nc("@info:title", "Printer Error!"),
                 message_type = Message.MessageType.ERROR)
             error_printer_message.show()
-
-        else:
-            self.getOutputDeviceManager().removeOutputDevice(serial_port)
 
     def _updateThread(self):
         Logger.log("d", "USB Output Device discovery thread started...")

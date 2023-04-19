@@ -211,8 +211,10 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._firmware_name = None  # after each connection ensure that the firmware name is removed
 
         self.setConnectionState(ConnectionState.Connecting)
+        Logger.log("d", "Starting connection to serial port %s", self._serial_port)
 
         if self._baud_rate is None:
+            Logger.log("d", "Baud Rate not set, auto-detecting baud rate...")
             if self._use_auto_detect:
                 auto_detect_job = AutoDetectBaudJob(self._serial_port)
                 auto_detect_job.start()
@@ -220,13 +222,14 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             return
         if self._serial is None:
             try:
+                Logger.log("d", "Attempting to create serial object with port %s and baud rate %s", self._serial_port, self._baud_rate)
                 self._serial = Serial(str(self._serial_port), self._baud_rate, timeout=self._timeout, writeTimeout=self._timeout)
             except SerialException:
-                Logger.warning("An exception occurred while trying to create serial connection.")
+                Logger.log("w", "An exception occurred while trying to create serial connection.")
                 self.setConnectionState(ConnectionState.Error)
                 return
             except OSError as e:
-                Logger.warning("The serial device is suddenly unavailable while trying to create a serial connection: {err}".format(err = str(e)))
+                Logger.log("w", "The serial device is suddenly unavailable while trying to create a serial connection: {err}".format(err = str(e)))
                 self.setConnectionState(ConnectionState.Error)
                 return
         self._checkFirmware()
@@ -246,8 +249,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._printers = [PrinterOutputModel(output_controller = controller, number_of_extruders = num_extruders)]
         self._printers[0].updateName(container_stack.getName())
 
+    @pyqtSlot()
     def close(self):
         super().close()
+
+        Logger.log("d", "Close called on device %s", self._serial_port)
 
         self._setAcceptsCommands(False)
 
@@ -283,11 +289,19 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             Logger.logException("w", "An unexpected exception occurred while writing to the serial.")
             self.setConnectionState(ConnectionState.Error)
 
+    class CheckFirmwareStatus(IntEnum):
+        OK = 0
+        TIMEOUT = 1
+        WRONG_MACHINE = 2
+        WRONG_TOOLHEAD = 3
+        FIRMWARE_OUTDATED = 4
+
+
     def _checkFirmware(self):
         self.sendCommand("\nM115")
-        timeout = time.time() + 2
+        timeout = time() + 2
         reply = self._serial.readline()
-        while b"FIRMWARE_NAME" not in reply and time.time() < timeout:
+        while b"FIRMWARE_NAME" not in reply and time() < timeout:
             reply = self._serial.readline()
 
         if b"FIRMWARE_NAME" not in reply:
@@ -310,16 +324,16 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             expected_value = global_container_stack.getProperty(profile_key, "value") if search_in_properties else\
                 global_container_stack.getMetaDataEntry(profile_key, None)
             if expected_value is None:
-                self._parent.log("d", "Missing %s in profile. Skipping check." % profile_key)
+                Logger.log("d", "Missing %s in profile. Skipping check." % profile_key)
                 return CheckValueStatus.MISSING_VALUE_IN_DEFINITION
             elif not fw_key in values:
-                self._parent.log("d", "Missing %s in firmware string: %s" % (fw_key, firmware_string))
+                Logger.log("d", "Missing %s in firmware string: %s" % (fw_key, firmware_string))
                 return CheckValueStatus.MISSING_VALUE_IN_REPLY
             elif exact_match and values[fw_key] != expected_value:
-                self._parent.log("e", "Expected that %s was %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
+                Logger.log("e", "Expected that %s was %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
                 return CheckValueStatus.WRONG_VALUE
             elif not exact_match and not values[fw_key].search(expected_value):
-                self._parent.log("e", "Expected that %s contained %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
+                Logger.log("e", "Expected that %s contained %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
                 return CheckValueStatus.WRONG_VALUE
             return CheckValueStatus.OK
 

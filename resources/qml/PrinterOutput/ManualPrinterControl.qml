@@ -99,7 +99,7 @@ Item
                 text: "Disconnect"
                 enabled:
                 {
-                    if (availablePrinter != null ? availablePrinter.connectionType == 1 : false)
+                    if (availablePrinter != null ? availablePrinter.connectionType == 2 : false)
                     {
                         checkEnabled()
                     }
@@ -111,7 +111,7 @@ Item
                 onClicked:
                 {
                     OutputDeviceHeader.pressedConnect = false
-                    Cura.USBPrinterOutputDeviceManager.pushedDisconnectButton() // May need to be changed to a different function
+                    availablePrinter.close() // May need to be changed to a different function
                 }
                 style: UM.Theme.styles.monitor_checkable_button_style
             }
