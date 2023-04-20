@@ -7,6 +7,7 @@ new versions are released and will continue to be utilized as the project progre
 		Re-added the ability to change filament diameter in the custom settings
 	Bug Fixes:
 		Fixed Seg-Fault crash common in the settings preference menu when scrolling too quickly
+		Corrected some file names that resulted in PolyFlex quality profiles not being loaded
 	Minor changes:
 		Made several more common useful settings visible by default in the advanced settings view
 	Planned:
