@@ -87,7 +87,17 @@ Item
                 height: UM.Theme.getSize("setting_control").height
                 width: height*2 + UM.Theme.getSize("default_margin").width
                 text: "Connect"
-                enabled: availablePrinter != null && availablePrinter.address != "None"
+                enabled:
+                {
+                    if(availablePrinter != null && availablePrinter.address != "None")
+                    {
+                        if(availablePrinter.connectionState == 0 || availablePrinter.connectionState > 5)
+                        {
+                            return true
+                        }
+                    }
+                    return false
+                }
                 onClicked: availablePrinter.connect()
                 style: UM.Theme.styles.monitor_checkable_button_style
             }
@@ -97,17 +107,7 @@ Item
                 height: UM.Theme.getSize("setting_control").height
                 width: height*2 + UM.Theme.getSize("default_margin").width
                 text: "Disconnect"
-                enabled:
-                {
-                    if (availablePrinter != null ? availablePrinter.connectionType == 2 : false)
-                    {
-                        checkEnabled()
-                    }
-                    else
-                    {
-                        return false
-                    }
-                }
+                enabled: checkEnabled()
                 onClicked:
                 {
                     OutputDeviceHeader.pressedConnect = false

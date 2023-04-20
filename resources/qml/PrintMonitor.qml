@@ -79,7 +79,7 @@ Item
                 Repeater
                 {
                     id: extrudersRepeater
-                    model: activePrinter == null ? null : connectedDevice.connectionState == 2 ? activePrinter.extruders : null
+                    model: connectedDevice != null ? connectedDevice.activePrinter.extruders : null
 
                     ExtruderBox
                     {
@@ -102,7 +102,7 @@ Item
         {
             visible:
             {
-                if(activePrinter != null && activePrinter.bedTemperature != -1)
+                if(activePrinter != null)
                 {
                     return true
                 }

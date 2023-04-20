@@ -204,7 +204,6 @@ class PrinterOutputModel(QObject):
 
     def updateBedTemperature(self, temperature: float) -> None:
         """Update the bed temperature. This only changes it locally."""
-
         if self._bed_temperature != temperature:
             self._bed_temperature = temperature
             self.bedTemperatureChanged.emit()
