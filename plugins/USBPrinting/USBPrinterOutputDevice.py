@@ -214,7 +214,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         Logger.log("d", "Starting connection to serial port %s", self._serial_port)
 
         if self._baud_rate is None:
-            Logger.log("d", "Baud Rate not set, auto-detecting baud rate...")
+            self._baud_rate = CuraApplication.getInstance().getGlobalContainerStack().getProperty("machine_baudrate", "value")
+            Logger.log("d", "Pulling active printer Baud Rate setting: %s", self._baud_rate)
+
+        if self._baud_rate is "AUTO":
+            Logger.log("d", "Baud Rate set to AUTO, auto-detecting baud rate...")
             if self._use_auto_detect:
                 auto_detect_job = AutoDetectBaudJob(self._serial_port)
                 auto_detect_job.start()
@@ -224,6 +228,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             try:
                 Logger.log("d", "Attempting to create serial object with port %s and baud rate %s", self._serial_port, self._baud_rate)
                 self._serial = Serial(str(self._serial_port), self._baud_rate, timeout=self._timeout, writeTimeout=self._timeout)
+
             except SerialException:
                 Logger.log("w", "An exception occurred while trying to create serial connection.")
                 self.setConnectionState(ConnectionState.Error)
@@ -232,7 +237,18 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 Logger.log("w", "The serial device is suddenly unavailable while trying to create a serial connection: {err}".format(err = str(e)))
                 self.setConnectionState(ConnectionState.Error)
                 return
-        self._checkFirmware()
+        sleep(7.5)
+        self._serial.write(b"\n")
+        firmware_response_status = self._checkFirmware()
+        if firmware_response_status is self.CheckFirmwareStatus.TIMEOUT:
+            message = Message(text = catalog.i18nc("@message",
+                                "The printer did not respond to the firmware check. Is firmware loaded?"),
+                                title = catalog.i18nc("@message", "No Response"),
+                                message_type = Message.MessageType.ERROR)
+            message.show()
+            self._serial.close()
+            self._serial = None
+            return
         self._onGlobalContainerStackChanged()
         self.setConnectionState(ConnectionState.Connected)
         self._setAcceptsCommands(True)
@@ -273,7 +289,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self._sendCommand(command)
 
     def _sendCommand(self, command: Union[str, bytes]):
-        if self._serial is None or self._connection_state != ConnectionState.Connected:
+        if self._serial is None or (self._connection_state != ConnectionState.Connected and self._connection_state != ConnectionState.Connecting):
             return
 
         new_command = cast(bytes, command) if type(command) is bytes else cast(str, command).encode() # type: bytes
@@ -298,15 +314,17 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
 
     def _checkFirmware(self):
-        self.sendCommand("\nM115")
+        self.sendCommand("M115")
         timeout = time() + 2
         reply = self._serial.readline()
         while b"FIRMWARE_NAME" not in reply and time() < timeout:
             reply = self._serial.readline()
+            print("Additional replies: " + str(reply))
 
         if b"FIRMWARE_NAME" not in reply:
             Logger.log("w", "Printer did not return firmware name")
             self.setConnectionState(ConnectionState.Timeout)
+            return self.CheckFirmwareStatus.TIMEOUT
 
         firmware_string = reply.decode()
         values = {m[0] : m[1] for m in re.findall("([A-Z_]+)\:(.*?)(?= [A-Z_]+\:|$)", firmware_string)}

@@ -15,6 +15,7 @@ Item
     property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
     property var outputDevice: null
     property var activeDevice: null
+    property var connectionState: outputDevice == null ? null : outputDevice.connectionState
 
     Connections
     {
@@ -44,27 +45,13 @@ Item
                 {
                     if(activeDevice != null)
                     {
-                        var connectionState = outputDevice.connectionState
                         switch(connectionState)
                         {
-                            case 0:
-                            case 1:
-                                "No USB Printer Connected"
-                                break;
                             case 2:
                                 outputDevice.activePrinter.name
                                 break;
-                            case 3:
-                                "Printer Busy"
-                                break;
-                            case 4:
-                                "Connection Error!"
-                                break;
-                            case 6:
-                                "Connection Timeout"
-                                break;
                             default:
-                                "Unknown Connection State"
+                                "No USB Printer Connected"
                                 break;
                         }
                     }
@@ -85,15 +72,33 @@ Item
                     {
                         "No USB Devices Available"
                     }
-                    else if(outputDevice.connectionState == 0)
+                    else
                     {
-                        "USB Devices Available!"
+                        switch(connectionState)
+                        {
+                            case 0:
+                                "USB Devices Available!"
+                                break;
+                            case 1:
+                                "Connecting..."
+                                break;
+                            case 2:
+                                "Connected On Port: " + outputDevice.address
+                                break;
+                            case 3:
+                                "Device At " + outputDevice.address + " Busy"
+                                break;
+                            case 4:
+                                "Error From Device At " + outputDevice.address
+                                break;
+                            case 6:
+                                "Connection Timeout!"
+                                break;
+                            default:
+                                "Unknown Connection State"
+                                break;
+                        }
                     }
-                    else if(outputDevice.connectionState == 1)
-                    {
-                        "Attempting Connection..."
-                    }
-                    else { "Connected on port: " + outputDevice.address }
                 }
                 else { "No Output Device Address" }
             }

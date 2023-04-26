@@ -100,14 +100,6 @@ Item
 
         HeatedBedBox
         {
-            visible:
-            {
-                if(activePrinter != null)
-                {
-                    return true
-                }
-                return false
-            }
             printerModel: activePrinter
         }
 
