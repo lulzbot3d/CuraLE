@@ -62,8 +62,6 @@ class FirmwareUpdater(QObject):
 
     def _cleanupAfterUpdate(self) -> None:
         """Cleanup after a successful update"""
-        print("FirmwareUpdater")
-        # Clean up for next attempt.
         self._update_firmware_thread = Thread()
         self._firmware_file = ""
         self._onFirmwareProgress(100)

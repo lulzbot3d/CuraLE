@@ -46,7 +46,7 @@ class FirmwareUpdaterMachineAction(MachineAction):
             self._active_output_device.activePrinter.getController().canUpdateFirmwareChanged.disconnect(self._onControllerCanUpdateFirmwareChanged)
 
         output_devices = CuraApplication.getInstance().getMachineManager().printerOutputDevices
-        self._active_output_device = output_devices[0] if output_devices else None
+        self._active_output_device = output_devices[len(output_devices) - 1] if output_devices else None
 
         if self._active_output_device and self._active_output_device.activePrinter:
             self._active_output_device.activePrinter.getController().canUpdateFirmwareChanged.connect(self._onControllerCanUpdateFirmwareChanged)

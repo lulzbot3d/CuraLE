@@ -19,7 +19,9 @@ Item
 
     property bool printerConnected: Cura.MachineManager.printerConnected
     property bool printerAcceptsCommands: printerConnected && Cura.MachineManager.printerOutputDevices[0].acceptsCommands
-    property var activePrinter: printerConnected ? Cura.MachineManager.printerOutputDevices[0].activePrinter : null
+    property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
+    property var printerOutputDevice: Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1]
+    property var activePrinter: printerConnected ? printerOutputDevice.activePrinter : null
     property var activePrintJob: activePrinter ? activePrinter.activePrintJob: null
     property real progress:
     {
@@ -117,8 +119,6 @@ Item
             return catalog.i18nc("@label:MonitorStatus", "Not connected to a printer");
         if(!printerAcceptsCommands)
             return catalog.i18nc("@label:MonitorStatus", "Printer does not accept commands");
-
-        var printerOutputDevice = Cura.MachineManager.printerOutputDevices[0]
 
         if(printerOutputDevice.printerState == "maintenance")
         {

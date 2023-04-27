@@ -14,8 +14,9 @@ import Cura 1.0 as Cura
 Cura.MachineAction
 {
     anchors.fill: parent;
-    property bool printerConnected: Cura.MachineManager.printerConnected
-    property var activeOutputDevice: printerConnected ? Cura.MachineManager.printerOutputDevices[0] : null
+    property int outputDevicesCount: Cura.MachineManager.printerOutputDevices.length
+    property bool printerConnected: outputDevicesCount > 1
+    property var activeOutputDevice: printerConnected ? Cura.MachineManager.printerOutputDevices[outputDevicesCount - 1] : null
     property bool canUpdateFirmware: activeOutputDevice ? activeOutputDevice.activePrinter.canUpdateFirmware : false
 
     Column
@@ -87,7 +88,7 @@ Cura.MachineAction
             {
                 id: autoUpgradeButton
                 text: catalog.i18nc("@action:button", "Automatically upgrade Firmware");
-                enabled: parent.firmwareName != ""
+                enabled: printerConnected && parent.firmwareName != ""
                 onClicked:
                 {
                     updateProgressDialog.visible = true;
@@ -98,7 +99,7 @@ Cura.MachineAction
             {
                 id: manualUpgradeButton
                 text: catalog.i18nc("@action:button", "Upload custom Firmware");
-                enabled: true //we can always update firmware now :)
+                enabled: printerConnected
                 onClicked:
                 {
                     customFirmwareDialog.open()
@@ -125,7 +126,7 @@ Cura.MachineAction
         onAccepted:
         {
             updateProgressDialog.visible = true;
-            manager.firmwareUpdater.updateFirmware(fileUrl);
+            activeOutputDevice.updateFirmware(fileUrl);
         }
     }
 
@@ -208,7 +209,11 @@ Cura.MachineAction
             {
                 text: catalog.i18nc("@action:button","Close");
                 enabled: (manager.firmwareUpdater != null) ? manager.firmwareUpdater.firmwareUpdateState != 1 : true;
-                onClicked: updateProgressDialog.visible = false;
+                onClicked: {
+                    updateProgressDialog.visible = false
+                    prog.value = 0
+                    manager.firmwareUpdater._setFirmwareUpdateState(0)
+                }
             }
         ]
     }
