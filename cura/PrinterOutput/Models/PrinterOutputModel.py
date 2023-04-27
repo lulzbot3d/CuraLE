@@ -127,7 +127,7 @@ class PrinterOutputModel(QObject):
 
     @pyqtProperty(QVariant, notify = headPositionChanged)
     def headPosition(self) -> Dict[str, float]:
-        return {"x": self._head_position.x, "y": self._head_position.y, "z": self.head_position.z}
+        return {"x": self._head_position.x, "y": self._head_position.y, "z": self._head_position.z}
 
     def updateHeadPosition(self, x: float, y: float, z: float) -> None:
         if self._head_position.x != x or self._head_position.y != y or self._head_position.z != z:

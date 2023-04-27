@@ -20,6 +20,7 @@ from cura.PrinterOutput.Models.PrintJobOutputModel import PrintJobOutputModel
 from cura.PrinterOutput.GenericOutputController import GenericOutputController
 
 from .AutoDetectBaudJob import AutoDetectBaudJob
+from .KnownBaudJob import KnownBaudJob
 from .LulzFirmwareUpdater import LulzFirmwareUpdater
 
 from PyQt5.QtCore import pyqtSignal, pyqtSlot
@@ -193,6 +194,21 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self.setBaudRate(result[0])
             self._serial = result[1]
             self.connect()  # Try to connect (actually create serial, etc)
+        else:
+            Logger.log("w", "Auto-detect baud rate failed.")
+            message = Message(text = catalog.i18nc("@message",
+                                "The device on {port} did not respond to any of the baud rates that Cura LE tried. Please check the connection and try again.").format(port=self._serial_port),
+                                title = catalog.i18nc("@message", "No Response"),
+                                message_type = Message.MessageType.ERROR)
+
+    def _knownBaudFinished(self, job: KnownBaudJob):
+        result = job.getResult()
+        if result is not None:
+            self._serial = result
+            self.connect() # Finish connection process
+        else: # Known baud rate didn't work, try auto-detect
+            self._baud_rate = "AUTO"
+            self.connect()
 
     def setBaudRate(self, baud_rate: int):
         if baud_rate not in self._all_baud_rates:
@@ -204,14 +220,14 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     @pyqtSlot()
     def connect(self):
 
+        self.setConnectionState(ConnectionState.Connecting)
+
         if self._serial_port is "None":
             Logger.log("w", "There was an attempt to connect to the 'None' printer!")
             Logger.log("w", "The 'None' printer is a placeholder for when no serial devices are detected.")
+            self.setConnectionState(ConnectionState.Closed)
 
         self._firmware_name = None  # after each connection ensure that the firmware name is removed
-
-        self.setConnectionState(ConnectionState.Connecting)
-        Logger.log("d", "Starting connection to serial port %s", self._serial_port)
 
         if self._baud_rate is None:
             self._baud_rate = CuraApplication.getInstance().getGlobalContainerStack().getProperty("machine_baudrate", "value")
@@ -225,20 +241,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 auto_detect_job.finished.connect(self._autoDetectFinished)
             return
         if self._serial is None:
-            try:
-                Logger.log("d", "Attempting to create serial object with port %s and baud rate %s", self._serial_port, self._baud_rate)
-                self._serial = Serial(str(self._serial_port), self._baud_rate, timeout=self._timeout, writeTimeout=self._timeout)
-
-            except SerialException:
-                Logger.log("w", "An exception occurred while trying to create serial connection.")
-                self.setConnectionState(ConnectionState.Error)
-                return
-            except OSError as e:
-                Logger.log("w", "The serial device is suddenly unavailable while trying to create a serial connection: {err}".format(err = str(e)))
-                self.setConnectionState(ConnectionState.Error)
-                return
-        sleep(7.5)
-        self._serial.write(b"\n")
+            Logger.log("d", "Starting connection to serial port %s", self._serial_port)
+            known_baud_job = KnownBaudJob(self._serial_port, self._baud_rate)
+            known_baud_job.start()
+            known_baud_job.finished.connect(self._knownBaudFinished)
+            return
         firmware_response_status = self._checkFirmware()
         if firmware_response_status is self.CheckFirmwareStatus.TIMEOUT:
             message = Message(text = catalog.i18nc("@message",
@@ -249,7 +256,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self._serial.close()
             self._serial = None
             return
-        self._onGlobalContainerStackChanged()
+        # self._onGlobalContainerStackChanged() # We shouldn't need to have another machine created anymore
         self.setConnectionState(ConnectionState.Connected)
         self._setAcceptsCommands(True)
         self._update_thread.start()
@@ -319,7 +326,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         reply = self._serial.readline()
         while b"FIRMWARE_NAME" not in reply and time() < timeout:
             reply = self._serial.readline()
-            print("Additional replies: " + str(reply))
 
         if b"FIRMWARE_NAME" not in reply:
             Logger.log("w", "Printer did not return firmware name")
@@ -399,8 +405,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
             if b"//action:" in line:
                 if b"out_of_filament" in line:
-                    #self._parent._error_message = Message(catalog.i18nc("@info:status", "Filament run out or filament jam."))
-                    #self._parent._error_message.show()
                     break
 
                 if b"pause" in line:
