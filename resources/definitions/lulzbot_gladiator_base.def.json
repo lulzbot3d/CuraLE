@@ -21,7 +21,7 @@
     {
         "firmware_machine_type":
         {
-            "resolve": "'LulzBot TAZ ProXT' if revision_type else 'LulzBot TAZ ProXT Rev B'"
+            "default_value": "LulzBot TAZ ProXT"
         },
         "machine_baudrate":
         {

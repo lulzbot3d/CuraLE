@@ -109,84 +109,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         CuraApplication.getInstance().globalContainerStackChanged.connect(self._onGlobalContainerStackChanged)
         CuraApplication.getInstance().getOnExitCallbackManager().addCallback(self._checkActivePrintingUponAppExit)
 
-    # This is a callback function that checks if there is any printing in progress via USB when the application tries
-    # to exit. If so, it will show a confirmation before
-    def _checkActivePrintingUponAppExit(self) -> None:
-        application = CuraApplication.getInstance()
-        if not self._is_printing:
-            # This USB printer is not printing, so we have nothing to do. Call the next callback if exists.
-            application.triggerNextExitCheck()
-            return
-
-        application.setConfirmExitDialogCallback(self._onConfirmExitDialogResult)
-        application.showConfirmExitDialog.emit(catalog.i18nc("@label", "A USB print is in progress, closing Cura LE will stop this print. Are you sure?"))
-
-    def _onConfirmExitDialogResult(self, result: bool) -> None:
-        if result:
-            application = CuraApplication.getInstance()
-            application.triggerNextExitCheck()
-
     def resetDeviceSettings(self) -> None:
         """Reset USB device settings"""
 
         self._firmware_name = None
 
-    def requestWrite(self, nodes: List["SceneNode"], file_name: Optional[str] = None, limit_mimetypes: bool = False,
-                     file_handler: Optional["FileHandler"] = None, filter_by_machine: bool = False, **kwargs) -> None:
-        """Request the current scene to be sent to a USB-connected printer.
-
-        :param nodes: A collection of scene nodes to send. This is ignored.
-        :param file_name: A suggestion for a file name to write.
-        :param filter_by_machine: Whether to filter MIME types by machine. This
-               is ignored.
-        :param kwargs: Keyword arguments.
-        """
-
-        if self._is_printing:
-            message = Message(text = catalog.i18nc("@message",
-                                                   "A print is still in progress. Cura LE cannot start another print via USB until the previous print has completed."),
-                              title = catalog.i18nc("@message", "Print in Progress"),
-                              message_type = Message.MessageType.ERROR)
-            message.show()
-            return  # Already printing
-        self.writeStarted.emit(self)
-        # cancel any ongoing preheat timer before starting a print
-        controller = cast(GenericOutputController, self._printers[0].getController())
-        controller.stopPreheatTimers()
-
-        CuraApplication.getInstance().getController().setActiveStage("MonitorStage")
-
-        #Find the g-code to print.
-        gcode_textio = StringIO()
-        gcode_writer = cast(MeshWriter, PluginRegistry.getInstance().getPluginObject("GCodeWriter"))
-        success = gcode_writer.write(gcode_textio, None)
-        if not success:
-            return
-
-        self._printGCode(gcode_textio.getvalue())
-
-    def _printGCode(self, gcode: str):
-        """Start a print based on a g-code.
-
-        :param gcode: The g-code to print.
-        """
-        self._gcode.clear()
-        self._paused = False
-
-        self._gcode.extend(gcode.split("\n"))
-
-        # Reset line number. If this is not done, first line is sometimes ignored
-        self._gcode.insert(0, "M110")
-        self._gcode_position = 0
-        self._print_start_time = time()
-
-        self._print_estimated_time = int(CuraApplication.getInstance().getPrintInformation().currentPrintTime.getDisplayString(DurationFormat.Format.Seconds))
-
-        for i in range(0, 4):  # Push first 4 entries before accepting other inputs
-            self._sendNextGcodeLine()
-
-        self._is_printing = True
-        self.writeFinished.emit(self)
 
     def _autoDetectFinished(self, job: AutoDetectBaudJob):
         result = job.getResult()
@@ -256,21 +183,9 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self._serial.close()
             self._serial = None
             return
-        # self._onGlobalContainerStackChanged() # We shouldn't need to have another machine created anymore
         self.setConnectionState(ConnectionState.Connected)
         self._setAcceptsCommands(True)
         self._update_thread.start()
-
-    def _onGlobalContainerStackChanged(self):
-        container_stack = CuraApplication.getInstance().getGlobalContainerStack()
-        if container_stack is None:
-            return
-        num_extruders = container_stack.getProperty("machine_extruder_count", "value")
-        # Ensure that a printer is created.
-        controller = GenericOutputController(self)
-        controller.setCanUpdateFirmware(True)
-        self._printers = [PrinterOutputModel(output_controller = controller, number_of_extruders = num_extruders)]
-        self._printers[0].updateName(container_stack.getName())
 
     @pyqtSlot()
     def close(self):
@@ -286,111 +201,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         # Re-create the thread so it can be started again later.
         self._update_thread = Thread(target=self._update, daemon=True, name = "USBPrinterUpdate")
         self._serial = None
-
-    def sendCommand(self, command: Union[str, bytes]):
-        """Send a command to printer."""
-
-        if not self._command_received.is_set():
-            self._command_queue.put(command)
-        else:
-            self._sendCommand(command)
-
-    def _sendCommand(self, command: Union[str, bytes]):
-        if self._serial is None or (self._connection_state != ConnectionState.Connected and self._connection_state != ConnectionState.Connecting):
-            return
-
-        new_command = cast(bytes, command) if type(command) is bytes else cast(str, command).encode() # type: bytes
-        if not new_command.endswith(b"\n"):
-            new_command += b"\n"
-        try:
-            self._command_received.clear()
-            self._serial.write(new_command)
-        except SerialTimeoutException:
-            Logger.log("w", "Timeout when sending command to printer via USB.")
-            self._command_received.set()
-        except SerialException:
-            Logger.logException("w", "An unexpected exception occurred while writing to the serial.")
-            self.setConnectionState(ConnectionState.Error)
-
-    class CheckFirmwareStatus(IntEnum):
-        OK = 0
-        TIMEOUT = 1
-        WRONG_MACHINE = 2
-        WRONG_TOOLHEAD = 3
-        FIRMWARE_OUTDATED = 4
-
-
-    def _checkFirmware(self):
-        self.sendCommand("M115")
-        timeout = time() + 2
-        reply = self._serial.readline()
-        while b"FIRMWARE_NAME" not in reply and time() < timeout:
-            reply = self._serial.readline()
-
-        if b"FIRMWARE_NAME" not in reply:
-            Logger.log("w", "Printer did not return firmware name")
-            self.setConnectionState(ConnectionState.Timeout)
-            return self.CheckFirmwareStatus.TIMEOUT
-
-        firmware_string = reply.decode()
-        values = {m[0] : m[1] for m in re.findall("([A-Z_]+)\:(.*?)(?= [A-Z_]+\:|$)", firmware_string)}
-
-        global_container_stack = CuraApplication.getInstance().getGlobalContainerStack()
-
-        class CheckValueStatus(IntEnum):
-            OK = 0
-            MISSING_VALUE_IN_REPLY = 1
-            WRONG_VALUE = 2
-            MISSING_VALUE_IN_DEFINITION = 3
-
-
-        def checkValue(fw_key, profile_key, exact_match = True, search_in_properties = False):
-            expected_value = global_container_stack.getProperty(profile_key, "value") if search_in_properties else\
-                global_container_stack.getMetaDataEntry(profile_key, None)
-            if expected_value is None:
-                Logger.log("d", "Missing %s in profile. Skipping check." % profile_key)
-                return CheckValueStatus.MISSING_VALUE_IN_DEFINITION
-            elif not fw_key in values:
-                Logger.log("d", "Missing %s in firmware string: %s" % (fw_key, firmware_string))
-                return CheckValueStatus.MISSING_VALUE_IN_REPLY
-            elif exact_match and values[fw_key] != expected_value:
-                Logger.log("e", "Expected that %s was %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
-                return CheckValueStatus.WRONG_VALUE
-            elif not exact_match and not values[fw_key].search(expected_value):
-                Logger.log("e", "Expected that %s contained %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
-                return CheckValueStatus.WRONG_VALUE
-            return CheckValueStatus.OK
-
-        list_to_check = [
-            {
-                "reply_key": "MACHINE_TYPE",
-                "definition_key": "firmware_machine_type",
-                "on_fail": self.CheckFirmwareStatus.WRONG_MACHINE,
-                "search_in_properties": True
-            },
-            {
-                "reply_key": "EXTRUDER_TYPE",
-                "definition_key": "firmware_toolhead_name",
-                "on_fail": self.CheckFirmwareStatus.WRONG_TOOLHEAD
-            },
-            {
-                "reply_key": "FIRMWARE_VERSION",
-                "definition_key": "firmware_last_version",
-                "on_fail": self.CheckFirmwareStatus.FIRMWARE_OUTDATED
-            }
-        ]
-
-        for option in list_to_check:
-            result = checkValue(option["reply_key"], option["definition_key"], option.get("exact_match", True), option.get("search_in_properties", False))
-            if result != CheckValueStatus.OK:
-                if result == CheckValueStatus.MISSING_VALUE_IN_DEFINITION:
-                    pass
-                elif result == CheckValueStatus.MISSING_VALUE_IN_REPLY:
-                    return self.CheckFirmwareStatus.FIRMWARE_OUTDATED
-                else:
-                    return option["on_fail"]
-
-        return self.CheckFirmwareStatus.OK
 
     def _update(self):
         while self._connection_state == ConnectionState.Connected and self._serial is not None:
@@ -509,6 +319,171 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                             # In some cases of the RS command it needs to be handled differently.
                             self._gcode_position = int(line.split()[1])
 
+    def sendCommand(self, command: Union[str, bytes]):
+        """Send a command to printer."""
+
+        if not self._command_received.is_set():
+            self._command_queue.put(command)
+        else:
+            self._sendCommand(command)
+
+    def _sendCommand(self, command: Union[str, bytes]):
+        if self._serial is None or (self._connection_state != ConnectionState.Connected and self._connection_state != ConnectionState.Connecting):
+            return
+
+        new_command = cast(bytes, command) if type(command) is bytes else cast(str, command).encode() # type: bytes
+        if not new_command.endswith(b"\n"):
+            new_command += b"\n"
+        try:
+            self._command_received.clear()
+            self._serial.write(new_command)
+        except SerialTimeoutException:
+            Logger.log("w", "Timeout when sending command to printer via USB.")
+            self._command_received.set()
+        except SerialException:
+            Logger.logException("w", "An unexpected exception occurred while writing to the serial.")
+            self.setConnectionState(ConnectionState.Error)
+
+    def requestWrite(self, nodes: List["SceneNode"], file_name: Optional[str] = None, limit_mimetypes: bool = False,
+                     file_handler: Optional["FileHandler"] = None, filter_by_machine: bool = False, **kwargs) -> None:
+        """Request the current scene to be sent to a USB-connected printer.
+
+        :param nodes: A collection of scene nodes to send. This is ignored.
+        :param file_name: A suggestion for a file name to write.
+        :param filter_by_machine: Whether to filter MIME types by machine. This
+               is ignored.
+        :param kwargs: Keyword arguments.
+        """
+
+        if self._is_printing:
+            message = Message(text = catalog.i18nc("@message",
+                                                   "A print is still in progress. Cura LE cannot start another print via USB until the previous print has completed."),
+                              title = catalog.i18nc("@message", "Print in Progress"),
+                              message_type = Message.MessageType.ERROR)
+            message.show()
+            return  # Already printing
+        self.writeStarted.emit(self)
+        # cancel any ongoing preheat timer before starting a print
+        controller = cast(GenericOutputController, self._printers[0].getController())
+        controller.stopPreheatTimers()
+
+        CuraApplication.getInstance().getController().setActiveStage("MonitorStage")
+
+        #Find the g-code to print.
+        gcode_textio = StringIO()
+        gcode_writer = cast(MeshWriter, PluginRegistry.getInstance().getPluginObject("GCodeWriter"))
+        success = gcode_writer.write(gcode_textio, None)
+        if not success:
+            return
+
+        self._printGCode(gcode_textio.getvalue())
+
+    def _printGCode(self, gcode: str):
+        """Start a print based on a g-code.
+
+        :param gcode: The g-code to print.
+        """
+        self._gcode.clear()
+        self._paused = False
+
+        self._gcode.extend(gcode.split("\n"))
+
+        # Reset line number. If this is not done, first line is sometimes ignored
+        self._gcode.insert(0, "M110")
+        self._gcode_position = 0
+        self._print_start_time = time()
+
+        self._print_estimated_time = int(CuraApplication.getInstance().getPrintInformation().currentPrintTime.getDisplayString(DurationFormat.Format.Seconds))
+
+        for i in range(0, 4):  # Push first 4 entries before accepting other inputs
+            self._sendNextGcodeLine()
+
+        self._is_printing = True
+        self.writeFinished.emit(self)
+
+
+######### Firmware Checks and Handling #########
+    class CheckFirmwareStatus(IntEnum):
+        OK = 0
+        TIMEOUT = 1
+        WRONG_MACHINE = 2
+        WRONG_TOOLHEAD = 3
+        FIRMWARE_OUTDATED = 4
+
+
+    def _checkFirmware(self):
+        self.sendCommand("M115")
+        timeout = time() + 2
+        reply = self._serial.readline()
+        while b"FIRMWARE_NAME" not in reply and time() < timeout:
+            reply = self._serial.readline()
+
+        if b"FIRMWARE_NAME" not in reply:
+            Logger.log("w", "Printer did not return firmware name")
+            self.setConnectionState(ConnectionState.Timeout)
+            return self.CheckFirmwareStatus.TIMEOUT
+
+        firmware_string = reply.decode()
+        print(firmware_string)
+        values = {m[0] : m[1] for m in re.findall("([A-Z_]+)\:(.*?)(?= [A-Z_]+\:|$)", firmware_string)}
+
+        global_container_stack = CuraApplication.getInstance().getGlobalContainerStack()
+
+        class CheckValueStatus(IntEnum):
+            OK = 0
+            MISSING_VALUE_IN_REPLY = 1
+            WRONG_VALUE = 2
+            MISSING_VALUE_IN_DEFINITION = 3
+
+
+        def checkValue(fw_key, profile_key, exact_match = True, search_in_properties = False):
+            expected_value = global_container_stack.getProperty(profile_key, "value") if search_in_properties else\
+                global_container_stack.getMetaDataEntry(profile_key, None)
+            if expected_value is None:
+                Logger.log("d", "Missing %s in profile. Skipping check." % profile_key)
+                return CheckValueStatus.MISSING_VALUE_IN_DEFINITION
+            elif not fw_key in values:
+                Logger.log("d", "Missing %s in firmware string: %s" % (fw_key, firmware_string))
+                return CheckValueStatus.MISSING_VALUE_IN_REPLY
+            elif exact_match and values[fw_key] != expected_value:
+                Logger.log("e", "Expected that %s was %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
+                return CheckValueStatus.WRONG_VALUE
+            elif not exact_match and not values[fw_key].search(expected_value):
+                Logger.log("e", "Expected that %s contained %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
+                return CheckValueStatus.WRONG_VALUE
+            return CheckValueStatus.OK
+
+        list_to_check = [
+            {
+                "reply_key": "MACHINE_TYPE",
+                "definition_key": "firmware_machine_type",
+                "on_fail": self.CheckFirmwareStatus.WRONG_MACHINE,
+                "search_in_properties": True
+            },
+            {
+                "reply_key": "EXTRUDER_TYPE",
+                "definition_key": "firmware_toolhead_name",
+                "on_fail": self.CheckFirmwareStatus.WRONG_TOOLHEAD
+            },
+            {
+                "reply_key": "FIRMWARE_VERSION",
+                "definition_key": "firmware_last_version",
+                "on_fail": self.CheckFirmwareStatus.FIRMWARE_OUTDATED
+            }
+        ]
+
+        for option in list_to_check:
+            result = checkValue(option["reply_key"], option["definition_key"], option.get("exact_match", True), option.get("search_in_properties", False))
+            if result != CheckValueStatus.OK:
+                if result == CheckValueStatus.MISSING_VALUE_IN_DEFINITION:
+                    pass
+                elif result == CheckValueStatus.MISSING_VALUE_IN_REPLY:
+                    return self.CheckFirmwareStatus.FIRMWARE_OUTDATED
+                else:
+                    return option["on_fail"]
+
+        return self.CheckFirmwareStatus.OK
+
     def _setFirmwareName(self, name):
         new_name = re.findall(r"FIRMWARE_NAME:([^\s]+)", str(name))
         if new_name:
@@ -517,26 +492,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         else:
             self._firmware_name = "Unknown"
             Logger.log("i", "Unknown USB output device Firmware name: %s", str(name))
-
-    def _getPrinterName(self, name):
-        print(name)
-        printer_name = re.findall(r"(?<=MACHINE_TYPE:)(.*)(?=EXTRUDER_COUNT:)", str(name))
-        if printer_name:
-            self._printer_name = printer_name[0].strip()
-            Logger.log("i", "USB output device printer type: %s", self._printer_name)
-            current_printer = CuraApplication.getInstance().getGlobalContainerStack().getName()
-            allow_wrong_connection = CuraApplication.getInstance().getPreferences().getValue("cura/allow_connection_to_wrong_machine")
-            if self._printer_name in current_printer:
-                Logger.log("i", "USB printer matches currently selected printer")
-            elif allow_wrong_connection:
-                Logger.log("w", "USB printer does NOT match currently selected printer, but user has elected to proceed.")
-            else:
-                Logger.log("e", "USB printer does NOT match currently selected printer! This could potentially result in damage and failed prints.")
-                raise ValueError("Machine mismatch!")
-        else:
-            self._printer_name = "Unknown"
-            Logger.log("i", "Couldn't find a printer name.")
-            Logger.log("e", "USB printer could not be determined to match the currently selected printer! Proceed with caution!")
 
     def getFirmwareName(self):
         return self._firmware_name
@@ -618,3 +573,33 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         print_job.updateTimeTotal(estimated_time)
 
         self._gcode_position += 1
+
+    def _onGlobalContainerStackChanged(self):
+        if self._serial is not None:
+            self.close()
+        container_stack = CuraApplication.getInstance().getGlobalContainerStack()
+        if container_stack is None:
+            return
+        num_extruders = container_stack.getProperty("machine_extruder_count", "value")
+        # Ensure that a printer is created.
+        controller = GenericOutputController(self)
+        controller.setCanUpdateFirmware(True)
+        self._printers = [PrinterOutputModel(output_controller = controller, number_of_extruders = num_extruders)]
+        self._printers[0].updateName(container_stack.getName())
+
+    # This is a callback function that checks if there is any printing in progress via USB when the application tries
+    # to exit. If so, it will show a confirmation before
+    def _checkActivePrintingUponAppExit(self) -> None:
+        application = CuraApplication.getInstance()
+        if not self._is_printing:
+            # This USB printer is not printing, so we have nothing to do. Call the next callback if exists.
+            application.triggerNextExitCheck()
+            return
+
+        application.setConfirmExitDialogCallback(self._onConfirmExitDialogResult)
+        application.showConfirmExitDialog.emit(catalog.i18nc("@label", "A USB print is in progress, closing Cura LE will stop this print. Are you sure?"))
+
+    def _onConfirmExitDialogResult(self, result: bool) -> None:
+        if result:
+            application = CuraApplication.getInstance()
+            application.triggerNextExitCheck()

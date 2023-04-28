@@ -17,10 +17,10 @@ Item
 
     height: childrenRect.height + UM.Theme.getSize("thick_margin").height
 
-    property bool printerConnected: Cura.MachineManager.printerConnected
-    property bool printerAcceptsCommands: printerConnected && Cura.MachineManager.printerOutputDevices[0].acceptsCommands
-    property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
+    property int outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
+    property bool printerConnected: outputDeviceCount > 1
     property var printerOutputDevice: Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1]
+    property bool printerAcceptsCommands: printerConnected && printerOutputDevice.acceptsCommands
     property var activePrinter: printerConnected ? printerOutputDevice.activePrinter : null
     property var activePrintJob: activePrinter ? activePrinter.activePrintJob: null
     property real progress:

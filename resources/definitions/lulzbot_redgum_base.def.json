@@ -26,7 +26,7 @@
     {
         "firmware_machine_type":
         {
-            "resolve": "'TAZ Workhorse Edition' if revision_type else 'TAZ Workhorse Edition Rev B'"
+            "default_value": "TAZ Workhorse Edition"
         },
         "machine_end_gcode":
         {

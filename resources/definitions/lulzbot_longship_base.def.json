@@ -40,7 +40,7 @@
         },
         "firmware_machine_type":
         {
-            "resolve": "'LulzBot TAZ Pro Long Bed' if revision_type else 'LulzBot TAZ Pro Rev B'"
+            "default_value": "LulzBot TAZ Pro Long Bed"
         },
         "machine_baudrate":
         {

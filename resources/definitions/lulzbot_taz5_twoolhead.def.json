@@ -60,7 +60,7 @@
         },
         "firmware_machine_type":
         {
-            "resolve": "'LulzBot TAZ 6'"
+            "resolve": "LulzBot TAZ 5"
         }
     }
 }
