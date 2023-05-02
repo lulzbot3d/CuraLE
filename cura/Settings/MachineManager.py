@@ -294,6 +294,12 @@ class MachineManager(QObject):
 
         self.activeQualityGroupChanged.emit()
 
+        activeStage = self._application.getController().getActiveStage()
+        prepareStage = self._application.getController().getAllStages()["PrepareStage"]
+
+        if activeStage != None and activeStage != prepareStage:
+            self._application.getController().setActiveStage("PrepareStage")
+
     def _onActiveExtruderStackChanged(self) -> None:
         self.blurSettings.emit()  # Ensure no-one has focus.
         self._active_container_stack = ExtruderManager.getInstance().getActiveExtruderStack()

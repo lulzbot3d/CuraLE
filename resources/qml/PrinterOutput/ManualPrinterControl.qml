@@ -62,7 +62,7 @@ Item
 
         MonitorSection
         {
-            label: catalog.i18nc("@label", "Printer control")
+            label: catalog.i18nc("@label", "Manual Printer Control")
             width: base.width
         }
 

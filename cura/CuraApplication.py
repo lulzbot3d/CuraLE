@@ -535,7 +535,7 @@ class CuraApplication(QtApplication):
         preferences.addPreference("cura/allow_connection_to_wrong_machine", False)
 
         preferences.addPreference("cura/categories_expanded", "")
-        preferences.addPreference("cura/jobname_prefix", True)
+        preferences.addPreference("cura/jobname_prefix", False)
         preferences.addPreference("cura/select_models_on_load", False)
         preferences.addPreference("view/center_on_select", False)
         preferences.addPreference("mesh/scale_to_fit", False)
@@ -958,10 +958,6 @@ class CuraApplication(QtApplication):
     @pyqtSlot(result = QObject)
     def getDiscoveredPrintersModel(self, *args) -> "DiscoveredPrintersModel":
         return self._discovered_printer_model
-
-    #@pyqtSlot(result=QObject)
-    #def getDiscoveredCloudPrintersModel(self, *args) -> "DiscoveredCloudPrintersModel":
-    #    return self._discovered_cloud_printers_model
 
     @pyqtSlot(result = QObject)
     def getFirstStartMachineActionsModel(self, *args) -> "FirstStartMachineActionsModel":

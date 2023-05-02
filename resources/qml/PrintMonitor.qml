@@ -12,20 +12,17 @@ import Cura 1.0 as Cura
 import "PrinterOutput"
 
 
-Item
-{
+Item {
     id: base
     UM.I18nCatalog { id: catalog; name: "cura"}
 
-    function showTooltip(item, position, text)
-    {
+    function showTooltip(item, position, text) {
         tooltip.text = text;
         position = item.mapToItem(base, position.x - UM.Theme.getSize("default_arrow").width, position.y);
         tooltip.show(position);
     }
 
-    function hideTooltip()
-    {
+    function hideTooltip() {
         tooltip.hide();
     }
 
@@ -33,8 +30,7 @@ Item
         return (new Array(length + 1).join(pad) + string).slice(-length);
     }
 
-    function getPrettyTime(time)
-    {
+    function getPrettyTime(time) {
         var hours = Math.floor(time / 3600)
         time -= hours * 3600
         var minutes = Math.floor(time / 60);
@@ -50,13 +46,10 @@ Item
     property var activePrinter: connectedDevice != null && connectedDevice.address != "None" ? connectedDevice.activePrinter : null
     property var activePrintJob: activePrinter != null ? activePrinter.activePrintJob: null
 
-    Column
-    {
+    Column {
         id: printMonitor
 
         anchors.fill: parent
-
-        property var extrudersModel: CuraApplication.getExtrudersModel()
 
         OutputDeviceHeader
         {
@@ -64,8 +57,7 @@ Item
             activeDevice: activePrinter
         }
 
-        Rectangle
-        {
+        Rectangle {
             color: UM.Theme.getColor("wide_lining")
             width: parent.width
             height: childrenRect.height
@@ -91,20 +83,17 @@ Item
             }
         }
 
-        Rectangle
-        {
+        Rectangle {
             color: UM.Theme.getColor("wide_lining")
             width: parent.width
             height: UM.Theme.getSize("thick_lining").width
         }
 
-        HeatedBedBox
-        {
+        HeatedBedBox {
             printerModel: activePrinter
         }
 
-        UM.SettingPropertyProvider
-        {
+        UM.SettingPropertyProvider {
             id: bedTemperature
             containerStack: Cura.MachineManager.activeMachine
             key: "material_bed_temperature"
@@ -114,22 +103,19 @@ Item
             property var resolve: Cura.MachineManager.activeStack != Cura.MachineManager.activeMachine ? properties.resolve : "None"
         }
 
-        UM.SettingPropertyProvider
-        {
+        UM.SettingPropertyProvider {
             id: machineExtruderCount
             containerStack: Cura.MachineManager.activeMachine
             key: "machine_extruder_count"
             watchedProperties: ["value"]
         }
 
-        ManualPrinterControl
-        {
+        ManualPrinterControl {
             printerModel: activePrinter
             visible: true
         }
 
-        function loadSection(label, path)
-	    {
+        function loadSection(label, path) {
 	        var title = Qt.createQmlObject('import QtQuick 2.2; Loader {property string label: ""}', printMonitor);
 	        // title.sourceComponent = MonitorSection
 	        title.label = label
@@ -149,7 +135,7 @@ Item
 
         MonitorSection
         {
-            label: catalog.i18nc("@label", "Active print")
+            label: catalog.i18nc("@label", "Active Print")
             width: base.width
             visible: activePrintJob != null
         }

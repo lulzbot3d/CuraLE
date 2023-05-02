@@ -13,6 +13,8 @@ Item
     height: 130
     enabled: connectedPrinter
 
+
+
         GridLayout
         {
             id: predefinedButtons
@@ -43,7 +45,7 @@ Item
 
             Button
             {
-                text: "Wipe nozzle"
+                text: "Wipe Nozzle"
                 Layout.row: 1
                 Layout.column: 2
                 Layout.preferredWidth: parent.width/3 - predefinedButtons.columnSpacing*7
@@ -61,7 +63,7 @@ Item
 
             Button
             {
-                text: "Cool nozzle"
+                text: "Cool Nozzle"
                 Layout.row: 1
                 Layout.column: 3
                 Layout.preferredWidth: parent.width/3 - predefinedButtons.columnSpacing*7
@@ -77,8 +79,8 @@ Item
 
             Button
             {
-                text: "Preheat bed"
-                //width: parent.width/3
+                text: "Preheat Bed"
+                width: parent.width/3
                 Layout.row: 2
                 Layout.column: 1
                 Layout.preferredWidth: parent.width/3 - predefinedButtons.columnSpacing*7

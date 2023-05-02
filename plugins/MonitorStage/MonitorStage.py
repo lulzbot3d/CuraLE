@@ -43,7 +43,9 @@ class MonitorStage(CuraStage):
     def _onOutputDevicesChanged(self):
         try:
             # We assume that you are monitoring the device with the highest priority.
-            new_output_device = Application.getInstance().getMachineManager().printerOutputDevices[0]
+            manager = Application.getInstance().getMachineManager()
+            devices = manager.printerOutputDevices
+            new_output_device = devices[-1]
             if new_output_device != self._printer_output_device:
                 if self._printer_output_device:
                     try:
