@@ -297,3 +297,19 @@ class PrinterOutputDevice(QObject, OutputDevice):
             return
 
         self._firmware_updater.updateFirmware(firmware_file)
+
+    @pyqtProperty(bool, notify = printersChanged)
+    def supportWipeNozzle(self):
+        return self._supportWipeNozzle()
+
+    def _supportWipeNozzle(self):
+        return False
+
+    @pyqtProperty(bool, notify = printersChanged)
+    def supportLevelXAxis(self):
+        return self._supportLevelXAxis()
+
+    def _supportLevelXAxis(self):
+        return False
+
+

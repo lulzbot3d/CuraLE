@@ -8,12 +8,12 @@ import Cura 1.0 as Cura
 
 Item
 {
-    property var connectedPrinter: printerConnected ? Cura.MachineManager.printerOutputDevices[0] : null
+    property int deviceCount: Cura.MachineManager.printerOutputDevices.length
+    property var connectedPrinter: deviceCount >= 1 ? Cura.MachineManager.printerOutputDevices[deviceCount - 1] : null
+    property bool canSendCommand: connectedPrinter.acceptsCommands
     width: 410
     height: 130
-    enabled: connectedPrinter
-
-
+    enabled: canSendCommand
 
         GridLayout
         {
@@ -51,7 +51,7 @@ Item
                 Layout.preferredWidth: parent.width/3 - predefinedButtons.columnSpacing*7
                 Layout.preferredHeight: UM.Theme.getSize("section").height
 
-                enabled: connectedPrinter && connectedPrinter.supportWipeNozzle
+                enabled: canSendCommand && connectedPrinter.supportWipeNozzle
 
                 onClicked:
                 {
@@ -119,14 +119,14 @@ Item
                 Layout.preferredHeight: UM.Theme.getSize("section").height
                 enabled:
                 {
-                    var name = Cura.MachineManager.activeMachineName
+                    var name = Cura.MachineManager.activeMachine.name
                     if(name.includes("Aerostruder"))
                     {
-                        return connectedPrinter && false;
+                        return false;
                     }
                     else
                     {
-                        return connectedPrinter && true
+                        return canSendCommand && true
                     }
                 }
 
@@ -162,7 +162,7 @@ Item
                 Layout.preferredWidth: parent.width/3 - predefinedButtons.columnSpacing*7
                 Layout.preferredHeight: UM.Theme.getSize("section").height
 
-                enabled: connectedPrinter && connectedPrinter.supportLevelXAxis
+                enabled: canSendCommand && connectedPrinter.supportLevelXAxis
 
                 onClicked:
                 {

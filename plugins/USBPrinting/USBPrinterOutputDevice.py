@@ -109,6 +109,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         CuraApplication.getInstance().globalContainerStackChanged.connect(self._onGlobalContainerStackChanged)
         CuraApplication.getInstance().getOnExitCallbackManager().addCallback(self._checkActivePrintingUponAppExit)
 
+    ############## PRINTER CONNECTION ##################
+
     def resetDeviceSettings(self) -> None:
         """Reset USB device settings"""
 
@@ -496,6 +498,9 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     def getFirmwareName(self):
         return self._firmware_name
 
+
+    ########### PRINTER COMMANDS ############
+
     def pausePrint(self):
         self._paused = True
 
@@ -515,10 +520,9 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._sendCommand("M104 S0")
         self._sendCommand("M107")
 
-        # Home XY to prevent nozzle resting on aborted print
-        # Don't home bed because it may crash the printhead into the print on printers that home on the bottom
-        self.printers[0].homeHead()
-        self._sendCommand("M84")
+        # We're gonna go to the park position
+        # Seems like a safe bet to not run into whatever's on the build plate
+        self._sendCommand("G27")
 
     def _sendNextGcodeLine(self):
         """
@@ -573,6 +577,52 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         print_job.updateTimeTotal(estimated_time)
 
         self._gcode_position += 1
+
+    def _supportWipeNozzle(self):
+        code = CuraApplication.getInstance().getGlobalContainerStack().getProperty("machine_wipe_gcode", "value")
+        if not code or len(code) == 0:
+            return False
+        return True
+
+    def _wipeNozzle(self):
+        code = CuraApplication.getInstance().getGlobalContainerStack().getProperty("machine_wipe_gcode", "value")
+        if not code or len(code) == 0:
+            self.log("w", "This device doesn't support wiping")
+            return
+        code = code.replace("{material_wipe_temperature}", str(CuraApplication.getInstance().getGlobalContainerStack().getProperty("material_wipe_temperature", "value"))).split("\n")
+        self._printGCode(code)
+
+        if result == Error.PRINTER_BUSY:
+            QMessageBox.critical(None, "Error wiping nozzle", "Printer is busy, aborting print" )
+
+        if result == Error.PRINTER_NOT_CONNECTED:
+            QMessageBox.critical(None, "Error wiping nozzle", "Printer is not connected  " )
+
+
+    def _supportLevelXAxis(self):
+        code = CuraApplication.getInstance().getGlobalContainerStack().getProperty("machine_level_x_axis_gcode", "value")
+        if not code or len(code) == 0:
+            return False
+        return True
+
+    def _levelXAxis(self):
+        code = CuraApplication.getInstance().getGlobalContainerStack().getProperty("machine_level_x_axis_gcode", "value")
+        if not code or len(code) == 0:
+            self.log("w", "This device doesn't support x axis levelling")
+            return
+        code = code.split("\n")
+        self.writeStarted.emit(self)
+        self._updateJobState("printing")
+        result=self.printGCode(code)
+
+        if result == Error.PRINTER_BUSY:
+            QMessageBox.critical(None, "Error", "Printer is busy, aborting print" )
+
+        if result == Error.PRINTER_NOT_CONNECTED:
+            QMessageBox.critical(None, "Error", "Printer is not connected  " )
+
+
+    ####################################################
 
     def _onGlobalContainerStackChanged(self):
         if self._serial is not None:
