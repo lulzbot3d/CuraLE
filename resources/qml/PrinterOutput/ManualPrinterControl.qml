@@ -85,7 +85,7 @@ Item
             Button
             {
                 height: UM.Theme.getSize("setting_control").height
-                width: height*2 + UM.Theme.getSize("default_margin").width
+                width: height*3 + UM.Theme.getSize("default_margin").width
                 text: "Connect"
                 enabled:
                 {
@@ -105,7 +105,7 @@ Item
             Button
             {
                 height: UM.Theme.getSize("setting_control").height
-                width: height*2 + UM.Theme.getSize("default_margin").width
+                width: height*3 + UM.Theme.getSize("default_margin").width
                 text: "Disconnect"
                 enabled: checkEnabled()
                 onClicked:
@@ -119,7 +119,7 @@ Item
             Button
             {
                 height: UM.Theme.getSize("setting_control").height
-                width: height*2 + UM.Theme.getSize("default_margin").width
+                width: height*3 + UM.Theme.getSize("default_margin").width
                 text: catalog.i18nc("@label", "Console")
                 enabled: availablePrinter.acceptsCommands ? availablePrinter.connectionState == 2 : false
                 onClicked:

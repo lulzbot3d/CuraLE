@@ -42,7 +42,12 @@ class KnownBaudJob(Job):
                 try:
                     serial = Serial(str(self._serial_port), str(self._baud_rate), timeout = read_timeout, writeTimeout = write_timeout)
                 except SerialException:
-                    Logger.logException("w", "Unable to create serial")
+                    if retry == tries - 1:
+                        Logger.logException("w", "Unable to create serial")
+                        Logger.log("w", "Attempting AutoDetect for Baud Rate...")
+                    else:
+                        Logger.log("w", "Serial creation failed, printer may be busy... retrying in 10 seconds")
+                        sleep(10)
                     continue
             sleep(wait_bootloader)  # Ensure that we are not talking to the boot loader. 1.5 seconds seems to be the magic number
 

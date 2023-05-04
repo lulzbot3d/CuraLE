@@ -17,7 +17,7 @@ Component
             color: UM.Theme.getColor("main_background")
 
             anchors.right: parent.right
-            width: parent.width * 0.3
+            width: parent.width * 0.25
             anchors.top: parent.top
             anchors.bottom: parent.bottom
 
