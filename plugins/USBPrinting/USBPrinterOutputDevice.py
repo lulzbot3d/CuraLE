@@ -57,7 +57,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._serial_port = serial_port
         self._address = serial_port
 
-        self._timeout = 3
+        self._timeout = 1.5
 
         # List of gcode lines to be printed
         self._gcode = [] # type: List[str]
@@ -357,19 +357,10 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         :param kwargs: Keyword arguments.
         """
 
-        if self._is_printing:
-            message = Message(text = catalog.i18nc("@message",
-                                                   "A print is still in progress. Cura LE cannot start another print via USB until the previous print has completed."),
-                              title = catalog.i18nc("@message", "Print in Progress"),
-                              message_type = Message.MessageType.ERROR)
-            message.show()
-            return  # Already printing
-        self.writeStarted.emit(self)
-        # cancel any ongoing preheat timer before starting a print
-        controller = cast(GenericOutputController, self._printers[0].getController())
-        controller.stopPreheatTimers()
-
-        CuraApplication.getInstance().getController().setActiveStage("MonitorStage")
+        safe = self.ensureSafeToWrite()
+        if not safe:
+            # We're not clear to print
+            return
 
         #Find the g-code to print.
         gcode_textio = StringIO()
@@ -379,30 +370,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             return
 
         self._printGCode(gcode_textio.getvalue())
-
-    def _printGCode(self, gcode: str):
-        """Start a print based on a g-code.
-
-        :param gcode: The g-code to print.
-        """
-        self._gcode.clear()
-        self._paused = False
-
-        self._gcode.extend(gcode.split("\n"))
-
-        # Reset line number. If this is not done, first line is sometimes ignored
-        self._gcode.insert(0, "M110")
-        self._gcode_position = 0
-        self._print_start_time = time()
-
-        self._print_estimated_time = int(CuraApplication.getInstance().getPrintInformation().currentPrintTime.getDisplayString(DurationFormat.Format.Seconds))
-
-        for i in range(0, 4):  # Push first 4 entries before accepting other inputs
-            self._sendNextGcodeLine()
-
-        self._is_printing = True
-        self.writeFinished.emit(self)
-
 
 ######### Firmware Checks and Handling #########
     class CheckFirmwareStatus(IntEnum):
@@ -524,6 +491,46 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         # Seems like a safe bet to not run into whatever's on the build plate
         self._sendCommand("G27")
 
+    def ensureSafeToWrite(self) -> bool:
+        if self._is_printing:
+            message = Message(text = catalog.i18nc("@message",
+                                                   "A print is still in progress. Cura LE cannot start another action at this time."),
+                              title = catalog.i18nc("@message", "Print in Progress"),
+                              message_type = Message.MessageType.ERROR)
+            message.show()
+            return False # Already printing
+        self.writeStarted.emit(self)
+        # cancel any ongoing preheat timer before starting a print
+        controller = cast(GenericOutputController, self._printers[0].getController())
+        controller.stopPreheatTimers()
+
+        CuraApplication.getInstance().getController().setActiveStage("MonitorStage")
+
+        return True
+
+    def _printGCode(self, gcode: str):
+        """Start a print based on a g-code.
+
+        :param gcode: The g-code to print.
+        """
+        self._gcode.clear()
+        self._paused = False
+
+        self._gcode.extend(gcode.split("\n"))
+
+        # Reset line number. If this is not done, first line is sometimes ignored
+        self._gcode.insert(0, "M110")
+        self._gcode_position = 0
+        self._print_start_time = time()
+
+        self._print_estimated_time = int(CuraApplication.getInstance().getPrintInformation().currentPrintTime.getDisplayString(DurationFormat.Format.Seconds))
+
+        for i in range(0, 4):  # Push first 4 entries before accepting other inputs
+            self._sendNextGcodeLine()
+
+        self._is_printing = True
+        self.writeFinished.emit(self)
+
     def _sendNextGcodeLine(self):
         """
         Send the next line of g-code, at the current `_gcode_position`, via a
@@ -588,16 +595,19 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         code = CuraApplication.getInstance().getGlobalContainerStack().getProperty("machine_wipe_gcode", "value")
         if not code or len(code) == 0:
             self.log("w", "This device doesn't support wiping")
+            message = Message(text = catalog.i18nc("@message",
+                                                   "The currently connected printer does not support Nozzle Wiping."),
+                              title = catalog.i18nc("@message", "Print in Progress"),
+                              message_type = Message.MessageType.ERROR)
+            message.show()
+            return
+        safe = self.ensureSafeToWrite()
+        if not safe:
+            # We can't wipe, there's probably already a print in progress
             return
         code = code.replace("{material_wipe_temperature}", str(CuraApplication.getInstance().getGlobalContainerStack().getProperty("material_wipe_temperature", "value"))).split("\n")
+        self.writeStarted.emit(self)
         self._printGCode(code)
-
-        if result == Error.PRINTER_BUSY:
-            QMessageBox.critical(None, "Error wiping nozzle", "Printer is busy, aborting print" )
-
-        if result == Error.PRINTER_NOT_CONNECTED:
-            QMessageBox.critical(None, "Error wiping nozzle", "Printer is not connected  " )
-
 
     def _supportLevelXAxis(self):
         code = CuraApplication.getInstance().getGlobalContainerStack().getProperty("machine_level_x_axis_gcode", "value")
@@ -609,17 +619,19 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         code = CuraApplication.getInstance().getGlobalContainerStack().getProperty("machine_level_x_axis_gcode", "value")
         if not code or len(code) == 0:
             self.log("w", "This device doesn't support x axis levelling")
+            message = Message(text = catalog.i18nc("@message",
+                                                   "The currently connected printer does not support X Axis Leveling."),
+                              title = catalog.i18nc("@message", "Print in Progress"),
+                              message_type = Message.MessageType.ERROR)
+            message.show()
+            return
+        safe = self.ensureSafeToWrite()
+        if not safe:
+            # We can't level, there's probably already a print in progress
             return
         code = code.split("\n")
         self.writeStarted.emit(self)
-        self._updateJobState("printing")
-        result=self.printGCode(code)
-
-        if result == Error.PRINTER_BUSY:
-            QMessageBox.critical(None, "Error", "Printer is busy, aborting print" )
-
-        if result == Error.PRINTER_NOT_CONNECTED:
-            QMessageBox.critical(None, "Error", "Printer is not connected  " )
+        self._printGCode(code)
 
 
     ####################################################

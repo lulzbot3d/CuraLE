@@ -305,6 +305,13 @@ class PrinterOutputDevice(QObject, OutputDevice):
     def _supportWipeNozzle(self):
         return False
 
+    @pyqtSlot()
+    def wipeNozzle(self):
+        return self._wipeNozzle()
+
+    def _wipeNozzle(self):
+        return
+
     @pyqtProperty(bool, notify = printersChanged)
     def supportLevelXAxis(self):
         return self._supportLevelXAxis()
@@ -312,4 +319,9 @@ class PrinterOutputDevice(QObject, OutputDevice):
     def _supportLevelXAxis(self):
         return False
 
+    @pyqtSlot()
+    def levelXAxis(self):
+        return self._levelXAxis()
 
+    def _levelXAxis(self):
+        return

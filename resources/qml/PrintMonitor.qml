@@ -117,11 +117,10 @@ Item {
 
         function loadSection(label, path) {
 	        var title = Qt.createQmlObject('import QtQuick 2.2; Loader {property string label: ""}', printMonitor);
-	        // title.sourceComponent = MonitorSection
 	        title.label = label
 	        var content = Qt.createQmlObject('import QtQuick 2.2; Loader {}', printMonitor);
             content.source = "file:///" + path
-	        content.item.width = base.width - 2 * UM.Theme.getSize("default_margin").width
+	        content.item.width = base.width - (2 * UM.Theme.getSize("default_margin").width)
 	    }
 
         Repeater
