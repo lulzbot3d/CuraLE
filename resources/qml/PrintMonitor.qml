@@ -2,7 +2,7 @@
 // Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.7
-import QtQuick.Controls 1.1
+import QtQuick.Controls 2.15
 import QtQuick.Controls.Styles 1.1
 import QtQuick.Layouts 1.1
 
@@ -46,140 +46,137 @@ Item {
     property var activePrinter: connectedDevice != null && connectedDevice.address != "None" ? connectedDevice.activePrinter : null
     property var activePrintJob: activePrinter != null ? activePrinter.activePrintJob: null
 
-    Column {
-        id: printMonitor
+    ScrollView {
 
-        anchors.fill: parent
+        anchors.fill: base
+        clip: true
+        ScrollBar.vertical.policy: ScrollBar.AsNeeded
 
-        OutputDeviceHeader
-        {
-            outputDevice: connectedDevice
-            activeDevice: activePrinter
-        }
-
-        Rectangle {
-            color: UM.Theme.getColor("wide_lining")
-            width: parent.width
+        Column {
+            id: printMonitor
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
             height: childrenRect.height
 
-            Flow
-            {
-                id: extrudersGrid
-                spacing: UM.Theme.getSize("thick_lining").width
+            OutputDeviceHeader {
+                outputDevice: connectedDevice
+                activeDevice: activePrinter
+            }
+
+            Rectangle {
+                color: UM.Theme.getColor("wide_lining")
                 width: parent.width
+                height: childrenRect.height
 
-                Repeater
-                {
-                    id: extrudersRepeater
-                    model: connectedDevice != null ? connectedDevice.activePrinter.extruders : null
+                Flow {
+                    id: extrudersGrid
+                    spacing: UM.Theme.getSize("thick_lining").width
+                    width: parent.width
 
-                    ExtruderBox
-                    {
-                        color: UM.Theme.getColor("main_background")
-                        width: index == machineExtruderCount.properties.value - 1 && index % 2 == 0 ? extrudersGrid.width : Math.round(extrudersGrid.width / 2 - UM.Theme.getSize("thick_lining").width / 2)
-                        extruderModel: modelData
+                    Repeater {
+                        id: extrudersRepeater
+                        model: connectedDevice != null ? connectedDevice.activePrinter.extruders : null
+
+                        ExtruderBox {
+                            color: UM.Theme.getColor("main_background")
+                            width: index == machineExtruderCount.properties.value - 1 && index % 2 == 0 ? extrudersGrid.width : Math.round(extrudersGrid.width / 2 - UM.Theme.getSize("thick_lining").width / 2)
+                            extruderModel: modelData
+                        }
                     }
                 }
             }
-        }
 
-        Rectangle {
-            color: UM.Theme.getColor("wide_lining")
-            width: parent.width
-            height: UM.Theme.getSize("thick_lining").width
-        }
-
-        HeatedBedBox {
-            printerModel: activePrinter
-        }
-
-        UM.SettingPropertyProvider {
-            id: bedTemperature
-            containerStack: Cura.MachineManager.activeMachine
-            key: "material_bed_temperature"
-            watchedProperties: ["value", "minimum_value", "maximum_value", "resolve"]
-            storeIndex: 0
-
-            property var resolve: Cura.MachineManager.activeStack != Cura.MachineManager.activeMachine ? properties.resolve : "None"
-        }
-
-        UM.SettingPropertyProvider {
-            id: machineExtruderCount
-            containerStack: Cura.MachineManager.activeMachine
-            key: "machine_extruder_count"
-            watchedProperties: ["value"]
-        }
-
-        ManualPrinterControl {
-            printerModel: activePrinter
-            visible: true
-        }
-
-        function loadSection(label, path) {
-	        var title = Qt.createQmlObject('import QtQuick 2.2; Loader {property string label: ""}', printMonitor);
-	        title.label = label
-	        var content = Qt.createQmlObject('import QtQuick 2.2; Loader {}', printMonitor);
-            content.source = "file:///" + path
-	        content.item.width = base.width - (2 * UM.Theme.getSize("default_margin").width)
-	    }
-
-        Repeater
-        {
-            model: Printer.printMonitorAdditionalSections
-            delegate: Item
-            {
-                Component.onCompleted: printMonitor.loadSection(modelData["name"], modelData["path"])
+            Rectangle {
+                color: UM.Theme.getColor("wide_lining")
+                width: parent.width
+                height: UM.Theme.getSize("thick_lining").width
             }
-        }
 
-        MonitorSection
-        {
-            label: catalog.i18nc("@label", "Active Print")
-            width: base.width
-            visible: activePrintJob != null
-        }
+            HeatedBedBox {
+                printerModel: activePrinter
+            }
 
+            UM.SettingPropertyProvider {
+                id: bedTemperature
+                containerStack: Cura.MachineManager.activeMachine
+                key: "material_bed_temperature"
+                watchedProperties: ["value", "minimum_value", "maximum_value", "resolve"]
+                storeIndex: 0
 
-        MonitorItem
-        {
-            label: catalog.i18nc("@label", "Job Name")
-            value: activePrintJob != null ? activePrintJob.name : ""
-            width: base.width
-            //visible: activePrinter != null
-            visible: activePrintJob != null
-        }
+                property var resolve: Cura.MachineManager.activeStack != Cura.MachineManager.activeMachine ? properties.resolve : "None"
+            }
 
-        MonitorItem
-        {
-            label: catalog.i18nc("@label", "Printing Time")
-            value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal) : ""
-            width: base.width
-            //visible: activePrinter != null
-            visible: activePrintJob != null
-        }
+            UM.SettingPropertyProvider {
+                id: machineExtruderCount
+                containerStack: Cura.MachineManager.activeMachine
+                key: "machine_extruder_count"
+                watchedProperties: ["value"]
+            }
 
-        MonitorItem
-        {
-            label: catalog.i18nc("@label", "Estimated time left")
-            value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal - activePrintJob.timeElapsed) : ""
-            visible:
-            {
-                if(activePrintJob == null)
+            ManualPrinterControl {
+                printerModel: activePrinter
+                visible: true
+            }
+
+            function loadSection(label, path) {
+                var title = Qt.createQmlObject('import QtQuick 2.2; Loader {property string label: ""}', printMonitor);
+                title.label = label
+                var content = Qt.createQmlObject('import QtQuick 2.2; Loader {}', printMonitor);
+                content.source = "file:///" + path
+                content.item.width = base.width - (2 * UM.Theme.getSize("default_margin").width)
+            }
+
+            Repeater {
+                model: Printer.printMonitorAdditionalSections
+                delegate: Item
                 {
-                    return false
+                    Component.onCompleted: printMonitor.loadSection(modelData["name"], modelData["path"])
                 }
-
-                return (activePrintJob.state == "printing" ||
-                        activePrintJob.state == "resuming" ||
-                        activePrintJob.state == "pausing" ||
-                        activePrintJob.state == "paused")
             }
-            width: base.width
+
+            MonitorSection {
+                label: catalog.i18nc("@label", "Active Print")
+                width: base.width
+                visible: activePrintJob != null
+            }
+
+
+            MonitorItem {
+                label: catalog.i18nc("@label", "Job Name")
+                value: activePrintJob != null ? activePrintJob.name : ""
+                width: base.width
+                //visible: activePrinter != null
+                visible: activePrintJob != null
+            }
+
+            MonitorItem {
+                label: catalog.i18nc("@label", "Printing Time")
+                value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal) : ""
+                width: base.width
+                //visible: activePrinter != null
+                visible: activePrintJob != null
+            }
+
+            MonitorItem {
+                label: catalog.i18nc("@label", "Estimated time left")
+                value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal - activePrintJob.timeElapsed) : ""
+                visible: {
+                    if(activePrintJob == null) {
+                        return false
+                    }
+
+                    return (activePrintJob.state == "printing" ||
+                            activePrintJob.state == "resuming" ||
+                            activePrintJob.state == "pausing" ||
+                            activePrintJob.state == "paused")
+                }
+                width: base.width
+            }
         }
     }
 
-    PrintSetupTooltip
-    {
+    PrintSetupTooltip {
         id: tooltip
     }
 }

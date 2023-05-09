@@ -21,7 +21,7 @@ Item {
             return false; //Can't control the printer if not connected
         }
 
-        if (connectedDevice == null)
+        if (canSendCommand == false)
         {
             return false; //Not allowed to do anything.
         }
@@ -69,7 +69,8 @@ Item {
         anchors.rightMargin: UM.Theme.getSize("default_margin").width
 
         Button {
-            text: "Cool Nozzle"
+            id: coolNozzleButton
+            text: "Cool Nozzles"
             Layout.row: 0
             Layout.column: 0
             Layout.alignment: Qt.AlignHCenter
@@ -81,13 +82,36 @@ Item {
 
             onClicked:
             {
-                connectedPrinter.setTargetHotendTemperature(Cura.MonitorStageStorage.extruderNumber, 0)
+                for (var i = 0; i < printerModel.extruders.length; i++) {
+                    var extruder = printerModel.extruders[i];
+                    if (extruder.isPreheating) {
+                        extruder.cancelPreheatHotend()
+                    }
+                    extruder.setTargetHotendTemperature(0.0)
+                }
+            }
+
+            onHoveredChanged:
+            {
+                if (hovered)
+                {
+                    base.showTooltip(
+                        base,
+                        {x: -200, y: coolNozzleButton.mapToItem(base, 0, -10).y},
+                        catalog.i18nc("@tooltip of cool nozzles", "Sets nozzle temperatures to 0 for all nozzles, can be used in case of UI error as a safety measure.")
+                    );
+                }
+                else
+                {
+                    base.hideTooltip();
+                }
             }
             style:  UM.Theme.styles.monitor_checkable_button_style
         }
 
         Button {
-            text: "Cool bed"
+            id: coolBedButton
+            text: "Cool Bed"
             Layout.row: 0
             Layout.column: 1
             Layout.alignment: Qt.AlignHCenter
@@ -99,12 +123,32 @@ Item {
 
             onClicked:
             {
-                connectedPrinter.setTargetBedTemperature(0)
+                if (printerModel.isPreheating){
+                    printerModel.cancelPreheatBed()
+                }
+                printerModel.setTargetBedTemperature(0.0)
+            }
+
+            onHoveredChanged:
+            {
+                if (hovered)
+                {
+                    base.showTooltip(
+                        base,
+                        {x: -200, y: coolBedButton.mapToItem(base, 0, -10).y},
+                        catalog.i18nc("@tooltip of cool bed", "Sets bed temperature to 0, can be used in case of UI error as a safety measure.")
+                    );
+                }
+                else
+                {
+                    base.hideTooltip();
+                }
             }
             style:  UM.Theme.styles.monitor_checkable_button_style
         }
 
         Button {
+            id: coldPullButton
             text: "Cold Pull"
             Layout.row: 1
             Layout.column: 0
@@ -113,28 +157,45 @@ Item {
             Layout.preferredHeight: height
             width: (base.width / 2) - (UM.Theme.getSize("default_margin").width * (3 / 2))
             height: UM.Theme.getSize("setting_control").height * 1.5
-            enabled:
-            {
-                var name = Cura.MachineManager.activeMachine.name
-                if(name.includes("Aerostruder"))
-                {
-                    return false;
-                }
-                else
-                {
-                    return canSendCommand && true
-                }
-            }
+            enabled: false
+            // {
+            //     var name = Cura.MachineManager.activeMachine.name
+            //     if(name.includes("Aerostruder"))
+            //     {
+            //         return false;
+            //     }
+            //     else
+            //     {
+            //         return canSendCommand && true
+            //     }
+            // }
 
             onClicked:
             {
                 connectedPrinter.coldPull(Cura.MonitorStageStorage.extruderNumber)
             }
+
+            onHoveredChanged:
+            {
+                if (hovered)
+                {
+                    base.showTooltip(
+                        base,
+                        {x: -200, y: coldPullButton.mapToItem(base, 0, -10).y},
+                        catalog.i18nc("@tooltip of cold pull", "Currently disabled, may be re-enabled later on!")
+                    );
+                }
+                else
+                {
+                    base.hideTooltip();
+                }
+            }
             style:  UM.Theme.styles.monitor_checkable_button_style
         }
 
         Button {
-            text: "Motors off"
+            id: disableSteppersButton
+            text: "Disable Steppers"
             Layout.row: 1
             Layout.column: 1
             Layout.alignment: Qt.AlignHCenter
@@ -148,10 +209,29 @@ Item {
             {
                 Cura.USBPrinterManager.sendCommandToCurrentPrinter("M18")
             }
+
+            onHoveredChanged:
+            {
+                if (hovered)
+                {
+                    base.showTooltip(
+                        base,
+                        {x: -200, y: disableSteppersButton.mapToItem(base, 0, -10).y},
+                        catalog.i18nc("@tooltip of disable steppers", "Disables the stepper motors on your printer until another command is sent " +
+                                        "requiring the motors. This is useful if you need to move the bed or Tool Head assembly manually. Take care " +
+                                        "if the printer is still hot.")
+                    );
+                }
+                else
+                {
+                    base.hideTooltip();
+                }
+            }
             style:  UM.Theme.styles.monitor_checkable_button_style
         }
 
         Button {
+            id: levelXButton
             text: "Level X Axis"
             Layout.row: 2
             Layout.column: 0
@@ -166,10 +246,27 @@ Item {
             {
                 connectedPrinter.levelXAxis()
             }
+
+            onHoveredChanged:
+            {
+                if (hovered)
+                {
+                    base.showTooltip(
+                        base,
+                        {x: -200, y: levelXButton.mapToItem(base, 0, -10).y},
+                        catalog.i18nc("@tooltip of tool head swap", "This is a test to see if tool tips work in this module")
+                    );
+                }
+                else
+                {
+                    base.hideTooltip();
+                }
+            }
             style:  UM.Theme.styles.monitor_checkable_button_style
         }
 
         Button {
+            id: wipeNozzleButton
             text: "Wipe Nozzle"
             Layout.row: 2
             Layout.column: 1
@@ -184,6 +281,22 @@ Item {
             onClicked:
             {
                 connectedPrinter.wipeNozzle()
+            }
+
+            onHoveredChanged:
+            {
+                if (hovered)
+                {
+                    base.showTooltip(
+                        base,
+                        {x: -200, y: wipeNozzleButton.mapToItem(base, 0, -10).y},
+                        catalog.i18nc("@tooltip of tool head swap", "This is a test to see if tool tips work in this module")
+                    );
+                }
+                else
+                {
+                    base.hideTooltip();
+                }
             }
             style: UM.Theme.styles.monitor_checkable_button_style
         }
@@ -211,7 +324,7 @@ Item {
                 {
                     base.showTooltip(
                         base,
-                        {x: 0, y: toolHeadSwapButton.mapToItem(base, 0, -parent.height).y},
+                        {x: -200, y: toolHeadSwapButton.mapToItem(base, 0, -10).y},
                         catalog.i18nc("@tooltip of tool head swap", "This is a test to see if tool tips work in this module")
                     );
                 }
