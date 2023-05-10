@@ -127,7 +127,7 @@ UM.Dialog
         CheckBox
         {
             id: filterCheckbox
-            text: catalog.i18nc("@action:button","Show debug messages")
+            text: catalog.i18nc("@action:button","Show Debug Messages ")
             checked: false
         },
         Button

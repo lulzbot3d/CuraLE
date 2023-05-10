@@ -138,39 +138,35 @@ Item {
             MonitorSection {
                 label: catalog.i18nc("@label", "Active Print")
                 width: base.width
-                visible: activePrintJob != null
+                visible: true //activePrintJob != null
             }
 
 
             MonitorItem {
-                label: catalog.i18nc("@label", "Job Name")
-                value: activePrintJob != null ? activePrintJob.name : ""
+                label: catalog.i18nc("@label", "Job Name:")
+                value: activePrintJob != null ? activePrintJob.name : "N/A"
                 width: base.width
-                //visible: activePrinter != null
-                visible: activePrintJob != null
             }
 
             MonitorItem {
-                label: catalog.i18nc("@label", "Printing Time")
-                value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal) : ""
+                label: catalog.i18nc("@label", "Printing Time:")
+                value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal) : "N/A"
                 width: base.width
-                //visible: activePrinter != null
-                visible: activePrintJob != null
             }
 
             MonitorItem {
-                label: catalog.i18nc("@label", "Estimated time left")
-                value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal - activePrintJob.timeElapsed) : ""
-                visible: {
-                    if(activePrintJob == null) {
-                        return false
-                    }
+                label: catalog.i18nc("@label", "Estimated Time Remaining:")
+                value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal - activePrintJob.timeElapsed) : "N/A"
+                // visible: {
+                //     if(activePrintJob == null) {
+                //         return false
+                //     }
 
-                    return (activePrintJob.state == "printing" ||
-                            activePrintJob.state == "resuming" ||
-                            activePrintJob.state == "pausing" ||
-                            activePrintJob.state == "paused")
-                }
+                //     return (activePrintJob.state == "printing" ||
+                //             activePrintJob.state == "resuming" ||
+                //             activePrintJob.state == "pausing" ||
+                //             activePrintJob.state == "paused")
+                // }
                 width: base.width
             }
         }
