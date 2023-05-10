@@ -207,7 +207,7 @@ Item {
 
             onClicked:
             {
-                Cura.USBPrinterManager.sendCommandToCurrentPrinter("M18")
+                printerModel.sendRawCommand("M18")
             }
 
             onHoveredChanged:
@@ -240,7 +240,7 @@ Item {
             Layout.preferredHeight: height
             width: (base.width / 2) - (UM.Theme.getSize("default_margin").width * (3 / 2))
             height: UM.Theme.getSize("setting_control").height * 1.5
-            enabled: canSendCommand && connectedPrinter.supportLevelXAxis
+            enabled: checkEnabled() && connectedPrinter.supportLevelXAxis
 
             onClicked:
             {
@@ -254,7 +254,8 @@ Item {
                     base.showTooltip(
                         base,
                         {x: -200, y: levelXButton.mapToItem(base, 0, -10).y},
-                        catalog.i18nc("@tooltip of tool head swap", "This is a test to see if tool tips work in this module")
+                        catalog.i18nc("@tooltip of level x axis", "Levels the X Axis of the printer on certain printers with belt-driven " +
+                                        "Z-axes. Runs a provided leveling G-Code file specific to each supported printer.")
                     );
                 }
                 else
@@ -276,7 +277,7 @@ Item {
             width: (base.width / 2) - (UM.Theme.getSize("default_margin").width * (3 / 2))
             height: UM.Theme.getSize("setting_control").height * 1.5
 
-            enabled: canSendCommand && connectedPrinter.supportWipeNozzle
+            enabled: checkEnabled() && connectedPrinter.supportWipeNozzle
 
             onClicked:
             {
@@ -290,7 +291,8 @@ Item {
                     base.showTooltip(
                         base,
                         {x: -200, y: wipeNozzleButton.mapToItem(base, 0, -10).y},
-                        catalog.i18nc("@tooltip of tool head swap", "This is a test to see if tool tips work in this module")
+                        catalog.i18nc("@tooltip of wipe nozzle", "Cleans Tool Head nozzles by wiping heated nozzles on the wiper pads of supported printers. " +
+                                        "Runs a wipe G-Code file provided for each supported printer.")
                     );
                 }
                 else
@@ -315,7 +317,7 @@ Item {
 
             onClicked:
             {
-                Cura.USBPrinterManager.sendCommandToCurrentPrinter("G28 O\nG27")
+                printerModel.sendRawCommand("G28 O\nG27")
             }
 
             onHoveredChanged:
@@ -325,7 +327,8 @@ Item {
                     base.showTooltip(
                         base,
                         {x: -200, y: toolHeadSwapButton.mapToItem(base, 0, -10).y},
-                        catalog.i18nc("@tooltip of tool head swap", "This is a test to see if tool tips work in this module")
+                        catalog.i18nc("@tooltip of tool head swap", "Moves the Tool Head to the park position, which works best for changing out filament " +
+                                        "or the Tool Head itself.")
                     );
                 }
                 else

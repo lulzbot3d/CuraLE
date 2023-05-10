@@ -580,7 +580,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         print_job.updateTimeElapsed(elapsed_time)
         estimated_time = self._print_estimated_time
         if progress > .1:
-            estimated_time = self._print_estimated_time * (1 - progress) + elapsed_time
+            estimated_time = int(self._print_estimated_time * (1 - progress) + elapsed_time)
         print_job.updateTimeTotal(estimated_time)
 
         self._gcode_position += 1
@@ -605,7 +605,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         if not safe:
             # We can't wipe, there's probably already a print in progress
             return
-        code = code.replace("{material_wipe_temperature}", str(CuraApplication.getInstance().getGlobalContainerStack().getProperty("material_wipe_temperature", "value"))).split("\n")
+        code = code.replace("{material_wipe_temperature}", str(CuraApplication.getInstance().getGlobalContainerStack().getProperty("material_wipe_temperature", "value")))#.split("\n")
         self.writeStarted.emit(self)
         self._printGCode(code)
 
@@ -629,7 +629,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         if not safe:
             # We can't level, there's probably already a print in progress
             return
-        code = code.split("\n")
+        # code = code.split("\n")
         self.writeStarted.emit(self)
         self._printGCode(code)
 
