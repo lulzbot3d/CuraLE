@@ -276,7 +276,7 @@ Item
                 {
                    return catalog.i18nc("@label", "Pause");
                 }
-                var jobState = Cura.MachineManager.printerOutputDevices[0].jobState;
+                var jobState = printerOutputDevice.jobState;
 
                 if (activePrintJob.state == "paused")
                 {

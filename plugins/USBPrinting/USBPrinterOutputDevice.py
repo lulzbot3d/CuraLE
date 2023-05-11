@@ -175,16 +175,45 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             known_baud_job.start()
             known_baud_job.finished.connect(self._knownBaudFinished)
             return
+
         firmware_response_status = self._checkFirmware()
-        if firmware_response_status is self.CheckFirmwareStatus.TIMEOUT:
-            message = Message(text = catalog.i18nc("@message",
+        ## Check what the firmware status came back as and whether or not we should ignore it.
+        if firmware_response_status is not self.CheckFirmwareStatus.OK:
+            overriden = False
+            allow_wrong = CuraApplication.getInstance().getPreferences().getValue("cura/allow_connection_to_wrong_machine")
+            if firmware_response_status is self.CheckFirmwareStatus.TIMEOUT:
+                message = Message(text = catalog.i18nc("@message",
                                 "The printer did not respond to the firmware check. Is firmware loaded?"),
                                 title = catalog.i18nc("@message", "No Response"),
                                 message_type = Message.MessageType.ERROR)
-            message.show()
-            self._serial.close()
-            self._serial = None
-            return
+            elif firmware_response_status is self.CheckFirmwareStatus.WRONG_MACHINE:
+                message = Message(text = catalog.i18nc("@message",
+                                "Firmware printer type doesn't match active printer in Cura LE!"),
+                                title = catalog.i18nc("@message", "Wrong Machine!"),
+                                message_type = Message.MessageType.ERROR)
+                if allow_wrong: overriden = True
+            elif firmware_response_status is self.CheckFirmwareStatus.WRONG_TOOLHEAD:
+                message = Message(text = catalog.i18nc("@message",
+                                "The printer reports having a different Tool Head than the active printer in Cura LE!"),
+                                title = catalog.i18nc("@message", "Wrong Tool Head!"),
+                                message_type = Message.MessageType.ERROR)
+                if allow_wrong: overriden = True
+            elif firmware_response_status is self.CheckFirmwareStatus.FIRMWARE_OUTDATED:
+                overriden = True
+                message = Message(text = catalog.i18nc("@message",
+                                "Printer appears to have outdated firmware."),
+                                title = catalog.i18nc("@message", "Old Firmware"),
+                                message_type = Message.MessageType.ERROR)
+            else:
+                message = Message(text = catalog.i18nc("@message",
+                                "Unknown CheckFirmwareStatus state!"),
+                                title = catalog.i18nc("@message", "Oh No!"),
+                                message_type = Message.MessageType.ERROR)
+            # Ignore it if it's minor or if the user has elected to
+            if not overriden:
+                message.show()
+                self.close()
+                return
         self.setConnectionState(ConnectionState.Connected)
         self._setAcceptsCommands(True)
         self._update_thread.start()
@@ -230,6 +259,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
                 if b"disconnect" in line:
                     self.setConnectionState(ConnectionState.Closed)
+                    self.close()
                     break
 
                 if b"poweroff" in line:
@@ -247,6 +277,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 # Skip the communication errors, as those get corrected.
                 if b"Extruder switched off" in line or b"Temperature heated bed switched off" in line or b"Something is wrong, please turn off the printer." in line:
                     self.setConnectionState(ConnectionState.Error)
+                    self.close()
 
             if self._last_temperature_request is None or time() > self._last_temperature_request + self._timeout:
                 # Timeout, or no request has been sent at all.
