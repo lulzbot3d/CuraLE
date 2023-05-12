@@ -96,6 +96,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
         self._firmware_name_requested = False
         self._firmware_updater = LulzFirmwareUpdater(self)
+        self._firmware_data = None
 
         plugin_path = PluginRegistry.getInstance().getPluginPath("USBPrinting")
         if plugin_path:
@@ -157,6 +158,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self.setConnectionState(ConnectionState.Closed)
 
         self._firmware_name = None  # after each connection ensure that the firmware name is removed
+        self._firmware_data = None
 
         if self._baud_rate is None:
             self._baud_rate = CuraApplication.getInstance().getGlobalContainerStack().getProperty("machine_baudrate", "value")
@@ -240,6 +242,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 decoded_line = line.decode()
                 if decoded_line != "":
                     self.messageFromPrinter.emit(decoded_line.strip('\n'))
+                    ## might want to save these somewhere at some point, could be handy.
+                    ##print(decoded_line.strip('\n'))
             except Exception as e:
                 print(e)
                 continue
@@ -273,11 +277,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 # So we can have an extra newline in the most common case. Awesome work people.
                 if re.match(b"Error:[0-9]\n", line):
                     line = line.rstrip() + self._serial.readline().decode()
+                    Logger.log("w", "Printer sent a numerical error message!")
 
                 # Skip the communication errors, as those get corrected.
                 if b"Extruder switched off" in line or b"Temperature heated bed switched off" in line or b"Something is wrong, please turn off the printer." in line:
                     self.setConnectionState(ConnectionState.Error)
-                    self.close()
 
             if self._last_temperature_request is None or time() > self._last_temperature_request + self._timeout:
                 # Timeout, or no request has been sent at all.
@@ -412,10 +416,14 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
 
     def _checkFirmware(self):
-        self.sendCommand("M115")
-        timeout = time() + 2
+        self._sendCommand("M115")
+        last_sent = time()
+        timeout = time() + 3
         reply = self._serial.readline()
         while b"FIRMWARE_NAME" not in reply and time() < timeout:
+            if last_sent > 1:
+                self._sendCommand("M115")
+                last_sent = time()
             reply = self._serial.readline()
 
         if b"FIRMWARE_NAME" not in reply:
@@ -424,8 +432,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             return self.CheckFirmwareStatus.TIMEOUT
 
         firmware_string = reply.decode()
-        print(firmware_string)
-        values = {m[0] : m[1] for m in re.findall("([A-Z_]+)\:(.*?)(?= [A-Z_]+\:|$)", firmware_string)}
+        self._setFirmwareData(firmware_string)
+        values = self._firmware_data
 
         global_container_stack = CuraApplication.getInstance().getGlobalContainerStack()
 
@@ -467,7 +475,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             },
             {
                 "reply_key": "FIRMWARE_VERSION",
-                "definition_key": "firmware_last_version",
+                "definition_key": "firmware_latest_version",
                 "on_fail": self.CheckFirmwareStatus.FIRMWARE_OUTDATED
             }
         ]
@@ -493,8 +501,21 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self._firmware_name = "Unknown"
             Logger.log("i", "Unknown USB output device Firmware name: %s", str(name))
 
+    def _setFirmwareData(self, data):
+        data_dict = {m[0] : m[1] for m in re.findall("([A-Z_]+)\:(.*?)(?= [A-Z_]+\:|$)", data)}
+        if data_dict:
+            self._firmware_data = data_dict
+            Logger.log("i", "Firmware data collected and stored")
+        else:
+            Logger.log("No valid firmware data found! What did the printer return?")
+
     def getFirmwareName(self):
         return self._firmware_name
+
+    def getFirmwareVersion(self):
+        if self._firmware_data and "FIRMWARE_VERSION" in self._firmware_data:
+            return self._firmware_data["FIRMWARE_VERSION"]
+        return catalog.i18nc("@info:status", "Connect for Info")
 
 
     ########### PRINTER COMMANDS ############

@@ -82,7 +82,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
                 if "text/x-gcode" in machine_file_formats:
                     port_list = self.getSerialPortList(only_list_usb=True)
             self._addRemovePorts(port_list)
-            time.sleep(2)
+            time.sleep(5)
         Logger.log("d", "USB Output Device discovery update thread stopped.")
 
     def getSerialPortList(self, only_list_usb = False):
@@ -180,21 +180,20 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
                 message_type = Message.MessageType.WARNING)
             wrong_printer_message.show()
 
-        elif changed_device.connectionState == ConnectionState.Closed:
-            changed_device.close()
-            disconnected_printer_message = Message(
-                i18n_catalog.i18nc("@info:status", "Printer initiated connection closure, connection closed!"),
-                title = i18n_catalog.i18nc("@info:title", "Printer dropped connection!"),
-                message_type = Message.MessageType.WARNING)
-            disconnected_printer_message.show()
+        # elif changed_device.connectionState == ConnectionState.Closed:
+        #     disconnected_printer_message = Message(
+        #         i18n_catalog.i18nc("@info:status", "Printer initiated connection closure, connection closed!"),
+        #         title = i18n_catalog.i18nc("@info:title", "Printer dropped connection!"),
+        #         message_type = Message.MessageType.WARNING)
+        #     disconnected_printer_message.show()
 
         elif changed_device.connectionState == ConnectionState.Error:
-            changed_device.close()
             error_printer_message = Message(
                 i18n_catalog.i18nc("@info:status", "Printer encountered an error, connection closed!"),
                 title = i18n_catalog.i18nc("@info:title", "Printer Error!"),
                 message_type = Message.MessageType.ERROR)
             error_printer_message.show()
+            changed_device.close()
 
     __instance = None # type: USBPrinterOutputDeviceManager
 

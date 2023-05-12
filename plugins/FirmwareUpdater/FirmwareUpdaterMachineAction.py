@@ -24,7 +24,7 @@ class FirmwareUpdaterMachineAction(MachineAction):
     """Upgrade the firmware of a machine by USB with this action."""
 
     def __init__(self) -> None:
-        super().__init__("UpgradeFirmware", catalog.i18nc("@action", "Update Firmware"))
+        super().__init__("UpgradeFirmware", catalog.i18nc("@action", "Firmware Update"))
         self._qml_url = "FirmwareUpdaterMachineAction.qml"
         ContainerRegistry.getInstance().containerAdded.connect(self._onContainerAdded)
 
