@@ -132,6 +132,29 @@ Item
             }
         }
 
+        // Row {
+        //     Repeater {
+        //         id: machineActionRepeater
+        //         model: base.currentItem ? Cura.MachineActionManager.getSupportedActions(Cura.MachineManager.getDefinitionByMachineId(base.currentItem.id)) : null
+
+        //         Item {
+        //             width: Math.round(childrenRect.width + 2 * screenScaleFactor)
+        //             height: childrenRect.height
+        //             Button {
+        //                 text: machineActionRepeater.model[index].label
+        //                 onClicked:
+        //                 {
+        //                     var currentItem = machineActionRepeater.model[index]
+        //                     actionDialog.loader.manager = currentItem
+        //                     actionDialog.loader.source = currentItem.qmlPath
+        //                     actionDialog.title = currentItem.label
+        //                     actionDialog.show()
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+
         Row
         {
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
