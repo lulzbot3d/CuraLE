@@ -51,26 +51,29 @@ new versions are released and will continue to be utilized as the project progre
 		Changed default settings view to use Advanced settings instead of Basic
 			Should be more in-line with the settings view from 3.6
 
-4.13.0-BETAv1.0:
+4.13.0-BETAv1.0: (4.13 Features branch off from 3.6 after 3.6.37. Some settings may be slightly different)
 	Updated main branch to upstream Cura 4.13 work
 		Full descriptive patchnotes for this still need to be written
 		Lots of changes, including improved stability and a new look
 
-3.6.38: (In-Progress)
+3.6.38(Scrapped) -> 3.6.39:
 	Printer Changes:
 		Added the TAZ Pro Long Bed printer
 			TAZ Pro with a substantially longer y-axis that allows for seamless long prints.
 		Removed the M175v1 Tool Head
 			Tool Head's existence was confusing for users, especially since it had it's own slightly altered firmware.
 			Anyone with a M175v1 can easily upgrade to a v2, and most if not all already should have.
+		Added the BLTouch add-on for Pro and ProXL
+			Allows customers to flash firmware for Pro and ProXL printers equipped with BLTouches
 	Firmware Changes:
 		SideKicks firmware updated from 2.0.9.0.10 to 2.0.9.0.14
 			Changed default z-offset to -1.23 to reduce chances of the nozzle digging into the bed on first print
 		TAZ Pro and TAZ Pro XT updated from 2.0.0.144.7 to 2.0.0.144.8
 			Y axis minimum position updated to avoid hitting
+		Added TAZ Pro and TAZ Pro XT BLTouch firmware
 	Material Profile Changes:
 		Added 2.85mm profiles for SE, HE, HS, and Dual Tool Heads for NinjaTek Armadillo
-		Added 1.75mm profiles for Polymaker PolyFlex
+		Added 1.75mm profiles for Polymaker PolyFlex - Fixed broken file name references for a couple 2.85 quality profiles
 		Added some missing Village Plastics ABS profiles on the Workhorse with SE
 		Added Polymaker ASA 1.75mm to all 1.75 Tool Heads on all current printers
 		Added NinjaTek Cheetah to all currently supported Tool Head/printer combinations
