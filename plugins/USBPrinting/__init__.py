@@ -2,9 +2,7 @@
 # Cura is released under the terms of the LGPLv3 or higher.
 
 from PyQt5.QtQml import qmlRegisterSingletonType
-from . import USBPrinterOutputDeviceManager as USBPrinter
 from .USBPrinterOutputDeviceManager import USBPrinterOutputDeviceManager
-from . import FirmwareUpdaterMachineAction
 
 def getMetaData():
     return {}
@@ -15,5 +13,4 @@ def register(app):
     # but we don't really have another means for doing this (and it seems to you know -work-)
     qmlRegisterSingletonType(USBPrinterOutputDeviceManager, "Cura", 1, 0, "USBPrinterOutputDeviceManager",
                              USBPrinterOutputDeviceManager.getInstance)
-    return {"output_device": USBPrinter.USBPrinterOutputDeviceManager(app),
-            "machine_action": [FirmwareUpdaterMachineAction.FirmwareUpdaterMachineAction()]}
+    return {"output_device": USBPrinterOutputDeviceManager(app)}

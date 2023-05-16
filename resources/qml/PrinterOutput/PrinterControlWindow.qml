@@ -13,7 +13,7 @@ UM.Dialog
 {
 
     id: base
-    title: catalog.i18nc("@title:window","Printer control")
+    title: catalog.i18nc("@title:window","Printer Control")
     modality: Qt.NonModal;
     minimumWidth: 800 * screenScaleFactor
     minimumHeight: 640 * screenScaleFactor
@@ -127,7 +127,7 @@ UM.Dialog
         CheckBox
         {
             id: filterCheckbox
-            text: catalog.i18nc("@action:button","Show debug messages ")
+            text: catalog.i18nc("@action:button","Show Debug Messages ")
             checked: false
         },
         Button

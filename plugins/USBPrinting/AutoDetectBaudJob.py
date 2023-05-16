@@ -53,7 +53,12 @@ class AutoDetectBaudJob(Job):
                     try:
                         serial = Serial(str(self._serial_port), baud_rate, timeout = read_timeout, writeTimeout = write_timeout)
                     except SerialException:
-                        Logger.logException("w", "Unable to create serial")
+                        if retry == tries - 1:
+                            Logger.logException("w", "Unable to create serial")
+                            Logger.log("w", "Failed AutoDetect Baud twice")
+                        else:
+                            Logger.log("w", "Serial creation failed, printer may be busy... retrying in 10 seconds")
+                            sleep(10)
                         continue
                 else:
                     # We already have a serial connection, just change the baud rate.
@@ -76,9 +81,8 @@ class AutoDetectBaudJob(Job):
                     line = serial.read_until(size = 100)
                     if b"ok" in line and b"T:" in line:
                         self.setResult([baud_rate, serial])
-                        Logger.log("d", "Detected baud rate {baud_rate} on serial {serial} on retry {retry} with after {time_elapsed:0.2f} seconds.".format(
+                        Logger.log("d", "Detected baud rate {baud_rate} on serial {serial} on retry {retry} after {time_elapsed:0.2f} seconds.".format(
                             serial = self._serial_port, baud_rate = baud_rate, retry = retry, time_elapsed = time() - start_timeout_time))
-                        #serial.close() # close serial port so it can be opened by the USBPrinterOutputDevice
                         return
 
                     serial.write(b"M105\n")

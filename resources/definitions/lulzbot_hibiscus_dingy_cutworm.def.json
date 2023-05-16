@@ -41,10 +41,6 @@
         "machine_start_gcode":
         {
             "default_value_from_file": "lulzbot_hibiscus/lulzbot_hibiscus_dingy_cutworm_start"
-        },
-        "firmware_machine_type":
-        {
-            "default_value": "LulzBot Mini 2"
         }
     }
 }

@@ -3,172 +3,341 @@ import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 import QtQuick.Layouts 1.1
 
-import UM 1.2 as UM
+import UM 1.3 as UM
 import Cura 1.0 as Cura
 
-Item
-{
-    property var connectedPrinter: printerConnected ? Cura.MachineManager.printerOutputDevices[0] : null
-    width: 410
+Item {
+    property int deviceCount: Cura.MachineManager.printerOutputDevices.length
+    property var connectedPrinter: deviceCount >= 1 ? Cura.MachineManager.printerOutputDevices[deviceCount - 1] : null
+    property var printerModel: connectedPrinter != null && connectedPrinter.address != "None" ? connectedPrinter.activePrinter : null
+    property bool canSendCommand: connectedPrinter.acceptsCommands
+    width: base.width
     height: 130
-    enabled: connectedPrinter
 
-        GridLayout
+    function checkEnabled()
+    {
+        if (printerModel == null)
         {
-            id: predefinedButtons
-            columns: 4
-            rows: 3
-            rowSpacing: 1
-            columnSpacing: 1
-            anchors.fill: parent
-            anchors.centerIn: parent
-            anchors.leftMargin: 5
-            anchors.rightMargin: 5
-
-            Button
-            {
-                text: "Preheat nozzle"
-                Layout.row: 1
-                Layout.column: 1
-                Layout.preferredWidth: parent.width/3 - predefinedButtons.columnSpacing*7
-                Layout.preferredHeight: UM.Theme.getSize("section").height
-
-                onClicked:
-                {
-                    connectedPrinter.preheatHotend(Cura.MonitorStageStorage.extruderNumber)
-                }
-                style: UM.Theme.styles.print_monitor_control_button
-
-            }
-
-            Button
-            {
-                text: "Wipe nozzle"
-                Layout.row: 1
-                Layout.column: 2
-                Layout.preferredWidth: parent.width/3 - predefinedButtons.columnSpacing*7
-                Layout.preferredHeight: UM.Theme.getSize("section").height
-
-                enabled: connectedPrinter && connectedPrinter.supportWipeNozzle
-
-                onClicked:
-                {
-                    connectedPrinter.wipeNozzle()
-                }
-                style: UM.Theme.styles.print_monitor_control_button
-
-            }
-
-            Button
-            {
-                text: "Cool nozzle"
-                Layout.row: 1
-                Layout.column: 3
-                Layout.preferredWidth: parent.width/3 - predefinedButtons.columnSpacing*7
-                Layout.preferredHeight: UM.Theme.getSize("section").height
-
-                onClicked:
-                {
-                    connectedPrinter.setTargetHotendTemperature(Cura.MonitorStageStorage.extruderNumber, 0)
-                }
-                style:  UM.Theme.styles.print_monitor_control_button
-
-            }
-
-            Button
-            {
-                text: "Preheat bed"
-                //width: parent.width/3
-                Layout.row: 2
-                Layout.column: 1
-                Layout.preferredWidth: parent.width/3 - predefinedButtons.columnSpacing*7
-                Layout.preferredHeight: UM.Theme.getSize("section").height
-
-                onClicked:
-                {
-                    connectedPrinter.preheatBed()
-                }
-                style:  UM.Theme.styles.print_monitor_control_button
-
-            }
-
-            Button
-            {
-                text: "Cool bed"
-                Layout.row: 2
-                Layout.column: 2
-                Layout.preferredWidth: parent.width/3 - predefinedButtons.columnSpacing*7
-                Layout.preferredHeight: UM.Theme.getSize("section").height
-
-                onClicked:
-                {
-                    connectedPrinter.setTargetBedTemperature(0)
-                }
-                style:  UM.Theme.styles.print_monitor_control_button
-
-            }
-
-            Button
-            {
-                text: "Cold pull"
-                Layout.row: 2
-                Layout.column: 3
-                Layout.preferredWidth: parent.width/3 - predefinedButtons.columnSpacing*7
-                Layout.preferredHeight: UM.Theme.getSize("section").height
-                enabled:
-                {
-                    var name = Cura.MachineManager.activeMachineName
-                    if(name.includes("Aerostruder"))
-                    {
-                        return connectedPrinter && false;
-                    }
-                    else
-                    {
-                        return connectedPrinter && true
-                    }
-                }
-
-                onClicked:
-                {
-                    connectedPrinter.coldPull(Cura.MonitorStageStorage.extruderNumber)
-                }
-                style:  UM.Theme.styles.print_monitor_control_button
-
-            }
-
-            Button
-            {
-                text: "Motors off"
-                Layout.row: 3
-                Layout.column: 1
-                Layout.preferredWidth: parent.width/3 - predefinedButtons.columnSpacing*7
-                Layout.preferredHeight: UM.Theme.getSize("section").height
-
-                onClicked:
-                {
-                    Cura.USBPrinterManager.sendCommandToCurrentPrinter("M18")
-                }
-                style:  UM.Theme.styles.print_monitor_control_button
-
-            }
-
-            Button
-            {
-                text: "Level X Axis"
-                Layout.row: 3
-                Layout.column: 2
-                Layout.preferredWidth: parent.width/3 - predefinedButtons.columnSpacing*7
-                Layout.preferredHeight: UM.Theme.getSize("section").height
-
-                enabled: connectedPrinter && connectedPrinter.supportLevelXAxis
-
-                onClicked:
-                {
-                    connectedPrinter.levelXAxis()
-                }
-                style:  UM.Theme.styles.print_monitor_control_button
-
-            }
-
+            return false; //Can't control the printer if not connected
         }
+
+        if (canSendCommand == false)
+        {
+            return false; //Not allowed to do anything.
+        }
+
+        if(activePrintJob == null)
+        {
+            return true;
+        }
+
+        if (activePrintJob.state == "printing" || activePrintJob.state == "resuming" || activePrintJob.state == "pausing" || activePrintJob.state == "error" || activePrintJob.state == "offline")
+        {
+            return false; //Printer is in a state where it can't react to manual control
+        }
+        return true;
+    }
+
+    Rectangle {
+        id: sectionHeader
+        color: UM.Theme.getColor("setting_category")
+        width: base.width
+        height: UM.Theme.getSize("section").height
+
+        Label
+        {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            anchors.leftMargin: UM.Theme.getSize("default_margin").width
+            text: "LulzBot Predefined Commands"
+            font: UM.Theme.getFont("default")
+            color: UM.Theme.getColor("setting_category_text")
+        }
+    }
+
+    GridLayout {
+        id: predefinedButtons
+        columns: 2
+        rows: 3
+        rowSpacing: UM.Theme.getSize("default_margin").width
+        columnSpacing: UM.Theme.getSize("default_margin").width / 2
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: sectionHeader.bottom
+        anchors.topMargin: UM.Theme.getSize("default_margin").width
+        anchors.leftMargin: UM.Theme.getSize("default_margin").width
+        anchors.rightMargin: UM.Theme.getSize("default_margin").width
+
+        Button {
+            id: coolNozzleButton
+            text: "Cool Nozzles"
+            Layout.row: 0
+            Layout.column: 0
+            Layout.alignment: Qt.AlignHCenter
+            Layout.preferredWidth: width
+            Layout.preferredHeight: height
+            width: (base.width / 2) - (UM.Theme.getSize("default_margin").width * (3 / 2))
+            height: UM.Theme.getSize("setting_control").height * 1.5
+            enabled: checkEnabled()
+
+            onClicked:
+            {
+                for (var i = 0; i < printerModel.extruders.length; i++) {
+                    var extruder = printerModel.extruders[i];
+                    if (extruder.isPreheating) {
+                        extruder.cancelPreheatHotend()
+                    }
+                    extruder.setTargetHotendTemperature(0.0)
+                }
+            }
+
+            onHoveredChanged:
+            {
+                if (hovered)
+                {
+                    base.showTooltip(
+                        base,
+                        {x: -200, y: coolNozzleButton.mapToItem(base, 0, -10).y},
+                        catalog.i18nc("@tooltip of cool nozzles", "Sets nozzle temperatures to 0 for all nozzles, can be used in case of UI error as a safety measure.")
+                    );
+                }
+                else
+                {
+                    base.hideTooltip();
+                }
+            }
+            style:  UM.Theme.styles.monitor_checkable_button_style
+        }
+
+        Button {
+            id: coolBedButton
+            text: "Cool Bed"
+            Layout.row: 0
+            Layout.column: 1
+            Layout.alignment: Qt.AlignHCenter
+            Layout.preferredWidth: width
+            Layout.preferredHeight: height
+            width: (base.width / 2) - (UM.Theme.getSize("default_margin").width * (3 / 2))
+            height: UM.Theme.getSize("setting_control").height * 1.5
+            enabled: checkEnabled()
+
+            onClicked:
+            {
+                if (printerModel.isPreheating){
+                    printerModel.cancelPreheatBed()
+                }
+                printerModel.setTargetBedTemperature(0.0)
+            }
+
+            onHoveredChanged:
+            {
+                if (hovered)
+                {
+                    base.showTooltip(
+                        base,
+                        {x: -200, y: coolBedButton.mapToItem(base, 0, -10).y},
+                        catalog.i18nc("@tooltip of cool bed", "Sets bed temperature to 0, can be used in case of UI error as a safety measure.")
+                    );
+                }
+                else
+                {
+                    base.hideTooltip();
+                }
+            }
+            style:  UM.Theme.styles.monitor_checkable_button_style
+        }
+
+        Button {
+            id: coldPullButton
+            text: "Cold Pull"
+            Layout.row: 1
+            Layout.column: 0
+            Layout.alignment: Qt.AlignHCenter
+            Layout.preferredWidth: width
+            Layout.preferredHeight: height
+            width: (base.width / 2) - (UM.Theme.getSize("default_margin").width * (3 / 2))
+            height: UM.Theme.getSize("setting_control").height * 1.5
+            enabled: false
+            // {
+            //     var name = Cura.MachineManager.activeMachine.name
+            //     if(name.includes("Aerostruder"))
+            //     {
+            //         return false;
+            //     }
+            //     else
+            //     {
+            //         return canSendCommand && true
+            //     }
+            // }
+
+            onClicked:
+            {
+                connectedPrinter.coldPull(Cura.MonitorStageStorage.extruderNumber)
+            }
+
+            onHoveredChanged:
+            {
+                if (hovered)
+                {
+                    base.showTooltip(
+                        base,
+                        {x: -200, y: coldPullButton.mapToItem(base, 0, -10).y},
+                        catalog.i18nc("@tooltip of cold pull", "Currently disabled, may be re-enabled later on!")
+                    );
+                }
+                else
+                {
+                    base.hideTooltip();
+                }
+            }
+            style:  UM.Theme.styles.monitor_checkable_button_style
+        }
+
+        Button {
+            id: disableSteppersButton
+            text: "Disable Steppers"
+            Layout.row: 1
+            Layout.column: 1
+            Layout.alignment: Qt.AlignHCenter
+            Layout.preferredWidth: width
+            Layout.preferredHeight: height
+            width: (base.width / 2) - (UM.Theme.getSize("default_margin").width * (3 / 2))
+            height: UM.Theme.getSize("setting_control").height * 1.5
+            enabled: checkEnabled()
+
+            onClicked:
+            {
+                printerModel.sendRawCommand("M18")
+            }
+
+            onHoveredChanged:
+            {
+                if (hovered)
+                {
+                    base.showTooltip(
+                        base,
+                        {x: -200, y: disableSteppersButton.mapToItem(base, 0, -10).y},
+                        catalog.i18nc("@tooltip of disable steppers", "Disables the stepper motors on your printer until another command is sent " +
+                                        "requiring the motors. This is useful if you need to move the bed or Tool Head assembly manually. Take care " +
+                                        "if the printer is still hot.")
+                    );
+                }
+                else
+                {
+                    base.hideTooltip();
+                }
+            }
+            style:  UM.Theme.styles.monitor_checkable_button_style
+        }
+
+        Button {
+            id: levelXButton
+            text: "Level X Axis"
+            Layout.row: 2
+            Layout.column: 0
+            Layout.alignment: Qt.AlignHCenter
+            Layout.preferredWidth: width
+            Layout.preferredHeight: height
+            width: (base.width / 2) - (UM.Theme.getSize("default_margin").width * (3 / 2))
+            height: UM.Theme.getSize("setting_control").height * 1.5
+            enabled: checkEnabled() && connectedPrinter.supportLevelXAxis
+
+            onClicked:
+            {
+                connectedPrinter.levelXAxis()
+            }
+
+            onHoveredChanged:
+            {
+                if (hovered)
+                {
+                    base.showTooltip(
+                        base,
+                        {x: -200, y: levelXButton.mapToItem(base, 0, -10).y},
+                        catalog.i18nc("@tooltip of level x axis", "Levels the X Axis of the printer on certain printers with belt-driven " +
+                                        "Z-axes. Runs a provided leveling G-Code file specific to each supported printer.")
+                    );
+                }
+                else
+                {
+                    base.hideTooltip();
+                }
+            }
+            style:  UM.Theme.styles.monitor_checkable_button_style
+        }
+
+        Button {
+            id: wipeNozzleButton
+            text: "Wipe Nozzle"
+            Layout.row: 2
+            Layout.column: 1
+            Layout.alignment: Qt.AlignHCenter
+            Layout.preferredWidth: width
+            Layout.preferredHeight: height
+            width: (base.width / 2) - (UM.Theme.getSize("default_margin").width * (3 / 2))
+            height: UM.Theme.getSize("setting_control").height * 1.5
+
+            enabled: checkEnabled() && connectedPrinter.supportWipeNozzle
+
+            onClicked:
+            {
+                connectedPrinter.wipeNozzle()
+            }
+
+            onHoveredChanged:
+            {
+                if (hovered)
+                {
+                    base.showTooltip(
+                        base,
+                        {x: -200, y: wipeNozzleButton.mapToItem(base, 0, -10).y},
+                        catalog.i18nc("@tooltip of wipe nozzle", "Cleans Tool Head nozzles by wiping heated nozzles on the wiper pads of supported printers. " +
+                                        "Runs a wipe G-Code file provided for each supported printer.")
+                    );
+                }
+                else
+                {
+                    base.hideTooltip();
+                }
+            }
+            style: UM.Theme.styles.monitor_checkable_button_style
+        }
+
+        Button {
+            id: toolHeadSwapButton
+            text: "Tool Head Swapping and Filament Changing Position"
+            Layout.row: 3
+            Layout.column: 0
+            Layout.columnSpan: 2
+            Layout.preferredWidth: width
+            Layout.preferredHeight: height
+            width: base.width - (UM.Theme.getSize("default_margin").width * 2)
+            height: UM.Theme.getSize("setting_control").height * 1.5
+            enabled: checkEnabled()
+
+            onClicked:
+            {
+                printerModel.sendRawCommand("G28 O\nG27")
+            }
+
+            onHoveredChanged:
+            {
+                if (hovered)
+                {
+                    base.showTooltip(
+                        base,
+                        {x: -200, y: toolHeadSwapButton.mapToItem(base, 0, -10).y},
+                        catalog.i18nc("@tooltip of tool head swap", "Moves the Tool Head to the park position, which works best for changing out filament " +
+                                        "or the Tool Head itself.")
+                    );
+                }
+                else
+                {
+                    base.hideTooltip();
+                }
+            }
+            style: UM.Theme.styles.monitor_checkable_button_style
+        }
+
+    }
 }

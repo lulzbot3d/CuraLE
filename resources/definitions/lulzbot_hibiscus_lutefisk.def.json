@@ -42,10 +42,6 @@
         {
             "default_value_from_file": "lulzbot_hibiscus/lulzbot_hibiscus_start"
         },
-        "firmware_machine_type":
-        {
-            "default_value": "LulzBot Mini 2"
-        },
         "material_diameter":
         {
             "default_value": 1.75

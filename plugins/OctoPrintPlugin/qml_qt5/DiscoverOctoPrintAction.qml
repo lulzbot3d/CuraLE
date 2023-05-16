@@ -8,8 +8,7 @@ import QtQuick 2.2
 import QtQuick.Controls 1.1
 
 
-Cura.MachineAction
-{
+Cura.MachineAction {
     id: base
 
     readonly property string defaultHTTP: "80"
@@ -55,8 +54,7 @@ Cura.MachineAction
         }
     }
 
-    Column
-    {
+    Column {
         anchors.fill: parent;
         id: discoverOctoPrintAction
 
@@ -66,8 +64,7 @@ Cura.MachineAction
         SystemPalette { id: palette }
         UM.I18nCatalog { id: catalog; name:"octoprint" }
 
-        Item
-        {
+        Item {
             width: parent.width
             height: pageTitle.height
 
@@ -90,16 +87,14 @@ Cura.MachineAction
             }
         }
 
-        Label
-        {
+        Label {
             id: pageDescription
             width: parent.width
             wrapMode: Text.WordWrap
             text: catalog.i18nc("@label", "Select your OctoPrint instance from the list below.")
         }
 
-        Row
-        {
+        Row {
             spacing: UM.Theme.getSize("default_lining").width
 
             Button
@@ -145,8 +140,7 @@ Cura.MachineAction
             }
         }
 
-        Row
-        {
+        Row {
             width: parent.width
             spacing: UM.Theme.getSize("default_margin").width
 
@@ -340,8 +334,7 @@ Cura.MachineAction
                     Connections
                     {
                         target: base
-                        onSelectedInstanceChanged:
-                        {
+                        function onSelectedInstanceChanged() {
                             if(base.selectedInstance)
                             {
                                 manager.probeAppKeySupport(base.selectedInstance.getId());
@@ -354,8 +347,7 @@ Cura.MachineAction
                     Connections
                     {
                         target: manager
-                        onAppKeyReceived:
-                        {
+                        function onAppKeyReceived() {
                             apiCheckDelay.lastKey = "\0";
                             apiKey.text = manager.getApiKey(base.selectedInstance.getId())
                             apiKey.select(0,0);
@@ -376,7 +368,7 @@ Cura.MachineAction
                         }
                         function check()
                         {
-                            if(apiKey.text != lastKey)
+                            if(apiKey.text != lastKey && base.selectedInstance != null)
                             {
                                 lastKey = apiKey.text;
                                 manager.testApiKey(base.selectedInstance.getId(), apiKey.text);
@@ -478,10 +470,11 @@ Cura.MachineAction
                                 manager.setContainerMetaDataEntry(activeMachineId, "octoprint_power_control", String(checked))
                             }
                         }
-                        Connections
-                        {
+                        Connections {
                             target: manager
-                            onInstanceAvailablePowerPluginsChanged: autoPowerControlPlugsModel.populateModel()
+                            function onInstanceAvailablePowerPluginsChanged() {
+                                autoPowerControlPlugsModel.populateModel()
+                            }
                         }
 
                         ComboBox
@@ -627,7 +620,7 @@ Cura.MachineAction
                     {
                         text:
                         {
-                            if (base.selectedInstance !== null)
+                            if (base.selectedInstance != null)
                             {
                                 if (base.selectedInstance.getId() == manager.instanceId && manager.instanceApiKeyAccepted)
                                 {
@@ -660,8 +653,7 @@ Cura.MachineAction
         }
     }
 
-    UM.SettingPropertyProvider
-    {
+    UM.SettingPropertyProvider {
         id: machineGCodeFlavorProvider
 
         containerStackId: activeMachineId
@@ -670,8 +662,7 @@ Cura.MachineAction
         storeIndex: 4
     }
 
-    ManualInstanceDialog
-    {
+    ManualInstanceDialog {
         id: manualInstanceDialog
     }
 }

@@ -141,7 +141,10 @@ class PrinterOutputDevice(QObject, OutputDevice):
         """
         if self.connectionState != connection_state:
             self._connection_state = connection_state
-            cura.CuraApplication.CuraApplication.getInstance().getGlobalContainerStack().setMetaDataEntry("is_online", self.isConnected())
+            try:
+                cura.CuraApplication.CuraApplication.getInstance().getGlobalContainerStack().setMetaDataEntry("is_online", self.isConnected())
+            except AttributeError:
+                return
             self.connectionStateChanged.emit(self._id)
 
     @pyqtProperty(int, constant = True)
@@ -222,8 +225,10 @@ class PrinterOutputDevice(QObject, OutputDevice):
 
     def __del__(self) -> None:
         """Ensure that close gets called when object is destroyed"""
-
-        self.close()
+        try:
+            self.close()
+        except RuntimeError:
+            Logger.log("w", "Printer %s threw a runtime error while closing out! It probably was already deleted." % self._id)
 
     @pyqtProperty(bool, notify = acceptsCommandsChanged)
     def acceptsCommands(self) -> bool:
@@ -294,3 +299,31 @@ class PrinterOutputDevice(QObject, OutputDevice):
             return
 
         self._firmware_updater.updateFirmware(firmware_file)
+
+    @pyqtProperty(bool, notify = printersChanged)
+    def supportWipeNozzle(self):
+        return self._supportWipeNozzle()
+
+    def _supportWipeNozzle(self):
+        return False
+
+    @pyqtSlot()
+    def wipeNozzle(self):
+        return self._wipeNozzle()
+
+    def _wipeNozzle(self):
+        return
+
+    @pyqtProperty(bool, notify = printersChanged)
+    def supportLevelXAxis(self):
+        return self._supportLevelXAxis()
+
+    def _supportLevelXAxis(self):
+        return False
+
+    @pyqtSlot()
+    def levelXAxis(self):
+        return self._levelXAxis()
+
+    def _levelXAxis(self):
+        return

@@ -13,8 +13,9 @@ Item
 {
     implicitWidth: parent.width
     height: visible ? UM.Theme.getSize("print_setup_extruder_box").height : 0
-    property var printerModel
-    property var connectedPrinter: Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null
+    property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
+    property var connectedPrinter: outputDeviceCount >= 1 ? Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1] : null
+    property var printerModel: connectedPrinter != null ? connectedPrinter.activePrinter : null
 
     Rectangle
     {
@@ -66,7 +67,7 @@ Item
         Label //Current temperature.
         {
             id: bedCurrentTemperature
-            text: printerModel != null ? printerModel.bedTemperature + "°C" : ""
+            text: printerModel != null ? printerModel.bedTemperature == -1 ? "0°C" : printerModel.bedTemperature + "°C" : ""
             font: UM.Theme.getFont("large_bold")
             color: UM.Theme.getColor("text")
             anchors.right: bedTargetTemperature.left
@@ -136,7 +137,7 @@ Item
             anchors.bottomMargin: UM.Theme.getSize("default_margin").height
             width: UM.Theme.getSize("monitor_preheat_temperature_control").width
             height: UM.Theme.getSize("monitor_preheat_temperature_control").height
-            visible: printerModel != null ? enabled && printerModel.canPreHeatBed && !printerModel.isPreheating : true
+            visible: true
             Rectangle //Highlight of input field.
             {
                 anchors.fill: parent

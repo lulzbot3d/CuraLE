@@ -535,7 +535,7 @@ class CuraApplication(QtApplication):
         preferences.addPreference("cura/allow_connection_to_wrong_machine", False)
 
         preferences.addPreference("cura/categories_expanded", "")
-        preferences.addPreference("cura/jobname_prefix", True)
+        preferences.addPreference("cura/jobname_prefix", False)
         preferences.addPreference("cura/select_models_on_load", False)
         preferences.addPreference("view/center_on_select", False)
         preferences.addPreference("mesh/scale_to_fit", False)
@@ -959,10 +959,6 @@ class CuraApplication(QtApplication):
     def getDiscoveredPrintersModel(self, *args) -> "DiscoveredPrintersModel":
         return self._discovered_printer_model
 
-    #@pyqtSlot(result=QObject)
-    #def getDiscoveredCloudPrintersModel(self, *args) -> "DiscoveredCloudPrintersModel":
-    #    return self._discovered_cloud_printers_model
-
     @pyqtSlot(result = QObject)
     def getFirstStartMachineActionsModel(self, *args) -> "FirstStartMachineActionsModel":
         if self._first_start_machine_actions_model is None:
@@ -1122,9 +1118,6 @@ class CuraApplication(QtApplication):
             self._custom_quality_profile_drop_down_menu_model = CustomQualityProfilesDropDownMenuModel(self)
         return self._custom_quality_profile_drop_down_menu_model
 
-    # def getCuraAPI(self, *args, **kwargs) -> "CuraAPI":
-    #     return self._cura_API
-
     def registerObjects(self, engine):
         """Registers objects for the QML engine to use.
 
@@ -1179,7 +1172,6 @@ class CuraApplication(QtApplication):
 
         self.processEvents()
         qmlRegisterType(DiscoveredPrintersModel, "Cura", 1, 0, "DiscoveredPrintersModel")
-        #qmlRegisterType(DiscoveredCloudPrintersModel, "Cura", 1, 7, "DiscoveredCloudPrintersModel")
         qmlRegisterSingletonType(QualityProfilesDropDownMenuModel, "Cura", 1, 0,
                                  "QualityProfilesDropDownMenuModel", self.getQualityProfilesDropDownMenuModel)
         qmlRegisterSingletonType(CustomQualityProfilesDropDownMenuModel, "Cura", 1, 0,
@@ -1204,10 +1196,6 @@ class CuraApplication(QtApplication):
         qmlRegisterType(SidebarCustomMenuItemsModel, "Cura", 1, 0, "SidebarCustomMenuItemsModel")
 
         qmlRegisterType(PrinterOutputDevice, "Cura", 1, 0, "PrinterOutputDevice")
-
-        # from cura.API import CuraAPI
-        # qmlRegisterSingletonType(CuraAPI, "Cura", 1, 1, "API", self.getCuraAPI)
-        # qmlRegisterUncreatableType(Account, "Cura", 1, 0, "AccountSyncState", "Could not create AccountSyncState")
 
         # As of Qt5.7, it is necessary to get rid of any ".." in the path for the singleton to work.
         actions_url = QUrl.fromLocalFile(os.path.abspath(Resources.getPath(CuraApplication.ResourceTypes.QmlFiles, "Actions.qml")))
@@ -1255,10 +1243,10 @@ class CuraApplication(QtApplication):
             self._camera_animation.setStart(self.getController().getTool("CameraTool").getOrigin())
             self._camera_animation.setTarget(Selection.getSelectedObject(0).getWorldPosition())
             self._camera_animation.start()
-    
+
     activityChanged = pyqtSignal()
     sceneBoundingBoxChanged = pyqtSignal()
-    
+
     @pyqtProperty(bool, notify = activityChanged)
     def platformActivity(self):
         return self._platform_activity
@@ -1883,7 +1871,7 @@ class CuraApplication(QtApplication):
         select_models_on_load = self.getPreferences().getValue("cura/select_models_on_load")
 
         nodes_to_arrange = []  # type: List[CuraSceneNode]
-        
+
         fixed_nodes = []
         for node_ in DepthFirstIterator(self.getController().getScene().getRoot()):
             # Only count sliceable objects

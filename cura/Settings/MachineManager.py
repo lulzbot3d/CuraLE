@@ -40,7 +40,6 @@ from cura.Settings.ExtruderStack import ExtruderStack
 from cura.Settings.cura_empty_instance_containers import (empty_definition_changes_container, empty_variant_container,
                                                           empty_material_container, empty_quality_container,
                                                           empty_quality_changes_container, empty_intent_container)
-#from cura.UltimakerCloud.UltimakerCloudConstants import META_UM_LINKED_TO_ACCOUNT
 
 from .CuraStackBuilder import CuraStackBuilder
 
@@ -184,7 +183,14 @@ class MachineManager(QObject):
         self._printer_output_devices = []
         for printer_output_device in self._application.getOutputDeviceManager().getOutputDevices():
             if isinstance(printer_output_device, PrinterOutputDevice):
-                self._printer_output_devices.append(printer_output_device)
+                if printer_output_device.address == "None":
+                    self._printer_output_devices.insert(0, printer_output_device)
+                # Hold this thought: Might need to change my thinking here.
+                # TODO: implement the correct machine variables so this check actually works
+                # if this is the active printer's preferred serial port:
+                #     hold on to this output device and add it at the end.
+                else:
+                    self._printer_output_devices.append(printer_output_device)
 
         self.outputDevicesChanged.emit()
 
@@ -289,6 +295,12 @@ class MachineManager(QObject):
             self._onRootMaterialChanged()
 
         self.activeQualityGroupChanged.emit()
+
+        activeStage = self._application.getController().getActiveStage()
+        prepareStage = self._application.getController().getAllStages()["PrepareStage"]
+
+        if activeStage != None and activeStage != prepareStage:
+            self._application.getController().setActiveStage("PrepareStage")
 
     def _onActiveExtruderStackChanged(self) -> None:
         self.blurSettings.emit()  # Ensure no-one has focus.
@@ -498,17 +510,24 @@ class MachineManager(QObject):
         """
         return bool(self._stacks_have_errors)
 
-    @pyqtProperty(str, notify = globalContainerChanged)
+    @pyqtProperty(str, notify = printerConnectedStatusChanged)
     def activeMachineFirmwareVersion(self) -> str:
         if not self._printer_output_devices:
             return ""
-        return self._printer_output_devices[0].firmwareVersion
+        return self._printer_output_devices[-1].getFirmwareVersion()
+
+    @pyqtProperty(str, notify= globalContainerChanged)
+    def activeMachineLatestFirmwareVersion(self) -> str:
+        if self.activeMachine is None:
+            return ""
+        version = self.activeMachine.getBottom().getMetaDataEntry("firmware_latest_version")
+        return version
 
     @pyqtProperty(str, notify = globalContainerChanged)
     def activeMachineAddress(self) -> str:
         if not self._printer_output_devices:
             return ""
-        return self._printer_output_devices[0].address
+        return self._printer_output_devices[-1].address
 
     @pyqtProperty(bool, notify = printerConnectedStatusChanged)
     def printerConnected(self) -> bool:
@@ -521,10 +540,6 @@ class MachineManager(QObject):
 
         group_size = int(self.activeMachine.getMetaDataEntry("group_size", "-1"))
         return group_size > 1
-
-    # @pyqtProperty(bool, notify = printerConnectedStatusChanged)
-    # def activeMachineIsLinkedToCurrentAccount(self) -> bool:
-    #     return parseBool(self.activeMachine.getMetaDataEntry(META_UM_LINKED_TO_ACCOUNT, "True"))
 
     @pyqtProperty(bool, notify = printerConnectedStatusChanged)
     def activeMachineHasNetworkConnection(self) -> bool:

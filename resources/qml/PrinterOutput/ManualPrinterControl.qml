@@ -16,7 +16,19 @@ Item
 {
     property var printerModel: null
     property var activePrintJob: printerModel != null ? printerModel.activePrintJob : null
-    property var connectedPrinter: Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null
+    property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
+    property var availablePrinter: outputDeviceCount >= 1 ? Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1] : null
+    property var connectedDevice:
+    {
+        if (availablePrinter != null)
+        {
+            return availablePrinter.acceptsCommands ? availablePrinter : null
+        }
+        else
+        {
+            return null
+        }
+    }
 
     implicitWidth: parent.width
     implicitHeight: childrenRect.height
@@ -28,14 +40,14 @@ Item
             return false; //Can't control the printer if not connected
         }
 
-        if (!connectedDevice.acceptsCommands)
+        if (connectedDevice == null)
         {
             return false; //Not allowed to do anything.
         }
 
         if(activePrintJob == null)
         {
-            return true
+            return true;
         }
 
         if (activePrintJob.state == "printing" || activePrintJob.state == "resuming" || activePrintJob.state == "pausing" || activePrintJob.state == "error" || activePrintJob.state == "offline")
@@ -50,13 +62,13 @@ Item
 
         MonitorSection
         {
-            label: catalog.i18nc("@label", "Printer control")
+            label: catalog.i18nc("@label", "Manual Printer Control")
             width: base.width
         }
 
         Label
         {
-            text: " "
+            text: " " // This actually acts as a spacer
         }
 
         Row
@@ -73,13 +85,33 @@ Item
             Button
             {
                 height: UM.Theme.getSize("setting_control").height
-                width: height*2 + UM.Theme.getSize("default_margin").width
+                width: height*3 + UM.Theme.getSize("default_margin").width
+                text: "Connect"
+                enabled:
+                {
+                    if(availablePrinter != null && availablePrinter.address != "None")
+                    {
+                        if(availablePrinter.connectionState == 0 || availablePrinter.connectionState > 5)
+                        {
+                            return true
+                        }
+                    }
+                    return false
+                }
+                onClicked: availablePrinter.connect()
+                style: UM.Theme.styles.monitor_checkable_button_style
+            }
+
+            Button
+            {
+                height: UM.Theme.getSize("setting_control").height
+                width: height*3 + UM.Theme.getSize("default_margin").width
                 text: "Disconnect"
-                enabled: checkEnabled() && connectedPrinter.connectionType == 1
+                enabled: checkEnabled()
                 onClicked:
                 {
                     OutputDeviceHeader.pressedConnect = false
-                    Cura.USBPrinterOutputDeviceManager.pushedDisconnectButton()
+                    availablePrinter.close() // May need to be changed to a different function
                 }
                 style: UM.Theme.styles.monitor_checkable_button_style
             }
@@ -87,18 +119,41 @@ Item
             Button
             {
                 height: UM.Theme.getSize("setting_control").height
-                width: height*2 + UM.Theme.getSize("default_margin").width
+                width: height*3 + UM.Theme.getSize("default_margin").width
                 text: catalog.i18nc("@label", "Console")
-                enabled: connectedPrinter.connectionType == 1
+                enabled: availablePrinter.acceptsCommands ? availablePrinter.connectionState == 2 : false
                 onClicked:
                 {
-                    connectedPrinter.messageFromPrinter.disconnect(printer_control.receive)
-                    connectedPrinter.messageFromPrinter.connect(printer_control.receive)
+                    availablePrinter.messageFromPrinter.disconnect(printer_control.receive)
+                    availablePrinter.messageFromPrinter.connect(printer_control.receive)
                     printer_control.visible = true;
                 }
                 style: UM.Theme.styles.monitor_checkable_button_style
             }
         }
+
+        // Row {
+        //     Repeater {
+        //         id: machineActionRepeater
+        //         model: base.currentItem ? Cura.MachineActionManager.getSupportedActions(Cura.MachineManager.getDefinitionByMachineId(base.currentItem.id)) : null
+
+        //         Item {
+        //             width: Math.round(childrenRect.width + 2 * screenScaleFactor)
+        //             height: childrenRect.height
+        //             Button {
+        //                 text: machineActionRepeater.model[index].label
+        //                 onClicked:
+        //                 {
+        //                     var currentItem = machineActionRepeater.model[index]
+        //                     actionDialog.loader.manager = currentItem
+        //                     actionDialog.loader.source = currentItem.qmlPath
+        //                     actionDialog.title = currentItem.label
+        //                     actionDialog.show()
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
         Row
         {
