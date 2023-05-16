@@ -223,12 +223,15 @@ class OctoPrintOutputDevice(NetworkedPrinterOutputDevice):
 
         qml_folder = "qml" if not USE_QT5 else "qml_qt5"
         if not USE_QT5:
+            Logger.log("i", "Using device view for CuraLE v5+")
             # In Cura 5.x, the monitor item can only contain QtQuick Controls 2 items
             qml_file = "MonitorItem.qml"
         elif major_api_version > 5:
+            Logger.log("i", "Using device view for CuraLE v4+")
             # In Cura 4.x, the monitor item shows the camera stream as well as the monitor sidebar
             qml_file = "MonitorItem4x.qml"
         else:
+            Logger.log("i", "Using device view for CuraLE v3+")
             # In Cura 3.x, the monitor item only shows the camera stream
             qml_file = "MonitorItem3x.qml"
 
@@ -438,6 +441,7 @@ class OctoPrintOutputDevice(NetworkedPrinterOutputDevice):
             self.get(end_point, self._onRequestFinished)
 
     def close(self) -> None:
+        Logger.log("d", "Closing output device: " + self._id)
         if self._update_timer:
             self._update_timer.stop()
 

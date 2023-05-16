@@ -74,7 +74,7 @@ else:
         )
 
 if TYPE_CHECKING:
-    from cura.PrinterOutput.PrinterOutputModel import PrinterOutputModel
+    from cura.PrinterOutput.Models.PrinterOutputModel import PrinterOutputModel
 
 ##  This plugin handles the connection detection & creation of output device objects for OctoPrint-connected printers.
 #   Zero-Conf is used to detect printers, which are saved in a dict.
