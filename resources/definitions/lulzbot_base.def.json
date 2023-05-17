@@ -118,13 +118,13 @@
                     "label": "LCD",
                     "description": "LCD"
                 },
-                "revision_type":
+                "machine_has_bltouch":
                 {
                     "type": "bool",
                     "default_value": false,
                     "enabled": false,
-                    "label": "Revision",
-                    "description": "Revision"
+                    "label": "BLTouch",
+                    "description": "BLTouch"
                 },
                 "firmware_machine_type":
                 {

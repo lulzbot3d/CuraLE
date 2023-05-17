@@ -2,7 +2,22 @@ CURA LULZBOT EDITION PATCHNOTES
 This file is a work-in-progress; some sections may be incomplete, especially older versions. Older version patch notes may be added over time. The file will be updated as
 new versions are released and will continue to be utilized as the project progresses.
 
-4.13.0-BETAvX.X (In Development):
+4.13.0-BETAv1.5 (In Development):
+	Major changes:
+		Rework of how printer connections are handled, particularly USB connections
+			- Cura LE now creates a USBOutputDevice object when a valid port is detected rather than
+				just on establishing a printable connection. This allows for easier detection of printer
+				availability for firmware flashing purposes along with making the monitor screen more
+				reminiscent of the previous version. Ease of use and familiarity are good.
+			- Automatic firmware flashing should now actually work, and custom file flashing should be
+				more consistent.
+			- Wrong printer detection should be *slightly* better than previous, but it will still take
+				"Allow connections to wrong printers" setting into account on failures. This will continue
+				to be improved but is not a focus at the moment.
+			- Compatability with the OctoPrint plugin is slightly buggy. We would like to better integrate
+				this plugin in the future along with cleaning things up so that other output device plugins
+				of a similar vein also function cleanly. It would imply that our system is relatively compatible
+				with upstream Cura in this regard.
 	Additions:
 		Re-added the ability to change filament diameter in the custom settings
 	Bug Fixes:
@@ -10,8 +25,6 @@ new versions are released and will continue to be utilized as the project progre
 		Corrected some file names that resulted in PolyFlex quality profiles not being loaded
 	Minor changes:
 		Made several more common useful settings visible by default in the advanced settings view
-	Planned:
-		Rework of printer tethering -> cleaner system for firmware flashing
 
 4.13.0-BETAv1.4:
 	Additions:
@@ -56,7 +69,7 @@ new versions are released and will continue to be utilized as the project progre
 		Full descriptive patchnotes for this still need to be written
 		Lots of changes, including improved stability and a new look
 
-3.6.38(Scrapped) -> 3.6.39:
+3.6.40:
 	Printer Changes:
 		Added the TAZ Pro Long Bed printer
 			TAZ Pro with a substantially longer y-axis that allows for seamless long prints.
@@ -105,12 +118,14 @@ new versions are released and will continue to be utilized as the project progre
 			- Support Interface Pattern from Lines to Zig Zag
 			- Enable Prime Tower from "not Checked" to "Checked"
 			- Found that the use of the prime tower helps the purging of the filament that sits in the nozzle/heat block
+		Fixed a few small file name errors that prevented some profiles from being usable
 	Other changes:
 		Disabled Auto Slice by default
 		Updated splash screen
 		Removed lines from start gcodes regarding backlash compensation
 		Fixed issue with Bio Infill percentage being at a fixed value
 		Altered TAZ Pro/XT Dual start gcodes slightly to avoid handles on flex plate
+		Updated firmware flashing menu to include link to OHAI explaining Universal firmware
 
 3.6.37:
 	Firmware Changes:

@@ -10,14 +10,14 @@ class LulzBotPrintersModel(ListModel):
     NameRole = Qt.UserRole + 1
     IdRole = Qt.UserRole + 2
     LCDRole = Qt.UserRole + 3
-    RevisionRole = Qt.UserRole + 4
+    BLTouchRole = Qt.UserRole + 4
 
     def __init__(self, parent = None):
         super().__init__(parent)
         self.addRoleName(self.NameRole, "name")
         self.addRoleName(self.IdRole, "id")
         self.addRoleName(self.LCDRole, "lcd")
-        self.addRoleName(self.RevisionRole, "revision")
+        self.addRoleName(self.BLTouchRole, "bltouch")
 
         # Listen to changes
         ContainerRegistry.getInstance().containerAdded.connect(self._onContainerChanged)
@@ -50,7 +50,7 @@ class LulzBotPrintersModel(ListModel):
                     "name": metadata["base_machine_name"],
                     "id": metadata["base_machine"],
                     "lcd": metadata.get("has_optional_lcd", False),
-                    "revision": metadata.get("has_revision", False),
+                    "bltouch": metadata.get("has_bltouch", False),
                     "machine_priority": metadata.get("machine_priority", "90")
                 })
         items = sorted(items, key=lambda x: x["machine_priority"]+x["name"])

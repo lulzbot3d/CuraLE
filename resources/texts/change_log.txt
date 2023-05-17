@@ -1,3 +1,14 @@
+[4.13.0-Beta v1.5]
+* Reworked printer connections
+* Improved consistency of firmware updating
+* Fixed automatic firmware updating (hopefully!)
+* Please note: OctoPrint plugin may be a bit buggy with these changes
+* Updated monitor page to look more similar to 3.6, will continue to be improved
+* Re-added the ability to change filament diameter in custom settings
+* Fixed an issue where Cura LE would crash when scrolling in the preferences menu
+* Fixed an issue that caused PolyFlex to not be usable
+* Adjusted default visible settings to include a couple more useful settings
+
 [4.13.0-Beta v1.4]
 * Reimplemented the OctoPrint plugin
 * Reimplemented a Custom Supports plugin

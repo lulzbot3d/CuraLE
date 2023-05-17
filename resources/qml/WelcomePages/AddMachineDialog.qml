@@ -32,7 +32,7 @@ Item
             {
                 base.visible = true //false
                 var item = toolheadsModel.getItem(toolheadSelection.selectedIndex).id
-                var success = Cura.MachineManager.addMachine(item, machineName.text, lcdSelection.selectedIndex == 0 ? true: false,true/*revisionSelection.selectedIndex == 0 ? true: false*/)
+                var success = Cura.MachineManager.addMachine(item, machineName.text, lcdSelection.selectedIndex == 0 ? true: false,true)
                 return success
             }
 
@@ -40,7 +40,7 @@ Item
             {
                 machineName.text = getMachineName()
                 printerSelection.lcd = printerSelectionRepeater.model.getItem(0).lcd
-                printerSelection.revision = printerSelectionRepeater.model.getItem(0).revision
+                printerSelection.bltouch = printerSelectionRepeater.model.getItem(0).bltouch
                 printerSelection.baseMachine = printerSelectionRepeater.model.getItem(0).id
                 printerSelection.selectedIndex = 0
                 for (var i = 0; i < printerSelectionRepeater.count; i++)
@@ -92,7 +92,7 @@ Item
 
                     property int selectedIndex: 0
                     property bool lcd: false
-                    property bool revision: false
+                    property bool bltouch: false
                     property string baseMachine: ""
 
                     Column
@@ -106,10 +106,10 @@ Item
                                 text: model.name
                                 ButtonGroup.group: printerGroup
                                 checked: model.index == 0
-                                onClicked: { printerSelection.selectedIndex = model.index; printerSelection.lcd = model.lcd; printerSelection.revision = model.revision; printerSelection.baseMachine = model.id; printerSelectorLoader.item.updateToolheads(); }
+                                onClicked: { printerSelection.selectedIndex = model.index; printerSelection.lcd = model.lcd; printerSelection.bltouch = model.bltouch; printerSelection.baseMachine = model.id; printerSelectorLoader.item.updateToolheads(); }
                             }
 
-                            Component.onCompleted: {printerSelection.lcd = model.getItem(0).lcd;printerSelection.revision = model.getItem(0).revision; printerSelection.baseMachine = model.getItem(0).id}
+                            Component.onCompleted: {printerSelection.lcd = model.getItem(0).lcd;printerSelection.bltouch = model.getItem(0).bltouch; printerSelection.baseMachine = model.getItem(0).id}
                         }
                     }
                 }
