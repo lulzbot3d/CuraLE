@@ -5,16 +5,16 @@
     "version": 2,
     "metadata":
     {
+        "author": "LulzBot",
         "manufacturer": "Fargo Additive Manufacturing Equipment LLC.",
+        "visible": false,
+        "file_formats": "text/x-gcode;application/x-stl-ascii;application/x-stl-binary;application/x-wavefront-obj;application/x3g",
         "first_start_actions":
         [
             "MachineSettingsAction"
         ],
         "category": "LulzBot",
-        "file_formats": "text/x-gcode;application/x-stl-ascii;application/x-stl-binary;application/x-wavefront-obj;application/x3g",
-        "visible": false,
         "has_materials": true,
-        "author": "Fargo Additive Manufacturing Equipment LLC.",
         "has_machine_materials": true,
         "has_machine_quality": true,
         "has_optional_lcd": false,
