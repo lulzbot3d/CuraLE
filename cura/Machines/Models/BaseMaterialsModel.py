@@ -14,7 +14,7 @@ from cura.Machines.MaterialNode import MaterialNode
 from cura.Settings.CuraContainerRegistry import CuraContainerRegistry
 
 class BaseMaterialsModel(ListModel):
-    """This is the base model class for GenericMaterialsModel and MaterialBrandsModel.
+    """This is the base model class for GenericMaterialsModel and MaterialTypesModel.
 
     Those 2 models are used by the material drop down menu to show generic materials and branded materials
     separately. The extruder position defined here is being used to bound a menu to the correct extruder. This is
