@@ -116,18 +116,18 @@ Item {
         width: materialList.width
         height: childrenRect.height
 
-        MaterialsBrandSection {
+        MaterialsTypeSection {
             id: favoriteSection
             sectionName: "Favorites"
             elementsModel: favoriteMaterialsModel
-            hasMaterialTypes: false
+            hasMaterialBrands: false
         }
 
-        MaterialsBrandSection {
+        MaterialsTypeSection {
             id: genericSection
             sectionName: "Generic"
             elementsModel: genericMaterialsModel
-            hasMaterialTypes: false
+            hasMaterialBrands: false
         }
 
         Repeater {

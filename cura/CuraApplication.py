@@ -67,8 +67,8 @@ from cura.Machines.Models.GenericMaterialsModel import GenericMaterialsModel
 from cura.Machines.Models.GlobalStacksModel import GlobalStacksModel
 from cura.Machines.Models.IntentCategoryModel import IntentCategoryModel
 from cura.Machines.Models.IntentModel import IntentModel
-from cura.Machines.Models.MaterialTypesModel import MaterialTypesModel
 from cura.Machines.Models.MaterialManagementModel import MaterialManagementModel
+from cura.Machines.Models.MaterialTypesModel import MaterialTypesModel
 from cura.Machines.Models.MultiBuildPlateModel import MultiBuildPlateModel
 from cura.Machines.Models.NozzleModel import NozzleModel
 from cura.Machines.Models.QualityManagementModel import QualityManagementModel

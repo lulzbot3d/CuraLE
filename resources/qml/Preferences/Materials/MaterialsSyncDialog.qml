@@ -9,8 +9,7 @@ import QtQuick.Window 2.1
 import Cura 1.1 as Cura
 import UM 1.4 as UM
 
-Window
-{
+Window {
     id: materialsSyncDialog
     property variant catalog: UM.I18nCatalog { name: "cura" }
 
@@ -32,40 +31,34 @@ Window
         anchors.fill: parent
         interactive: false
 
-        Rectangle
-        {
+        Rectangle {
             id: introPage
             color: UM.Theme.getColor("main_background")
-            Column
-            {
+            Column {
                 spacing: UM.Theme.getSize("default_margin").height
                 anchors.fill: parent
                 anchors.margins: UM.Theme.getSize("default_margin").width
 
-                Label
-                {
+                Label {
                     text: catalog.i18nc("@title:header", "Sync materials with printers")
                     font: UM.Theme.getFont("large_bold")
                     color: UM.Theme.getColor("text")
                 }
-                Label
-                {
+                Label {
                     text: catalog.i18nc("@text", "Following a few simple steps, you will be able to synchronize all your material profiles with your printers.")
                     font: UM.Theme.getFont("medium")
                     color: UM.Theme.getColor("text")
                     wrapMode: Text.Wrap
                     width: parent.width
                 }
-                Image
-                {
+                Image {
                     source: UM.Theme.getImage("material_ecosystem")
                     width: parent.width
                     sourceSize.width: width
                 }
             }
 
-            Cura.PrimaryButton
-            {
+            Cura.PrimaryButton {
                 id: startButton
                 anchors
                 {
@@ -87,8 +80,7 @@ Window
                     }
                 }
             }
-            Cura.TertiaryButton
-            {
+            Cura.TertiaryButton {
                 anchors
                 {
                     left: parent.left
@@ -102,8 +94,7 @@ Window
             }
         }
 
-        Rectangle
-        {
+        Rectangle {
             id: signinPage
             color: UM.Theme.getColor("main_background")
 
@@ -119,21 +110,18 @@ Window
                 }
             }
 
-            ColumnLayout
-            {
+            ColumnLayout {
                 spacing: UM.Theme.getSize("default_margin").height
                 anchors.fill: parent
                 anchors.margins: UM.Theme.getSize("default_margin").width
 
-                Label
-                {
+                Label {
                     text: catalog.i18nc("@title:header", "Sign in")
                     font: UM.Theme.getFont("large_bold")
                     color: UM.Theme.getColor("text")
                     Layout.preferredHeight: height
                 }
-                Label
-                {
+                Label {
                     text: catalog.i18nc("@text", "To automatically sync the material profiles with all your printers connected to Digital Factory you need to be signed in in Cura.")
                     font: UM.Theme.getFont("medium")
                     color: UM.Theme.getColor("text")
@@ -142,31 +130,26 @@ Window
                     Layout.maximumWidth: width
                     Layout.preferredHeight: height
                 }
-                Item
-                {
+                Item {
                     Layout.preferredWidth: parent.width
                     Layout.fillHeight: true
-                    Image
-                    {
+                    Image {
                         source: UM.Theme.getImage("first_run_ultimaker_cloud")
                         width: parent.width / 2
                         sourceSize.width: width
                         anchors.centerIn: parent
                     }
                 }
-                Item
-                {
+                Item {
                     width: parent.width
                     height: childrenRect.height
                     Layout.preferredHeight: height
-                    Cura.SecondaryButton
-                    {
+                    Cura.SecondaryButton {
                         anchors.left: parent.left
                         text: catalog.i18nc("@button", "Sync materials with USB")
                         onClicked: swipeView.currentIndex = removableDriveSyncPage.SwipeView.index
                     }
-                    Cura.PrimaryButton
-                    {
+                    Cura.PrimaryButton {
                         anchors.right: parent.right
                         text: catalog.i18nc("@button", "Sign in")
                         onClicked: Cura.API.account.login()
@@ -175,40 +158,34 @@ Window
             }
         }
 
-        Rectangle
-        {
+        Rectangle {
             id: printerListPage
             color: UM.Theme.getColor("main_background")
 
-            ColumnLayout
-            {
+            ColumnLayout {
                 spacing: UM.Theme.getSize("default_margin").height
                 anchors.fill: parent
                 anchors.margins: UM.Theme.getSize("default_margin").width
                 visible: cloudPrinterList.count > 0
 
-                Row
-                {
+                Row {
                     Layout.preferredHeight: childrenRect.height
                     spacing: UM.Theme.getSize("default_margin").width
 
                     states: [
-                        State
-                        {
+                        State {
                             name: "idle"
                             when: typeof syncModel === "undefined" || syncModel.exportUploadStatus == "idle" || syncModel.exportUploadStatus == "uploading"
                             PropertyChanges { target: printerListHeader; text: catalog.i18nc("@title:header", "The following printers will receive the new material profiles:") }
                             PropertyChanges { target: printerListHeaderIcon; status: UM.StatusIcon.Status.NEUTRAL; width: 0 }
                         },
-                        State
-                        {
+                        State {
                             name: "error"
                             when: typeof syncModel !== "undefined" && syncModel.exportUploadStatus == "error"
                             PropertyChanges { target: printerListHeader; text: catalog.i18nc("@title:header", "Something went wrong when sending the materials to the printers.") }
                             PropertyChanges { target: printerListHeaderIcon; status: UM.StatusIcon.Status.ERROR }
                         },
-                        State
-                        {
+                        State {
                             name: "success"
                             when: typeof syncModel !== "undefined" && syncModel.exportUploadStatus == "success"
                             PropertyChanges { target: printerListHeader; text: catalog.i18nc("@title:header", "Material profiles successfully synced with the following printers:") }
@@ -216,15 +193,13 @@ Window
                         }
                     ]
 
-                    UM.StatusIcon
-                    {
+                    UM.StatusIcon {
                         id: printerListHeaderIcon
                         width: UM.Theme.getSize("section_icon").width
                         height: width
                         anchors.verticalCenter: parent.verticalCenter
                     }
-                    Label
-                    {
+                    Label {
                         id: printerListHeader
                         anchors.verticalCenter: parent.verticalCenter
                         //Text is always defined by the states above.
@@ -232,8 +207,7 @@ Window
                         color: UM.Theme.getColor("text")
                     }
                 }
-                Row
-                {
+                Row {
                     Layout.preferredWidth: parent.width
                     Layout.preferredHeight: childrenRect.height
 
@@ -259,8 +233,7 @@ Window
                         onClicked: Qt.openUrlExternally("https://support.ultimaker.com/hc/en-us/articles/360012019239?utm_source=cura&utm_medium=software&utm_campaign=sync-material-wizard-troubleshoot-cloud-printer")
                     }
                 }
-                ScrollView
-                {
+                ScrollView {
                     id: printerListScrollView
                     width: parent.width
                     Layout.preferredWidth: width
@@ -268,15 +241,13 @@ Window
                     clip: true
                     ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
-                    ListView
-                    {
+                    ListView {
                         id: printerList
                         width: parent.width
                         spacing: UM.Theme.getSize("default_margin").height
 
                         model: cloudPrinterList
-                        delegate: Rectangle
-                        {
+                        delegate: Rectangle {
                             id: delegateContainer
                             color: "transparent"
                             border.color: UM.Theme.getColor("lining")
@@ -294,10 +265,8 @@ Window
                                 return syncModel.printerStatus[printer_id];
                             }
 
-                            Cura.IconWithText
-                            {
-                                anchors
-                                {
+                            Cura.IconWithText {
+                                anchors {
                                     verticalCenter: parent.verticalCenter
                                     left: parent.left
                                     leftMargin: Math.round(parent.height - height) / 2 //Equal margin on the left as above and below.
@@ -313,12 +282,10 @@ Window
                                 iconSize: UM.Theme.getSize("machine_selector_icon").width
 
                                 //Printer status badge (always cloud, but whether it's online or offline).
-                                UM.RecolorImage
-                                {
+                                UM.RecolorImage {
                                     width: UM.Theme.getSize("printer_status_icon").width
                                     height: UM.Theme.getSize("printer_status_icon").height
-                                    anchors
-                                    {
+                                    anchors {
                                         bottom: parent.bottom
                                         bottomMargin: -Math.round(height / 6)
                                         left: parent.left
@@ -329,8 +296,7 @@ Window
                                     color: UM.Theme.getColor("primary")
 
                                     //Make a themeable circle in the background so we can change it in other themes.
-                                    Rectangle
-                                    {
+                                    Rectangle {
                                         anchors.centerIn: parent
                                         width: parent.width - 1.5 //1.5 pixels smaller (at least sqrt(2), regardless of pixel scale) so that the circle doesn't show up behind the icon due to anti-aliasing.
                                         height: parent.height - 1.5
@@ -341,8 +307,7 @@ Window
                                 }
                             }
 
-                            UM.RecolorImage
-                            {
+                            UM.RecolorImage {
                                 id: printerSpinner
                                 width: UM.Theme.getSize("section_icon").width
                                 height: width
@@ -354,8 +319,7 @@ Window
                                 source: UM.Theme.getIcon("ArrowDoubleCircleRight")
                                 color: UM.Theme.getColor("primary")
 
-                                RotationAnimator
-                                {
+                                RotationAnimator {
                                     target: printerSpinner
                                     from: 0
                                     to: 360
@@ -364,8 +328,7 @@ Window
                                     running: true
                                 }
                             }
-                            UM.StatusIcon
-                            {
+                            UM.StatusIcon {
                                 width: UM.Theme.getSize("section_icon").width
                                 height: width
                                 anchors.verticalCenter: parent.verticalCenter
@@ -377,20 +340,17 @@ Window
                             }
                         }
 
-                        footer: Item
-                        {
+                        footer: Item {
                             width: printerListScrollView.width
                             height: {
-                                if(!visible)
-                                {
+                                if(!visible) {
                                     return 0;
                                 }
                                 let h = UM.Theme.getSize("card").height + printerListTroubleshooting.height + UM.Theme.getSize("default_margin").height * 2; //1 margin between content and footer, 1 for troubleshooting link.
                                 return h;
                             }
                             visible: includeOfflinePrinterList.count - cloudPrinterList.count > 0 && typeof syncModel !== "undefined" && syncModel.exportUploadStatus === "idle"
-                            Rectangle
-                            {
+                            Rectangle {
                                 anchors.fill: parent
                                 anchors.topMargin: UM.Theme.getSize("default_margin").height
 
@@ -398,17 +358,14 @@ Window
                                 border.width: UM.Theme.getSize("default_lining").width
                                 color: "transparent"
 
-                                Row
-                                {
-                                    anchors
-                                    {
+                                Row {
+                                    anchors {
                                         fill: parent
                                         margins: Math.round(UM.Theme.getSize("card").height - UM.Theme.getSize("machine_selector_icon").width) / 2 //Same margin as in other cards.
                                     }
                                     spacing: UM.Theme.getSize("default_margin").width
 
-                                    UM.StatusIcon
-                                    {
+                                    UM.StatusIcon {
                                         id: infoIcon
                                         width: UM.Theme.getSize("section_icon").width
                                         height: width
@@ -419,15 +376,13 @@ Window
                                         status: UM.StatusIcon.Status.WARNING
                                     }
 
-                                    Column
-                                    {
+                                    Column {
                                         //Fill the total width. Can't use layouts because we need the anchors for vertical alignment.
                                         width: parent.width - infoIcon.width - refreshListButton.width - parent.spacing * 2
 
                                         spacing: UM.Theme.getSize("default_margin").height
 
-                                        Label
-                                        {
+                                        Label {
                                             id: printersMissingText
                                             text: catalog.i18nc("@text Asking the user whether printers are missing in a list.", "Printers missing?")
                                               + "\n"
@@ -436,8 +391,7 @@ Window
                                             color: UM.Theme.getColor("text")
                                             elide: Text.ElideRight
                                         }
-                                        Cura.TertiaryButton
-                                        {
+                                        Cura.TertiaryButton {
                                             id: printerListTroubleshooting
                                             leftPadding: 0  //Want to visually align this to the text.
 
@@ -447,8 +401,7 @@ Window
                                         }
                                     }
 
-                                    Cura.SecondaryButton
-                                    {
+                                    Cura.SecondaryButton {
                                         id: refreshListButton
                                         //Fake anchor.verticalCenter: printersMissingText.verticalCenter, since we can't anchor to things that aren't siblings.
                                         anchors.top: parent.top
@@ -463,65 +416,52 @@ Window
                         }
                     }
                 }
-                Item
-                {
+                Item {
                     width: parent.width
                     height: childrenRect.height
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
 
-                    Cura.SecondaryButton
-                    {
+                    Cura.SecondaryButton {
                         anchors.left: parent.left
                         text: catalog.i18nc("@button", "Sync materials with USB")
                         onClicked: swipeView.currentIndex = removableDriveSyncPage.SwipeView.index
                     }
-                    Cura.PrimaryButton
-                    {
+                    Cura.PrimaryButton {
                         id: syncButton
                         anchors.right: parent.right
-                        text:
-                        {
-                            if(typeof syncModel !== "undefined" && syncModel.exportUploadStatus == "error")
-                            {
+                        text: {
+                            if(typeof syncModel !== "undefined" && syncModel.exportUploadStatus == "error") {
                                 return catalog.i18nc("@button", "Try again");
                             }
-                            if(typeof syncModel !== "undefined" && syncModel.exportUploadStatus == "success")
-                            {
+                            if(typeof syncModel !== "undefined" && syncModel.exportUploadStatus == "success") {
                                 return catalog.i18nc("@button", "Done");
                             }
                             return catalog.i18nc("@button", "Sync");
                         }
-                        onClicked:
-                        {
-                            if(typeof syncModel !== "undefined" && syncModel.exportUploadStatus == "success")
-                            {
+                        onClicked: {
+                            if(typeof syncModel !== "undefined" && syncModel.exportUploadStatus == "success") {
                                 materialsSyncDialog.close();
                             }
-                            else
-                            {
+                            else {
                                 syncModel.exportUpload();
                             }
                         }
-                        visible:
-                        {
-                            if(!syncModel) //When the dialog is created, this is not set yet.
-                            {
+                        visible: {
+                            if(!syncModel) { //When the dialog is created, this is not set yet.
                                 return true;
                             }
                             return syncModel.exportUploadStatus != "uploading";
                         }
                     }
-                    Item
-                    {
+                    Item {
                         anchors.right: parent.right
                         width: childrenRect.width
                         height: syncButton.height
 
                         visible: !syncButton.visible
 
-                        UM.RecolorImage
-                        {
+                        UM.RecolorImage {
                             id: syncingIcon
                             height: UM.Theme.getSize("action_button_icon").height
                             width: height
@@ -530,8 +470,7 @@ Window
                             source: UM.Theme.getIcon("ArrowDoubleCircleRight")
                             color: UM.Theme.getColor("primary")
 
-                            RotationAnimator
-                            {
+                            RotationAnimator {
                                 target: syncingIcon
                                 from: 0
                                 to: 360
@@ -540,8 +479,7 @@ Window
                                 running: true
                             }
                         }
-                        Label
-                        {
+                        Label {
                             id: syncingLabel
                             anchors.left: syncingIcon.right
                             anchors.leftMargin: UM.Theme.getSize("narrow_margin").width
@@ -554,31 +492,27 @@ Window
                 }
             }
 
-            ColumnLayout //Placeholder for when the user has no cloud printers.
-            {
+            ColumnLayout { //Placeholder for when the user has no cloud printers.
                 spacing: UM.Theme.getSize("default_margin").height
                 anchors.fill: parent
                 anchors.margins: UM.Theme.getSize("default_margin").width
                 visible: cloudPrinterList.count == 0
 
-                Label
-                {
+                Label {
                     text: catalog.i18nc("@title:header", "No printers found")
                     font: UM.Theme.getFont("large_bold")
                     color: UM.Theme.getColor("text")
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
                 }
-                Image
-                {
+                Image {
                     source: UM.Theme.getImage("3d_printer_faded")
                     sourceSize.width: width
                     fillMode: Image.PreserveAspectFit
                     Layout.alignment: Qt.AlignHCenter
                     Layout.preferredWidth: parent.width / 3
                 }
-                Label
-                {
+                Label {
                     text: catalog.i18nc("@text", "It seems like you don't have any compatible printers connected to Digital Factory. Make sure your printer is connected and it's running the latest firmware.")
                     width: parent.width
                     horizontalAlignment: Text.AlignHCenter
@@ -586,40 +520,34 @@ Window
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
                 }
-                Item
-                {
+                Item {
                     Layout.preferredWidth: parent.width
                     Layout.fillHeight: true
-                    Cura.TertiaryButton
-                    {
+                    Cura.TertiaryButton {
                         text: catalog.i18nc("@button", "Learn how to connect your printer to Digital Factory")
                         iconSource: UM.Theme.getIcon("LinkExternal")
                         onClicked: Qt.openUrlExternally("https://support.ultimaker.com/hc/en-us/articles/360012019239?utm_source=cura&utm_medium=software&utm_campaign=sync-material-wizard-add-cloud-printer")
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
                 }
-                Item
-                {
+                Item {
                     width: parent.width
                     height: childrenRect.height
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
 
-                    Cura.SecondaryButton
-                    {
+                    Cura.SecondaryButton {
                         anchors.left: parent.left
                         text: catalog.i18nc("@button", "Sync materials with USB")
                         onClicked: swipeView.currentIndex = removableDriveSyncPage.SwipeView.index
                     }
-                    Cura.PrimaryButton
-                    {
+                    Cura.PrimaryButton {
                         id: disabledSyncButton
                         anchors.right: parent.right
                         text: catalog.i18nc("@button", "Sync")
                         enabled: false //If there are no printers, always disable this button.
                     }
-                    Cura.SecondaryButton
-                    {
+                    Cura.SecondaryButton {
                         anchors.right: disabledSyncButton.left
                         anchors.rightMargin: UM.Theme.getSize("default_margin").width
                         text: catalog.i18nc("@button", "Refresh")
@@ -631,26 +559,22 @@ Window
             }
         }
 
-        Rectangle
-        {
+        Rectangle {
             id: removableDriveSyncPage
             color: UM.Theme.getColor("main_background")
 
-            ColumnLayout
-            {
+            ColumnLayout {
                 spacing: UM.Theme.getSize("default_margin").height
                 anchors.fill: parent
                 anchors.margins: UM.Theme.getSize("default_margin").width
 
-                Label
-                {
+                Label {
                     text: catalog.i18nc("@title:header", "Sync material profiles via USB")
                     font: UM.Theme.getFont("large_bold")
                     color: UM.Theme.getColor("text")
                     Layout.preferredHeight: height
                 }
-                Label
-                {
+                Label {
                     text: catalog.i18nc("@text In the UI this is followed by a list of steps the user needs to take.", "Follow the following steps to load the new material profiles to your printer.")
                     font: UM.Theme.getFont("medium")
                     color: UM.Theme.getColor("text")
@@ -659,23 +583,20 @@ Window
                     Layout.maximumWidth: width
                     Layout.preferredHeight: height
                 }
-                Row
-                {
+                Row {
                     width: parent.width
                     Layout.preferredWidth: width
                     Layout.fillHeight: true
                     spacing: UM.Theme.getSize("default_margin").width
 
-                    Image
-                    {
+                    Image {
                         source: UM.Theme.getImage("insert_usb")
                         width: parent.width / 3
                         height: width
                         anchors.verticalCenter: parent.verticalCenter
                         sourceSize.width: width
                     }
-                    Label
-                    {
+                    Label {
                         text: "1. " + catalog.i18nc("@text", "Click the export material archive button.")
                           + "\n2. " + catalog.i18nc("@text", "Save the .umm file on a USB stick.")
                           + "\n3. " + catalog.i18nc("@text", "Insert the USB stick into your printer and launch the procedure to load new material profiles.")
@@ -687,42 +608,35 @@ Window
                     }
                 }
 
-                Cura.TertiaryButton
-                {
+                Cura.TertiaryButton {
                     text: catalog.i18nc("@button", "How to load new material profiles to my printer")
                     iconSource: UM.Theme.getIcon("LinkExternal")
                     onClicked: Qt.openUrlExternally("https://support.ultimaker.com/hc/en-us/articles/4403319801106/?utm_source=cura&utm_medium=software&utm_campaign=add-material-profiles-via-usb")
                 }
 
-                Item
-                {
+                Item {
                     width: parent.width
                     height: childrenRect.height
                     Layout.preferredWidth: width
                     Layout.preferredHeight: height
 
-                    Cura.SecondaryButton
-                    {
+                    Cura.SecondaryButton {
                         anchors.left: parent.left
                         text: catalog.i18nc("@button", "Back")
                         onClicked: swipeView.currentIndex = 0 //Reset to first page.
                     }
-                    Cura.PrimaryButton
-                    {
+                    Cura.PrimaryButton {
                         id: exportUsbButton
                         anchors.right: parent.right
 
                         property bool hasExported: false
                         text: materialsSyncDialog.hasExportedUsb ? catalog.i18nc("@button", "Done") : catalog.i18nc("@button", "Export material archive")
-                        onClicked:
-                        {
-                            if(!materialsSyncDialog.hasExportedUsb)
-                            {
+                        onClicked: {
+                            if(!materialsSyncDialog.hasExportedUsb) {
                                 exportUsbDialog.folder = syncModel.getPreferredExportAllPath();
                                 exportUsbDialog.open();
                             }
-                            else
-                            {
+                            else {
                                 materialsSyncDialog.close();
                             }
                         }
@@ -732,23 +646,20 @@ Window
         }
     }
 
-    Cura.GlobalStacksModel
-    {
+    Cura.GlobalStacksModel {
         id: cloudPrinterList
         filterConnectionType: 3 //Only show cloud connections.
         filterOnlineOnly: true //Only show printers that are online.
         filterCapabilities: ["import_material"] //Only show printers that can receive the material profiles.
     }
-    Cura.GlobalStacksModel
-    {
+    Cura.GlobalStacksModel {
         //In order to show a refresh button only when there are offline cloud printers, we need to know if there are any offline printers.
         //A global stacks model without the filter for online-only printers allows this.
         id: includeOfflinePrinterList
         filterConnectionType: 3 //Still only show cloud connections.
     }
 
-    FileDialog
-    {
+    FileDialog {
         id: exportUsbDialog
         title: catalog.i18nc("@title:window", "Export All Materials")
         selectExisting: false

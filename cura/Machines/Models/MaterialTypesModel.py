@@ -98,7 +98,7 @@ class MaterialTypesModel(BaseMaterialsModel):
                 material_list = sorted(material_list, key = lambda x: x["name"].upper())
                 material_brand_item["colors"].setItems(material_list)
 
-                brand_item_list.append(material_type_item)
+                brand_item_list.append(material_brand_item)
 
             # Sort brand by name
             brand_item_list = sorted(brand_item_list, key = lambda x: x["name"].upper())
@@ -106,6 +106,6 @@ class MaterialTypesModel(BaseMaterialsModel):
 
             material_item_list.append(material_type_item)
 
-        # Sort brand by name
+        # Sort type by name
         material_item_list = sorted(material_item_list, key = lambda x: x["name"].upper())
         self.setItems(material_item_list)
