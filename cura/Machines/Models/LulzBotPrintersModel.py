@@ -23,7 +23,7 @@ class LulzBotPrintersModel(ListModel):
         ContainerRegistry.getInstance().containerAdded.connect(self._onContainerChanged)
         ContainerRegistry.getInstance().containerRemoved.connect(self._onContainerChanged)
 
-        self._filter_dict = {"category": "LulzBot", "visible": True}
+        self._filter_dict = {"author": "LulzBot", "visible": True}
         self._update()
 
     ##  Handler for container change events from registry

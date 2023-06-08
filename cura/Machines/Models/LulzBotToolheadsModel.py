@@ -25,7 +25,7 @@ class LulzBotToolheadsModel(ListModel):
 
         self._base_machine_property = ""
 
-        self._filter_dict = {"category": "LulzBot", "visible": True}
+        self._filter_dict = {"author": "LulzBot", "visible": True}
         self._update()
 
     ##  Handler for container change events from registry

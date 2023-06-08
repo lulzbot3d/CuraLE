@@ -1,0 +1,52 @@
+{
+    "name": "LulzBot Bio",
+    "inherits": "lulzbot_kangaroo_paw_base",
+    "version": 2,
+    "metadata":
+    {
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_kangaroo_paw_extruder"
+        },
+        "type": "machine",
+        "category": "LulzBot",
+        "firmware_toolhead_name": "SingleExtruder",
+        "preferred_material": "*Sodium_Alginate*",
+        "preferred_quality_type": "*High Detail*",
+        "file_formats": "text/x-gcode",
+        "visible": true,
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/?pk_campaign=software-cura",
+        "base_machine": "lulzbot_kangaroo_paw_base",
+        "base_machine_name": "LulzBot Bio",
+        "user_toolhead_name": "Syringe Pump",
+        "default_extrusion_rate": 60,
+        "firmware_latest_version": "2.0.0.175",
+        "firmware_file": "Bio/Marlin_Bio_SingleExtruder_2.0.0.175_6c8c1c0d.hex",
+        "firmware_update_info": {
+            "id": "lulzbot_kangaroo_paw",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/Bio/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/Bio/BioFirmware"
+        }
+    },
+    "overrides":
+    {
+        "machine_head_polygon": {
+            "default_value": [
+                [0, 162],
+                [0, 0],
+                [162, 162],
+                [162, 0]
+            ]
+        },
+        "machine_abort_gcode":
+        {
+            "default_value": "G28 Z"
+        },
+         "machine_center_is_zero": {
+            "default_value": true
+        }
+    }
+}
