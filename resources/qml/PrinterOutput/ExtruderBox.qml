@@ -10,8 +10,7 @@ import UM 1.2 as UM
 import Cura 1.0 as Cura
 
 
-Item
-{
+Item {
     property alias color: background.color
     property var extruderModel
     property var position: index
@@ -21,8 +20,7 @@ Item
     implicitWidth: parent.width
     implicitHeight: UM.Theme.getSize("print_setup_extruder_box").height
 
-    UM.SettingPropertyProvider
-    {
+    UM.SettingPropertyProvider {
         id: extruderTemperature
         containerStackId: Cura.ExtruderManager.extruderIds[position]
         key: "material_print_temperature"
@@ -32,13 +30,11 @@ Item
         property var resolve: Cura.MachineManager.activeStack != Cura.MachineManager.activeMachine ? properties.resolve : "None"
     }
 
-    Rectangle
-    {
+    Rectangle {
         id: background
         anchors.fill: parent
 
-        Label //Extruder name.
-        {
+        Label { //Extruder name.
             text: Cura.MachineManager.activeMachine.extruderList[position].name !== "" ? Cura.MachineManager.activeMachine.extruderList[position].name : catalog.i18nc("@label", "Extruder")
             color: UM.Theme.getColor("text")
             font: UM.Theme.getFont("default")
@@ -47,8 +43,7 @@ Item
             anchors.margins: UM.Theme.getSize("default_margin").width
         }
 
-        Label //Target temperature.
-        {
+        Label { //Target temperature.
             id: extruderTargetTemperature
             text: Math.round(extruderModel.targetHotendTemperature) + "°C"
             font: UM.Theme.getFont("default_bold")
@@ -57,8 +52,7 @@ Item
             anchors.rightMargin: UM.Theme.getSize("default_margin").width
             anchors.bottom: extruderCurrentTemperature.bottom
 
-            MouseArea //For tooltip.
-            {
+            MouseArea { //For tooltip.
                 id: extruderTargetTemperatureTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
@@ -79,8 +73,7 @@ Item
                 }
             }
         }
-        Label //Temperature indication.
-        {
+        Label { //Temperature indication.
             id: extruderCurrentTemperature
             text: Math.round(extruderModel.hotendTemperature) + "°C"
             color: UM.Theme.getColor("text")
@@ -89,8 +82,7 @@ Item
             anchors.top: parent.top
             anchors.margins: UM.Theme.getSize("default_margin").width
 
-            MouseArea //For tooltip.
-            {
+            MouseArea { //For tooltip.
                 id: extruderCurrentTemperatureTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
@@ -112,8 +104,7 @@ Item
             }
         }
 
-        Rectangle //Input field for pre-heat temperature.
-        {
+        Rectangle { //Input field for pre-heat temperature.
             id: preheatTemperatureControl
             color: !enabled ? UM.Theme.getColor("setting_control_disabled") : showError ? UM.Theme.getColor("setting_validation_error_background") : UM.Theme.getColor("setting_validation_ok")
             property var showError:
@@ -154,15 +145,13 @@ Item
             width: UM.Theme.getSize("monitor_preheat_temperature_control").width
             height: UM.Theme.getSize("monitor_preheat_temperature_control").height
             visible: true
-            Rectangle //Highlight of input field.
-            {
+            Rectangle { //Highlight of input field.
                 anchors.fill: parent
                 anchors.margins: UM.Theme.getSize("default_lining").width
                 color: UM.Theme.getColor("setting_control_highlight")
                 opacity: preheatTemperatureControl.hovered ? 1.0 : 0
             }
-            MouseArea //Change cursor on hovering.
-            {
+            MouseArea { //Change cursor on hovering.
                 id: preheatTemperatureInputMouseArea
                 hoverEnabled: true
                 anchors.fill: parent
@@ -184,8 +173,7 @@ Item
                     }
                 }
             }
-            Label
-            {
+            Label {
                 id: unit
                 anchors.right: parent.right
                 anchors.rightMargin: UM.Theme.getSize("setting_unit_margin").width
@@ -195,8 +183,7 @@ Item
                 color: UM.Theme.getColor("setting_unit")
                 font: UM.Theme.getFont("default")
             }
-            TextInput
-            {
+            TextInput {
                 id: preheatTemperatureInput
                 font: UM.Theme.getFont("default")
                 color: !enabled ? UM.Theme.getColor("setting_control_disabled_text") : UM.Theme.getColor("setting_control_text")
@@ -224,8 +211,7 @@ Item
             }
         }
 
-        Button //The pre-heat button.
-        {
+        Button { //The pre-heat button.
             id: preheatButton
             height: UM.Theme.getSize("setting_control").height
             visible: extruderModel != null ? extruderModel.canPreHeatHotends: true
@@ -301,14 +287,12 @@ Item
                     }
                     Behavior on color
                     {
-                        ColorAnimation
-                        {
+                        ColorAnimation {
                             duration: 50
                         }
                     }
 
-                    Label
-                    {
+                    Label {
                         id: actualLabel
                         anchors.centerIn: parent
                         color:
@@ -378,8 +362,7 @@ Item
             }
         }
 
-        Rectangle //Material colour indication.
-        {
+        Rectangle { //Material colour indication.
             id: materialColor
             width: Math.floor(materialName.height * 0.75)
             height: Math.floor(materialName.height * 0.75)
@@ -392,30 +375,25 @@ Item
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
             anchors.verticalCenter: materialName.verticalCenter
 
-            MouseArea //For tooltip.
-            {
+            MouseArea { //For tooltip.
                 id: materialColorTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
-                onHoveredChanged:
-                {
-                    if (containsMouse)
-                    {
+                onHoveredChanged: {
+                    if (containsMouse) {
                         base.showTooltip(
                             base,
                             {x: 0, y: parent.mapToItem(base, 0, -parent.height / 2).y},
                             catalog.i18nc("@tooltip", "The colour of the material in this extruder.")
                         );
                     }
-                    else
-                    {
+                    else {
                         base.hideTooltip();
                     }
                 }
             }
         }
-        Label //Material name.
-        {
+        Label { //Material name.
             id: materialName
             text: extruderModel.activeMaterial != null ? extruderModel.activeMaterial.type : ""
             font: UM.Theme.getFont("default")
@@ -424,30 +402,25 @@ Item
             anchors.bottom: parent.bottom
             anchors.margins: UM.Theme.getSize("default_margin").width
 
-            MouseArea //For tooltip.
-            {
+            MouseArea { //For tooltip.
                 id: materialNameTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
-                onHoveredChanged:
-                {
-                    if (containsMouse)
-                    {
+                onHoveredChanged: {
+                    if (containsMouse) {
                         base.showTooltip(
                             base,
                             {x: 0, y: parent.mapToItem(base, 0, 0).y},
                             catalog.i18nc("@tooltip", "The material in this extruder.")
-                        );
+                        )
                     }
-                    else
-                    {
+                    else {
                         base.hideTooltip();
                     }
                 }
             }
         }
-        Label //Variant name.
-        {
+        Label { //Variant name.
             id: variantName
             text: extruderModel.hotendID
             font: UM.Theme.getFont("default")
@@ -456,23 +429,19 @@ Item
             anchors.bottom: parent.bottom
             anchors.margins: UM.Theme.getSize("default_margin").width
 
-            MouseArea //For tooltip.
-            {
+            MouseArea { //For tooltip.
                 id: variantNameTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
-                onHoveredChanged:
-                {
-                    if (containsMouse)
-                    {
+                onHoveredChanged: {
+                    if (containsMouse) {
                         base.showTooltip(
                             base,
                             {x: 0, y: parent.mapToItem(base, 0, -parent.height / 4).y},
                             catalog.i18nc("@tooltip", "The nozzle inserted in this extruder.")
                         );
                     }
-                    else
-                    {
+                    else {
                         base.hideTooltip();
                     }
                 }

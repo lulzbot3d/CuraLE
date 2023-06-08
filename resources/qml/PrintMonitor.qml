@@ -93,9 +93,7 @@ Item {
                 height: UM.Theme.getSize("thick_lining").width
             }
 
-            HeatedBedBox {
-                printerModel: activePrinter
-            }
+            HeatedBedBox { }
 
             UM.SettingPropertyProvider {
                 id: bedTemperature
