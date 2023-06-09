@@ -1,15 +1,7 @@
 {
+    "version": 2,
     "name": "LulzBot TAZ",
     "inherits": "lulzbot",
-    "version": 2,
-    "metadata":
-    {
-        "type": "machine",
-        "preferred_material": "pla",
-        "preferred_quality_type": "normal",
-        "file_formats": "text/x-gcode",
-        "visible": false
-    },
     "overrides":
     {
         "machine_acceleration": { "default_value": 500 },

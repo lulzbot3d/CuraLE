@@ -1,14 +1,14 @@
 {
-    "name": "LulzBot Mini 2 | SE | 0.50 mm",
-    "inherits": "lulzbot",
     "version": 2,
+    "name": "LulzBot Mini 2 with 1.75mm Tool Head",
+    "inherits": "lulzbot",
     "metadata":
     {
         "machine_priority": "00",
         "priority": "00",
         "machine_extruder_trains":
         {
-            "0": "lulzbot_hibiscus_extruder"
+            "0": "lulzbot_universal_extruder"
         },
         "type": "machine",
         "platform": "lulzbot_mini.stl",
@@ -22,12 +22,10 @@
         "preferred_quality_type": "standard",
         "file_formats": "text/x-gcode",
         "visible": true,
-        "printer_info_link": "https://www.lulzbot.com/store/printers/",
-        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
         "base_machine_name": "LulzBot Mini 2",
         "firmware_latest_version": "2.0.9.0.12",
-        "user_toolhead_name": "SE | 0.50 mm | Nickel Plated Copper",
+        "user_toolhead_name": "LulzBot Universal Tool Head",
         "firmware_file": "Mini2/Marlin_Mini2_Universal_2.0.9.0.12_077266e.hex",
         "firmware_update_info": {
             "id": "lulzbot_hibiscus",

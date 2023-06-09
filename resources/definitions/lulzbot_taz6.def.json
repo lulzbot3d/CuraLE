@@ -1,7 +1,7 @@
 {
+    "version": 2,
     "name": "LulzBot TAZ 6",
     "inherits": "lulzbot_taz",
-    "version": 2,
     "metadata":
     {
         "machine_priority": "99",
@@ -18,10 +18,6 @@
             0
         ],
         "visible": true,
-        "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-taz-6?pk_campaign=software-cura",
-        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-single-extruder-tool-head-v21?pk_campaign=software-cura",
-        "base_machine": "lulzbot_taz_6",
-        "base_machine_name": "[Legacy] TAZ 6",
         "firmware_latest_version": "2.0.9.0.13",
         "firmware_file": "TAZ6/Marlin_TAZ6_Universal_2.0.9.0.13_80a6628.hex",
         "user_toolhead_name": "Single Extruder",

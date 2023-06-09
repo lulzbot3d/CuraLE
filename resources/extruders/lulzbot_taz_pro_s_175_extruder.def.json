@@ -1,0 +1,9 @@
+{
+    "version": 2,
+    "name": "Hot End",
+    "inherits": "lulzbot_universal_175_extruder",
+    "metadata":
+    {
+        "machine": "lulzbot_taz_pro_s_175"
+    }
+}

@@ -18,7 +18,7 @@
         ],
         "machine_extruder_trains":
         {
-            "0": "lulzbot_bio_extruder"
+            "0": "lulzbot_bio_syringe"
         },
         "has_variants": false,
         "preferred_material": "Sodium_Alginate",
