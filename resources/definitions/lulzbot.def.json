@@ -14,6 +14,7 @@
         ],
         "has_machine_materials": true,
         "has_machine_quality": true,
+        "has_variants": true,
         "required_actions": ["ChangeToolHead"],
         "supported_actions": ["MachineSettingsAction", "UpgradeFirmware"],
         "firmware_update_info": {
@@ -25,28 +26,53 @@
     },
     "overrides":
     {
-        "infill_before_walls":
-        {
-            "default_value": "False"
-        },
+        "machine_heated_bed": { "default_value": true },
+        "machine_center_is_zero": { "default_value": false },
+        "infill_before_walls": { "default_value": "False" },
         "material_print_temperature":
         {
             "enabled": true,
             "minimum_value": "0",
             "maximum_value_warning": "295"
         },
-        "machine_nozzle_size":
-        {
-            "default_value": 0.5
-        },
-        "acceleration_enabled":
-        {
+        "machine_nozzle_size": { "default_value": 0.5 },
+        "acceleration_enabled": {
             "description": "Enables adjusting the print head acceleration. Increasing the accelerations can reduce printing time at the cost of print quality. Populated values are the firmware defaults."
         },
-        "jerk_enabled":
-        {
+        "jerk_enabled": {
             "description": "Enables adjusting the jerk of print head when the velocity in the X or Y axis changes. Increasing the jerk can reduce printing time at the cost of print quality. Populated values are the firmware defaults."
-        }
+        },
+        "machine_acceleration": { "default_value": 1000 },
+        "acceleration_print": { "default_value": 1000 },
+        "acceleration_infill": { "default_value": 1000 },
+        "acceleration_wall": { "default_value": 1000 },
+        "acceleration_wall_0": { "default_value": 1000 },
+        "acceleration_wall_x": { "default_value": 1000 },
+        "acceleration_topbottom": { "default_value": 1000 },
+        "acceleration_support": { "default_value": 1000 },
+        "acceleration_support_infill": { "default_value": 1000 },
+        "acceleration_support_interface": { "default_value": 1000 },
+        "acceleration_prime_tower": { "default_value": 1000 },
+        "acceleration_travel":
+        {
+            "default_value": 1000,
+            "value": "acceleration_print if magic_spiralize else 2000"
+        },
+        "acceleration_layer_0": { "default_value": 1000 },
+        "acceleration_print_layer_0": { "default_value": 1000 },
+        "acceleration_travel_layer_0": { "default_value": 1000 },
+        "acceleration_skirt_brim": { "default_value": 1000 },
+        "jerk_travel":
+        {
+            "default_value": 20,
+            "value": "jerk_print if magic_spiralize else 20"
+        },
+        "prime_tower_position_x": { "default_value": 20 },
+        "prime_tower_position_y": { "default_value": 20 },
+        "machine_max_feedrate_x": { "default_value": 800 },
+        "machine_max_feedrate_y": { "default_value": 800 },
+        "machine_max_feedrate_z": { "default_value": 8 },
+        "machine_max_feedrate_e": { "default_value": 40 }
     },
 
     "settings":
@@ -61,7 +87,7 @@
                     "description": "LCD",
                     "enabled": false,
                     "type": "bool",
-                    "default_value": false
+                    "default_value": true
                 },
                 "machine_has_bltouch":
                 {

@@ -1,5 +1,5 @@
 # Copyright (c) 2022 Ultimaker B.V.
-# Copyright (c) 2022 Fargo Additive Machinery Equipment 3D
+# Copyright (c) 2022 Fargo Additive Manufacturing Equipment 3D
 # Cura is released under the terms of the LGPLv3 or higher.
 
 import numpy
