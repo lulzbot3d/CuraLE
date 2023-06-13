@@ -54,18 +54,6 @@
         "firmware_machine_type":
         {
             "default_value": "Taz SideKick 747"
-        },
-        "prime_tower_position_x":
-        {
-            "default_value": 20
-        },
-        "prime_tower_position_y":
-        {
-            "default_value": 20
-        },
-        "machine_baudrate":
-        {
-            "default_value": "250000"
         }
     }
 }

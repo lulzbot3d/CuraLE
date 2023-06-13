@@ -39,10 +39,6 @@
         {
             "default_value": "LulzBot TAZ Pro Long Bed"
         },
-        "machine_baudrate":
-        {
-            "default_value": "250000"
-        },
         "machine_width":
         {
             "default_value": 282
