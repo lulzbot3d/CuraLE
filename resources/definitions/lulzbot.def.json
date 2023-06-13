@@ -26,6 +26,7 @@
     },
     "overrides":
     {
+        "machine_baudrate": { "default_value": "250000" },
         "machine_heated_bed": { "default_value": true },
         "machine_center_is_zero": { "default_value": false },
         "infill_before_walls": { "default_value": "False" },
