@@ -4,6 +4,9 @@
     "inherits": "lulzbot",
     "overrides":
     {
+        "machine_width": { "default_value": 280 },
+        "machine_depth": { "default_value": 280 },
+        "machine_height": { "default_value": 285 },
         "machine_acceleration": { "default_value": 500 },
         "acceleration_print": { "default_value": 500 },
         "acceleration_infill": { "default_value": 500 },

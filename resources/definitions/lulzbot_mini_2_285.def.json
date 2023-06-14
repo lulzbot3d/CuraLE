@@ -10,22 +10,5 @@
         },
         "preferred_material": "PolyLite_PLA_(Polymaker)",
         "visible": true
-    },
-    "overrides":
-    {
-        "machine_disallowed_areas": { "default_value": [
-            [[85,85],[85,77],[77,85]],
-            [[-85,85],[-85,77],[-77,85]],
-            [[85,-85],[85,-77],[77,-85]],
-            [[-85,-85],[-85,-77],[-77,-85]]
-        ]},
-        "firmware_machine_type":
-        {
-            "default_value": "LulzBot Mini 2"
-        },
-        "firmware_toolhead_name":
-        {
-            "default_value": "Universal"
-        }
     }
 }

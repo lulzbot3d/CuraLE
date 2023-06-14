@@ -11,7 +11,7 @@
             -10,
             5
         ],
-        "visible": false,
+        "visible": true,
         "preferred_material": "PolyLite_PLA_(Polymaker)",
         "preferred_quality_type": "standard",
         "firmware_latest_version": "2.0.9.0.13",
@@ -36,18 +36,6 @@
         "machine_wipe_gcode":
         {
             "default_value_from_file": "lulzbot_redgum/lulzbot_redgum_wipe"
-        },
-        "machine_width":
-        {
-            "default_value": 280
-        },
-        "machine_depth":
-        {
-            "default_value": 280
-        },
-        "machine_height":
-        {
-            "default_value": 250
         }
     }
 }
