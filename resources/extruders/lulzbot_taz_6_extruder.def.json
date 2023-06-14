@@ -2,8 +2,8 @@
     "version": 2,
     "name": "Hot End",
     "inherits": "lulzbot_universal_extruder",
-    "overrides":
+    "metadata":
     {
-        "material_diameter": { "default_value": 1.75 }
+        "machine": "lulzbot_taz_6"
     }
 }

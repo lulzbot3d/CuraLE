@@ -12,6 +12,10 @@
             -18,
             5.5
         ],
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_sidekick_747_extruder"
+        },
         "preferred_material": "PolyLite_PLA_(Polymaker)",
         "preferred_quality_type": "Standard",
         "file_formats": "text/x-gcode",

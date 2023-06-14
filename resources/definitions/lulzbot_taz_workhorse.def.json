@@ -11,6 +11,10 @@
             -10,
             5
         ],
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_taz_workhorse_extruder"
+        },
         "visible": true,
         "preferred_material": "PolyLite_PLA_(Polymaker)",
         "preferred_quality_type": "standard",
@@ -27,15 +31,15 @@
         },
         "machine_end_gcode":
         {
-            "default_value_from_file": "lulzbot_redgum/lulzbot_redgum_end"
+            "default_value_from_file": "lulzbot_taz_workhorse/lulzbot_taz_workhorse_end"
         },
         "machine_level_x_axis_gcode":
         {
-            "default_value_from_file": "lulzbot_quiver/lulzbot_quiver_level_x_axis"
+            "default_value_from_file": "lulzbot_taz_pro/lulzbot_taz_pro_level_x_axis"
         },
         "machine_wipe_gcode":
         {
-            "default_value_from_file": "lulzbot_redgum/lulzbot_redgum_wipe"
+            "default_value_from_file": "lulzbot_taz_workhorse/lulzbot_taz_workhorse_wipe"
         }
     }
 }
