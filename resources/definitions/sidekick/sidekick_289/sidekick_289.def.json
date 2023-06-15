@@ -1,0 +1,34 @@
+{
+    "version": 2,
+    "name": "SideKick 289",
+    "inherits": "lulzbot",
+    "metadata":
+    {
+        "machine_priority": "06",
+        "visible": false,
+        "platform": "sidekick_289.stl",
+        "platform_offset":
+        [
+            0,
+            -18,
+            0
+        ],
+        "preferred_material": "PolyLite_PLA_(Polymaker)",
+        "preferred_quality_type": "standard",
+        "file_formats": "text/x-gcode",
+        "firmware_latest_version": "2.0.9.0.14",
+        "firmware_file": "289/Marlin_289_Universal_2.0.9.0.14_2aed11e.hex",
+        "firmware_file_no_lcd": "",
+        "has_optional_lcd": true
+    },
+    "overrides":
+    {
+        "machine_start_gcode": { "default_value_from_file": "sidekick/sidekick_start" },
+        "machine_end_gcode": { "default_value_from_file": "sidekick/sidekick_289_end" },
+        "machine_level_x_axis_gcode": { "default_value_from_file": "/sidekick_level_x_axis" },
+        "machine_width": { "default_value": 165.3 },
+        "machine_depth":  { "default_value": 165.3 },
+        "machine_height": { "default_value": 181 },
+        "firmware_machine_type": { "default_value": "Taz SideKick 289" }
+    }
+}

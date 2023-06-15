@@ -26,7 +26,7 @@
         <setting key="wipe temperature">0</setting>
         <setting key="part removal temperature">0</setting>
         <machine>
-            <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="lulzbot_bio"/>
+            <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="bio"/>
         </machine>
     </settings>
 </fdmmaterial>

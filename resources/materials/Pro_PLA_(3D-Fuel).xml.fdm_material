@@ -28,7 +28,7 @@
         <setting key="standby temperature">175</setting>
 
         <machine>
-            <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="lulzbot_mini_2" />
+            <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="mini_2" />
             <hotend id="SE 0.5" />
             <hotend id="HE 0.5" />
             <hotend id="SL 0.25" />

@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "name": "SideKick 747",
+    "inherits": "lulzbot",
+    "metadata":
+    {
+        "priority": "02",
+        "machine_extruder_trains":
+        {
+            "0": "sidekick_747_extruder"
+        },
+
+        "visible": false,
+        "firmware_file_no_lcd": ""
+    }
+}

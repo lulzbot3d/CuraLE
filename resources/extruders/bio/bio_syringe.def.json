@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "name": "Syringe Pump",
+    "inherits": "universal_extruder",
+    "metadata": {
+        "machine": "bio",
+        "position": "0",
+        "quality_definition": "bio_extruder"
+    },
+
+    "overrides": {
+        "machine_nozzle_size": { "default_value": 0.26 }
+    }
+}

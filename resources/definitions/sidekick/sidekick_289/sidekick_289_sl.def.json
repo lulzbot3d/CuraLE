@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "name": "SideKick 289",
+    "inherits": "lulzbot",
+    "metadata":
+    {
+        "priority": "03",
+        "machine_extruder_trains":
+        {
+            "0": "sidekick_289_extruder"
+        },
+        "visible": false,
+        "firmware_file_no_lcd": ""
+    }
+}

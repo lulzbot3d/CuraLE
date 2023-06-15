@@ -1,9 +1,0 @@
-{
-    "version": 2,
-    "name": "HS+",
-    "inherits": "lulzbot_universal_extruder",
-    "metadata":
-    {
-        "machine": "lulzbot_mini_2_hsplus"
-    }
-}
