@@ -1,11 +1,11 @@
 {
     "id": "lulzbot_taz_pro_dual",
     "name": "TAZ Pro Dual Extruder",
-    "inherits": "lulzbot_taz_pro",
+    "inherits": "lulzbot_taz",
     "version": 2,
     "metadata":
     {
-        "visible": true,
+        "visible": false,
         "priority": "00",
         "machine_extruder_trains":
         {
@@ -21,8 +21,6 @@
         ],
         "firmware_toolhead_name": "DualExtruder",
         "firmware_latest_version": "2.0.0.144.5",
-        "base_machine": "LulzBot TAZ Pro",
-        "base_machine_name": "TAZ Pro",
         "preferred_material": "PolyLite_PLA_(Polymaker)",
         "user_toolhead_name": "Pro Dual | 0.50 mm | Hardened SST",
         "default_category": "All",

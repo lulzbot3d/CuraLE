@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "name": "LulzBot Mini 2 | SE | 0.50 mm",
+    "inherits": "lulzbot_mini_2",
+    "metadata":
+    {
+        "toolhead_selection_name": "SE | 0.50 mm | Nickel Plated Copper",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_mini_2_se_extruder"
+        },
+        "base_machine": false,
+        "visible": true
+    }
+}

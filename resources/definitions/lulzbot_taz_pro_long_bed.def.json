@@ -21,8 +21,7 @@
         "file_formats": "text/x-gcode",
         "visible": false,
         "firmware_latest_version": "2.0.0.144.10",
-        "firmware_file": "Pro_LongBed/Marlin_TAZPro_LongBed_Universal_BLTouch_2.0.0.144.10_3e72837.bin",
-        "default_eeprom_state": false
+        "firmware_file": "Pro_LongBed/Marlin_TAZPro_LongBed_Universal_BLTouch_2.0.0.144.10_3e72837.bin"
     },
     "overrides":
     {

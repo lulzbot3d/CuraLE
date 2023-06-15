@@ -14,7 +14,9 @@
         ],
         "has_machine_materials": true,
         "has_machine_quality": true,
-        "has_variants": true,
+        "preferred_quality_type": "normal",
+        "has_variants": false,
+        "variants_name": "Nozzle Size",
         "required_actions": ["ChangeToolHead"],
         "supported_actions": ["MachineSettingsAction", "UpgradeFirmware"],
         "firmware_update_info": {

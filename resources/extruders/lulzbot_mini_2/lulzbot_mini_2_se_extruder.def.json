@@ -1,0 +1,9 @@
+{
+    "version": 2,
+    "name": "SE",
+    "inherits": "lulzbot_universal_extruder",
+    "metadata":
+    {
+        "machine": "lulzbot_mini_2_se"
+    }
+}

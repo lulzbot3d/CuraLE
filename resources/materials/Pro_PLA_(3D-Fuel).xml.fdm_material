@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
+    <metadata>
+        <name>
+            <brand>3D-Fuel</brand>
+            <material>PLA</material>
+            <color>Generic</color>
+            <label>Pro PLA+</label>
+            <category>Beginner</category>
+        </name>
+        <compatible>True</compatible>
+        <info_link>https://www.lulzbot.com</info_link>
+        <color_code>#c1d82f</color_code>
+        <adhesion_info />
+        <definition>fdmprinter</definition>
+        <GUID>4a93345b-114d-40f9-9781-40216df0e2b4</GUID>
+        <description />
+        <version>2</version>
+        <extruder_disabled>False</extruder_disabled>
+    </metadata>
+    <properties>
+        <diameter>2.85</diameter>
+        <density>1.25</density>
+    </properties>
+    <settings>
+        <setting key="heated bed temperature">50</setting>
+        <setting key="print temperature">240</setting>
+        <setting key="standby temperature">175</setting>
+
+        <machine>
+            <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="lulzbot_mini_2" />
+            <hotend id="SE 0.5" />
+            <hotend id="HE 0.5" />
+            <hotend id="SL 0.25" />
+            <hotend id="HS 0.8" />
+            <hotend id="HS+ 1.2" />
+        </machine>
+
+    </settings>
+</fdmmaterial>

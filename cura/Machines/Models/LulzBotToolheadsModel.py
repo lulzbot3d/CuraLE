@@ -38,14 +38,14 @@ class LulzBotToolheadsModel(ListModel):
     def _update(self):
         items = []
         new_filter = copy.deepcopy(self._filter_dict)
-        new_filter["base_machine"] = self._base_machine_property
+        new_filter["base_machine_id"] = self._base_machine_property
         definition_containers = ContainerRegistry.getInstance().findDefinitionContainersMetadata(**new_filter)
 
         for metadata in definition_containers:
             metadata = metadata.copy()
 
             items.append({
-                "toolhead": metadata.get("user_toolhead_name", metadata.get("firmware_toolhead_name", metadata["name"])),
+                "toolhead": metadata.get("toolhead_selection_name", metadata.get("firmware_toolhead_name", metadata["name"])),
                 "id": metadata["id"],
                 "name": metadata["name"],
                 "priority": metadata.get("priority", "99")

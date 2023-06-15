@@ -15,12 +15,11 @@
         {
             "0": "lulzbot_taz_workhorse_extruder"
         },
-        "visible": true,
+        "visible": false,
         "preferred_material": "PolyLite_PLA_(Polymaker)",
         "preferred_quality_type": "standard",
         "firmware_latest_version": "2.0.9.0.13",
         "machine_priority": "04",
-        "default_eeprom_state": false,
         "firmware_file": "Workhorse/Marlin_TAZWorkhorse_Universal_2.0.9.0.13_80a6628.hex"
     },
     "overrides":

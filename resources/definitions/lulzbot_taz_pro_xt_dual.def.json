@@ -4,7 +4,7 @@
     "version": 2,
     "metadata":
     {
-        "visible": true,
+        "visible": false,
         "priority": "01",
         "machine_extruder_trains":
         {

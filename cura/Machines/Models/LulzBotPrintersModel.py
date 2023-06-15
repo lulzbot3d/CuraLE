@@ -23,7 +23,7 @@ class LulzBotPrintersModel(ListModel):
         ContainerRegistry.getInstance().containerAdded.connect(self._onContainerChanged)
         ContainerRegistry.getInstance().containerRemoved.connect(self._onContainerChanged)
 
-        self._filter_dict = {"author": "LulzBot", "visible": True}
+        self._filter_dict = {"author": "LulzBot", "visible": False, "base_machine": True}
         self._update()
 
     ##  Handler for container change events from registry
@@ -39,20 +39,13 @@ class LulzBotPrintersModel(ListModel):
 
         for metadata in definition_containers:
             metadata = metadata.copy()
-
-            already_added = False
-            for i in items:
-                if i["id"] == metadata["base_machine"]:
-                    already_added = True
-                    break
-            if not already_added:
-                items.append({
-                    "name": metadata["base_machine_name"],
-                    "id": metadata["base_machine"],
-                    "lcd": metadata.get("has_optional_lcd", False),
-                    "bltouch": metadata.get("has_bltouch", False),
-                    "machine_priority": metadata.get("machine_priority", "90")
-                })
+            items.append({
+                "name": metadata["name"],
+                "id": metadata["id"],
+                "lcd": metadata.get("has_optional_lcd", False),
+                "bltouch": metadata.get("has_bltouch", False),
+                "machine_priority": metadata.get("machine_priority", "90")
+            })
         items = sorted(items, key=lambda x: x["machine_priority"]+x["name"])
         self.setItems(items)
 
