@@ -7,7 +7,7 @@
         "priority": "00",
         "visible": true,
         "base_machine": false,
-        "toolhead_selection_name": "SE | 0.50 mm | Nickel Plated Copper (Default)",
+        "toolhead_selection_name": "SE | 0.50 mm | Nickel Plated Copper",
         "machine_extruder_trains":
         {
             "0": "taz_workhorse_se_extruder"

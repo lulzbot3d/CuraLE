@@ -7,7 +7,7 @@
         "machine_priority": "01",
         "visible": false,
         "base_machine": true,
-        "base_machine_id": "taz_pro_xt",
+        "base_machine_id": "taz_workhorse",
         "toolhead_category": "Universal",
         "toolhead_selection_name": "Universal Tool Head",
         "platform": "taz_workhorse_bed.stl",

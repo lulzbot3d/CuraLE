@@ -6,6 +6,7 @@
     {
         "visible": false,
         "base_machine": true,
+        "variant_machine": true,
         "base_machine_id": "taz_pro_xt",
         "toolhead_category": "Universal",
         "toolhead_selection_name": "Universal Tool Head",

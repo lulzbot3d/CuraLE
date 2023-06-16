@@ -1,7 +1,7 @@
 {
     "version": 2,
     "name": "SideKick 747 | HS | 0.80 mm",
-    "inherits": "lulzbot",
+    "inherits": "sidekick_747",
     "metadata":
     {
         "priority": "04",

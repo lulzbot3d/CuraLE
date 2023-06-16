@@ -6,7 +6,8 @@
     "metadata":
     {
         "priority": "00",
-        "visible": false,
+        "visible": true,
+        "base_machine": false,
         "toolhead_category": "Dual Extruders",
         "toolhead_selection_name": "Pro Dual | 0.50 mm | Hardened SST",
         "machine_extruder_trains":

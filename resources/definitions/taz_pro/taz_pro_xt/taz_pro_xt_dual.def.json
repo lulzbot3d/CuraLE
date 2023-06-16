@@ -4,8 +4,9 @@
     "inherits": "taz_pro_xt",
     "metadata":
     {
-        "visible": false,
-        "priority": "01",
+        "priority": "00",
+        "visible": true,
+        "base_machine": false,
         "toolhead_selection_name": "Pro Dual | 0.50 mm | Hardened SST",
         "machine_extruder_trains":
         {

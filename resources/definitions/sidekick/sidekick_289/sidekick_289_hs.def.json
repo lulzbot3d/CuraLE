@@ -1,7 +1,7 @@
 {
     "version": 2,
     "name": "SideKick 289 | HS | 0.80 mm",
-    "inherits": "lulzbot",
+    "inherits": "sidekick_289",
     "metadata":
     {
         "priority": "05",
