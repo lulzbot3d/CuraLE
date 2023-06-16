@@ -27,12 +27,14 @@
         <setting key="part removal temperature">45</setting>
 
         <machine>
-            <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="mini_2" />
-            <hotend id="SE 0.5" />
-            <hotend id="HE 0.5" />
-            <hotend id="SL 0.25" />
-            <hotend id="HS 0.8" />
-            <hotend id="HS+ 1.2" />
+            <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="taz_pro_se" />
+            <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="taz_pro_xt_se" />
+            <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="taz_pro_long_bed_se" />
+            <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="taz_workhorse_se" />
+            <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="mini_2_se" />
+            <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="sidekick_747_se" />
+            <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="sidekick_289_se" />
         </machine>
+
   </settings>
 </fdmmaterial>
