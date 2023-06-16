@@ -2,9 +2,20 @@ CURA LULZBOT EDITION PATCHNOTES
 This file is a work-in-progress; some sections may be incomplete, especially older versions. Older version patch notes may be added over time. The file will be updated as
 new versions are released and will continue to be utilized as the project progresses.
 
-4.13.0-BETAvX.X (In Development):
+4.13.0-BETAv1.6:
+	Major additions and changes:
+		- Reworked material selection to go by material type and then brand instead of the other way around
+		- Added the ability to mark a machine as having an optional BLTouch, this functionality will change
+			what firmware you are provided with.
+		- Added both the Asteroid and Meteor Tool Heads and firmware for them. Both Tool Heads are experimental
+			at this time, but this will allow for those who have been provided kits to more easily flash firmware.
+			Material quality settings have not yet been added, we wanted to make sure the firmware got out the door
+			asap.
+		- Patched up the Add Printer screen a little bit to fix a couple bugs.
 	Minor changes:
-		Swaped the path that opens when you elect to upload custom firmware
+		- Swaped the path that opens when you elect to upload custom firmware
+		- Fixed small but in monitor screen regarding the print bed
+		- Started work on providing the ability to adjust port and baudrate for a printer.
 
 4.13.0-BETAv1.5:
 	Major changes:
