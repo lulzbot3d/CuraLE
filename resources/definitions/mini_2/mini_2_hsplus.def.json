@@ -4,12 +4,13 @@
     "inherits": "mini_2",
     "metadata":
     {
+        "priority": "03",
+        "visible": true,
+        "base_machine": false,
         "toolhead_selection_name": "HS+ | 1.20 mm | Hardened SST",
         "machine_extruder_trains":
         {
             "0": "mini_2_hsplus_extruder"
-        },
-        "base_machine": false,
-        "visible": true
+        }
     }
 }

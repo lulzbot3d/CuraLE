@@ -5,11 +5,12 @@
     "metadata":
     {
         "priority": "00",
+        "visible": true,
+        "base_machine": false,
         "machine_extruder_trains":
         {
-            "0": "sidekick_289_extruder"
+            "0": "sidekick_289_sk285_extruder"
         },
-        "visible": false,
         "firmware_file_no_lcd": ""
     }
 }

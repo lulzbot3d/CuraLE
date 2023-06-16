@@ -4,6 +4,12 @@
     "inherits": "taz",
     "metadata":
     {
+        "machine_priority": "01",
+        "visible": false,
+        "base_machine": true,
+        "base_machine_id": "taz_pro_xt",
+        "toolhead_category": "Universal",
+        "toolhead_selection_name": "Universal Tool Head",
         "platform": "taz_workhorse_bed.stl",
         "platform_offset":
         [
@@ -11,15 +17,9 @@
             -10,
             5
         ],
-        "machine_extruder_trains":
-        {
-            "0": "taz_workhorse_extruder"
-        },
-        "visible": false,
         "preferred_material": "PolyLite_PLA_(Polymaker)",
-        "preferred_quality_type": "standard",
+        "preferred_quality_type": "normal",
         "firmware_latest_version": "2.0.9.0.13",
-        "machine_priority": "04",
         "firmware_file": "Workhorse/Marlin_TAZWorkhorse_Universal_2.0.9.0.13_80a6628.hex"
     },
     "overrides":

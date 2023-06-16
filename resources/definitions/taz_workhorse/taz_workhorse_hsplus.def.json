@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "name": "TAZ Workhorse | HS+ | 1.20 mm",
+    "inherits": "taz_workhorse",
+    "metadata":
+    {
+        "priority": "03",
+        "visible": true,
+        "base_machine": false,
+        "toolhead_selection_name": "HS+ | 1.20 mm | Hardened SST",
+        "machine_extruder_trains":
+        {
+            "0": "taz_workhorse_hsplus_extruder"
+        }
+    }
+}

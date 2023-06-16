@@ -4,12 +4,13 @@
     "inherits": "mini_2",
     "metadata":
     {
-        "toolhead_selection_name": "SE | 0.50 mm | Nickel Plated Copper",
+        "priority": "00",
+        "visible": true,
+        "base_machine": false,
+        "toolhead_selection_name": "SE | 0.50 mm | Nickel Plated Copper (Default)",
         "machine_extruder_trains":
         {
             "0": "mini_2_se_extruder"
-        },
-        "base_machine": false,
-        "visible": true
+        }
     }
 }

@@ -15,6 +15,7 @@
         "has_machine_materials": true,
         "has_machine_quality": true,
         "preferred_quality_type": "normal",
+        "variant_machine": false,
         "has_variants": false,
         "variants_name": "Nozzle Size",
         "required_actions": ["ChangeToolHead"],

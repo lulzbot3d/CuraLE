@@ -4,7 +4,12 @@
     "inherits": "taz",
     "metadata":
     {
-        "machine_priority": "05",
+        "visible": false,
+        "base_machine": true,
+        "variant_machine": true,
+        "base_machine_id": "taz_pro_long_bed",
+        "toolhead_category": "Universal",
+        "toolhead_selection_name": "Universal Tool Head",
         "platform": "taz_pro_long_bed.stl",
         "platform_offset":
         [
@@ -12,14 +17,9 @@
             -7,
             0
         ],
-        "machine_extruder_trains":
-        {
-            "0": "taz_pro_long_bed_extruder"
-        },
-        "preferred_material": "pla",
-        "preferred_quality_type": "standard",
+        "preferred_material": "PolyLite_PLA_",
+        "preferred_quality_type": "normal",
         "file_formats": "text/x-gcode",
-        "visible": false,
         "firmware_latest_version": "2.0.0.144.10",
         "firmware_file": "Pro_LongBed/Marlin_TAZPro_LongBed_Universal_BLTouch_2.0.0.144.10_3e72837.bin"
     },

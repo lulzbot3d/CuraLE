@@ -5,11 +5,10 @@
     "metadata":
     {
         "machine_priority": "02",
-        "priority": "00",
         "visible": false,
         "base_machine": true,
         "base_machine_id": "mini_2",
-        "toolhead_series": "Universal",
+        "toolhead_category": "Universal",
         "toolhead_selection_name": "Universal Tool Head",
         "platform": "mini.stl",
         "platform_offset":

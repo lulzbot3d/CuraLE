@@ -15,14 +15,13 @@
             -13,
             100
         ],
+        "toolhead_selection_name": "Syringe Pump",
         "machine_extruder_trains":
         {
             "0": "bio_syringe"
         },
-        "has_variants": false,
         "preferred_material": "Sodium_Alginate",
         "preferred_quality_type": "high",
-        "user_toolhead_name": "Syringe Pump",
         "firmware_toolhead_name": "SingleExtruder",
         "firmware_latest_version": "2.0.0.175",
         "firmware_file": "Bio/Marlin_Bio_SingleExtruder_2.0.0.175_6c8c1c0d.hex",
@@ -42,9 +41,9 @@
         "machine_width": { "default_value": 162 },
         "machine_depth": { "default_value": 162 },
         "machine_height": { "default_value": 180 },
-        "machine_start_gcode": { "default_value_from_file": "bio"_bio_start" },
-        "machine_end_gcode": { "default_value_from_file": "bio"_bio_end" },
-        "machine_level_x_axis_gcode": { "default_value_from_file": "mini_2"_mini_2_level_x_axis" },
+        "machine_start_gcode": { "default_value_from_file": "bio/bio_start" },
+        "machine_end_gcode": { "default_value_from_file": "bio/bio_end" },
+        "machine_level_x_axis_gcode": { "default_value_from_file": "mini_2/mini_2_level_x_axis" },
         "machine_disallowed_areas": {
             "default_value": [
                 [[85,85],[85,77],[77,85]],

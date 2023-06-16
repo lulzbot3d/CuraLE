@@ -1,15 +1,17 @@
 {
     "version": 2,
-    "name": "SideKick 747",
+    "name": "SideKick 747 | SE | 0.50 mm",
     "inherits": "lulzbot",
     "metadata":
     {
         "priority": "02",
+        "visible": true,
+        "base_machine": false,
+        "toolhead_selection_name": "SE | 0.50 mm | Nickel Plated Copper",
         "machine_extruder_trains":
         {
-            "0": "sidekick_747_extruder"
+            "0": "sidekick_747_se_extruder"
         },
-        "visible": false,
         "firmware_file_no_lcd": ""
     }
 }
