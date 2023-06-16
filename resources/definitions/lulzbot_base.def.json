@@ -18,6 +18,8 @@
         "has_machine_materials": true,
         "has_machine_quality": true,
         "has_optional_lcd": false,
+        "has_optional_bltouch": false,
+        "bltouch_is_standard": false,
         "required_actions": ["ChangeToolHead"],
         "firmware_update_info": {
             "check_urls":
@@ -113,7 +115,7 @@
                 "machine_has_lcd":
                 {
                     "type": "bool",
-                    "default_value": false,
+                    "default_value": true,
                     "enabled": false,
                     "label": "LCD",
                     "description": "LCD"

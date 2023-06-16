@@ -1,43 +1,55 @@
 {
-    "id": "lulzbot_sidekick_747_base",
-    "name": "LulzBot TAZ SideKick 747",
-    "inherits": "lulzbot_base",
+    "id": "lulzbot_hibiscus_asteroid",
+    "name": "LulzBot Mini 2 | Asteroid",
+    "inherits": "lulzbot_hibiscus",
     "version": 2,
     "metadata":
     {
-        "machine_priority": "02",
-        "platform": "Sidekick_747_bed.stl",
+        "machine_priority": "00",
+        "priority": "00",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_hibiscus_asteroid_extruder"
+        },
+        "type": "machine",
+        "platform": "lulzbot_mini.stl",
         "platform_offset":
         [
-            -4.9,
-            -18,
-            5.5
+            -100,
+            -11,
+            100
         ],
         "preferred_material": "PolyLite_PLA_(Polymaker)",
-        "preferred_quality_type": "Standard",
+        "preferred_quality_type": "standard",
         "file_formats": "text/x-gcode",
-        "visible": false,
+        "visible": true,
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
-        "firmware_latest_version": "2.0.9.0.14",
-        "firmware_file": "747/Marlin_289_Universal_2.0.9.0.14_2aed11e.hex",
-        "firmware_file_no_lcd": "",
-        "has_optional_lcd": true,
-        "bltouch_is_standard": true
+        "base_machine": "lulzbot_hibiscus",
+        "base_machine_name": "LulzBot Mini 2",
+        "firmware_latest_version": "2.0.9.0.12",
+        "user_toolhead_name": "Asteroid",
+        "firmware_file": "Mini2/",
+        "firmware_update_info": {
+            "id": "lulzbot_hibiscus",
+            "check_urls":
+            [
+                ""
+            ],
+            "update_url": ""
+        }
     },
     "overrides":
     {
-        "machine_start_gcode":
+        "machine_disallowed_areas": { "default_value": [
+            [[85,85],[85,77],[77,85]],
+            [[-85,85],[-85,77],[-77,85]],
+            [[85,-85],[85,-77],[77,-85]],
+            [[-85,-85],[-85,-77],[-77,-85]]
+        ]},
+        "machine_name":
         {
-            "default_value_from_file": "lulzbot_sidekick/lulzbot_sidekick_start"
-        },
-        "machine_end_gcode":
-        {
-            "default_value_from_file": "lulzbot_sidekick/lulzbot_sidekick_747_end"
-        },
-        "machine_level_x_axis_gcode":
-        {
-            "default_value_from_file": "lulzbot_sidekick/lulzbot_sidekick_level_x_axis"
+            "default_value": "LulzBot Hibiscus"
         },
         "machine_heated_bed":
         {
@@ -45,27 +57,43 @@
         },
         "machine_width":
         {
-            "default_value": 232.3
+            "default_value": 162
         },
         "machine_depth":
         {
-            "default_value": 232.3
+            "default_value": 162
         },
         "machine_height":
         {
-            "default_value": 248
-        },
-        "machine_has_bltouch":
-        {
-            "default_value": true
+            "default_value": 180
         },
         "machine_center_is_zero":
         {
             "default_value": false
         },
+        "machine_nozzle_size":
+        {
+            "default_value": 0.5
+        },
         "machine_gcode_flavor":
         {
             "default_value": "RepRap (Marlin/Sprinter)"
+        },
+        "machine_start_gcode":
+        {
+            "default_value_from_file": "lulzbot_hibiscus/lulzbot_hibiscus_start"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "lulzbot_hibiscus/lulzbot_hibiscus_end"
+        },
+        "machine_wipe_gcode":
+        {
+            "default_value_from_file": "lulzbot_hibiscus/lulzbot_hibiscus_wipe"
+        },
+        "machine_level_x_axis_gcode":
+        {
+            "default_value_from_file": "lulzbot_hibiscus/lulzbot_hibiscus_level_x_axis"
         },
         "machine_acceleration":
         {
@@ -131,10 +159,6 @@
         "acceleration_skirt_brim":
         {
             "default_value": 1000
-        },
-        "firmware_machine_type":
-        {
-            "default_value": "Taz SideKick 747"
         },
         "jerk_print":
         {
@@ -208,6 +232,14 @@
         "machine_baudrate":
         {
             "default_value": "250000"
+        },
+        "firmware_machine_type":
+        {
+            "default_value": "LulzBot Mini 2"
+        },
+        "firmware_toolhead_name":
+        {
+            "default_value": "Universal Galaxy-Series"
         },
         "machine_max_feedrate_x":
         {

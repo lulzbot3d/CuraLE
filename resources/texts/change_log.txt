@@ -1,3 +1,7 @@
+[4.13.0-Beta v1.6]
+* Fixed small but in monitor screen regarding the print bed
+* Reworked material selection to go by material type and then brand
+
 [4.13.0-Beta v1.5]
 * Reworked printer connections
 * Improved consistency of firmware updating

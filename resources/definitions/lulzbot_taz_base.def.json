@@ -155,10 +155,6 @@
         {
             "default_value": 12
         },
-        "machine_has_lcd":
-        {
-            "default_value": true
-        },
         "machine_max_feedrate_x":
         {
             "default_value": 800

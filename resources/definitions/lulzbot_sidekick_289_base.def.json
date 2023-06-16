@@ -23,7 +23,8 @@
         "firmware_latest_version": "2.0.9.0.14",
         "firmware_file": "289/Marlin_289_Universal_2.0.9.0.14_2aed11e.hex",
         "firmware_file_no_lcd": "",
-        "has_optional_lcd": true
+        "has_optional_lcd": true,
+        "bltouch_is_standard": true
     },
     "overrides":
     {
@@ -55,13 +56,9 @@
         {
             "default_value": 181
         },
-        "machine_has_lcd":
+        "machine_has_bltouch":
         {
-            "type": "bool",
-            "default_value": true,
-            "enabled": true,
-            "label": "LCD",
-            "description": "LCD"
+            "default_value": true
         },
         "machine_center_is_zero":
         {

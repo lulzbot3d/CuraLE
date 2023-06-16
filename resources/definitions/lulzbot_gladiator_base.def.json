@@ -8,6 +8,7 @@
         "type": "machine",
         "preferred_material": "pla",
         "preferred_quality_type": "standard",
+        "has_optional_bltouch": true,
         "file_formats": "text/x-gcode",
         "visible": false,
         "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-taz-pro?pk_campaign=software-cura",
@@ -179,10 +180,6 @@
         "jerk_skirt_brim":
         {
             "default_value": 12
-        },
-        "machine_has_lcd":
-        {
-            "default_value": true
         },
         "machine_max_feedrate_x":
         {

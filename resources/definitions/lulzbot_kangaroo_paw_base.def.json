@@ -53,14 +53,6 @@
         {
             "default_value": 180
         },
-	"machine_has_lcd":
-        {
-        "type": "bool",
-        "default_value": true,
-        "enabled": true,
-        "label": "LCD",
-        "description": "LCD"
-        },
         "machine_center_is_zero":
         {
             "default_value": false

@@ -23,6 +23,7 @@
         "category": "LulzBot",
         "base_machine": "LulzBot TAZ ProXT",
         "base_machine_name": "TAZ Pro XT",
+        "has_optional_bltouch": false,
         "preferred_material": "PolyLite_PLA_(Polymaker)",
         "user_toolhead_name": "Pro Dual | 0.50 mm | Hardened SST",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",

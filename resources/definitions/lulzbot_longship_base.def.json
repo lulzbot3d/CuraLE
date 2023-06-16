@@ -8,6 +8,7 @@
         "type": "machine",
         "preferred_material": "pla",
         "preferred_quality_type": "standard",
+        "bltouch_is_standard": true,
         "file_formats": "text/x-gcode",
         "visible": false,
         "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-taz-pro?pk_campaign=software-cura",
@@ -199,7 +200,7 @@
         {
             "default_value": 12
         },
-        "machine_has_lcd":
+        "machine_has_bltouch":
         {
             "default_value": true
         },
