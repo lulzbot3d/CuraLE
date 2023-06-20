@@ -10,6 +10,7 @@ from .avr_isp import stk500v2, intelHex
 from .bossapy import bossa
 from serial import SerialException
 
+from serial.tools import list_ports
 from time import sleep
 import platform
 
@@ -22,6 +23,17 @@ class LulzFirmwareUpdater(FirmwareUpdater):
     def __init__(self, output_device: "PrinterOutputDevice") -> None:
         super().__init__(output_device)
         self._firmware_serial_port = self._output_device._serial_port
+
+    def _updateFirmware(self) -> None:
+
+        firmware_file_extension = self._firmware_file.split(".")[-1]
+
+        if firmware_file_extension == "hex":
+            self._updateFirmwareAvr()
+        elif firmware_file_extension == "bin":
+            self._updateFirmwareBossapy()
+        else:
+            Logger.log("e", "File type unknown/unsupported" + firmware_file_extension)
 
     def _updateFirmwareAvr(self) -> None:
         try:
@@ -86,16 +98,23 @@ class LulzFirmwareUpdater(FirmwareUpdater):
             programmer.close()
             pass
 
+        # During the programmer reset, Windows in particular really likes to switch
+        # which port number the printer is located on, so our firmware updater loses it!
+        # In the case that we aren't able to connect again, we should try and find a port
+        # named "Bossa Program Port" or with a VID:PID=03EB:6124 for the Pro boards
         try:
             programmer.connect(self._firmware_serial_port)
-        except Exception:
+        except SerialException:
             programmer.close()
-            Logger.log("e", "Programmer connection failure")
-            self._detectSerialPort(bootloader=True)
+            Logger.log("w", "Programmer connection failure, rescanning for printer")
+            new_port = self._relocateMovedPort()
+            if new_port:
+                Logger.log("d", "Found new port: " + new_port)
+                self._firmware_serial_port = new_port
             try:
                 programmer.connect(self._firmware_serial_port)
             except Exception:
-                Logger.log("e", "Programmer connection failure with bootloader=True")
+                Logger.log("e", "Programmer connection failure with new port!")
                 programmer.close()
                 pass
 
@@ -119,3 +138,18 @@ class LulzFirmwareUpdater(FirmwareUpdater):
         programmer.close()
 
         self._cleanupAfterUpdate()
+
+    def _relocateMovedPort():
+        located_pro = ""
+        try:
+            ports = list_ports.comports()
+        except TypeError:
+            ports = []
+        for port in ports:
+            if not isinstance(port, tuple):
+                port = (port.device, port.description, port.hwid)
+            if "Bossa Program Port" in port[1]:
+                return port[0]
+            if "VID:PID=03EB:6124" in port[2]:
+                located_pro = port[0]
+        return located_pro
