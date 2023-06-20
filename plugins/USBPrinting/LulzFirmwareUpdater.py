@@ -106,11 +106,14 @@ class LulzFirmwareUpdater(FirmwareUpdater):
             programmer.connect(self._firmware_serial_port)
         except Exception:
             programmer.close()
-            Logger.log("w", "Programmer connection failure, rescanning for printer")
+            Logger.log("w", "Programmer connection failure, rescanning for printer in 3 seconds.")
+            sleep(3)
             new_port = self._relocateMovedPort()
             if new_port:
-                Logger.log("d", "Found new port: " + new_port)
+                Logger.log("d", "Checking new port: " + new_port)
                 self._firmware_serial_port = new_port
+            else:
+                Logger.log("w", "Didn't find a new port")
             try:
                 programmer.connect(self._firmware_serial_port)
             except Exception:
@@ -143,13 +146,20 @@ class LulzFirmwareUpdater(FirmwareUpdater):
         located_pro = ""
         try:
             ports = list_ports.comports()
+            Logger.log("d", "Found %s ports to check" % len(ports))
         except TypeError:
+            Logger.log("w", "No other ports found...")
             ports = []
+        except Exception:
+            Logger.log("e", "Encountered an unknown exception in _relocateMovedPort!")
+            return located_pro
         for port in ports:
             if not isinstance(port, tuple):
                 port = (port.device, port.description, port.hwid)
             if "Bossa Program Port" in port[1]:
+                Logger.log("d", "Found a port claiming to be Bossa")
                 return port[0]
             if "VID:PID=03EB:6124" in port[2]:
+                Logger.log("d", "Found a port with the correct board identifiers")
                 located_pro = port[0]
         return located_pro
