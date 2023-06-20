@@ -104,7 +104,7 @@ class LulzFirmwareUpdater(FirmwareUpdater):
         # named "Bossa Program Port" or with a VID:PID=03EB:6124 for the Pro boards
         try:
             programmer.connect(self._firmware_serial_port)
-        except SerialException:
+        except Exception:
             programmer.close()
             Logger.log("w", "Programmer connection failure, rescanning for printer")
             new_port = self._relocateMovedPort()
