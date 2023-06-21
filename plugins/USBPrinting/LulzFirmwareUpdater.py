@@ -1,5 +1,11 @@
 # Copyright (c) 2022 FAME 3D
-# Cura is released under the terms of the LGPLv3 or higher.
+# Cura LE is released under the terms of the LGPLv3 or higher.
+
+from enum import IntEnum
+from serial.tools import list_ports
+from threading import Thread
+from time import sleep
+import platform
 
 from UM.Logger import Logger
 
@@ -10,25 +16,26 @@ from .avr_isp import stk500v2, intelHex
 from .bossapy import bossa
 from serial import SerialException
 
-from serial.tools import list_ports
-from threading import Thread
-from time import sleep
-import platform
-
 MYPY = False
 if MYPY:
     from cura.PrinterOutput.PrinterOutputDevice import PrinterOutputDevice
 
 
 class LulzFirmwareUpdater(FirmwareUpdater):
+
     def __init__(self, output_device: "PrinterOutputDevice") -> None:
         super().__init__(output_device)
         self._firmware_serial_port = self._output_device._serial_port
 
+        # Override FirmwareUpdateState for our purposes without modifying the original
+        updateStateList = [(enum.name, int(enum.value)) for enum in FirmwareUpdateState]
+        self.FirmwareUpdateState = IntEnum("FirmwareUpdateState", updateStateList + [("starting_update", len(updateStateList)), ("waiting", len(updateStateList) + 1)])
+
     def _updateFirmware(self) -> None:
 
         Logger.log("i", "Update Firmware Thread Started!")
-        self._onFirmwareProgress(0)
+        self._setFirmwareUpdateState(self.FirmwareUpdateState.starting_update)
+        self._onFirmwareProgress(-1)
 
         firmware_file_extension = self._firmware_file.split(".")[-1]
 
@@ -38,7 +45,7 @@ class LulzFirmwareUpdater(FirmwareUpdater):
             self._updateFirmwareBossapy()
         else:
             Logger.log("e", "File type unknown/unsupported" + firmware_file_extension)
-            self._setFirmwareUpdateState(FirmwareUpdateState.firmware_not_found_error)
+            self._setFirmwareUpdateState(self.FirmwareUpdateState.firmware_not_found_error)
 
         Logger.log("i", "Update Firmware Thread Closing...")
         return
@@ -49,7 +56,7 @@ class LulzFirmwareUpdater(FirmwareUpdater):
             assert len(hex_file) > 0
         except (FileNotFoundError, AssertionError):
             Logger.log("e", "Unable to read provided hex file. Could not update firmware.")
-            self._setFirmwareUpdateState(FirmwareUpdateState.firmware_not_found_error)
+            self._setFirmwareUpdateState(self.FirmwareUpdateState.firmware_not_found_error)
             return
 
         programmer = stk500v2.Stk500v2()
@@ -64,7 +71,7 @@ class LulzFirmwareUpdater(FirmwareUpdater):
         except:
             programmer.close()
             Logger.logException("e", "Failed to update firmware")
-            self._setFirmwareUpdateState(FirmwareUpdateState.communication_error)
+            self._setFirmwareUpdateState(self.FirmwareUpdateState.communication_error)
             return
 
         # Give programmer some time to connect. Might need more in some cases, but this worked in all tested cases.
@@ -72,16 +79,17 @@ class LulzFirmwareUpdater(FirmwareUpdater):
 
         if not programmer.isConnected():
             Logger.log("e", "Unable to connect with serial. Could not update firmware")
-            self._setFirmwareUpdateState(FirmwareUpdateState.communication_error)
+            self._setFirmwareUpdateState(self.FirmwareUpdateState.communication_error)
         try:
+            self._setFirmwareUpdateState(self.FirmwareUpdateState.updating)
             programmer.programChip(hex_file)
         except SerialException as e:
             Logger.log("e", "A serial port exception occurred during firmware update: %s" % e)
-            self._setFirmwareUpdateState(FirmwareUpdateState.io_error)
+            self._setFirmwareUpdateState(self.FirmwareUpdateState.io_error)
             return
         except Exception as e:
             Logger.log("e", "An unknown exception occurred during firmware update: %s" % e)
-            self._setFirmwareUpdateState(FirmwareUpdateState.unknown_error)
+            self._setFirmwareUpdateState(self.FirmwareUpdateState.unknown_error)
             return
 
         programmer.close()
@@ -110,13 +118,15 @@ class LulzFirmwareUpdater(FirmwareUpdater):
         except Exception as e:
             Logger.log("w", "Programmer reset failure: {0}".format(e))
             Logger.log("d", "Serial may not be ready yet, will try again in 12 seconds.")
+            self._setFirmwareUpdateState(self.FirmwareUpdateState.waiting)
             # 12 seconds should be long enough if they literally attempt to flash it again nearly instantly
             sleep(12)
+            self._setFirmwareUpdateState(self.FirmwareUpdateState.starting_update)
             try:
                 programmer.reset(self._firmware_serial_port)
             except Exception as e:
                 Logger.log("e", "Second programmer reset failure: {0}".format(e))
-                self._setFirmwareUpdateState(FirmwareUpdateState.communication_error)
+                self._setFirmwareUpdateState(self.FirmwareUpdateState.communication_error)
                 programmer.close()
                 self._cleanupAfterFailure()
                 return
@@ -147,19 +157,20 @@ class LulzFirmwareUpdater(FirmwareUpdater):
 
         if not programmer.isConnected():
             Logger.log("e", "Unable to connect with serial. Could not update firmware")
-            self._setFirmwareUpdateState(FirmwareUpdateState.communication_error)
+            self._setFirmwareUpdateState(self.FirmwareUpdateState.communication_error)
             self._cleanupAfterFailure()
             return
         try:
+            self._setFirmwareUpdateState(self.FirmwareUpdateState.updating)
             programmer.flash_firmware(self._firmware_file)
         except SerialException as e:
             Logger.log("e", "A serial port exception occurred during firmware update: {0}".format(e))
-            self._setFirmwareUpdateState(FirmwareUpdateState.io_error)
+            self._setFirmwareUpdateState(self.FirmwareUpdateState.io_error)
             self._cleanupAfterFailure()
             return
         except Exception as e:
             Logger.log("e", "An unknown exception occurred during firmware update: {0}".format(e))
-            self._setFirmwareUpdateState(FirmwareUpdateState.unknown_error)
+            self._setFirmwareUpdateState(self.FirmwareUpdateState.unknown_error)
             self._cleanupAfterFailure()
             return
 
