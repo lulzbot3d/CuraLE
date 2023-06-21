@@ -40,6 +40,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         self._application = application
 
         self._serial_port_list = []
+        self.missing_port_timers = {}
         self._usb_output_devices = {}
         self._usb_output_devices_model = None
 
@@ -130,18 +131,28 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
     def _addRemovePorts(self, serial_ports):
         """Helper to identify serial ports (and scan for them)"""
 
+        serial_ports = list(serial_ports)
+
         # First, find and add all new or changed keys
-        for serial_port in list(serial_ports):
+        for serial_port in serial_ports:
             if serial_port not in self._serial_port_list:
                 Logger.log("d", "Found new serial port: %s, creating output device...", serial_port)
                 self.addUSBOutputDeviceSignal.emit(serial_port)  # Hack to ensure its created in main thread
+                self.missing_port_timers[serial_port] = 0
                 continue
+
+        # Then, check for missing ports and remove them if they've been missing twice (to account for firmware flashing)
         for serial_port in self._serial_port_list:
-            if serial_port not in list(serial_ports):
+            if serial_port not in serial_ports:
+                if self.missing_port_timers[serial_port] < 1:
+                    self.missing_port_timers[serial_port] += 1
+                    serial_ports.append(serial_port)
+                    continue
                 Logger.log("d", "Serial port disappeared: %s, removing output device...", serial_port)
                 self.removeUSBOutputDeviceSignal.emit(serial_port)
+                del(self.missing_port_timers[serial_port])
                 continue
-        self._serial_port_list = list(serial_ports)
+        self._serial_port_list = serial_ports
 
     def addOutputDevice(self, serial_port):
         """Because the model needs to be created in the same thread as the QMLEngine, we use a signal."""

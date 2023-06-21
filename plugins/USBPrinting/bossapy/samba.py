@@ -34,7 +34,7 @@ class Samba():
             raise Exception("write failed")
 
         # Logger.log("d", "...Write to addr=" + hex(addr) + " of " + str(size) + " bytes")
-    
+
     def go(self, addr):
         cmd = str.encode("G" + str('%0*x' % (8,addr)) + "#")
         try:

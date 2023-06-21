@@ -11,6 +11,7 @@ from .bossapy import bossa
 from serial import SerialException
 
 from serial.tools import list_ports
+from threading import Thread
 from time import sleep
 import platform
 
@@ -26,6 +27,9 @@ class LulzFirmwareUpdater(FirmwareUpdater):
 
     def _updateFirmware(self) -> None:
 
+        Logger.log("i", "Update Firmware Thread Started!")
+        self._onFirmwareProgress(0)
+
         firmware_file_extension = self._firmware_file.split(".")[-1]
 
         if firmware_file_extension == "hex":
@@ -34,6 +38,10 @@ class LulzFirmwareUpdater(FirmwareUpdater):
             self._updateFirmwareBossapy()
         else:
             Logger.log("e", "File type unknown/unsupported" + firmware_file_extension)
+            self._setFirmwareUpdateState(FirmwareUpdateState.firmware_not_found_error)
+
+        Logger.log("i", "Update Firmware Thread Closing...")
+        return
 
     def _updateFirmwareAvr(self) -> None:
         try:
@@ -82,6 +90,8 @@ class LulzFirmwareUpdater(FirmwareUpdater):
 
     def _updateFirmwareBossapy(self) -> None:
 
+        Logger.log("i", "Starting Bossa firmware update...")
+
         Logger.log("i", "Loading BIN firmware file: " + self._firmware_file)
 
         # Ensure that other connections are closed.
@@ -92,22 +102,33 @@ class LulzFirmwareUpdater(FirmwareUpdater):
         programmer.progress_callback = self._onFirmwareProgress
 
         try:
+            Logger.log("i", "Resetting CPU for Bossa bootloader access")
             programmer.reset(self._firmware_serial_port)
-        except Exception:
-            Logger.log("e", "Programmer reset failure")
-            programmer.close()
-            pass
+        # If for some reason you attempt to flash too soon after a printer has started,
+        # it may fail to connect to serial on first attempt. Waiting a few seconds seems
+        # to be all it takes to fix this issue.
+        except Exception as e:
+            Logger.log("w", "Programmer reset failure: {0}".format(e))
+            Logger.log("d", "Serial may not be ready yet, will try again in 12 seconds.")
+            # 12 seconds should be long enough if they literally attempt to flash it again nearly instantly
+            sleep(12)
+            try:
+                programmer.reset(self._firmware_serial_port)
+            except Exception as e:
+                Logger.log("e", "Second programmer reset failure: {0}".format(e))
+                self._setFirmwareUpdateState(FirmwareUpdateState.communication_error)
+                programmer.close()
+                self._cleanupAfterFailure()
+                return
 
         # During the programmer reset, Windows in particular really likes to switch
         # which port number the printer is located on, so our firmware updater loses it!
-        # In the case that we aren't able to connect again, we should try and find a port
-        # named "Bossa Program Port" or with a VID:PID=03EB:6124 for the Pro boards
         try:
+            Logger.log("i", "CPU reset success, attempting programmer connection...")
             programmer.connect(self._firmware_serial_port)
         except Exception:
             programmer.close()
-            Logger.log("w", "Programmer connection failure, rescanning for printer in 3 seconds.")
-            sleep(3)
+            Logger.log("w", "Programmer connection failure, rescanning for printer...")
             new_port = self._relocateMovedPort()
             if new_port:
                 Logger.log("d", "Checking new port: " + new_port)
@@ -116,8 +137,8 @@ class LulzFirmwareUpdater(FirmwareUpdater):
                 Logger.log("w", "Didn't find a new port")
             try:
                 programmer.connect(self._firmware_serial_port)
-            except Exception:
-                Logger.log("e", "Programmer connection failure with new port!")
+            except Exception as e:
+                Logger.log("e", "Programmer connection failure with new port!: {0}".format(e))
                 programmer.close()
                 pass
 
@@ -127,26 +148,32 @@ class LulzFirmwareUpdater(FirmwareUpdater):
         if not programmer.isConnected():
             Logger.log("e", "Unable to connect with serial. Could not update firmware")
             self._setFirmwareUpdateState(FirmwareUpdateState.communication_error)
+            self._cleanupAfterFailure()
+            return
         try:
             programmer.flash_firmware(self._firmware_file)
         except SerialException as e:
-            Logger.log("e", "A serial port exception occurred during firmware update: %s" % e)
+            Logger.log("e", "A serial port exception occurred during firmware update: {0}".format(e))
             self._setFirmwareUpdateState(FirmwareUpdateState.io_error)
+            self._cleanupAfterFailure()
             return
         except Exception as e:
-            Logger.log("e", "An unknown exception occurred during firmware update: %s" % e)
+            Logger.log("e", "An unknown exception occurred during firmware update: {0}".format(e))
             self._setFirmwareUpdateState(FirmwareUpdateState.unknown_error)
+            self._cleanupAfterFailure()
             return
+
+        Logger.log('i', "Bossa firmware update complete!")
 
         programmer.close()
 
         self._cleanupAfterUpdate()
 
-    def _relocateMovedPort():
+    def _relocateMovedPort(self) -> str:
         located_pro = ""
         try:
             ports = list_ports.comports()
-            Logger.log("d", "Found %s ports to check" % len(ports))
+            Logger.log("d", "Found %s port(s) to check" % len(ports))
         except TypeError:
             Logger.log("w", "No other ports found...")
             ports = []
@@ -156,10 +183,14 @@ class LulzFirmwareUpdater(FirmwareUpdater):
         for port in ports:
             if not isinstance(port, tuple):
                 port = (port.device, port.description, port.hwid)
-            if "Bossa Program Port" in port[1]:
-                Logger.log("d", "Found a port claiming to be Bossa")
+            if "Bossa Program Port" in port[1]: # Windows might actually be able to identify it
+                Logger.log("d", "Found a port claiming to be Bossa!")
                 return port[0]
-            if "VID:PID=03EB:6124" in port[2]:
-                Logger.log("d", "Found a port with the correct board identifiers")
+            if "VID:PID=03EB:6124" in port[2]: # This is the board within TAZ Pro printers
+                Logger.log("d", "Found a port with the correct board identifiers!")
                 located_pro = port[0]
         return located_pro
+
+    def _cleanupAfterFailure(self) -> None:
+        self._update_firmware_thread = Thread(target=self._updateFirmware, daemon=True, name = "FirmwareUpdateThread")
+        self._firmware_file = ""

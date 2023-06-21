@@ -261,7 +261,6 @@ Cura.MachineAction {
                 enabled: (manager.firmwareUpdater != null) ? manager.firmwareUpdater.firmwareUpdateState != 1 : true;
                 onClicked: {
                     updateProgressDialog.visible = false
-                    prog.value = 0
                 }
             }
         ]
