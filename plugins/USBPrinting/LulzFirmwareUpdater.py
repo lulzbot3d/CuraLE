@@ -152,11 +152,10 @@ class LulzFirmwareUpdater(FirmwareUpdater):
             new_port = self._relocateMovedPort()
             if new_port:
                 Logger.log("d", "Checking new port: " + new_port)
-                self._firmware_serial_port = new_port
             else:
                 Logger.log("w", "Didn't find a new port")
             try:
-                programmer.connect(self._firmware_serial_port)
+                programmer.connect(new_port)
             except Exception as e:
                 Logger.log("e", "Programmer connection failure with new port!: {0}".format(e))
                 programmer.close()
