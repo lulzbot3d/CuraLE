@@ -1,6 +1,6 @@
 {
     "name": "USB printing",
-    "author": "Ultimaker B.V.",
+    "author": "Ultimaker B.V.; FAME3D, LLC",
     "version": "1.0.2",
     "api": 7,
     "description": "Accepts G-Code and sends them to a printer. Plugin can also update firmware.",

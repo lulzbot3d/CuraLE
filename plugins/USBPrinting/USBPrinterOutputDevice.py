@@ -1,5 +1,6 @@
 # Copyright (c) 2020 Ultimaker B.V.
-# Cura is released under the terms of the LGPLv3 or higher.
+# Copyright (c) 2023 Fargo Additive Manufacturing Equipment 3D, LLC
+# Cura LE is released under the terms of the LGPLv3 or higher.
 
 from multiprocessing.sharedctypes import Value
 import os
@@ -23,7 +24,7 @@ from .AutoDetectBaudJob import AutoDetectBaudJob
 from .KnownBaudJob import KnownBaudJob
 from .LulzFirmwareUpdater import LulzFirmwareUpdater
 
-from PyQt5.QtCore import pyqtSignal, pyqtSlot
+from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QUrl
 
 from io import StringIO #To write the g-code output.
 from queue import Queue
@@ -43,8 +44,11 @@ catalog = i18nCatalog("cura")
 
 
 class USBPrinterOutputDevice(PrinterOutputDevice):
+    """USB Printer Output Device adds USB options on top of a printer output device.
+    """
 
     messageFromPrinter = pyqtSignal(str)
+    printersChanged = pyqtSignal()
 
     def __init__(self, serial_port: str, baud_rate: Optional[int] = None) -> None:
         super().__init__(serial_port, connection_type = ConnectionType.NotConnected)
@@ -76,6 +80,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._firmware_idle_count = 0
 
         self._is_printing = False  # A print is being sent.
+        self._is_flashing = False  # Firmware is being flashed
 
         ## Set when print is started in order to check running time.
         self._print_start_time = None  # type: Optional[float]
@@ -97,6 +102,9 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._firmware_name_requested = False
         self._firmware_updater = LulzFirmwareUpdater(self)
         self._firmware_data = None
+
+        self._firmware_updater.firmwareUpdating.connect(self.setIsFlashing)
+        self.printersChanged.connect(self.printersChanged)
 
         plugin_path = PluginRegistry.getInstance().getPluginPath("USBPrinting")
         if plugin_path:
@@ -517,6 +525,20 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             return self._firmware_data["FIRMWARE_VERSION"]
         return catalog.i18nc("@info:status", "Connect for Info")
 
+    @pyqtSlot(str)
+    def updateFirmware(self, firmware_file: Union[str, QUrl]) -> None:
+        if not self._firmware_updater:
+            return
+        self.setIsFlashing(True)
+        self._firmware_updater.updateFirmware(firmware_file)
+
+    def setIsFlashing(self, value: bool) -> None:
+        print("We're flashing, it should be locked")
+        self._is_flashing = value
+
+    def getIsFlashing(self) -> bool:
+        print("It's checking if it's flashing")
+        return self._is_flashing
 
     ########### PRINTER COMMANDS ############
 
@@ -637,11 +659,20 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
         self._gcode_position += 1
 
+    # LulzBot Predefined Commands Dependencies
+    @pyqtProperty(bool, notify = printersChanged)
+    def supportWipeNozzle(self):
+        return self._supportWipeNozzle()
+
     def _supportWipeNozzle(self):
         code = CuraApplication.getInstance().getGlobalContainerStack().getProperty("machine_wipe_gcode", "value")
         if not code or len(code) == 0:
             return False
         return True
+
+    @pyqtSlot()
+    def wipeNozzle(self):
+        return self._wipeNozzle()
 
     def _wipeNozzle(self):
         code = CuraApplication.getInstance().getGlobalContainerStack().getProperty("machine_wipe_gcode", "value")
@@ -661,11 +692,19 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self.writeStarted.emit(self)
         self._printGCode(code)
 
+    @pyqtProperty(bool, notify = printersChanged)
+    def supportLevelXAxis(self):
+        return self._supportLevelXAxis()
+
     def _supportLevelXAxis(self):
         code = CuraApplication.getInstance().getGlobalContainerStack().getProperty("machine_level_x_axis_gcode", "value")
         if not code or len(code) == 0:
             return False
         return True
+
+    @pyqtSlot()
+    def levelXAxis(self):
+        return self._levelXAxis()
 
     def _levelXAxis(self):
         code = CuraApplication.getInstance().getGlobalContainerStack().getProperty("machine_level_x_axis_gcode", "value")

@@ -2,10 +2,13 @@
 # Cura LE is released under the terms of the LGPLv3 or higher.
 
 from enum import IntEnum
+from serial import SerialException
 from serial.tools import list_ports
 from threading import Thread
 from time import sleep
 import platform
+
+from PyQt5.QtCore import pyqtSignal
 
 from UM.Logger import Logger
 
@@ -14,14 +17,14 @@ from cura.PrinterOutput.FirmwareUpdater import FirmwareUpdater, FirmwareUpdateSt
 
 from .avr_isp import stk500v2, intelHex
 from .bossapy import bossa
-from serial import SerialException
 
 MYPY = False
 if MYPY:
     from cura.PrinterOutput.PrinterOutputDevice import PrinterOutputDevice
 
-
 class LulzFirmwareUpdater(FirmwareUpdater):
+
+    firmwareUpdating = pyqtSignal(bool)
 
     def __init__(self, output_device: "PrinterOutputDevice") -> None:
         super().__init__(output_device)
@@ -48,6 +51,7 @@ class LulzFirmwareUpdater(FirmwareUpdater):
             self._setFirmwareUpdateState(self.FirmwareUpdateState.firmware_not_found_error)
 
         Logger.log("i", "Update Firmware Thread Closing...")
+        self.firmwareUpdating.emit(False)
         return
 
     def _updateFirmwareAvr(self) -> None:

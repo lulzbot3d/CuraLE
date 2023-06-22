@@ -1,6 +1,6 @@
 {
     "name": "Firmware Updater",
-    "author": "Ultimaker B.V.",
+    "author": "Ultimaker B.V.; FAME3D, LLC",
     "version": "1.0.1",
     "description": "Provides machine actions for updating firmware.",
     "api": 7,
