@@ -3,6 +3,7 @@
 
 import QtQuick 2.10
 import QtQuick.Controls 2.3
+import QtQml 2.15
 
 import UM 1.2 as UM
 import Cura 1.6 as Cura
@@ -169,6 +170,7 @@ Popup
                         {
                             target: parent
                             property: "height"
+                            restoreMode: Binding.RestoreBinding
                             value: parent.childrenRect.height
                             when: parent.visibleChildren.length > 1
                         }

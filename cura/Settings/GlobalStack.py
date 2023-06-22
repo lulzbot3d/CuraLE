@@ -62,7 +62,7 @@ class GlobalStack(CuraContainerStack):
     extrudersChanged = pyqtSignal()
     configuredConnectionTypesChanged = pyqtSignal()
 
-    @pyqtProperty("QVariantMap", notify = extrudersChanged)
+    #@pyqtProperty("QVariantMap", notify = extrudersChanged)
     @deprecated("Please use extruderList instead.", "4.4")
     def extruders(self) -> Dict[str, "ExtruderStack"]:
         """Get the list of extruders of this stack.

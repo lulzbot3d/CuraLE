@@ -132,6 +132,9 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         """Helper to identify serial ports (and scan for them)"""
 
         serial_ports = list(serial_ports)
+        for device in self._usb_output_devices.values():
+            if device.getIsFlashing():
+                return
 
         # First, find and add all new or changed keys
         for serial_port in serial_ports:
@@ -145,6 +148,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
             if serial_port not in serial_ports:
                 if serial_port in self._usb_output_devices.keys():
                     if self._usb_output_devices[serial_port].getIsFlashing():
+                        serial_ports.append(serial_ports)
                         continue
                 Logger.log("d", "Serial port disappeared: %s, removing output device...", serial_port)
                 self.removeUSBOutputDeviceSignal.emit(serial_port)

@@ -49,6 +49,7 @@ class LulzFirmwareUpdater(FirmwareUpdater):
         else:
             Logger.log("e", "File type unknown/unsupported" + firmware_file_extension)
             self._setFirmwareUpdateState(self.FirmwareUpdateState.firmware_not_found_error)
+            self._cleanupAfterFailure()
 
         Logger.log("i", "Update Firmware Thread Closing...")
         self.firmwareUpdating.emit(False)
@@ -61,6 +62,7 @@ class LulzFirmwareUpdater(FirmwareUpdater):
         except (FileNotFoundError, AssertionError):
             Logger.log("e", "Unable to read provided hex file. Could not update firmware.")
             self._setFirmwareUpdateState(self.FirmwareUpdateState.firmware_not_found_error)
+            self._cleanupAfterFailure()
             return
 
         programmer = stk500v2.Stk500v2()
@@ -76,6 +78,7 @@ class LulzFirmwareUpdater(FirmwareUpdater):
             programmer.close()
             Logger.logException("e", "Failed to update firmware")
             self._setFirmwareUpdateState(self.FirmwareUpdateState.communication_error)
+            self._cleanupAfterFailure()
             return
 
         # Give programmer some time to connect. Might need more in some cases, but this worked in all tested cases.
@@ -84,16 +87,19 @@ class LulzFirmwareUpdater(FirmwareUpdater):
         if not programmer.isConnected():
             Logger.log("e", "Unable to connect with serial. Could not update firmware")
             self._setFirmwareUpdateState(self.FirmwareUpdateState.communication_error)
+            self._cleanupAfterFailure()
         try:
             self._setFirmwareUpdateState(self.FirmwareUpdateState.updating)
             programmer.programChip(hex_file)
         except SerialException as e:
             Logger.log("e", "A serial port exception occurred during firmware update: %s" % e)
             self._setFirmwareUpdateState(self.FirmwareUpdateState.io_error)
+            self._cleanupAfterFailure()
             return
         except Exception as e:
             Logger.log("e", "An unknown exception occurred during firmware update: %s" % e)
             self._setFirmwareUpdateState(self.FirmwareUpdateState.unknown_error)
+            self._cleanupAfterFailure()
             return
 
         programmer.close()
@@ -162,6 +168,7 @@ class LulzFirmwareUpdater(FirmwareUpdater):
         if not programmer.isConnected():
             Logger.log("e", "Unable to connect with serial. Could not update firmware")
             self._setFirmwareUpdateState(self.FirmwareUpdateState.communication_error)
+            self._onFirmwareProgress(0)
             self._cleanupAfterFailure()
             return
         try:
@@ -209,3 +216,4 @@ class LulzFirmwareUpdater(FirmwareUpdater):
     def _cleanupAfterFailure(self) -> None:
         self._update_firmware_thread = Thread(target=self._updateFirmware, daemon=True, name = "FirmwareUpdateThread")
         self._firmware_file = ""
+        self._onFirmwareProgress(0)

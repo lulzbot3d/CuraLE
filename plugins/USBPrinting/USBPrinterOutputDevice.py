@@ -533,11 +533,9 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._firmware_updater.updateFirmware(firmware_file)
 
     def setIsFlashing(self, value: bool) -> None:
-        print("We're flashing, it should be locked")
         self._is_flashing = value
 
     def getIsFlashing(self) -> bool:
-        print("It's checking if it's flashing")
         return self._is_flashing
 
     ########### PRINTER COMMANDS ############
