@@ -1,13 +1,13 @@
 {
     "id": "lulzbot_longship_asteroid",
-    "name": "TAZ Pro Long Bed Asteroid",
+    "name": "TAZ Pro Long Bed | Asteroid | 1.20 mm",
     "inherits": "lulzbot_longship_base",
     "version": 2,
     "metadata":
     {
         "type": "machine",
         "visible": true,
-        "priority": "01",
+        "priority": "12",
         "machine_extruder_trains":
         {
             "0": "lulzbot_longship_asteroid_extruder"
@@ -16,7 +16,7 @@
         "base_machine": "LulzBot TAZ Pro Long Bed",
         "base_machine_name": "TAZ Pro Long Bed",
         "preferred_material": "PolyLite_PLA_(Polymaker)",
-        "user_toolhead_name": "Asteroid",
+        "user_toolhead_name": "Asteroid | 0.50 mm | Galaxy Series [In-Development]",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/se-tool-head-single-extruder-05-mm?pk_campaign=software-cura",
         "default_category": "All",
         "firmware_latest_version": "2.0.0.144.11",

@@ -1,12 +1,12 @@
 {
     "id": "lulzbot_hibiscus_meteor",
-    "name": "LulzBot Mini 2 | Meteor",
+    "name": "LulzBot Mini 2 | Meteor | 0.50 mm",
     "inherits": "lulzbot_hibiscus",
     "version": 2,
     "metadata":
     {
         "machine_priority": "00",
-        "priority": "00",
+        "priority": "10",
         "machine_extruder_trains":
         {
             "0": "lulzbot_hibiscus_meteor_extruder"
@@ -29,7 +29,7 @@
         "base_machine_name": "LulzBot Mini 2",
         "firmware_latest_version": "2.0.9.0.14",
         "firmware_file": "Mini2/Marlin_Mini2_Galaxy_2.0.9.0.14_15d22ac.hex",
-        "user_toolhead_name": "Meteor",
+        "user_toolhead_name": "Meteor | 0.50 mm | Galaxy Series [In-Development]",
         "firmware_update_info": {
             "id": "lulzbot_hibiscus",
             "check_urls":

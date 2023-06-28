@@ -1,13 +1,13 @@
 {
     "id": "lulzbot_quiver_asteroid",
-    "name": "TAZ Pro | Asteroid",
+    "name": "TAZ Pro | Asteroid | 1.20 mm",
     "inherits": "lulzbot_quiver_base",
     "version": 2,
     "metadata":
     {
         "type": "machine",
         "visible": true,
-        "priority": "01",
+        "priority": "12",
         "machine_extruder_trains":
         {
             "0": "lulzbot_quiver_asteroid_extruder"
@@ -23,7 +23,7 @@
         "base_machine": "LulzBot TAZ Pro",
         "base_machine_name": "TAZ Pro",
         "preferred_material": "PolyLite_PLA_(Polymaker)",
-        "user_toolhead_name": "Asteroid",
+        "user_toolhead_name": "Asteroid | 0.50 mm | Galaxy Series [In-Development]",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/se-tool-head-single-extruder-05-mm?pk_campaign=software-cura",
         "default_category": "All",
         "firmware_latest_version": "2.0.0.144.11",

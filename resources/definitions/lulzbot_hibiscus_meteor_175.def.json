@@ -5,7 +5,7 @@
     "version": 2,
     "metadata":
     {
-        "priority": "05",
+        "priority": "11",
         "machine_extruder_trains":
         {
             "0": "lulzbot_hibiscus_meteor_175_extruder"
@@ -25,7 +25,7 @@
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
-        "user_toolhead_name": "Meteor 1.75mm | 0.50 mm | Carbide Coated Copper",
+        "user_toolhead_name": "Meteor 1.75mm | 0.50 mm | Galaxy Series [In-Development]",
         "default_extrusion_rate": 60,
         "firmware_update_info": {
             "id": "",

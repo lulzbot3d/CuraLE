@@ -1,13 +1,13 @@
 {
     "id": "lulzbot_redgum_meteor",
-    "name": "TAZ Workhorse Meteor",
+    "name": "TAZ Workhorse | Meteor | 0.50 mm",
     "inherits": "lulzbot_redgum_base",
     "version": 2,
     "metadata":
     {
         "type": "machine",
         "visible": true,
-        "priority": "00",
+        "priority": "10",
         "machine_extruder_trains":
         {
             "0": "lulzbot_redgum_meteor_extruder"
@@ -16,7 +16,7 @@
         "base_machine": "LulzBot TAZ Workhorse",
         "base_machine_name": "TAZ Workhorse",
         "preferred_material": "PolyLite_PLA_(Polymaker)",
-        "user_toolhead_name": "Meteor",
+        "user_toolhead_name": "Meteor | 0.50 mm | Galaxy Series [In-Development]",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
         "default_category": "All",
         "firmware_latest_version": "2.0.0.144.14",
