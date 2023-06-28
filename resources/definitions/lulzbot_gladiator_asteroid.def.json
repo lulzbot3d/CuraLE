@@ -23,7 +23,7 @@
         "base_machine": "LulzBot TAZ ProXT",
         "base_machine_name": "TAZ Pro XT",
         "preferred_material": "PolyLite_PLA_(Polymaker)",
-        "user_toolhead_name": "Asteroid | 0.50 mm | Galaxy Series [In-Development]",
+        "user_toolhead_name": "Asteroid | 1.20 mm | Galaxy Series [In-Development]",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/se-tool-head-single-extruder-05-mm?pk_campaign=software-cura",
         "default_category": "All",
         "firmware_latest_version": "2.0.0.144.11",
