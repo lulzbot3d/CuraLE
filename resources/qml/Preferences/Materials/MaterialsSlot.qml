@@ -10,10 +10,9 @@ import QtQuick.Dialogs 1.2
 import UM 1.2 as UM
 import Cura 1.0 as Cura
 
-// A single material row, typically used in a MaterialsBrandSection
+// A single material row, typically used in a MaterialsTypeSection
 
-Rectangle
-{
+Rectangle {
     id: materialSlot
     property var material: null
     property var hovered: false
@@ -21,20 +20,15 @@ Rectangle
 
     height: UM.Theme.getSize("favorites_row").height
     width: parent.width
-    //color: material != null ? (base.currentItem.root_material_id == material.root_material_id ? UM.Theme.getColor("favorites_row_selected") : "transparent") : "transparent"
-    color:
-    {
-        if(material !== null && base.currentItem !== null)
-        {
-            if(base.currentItem.root_material_id === material.root_material_id)
-            {
+    color: {
+        if(material !== null && base.currentItem !== null) {
+            if(base.currentItem.root_material_id === material.root_material_id) {
                 return UM.Theme.getColor("favorites_row_selected")
             }
         }
         return "transparent"
     }
-    Rectangle
-    {
+    Rectangle {
         id: swatch
         color: material != null ? material.color_code : "transparent"
         border.width: UM.Theme.getSize("default_lining").width
@@ -45,8 +39,8 @@ Rectangle
         anchors.left: materialSlot.left
         anchors.leftMargin: UM.Theme.getSize("default_margin").width
     }
-    Label
-    {
+
+    Label {
         text: material != null ? material.brand + " " + material.name : ""
         verticalAlignment: Text.AlignVCenter
         height: parent.height
@@ -55,11 +49,10 @@ Rectangle
         anchors.leftMargin: UM.Theme.getSize("narrow_margin").width
         font.italic: material != null && Cura.MachineManager.currentRootMaterialId[Cura.ExtruderManager.activeExtruderIndex] == material.root_material_id
     }
-    MouseArea
-    {
+
+    MouseArea {
         anchors.fill: parent
-        onClicked:
-        {
+        onClicked: {
             materialList.currentBrand = material.brand
             materialList.currentType = material.brand + "_" + material.material
             base.setExpandedActiveMaterial(material.root_material_id)
@@ -68,56 +61,45 @@ Rectangle
         onEntered: { materialSlot.hovered = true }
         onExited: { materialSlot.hovered = false }
     }
-    Button
-    {
+
+    Button {
         id: favorite_button
         text: ""
         implicitWidth: UM.Theme.getSize("favorites_button").width
         implicitHeight: UM.Theme.getSize("favorites_button").height
         visible: materialSlot.hovered || materialSlot.is_favorite || favorite_button.hovered
-        anchors
-        {
+        anchors {
             right: materialSlot.right
             verticalCenter: materialSlot.verticalCenter
         }
-        onClicked:
-        {
-            if (materialSlot.is_favorite)
-            {
+        onClicked: {
+            if (materialSlot.is_favorite) {
                 CuraApplication.getMaterialManagementModel().removeFavorite(material.root_material_id)
             }
-            else
-            {
+            else {
                 CuraApplication.getMaterialManagementModel().addFavorite(material.root_material_id)
             }
         }
-        style: ButtonStyle
-        {
+        style: ButtonStyle {
             background: Item { }
         }
-        UM.RecolorImage
-        {
-            anchors
-            {
+
+        UM.RecolorImage {
+            anchors {
                 verticalCenter: favorite_button.verticalCenter
                 horizontalCenter: favorite_button.horizontalCenter
             }
             width: UM.Theme.getSize("favorites_button_icon").width
             height: UM.Theme.getSize("favorites_button_icon").height
-            color:
-            {
-                if (favorite_button.hovered)
-                {
+            color: {
+                if (favorite_button.hovered) {
                     return UM.Theme.getColor("primary_hover")
                 }
-                else
-                {
-                    if (materialSlot.is_favorite)
-                    {
+                else {
+                    if (materialSlot.is_favorite) {
                         return UM.Theme.getColor("primary")
                     }
-                    else
-                    {
+                    else {
                         UM.Theme.getColor("text_inactive")
                     }
                 }

@@ -1,5 +1,6 @@
 # Copyright (c) 2018 Ultimaker B.V.
-# Cura is released under the terms of the LGPLv3 or higher.
+# Copyright (c) 2023 Fargo Additive Manufacturing Equipment 3D, LLC
+# Cura LE is released under the terms of the LGPLv3 or higher.
 
 from UM.Job import Job
 from UM.Logger import Logger

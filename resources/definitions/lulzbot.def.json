@@ -18,14 +18,15 @@
         "variant_machine": false,
         "has_variants": false,
         "variants_name": "Nozzle Size",
+        "has_optional_lcd": false,
+        "has_optional_bltouch": false,
+        "bltouch_is_standard": false,
         "required_actions": ["ChangeToolHead"],
         "supported_actions": ["MachineSettingsAction", "UpgradeFirmware"],
         "firmware_update_info": {
             "check_urls": ["https://firmware.lulzbot.com"],
             "update_url": "https://firmware.lulzbot.com"
-        },
-        "has_optional_lcd": false,
-        "has_optional_bltouch": false
+        }
     },
     "overrides":
     {

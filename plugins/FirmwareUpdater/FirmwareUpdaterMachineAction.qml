@@ -2,7 +2,7 @@
 // Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.2
-import QtQuick.Controls 1.1
+import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.1
 import QtQuick.Window 2.1
 import QtQuick.Dialogs 1.2 // For filedialog
@@ -115,7 +115,7 @@ Cura.MachineAction {
             spacing: UM.Theme.getSize("default_margin").width
             Button {
                 id: autoUpgradeButton
-                text: catalog.i18nc("@action:button", "Automatically upgrade Firmware");
+                text: catalog.i18nc("@action:button", "Automatically Upgrade Firmware");
                 enabled: printerConnected && firmwareName != ""
                 onClicked:
                 {
@@ -125,7 +125,7 @@ Cura.MachineAction {
             }
             Button {
                 id: manualUpgradeButton
-                text: catalog.i18nc("@action:button", "Upload custom Firmware")
+                text: catalog.i18nc("@action:button", "Upload Custom Firmware")
                 enabled: printerConnected
                 onClicked:
                 {
@@ -205,8 +205,11 @@ Cura.MachineAction {
 
         Column {
             anchors.fill: parent
+            spacing: 5
 
             Label {
+                id: statusLabel
+
                 anchors {
                     left: parent.left
                     right: parent.right
@@ -224,13 +227,19 @@ Cura.MachineAction {
                         case 2:
                             return catalog.i18nc("@label","Firmware update completed!");
                         case 3:
-                            return catalog.i18nc("@label","Firmware update failed due to an unknown error.");
+                            return catalog.i18nc("@label","Firmware update failed due to an unknown error!");
                         case 4:
-                            return catalog.i18nc("@label","Firmware update failed due to an communication error.");
+                            return catalog.i18nc("@label","Firmware update failed due to an communication error!");
                         case 5:
-                            return catalog.i18nc("@label","Firmware update failed due to an input/output error.");
+                            return catalog.i18nc("@label","Firmware update failed due to an input/output error!");
                         case 6:
-                            return catalog.i18nc("@label","Firmware update failed due to missing firmware.");
+                            return catalog.i18nc("@label","Firmware update failed due to missing firmware!");
+                        case 7:
+                            return catalog.i18nc("@label","Preparing to upgrade firmware...")
+                        case 8:
+                            return catalog.i18nc("@label","Printer not quite ready, please wait...")
+                        default:
+                            return catalog.i18nc("@label","Unknown State, something has gone wrong!")
                     }
                 }
 
@@ -238,15 +247,15 @@ Cura.MachineAction {
             }
 
             ProgressBar {
-                id: prog
+                id: progBar
                 value: (manager.firmwareUpdater != null) ? manager.firmwareUpdater.firmwareProgress : 0
-                minimumValue: 0
-                maximumValue: 100
+                from: 0
+                to: 100
                 indeterminate: {
                     if(manager.firmwareUpdater == null) {
                         return false;
                     }
-                    return manager.firmwareUpdater.firmwareProgress < 1 && manager.firmwareUpdater.firmwareProgress > 0;
+                    return manager.firmwareUpdater.firmwareProgress < 0
                 }
                 anchors {
                     left: parent.left;
@@ -257,11 +266,11 @@ Cura.MachineAction {
 
         rightButtons: [
             Button {
+                id: exitButton
                 text: catalog.i18nc("@action:button","Close");
                 enabled: (manager.firmwareUpdater != null) ? manager.firmwareUpdater.firmwareUpdateState != 1 : true;
                 onClicked: {
                     updateProgressDialog.visible = false
-                    prog.value = 0
                 }
             }
         ]

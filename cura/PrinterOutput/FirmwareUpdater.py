@@ -22,11 +22,11 @@ class FirmwareUpdater(QObject):
 
         self._output_device = output_device
 
+        self._update_firmware_thread = Thread(target=self._updateFirmware, daemon=True, name = "FirmwareUpdateThread")
+
         self._firmware_file = ""
         self._firmware_progress = 0
         self._firmware_update_state = FirmwareUpdateState.idle
-
-        self._update_firmware_thread = Thread()
 
     def updateFirmware(self, firmware_file: Union[str, QUrl]) -> None:
         # the file path could be url-encoded.
@@ -39,30 +39,21 @@ class FirmwareUpdater(QObject):
             self._setFirmwareUpdateState(FirmwareUpdateState.firmware_not_found_error)
             return
 
-        firmware_file_extension = self._firmware_file.split(".")[-1]
-
-        if firmware_file_extension == "hex":
-            self._update_firmware_thread = Thread(target=self._updateFirmwareAvr, daemon=True, name = "FirmwareUpdateThread")
-        elif firmware_file_extension == "bin":
-            self._update_firmware_thread = Thread(target=self._updateFirmwareBossapy, daemon=True, name = "FirmwareUpdateThread")
-        else:
-            Logger.log("e", "File type unknown/unsupported" + firmware_file_extension)
-
         self._setFirmwareUpdateState(FirmwareUpdateState.updating)
         try:
             self._update_firmware_thread.start()
         except RuntimeError:
             Logger.warning("Could not start the update thread, since it's still running!")
+            self._setFirmwareUpdateState(FirmwareUpdateState.unknown_error)
 
-    def _updateFirmwareAvr(self) -> None:
-        raise NotImplementedError("_updateFirmwareAvr needs to be implemented")
-
-    def _updateFirmwareBossapy(self) -> None:
-        raise NotImplementedError("_updateFirmwareBossapy needs to be implemented")
+    def _updateFirmware(self) -> None:
+        raise NotImplementedError("_updateFirmware needs to be implemented")
 
     def _cleanupAfterUpdate(self) -> None:
         """Cleanup after a successful update"""
-        self._update_firmware_thread = Thread()
+
+        # Clean up for next attempt.
+        self._update_firmware_thread = Thread(target=self._updateFirmware, daemon=True, name = "FirmwareUpdateThread")
         self._firmware_file = ""
         self._onFirmwareProgress(100)
         self._setFirmwareUpdateState(FirmwareUpdateState.completed)

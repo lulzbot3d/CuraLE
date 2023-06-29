@@ -2,7 +2,9 @@
 // Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.10
-import QtQuick.Controls 2.3
+import QtQuick.Controls 1.1
+import QtQuick.Controls.Styles 1.1
+import QtQuick.Layouts 1.1
 
 import UM 1.3 as UM
 import Cura 1.1 as Cura
@@ -30,9 +32,9 @@ Item
 
             function addMachine()
             {
-                base.visible = true //false
+                base.visible = true
                 var item = toolheadsModel.getItem(toolheadSelection.selectedIndex).id
-                var success = Cura.MachineManager.addMachine(item, machineName.text, lcdSelection.selectedIndex == 0 ? true: false,true)
+                var success = Cura.MachineManager.addMachine(item, machineName.text, lcdSelection.selectedIndex == 0, bltouchSelection.selectedIndex == 0)
                 return success
             }
 
@@ -40,8 +42,9 @@ Item
             {
                 machineName.text = getMachineName()
                 printerSelection.lcd = printerSelectionRepeater.model.getItem(0).lcd
-                printerSelection.bltouch = printerSelectionRepeater.model.getItem(0).bltouch
                 printerSelection.baseMachine = printerSelectionRepeater.model.getItem(0).id
+                toolheadSelection.bltouch_default = toolheadSelectionRepeater.model.getItem(0).bltouch_default
+                toolheadSelection.bltouch_option = toolheadSelectionRepeater.model.getItem(0).bltouch_option
                 printerSelection.selectedIndex = 0
                 for (var i = 0; i < printerSelectionRepeater.count; i++)
                 {
@@ -65,34 +68,55 @@ Item
                     if (i==0)
                     {
                         item.checked = true
+                        item.clicked()
                     }
                     else
                     {
                         item.checked = false
                     }
-                    item.checkedChanged()
                 }
             }
 
-            Row
+            function updateOptions()
+            {
+                for (var i = 0; i < bltouchSelectionRepeater.count; i++)
+                {
+                    var item = bltouchSelectionRepeater.itemAt(i)
+                    if(toolheadSelection.bltouch_default){
+                        if(i==0) { item.checked = true }
+                        else { item.checked = false }
+                    } else {
+                        if(i==0) { item.checked = false }
+                        else { item.checked = true }
+                    }
+                }
+            }
+
+            GridLayout
             {
                 anchors.fill: parent
-                spacing: 2
+                anchors.bottomMargin: UM.Theme.getSize("default_margin").width
+                columns: 3
+                rows: 2
+                columnSpacing: 2
+                rowSpacing: 2
 
                 GroupBox
                 {
                     id: printerSelection
-                    width: parent.width * .25 //the parent width of the window is multiplied by 1/ # of boxes to get evenly spaced boxes that take up the whole window
-                    anchors.bottom: parent.bottom
-                    anchors.top: parent.top
-                    anchors.bottomMargin: UM.Theme.getSize("default_margin").width
+
+                    Layout.preferredWidth: parent.width * .25
+
+                    Layout.fillHeight: true
+
+                    Layout.column: 0
+                    Layout.rowSpan: 2
 
                     title: catalog.i18nc("@action:button", "LulzBot 3D Printers")
-                    ButtonGroup { id: printerGroup }
+                    ExclusiveGroup { id: printerGroup }
 
                     property int selectedIndex: 0
                     property bool lcd: false
-                    property bool bltouch: false
                     property string baseMachine: ""
 
                     Column
@@ -101,15 +125,24 @@ Item
                         {
                             id: printerSelectionRepeater
                             model: Cura.LulzBotPrintersModel {}
-                            delegate: Cura.RadioButton
+                            delegate: RadioButton
                             {
                                 text: model.name
-                                ButtonGroup.group: printerGroup
+
+                                exclusiveGroup: printerGroup
                                 checked: model.index == 0
-                                onClicked: { printerSelection.selectedIndex = model.index; printerSelection.lcd = model.lcd; printerSelection.bltouch = model.bltouch; printerSelection.baseMachine = model.id; printerSelectorLoader.item.updateToolheads(); }
+                                onClicked: {
+                                    printerSelection.selectedIndex = model.index
+                                    printerSelection.lcd = model.lcd
+                                    printerSelection.baseMachine = model.id
+                                    printerSelectorLoader.item.updateToolheads()
+                                }
                             }
 
-                            Component.onCompleted: {printerSelection.lcd = model.getItem(0).lcd;printerSelection.bltouch = model.getItem(0).bltouch; printerSelection.baseMachine = model.getItem(0).id}
+                            Component.onCompleted: {
+                                printerSelection.lcd = model.getItem(0).lcd;
+                                printerSelection.baseMachine = model.getItem(0).id
+                            }
                         }
                     }
                 }
@@ -117,15 +150,19 @@ Item
                 GroupBox
                 {
                     id: toolheadSelection
-                    width: parent.width * .50
-                    anchors.bottom: parent.bottom
-                    anchors.top: parent.top
-                    anchors.bottomMargin: UM.Theme.getSize("default_margin").width
+                    Layout.preferredWidth: parent.width * .50
+
+                    Layout.fillHeight: true
+
+                    Layout.column: 1
+                    Layout.rowSpan: 2
 
                     title: catalog.i18nc("@action:button", "Tool Head | Nozzle Ø | Nozzle Material")
-                    ButtonGroup { id: toolheadGroup }
+                    ExclusiveGroup { id: toolheadGroup }
 
                     property int selectedIndex: 0
+                    property bool bltouch_option: false
+                    property bool bltouch_default: false
 
                     Column
                     {
@@ -134,12 +171,18 @@ Item
                         {
                             id: toolheadSelectionRepeater
                             model: Cura.LulzBotToolheadsModel { id: toolheadsModel; baseMachineProperty: printerSelection.baseMachine }
-                            delegate: Cura.RadioButton
+                            delegate: RadioButton
                             {
                                 text: model.toolhead
-                                ButtonGroup.group: toolheadGroup
+                                exclusiveGroup: toolheadGroup
                                 checked: model.index == 0
-                                onCheckedChanged: { if(checked) {toolheadSelection.selectedIndex = model.index; machineName.text = model.name }}
+                                onClicked: {
+                                    toolheadSelection.selectedIndex = model.index
+                                    machineName.text = model.name
+                                    toolheadSelection.bltouch_option = model.bltouch_option
+                                    toolheadSelection.bltouch_default = model.bltouch_default
+                                    printerSelectorLoader.item.updateOptions()
+                                }
                             }
                         }
                     }
@@ -148,13 +191,16 @@ Item
                 GroupBox
                 {
                     id: lcdSelection
-                    width: parent.width * .25
-                    anchors.bottom: parent.bottom
-                    anchors.top: parent.top
+                    Layout.preferredWidth: parent.width * .25
                     anchors.bottomMargin: UM.Theme.getSize("default_margin").width
 
+                    Layout.fillHeight: true
+
+                    Layout.column: 2
+                    Layout.rowSpan: 1
+
                     title: catalog.i18nc("@action:button", "Graphical LCD")
-                    ButtonGroup { id: lcdGroup }
+                    ExclusiveGroup { id: lcdGroup }
 
                     property int selectedIndex: 0
 
@@ -163,10 +209,10 @@ Item
                         Repeater
                         {
                             model: ["Yes", "No"]
-                            delegate: Cura.RadioButton
+                            delegate: RadioButton
                             {
                                 text: modelData
-                                ButtonGroup.group: lcdGroup
+                                exclusiveGroup: lcdGroup
                                 checked: model.index == 0
                                 enabled: printerSelection.lcd
                                 onEnabledChanged:
@@ -174,6 +220,47 @@ Item
                                     if(!enabled && model.index == 0) checked = true
                                 }
                                 onClicked: { lcdSelection.selectedIndex = model.index }
+                            }
+                        }
+                    }
+                }
+
+                GroupBox
+                {
+                    id: bltouchSelection
+                    Layout.preferredWidth: parent.width * .25
+                    anchors.bottomMargin: UM.Theme.getSize("default_margin").width
+
+                    Layout.fillHeight: true
+
+                    Layout.column: 2
+                    Layout.row: 1
+                    Layout.rowSpan: 1
+
+                    title: catalog.i18nc("@action:button", "BLTouch Leveling")
+                    ExclusiveGroup { id: bltouchGroup }
+
+                    property int selectedIndex: 1
+
+                    Column
+                    {
+                        Repeater
+                        {
+                            id: bltouchSelectionRepeater
+                            model: ["Yes", "No"]
+                            delegate: RadioButton
+                            {
+                                text: modelData
+                                exclusiveGroup: bltouchGroup
+                                checked: {
+                                    if(model.index == 0){
+                                        toolheadSelection.bltouch_default
+                                    } else {
+                                        !toolheadSelection.bltouch_default
+                                    }
+                                }
+                                enabled: toolheadSelection.bltouch_option
+                                onClicked: { bltouchSelection.selectedIndex = model.index }
                             }
                         }
                     }
@@ -201,7 +288,7 @@ Item
     Label
     {
         id: printerLabel
-        text: catalog.i18nc("@label", "Printer Name:")
+        text: catalog.i18nc("@label", "Name:")
         anchors.verticalCenter: machineName.verticalCenter
         anchors.left: backButton.right
         anchors.leftMargin: 10
@@ -217,9 +304,7 @@ Item
         anchors.leftMargin: UM.Theme.getSize("default_margin").width
         anchors.rightMargin: UM.Theme.getSize("default_margin").width
         text: printerSelectorLoader.item.getMachineName()
-        //implicitWidth: UM.Theme.getSize("standard_list_input").width
         maximumLength: 40
-        //validator: Cura.MachineNameValidator { } //TODO: Gives a segfault in PyQt5.6. For now, we must use a signal on text changed.
         validator: RegExpValidator
         {
             regExp: {

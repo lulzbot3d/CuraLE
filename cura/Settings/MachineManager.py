@@ -407,7 +407,7 @@ class MachineManager(QObject):
 
     @pyqtSlot(str, result=bool)
     @pyqtSlot(str, str, result = bool)
-    def addMachine(self, definition_id: str, name: Optional[str] = None, lcd=True) -> bool:
+    def addMachine(self, definition_id: str, name: Optional[str] = None, lcd=True, bltouch=False) -> bool:
         Logger.log("i", "Trying to add a machine with the definition id [%s]", definition_id)
         if name is None:
             definitions = CuraContainerRegistry.getInstance().findDefinitionContainers(id = definition_id)
@@ -418,10 +418,11 @@ class MachineManager(QObject):
 
         new_stack = CuraStackBuilder.createMachine(cast(str, name), definition_id)
         if new_stack:
+            # Check for LCD and BLTouch values
             if new_stack.getMetaDataEntry("has_optional_lcd", False):
-                # new_stack.setProperty("machine_has_lcd", "value", lcd, "definition_changes")
-                # Optional LCD code is currently a bit of a mess, that needs to be fixed. For now just get these working for slicing.
-                pass
+                new_stack.setProperty("machine_has_lcd", "value", lcd, "definition_changes")
+            if new_stack.getMetaDataEntry("has_optional_bltouch", False):
+                new_stack.setProperty("machine_has_bltouch", "value", bltouch, "definition_changes")
             # Instead of setting the global container stack here, we set the active machine and so the signals are emitted
             self.setActiveMachine(new_stack.getId())
             if Application.getInstance().getPreferences().getValue("general/is_first_run"):

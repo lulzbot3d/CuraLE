@@ -46,6 +46,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         self._update_thread = Thread()
         self.createUpdateThread() # Sets up the thread properly
         self._check_updates = True
+        self._port_check_frequency = 3
         self._update_thread.start()
 
         self._application.applicationShuttingDown.connect(self.stop)
@@ -82,7 +83,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
                 if "text/x-gcode" in machine_file_formats:
                     port_list = self.getSerialPortList(only_list_usb=True)
             self._addRemovePorts(port_list)
-            time.sleep(5)
+            time.sleep(self._port_check_frequency)
         Logger.log("d", "USB Output Device discovery update thread stopped.")
 
     def getSerialPortList(self, only_list_usb = False):
@@ -130,18 +131,29 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
     def _addRemovePorts(self, serial_ports):
         """Helper to identify serial ports (and scan for them)"""
 
+        serial_ports = list(serial_ports)
+        for device in self._usb_output_devices.values():
+            if device.getIsFlashing():
+                return
+
         # First, find and add all new or changed keys
-        for serial_port in list(serial_ports):
+        for serial_port in serial_ports:
             if serial_port not in self._serial_port_list:
                 Logger.log("d", "Found new serial port: %s, creating output device...", serial_port)
                 self.addUSBOutputDeviceSignal.emit(serial_port)  # Hack to ensure its created in main thread
                 continue
+
+        # Then, check for missing ports and remove them if they've been missing twice (to account for firmware flashing)
         for serial_port in self._serial_port_list:
-            if serial_port not in list(serial_ports):
+            if serial_port not in serial_ports:
+                if serial_port in self._usb_output_devices.keys():
+                    if self._usb_output_devices[serial_port].getIsFlashing():
+                        serial_ports.append(serial_ports)
+                        continue
                 Logger.log("d", "Serial port disappeared: %s, removing output device...", serial_port)
                 self.removeUSBOutputDeviceSignal.emit(serial_port)
                 continue
-        self._serial_port_list = list(serial_ports)
+        self._serial_port_list = serial_ports
 
     def addOutputDevice(self, serial_port):
         """Because the model needs to be created in the same thread as the QMLEngine, we use a signal."""
@@ -179,13 +191,6 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
                 title = i18n_catalog.i18nc("@info:title", "Incorrect Printer!"),
                 message_type = Message.MessageType.WARNING)
             wrong_printer_message.show()
-
-        # elif changed_device.connectionState == ConnectionState.Closed:
-        #     disconnected_printer_message = Message(
-        #         i18n_catalog.i18nc("@info:status", "Printer initiated connection closure, connection closed!"),
-        #         title = i18n_catalog.i18nc("@info:title", "Printer dropped connection!"),
-        #         message_type = Message.MessageType.WARNING)
-        #     disconnected_printer_message.show()
 
         elif changed_device.connectionState == ConnectionState.Error:
             error_printer_message = Message(

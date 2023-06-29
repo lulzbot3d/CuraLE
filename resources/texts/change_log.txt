@@ -1,3 +1,18 @@
+[4.13.0-Betav1.8.1]
+* Added basic material profiles for Galaxy Tool Heads
+* Resized first start and add machine menus to better fit content.
+
+[4.13.0-Beta v1.7]
+* Small bugfix patch
+* Mainly just fixed an issue with flashing Pro firmware on Windows
+
+[4.13.0-Beta v1.6]
+* Fixed small but in monitor screen regarding the print bed
+* Reworked material selection to go by material type and then brand
+* Added the ability to mark a machine as having an optional BLTouch
+* Added the Asteroid and Meteor Experimental Tool Heads
+* Added firmware for the aformentioned Tool Heads
+
 [4.13.0-Beta v1.5]
 * Reworked printer connections
 * Improved consistency of firmware updating

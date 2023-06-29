@@ -1,0 +1,43 @@
+{
+    "id": "lulzbot_sidekick_747_meteor",
+    "name": "TAZ SideKick 747 | Meteor | 0.50 mm",
+    "inherits": "lulzbot_sidekick_747_base",
+    "version": 2,
+    "metadata":
+    {
+        "priority": "10",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_sidekick_747_meteor_extruder"
+        },
+        "type": "machine",
+        "platform": "Sidekick_747_bed.stl",
+
+        "preferred_material": "PolyLite_PLA_(Polymaker)",
+        "preferred_quality_type": "Standard",
+        "file_formats": "text/x-gcode",
+        "visible": true,
+        "printer_info_link": "https://www.lulzbot.com/store/printers/",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
+        "base_machine": "lulzbot_sidekick_747_base",
+        "base_machine_name": "TAZ Sidekick 747",
+        "user_toolhead_name": "Meteor | 0.50 mm | Galaxy Series [In-Development]",
+        "default_extrusion_rate": 60,
+        "firmware_file": "747/Marlin_747_Galaxy_2.0.9.0.14_15d22ac.hex",
+        "firmware_update_info": {
+            "id": "",
+            "check_urls":
+            [
+                ""
+            ],
+            "update_url": ""
+        }
+    },
+    "overrides":
+    {
+        "firmware_toolhead_name":
+        {
+            "default_value": "Universal Galaxy-Series"
+        }
+    }
+}

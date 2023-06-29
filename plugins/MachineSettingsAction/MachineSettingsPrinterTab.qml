@@ -40,7 +40,7 @@ Item
             margins: UM.Theme.getSize("default_margin").width
         }
         spacing: UM.Theme.getSize("default_margin").width
-        
+
         // =======================================
         // Left-side column for "Printer Settings"
         // =======================================
@@ -51,7 +51,7 @@ Item
 
             spacing: base.columnSpacing
 
-            Label   // Title Label
+            Label   // Printer Title Label
             {
                 text: catalog.i18nc("@title:label", "Printer Settings")
                 font: UM.Theme.getFont("medium_bold")
@@ -118,6 +118,23 @@ Item
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 
+            Cura.ComboBoxWithOptions  // "G-code flavor"
+            {
+                id: gcodeFlavorComboBox
+                containerStackId: machineStackId
+                settingKey: "machine_gcode_flavor"
+                settingStoreIndex: propertyStoreIndex
+                labelText: catalog.i18nc("@label", "G-code flavor")
+                labelFont: base.labelFont
+                labelWidth: base.labelWidth
+                controlWidth: base.controlWidth
+                forceUpdateOnChangeFunction: forceUpdateFunction
+                // FIXME(Lipu): better document this.
+                // This has something to do with UM2 and UM2+ regarding "has_material" and the gcode flavor settings.
+                // I don't remember exactly what.
+                afterOnEditingFinishedFunction: manager.updateHasMaterialsMetadata
+            }
+
             Cura.SimpleCheckBox  // "Origin at center"
             {
                 id: originAtCenterCheckBox
@@ -154,22 +171,30 @@ Item
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 
-            Cura.ComboBoxWithOptions  // "G-code flavor"
+            Cura.SimpleCheckBox // "LCD"
             {
-                id: gcodeFlavorComboBox
+                id: lcdCheckBox
                 containerStackId: machineStackId
-                settingKey: "machine_gcode_flavor"
+                settingKey: "machine_has_lcd"
                 settingStoreIndex: propertyStoreIndex
-                labelText: catalog.i18nc("@label", "G-code flavor")
+                labelText: catalog.i18nc("@label", "Has LCD Screen")
                 labelFont: base.labelFont
                 labelWidth: base.labelWidth
-                controlWidth: base.controlWidth
                 forceUpdateOnChangeFunction: forceUpdateFunction
-                // FIXME(Lipu): better document this.
-                // This has something to do with UM2 and UM2+ regarding "has_material" and the gcode flavor settings.
-                // I don't remember exactly what.
-                afterOnEditingFinishedFunction: manager.updateHasMaterialsMetadata
             }
+
+            Cura.SimpleCheckBox // "BLTouch"
+            {
+                id: bltouchCheckBox
+                containerStackId: machineStackId
+                settingKey: "machine_has_bltouch"
+                settingStoreIndex: propertyStoreIndex
+                labelText: catalog.i18nc("@label", "Has BLTouch")
+                labelFont: base.labelFont
+                labelWidth: base.labelWidth
+                forceUpdateOnChangeFunction: forceUpdateFunction
+            }
+
         }
 
         // =======================================
@@ -182,7 +207,7 @@ Item
 
             spacing: base.columnSpacing
 
-            Label   // Title Label
+            Label   // Printhead Title Label
             {
                 text: catalog.i18nc("@title:label", "Printhead Settings")
                 font: UM.Theme.getFont("medium_bold")
@@ -330,9 +355,9 @@ Item
                 }
             }
 
-            /* 
-               - Fix for this issue: https://github.com/Ultimaker/Cura/issues/9167 
-               - Allows user to toggle if GCODE coordinates are affected by the extruder offset. 
+            /*
+               - Fix for this issue: https://github.com/Ultimaker/Cura/issues/9167
+               - Allows user to toggle if GCODE coordinates are affected by the extruder offset.
                - Machine wide setting. CuraEngine/src/gcodeExport.cpp is not set up to evaluate per extruder currently.
                - If it is moved to per-extruder (unlikely), then this should be moved to the extruder tab.
             */
@@ -347,8 +372,7 @@ Item
                 labelWidth: base.labelWidth
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
-			
-			
+
             /* The "Shared Heater" feature is temporarily disabled because its
             implementation is incomplete. Printers with multiple filaments going
             into one nozzle will keep the inactive filaments retracted at the
@@ -369,9 +393,52 @@ Item
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
             */
+
+            // =======================================
+            // Subsection below Printhead for USB
+            // =======================================
+
+            Label   // USB Title Label
+            {
+                text: catalog.i18nc("@title:label", "USB Settings (WIP)")
+                font: UM.Theme.getFont("medium_bold")
+                color: UM.Theme.getColor("text")
+                renderType: Text.NativeRendering
+                width: parent.width
+                elide: Text.ElideRight
+            }
+
+            Cura.ComboBoxWithOptions  // "Port"
+            {
+                id: portComboBox
+                containerStackId: machineStackId
+                settingKey: "machine_port"
+                settingStoreIndex: propertyStoreIndex
+                labelText: catalog.i18nc("@label", "USB Port")
+                labelFont: base.labelFont
+                labelWidth: base.labelWidth
+                controlWidth: base.controlWidth
+                forceUpdateOnChangeFunction: forceUpdateFunction
+            }
+
+            Cura.ComboBoxWithOptions  // "Baudrate"
+            {
+                id: baudComboBox
+                containerStackId: machineStackId
+                settingKey: "machine_baudrate"
+                settingStoreIndex: propertyStoreIndex
+                labelText: catalog.i18nc("@label", "USB Communication Speed (Baudrate)")
+                labelFont: base.labelFont
+                labelWidth: base.labelWidth
+                controlWidth: base.controlWidth
+                forceUpdateOnChangeFunction: forceUpdateFunction
+            }
         }
     }
 
+    // =======================================
+    // Bottom section for "Printhead Settings"
+    // =======================================
     RowLayout  // Start and End G-code
     {
         id: lowerBlock

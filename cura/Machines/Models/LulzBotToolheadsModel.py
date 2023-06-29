@@ -12,12 +12,16 @@ class LulzBotToolheadsModel(ListModel):
     NameRole = Qt.UserRole + 1
     IdRole = Qt.UserRole + 2
     ToolheadRole = Qt.UserRole + 3
+    BLTouchOptionRole = Qt.UserRole + 4
+    BLTouchDefaultRole = Qt.UserRole + 5
 
     def __init__(self, parent = None):
         super().__init__(parent)
         self.addRoleName(self.NameRole, "name")
         self.addRoleName(self.IdRole, "id")
         self.addRoleName(self.ToolheadRole, "toolhead")
+        self.addRoleName(self.BLTouchOptionRole, "bltouch_option")
+        self.addRoleName(self.BLTouchDefaultRole, "bltouch_default")
 
         # Listen to changes
         ContainerRegistry.getInstance().containerAdded.connect(self._onContainerChanged)
@@ -48,6 +52,8 @@ class LulzBotToolheadsModel(ListModel):
                 "toolhead": metadata.get("toolhead_selection_name", metadata.get("firmware_toolhead_name", metadata["name"])),
                 "id": metadata["id"],
                 "name": metadata["name"],
+                "bltouch_option": metadata.get("has_optional_bltouch", False),
+                "bltouch_default": metadata.get("bltouch_is_standard", False),
                 "priority": metadata.get("priority", "99")
             })
         items = sorted(items, key=lambda x: x["priority"]+x["name"])

@@ -67,8 +67,8 @@ from cura.Machines.Models.GenericMaterialsModel import GenericMaterialsModel
 from cura.Machines.Models.GlobalStacksModel import GlobalStacksModel
 from cura.Machines.Models.IntentCategoryModel import IntentCategoryModel
 from cura.Machines.Models.IntentModel import IntentModel
-from cura.Machines.Models.MaterialBrandsModel import MaterialBrandsModel
 from cura.Machines.Models.MaterialManagementModel import MaterialManagementModel
+from cura.Machines.Models.MaterialTypesModel import MaterialTypesModel
 from cura.Machines.Models.MultiBuildPlateModel import MultiBuildPlateModel
 from cura.Machines.Models.NozzleModel import NozzleModel
 from cura.Machines.Models.QualityManagementModel import QualityManagementModel
@@ -1166,7 +1166,7 @@ class CuraApplication(QtApplication):
         self.processEvents()
         qmlRegisterType(FavoriteMaterialsModel, "Cura", 1, 0, "FavoriteMaterialsModel")
         qmlRegisterType(GenericMaterialsModel, "Cura", 1, 0, "GenericMaterialsModel")
-        qmlRegisterType(MaterialBrandsModel, "Cura", 1, 0, "MaterialBrandsModel")
+        qmlRegisterType(MaterialTypesModel, "Cura", 1, 0, "MaterialTypesModel")
         qmlRegisterSingletonType(QualityManagementModel, "Cura", 1, 0, "QualityManagementModel", self.getQualityManagementModel)
         qmlRegisterSingletonType(MaterialManagementModel, "Cura", 1, 5, "MaterialManagementModel", self.getMaterialManagementModel)
 

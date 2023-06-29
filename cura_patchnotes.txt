@@ -1,26 +1,60 @@
-CURA LULZBOT EDITION PATCHNOTES
-This file is a work-in-progress; some sections may be incomplete, especially older versions. Older version patch notes may be added over time. The file will be updated as
-new versions are released and will continue to be utilized as the project progresses.
+						CURA LULZBOT EDITION PATCHNOTES
 
-4.13.0-BETAvX.X (In Development):
+This file is a work-in-progress; some sections may be incomplete, especially
+	older versions. Older version patch notes may be added over time. The file
+	will be updated as new versions are released and will continue to be
+	utilized as the project progresses.
+
+4.13.0-BETAv1.8.1:
+	Simply resized add machine screens to better fit.
+
+4.13.0-BETAv1.8:
+	Added basic material profiles for the Meteor Tool Heads
+
+4.13.0-BETAv1.7:
+	Small Patch
+		- Fixed issue with firmware flashing to Pro-style printers on Windows
+			* During the firmware reset to start the flash, Windows likes to
+				move which port the printer is located on and Cura LE would
+				lose it, which then prevents the flash from finishing unless
+				you would close out and re-open the firmware flashing window.
+
+4.13.0-BETAv1.6:
+	Major additions and changes:
+		- Reworked material selection to go by material type and then brand
+			instead of the other way around
+		- Added the ability to mark a machine as having an optional BLTouch,
+			this functionality will change what firmware you are provided with.
+		- Added both the Asteroid and Meteor Tool Heads and firmware for them.
+			Both Tool Heads are experimental at this time, but this will allow
+			for those who have been provided kits to more easily flash firmware.
+			Material quality settings have not yet been added, we wanted to make
+			sure the firmware got out the door ASAP.
+		- Patched up the Add Printer screen a little bit to fix a couple bugs.
 	Minor changes:
-		Swaped the path that opens when you elect to upload custom firmware
+		- Swaped the path that opens when you elect to upload custom firmware
+		- Fixed small but in monitor screen regarding the print bed
+		- Started work on providing the ability to adjust port and baudrate for a
+			printer.
 
 4.13.0-BETAv1.5:
 	Major changes:
-		Rework of how printer connections are handled, particularly USB connections
-			- Cura LE now creates a USBOutputDevice object when a valid port is detected rather than
-				just on establishing a printable connection. This allows for easier detection of printer
-				availability for firmware flashing purposes along with making the monitor screen more
-				reminiscent of the previous version. Ease of use and familiarity are good.
-			- Automatic firmware flashing should now actually work, and custom file flashing should be
-				more consistent.
-			- Wrong printer detection should be *slightly* better than previous, but it will still take
-				"Allow connections to wrong printers" setting into account on failures. This will continue
-				to be improved but is not a focus at the moment.
-			- Compatability with the OctoPrint plugin is slightly buggy. We would like to better integrate
-				this plugin in the future along with cleaning things up so that other output device plugins
-				of a similar vein also function cleanly. It would imply that our system is relatively compatible
+		- Rework of how printer connections are handled, particularly USB connections
+			* Cura LE now creates a USBOutputDevice object when a valid port is
+				detected rather than just on establishing a printable connection.
+				This allows for easier detection of printer availability for firmware
+				flashing purposes along with making the monitor screen more reminiscent
+				of the previous version. Ease of use and familiarity are good.
+			* Automatic firmware flashing should now actually work, and custom file
+				flashing should be more consistent.
+			* Wrong printer detection should be *slightly* better than previous,
+				but it will still take "Allow connections to wrong printers"
+				setting into account on failures. This will continue to be improved
+				but is not a focus at the moment.
+			* Compatability with the OctoPrint plugin is slightly buggy. We would like
+				to better integrate this plugin in the future along with cleaning
+				things up so that other output device plugins of a similar vein also
+				function cleanly. It would imply that our system is relatively compatible
 				with upstream Cura in this regard.
 	Additions:
 		Re-added the ability to change filament diameter in the custom settings
