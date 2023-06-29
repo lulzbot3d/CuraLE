@@ -21,7 +21,7 @@ Item
 
     anchors.centerIn: parent
 
-    width: UM.Theme.getSize("welcome_wizard_window").width
+    width: UM.Theme.getSize("welcome_wizard_window").width * 1.5
     height: UM.Theme.getSize("welcome_wizard_window").height
 
     property int shadowOffset: 1 * screenScaleFactor

@@ -22,7 +22,7 @@ Window
     flags: Qt.Dialog
     modality: Qt.ApplicationModal
 
-    minimumWidth: UM.Theme.getSize("modal_window_minimum").width
+    minimumWidth: UM.Theme.getSize("modal_window_minimum").width * 1.2
     minimumHeight: UM.Theme.getSize("modal_window_minimum").height
     maximumWidth: minimumWidth
     maximumHeight: minimumHeight

@@ -1,3 +1,7 @@
+[4.13.0-Betav1.8.1]
+* Added basic material profiles for Galaxy Tool Heads
+* Resized first start and add machine menus to better fit content.
+
 [4.13.0-Beta v1.7]
 * Small bugfix patch
 * Mainly just fixed an issue with flashing Pro firmware on Windows
