@@ -1,0 +1,9 @@
+{
+    "version": 2,
+    "name": "HS+",
+    "inherits": "universal_extruder",
+    "overrides":
+    {
+        "machine_nozzle_size": { "default_value": 1.2 }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "version": 2,
+    "name": "TAZ Pro",
+    "inherits": "taz",
+    "metadata":
+    {
+        "machine_priority": "00",
+        "visible": false,
+        "base_machine": true,
+        "base_machine_id": "taz_pro",
+        "toolhead_selection_name": "Pro Tool Head",
+        "preferred_material": "PolyLite_PLA_(Polymaker)",
+        "preferred_quality_type": "normal",
+        "file_formats": "text/x-gcode"
+    },
+    "overrides":
+    {
+        "firmware_machine_type": { "default_value": "LulzBot TAZ Pro" },
+        "machine_end_gcode": { "default_value_from_file": "taz_pro/taz_pro_end" },
+        "machine_level_x_axis_gcode": { "default_value_from_file": "taz_pro/taz_pro_level_x_axis" },
+        "machine_wipe_gcode": { "default_value_from_file": "taz_pro/taz_pro_wipe" }
+    }
+}

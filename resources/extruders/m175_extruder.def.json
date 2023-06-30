@@ -1,0 +1,9 @@
+{
+    "version": 2,
+    "name": "M175",
+    "inherits": "universal_extruder",
+    "overrides":
+    {
+        "material_diameter": { "default_value": 1.75 }
+    }
+}

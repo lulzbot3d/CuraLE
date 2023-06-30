@@ -50,13 +50,14 @@ class MaterialTypesModel(BaseMaterialsModel):
 
             # Add material types we haven't seen yet to the dict, skipping generics
             material_type = container_node.getMetaDataEntry("material", "")
+            brand = container_node.getMetaDataEntry("brand", "")
+            if brand.lower() == "generic":
+                continue
+
             if material_type not in material_group_dict:
                 material_group_dict[material_type] = {}
 
             # Add material types we haven't seen yet to the dict
-            brand = container_node.getMetaDataEntry("brand", "")
-            if brand.lower() == "generic":
-                continue
             if brand not in material_group_dict[material_type]:
                 material_group_dict[material_type][brand] = []
 
