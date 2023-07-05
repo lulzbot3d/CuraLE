@@ -407,7 +407,7 @@ class MachineManager(QObject):
 
     @pyqtSlot(str, result=bool)
     @pyqtSlot(str, str, result = bool)
-    def addMachine(self, definition_id: str, name: Optional[str] = None, lcd=True, bltouch=False) -> bool:
+    def addMachine(self, definition_id: str, name: Optional[str] = None, extruder_selection: Optional[int] = None, lcd: bool = True, bltouch: bool = False) -> bool:
         Logger.log("i", "Trying to add a machine with the definition id [%s]", definition_id)
         if name is None:
             definitions = CuraContainerRegistry.getInstance().findDefinitionContainers(id = definition_id)
@@ -416,7 +416,7 @@ class MachineManager(QObject):
             else:
                 name = definition_id
 
-        new_stack = CuraStackBuilder.createMachine(cast(str, name), definition_id)
+        new_stack = CuraStackBuilder.createMachine(cast(str, name), definition_id, extruder_choice=extruder_selection)
         if new_stack:
             # Check for LCD and BLTouch values
             if new_stack.getMetaDataEntry("has_optional_lcd", False):
