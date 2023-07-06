@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "name": "TAZ Pro Long Bed | HS | 0.80 mm",
+    "inherits": "taz_pro_long_bed",
+    "metadata":
+    {
+        "priority": "03",
+        "visible": true,
+        "base_machine": false,
+        "toolhead_selection_name": "HS | 0.80 mm | Hardened SST",
+        "machine_extruder_trains":
+        {
+            "0": "taz_pro_long_bed_hs_extruder"
+        }
+    }
+}

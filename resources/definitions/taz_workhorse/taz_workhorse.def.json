@@ -1,0 +1,44 @@
+{
+    "version": 2,
+    "name": "TAZ Workhorse",
+    "inherits": "taz",
+    "metadata":
+    {
+        "machine_priority": "01",
+        "visible": false,
+        "base_machine": true,
+        "base_machine_id": "taz_workhorse",
+        "toolhead_category": "Universal",
+        "toolhead_selection_name": "Universal Tool Head",
+        "platform": "taz_workhorse_bed.stl",
+        "platform_offset":
+        [
+            -30,
+            -10,
+            5
+        ],
+        "preferred_material": "PolyLite_PLA_(Polymaker)",
+        "preferred_quality_type": "normal",
+        "firmware_latest_version": "2.0.9.0.13",
+        "firmware_file": "Workhorse/Marlin_TAZWorkhorse_Universal_2.0.9.0.13_80a6628.hex"
+    },
+    "overrides":
+    {
+        "firmware_machine_type":
+        {
+            "default_value": "TAZ Workhorse Edition"
+        },
+        "machine_end_gcode":
+        {
+            "default_value_from_file": "taz_workhorse/taz_workhorse_end"
+        },
+        "machine_level_x_axis_gcode":
+        {
+            "default_value_from_file": "taz_pro/taz_pro_level_x_axis"
+        },
+        "machine_wipe_gcode":
+        {
+            "default_value_from_file": "taz_workhorse/taz_workhorse_wipe"
+        }
+    }
+}

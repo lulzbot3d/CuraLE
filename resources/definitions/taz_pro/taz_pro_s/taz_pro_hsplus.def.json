@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "name": "TAZ Pro S | HS+ | 1.20 mm",
+    "inherits": "taz_pro",
+    "metadata":
+    {
+        "priority": "04",
+        "visible": true,
+        "base_machine": false,
+        "toolhead_selection_name": "HS+ | 1.20 mm | Hardened SST",
+        "machine_extruder_trains":
+        {
+            "0": "taz_pro_hsplus_extruder"
+        }
+    }
+}

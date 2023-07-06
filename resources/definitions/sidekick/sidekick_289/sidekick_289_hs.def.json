@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "name": "SideKick 289 | HS | 0.80 mm",
+    "inherits": "sidekick_289",
+    "metadata":
+    {
+        "priority": "05",
+        "visible": true,
+        "base_machine": false,
+        "toolhead_selection_name": "HS | 0.80 mm | Hardened SST",
+        "machine_extruder_trains":
+        {
+            "0": "sidekick_289_hs_extruder"
+        },
+        "firmware_file_no_lcd": ""
+    }
+}

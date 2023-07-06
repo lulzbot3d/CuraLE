@@ -26,9 +26,8 @@ Generic PLA profile. The data in this file may not be correct for your specific 
         <setting key="standby temperature">175</setting>
 
         <machine>
+            <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC." product="mini_2_universal"/>
             <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC." product="mini_2_galaxy"/>
-            <!--<machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC." product="mini_2_se"/>-->
-            <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC." product="taz_pro"/>
         </machine>
 
     </settings>
