@@ -192,9 +192,9 @@ class MachineNode(ContainerNode):
                 self.variants["empty"] = VariantNode("empty_variant", machine = self)
 
         # Find the global qualities for this printer.
-        # global_qualities = container_registry.findInstanceContainersMetadata(type = "quality", definition = self.quality_definition, global_quality = "True")  # First try specific to this printer.
+        global_qualities = container_registry.findInstanceContainersMetadata(type = "quality", definition = self.quality_definition, global_quality = "True")  # First try specific to this printer.
         # I'm just going to pretend that everything is global, since for our purposes this seems to work out for the best
-        global_qualities = container_registry.findInstanceContainersMetadata(type = "quality", definition = self.quality_definition)
+        # global_qualities = container_registry.findInstanceContainersMetadata(type = "quality", definition = self.quality_definition)
         if not global_qualities:  # This printer doesn't override the global qualities.
             global_qualities = container_registry.findInstanceContainersMetadata(type = "quality", definition = "fdmprinter", global_quality = "True")  # Otherwise pick the global global qualities.
             if not global_qualities:  # There are no global qualities either?! Something went very wrong, but we'll not crash and properly fill the tree.
