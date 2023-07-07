@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_hibiscus_asteroid",
-    "name": "LulzBot Mini 2 | Asteroid | 1.20 mm",
+    "name": "LulzBot Mini 2 | AST285 | 1.20 mm",
     "inherits": "lulzbot_hibiscus",
     "version": 2,
     "metadata":
@@ -29,7 +29,7 @@
         "base_machine_name": "LulzBot Mini 2",
         "firmware_latest_version": "2.0.9.0.14",
         "firmware_file": "Mini2/Marlin_Mini2_Galaxy_2.0.9.0.14_15d22ac.hex",
-        "user_toolhead_name": "Asteroid | 1.20 mm | Galaxy Series [In-Development]",
+        "user_toolhead_name": "ASTEROID 285 | 1.20 mm | GammaMaster Steel",
         "firmware_update_info": {
             "id": "lulzbot_hibiscus",
             "check_urls":

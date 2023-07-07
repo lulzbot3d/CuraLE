@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_hibiscus_meteor_175",
-    "name": "LulzBot Mini 2 | Meteor 1.75mm | 0.50 mm",
+    "name": "LulzBot Mini 2 | MET175 | 0.50 mm",
     "inherits": "lulzbot_hibiscus",
     "version": 2,
     "metadata":
@@ -25,7 +25,7 @@
         "printer_info_link": "https://www.lulzbot.com/store/printers/",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/",
         "base_machine": "lulzbot_hibiscus",
-        "user_toolhead_name": "Meteor 1.75mm | 0.50 mm | Galaxy Series [In-Development]",
+        "user_toolhead_name": "METEOR 175 | 0.50 mm | Nickel-Plated Brass",
         "default_extrusion_rate": 60,
         "firmware_update_info": {
             "id": "",

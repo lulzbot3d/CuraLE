@@ -1,6 +1,6 @@
 {
     "id": "lulzbot_quiver_meteor",
-    "name": "TAZ Pro | Meteor | 0.50 mm",
+    "name": "TAZ Pro | MET285 | 0.50 mm",
     "inherits": "lulzbot_quiver_base",
     "version": 2,
     "metadata":
@@ -23,7 +23,7 @@
         "base_machine": "LulzBot TAZ Pro",
         "base_machine_name": "TAZ Pro",
         "preferred_material": "PolyLite_PLA_(Polymaker)",
-        "user_toolhead_name": "Meteor | 0.50 mm | Galaxy Series [In-Development]",
+        "user_toolhead_name": "METEOR 285 | 0.50 mm | Nickel-Plated Brass",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/se-tool-head-single-extruder-05-mm?pk_campaign=software-cura",
         "default_category": "All",
         "firmware_latest_version": "2.0.0.144.11",
