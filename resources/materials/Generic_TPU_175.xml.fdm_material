@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Generic</brand>
+      <material>TPU</material>
+      <color>Generic</color>
+      <category />
+    </name>
+    <version>1</version>
+    <description></description>
+    <compatible>True</compatible>
+    <extruder_disabled>False</extruder_disabled>
+    <color_code>#fbff06</color_code>
+    <GUID>f134d2fe-4ffd-48b7-a33f-d2a260654b07</GUID>
+    <adhesion_info>Use glue stick with PEI or print directly on glass.</adhesion_info>
+  </metadata>
+  <properties>
+    <density>1.21</density>
+    <diameter>1.75</diameter>
+  </properties>
+  <settings>
+    <setting key="print cooling">50.0</setting>
+    <setting key="standby temperature">150.0</setting>
+    <setting key="retraction speed">15.0</setting>
+    <setting key="print temperature">220.0</setting>
+    <setting key="part removal temperature">0.0</setting>
+    <setting key="heated bed temperature">60.0</setting>
+    <setting key="wipe temperature">160.0</setting>
+    <setting key="retraction amount">3.0</setting>
+    <setting key="probe temperature">150.0</setting>
+    <setting key="soften temperature">150.0</setting>
+    <machine>
+      <machine_identifier product="lulzbot_hibiscus_meteor_175"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_quiver_meteor_175"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_gladiator_meteor_175"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_longship_meteor_175"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_redgum_meteor_175"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_289_meteor_175"/>
+    </machine>
+    <machine>
+      <machine_identifier product="lulzbot_sidekick_747_meteor_175"/>
+    </machine>
+  </settings>
+</fdmmaterial>
