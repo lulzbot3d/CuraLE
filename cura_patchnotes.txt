@@ -5,6 +5,11 @@ This file is a work-in-progress; some sections may be incomplete, especially
 	will be updated as new versions are released and will continue to be
 	utilized as the project progresses.
 
+4.13.0-BETAv1.10:
+	Added some profiles for the Galaxy Series Tool Heads
+	Improved Galaxy Tool Head Firmware files slightly
+	Added that start of some generic materials
+
 4.13.0-BETAv1.8.1:
 	Simply resized add machine screens to better fit.
 
