@@ -27,6 +27,8 @@
         "base_machine": "lulzbot_hibiscus",
         "user_toolhead_name": "METEOR 175 | 0.50 mm | Nickel-Plated Brass",
         "default_extrusion_rate": 60,
+        "firmware_latest_version": "2.0.9.0.14",
+        "firmware_file": "Mini2/Marlin_Mini2_Galaxy_2.0.9.0.14_488b0a4.hex",
         "firmware_update_info": {
             "id": "",
             "check_urls":

@@ -27,8 +27,8 @@
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/se-tool-head-single-extruder-05-mm?pk_campaign=software-cura",
         "default_category": "All",
         "firmware_latest_version": "2.0.0.144.11",
-        "firmware_file": "Pro/Marlin_TAZPro_Galaxy_2.0.0.144.11_675af54.bin",
-        "firmware_file_bltouch": "Pro/Marlin_TAZPro_Galaxy_BLTouch_2.0.0.144.11_675af54.bin",
+        "firmware_file": "Pro/Marlin_TAZPro_Galaxy_2.0.0.144.11_259c25e.bin",
+        "firmware_file_bltouch": "Pro/Marlin_TAZPro_Galaxy_BLTouch_2.0.0.144.11_259c25e.bin",
         "firmware_update_info": {
             "id": "",
             "check_urls":

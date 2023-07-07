@@ -19,6 +19,8 @@
         "user_toolhead_name": "METEOR 175 | 0.50 mm | Nickel-Plated Brass",
         "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads?pk_campaign=software-cura",
         "default_category": "All",
+        "firmware_latest_version": "2.0.0.144.11",
+        "firmware_file": "Pro_LongBed/Marlin_TAZPro_LongBed_Galaxy_BLTouch_2.0.0.144.11_259c25e.bin",
         "firmware_update_info": {
             "id": "",
             "check_urls":
