@@ -10,6 +10,13 @@
         "base_machine_id": "taz_pro_xt",
         "toolhead_category": "Universal",
         "toolhead_selection_name": "Universal Tool Head",
+        "platform": "taz_pro.stl",
+        "platform_offset":
+        [
+            0,
+            -11.5,
+            0
+        ],
         "preferred_material": "PolyLite_PLA_(Polymaker)",
         "preferred_quality_type": "normal",
         "file_formats": "text/x-gcode",
