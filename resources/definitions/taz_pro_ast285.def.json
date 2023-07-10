@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "name": "TAZ Pro S | AST285 | 0.50 mm",
+    "inherits": "taz_pro_galaxy",
+    "metadata":
+    {
+        "priority": "02",
+        "visible": true,
+        "base_machine": false,
+        "toolhead_selection_name": "ASTEROID 285 | 0.50 mm | GammaMaster Steel",
+        "machine_extruder_trains":
+        {
+            "0": "taz_pro_ast285_extruder"
+        }
+    }
+}

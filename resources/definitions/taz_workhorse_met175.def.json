@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "name": "TAZ Workhorse| MET175 | 0.50 mm",
+    "inherits": "taz_workhorse_galaxy",
+    "metadata":
+    {
+        "priority": "01",
+        "visible": true,
+        "base_machine": false,
+        "toolhead_selection_name": "METEOR 175 | 0.50 mm | Nickel-Plated Brass",
+        "machine_extruder_trains":
+        {
+            "0": "taz_workhorse_met175_extruder"
+        }
+    }
+}

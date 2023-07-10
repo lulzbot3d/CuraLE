@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "name": "TAZ Pro Long Bed | SE | 0.50 mm",
+    "inherits": "taz_pro_long_bed",
+    "metadata":
+    {
+        "priority": "01",
+        "visible": true,
+        "base_machine": false,
+        "toolhead_selection_name": "SE | 0.50 mm | Nickel-Plated Copper",
+        "machine_extruder_trains":
+        {
+            "0": "taz_pro_long_bed_se_extruder"
+        }
+    }
+}

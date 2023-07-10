@@ -25,14 +25,27 @@
     <setting key="part removal temperature">50</setting>
     <setting key="soften temperature">170</setting>
     <setting key="probe temperature">170</setting>
+
     <machine>
-      <machine_identifier product="lulzbot_hibiscus_meteor"/>
-      <machine_identifier product="lulzbot_quiver_meteor"/>
-      <machine_identifier product="lulzbot_gladiator_meteor"/>
-      <machine_identifier product="lulzbot_longship_meteor"/>
-      <machine_identifier product="lulzbot_redgum_meteor"/>
-      <machine_identifier product="lulzbot_sidekick_289_meteor"/>
-      <machine_identifier product="lulzbot_sidekick_747_meteor"/>
+      <machine_identifier product="mini_2_met285"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_pro_met285"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_pro_xt_met285"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_pro_long_bed_met285"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_workhorse_met285"/>
+    </machine>
+    <machine>
+      <machine_identifier product="sidekick_289_met285"/>
+    </machine>
+    <machine>
+      <machine_identifier product="sidekick_747_met285"/>
     </machine>
   </settings>
 </fdmmaterial>

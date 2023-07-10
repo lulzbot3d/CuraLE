@@ -24,26 +24,27 @@
     <setting key="probe temperature">170</setting>
     <setting key="wipe temperature">170</setting>
     <setting key="part removal temperature">60</setting>
+
     <machine>
-      <machine_identifier product="lulzbot_hibiscus_meteor_175"/>
+      <machine_identifier product="mini_2_met175"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_quiver_meteor_175"/>
+      <machine_identifier product="taz_pro_met175"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_gladiator_meteor_175"/>
+      <machine_identifier product="taz_pro_xt_met175"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_longship_meteor_175"/>
+      <machine_identifier product="taz_pro_long_bed_met175"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_redgum_meteor_175"/>
+      <machine_identifier product="taz_workhorse_met175"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_289_meteor_175"/>
+      <machine_identifier product="sidekick_289_met175"/>
     </machine>
     <machine>
-      <machine_identifier product="lulzbot_sidekick_747_meteor_175"/>
+      <machine_identifier product="sidekick_747_met175"/>
     </machine>
   </settings>
 </fdmmaterial>

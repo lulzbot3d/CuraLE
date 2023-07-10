@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "name": "SideKick 747 | SL | 0.25 mm",
+    "inherits": "sidekick_747",
+    "metadata":
+    {
+        "priority": "06",
+        "visible": true,
+        "base_machine": false,
+        "toolhead_selection_name": "SL | 0.25 mm | Nickel-Plated Copper",
+        "machine_extruder_trains":
+        {
+            "0": "sidekick_747_sl_extruder"
+        },
+        "firmware_file_no_lcd": ""
+    }
+}
