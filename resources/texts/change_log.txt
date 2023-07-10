@@ -1,4 +1,9 @@
-[4.13.0-Betav1.8.1]
+[4.13.0-Beta v1.10]
+* Added material profiles for MET175 and MET285
+* Improved Galaxy Firmware slightly
+* Working on refactoring quality system
+
+[4.13.0-Beta v1.8.1]
 * Added basic material profiles for Galaxy Tool Heads
 * Resized first start and add machine menus to better fit content.
 

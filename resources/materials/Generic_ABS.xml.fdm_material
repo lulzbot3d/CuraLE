@@ -3,27 +3,27 @@
   <metadata>
     <name>
       <brand>Generic</brand>
-      <material>PLA</material>
+      <material>ABS</material>
       <color>Generic</color>
-      <category>Beginner</category>
+      <category>Intermediate</category>
     </name>
-    <GUID>e5195fb9-6af3-4220-845f-bf4a7a888146</GUID>
+    <GUID>d7bcbbc4-c2a1-485d-8562-b9d948d17e34</GUID>
     <version>25</version>
-    <color_code>#c1d82f</color_code>
+    <color_code>#68d6ce</color_code>
     <info_link></info_link>
   </metadata>
   <properties>
-    <density>1.25</density>
+    <density>1.07</density>
     <diameter>2.85</diameter>
   </properties>
   <settings>
-    <setting key="print temperature">205</setting>
-    <setting key="heated bed temperature">60</setting>
-    <setting key="standby temperature">175</setting>
-    <setting key="soften temperature">140</setting>
-    <setting key="probe temperature">140</setting>
-    <setting key="wipe temperature">140</setting>
-    <setting key="part removal temperature">45</setting>
+    <setting key="print temperature">240</setting>
+    <setting key="heated bed temperature">110</setting>
+    <setting key="standby temperature">200</setting>
+    <setting key="soften temperature">170</setting>
+    <setting key="probe temperature">170</setting>
+    <setting key="wipe temperature">170</setting>
+    <setting key="part removal temperature">60</setting>
     <machine>
       <machine_identifier product="lulzbot_hibiscus_meteor"/>
       <machine_identifier product="lulzbot_quiver_meteor"/>
