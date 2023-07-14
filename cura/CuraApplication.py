@@ -536,6 +536,7 @@ class CuraApplication(QtApplication):
 
         preferences.addPreference("cura/categories_expanded", "")
         preferences.addPreference("cura/jobname_prefix", False)
+        preferences.addPreference("cura/jobname_lulzbot", "at_end")
         preferences.addPreference("cura/select_models_on_load", False)
         preferences.addPreference("view/center_on_select", False)
         preferences.addPreference("mesh/scale_to_fit", False)

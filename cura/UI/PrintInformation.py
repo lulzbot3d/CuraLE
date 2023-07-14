@@ -312,12 +312,22 @@ class PrintInformation(QObject):
 
         # Only update the job name when it's not user-specified.
         if not self._is_user_specified_job_name:
-            if self._application.getInstance().getPreferences().getValue("cura/jobname_prefix") and not self._pre_sliced:
+            jobname_position = self._application.getInstance().getPreferences().getValue("cura/jobname_lulzbot")
+            if jobname_position is not "none":
                 # Don't add abbreviation if it already has the exact same abbreviation.
-                if base_name.startswith(self._abbr_machine + "_"):
+                if self._abbr_machine in base_name:
                     self._job_name = base_name
-                else:
+                elif jobname_position == "at_start":
                     self._job_name = self._abbr_machine + "_" + base_name
+                elif jobname_position == "at_end":
+                    self._job_name = base_name + "_" + self._abbr_machine
+                elif jobname_position == "printfarm_style":
+                    output = ""
+                    split_base = base_name.split("_")
+                    split_base.insert(2, self._abbr_machine)
+                    for i in range(len(split_base)):
+                        output += split_base[i] + "_"
+                    self._job_name = output.strip("_")
             else:
                 self._job_name = base_name
 

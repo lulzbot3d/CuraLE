@@ -408,7 +408,6 @@ class ExtruderManager(QObject):
         """Checks if quality nodes exist for the variant/material combination."""
         application = cura.CuraApplication.CuraApplication.getInstance()
         global_stack = application.getGlobalContainerStack()
-        print("Extruder Stack: " + str(extruder_stack))
         if not global_stack or not extruder_stack:
             return False
 

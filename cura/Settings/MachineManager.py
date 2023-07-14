@@ -1776,18 +1776,72 @@ class MachineManager(QObject):
     def getAbbreviatedMachineName(self, machine_type_name: str) -> str:
         """This function will translate any printer type name to an abbreviated printer type name"""
 
+        is_lulzbot_edition = True
+
         abbr_machine = ""
-        for word in re.findall(r"[\w']+", machine_type_name):
-            if word.lower() == "ultimaker":
-                abbr_machine += "UM"
-            elif word.isdigit():
-                abbr_machine += word
+        machine_name = ""
+        th_name = ""
+        nozzle_dia = ""
+        include_diameter = False
+
+        # Cura LE specific code
+        if is_lulzbot_edition:
+            names = [word.strip() for word in machine_type_name.split('|')]
+
+            # Machine Names
+            m = names[0].lower()
+            if "mini" in m:
+                machine_name = "M" + m.split(" ")[-1]
+            elif "sidekick" in m:
+                machine_name = m.split(" ")[-1]
+            elif "taz" in m:
+                if "pro" in m:
+                    if "xt" in m:
+                        machine_name = "XT"
+                    elif "long" in m:
+                        machine_name = "LB"
+                    else: machine_name = "PRO"
+                elif "workhorse" in m:
+                    machine_name = "WH"
+                elif "6" in m:
+                    machine_name = "T6"
+                elif "5" in m:
+                    machine_name = "T5"
+            elif "viking" in m:
+                machine_name = "VIK"
+
+            # Tool Head Name
+            th = names[1].lower()
+            if "ast" in th:
+                th_name = "AST"
+                include_diameter = True
+            elif "dual" in th:
+                th_name = "DUAL"
             else:
-                stripped_word = "".join(char for char in unicodedata.normalize("NFD", word.upper()) if unicodedata.category(char) != "Mn")
-                # - use only the first character if the word is too long (> 3 characters)
-                # - use the whole word if it's not too long (<= 3 characters)
-                if len(stripped_word) > 3:
-                    stripped_word = stripped_word[0]
-                abbr_machine += stripped_word
+                if "met" in th:
+                    include_diameter = True
+                th_name = names[1]
+
+            # Nozzle Diameter for machines where it can change
+            # This will need to actually pull the current variant eventually
+            if include_diameter:
+                nozzle_dia = names[2][:3].replace(".", "")
+
+            abbr_machine = (machine_name + "-" + th_name + "-" + nozzle_dia).strip("-")
+
+        # Ultimaker code
+        else:
+            for word in re.findall(r"[\w']+", machine_type_name):
+                if word.lower() == "ultimaker":
+                    abbr_machine += "UM"
+                elif word.isdigit():
+                    abbr_machine += word
+                else:
+                    stripped_word = "".join(char for char in unicodedata.normalize("NFD", word.upper()) if unicodedata.category(char) != "Mn")
+                    # - use only the first character if the word is too long (> 3 characters)
+                    # - use the whole word if it's not too long (<= 3 characters)
+                    if len(stripped_word) > 3:
+                        stripped_word = stripped_word[0]
+                    abbr_machine += stripped_word
 
         return abbr_machine
