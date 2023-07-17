@@ -1786,51 +1786,56 @@ class MachineManager(QObject):
 
         # Cura LE specific code
         if is_lulzbot_edition:
-            names = [word.strip() for word in machine_type_name.split('|')]
+            try:
+                names = [word.strip() for word in machine_type_name.split('|')]
 
-            # Machine Names
-            m = names[0].lower()
-            if "mini" in m:
-                machine_name = "M" + m.split(" ")[-1]
-            elif "sidekick" in m:
-                machine_name = m.split(" ")[-1]
-            elif "taz" in m:
-                if "pro" in m:
-                    if "xt" in m:
-                        machine_name = "XT"
-                    elif "long" in m:
-                        machine_name = "LB"
-                    else: machine_name = "PRO"
-                elif "workhorse" in m:
-                    machine_name = "WH"
-                elif "6" in m:
-                    machine_name = "T6"
-                elif "5" in m:
-                    machine_name = "T5"
-            elif "viking" in m:
-                machine_name = "VIK"
+                # Machine Names
+                m = names[0].lower()
+                if "mini" in m:
+                    machine_name = "M" + m.split(" ")[-1]
+                elif "sidekick" in m:
+                    machine_name = m.split(" ")[-1]
+                elif "taz" in m:
+                    if "pro" in m:
+                        if "xt" in m:
+                            machine_name = "XT"
+                        elif "long" in m:
+                            machine_name = "LB"
+                        else: machine_name = "PRO"
+                    elif "workhorse" in m:
+                        machine_name = "WH"
+                    elif "6" in m:
+                        machine_name = "T6"
+                    elif "5" in m:
+                        machine_name = "T5"
+                elif "viking" in m:
+                    machine_name = "VIK"
 
-            # Tool Head Name
-            th = names[1].lower()
-            if "ast" in th:
-                th_name = "AST"
-                include_diameter = True
-            elif "dual" in th:
-                th_name = "DUAL"
-            else:
-                if "met" in th:
+                # Tool Head Name
+                th = names[1].lower()
+                if "ast" in th:
+                    th_name = "AST"
                     include_diameter = True
-                th_name = names[1]
+                elif "dual" in th:
+                    th_name = "DUAL"
+                else:
+                    if "met" in th:
+                        include_diameter = True
+                    th_name = names[1]
 
-            # Nozzle Diameter for machines where it can change
-            # This will need to actually pull the current variant eventually
-            if include_diameter:
-                nozzle_dia = names[2][:3].replace(".", "")
+                # Nozzle Diameter for machines where it can change
+                # This will need to actually pull the current variant eventually
+                if include_diameter:
+                    nozzle_dia = names[2][:3].replace(".", "")
 
-            abbr_machine = (machine_name + "-" + th_name + "-" + nozzle_dia).strip("-")
+                abbr_machine = (machine_name + "-" + th_name + "-" + nozzle_dia).strip("-")
+
+            except IndexError:
+                Logger.log("w", "Machine name likely not in conformity with LulzBot standards, using regular Ultimaker name abbreviator")
+                is_lulzbot_edition = False
 
         # Ultimaker code
-        else:
+        if not is_lulzbot_edition:
             for word in re.findall(r"[\w']+", machine_type_name):
                 if word.lower() == "ultimaker":
                     abbr_machine += "UM"
