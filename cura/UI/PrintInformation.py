@@ -304,7 +304,6 @@ class PrintInformation(QObject):
         return self._job_name
 
     def _updateJobName(self) -> None:
-        print("Update Job Name was called")
         if self._base_name == "":
             self._job_name = self.UNTITLED_JOB_NAME
             self._is_user_specified_job_name = False
@@ -333,7 +332,11 @@ class PrintInformation(QObject):
                     # Insert Machine Abbriviation
                     split_base.insert(2, self._abbr_machine)
                     # Insert part count
-                    split_base.append("QTY"+str(objects_model.count))
+                    part_count = 0
+                    for i in objects_model.items:
+                        if i['mesh_type'] == "":
+                            part_count += 1
+                    split_base.append("QTY"+str(part_count))
                     # Insert print time
                     split_base.append(str(self.currentPrintTime.getDisplayString()))
                     for i in range(len(split_base)):

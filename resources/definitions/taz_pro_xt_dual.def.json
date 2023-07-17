@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "TAZ Pro XT Dual Extruder",
+    "name": "TAZ Pro XT | Pro Dual | 0.50 mm",
     "inherits": "taz_pro_xt",
     "metadata":
     {
