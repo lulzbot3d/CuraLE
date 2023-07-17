@@ -8,6 +8,8 @@ from typing import Dict, List, Optional, TYPE_CHECKING
 
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtProperty, pyqtSlot, QTimer
 
+from UM.Application import Application
+from UM.Qt.Duration import DurationFormat
 from UM.Logger import Logger
 from UM.Qt.Duration import Duration
 from UM.Scene.SceneNode import SceneNode
@@ -257,6 +259,8 @@ class PrintInformation(QObject):
         self.materialCostsChanged.emit()
         self.materialNamesChanged.emit()
 
+        self._updateJobName()
+
     def _onPreferencesChanged(self, preference: str) -> None:
         if preference != "cura/material_settings":
             return
@@ -300,6 +304,7 @@ class PrintInformation(QObject):
         return self._job_name
 
     def _updateJobName(self) -> None:
+        print("Update Job Name was called")
         if self._base_name == "":
             self._job_name = self.UNTITLED_JOB_NAME
             self._is_user_specified_job_name = False
@@ -309,6 +314,7 @@ class PrintInformation(QObject):
 
         base_name = self._base_name
         self._defineAbbreviatedMachineName()
+        objects_model = Application.getInstance().getObjectsModel()
 
         # Only update the job name when it's not user-specified.
         if not self._is_user_specified_job_name:
@@ -324,7 +330,12 @@ class PrintInformation(QObject):
                 elif jobname_position == "printfarm_style":
                     output = ""
                     split_base = base_name.split("_")
+                    # Insert Machine Abbriviation
                     split_base.insert(2, self._abbr_machine)
+                    # Insert part count
+                    split_base.append("QTY"+str(objects_model.count))
+                    # Insert print time
+                    split_base.append(str(self.currentPrintTime.getDisplayString()))
                     for i in range(len(split_base)):
                         output += split_base[i] + "_"
                     self._job_name = output.strip("_")
