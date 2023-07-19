@@ -17,13 +17,12 @@ class CuraStackBuilder:
     """Contains helper functions to create new machines."""
 
     @classmethod
-    def createMachine(cls, name: str, definition_id: str, machine_extruder_count: Optional[int] = None, extruder_choice: Optional[int] = None) -> Optional[GlobalStack]:
+    def createMachine(cls, name: str, definition_id: str, machine_extruder_count: Optional[int] = None) -> Optional[GlobalStack]:
         """Create a new instance of a machine.
 
         :param name: The name of the new machine.
         :param definition_id: The ID of the machine definition to use.
         :param machine_extruder_count: The number of extruders in the machine.
-        :param extruder_choice: index of the extruder selected on certain printer definitions.
 
         :return: The new global stack or None if an error occurred.
         """

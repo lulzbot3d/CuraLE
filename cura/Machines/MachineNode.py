@@ -14,7 +14,6 @@ from cura.Machines.QualityChangesGroup import QualityChangesGroup  # To construc
 from cura.Machines.QualityGroup import QualityGroup  # To construct groups of quality profiles that belong together.
 from cura.Machines.QualityNode import QualityNode
 from cura.Machines.VariantNode import VariantNode
-from cura.Machines.MaterialNode import MaterialNode
 import UM.FlameProfiler
 
 
