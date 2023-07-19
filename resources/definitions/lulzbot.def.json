@@ -12,7 +12,7 @@
         [
             "MachineSettingsAction"
         ],
-        "has_machine_materials": true,
+        "has_materials": true,
         "has_machine_quality": true,
         "preferred_quality_type": "normal",
         "variant_machine": false,
