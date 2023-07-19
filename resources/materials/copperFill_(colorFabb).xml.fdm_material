@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>colorFabb</brand>
+      <material>PLA</material>
+      <color>Generic</color>
+      <category>Advanced</category>
+      <label>copperFill</label>
+    </name>
+    <GUID>364b0181-6db8-4aad-8784-4803a35be3fd</GUID>
+    <version>1</version>
+    <color_code>#8b4500</color_code>
+    <info_link>https://www.lulzbot.com/store/filament/copperfill?pk_campaign=software-cura</info_link>
+  </metadata>
+  <properties>
+    <density>4</density>
+    <diameter>2.85</diameter>
+  </properties>
+  <settings>
+    <setting key="print temperature">230</setting>
+    <setting key="heated bed temperature">60</setting>
+    <setting key="standby temperature">175</setting>
+    <setting key="soften temperature">140</setting>
+    <setting key="probe temperature">140</setting>
+    <setting key="wipe temperature">140</setting>
+    <setting key="part removal temperature">50</setting>
+    <machine>
+      <machine_identifier product="taz_6_dual_v3"/>
+      <metadata key="category">Experimental</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_5_dual_v3"/>
+      <metadata key="category">Experimental</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_6_aerostruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_6"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_6_se"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_6_he"/>
+    </machine>
+    <machine>
+      <machine_identifier product="mini_1_aerostruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_6_dual_v2"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_6_flexy_dually_v2"/>
+      <metadata key="category">Experimental</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="mini_1"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_5"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_5_se"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_5_flexy_dually_v2"/>
+      <metadata key="category">Experimental</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_5_aerostruder"/>
+    </machine>
+    <machine>
+      <machine_identifier product="mini_2_se"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_pro_dual"/>
+      <metadata key="category">Experimental</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_pro_xt_dual"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_pro_se"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_pro_long_bed_se"/>
+    </machine>
+    <machine>
+      <machine_identifier product="mini_1_se"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_6_twoolhead"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_5_twoolhead"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_workhorse_se"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_pro_xt_se"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_workhorse_yellowfin"/>
+    </machine>
+  </settings>
+</fdmmaterial>

@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Taulman</brand>
+      <material>Alloy 920 GF</material>
+      <color>Generic</color>
+      <category>Experimental</category>
+    </name>
+    <GUID>8c5eab64-5040-4fca-9903-778ddcbc359b</GUID>
+    <color_code>#d3d7cf</color_code>
+    <adhesion_info />
+    <definition>fdmprinter</definition>
+    <description />
+    <version>1</version>
+    <compatible>True</compatible>
+    <adhesion_info>Use directly on clean PEI.</adhesion_info>
+  </metadata>
+  <properties>
+    <diameter>2.85</diameter>
+  </properties>
+  <settings>
+    <setting key="retraction amount">7.0</setting>
+    <setting key="wipe temperature">180.0</setting>
+    <setting key="part removal temperature">60</setting>
+    <setting key="heated bed temperature">105</setting>
+    <setting key="print temperature">240.0</setting>
+    <setting key="retraction speed">30.0</setting>
+    <setting key="soften temperature">180</setting>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="mini_2_hsplus" />
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="mini_1_hsplus"/>
+    </machine>
+    <machine>
+      <machine_identifier manufacturer="Aleph Objects, Inc." product="taz_5_hsplus"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_pro_hsplus"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_pro_long_bed_hsplus"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_pro_dual"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_pro_xt_dual"/>
+    </machine>
+    <machine>
+      <machine_identifier manufactuere = "Aleph Objects, Inc." product="taz_6_hsplus"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_workhorse_hsplus"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_pro_xt_hsplus"/>
+    </machine>
+  </settings>
+</fdmmaterial>

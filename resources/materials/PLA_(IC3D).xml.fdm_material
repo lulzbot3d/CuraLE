@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>IC3D</brand>
+      <material>PLA</material>
+      <color>Generic</color>
+      <category>Experimental</category>
+    </name>
+    <GUID>09bb79b8-e516-44fb-b6e5-be165c89c64e</GUID>
+    <version>1</version>
+    <color_code>#ffc924</color_code>
+  </metadata>
+  <properties>
+    <density>1.25</density>
+    <diameter>2.85</diameter>
+  </properties>
+  <settings>
+    <setting key="print temperature">210</setting>
+    <setting key="heated bed temperature">60</setting>
+    <setting key="standby temperature">175</setting>
+    <setting key="soften temperature">140</setting>
+    <setting key="probe temperature">140</setting>
+    <setting key="wipe temperature">140</setting>
+    <setting key="part removal temperature">45</setting>
+    <machine>
+      <machine_identifier product="taz_6_se"/>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_6_he"/>
+    </machine>
+    <machine>
+      <machine_identifier product="mini_2_se"/>
+    </machine>
+     <machine>
+      <machine_identifier product="mini_2_hsplus"/>
+    </machine>
+     <machine>
+      <machine_identifier product="mini_2_hs"/>
+    </machine>
+     <machine>
+      <machine_identifier product="taz_pro_dual"/>
+	<metadata key="category">Supported</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_pro_xt_dual"/>
+    </machine>
+     <machine>
+      <machine_identifier product="taz_workhorse_he"/>
+	<metadata key="category">Supported</metadata>
+    </machine>
+    <machine>
+      <machine_identifier product="taz_workhorse_se"/>
+    </machine>
+  </settings>
+</fdmmaterial>
