@@ -26,25 +26,48 @@
     <setting key="part removal temperature">60</setting>
 
     <machine>
+      <machine_identifier product="mini_2_h175"/>
+      <machine_identifier product="mini_2_m175"/>
       <machine_identifier product="mini_2_met175"/>
     </machine>
+
     <machine>
+      <machine_identifier product="sidekick_289_h175"/>
+      <machine_identifier product="sidekick_289_m175"/>
+      <machine_identifier product="sidekick_289_met175"/>
+      <machine_identifier product="sidekick_289_sk175"/>
+    </machine>
+
+    <machine>
+      <machine_identifier product="sidekick_747_h175"/>
+      <machine_identifier product="sidekick_747_m175"/>
+      <machine_identifier product="sidekick_747_met175"/>
+      <machine_identifier product="sidekick_747_sk175"/>
+    </machine>
+
+    <machine>
+      <machine_identifier product="taz_pro_h175"/>
+      <machine_identifier product="taz_pro_m175"/>
       <machine_identifier product="taz_pro_met175"/>
     </machine>
+
     <machine>
-      <machine_identifier product="taz_pro_xt_met175"/>
-    </machine>
-    <machine>
+      <machine_identifier product="taz_pro_long_bed_h175"/>
+      <machine_identifier product="taz_pro_long_bed_m175"/>
       <machine_identifier product="taz_pro_long_bed_met175"/>
     </machine>
+
     <machine>
+      <machine_identifier product="taz_pro_xt_h175"/>
+      <machine_identifier product="taz_pro_xt_m175"/>
+      <machine_identifier product="taz_pro_xt_met175"/>
+    </machine>
+
+    <machine>
+      <machine_identifier product="taz_workhorse_h175"/>
+      <machine_identifier product="taz_workhorse_m175"/>
       <machine_identifier product="taz_workhorse_met175"/>
     </machine>
-    <machine>
-      <machine_identifier product="sidekick_289_met175"/>
-    </machine>
-    <machine>
-      <machine_identifier product="sidekick_747_met175"/>
-    </machine>
+
   </settings>
 </fdmmaterial>
