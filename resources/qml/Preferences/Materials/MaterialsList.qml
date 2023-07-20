@@ -26,10 +26,10 @@ Item {
         extruderPosition: Cura.ExtruderManager.activeExtruderIndex
     }
 
-    Cura.GenericMaterialsModel {
-        id: genericMaterialsModel
-        extruderPosition: Cura.ExtruderManager.activeExtruderIndex
-    }
+    // Cura.GenericMaterialsModel {
+    //     id: genericMaterialsModel
+    //     extruderPosition: Cura.ExtruderManager.activeExtruderIndex
+    // }
 
     property var currentType: null
     property var currentBrand: null
@@ -50,18 +50,18 @@ Item {
             var currentItemId = base.currentItem == null ? "" : base.currentItem.root_material_id
             search_root_id = currentItemId
         }
-        for (var material_idx = 0; material_idx < genericMaterialsModel.count; material_idx++) {
-            var material = genericMaterialsModel.getItem(material_idx)
-            if (material.root_material_id == search_root_id) {
-                if (materialList.expandedBrands.indexOf("Generic") == -1) {
-                    materialList.expandedBrands.push("Generic")
-                }
-                materialList.currentBrand = "Generic"
-                base.currentItem = material
-                persistExpandedCategories()
-                return true
-            }
-        }
+        // for (var material_idx = 0; material_idx < genericMaterialsModel.count; material_idx++) {
+        //     var material = genericMaterialsModel.getItem(material_idx)
+        //     if (material.root_material_id == search_root_id) {
+        //         if (materialList.expandedBrands.indexOf("Generic") == -1) {
+        //             materialList.expandedBrands.push("Generic")
+        //         }
+        //         materialList.currentBrand = "Generic"
+        //         base.currentItem = material
+        //         persistExpandedCategories()
+        //         return true
+        //     }
+        // }
         for (var type_idx = 0; type_idx < materialsModel.count; type_idx++) {
             var type = materialsModel.getItem(type_idx)
             var brands_model = type.brands
@@ -107,10 +107,10 @@ Item {
         function onItemsChanged() { updateAfterModelChanges() }
     }
 
-    Connections {
-        target: genericMaterialsModel
-        function onItemsChanged() { updateAfterModelChanges() }
-    }
+    // Connections {
+    //     target: genericMaterialsModel
+    //     function onItemsChanged() { updateAfterModelChanges() }
+    // }
 
     Column {
         width: materialList.width
@@ -123,12 +123,12 @@ Item {
             hasMaterialBrands: false
         }
 
-        MaterialsTypeSection {
-            id: genericSection
-            sectionName: "Generic"
-            elementsModel: genericMaterialsModel
-            hasMaterialBrands: false
-        }
+        // MaterialsTypeSection {
+        //     id: genericSection
+        //     sectionName: "Generic"
+        //     elementsModel: genericMaterialsModel
+        //     hasMaterialBrands: false
+        // }
 
         Repeater {
             model: materialsModel

@@ -40,40 +40,41 @@
       <metadata key="category">Experimental</metadata>
     </machine>
     <machine>
-      <machine_identifier product="sidekick_289_sk285"/>
     </machine>
     <machine>
+      <machine_identifier product="sidekick_289_sk285"/>
       <machine_identifier product="sidekick_747_sk285"/>
     </machine>
     <machine>
-      <machine_identifier product="sidekick_289_sl"/>
     </machine>
     <machine>
+      <machine_identifier product="sidekick_289_sl"/>
       <machine_identifier product="sidekick_747_sl"/>
     </machine>
     <machine>
       <machine_identifier product="sidekick_289_se"/>
-    </machine>
-    <machine>
       <machine_identifier product="sidekick_747_se"/>
     </machine>
     <machine>
-      <machine_identifier product="sidekick_289_he"/>
     </machine>
     <machine>
+      <machine_identifier product="sidekick_289_he"/>
       <machine_identifier product="sidekick_747_he"/>
     </machine>
     <machine>
-      <machine_identifier product="sidekick_289_hs"/>
     </machine>
     <machine>
+      <machine_identifier product="sidekick_289_hs"/>
       <machine_identifier product="sidekick_747_hs"/>
     </machine>
     <machine>
-      <machine_identifier product="sidekick_289_hsplus"/>
     </machine>
     <machine>
+      <machine_identifier product="sidekick_289_hsplus"/>
       <machine_identifier product="sidekick_747_hsplus"/>
+      <machine_identifier product="taz_6_hsplus"/>
+    </machine>
+    <machine>
     </machine>
     <machine>
       <machine_identifier product="taz_6_aerostruder"/>
@@ -85,7 +86,6 @@
       <machine_identifier product="taz_6_se"/>
     </machine>
     <machine>
-      <machine_identifier product="taz_6_hsplus"/>
     </machine>
     <machine>
       <machine_identifier product="taz_6_flexy_dually_v2"/>
@@ -227,26 +227,6 @@
       <machine_identifier product="taz_workhorse_yellowfin"/>
       <metadata key="category">Supported</metadata>
     </machine>
-    <machine>
-      <machine_identifier product="mini_2_met285"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_met285"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_xt_met285"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_long_bed_met285"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_workhorse_met285"/>
-    </machine>
-    <machine>
-      <machine_identifier product="sidekick_289_met285"/>
-    </machine>
-    <machine>
-      <machine_identifier product="sidekick_747_met285"/>
-    </machine>
+
   </settings>
 </fdmmaterial>

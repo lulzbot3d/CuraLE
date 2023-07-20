@@ -52,7 +52,9 @@ class MaterialTypesModel(BaseMaterialsModel):
             material_type = container_node.getMetaDataEntry("material", "")
             brand = container_node.getMetaDataEntry("brand", "")
             if brand.lower() == "generic":
-                continue
+            # It sounds like we're gonna actually include Generic as a brand?
+            #    continue
+                pass
 
             if material_type not in material_group_dict:
                 material_group_dict[material_type] = {}
@@ -103,6 +105,11 @@ class MaterialTypesModel(BaseMaterialsModel):
 
             # Sort brand by name
             brand_item_list = sorted(brand_item_list, key = lambda x: x["name"].upper())
+            for index in range(len(brand_item_list)):
+                if brand_item_list[index]["name"].lower() == "generic":
+                    generic_item = brand_item_list.pop(index)
+                    brand_item_list.insert(0, generic_item)
+                    break
             material_type_item["brands"].setItems(brand_item_list)
 
             material_item_list.append(material_type_item)

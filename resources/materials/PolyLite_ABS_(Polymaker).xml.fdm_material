@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
+    <metadata>
+        <name>
+            <brand>Polymaker</brand>
+            <material>ABS</material>
+            <color>Generic</color>
+            <label>PolyLite ABS</label>
+            <category />
+        </name>
+        <adhesion_info />
+        <version>1</version>
+        <GUID>d4a13563-4fab-4cb9-9fd7-d9810267c158</GUID>
+        <compatible>True</compatible>
+        <description />
+        <color_code>#0000ff</color_code>
+        <definition>fdmprinter</definition>
+        <extruder_disabled>False</extruder_disabled>
+    </metadata>
+    <properties>
+        <diameter>2.85</diameter>
+        <density>1.12</density>
+    </properties>
+    <settings>
+        <setting key="print temperature">240</setting>
+        <setting key="heated bed temperature">100</setting>
+        <setting key="standby temperature">200</setting>
+        <setting key="soften temperature">170</setting>
+        <setting key="probe temperature">160</setting>
+        <setting key="wipe temperature">180</setting>
+        <setting key="part removal temperature">50</setting>
+
+        <machine>
+            <machine_identifier product="mini_2_met285"/>
+            <machine_identifier product="sidekick_289_met285"/>
+            <machine_identifier product="sidekick_747_met285"/>
+            <machine_identifier product="taz_pro_met285"/>
+            <machine_identifier product="taz_pro_long_bed_met285"/>
+            <machine_identifier product="taz_pro_xt_met285"/>
+            <machine_identifier product="taz_workhorse_met285"/>
+        </machine>
+
+    </settings>
+</fdmmaterial>
