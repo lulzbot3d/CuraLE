@@ -1,3 +1,11 @@
+[4.13.0-Beta v2]
+* Refactored printer definitions and settings to improve workflow
+* Added Generic profiles for some material types
+* Added Update Firmware button to Monitor screen
+* Removed LulzBot Dark theme until it can be redone
+* Added a new setting that allows flexibility in auto generated job names
+* Some small bug fixes
+
 [4.13.0-Beta v1.10]
 * Added material profiles for MET175 and MET285
 * Improved Galaxy Firmware slightly

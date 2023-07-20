@@ -5,6 +5,28 @@ This file is a work-in-progress; some sections may be incomplete, especially
 	will be updated as new versions are released and will continue to be
 	utilized as the project progresses.
 
+4.13.0-BETAv2:
+	Incrementing version number to Beta v2 to signify a more public release
+		- We're getting pretty close to a place we're somewhat comfortable with
+	Completely refactored definitions and instance containers for settings
+		- Old "codenames" have been nuked
+		- In the process of reconfiguring settings to be more sensical
+		- Too many settings are still being assigned in quality profiles that
+			should be assigned elsewhere
+	Added Update Firmware button to Monitor screen
+		- Simple ease of use change
+		- Button will eventually only appear if a firmware flash is recommended
+		- May add a similar button in the future for OctoPrint functionality
+	Added ability to change how condensed printer name is added to the job name
+	Added some Generic profiles with more to come
+	Temporarily removed LulzBot Dark Theme
+		- It was very hard to use at present with some buttons hardly being
+			visible at all.
+		- Will be re-added at a later date when there is more time to improve it
+	Small Bug Fixes
+		- Flipped around Y and Z axes when rotating an object
+		- Lowered representation of Mini 2 bed slightly
+
 4.13.0-BETAv1.10:
 	Added some profiles for the Galaxy Series Tool Heads
 	Improved Galaxy Tool Head Firmware files slightly

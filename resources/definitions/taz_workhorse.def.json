@@ -10,7 +10,7 @@
         "base_machine_id": "taz_workhorse",
         "toolhead_category": "Universal",
         "toolhead_selection_name": "Universal Tool Head",
-        "platform": "taz_workhorse_bed.stl",
+        "platform": "taz_workhorse.stl",
         "platform_offset":
         [
             -30,

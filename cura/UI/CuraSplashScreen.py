@@ -70,7 +70,7 @@ class CuraSplashScreen(QSplashScreen):
             font.setPixelSize(26)
             painter.setFont(font)
             painter.setPen(QColor(0, 0, 0, 255))
-            painter.drawText(500, 435 + self._version_y_offset, round(330 * self._scale), round(255 * self._scale), Qt.AlignLeft | Qt.AlignTop, version[1])
+            painter.drawText(400, 435 + self._version_y_offset, round(330 * self._scale), round(255 * self._scale), Qt.AlignLeft | Qt.AlignTop, version[1])
         painter.setPen(QColor(255, 255, 255, 255))
 
         # Draw the loading image
