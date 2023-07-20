@@ -132,28 +132,43 @@ Item
             }
         }
 
-        // Row {
-        //     Repeater {
-        //         id: machineActionRepeater
-        //         model: base.currentItem ? Cura.MachineActionManager.getSupportedActions(Cura.MachineManager.getDefinitionByMachineId(base.currentItem.id)) : null
+        Row {
 
-        //         Item {
-        //             width: Math.round(childrenRect.width + 2 * screenScaleFactor)
-        //             height: childrenRect.height
-        //             Button {
-        //                 text: machineActionRepeater.model[index].label
-        //                 onClicked:
-        //                 {
-        //                     var currentItem = machineActionRepeater.model[index]
-        //                     actionDialog.loader.manager = currentItem
-        //                     actionDialog.loader.source = currentItem.qmlPath
-        //                     actionDialog.title = currentItem.label
-        //                     actionDialog.show()
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+            width: base.width - 2 * UM.Theme.getSize("default_margin").width
+            height: childrenRect.height + UM.Theme.getSize("default_margin").width
+            anchors.left: parent.left
+            anchors.topMargin: UM.Theme.getSize("default_margin").height * 100
+            anchors.leftMargin: UM.Theme.getSize("default_margin").width
+            spacing: UM.Theme.getSize("default_margin").width
+
+            Button
+            {
+                property var machineActions: Cura.MachineActionManager.getSupportedActions(Cura.MachineManager.getDefinitionByMachineId(Cura.MachineManager.activeMachine.id))
+                property var updateAction
+                property bool canUpdate: {
+                    for (var i = 0; i < machineActions.length; i++) {
+                        if (machineActions[i].label == "Firmware Update") {
+                            updateAction = machineActions[i]
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                height: UM.Theme.getSize("setting_control").height
+                width: height*9 + UM.Theme.getSize("default_margin").width * 5
+                text: catalog.i18nc("@label", "Firmware Update")
+                enabled: canUpdate
+                onClicked:
+                {
+                        var currentItem = updateAction
+                        actionDialog.loader.manager = currentItem
+                        actionDialog.loader.source = currentItem.qmlPath
+                        actionDialog.title = currentItem.label
+                        actionDialog.show()
+                }
+                style: UM.Theme.styles.monitor_checkable_button_style
+            }
+        }
 
         Row
         {
@@ -403,6 +418,21 @@ Item
 	            }
 	        }
 	    }
+
+        UM.Dialog
+        {
+            id: actionDialog
+            minimumWidth: UM.Theme.getSize("modal_window_minimum").width
+            minimumHeight: UM.Theme.getSize("modal_window_minimum").height
+            maximumWidth: minimumWidth * 3
+            maximumHeight: minimumHeight * 3
+            rightButtons: Button
+            {
+                text: catalog.i18nc("@action:button", "Close")
+                iconName: "dialog-close"
+                onClicked: actionDialog.reject()
+            }
+        }
 
         ListModel
         {
