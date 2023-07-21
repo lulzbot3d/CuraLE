@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "name": "TAZ 6 | Single Extruder",
+    "inherits": "taz_6",
+    "metadata":
+    {
+        "priority": "00",
+        "visible": true,
+        "base_machine": false,
+        "toolhead_selection_name": "Single Extruder",
+        "machine_extruder_trains":
+        {
+            "0": "taz_6_single_extruder"
+        }
+    }
+}

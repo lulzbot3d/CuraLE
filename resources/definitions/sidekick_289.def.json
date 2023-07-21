@@ -28,7 +28,7 @@
     {
         "machine_start_gcode": { "default_value_from_file": "sidekick/sidekick_start" },
         "machine_end_gcode": { "default_value_from_file": "sidekick/sidekick_289_end" },
-        "machine_level_x_axis_gcode": { "default_value_from_file": "/sidekick_level_x_axis" },
+        "machine_level_x_axis_gcode": { "default_value_from_file": "sidekick/sidekick_level_x_axis" },
         "machine_width": { "default_value": 165.3 },
         "machine_depth":  { "default_value": 165.3 },
         "machine_height": { "default_value": 181 },
