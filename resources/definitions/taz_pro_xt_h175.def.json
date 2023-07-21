@@ -4,7 +4,7 @@
     "inherits": "taz_pro_xt",
     "metadata":
     {
-        "priority": "06",
+        "priority": "09",
         "visible": true,
         "base_machine": false,
         "toolhead_selection_name": "H175 | 0.50 mm | Nickel-Plated Copper",

@@ -5,6 +5,12 @@ This file is a work-in-progress; some sections may be incomplete, especially
 	will be updated as new versions are released and will continue to be
 	utilized as the project progresses.
 
+4.13.0-BETAv2.1:
+	Improved job name setting options
+		- Can choose to add part count and print time as a separate option
+	Temp fix for ugly warning regarding incompatable qualities
+	Cleaned up add printer screen
+
 4.13.0-BETAv2.0.1:
 	Quick patch update:
 		- Fixed issue that made SideKick 289 unable to Slice

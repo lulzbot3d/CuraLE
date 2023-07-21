@@ -4,7 +4,7 @@
     "inherits": "sidekick_747_galaxy",
     "metadata":
     {
-        "priority": "02",
+        "priority": "04",
         "visible": true,
         "base_machine": false,
         "toolhead_selection_name": "ASTEROID 285 | 0.50 mm | GammaMaster Steel",

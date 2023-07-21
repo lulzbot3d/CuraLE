@@ -41,7 +41,6 @@ class LulzBotPrintersModel(ListModel):
                 "name": metadata["name"],
                 "id": metadata["id"],
                 "lcd": metadata.get("has_optional_lcd", False),
-                "bltouch": metadata.get("has_bltouch", False),
                 "machine_priority": metadata.get("machine_priority", "90")
             })
         items = sorted(items, key=lambda x: x["machine_priority"]+x["name"])

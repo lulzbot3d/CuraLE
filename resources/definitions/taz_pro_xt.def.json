@@ -10,6 +10,7 @@
         "base_machine_id": "taz_pro_xt",
         "toolhead_category": "Universal",
         "toolhead_selection_name": "Universal Tool Head",
+        "has_optional_bltouch": true,
         "platform": "taz_pro.stl",
         "platform_offset":
         [

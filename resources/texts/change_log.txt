@@ -1,3 +1,8 @@
+[4.13.0-Beta v2.1]
+* Improved job name setting options
+* Temp fix for ugly warning regarding incompatable qualities
+* Cleaned up add printer screen
+
 [4.13.0-Beta v2.0.1]
 * Fixed issue that made SideKick 289 unable to Slice
 * Made TAZ 6 with Universal Tool Heads visible

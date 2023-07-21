@@ -107,6 +107,8 @@ UM.PreferencesPage {
         topLayerCountCheckbox.checked = boolCheck(UM.Preferences.getValue("view/top_layer_count"))
         UM.Preferences.resetPreference("general/restore_window_geometry")
         restoreWindowPositionCheckbox.checked = boolCheck(UM.Preferences.getValue("general/restore_window_geometry"))
+        UM.Preferences.resetPreference("cura/jobname_parts_and_time")
+        jobnamePartsAndTimeCheckbox.checked = boolCheck(UM.Preferences.getValue("cura/jobname_parts_and_time"))
 
         UM.Preferences.resetPreference("general/camera_perspective_mode")
         var defaultCameraMode = UM.Preferences.getValue("general/camera_perspective_mode")
@@ -650,6 +652,19 @@ UM.PreferencesPage {
 
                         onActivated: UM.Preferences.setValue("cura/jobname_lulzbot", model.get(index).code)
                     }
+                }
+            }
+
+            UM.TooltipArea {
+                width: childrenRect.width
+                height: childrenRect.height
+                text: catalog.i18nc("@info:tooltip", "Should part quantity and print time be added to the end of the job name?")
+
+                CheckBox {
+                    id: jobnamePartsAndTimeCheckbox
+                    text: catalog.i18nc("@option:check", "Append part count and print time to job name")
+                    checked: boolCheck(UM.Preferences.getValue("cura/jobname_parts_and_time"))
+                    onCheckedChanged: UM.Preferences.setValue("cura/jobname_parts_and_time", checked)
                 }
             }
 

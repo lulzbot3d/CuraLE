@@ -318,6 +318,7 @@ class PrintInformation(QObject):
         # Only update the job name when it's not user-specified.
         if not self._is_user_specified_job_name:
             jobname_position = self._application.getInstance().getPreferences().getValue("cura/jobname_lulzbot")
+            add_count_and_time = self._application.getInstance().getPreferences().getValue("cura/jobname_parts_and_time")
             if jobname_position is not "none":
                 # Don't add abbreviation if it already has the exact same abbreviation.
                 if self._abbr_machine in base_name:
@@ -331,17 +332,16 @@ class PrintInformation(QObject):
                     split_base = base_name.split("_")
                     # Insert Machine Abbriviation
                     split_base.insert(2, self._abbr_machine)
+                    for i in range(len(split_base)):
+                        output += split_base[i] + "_"
+                    self._job_name = output.strip("_")
+                if add_count_and_time:
                     # Insert part count
                     part_count = 0
                     for i in objects_model.items:
                         if i['mesh_type'] == "":
                             part_count += 1
-                    split_base.append("QTY"+str(part_count))
-                    # Insert print time
-                    split_base.append(str(self.currentPrintTime.getDisplayString()))
-                    for i in range(len(split_base)):
-                        output += split_base[i] + "_"
-                    self._job_name = output.strip("_")
+                    self._job_name += ("_QTY"+ str(part_count) + "_" + str(self.currentPrintTime.getDisplayString()))
             else:
                 self._job_name = base_name
 

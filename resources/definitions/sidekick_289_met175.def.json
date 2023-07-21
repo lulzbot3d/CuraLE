@@ -4,7 +4,7 @@
     "inherits": "sidekick_289_galaxy",
     "metadata":
     {
-        "priority": "01",
+        "priority": "03",
         "visible": true,
         "base_machine": false,
         "toolhead_selection_name": "METEOR 175 | 0.50 mm | Nickel-Plated Brass",

@@ -4,7 +4,7 @@
     "inherits": "sidekick_747",
     "metadata":
     {
-        "priority": "02",
+        "priority": "06",
         "visible": true,
         "base_machine": false,
         "toolhead_selection_name": "SE | 0.50 mm | Nickel-Plated Copper",

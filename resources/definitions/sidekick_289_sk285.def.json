@@ -4,7 +4,7 @@
     "inherits": "sidekick_289",
     "metadata":
     {
-        "priority": "00",
+        "priority": "01",
         "visible": true,
         "base_machine": false,
         "toolhead_selection_name": "SK285 | 0.50 mm | Nickel-Plated Copper",

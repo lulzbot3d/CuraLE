@@ -4,7 +4,7 @@
     "inherits": "taz_pro_xt",
     "metadata":
     {
-        "priority": "00",
+        "priority": "11",
         "visible": true,
         "base_machine": false,
         "toolhead_selection_name": "Pro Dual | 0.50 mm | Hardened SST",
@@ -13,15 +13,9 @@
             "0": "taz_pro_xt_dual_extruder_1st",
             "1": "taz_pro_xt_dual_extruder_2nd"
         },
-        "platform": "taz_pro.stl",
-        "platform_offset":
-        [
-            0,
-            -25,
-            0
-        ],
         "category": "LulzBot",
         "preferred_material": "PolyLite_PLA_(Polymaker)",
+        "has_optional_bltouch": false,
         "firmware_toolhead_name": "DualExtruder",
         "firmware_latest_version": "2.0.0.144.5",
         "firmware_file": "Pro_XT/Marlin_TAZProXT_DUALEXTRUDER_2.0.0.144.5_2731681.bin",

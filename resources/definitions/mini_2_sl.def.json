@@ -4,7 +4,7 @@
     "inherits": "mini_2",
     "metadata":
     {
-        "priority": "06",
+        "priority": "04",
         "visible": true,
         "base_machine": false,
         "toolhead_selection_name": "SL | 0.25 mm | Nickel-Plated Copper",

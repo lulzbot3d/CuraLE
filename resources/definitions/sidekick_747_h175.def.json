@@ -4,7 +4,7 @@
     "inherits": "sidekick_747",
     "metadata":
     {
-        "priority": "08",
+        "priority": "10",
         "visible": true,
         "base_machine": false,
         "toolhead_selection_name": "H175 | 0.50 mm | Nickel-Plated Copper",

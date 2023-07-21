@@ -4,7 +4,7 @@
     "inherits": "taz_pro_xt_galaxy",
     "metadata":
     {
-        "priority": "02",
+        "priority": "03",
         "visible": true,
         "base_machine": false,
         "toolhead_selection_name": "ASTEROID 285 | 0.50 mm | GammaMaster Steel",

@@ -4,7 +4,7 @@
     "inherits": "taz_workhorse",
     "metadata":
     {
-        "priority": "02",
+        "priority": "06",
         "visible": true,
         "base_machine": false,
         "toolhead_selection_name": "HS | 0.80 mm | Hardened SST",

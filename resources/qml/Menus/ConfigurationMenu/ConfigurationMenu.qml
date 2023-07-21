@@ -124,7 +124,8 @@ Cura.ExpandablePopup
                         width: UM.Theme.getSize("icon_indicator").width
                         height: UM.Theme.getSize("icon_indicator").height
 
-                        visible: model.enabled && (extruderItem.valueError || extruderItem.valueWarning)
+                        // visible: model.enabled && (extruderItem.valueError || extruderItem.valueWarning)
+                        visible: false
 
                         source:
                         {

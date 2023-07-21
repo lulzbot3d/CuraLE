@@ -4,7 +4,7 @@
     "inherits": "sidekick_289",
     "metadata":
     {
-        "priority": "05",
+        "priority": "08",
         "visible": true,
         "base_machine": false,
         "toolhead_selection_name": "HS | 0.80 mm | Hardened SST",
