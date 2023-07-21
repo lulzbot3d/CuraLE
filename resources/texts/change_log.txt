@@ -1,3 +1,8 @@
+[4.13.0-Beta v2.0.1]
+* Fixed issue that made SideKick 289 unable to Slice
+* Made TAZ 6 with Universal Tool Heads visible
+* TAZ 5, Mini 1, and older Legacy TAZ 6 Tool Heads will come soon, never fear!
+
 [4.13.0-Beta v2]
 * Refactored printer definitions and settings to improve workflow
 * Added Generic profiles for some material types

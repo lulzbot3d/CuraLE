@@ -5,6 +5,13 @@ This file is a work-in-progress; some sections may be incomplete, especially
 	will be updated as new versions are released and will continue to be
 	utilized as the project progresses.
 
+4.13.0-BETAv2.0.1:
+	Quick patch update:
+		- Fixed issue that made SideKick 289 unable to Slice
+		- Made TAZ 6 with Universal Tool Heads visible
+		- TAZ 5, Mini 1, and older Legacy TAZ 6 Tool Heads will come soon,
+			should be in an update sometime early next week!
+
 4.13.0-BETAv2:
 	Incrementing version number to Beta v2 to signify a more public release
 		- We're getting pretty close to a place we're somewhat comfortable with
