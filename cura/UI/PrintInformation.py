@@ -330,6 +330,11 @@ class PrintInformation(QObject):
                 elif jobname_position == "printfarm_style":
                     output = ""
                     split_base = base_name.split("_")
+                    # Remove Part Description, if possible
+                    try:
+                        split_base.pop(2)
+                    except:
+                        pass
                     # Insert Machine Abbriviation
                     split_base.insert(2, self._abbr_machine)
                     for i in range(len(split_base)):

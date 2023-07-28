@@ -4,7 +4,7 @@
     "inherits": "lulzbot",
     "metadata":
     {
-        "machine_priority": "06",
+        "machine_priority": "04",
         "visible": false,
         "base_machine": true,
         "base_machine_id": "sidekick_289",

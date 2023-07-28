@@ -9,8 +9,7 @@ import QtQuick.Window 2.1
 import UM 1.2 as UM
 import Cura 1.0 as Cura
 
-Menu
-{
+Menu {
     id: base
 
     property bool shouldShowExtruders: machineExtruderCount.properties.value > 1;
@@ -25,8 +24,7 @@ Menu
     // Extruder selection - only visible if there is more than 1 extruder
     MenuSeparator { visible: base.shouldShowExtruders }
     MenuItem { id: extruderHeader; text: catalog.i18ncp("@label", "Print Selected Model With:", "Print Selected Models With:", UM.Selection.selectionCount); enabled: false; visible: base.shouldShowExtruders }
-    Instantiator
-    {
+    Instantiator {
         model: CuraApplication.getExtrudersModel()
         MenuItem {
             text: "%1: %2 - %3".arg(model.name).arg(model.material).arg(model.variant)
@@ -45,8 +43,7 @@ Menu
         visible: UM.Preferences.getValue("cura/use_multi_build_plate")
     }
 
-    Instantiator
-    {
+    Instantiator {
         model: base.multiBuildPlateModel
         MenuItem {
             enabled: UM.Selection.hasSelection
@@ -87,20 +84,17 @@ Menu
     MenuItem { action: Cura.Actions.mergeObjects; }
     MenuItem { action: Cura.Actions.unGroupObjects; }
 
-    Connections
-    {
+    Connections {
         target: UM.Controller
         function onContextMenuRequested() { base.popup(); }
     }
 
-    Connections
-    {
+    Connections {
         target: Cura.Actions.multiplySelection
         function onTriggered() { multiplyDialog.open() }
     }
 
-    UM.SettingPropertyProvider
-    {
+    UM.SettingPropertyProvider {
         id: machineExtruderCount
 
         containerStack: Cura.MachineManager.activeMachine
@@ -108,8 +102,7 @@ Menu
         watchedProperties: [ "value" ]
     }
 
-    Dialog
-    {
+    Dialog {
         id: multiplyDialog
         modality: Qt.ApplicationModal
 
@@ -119,31 +112,26 @@ Menu
         onAccepted: CuraActions.multiplySelection(copiesField.value)
 
         signal reset()
-        onReset:
-        {
+        onReset: {
             copiesField.value = 1;
             copiesField.focus = true;
         }
 
-        onVisibleChanged:
-        {
+        onVisibleChanged: {
             copiesField.forceActiveFocus();
         }
 
         standardButtons: StandardButton.Ok | StandardButton.Cancel
 
-        Row
-        {
+        Row {
             spacing: UM.Theme.getSize("default_margin").width
 
-            Label
-            {
+            Label {
                 text: catalog.i18nc("@label", "Number of Copies")
                 anchors.verticalCenter: copiesField.verticalCenter
             }
 
-            SpinBox
-            {
+            SpinBox {
                 id: copiesField
                 focus: true
                 minimumValue: 1
@@ -160,8 +148,7 @@ Menu
     // \param item The item to find the index of.
     //
     // \return The index of the item or -1 if it was not found.
-    function findItemIndex(item)
-    {
+    function findItemIndex(item) {
         for(var i in base.items)
         {
             if(base.items[i] == item)

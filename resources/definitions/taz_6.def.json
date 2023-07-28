@@ -1,13 +1,13 @@
 {
     "version": 2,
-    "name": "TAZ 6 [Legacy]",
+    "name": "[Legacy] TAZ 6",
     "inherits": "taz",
     "metadata":
     {
-        "machine_priority": "99",
+        "machine_priority": "08",
         "base_machine": true,
         "base_machine_id": "taz_6",
-        "platform": "taz6.stl",
+        "platform": "taz_6.stl",
         "platform_offset":
         [
             0,
@@ -17,7 +17,6 @@
         "visible": false,
         "firmware_latest_version": "2.0.9.0.13",
         "firmware_file": "TAZ6/Marlin_TAZ6_Universal_2.0.9.0.13_80a6628.hex",
-        "toolhead_selection_name": "Single Extruder",
         "firmware_update_info": {
             "id": "taz6",
             "check_urls":

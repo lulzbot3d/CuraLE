@@ -6,7 +6,6 @@
     {
         "visible": false,
         "base_machine": false,
-        "base_machine_id": "mini_2",
         "toolhead_category": "Galaxy",
         "toolhead_selection_name": "Galaxy Tool Head",
         "preferred_material": "Generic_PLA",
