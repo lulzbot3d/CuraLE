@@ -1,13 +1,13 @@
 {
     "version": 2,
-    "name": "Mini 1 | M175 v2 | 0.50 mm",
+    "name": "Mini 1 | M175 | 0.50 mm",
     "inherits": "mini_1",
     "metadata":
     {
         "priority": "05",
         "visible": true,
         "base_machine": false,
-        "toolhead_selection_name": "M175 v2 | 0.50 mm | Carbide Coated Copper",
+        "toolhead_selection_name": "M175 | 0.50 mm | Carbide Coated Copper",
         "machine_extruder_trains":
         {
             "0": "mini_1_m175_extruder"

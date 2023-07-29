@@ -29,6 +29,7 @@
       <machine_identifier product="mini_2_he"/>
       <machine_identifier product="sidekick_289_he"/>
       <machine_identifier product="sidekick_747_he"/>
+      <machine_identifier product="taz_6_he"/>
       <machine_identifier product="taz_pro_he"/>
       <machine_identifier product="taz_pro_long_bed_he"/>
       <machine_identifier product="taz_pro_xt_he"/>
@@ -36,9 +37,12 @@
     </machine>
 
     <machine>
+      <machine_identifier product="mini_1_hs"/>
       <machine_identifier product="mini_2_hs"/>
       <machine_identifier product="sidekick_289_hs"/>
       <machine_identifier product="sidekick_747_hs"/>
+      <machine_identifier product="taz_5_hs"/>
+      <machine_identifier product="taz_6_hs"/>
       <machine_identifier product="taz_pro_hs"/>
       <machine_identifier product="taz_pro_long_bed_hs"/>
       <machine_identifier product="taz_pro_xt_hs"/>
@@ -46,9 +50,12 @@
     </machine>
 
     <machine>
+      <machine_identifier product="mini_1_hsplus"/>
       <machine_identifier product="mini_2_hsplus"/>
       <machine_identifier product="sidekick_289_hsplus"/>
       <machine_identifier product="sidekick_747_hsplus"/>
+      <machine_identifier product="taz_5_hsplus"/>
+      <machine_identifier product="taz_6_hsplus"/>
       <machine_identifier product="taz_pro_hsplus"/>
       <machine_identifier product="taz_pro_long_bed_hsplus"/>
       <machine_identifier product="taz_pro_xt_hsplus"/>
@@ -79,14 +86,23 @@
     </machine>
 
     <machine>
+      <machine_identifier product="mini_1_single"/>
+      <machine_identifier product="taz_5_single"/>
+      <machine_identifier product="taz_6_single"/>
+    <machine>
+
+    <machine>
       <machine_identifier product="sidekick_289_sk285"/>
       <machine_identifier product="sidekick_747_sk285"/>
     </machine>
 
     <machine>
+      <machine_identifier product="mini_1_sl"/>
       <machine_identifier product="mini_2_sl"/>
       <machine_identifier product="sidekick_289_sl"/>
       <machine_identifier product="sidekick_747_sl"/>
+      <machine_identifier product="taz_5_sl"/>
+      <machine_identifier product="taz_6_sl"/>
       <machine_identifier product="taz_pro_sl"/>
       <machine_identifier product="taz_pro_long_bed_sl"/>
       <machine_identifier product="taz_pro_xt_sl"/>
