@@ -605,6 +605,12 @@ UM.PreferencesPage {
                 }
             }
 
+            Item {
+                //: Spacer
+                height: UM.Theme.getSize("default_margin").height
+                width: UM.Theme.getSize("default_margin").width
+            }
+
             UM.TooltipArea {
                 width: childrenRect.width
                 height: childrenRect.height
@@ -666,6 +672,12 @@ UM.PreferencesPage {
                     checked: boolCheck(UM.Preferences.getValue("cura/jobname_parts_and_time"))
                     onCheckedChanged: UM.Preferences.setValue("cura/jobname_parts_and_time", checked)
                 }
+            }
+
+            Item {
+                //: Spacer
+                height: UM.Theme.getSize("default_margin").height
+                width: UM.Theme.getSize("default_margin").width
             }
 
             UM.TooltipArea {

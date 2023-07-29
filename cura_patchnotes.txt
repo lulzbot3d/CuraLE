@@ -5,6 +5,23 @@ This file is a work-in-progress; some sections may be incomplete, especially
 	will be updated as new versions are released and will continue to be
 	utilized as the project progresses.
 
+4.13.0-BETAv2.2:
+	Fixed a couple of missing gcode files for certain printers
+	Added ability to select Bio, TAZ 5, and Mini 1 printers
+		- Limited to Legacy Universal Tool Heads on TAZ 5 and Mini 1 for now
+	Added a "Multiply" button on the tool bar instead of needing to right click
+	Ensured "Scale To Max" results in a part above the build plate
+	Slightly altered default visible settings
+		- Added "Top/Bottom Line Directions" by default
+	Turned on "Retract Before Outer Wall" by default
+		- Very common setting our support team would have clients turn on
+	Fixed monitor page not being able to scroll correctly
+	Expanded "Add Printer" dialog slightly by default and added the ability
+		to increase the size of the window, it had been locked to size before
+	Fixed bug where the rocktopus.stl file would load off the buildplate when
+		opening the application for the first time
+	Touched up some UI for clarity in the general preferences menu
+
 4.13.0-BETAv2.1:
 	Improved job name setting options
 		- Can choose to add part count and print time as a separate option

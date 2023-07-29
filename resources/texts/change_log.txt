@@ -1,3 +1,12 @@
+[4.13.0-Beta v2.2]
+* Fixed a couple of missing gcode files for certain printers
+* Added ability to select Bio, TAZ 5, and Mini 1 printers (Limited to Legacy Universal Tool Heads on TAZ 5 and Mini 1 for now)
+* Added a "Multiply" button on the tool bar instead of needing to right click
+* Ensured "Scale To Max" results in a part above the build plate
+* Fixed monitor page not being able to scroll correctly
+* Expanded "Add Printer" dialog slightly by default and added the ability to increase the size of the window, it had been locked to size before
+* Fixed bug where the rocktopus.stl file would load off the buildplate
+
 [4.13.0-Beta v2.1]
 * Improved job name setting options
 * Temp fix for ugly warning regarding incompatable qualities
