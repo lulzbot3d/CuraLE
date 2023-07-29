@@ -426,6 +426,7 @@ class MachineManager(QObject):
             # Instead of setting the global container stack here, we set the active machine and so the signals are emitted
             self.setActiveMachine(new_stack.getId())
             if Application.getInstance().getPreferences().getValue("general/is_first_run"):
+                time.sleep(1) # Seems like it tries to load in too fast if there isn't a slight delay.
                 model_will_be_loaded = "rocktopus.stl"
                 Application.getInstance()._openFile(os.path.join(Resources.getPath(Resources.Meshes), model_will_be_loaded))
                 Application.getInstance().getPreferences().setValue("general/is_first_run", False)

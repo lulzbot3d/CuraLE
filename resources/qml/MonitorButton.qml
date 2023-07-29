@@ -10,8 +10,7 @@ import QtQuick.Layouts 1.1
 import UM 1.1 as UM
 import Cura 1.0 as Cura
 
-Item
-{
+Item {
     id: base;
     UM.I18nCatalog { id: catalog; name: "cura"}
 
@@ -151,8 +150,7 @@ Item
         }
     }
 
-    Label
-    {
+    Label {
         id: statusLabel
         width: parent.width - 2 * UM.Theme.getSize("thick_margin").width
         anchors.top: parent.top
@@ -164,8 +162,7 @@ Item
         text: statusText
     }
 
-    Label
-    {
+    Label {
         id: percentageLabel
         anchors.top: parent.top
         anchors.right: progressBar.right
@@ -176,16 +173,14 @@ Item
         visible: showProgress
     }
 
-    ProgressBar
-    {
+    ProgressBar {
         id: progressBar;
         minimumValue: 0;
         maximumValue: 100;
         value: 0;
 
         //Doing this in an explicit binding since the implicit binding breaks on occasion.
-        Binding
-        {
+        Binding {
             target: progressBar;
             property: "value";
             value: base.progress;
@@ -224,8 +219,7 @@ Item
         anchors.leftMargin: UM.Theme.getSize("thick_margin").width;
     }
 
-    Row
-    {
+    Row {
         id: buttonsRow
         height: abortButton.height
         anchors.top: progressBar.bottom
@@ -234,8 +228,7 @@ Item
         anchors.rightMargin: UM.Theme.getSize("thick_margin").width
         spacing: UM.Theme.getSize("default_margin").width
 
-        Row
-        {
+        Row {
             id: additionalComponentsRow
             spacing: UM.Theme.getSize("default_margin").width
         }
@@ -244,8 +237,7 @@ Item
             buttonsRow.updateAdditionalComponents("monitorButtons")
         }
 
-        Connections
-        {
+        Connections {
             target: CuraApplication
             function onAdditionalComponentsChanged() { buttonsRow.updateAdditionalComponents("monitorButtons") }
         }
@@ -258,8 +250,7 @@ Item
             }
         }
 
-        Button
-        {
+        Button {
             id: pauseResumeButton
 
             height: UM.Theme.getSize("save_button_save_to_button").height
@@ -306,8 +297,7 @@ Item
             style: UM.Theme.styles.print_setup_action_button
         }
 
-        Button
-        {
+        Button {
             id: abortButton
 
             visible: printerConnected && activePrinter != null && activePrinter.canAbort
@@ -322,8 +312,7 @@ Item
             style: UM.Theme.styles.print_setup_action_button
         }
 
-        MessageDialog
-        {
+        MessageDialog {
             id: confirmationDialog
 
             title: catalog.i18nc("@window:title", "Abort print")

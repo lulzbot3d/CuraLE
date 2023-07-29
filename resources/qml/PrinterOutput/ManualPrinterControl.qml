@@ -12,20 +12,17 @@ import Cura 1.0 as Cura
 import "."
 
 
-Item
-{
+Item {
     property var printerModel: null
     property var activePrintJob: printerModel != null ? printerModel.activePrintJob : null
     property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
     property var availablePrinter: outputDeviceCount >= 1 ? Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1] : null
     property var connectedDevice:
     {
-        if (availablePrinter != null)
-        {
+        if (availablePrinter != null) {
             return availablePrinter.acceptsCommands ? availablePrinter : null
         }
-        else
-        {
+        else {
             return null
         }
     }
@@ -33,46 +30,37 @@ Item
     implicitWidth: parent.width
     implicitHeight: childrenRect.height
 
-    function checkEnabled()
-    {
-        if (printerModel == null)
-        {
+    function checkEnabled() {
+        if (printerModel == null) {
             return false; //Can't control the printer if not connected
         }
 
-        if (connectedDevice == null)
-        {
+        if (connectedDevice == null) {
             return false; //Not allowed to do anything.
         }
 
-        if(activePrintJob == null)
-        {
+        if(activePrintJob == null) {
             return true;
         }
 
-        if (activePrintJob.state == "printing" || activePrintJob.state == "resuming" || activePrintJob.state == "pausing" || activePrintJob.state == "error" || activePrintJob.state == "offline")
-        {
+        if (activePrintJob.state == "printing" || activePrintJob.state == "resuming" || activePrintJob.state == "pausing" || activePrintJob.state == "error" || activePrintJob.state == "offline") {
             return false; //Printer is in a state where it can't react to manual control
         }
         return true;
     }
 
-    Column
-    {
+    Column {
 
-        MonitorSection
-        {
+        MonitorSection {
             label: catalog.i18nc("@label", "Manual Printer Control")
             width: base.width
         }
 
-        Label
-        {
+        Label {
             text: " " // This actually acts as a spacer
         }
 
-        Row
-        {
+        Row {
             id: baseControls
 
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
@@ -82,17 +70,13 @@ Item
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
             spacing: UM.Theme.getSize("default_margin").width
 
-            Button
-            {
+            Button {
                 height: UM.Theme.getSize("setting_control").height
-                width: height*3 + UM.Theme.getSize("default_margin").width
+                width: base.width / 3 - (UM.Theme.getSize("default_margin").width * 1.3)
                 text: "Connect"
-                enabled:
-                {
-                    if(availablePrinter != null && availablePrinter.address != "None")
-                    {
-                        if(availablePrinter.connectionState == 0 || availablePrinter.connectionState > 5)
-                        {
+                enabled: {
+                    if(availablePrinter != null && availablePrinter.address != "None") {
+                        if(availablePrinter.connectionState == 0 || availablePrinter.connectionState > 5) {
                             return true
                         }
                     }
@@ -102,28 +86,24 @@ Item
                 style: UM.Theme.styles.monitor_checkable_button_style
             }
 
-            Button
-            {
+            Button {
                 height: UM.Theme.getSize("setting_control").height
-                width: height*3 + UM.Theme.getSize("default_margin").width
+                width: base.width / 3 - (UM.Theme.getSize("default_margin").width * 1.4)
                 text: "Disconnect"
                 enabled: checkEnabled()
-                onClicked:
-                {
+                onClicked: {
                     OutputDeviceHeader.pressedConnect = false
                     availablePrinter.close() // May need to be changed to a different function
                 }
                 style: UM.Theme.styles.monitor_checkable_button_style
             }
 
-            Button
-            {
+            Button {
                 height: UM.Theme.getSize("setting_control").height
-                width: height*3 + UM.Theme.getSize("default_margin").width
+                width: base.width / 3 - (UM.Theme.getSize("default_margin").width * 1.3)
                 text: catalog.i18nc("@label", "Console")
                 enabled: availablePrinter.acceptsCommands ? availablePrinter.connectionState == 2 : false
-                onClicked:
-                {
+                onClicked: {
                     availablePrinter.messageFromPrinter.disconnect(printer_control.receive)
                     availablePrinter.messageFromPrinter.connect(printer_control.receive)
                     printer_control.visible = true;
@@ -141,8 +121,7 @@ Item
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
             spacing: UM.Theme.getSize("default_margin").width
 
-            Button
-            {
+            Button {
                 property var machineActions: Cura.MachineActionManager.getSupportedActions(Cura.MachineManager.getDefinitionByMachineId(Cura.MachineManager.activeMachine.id))
                 property var updateAction
                 property bool canUpdate: {
@@ -155,11 +134,10 @@ Item
                     return false;
                 }
                 height: UM.Theme.getSize("setting_control").height
-                width: height*9 + UM.Theme.getSize("default_margin").width * 5
+                width: base.width - UM.Theme.getSize("default_margin").width - UM.Theme.getSize("default_margin").width
                 text: catalog.i18nc("@label", "Firmware Update")
                 enabled: canUpdate
-                onClicked:
-                {
+                onClicked: {
                         var currentItem = updateAction
                         actionDialog.loader.manager = currentItem
                         actionDialog.loader.source = currentItem.qmlPath
@@ -170,8 +148,7 @@ Item
             }
         }
 
-        Row
-        {
+        Row {
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
             height: childrenRect.height + UM.Theme.getSize("default_margin").width
             anchors.left: parent.left
@@ -181,8 +158,7 @@ Item
 
             enabled: checkEnabled()
 
-            Label
-            {
+            Label {
                 text: catalog.i18nc("@label", "Jog Position")
                 color: UM.Theme.getColor("setting_control_text")
                 font: UM.Theme.getFont("default")
@@ -192,15 +168,13 @@ Item
                 verticalAlignment: Text.AlignVCenter
             }
 
-            GridLayout
-            {
+            GridLayout {
                 columns: 3
                 rows: 4
                 rowSpacing: UM.Theme.getSize("default_lining").width
                 columnSpacing: UM.Theme.getSize("default_lining").height
 
-                Label
-                {
+                Label {
                     text: catalog.i18nc("@label", "X/Y")
                     color: UM.Theme.getColor("setting_control_text")
                     font: UM.Theme.getFont("default")
@@ -215,8 +189,7 @@ Item
                     Layout.preferredHeight: height
                 }
 
-                Button
-                {
+                Button {
                     Layout.row: 1
                     Layout.column: 1
                     Layout.preferredWidth: width
@@ -226,14 +199,12 @@ Item
                     width: height
                     height: UM.Theme.getSize("setting_control").height
 
-                    onClicked:
-                    {
+                    onClicked: {
                         printerModel.moveHead(0, distancesRow.currentDistance, 0)
                     }
                 }
 
-                Button
-                {
+                Button {
                     Layout.row: 2
                     Layout.column: 0
                     Layout.preferredWidth: width
@@ -243,14 +214,12 @@ Item
                     width: height
                     height: UM.Theme.getSize("setting_control").height
 
-                    onClicked:
-                    {
+                    onClicked: {
                         printerModel.moveHead(-distancesRow.currentDistance, 0, 0)
                     }
                 }
 
-                Button
-                {
+                Button {
                     Layout.row: 2
                     Layout.column: 2
                     Layout.preferredWidth: width
@@ -260,14 +229,12 @@ Item
                     width: height
                     height: UM.Theme.getSize("setting_control").height
 
-                    onClicked:
-                    {
+                    onClicked: {
                         printerModel.moveHead(distancesRow.currentDistance, 0, 0)
                     }
                 }
 
-                Button
-                {
+                Button {
                     Layout.row: 3
                     Layout.column: 1
                     Layout.preferredWidth: width
@@ -277,14 +244,12 @@ Item
                     width: height
                     height: UM.Theme.getSize("setting_control").height
 
-                    onClicked:
-                    {
+                    onClicked: {
                         printerModel.moveHead(0, -distancesRow.currentDistance, 0)
                     }
                 }
 
-                Button
-                {
+                Button {
                     Layout.row: 2
                     Layout.column: 1
                     Layout.preferredWidth: width
@@ -294,20 +259,17 @@ Item
                     width: height
                     height: UM.Theme.getSize("setting_control").height
 
-                    onClicked:
-                    {
+                    onClicked: {
                         printerModel.homeHead()
                     }
                 }
             }
 
 
-            Column
-            {
+            Column {
                 spacing: UM.Theme.getSize("default_lining").height
 
-                Label
-                {
+                Label {
                     text: catalog.i18nc("@label", "Z")
                     color: UM.Theme.getColor("setting_control_text")
                     font: UM.Theme.getFont("default")
@@ -317,49 +279,42 @@ Item
                     horizontalAlignment: Text.AlignHCenter
                 }
 
-                Button
-                {
+                Button {
                     iconSource: UM.Theme.getIcon("ChevronSingleUp");
                     style: UM.Theme.styles.monitor_button_style
                     width: height
                     height: UM.Theme.getSize("setting_control").height
 
-                    onClicked:
-                    {
+                    onClicked: {
                         printerModel.moveHead(0, 0, distancesRow.currentDistance)
                     }
                 }
 
-                Button
-                {
+                Button {
                     iconSource: UM.Theme.getIcon("House");
                     style: UM.Theme.styles.monitor_button_style
                     width: height
                     height: UM.Theme.getSize("setting_control").height
 
-                    onClicked:
-                    {
+                    onClicked: {
                         printerModel.homeBed()
                     }
                 }
 
-                Button
-                {
+                Button {
                     iconSource: UM.Theme.getIcon("ChevronSingleDown");
                     style: UM.Theme.styles.monitor_button_style
                     width: height
                     height: UM.Theme.getSize("setting_control").height
 
-                    onClicked:
-                    {
+                    onClicked: {
                         printerModel.moveHead(0, 0, -distancesRow.currentDistance)
                     }
                 }
             }
         }
 
-        Row
-        {
+        Row {
             id: distancesRow
 
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
@@ -373,8 +328,7 @@ Item
 
             enabled: checkEnabled()
 
-            Label
-            {
+            Label {
                 text: catalog.i18nc("@label", "Jog Distance")
                 color: UM.Theme.getColor("setting_control_text")
                 font: UM.Theme.getFont("default")
@@ -384,13 +338,10 @@ Item
                 verticalAlignment: Text.AlignVCenter
             }
 
-            Row
-            {
-                Repeater
-                {
+            Row {
+                Repeater {
                     model: distancesModel
-                    delegate: Button
-                    {
+                    delegate: Button {
                         height: UM.Theme.getSize("setting_control").height
                         width: height + UM.Theme.getSize("default_margin").width
 
@@ -406,36 +357,30 @@ Item
             }
         }
 
-        PrinterControlWindow
-	    {
+        PrinterControlWindow {
 	        id: printer_control
             activePrinter: printerModel
-	        onCommand:
-	        {
-	            if (!Cura.USBPrinterManager.sendCommandToCurrentPrinter(command))
-	            {
+	        onCommand: {
+	            if (!Cura.USBPrinterManager.sendCommandToCurrentPrinter(command)) {
 	                receive("i", "Error: Printer not connected")
 	            }
 	        }
 	    }
 
-        UM.Dialog
-        {
+        UM.Dialog {
             id: actionDialog
             minimumWidth: UM.Theme.getSize("modal_window_minimum").width
             minimumHeight: UM.Theme.getSize("modal_window_minimum").height
             maximumWidth: minimumWidth * 3
             maximumHeight: minimumHeight * 3
-            rightButtons: Button
-            {
+            rightButtons: Button {
                 text: catalog.i18nc("@action:button", "Close")
                 iconName: "dialog-close"
                 onClicked: actionDialog.reject()
             }
         }
 
-        ListModel
-        {
+        ListModel {
             id: distancesModel
             ListElement { label: "0.1"; value: 0.1 }
             ListElement { label: "1";   value: 1   }

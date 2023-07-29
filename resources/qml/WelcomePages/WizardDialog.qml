@@ -23,9 +23,9 @@ Window
     modality: Qt.ApplicationModal
 
     minimumWidth: UM.Theme.getSize("modal_window_minimum").width * 1.2
-    minimumHeight: UM.Theme.getSize("modal_window_minimum").height
-    maximumWidth: minimumWidth
-    maximumHeight: minimumHeight
+    minimumHeight: UM.Theme.getSize("modal_window_minimum").height * 1.2
+    maximumWidth: minimumWidth * 1.5
+    maximumHeight: minimumHeight * 1.5
 
     color: UM.Theme.getColor("main_background")
 

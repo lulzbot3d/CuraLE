@@ -8,8 +8,7 @@ import UM 1.2 as UM
 import Cura 1.0 as Cura
 
 
-Item
-{
+Item {
     implicitWidth: parent.width
     implicitHeight: Math.floor(childrenRect.height + UM.Theme.getSize("default_margin").height * 2)
     property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
@@ -26,8 +25,7 @@ Item
         }
     }
 
-    Rectangle
-    {
+    Rectangle {
         height: childrenRect.height
         color: UM.Theme.getColor("setting_category")
 
@@ -61,8 +59,7 @@ Item
             }
         }
 
-        Label
-        {
+        Label {
             id: outputDeviceAddressLabel
             text:
             {

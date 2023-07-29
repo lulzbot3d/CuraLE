@@ -50,6 +50,7 @@ Item {
 
         anchors.fill: base
         clip: true
+        contentHeight: contentItem.children[0].childrenRect.height * 1.2
         ScrollBar.vertical.policy: ScrollBar.AsNeeded
 
         Column {
@@ -57,7 +58,6 @@ Item {
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
-            height: childrenRect.height
 
             OutputDeviceHeader {
                 outputDevice: connectedDevice
@@ -66,7 +66,7 @@ Item {
 
             Rectangle {
                 color: UM.Theme.getColor("wide_lining")
-                width: parent.width
+                width: base.width
                 height: childrenRect.height
 
                 Flow {
@@ -89,11 +89,13 @@ Item {
 
             Rectangle {
                 color: UM.Theme.getColor("wide_lining")
-                width: parent.width
+                width: base.width
                 height: UM.Theme.getSize("thick_lining").width
             }
 
-            HeatedBedBox { }
+            HeatedBedBox {
+                width: base.width
+            }
 
             UM.SettingPropertyProvider {
                 id: bedTemperature
@@ -113,6 +115,7 @@ Item {
             }
 
             ManualPrinterControl {
+                width: base.width
                 printerModel: activePrinter
                 visible: true
             }
