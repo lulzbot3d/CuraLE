@@ -6,11 +6,11 @@
       <material>TPU</material>
       <color>Generic</color>
       <label>NinjaFlex Edge 83A</label>
-      <category />
+      <category/>
     </name>
     <adhesion_info>Use glue stick on PEI or print directly on glass.</adhesion_info>
     <definition>fdmprinter</definition>
-    <description />
+    <description/>
     <version>2</version>
     <color_code>#dd00d2</color_code>
     <compatible>True</compatible>
@@ -32,59 +32,33 @@
     <setting key="print temperature">235.0</setting>
     <setting key="part removal temperature">0.0</setting>
     <setting key="standby temperature">150.0</setting>
+
     <machine>
-      <machine_identifier product="sidekick_289_m175" />
+      <machine_identifier product="mini_2_h175"/>
+      <machine_identifier product="sidekick_289_h175"/>
+      <machine_identifier product="sidekick_747_h175"/>
+      <machine_identifier product="taz_6_h175"/>
+      <machine_identifier product="taz_pro_h175"/>
+      <machine_identifier product="taz_pro_long_bed_h175"/>
+      <machine_identifier product="taz_pro_xt_h175"/>
+      <machine_identifier product="taz_workhorse_h175"/>
     </machine>
+
     <machine>
-      <machine_identifier product="sidekick_289_h175" />
+      <machine_identifier product="mini_2_m175"/>
+      <machine_identifier product="sidekick_289_m175"/>
+      <machine_identifier product="sidekick_747_m175"/>
+      <machine_identifier product="taz_6_m175"/>
+      <machine_identifier product="taz_pro_m175"/>
+      <machine_identifier product="taz_pro_long_bed_m175"/>
+      <machine_identifier product="taz_pro_xt_m175"/>
+      <machine_identifier product="taz_workhorse_m175"/>
     </machine>
+
     <machine>
-      <machine_identifier product="sidekick_289_sk175" />
+      <machine_identifier product="sidekick_289_sk175"/>
+      <machine_identifier product="sidekick_747_sk175"/>
     </machine>
-    <machine>
-      <machine_identifier product="sidekick_747_m175" />
-    </machine>
-    <machine>
-      <machine_identifier product="sidekick_747_h175" />
-    </machine>
-    <machine>
-      <machine_identifier product="sidekick_747_sk175" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_xt_m175" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_xt_h175" />
-    </machine>
-    <machine>
-      <machine_identifier product="mini_2_m175" />
-    </machine>
-    <machine>
-      <machine_identifier product="mini_2_h175" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_m175" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_h175" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_long_bed_m175" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_long_bed_h175" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_workhorse_m175" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_workhorse_h175" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_6_m175" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_6_h175" />
-    </machine>
+
   </settings>
 </fdmmaterial>
