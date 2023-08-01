@@ -1819,6 +1819,10 @@ class MachineManager(QObject):
                     include_diameter = True
                 elif "dual" in th:
                     th_name = "DUAL"
+                elif "m175" in th:
+                    th_name = "M175"
+                elif "single" in th:
+                    th_name = "SINGLE"
                 else:
                     if "met" in th:
                         include_diameter = True

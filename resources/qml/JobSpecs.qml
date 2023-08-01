@@ -124,9 +124,9 @@ Item
             }
 
             validator: RegExpValidator {
-                regExp: /^[^\\ \/ \*\?\|\[\]]*$/
+                regExp: /^[^\\\/\*\?\|\[\]]*$/
             }
-            
+
             style: TextFieldStyle{
                 textColor: UM.Theme.getColor("text_scene");
                 font: UM.Theme.getFont("default");
