@@ -27,35 +27,22 @@
     <setting key="print temperature">240.0</setting>
     <setting key="retraction speed">30.0</setting>
     <setting key="soften temperature">180</setting>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="mini_2_hsplus" />
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="mini_1_hsplus"/>
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="taz_5_hsplus"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_hsplus"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_long_bed_hsplus"/>
-    </machine>
+
     <machine>
       <machine_identifier product="taz_pro_dual"/>
-    </machine>
-    <machine>
       <machine_identifier product="taz_pro_xt_dual"/>
     </machine>
+
     <machine>
-      <machine_identifier manufactuere = "Aleph Objects, Inc." product="taz_6_hsplus"/>
-    </machine>
-    <machine>
+      <machine_identifier product="mini_1_hsplus"/>
+      <machine_identifier product="mini_2_hsplus"/>
+      <machine_identifier product="taz_5_hsplus"/>
+      <machine_identifier product="taz_6_hsplus"/>
+      <machine_identifier product="taz_pro_hsplus"/>
+      <machine_identifier product="taz_pro_long_bed_hsplus"/>
+      <machine_identifier product="taz_pro_xt_hsplus"/>
       <machine_identifier product="taz_workhorse_hsplus"/>
     </machine>
-    <machine>
-      <machine_identifier product="taz_pro_xt_hsplus"/>
-    </machine>
+
   </settings>
 </fdmmaterial>

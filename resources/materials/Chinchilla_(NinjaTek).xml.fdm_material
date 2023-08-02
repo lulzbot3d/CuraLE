@@ -6,14 +6,14 @@
       <material>TPU</material>
       <color>Generic</color>
       <label>Chinchilla 75A</label>
-      <category />
+      <category/>
     </name>
     <compatible>True</compatible>
-    <description />
+    <description/>
     <color_code>#13adff</color_code>
     <GUID>e2a55b2a-2d03-4006-bbcb-cc15080489bf</GUID>
     <version>1</version>
-    <adhesion_info />
+    <adhesion_info/>
     <definition>fdmprinter</definition>
     <extruder_disabled>False</extruder_disabled>
   </metadata>
@@ -32,113 +32,60 @@
     <setting key="probe temperature">160.0</setting>
     <setting key="print cooling">60.0</setting>
     <setting key="retraction speed">25.0</setting>
+
     <machine>
-      <machine_identifier product="sidekick_289_se" />
+      <machine_identifier product="taz_pro_dual"/>
+      <machine_identifier product="taz_pro_xt_dual"/>
     </machine>
+
     <machine>
-      <machine_identifier product="sidekick_289_hs" />
+      <machine_identifier product="mini_2_he"/>
+      <machine_identifier product="sidekick_289_he"/>
+      <machine_identifier product="sidekick_747_he"/>
+      <machine_identifier product="taz_6_he"/>
+      <machine_identifier product="taz_pro_he"/>
+      <machine_identifier product="taz_pro_long_bed_he"/>
+      <machine_identifier product="taz_pro_xt_he"/>
+      <machine_identifier product="taz_workhorse_he"/>
     </machine>
+
     <machine>
-      <machine_identifier product="sidekick_289_hsplus" />
+      <machine_identifier product="mini_2_hs"/>
+      <machine_identifier product="sidekick_289_hs"/>
+      <machine_identifier product="sidekick_747_hs"/>
+      <machine_identifier product="taz_6_hs"/>
+      <machine_identifier product="taz_pro_hs"/>
+      <machine_identifier product="taz_pro_long_bed_hs"/>
+      <machine_identifier product="taz_pro_xt_hs"/>
+      <machine_identifier product="taz_workhorse_hs"/>
     </machine>
+
     <machine>
-      <machine_identifier product="sidekick_289_he" />
+      <machine_identifier product="mini_2_hsplus"/>
+      <machine_identifier product="sidekick_289_hsplus"/>
+      <machine_identifier product="sidekick_747_hsplus"/>
+      <machine_identifier product="taz_6_hsplus"/>
+      <machine_identifier product="taz_pro_hsplus"/>
+      <machine_identifier product="taz_pro_long_bed_hsplus"/>
+      <machine_identifier product="taz_pro_xt_hsplus"/>
+      <machine_identifier product="taz_workhorse_hsplus"/>
     </machine>
+
     <machine>
-      <machine_identifier product="sidekick_289_sk285" />
+      <machine_identifier product="mini_2_se"/>
+      <machine_identifier product="sidekick_289_se"/>
+      <machine_identifier product="sidekick_747_se"/>
+      <machine_identifier product="taz_6_se"/>
+      <machine_identifier product="taz_pro_se"/>
+      <machine_identifier product="taz_pro_long_bed_se"/>
+      <machine_identifier product="taz_pro_xt_se"/>
+      <machine_identifier product="taz_workhorse_se"/>
     </machine>
+
     <machine>
-      <machine_identifier product="sidekick_747_se" />
+      <machine_identifier product="sidekick_289_sk285"/>
+      <machine_identifier product="sidekick_747_sk285"/>
     </machine>
-    <machine>
-      <machine_identifier product="sidekick_747_hs" />
-    </machine>
-    <machine>
-      <machine_identifier product="sidekick_747_hsplus" />
-    </machine>
-    <machine>
-      <machine_identifier product="sidekick_747_he" />
-    </machine>
-    <machine>
-      <machine_identifier product="sidekick_747_sk285" />
-    </machine>
-    <machine>
-      <machine_identifier product="mini_2_se" />
-    </machine>
-    <machine>
-      <machine_identifier product="mini_2_hs" />
-    </machine>
-    <machine>
-      <machine_identifier product="mini_2_hsplus" />
-    </machine>
-    <machine>
-      <machine_identifier product="mini_2_he" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_se" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_hs" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_hsplus" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_he" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_dual" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_xt_se" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_xt_hs" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_xt_hsplus" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_xt_he" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_xt_dual" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_long_bed_se" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_long_bed_hs" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_long_bed_hsplus" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_long_bed_he" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_6_se" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_6_hs" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_6_hsplus" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_6_he" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_workhorse_se" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_workhorse_hs" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_workhorse_hsplus" />
-    </machine>
-    <machine>
-      <machine_identifier product="taz_workhorse_he" />
-    </machine>
+
   </settings>
 </fdmmaterial>

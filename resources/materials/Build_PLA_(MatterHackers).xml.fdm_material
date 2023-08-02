@@ -20,28 +20,27 @@
 	<diameter>2.85</diameter>
   </properties>
   <settings>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="taz_6"/>
-      <setting key="probe temperature">140.0</setting>
-      <setting key="print temperature">205.0</setting>
-      <setting key="heated bed temperature">60.0</setting>
-      <setting key="wipe temperature">140.0</setting>
-      <setting key="soften temperature">140.0</setting>
-      <setting key="standby temperature">175.0</setting>
-      <setting key="part removal temperature">45.0</setting>
-    </machine>
-    <machine>
-      <machine_identifier product="mini_1"/>
-    </machine>
-    <machine>
-       <machine_identifier product="taz_6_twoolhead"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_5_twoolhead"/>
-    </machine>
+    <setting key="probe temperature">140.0</setting>
+    <setting key="print temperature">205.0</setting>
+    <setting key="heated bed temperature">60.0</setting>
+    <setting key="wipe temperature">140.0</setting>
+    <setting key="soften temperature">140.0</setting>
+    <setting key="standby temperature">175.0</setting>
+    <setting key="part removal temperature">45.0</setting>
+
     <machine>
       <machine_identifier product="taz_6_flexy_dually_v2"/>
-      <metadata key="category">Experimental</metadata>
     </machine>
+
+    <machine>
+      <machine_identifier product="mini_1_single"/>
+      <machine_identifier product="taz_6_single"/>
+    </machine>
+
+    <machine>
+      <machine_identifier product="taz_5_twoolhead"/>
+      <machine_identifier product="taz_6_twoolhead"/>
+    </machine>
+
   </settings>
 </fdmmaterial>

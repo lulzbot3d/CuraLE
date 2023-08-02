@@ -10,10 +10,8 @@
     </name>
     <GUID>8c5eab64-5040-4fca-9903-778ddcbc359b</GUID>
     <color_code>#d3d7cf</color_code>
-    <info_link>https://www.lulzbot.com/store/filament/pa-cf-low-warp?pk_campaign=software-cura</info_link>
-    <adhesion_info />
-    <definition>fdmprinter</definition>
-    <description />
+    <adhesion_info/>
+    <description/>
     <version>1</version>
     <compatible>True</compatible>
     <adhesion_info>Use directly on clean PEI.</adhesion_info>
@@ -29,86 +27,46 @@
     <setting key="heated bed temperature">70.0</setting>
     <setting key="print temperature">260.0</setting>
     <setting key="retraction speed">30.0</setting>
+
     <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="mini_2_hs" />
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="mini_2_hsplus" />
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="taz_6_hs"/>
-    </machine>
-    <machine>
-      <machine_identifier product="mini_2_he"/>
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="taz_6_hs"/>
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="taz_6_he"/>
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="mini_1_hs"/>
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="mini_1_hsplus"/>
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="taz_5_hs"/>
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="taz_5_hsplus"/>
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="taz_pro_dual"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_xt_hsplus"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_xt_he"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_xt_hs"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_hs"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_long_bed_hs"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_xt_hsplus"/>
-    </machine>
-    <machine>
+      <machine_identifier product="taz_pro_dual"/>
       <machine_identifier product="taz_pro_xt_dual"/>
     </machine>
+
     <machine>
-      <machine_identifier manufactuere = "Aleph Objects, Inc." product="taz_6_hsplus"/>
-    </machine>
-    <machine>
+      <machine_identifier product="mini_2_he"/>
+      <machine_identifier product="taz_6_he"/>
+      <machine_identifier product="taz_pro_he"/>
+      <machine_identifier product="taz_pro_long_bed_he"/>
+      <machine_identifier product="taz_pro_xt_he"/>
       <machine_identifier product="taz_workhorse_he"/>
     </machine>
+
+    <machine>
+      <machine_identifier product="mini_1_hs"/>
+      <machine_identifier product="mini_2_hs"/>
+      <machine_identifier product="taz_5_hs"/>
+      <machine_identifier product="taz_6_hs"/>
+      <machine_identifier product="taz_pro_hs"/>
+      <machine_identifier product="taz_pro_long_bed_hs"/>
+      <machine_identifier product="taz_pro_xt_hs"/>
+      <machine_identifier product="taz_workhorse_hs"/>
+    </machine>
+
+    <machine>
+      <machine_identifier product="mini_1_hsplus"/>
+      <machine_identifier product="mini_2_hsplus"/>
+      <machine_identifier product="taz_5_hsplus"/>
+      <machine_identifier product="taz_6_hsplus"/>
+      <machine_identifier product="taz_pro_hsplus"/>
+      <machine_identifier product="taz_pro_long_bed_hsplus"/>
+      <machine_identifier product="taz_pro_xt_hsplus"/>
+      <machine_identifier product="taz_workhorse_hsplus"/>
+    </machine>
+
     <machine>
       <machine_identifier product="taz_workhorse_se"/>
     </machine>
-    <machine>
-      <machine_identifier product="taz_pro_he"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_long_bed_he"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_workhorse_hs"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_workhorse_hsplus"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_hsplus"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_long_bed_hsplus"/>
-    </machine>
+
   </settings>
 </fdmmaterial>
