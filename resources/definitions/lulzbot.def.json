@@ -80,6 +80,7 @@
         },
         "prime_tower_position_x": { "default_value": 20 },
         "prime_tower_position_y": { "default_value": 20 },
+        "support_angle": { "default_value": 60 },
         "travel_retract_before_outer_wall": { "default_value": true },
         "wall_thickness": { "default_value": 1 }
     },
