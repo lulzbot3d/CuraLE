@@ -9,7 +9,6 @@
         "base_machine_id": "taz_pro_long_bed",
         "toolhead_category": "Galaxy",
         "toolhead_selection_name": "Galaxy Tool Head",
-        "preferred_material": "Generic_PLA",
         "has_variants": true,
         "firmware_latest_version": "2.0.0.144.11",
         "firmware_file": "Pro_LongBed/Marlin_TAZPro_LongBed_Galaxy_BLTouch_2.0.0.144.11_259c25e.bin"

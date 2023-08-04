@@ -9,10 +9,8 @@
       <category>Beginner</category>
     </name>
     <compatible>True</compatible>
-    <info_link>https://www.lulzbot.com/store/filament/285mm-pro-pla</info_link>
     <color_code>#c1d82f</color_code>
     <adhesion_info />
-    <definition>fdmprinter</definition>
     <GUID>4a93345b-114d-40f9-9781-40216df0e2b4</GUID>
     <description />
     <version>2</version>
@@ -26,72 +24,38 @@
     <setting key="heated bed temperature">50</setting>
     <setting key="print temperature">240</setting>
     <setting key="standby temperature">175</setting>
+    <setting key="probe temperature">140</setting>
+    <setting key="wipe temperature">140</setting>
+    <setting key="part removal temperature">45</setting>
+    <setting key="soften temperature">140</setting>
 
-    <machine>
-      <machine_identifier product="taz_workhorse_se"/>
-      <setting key="probe temperature">140</setting>
-      <setting key="wipe temperature">140</setting>
-      <setting key="part removal temperature">45</setting>
-      <setting key="soften temperature">140</setting>
-    </machine>
-    <machine>
-      <machine_identifier product="mini_2_se"/>
-    </machine>
     <machine>
       <machine_identifier product="mini_1_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_long_bed_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_xt_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_5_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_6_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="sidekick_747_se"/>
-    </machine>
-    <machine>
+      <machine_identifier product="mini_2_se"/>
       <machine_identifier product="sidekick_289_se"/>
+      <machine_identifier product="sidekick_747_se"/>
+      <machine_identifier product="taz_5_se"/>
+      <machine_identifier product="taz_6_se"/>
+      <machine_identifier product="taz_pro_se"/>
+      <machine_identifier product="taz_pro_long_bed_se"/>
+      <machine_identifier product="taz_pro_xt_se"/>
+      <machine_identifier product="taz_workhorse_se"/>
     </machine>
 
     <machine>
-      <machine_identifier product="taz_workhorse_he" />
-      <setting key="probe temperature">140</setting>
-      <setting key="wipe temperature">140</setting>
-      <setting key="part removal temperature">45</setting>
-      <setting key="soften temperature">140</setting>
-    </machine>
-    <machine>
       <machine_identifier product="mini_2_he"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_long_bed_he"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_xt_he"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_6_he"/>
-    </machine>
-    <machine>
-      <machine_identifier product="sidekick_747_he"/>
-    </machine>
-    <machine>
       <machine_identifier product="sidekick_289_he"/>
+      <machine_identifier product="sidekick_747_he"/>
+      <machine_identifier product="taz_6_he"/>
+      <machine_identifier product="taz_pro_long_bed_he"/>
+      <machine_identifier product="taz_pro_xt_he"/>
+      <machine_identifier product="taz_workhorse_he"/>
     </machine>
-    <machine>
-      <machine_identifier product="sidekick_747_sk285"/>
-    </machine>
+
     <machine>
       <machine_identifier product="sidekick_289_sk285"/>
+      <machine_identifier product="sidekick_747_sk285"/>
     </machine>
+
   </settings>
 </fdmmaterial>

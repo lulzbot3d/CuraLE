@@ -16,7 +16,7 @@
             -13,
             100
         ],
-        "preferred_material": "Sodium_Alginate",
+        "preferred_material": "Generic_Sodium_Alginate",
         "preferred_quality_type": "high",
         "firmware_toolhead_name": "SingleExtruder",
         "firmware_latest_version": "2.0.0.175",

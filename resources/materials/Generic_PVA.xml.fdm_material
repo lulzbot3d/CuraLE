@@ -10,7 +10,6 @@
     <GUID>ce747483-8d4e-47ab-96c7-eda81bb3f77f</GUID>
     <version>1</version>
     <color_code>#8DB6CD</color_code>
-    <info_link>https://www.lulzbot.com/store/filament/natural-pva?pk_campaign=software-cura</info_link>
     <adhesion_info>Use glue stick.</adhesion_info>
   </metadata>
   <properties>
@@ -25,35 +24,30 @@
     <setting key="probe temperature">140</setting>
     <setting key="wipe temperature">140</setting>
     <setting key="part removal temperature">45</setting>
-    <machine>
-      <machine_identifier product="taz_6_dual_v3"/>
-      <metadata key="category">Supported</metadata>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_5_dual_v3"/>
-      <metadata key="category">Supported</metadata>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_6_dual_v2"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_5_dual_v2"/>
-    </machine>
-    <machine>
-	  <machine_identifier product = "taz_6_flexy_dually_v2"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_5_flexy_dually_v2"/>
-    </machine>
+
     <machine>
       <machine_identifier product="taz_pro_dual"/>
-    </machine>
-    <machine>
       <machine_identifier product="taz_pro_xt_dual"/>
     </machine>
+
+    <machine>
+      <machine_identifier product="taz_5_dual_v2"/>
+      <machine_identifier product="taz_6_dual_v2"/>
+    </machine>
+
+    <machine>
+      <machine_identifier product="taz_5_dual_v3"/>
+      <machine_identifier product="taz_6_dual_v3"/>
+    </machine>
+
+    <machine>
+      <machine_identifier product="taz_5_flexy_dually_v2"/>
+	    <machine_identifier product="taz_6_flexy_dually_v2"/>
+    </machine>
+
     <machine>
       <machine_identifier product="taz_workhorse_yellowfin"/>
-      <metadata key="category">Supported</metadata>
     </machine>
+
   </settings>
 </fdmmaterial>

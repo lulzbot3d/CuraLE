@@ -10,7 +10,6 @@
     <GUID>9a7c0857-0514-4881-a8a7-088a6a6f6842</GUID>
     <version>1</version>
     <color_code>#E3CF57</color_code>
-    <info_link>https://www.lulzbot.com/store/filament/t-glase?pk_campaign=software-cura</info_link>
     <adhesion_info>Use glue stick.</adhesion_info>
   </metadata>
   <properties>
@@ -25,105 +24,71 @@
     <setting key="probe temperature">170</setting>
     <setting key="wipe temperature">170</setting>
     <setting key="part removal temperature">50</setting>
-    <machine>
-      <machine_identifier product="taz_6_dual_v3"/>
-      <metadata key="category">Experimental</metadata>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_5_moarstruder"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_5_dual_v3"/>
-      <metadata key="category">Experimental</metadata>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_6_moarstruder"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_6_aerostruder"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_6"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_6_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_6_he"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_5"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_5_flexy_dually_v2"/>
-      <metadata key="category">Experimental</metadata>
-    </machine>
+
     <machine>
       <machine_identifier product="mini_1_aerostruder"/>
+      <machine_identifier product="taz_5_aerostruder"/>
+      <machine_identifier product="taz_6_aerostruder"/>
     </machine>
+
+    <machine>
+      <machine_identifier product="taz_pro_dual"/>
+      <machine_identifier product="taz_pro_xt_dual"/>
+    </machine>
+
     <machine>
       <machine_identifier product="taz_6_dual_v2"/>
     </machine>
+
     <machine>
+      <machine_identifier product="taz_5_dual_v3"/>
+      <machine_identifier product="taz_6_dual_v3"/>
+    </machine>
+
+    <machine>
+      <machine_identifier product="taz_5_flexy_dually_v2"/>
       <machine_identifier product="taz_6_flexy_dually_v2"/>
-      <metadata key="category">Experimental</metadata>
     </machine>
-    <machine>
-      <machine_identifier product="mini_1"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_5_aerostruder"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_5_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="mini_2_se"/>
-    </machine>
+
     <machine>
       <machine_identifier product="mini_2_he"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_dual"/>
-      <metadata key="category">Experimental</metadata>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_xt_dual"/>
-    </machine>
-    <machine>
-      <machine_identifier product="mini_1_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_6_twoolhead"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_5_twoolhead"/>
-    </machine><machine>
+      <machine_identifier product="taz_6_he"/>
+      <machine_identifier product="taz_pro_he"/>
+      <machine_identifier product="taz_pro_long_bed_he"/>
+      <machine_identifier product="taz_pro_xt_he"/>
       <machine_identifier product="taz_workhorse_he"/>
     </machine>
+
     <machine>
+      <machine_identifier product="taz_5_moarstruder"/>
+      <machine_identifier product="taz_6_moarstruder"/>
+    </machine>
+
+    <machine>
+      <machine_identifier product="mini_1_se"/>
+      <machine_identifier product="mini_2_se"/>
+      <machine_identifier product="taz_5_se"/>
+      <machine_identifier product="taz_6_se"/>
+      <machine_identifier product="taz_pro_se"/>
+      <machine_identifier product="taz_pro_long_bed_se"/>
+      <machine_identifier product="taz_pro_xt_se"/>
       <machine_identifier product="taz_workhorse_se"/>
     </machine>
+
     <machine>
-      <machine_identifier product="taz_pro_xt_se"/>
+      <machine_identifier product="mini_1_single"/>
+      <machine_identifier product="taz_5_single"/>
+      <machine_identifier product="taz_6_single"/>
     </machine>
+
     <machine>
-      <machine_identifier product="taz_pro_xt_he"/>
+      <machine_identifier product="taz_5_twoolhead"/>
+      <machine_identifier product="taz_6_twoolhead"/>
     </machine>
-    <machine>
-      <machine_identifier product="taz_pro_he"/>
-    </machine>
+
     <machine>
       <machine_identifier product="taz_workhorse_yellowfin"/>
     </machine>
-    <machine>
-      <machine_identifier product="taz_pro_long_bed_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_long_bed_he"/>
-    </machine>
+
   </settings>
 </fdmmaterial>

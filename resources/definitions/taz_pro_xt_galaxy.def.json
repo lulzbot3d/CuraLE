@@ -9,7 +9,6 @@
         "base_machine_id": "taz_pro_xt",
         "toolhead_category": "Galaxy",
         "toolhead_selection_name": "Galaxy Tool Head",
-        "preferred_material": "Generic_PLA",
         "has_variants": true,
         "firmware_latest_version": "2.0.0.144.11",
         "firmware_file": "Pro_XT/Marlin_TAZProXT_Galaxy_2.0.0.144.11_259c25e.bin",

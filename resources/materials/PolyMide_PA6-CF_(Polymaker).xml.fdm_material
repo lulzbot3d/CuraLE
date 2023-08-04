@@ -6,12 +6,11 @@
       <material>Nylon</material>
       <color>Generic</color>
       <label>PolyMide PA6-CF</label>
-      <category />
+      <category/>
     </name>
     <extruder_disabled>False</extruder_disabled>
-    <description />
+    <description/>
     <version>1</version>
-    <definition>fdmprinter</definition>
     <GUID>54660aef-2bda-440d-8e46-cf672e56efbc</GUID>
     <compatible>True</compatible>
     <adhesion_info>Use Glue Stick</adhesion_info>
@@ -22,68 +21,39 @@
     <diameter>2.85</diameter>
   </properties>
   <settings>
+
     <machine>
-      <machine_identifier product="taz_workhorse_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_long_bed_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_pro_xt_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="mini_2_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="mini_1_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="sidekick_289_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="sidekick_747_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="taz_6_se"/>
-    </machine>
-    <machine>
-      <machine_identifier product="sidekick_289_sk285"/>
-    </machine>
-    <machine>
-      <machine_identifier product="sidekick_747_sk285"/>
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="taz_workhorse_he" />
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="mini_2_he" />
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="taz_pro_xt_he" />
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="taz_pro_he" />
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="taz_pro_long_bed_he" />
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="sidekick_289_he" />
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="sidekick_747_he" />
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="taz_6_he" />
-    </machine>
-    <machine>
-      <machine_identifier manufacturer="Aleph Objects, Inc." product="taz_pro_dual" />
-    </machine>
-    <machine>
+      <machine_identifier product="taz_pro_dual"/>
       <machine_identifier product="taz_pro_xt_dual"/>
     </machine>
+
+    <machine>
+      <machine_identifier product="mini_2_he"/>
+      <machine_identifier product="sidekick_289_he"/>
+      <machine_identifier product="sidekick_747_he"/>
+      <machine_identifier product="taz_6_he"/>
+      <machine_identifier product="taz_pro_he"/>
+      <machine_identifier product="taz_pro_long_bed_he"/>
+      <machine_identifier product="taz_pro_xt_he"/>
+      <machine_identifier product="taz_workhorse_he"/>
+    </machine>
+
+    <machine>
+      <machine_identifier product="mini_1_se"/>
+      <machine_identifier product="mini_2_se"/>
+      <machine_identifier product="sidekick_289_se"/>
+      <machine_identifier product="sidekick_747_se"/>
+      <machine_identifier product="taz_6_se"/>
+      <machine_identifier product="taz_pro_se"/>
+      <machine_identifier product="taz_pro_long_bed_se"/>
+      <machine_identifier product="taz_pro_xt_se"/>
+      <machine_identifier product="taz_workhorse_se"/>
+    </machine>
+
+    <machine>
+      <machine_identifier product="sidekick_289_sk285"/>
+      <machine_identifier product="sidekick_747_sk285"/>
+    </machine>
+
   </settings>
 </fdmmaterial>

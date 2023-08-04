@@ -14,7 +14,6 @@
         <compatible>True</compatible>
         <description />
         <color_code>#0000ff</color_code>
-        <definition>fdmprinter</definition>
         <extruder_disabled>False</extruder_disabled>
     </metadata>
     <properties>

@@ -28,11 +28,6 @@
     <setting key="standby temperature">170</setting>
 
     <machine>
-      <machine_identifier product="mini_1"/>
-      <machine_identifier product="taz_6"/>
-    </machine>
-
-    <machine>
       <machine_identifier product="mini_1_aerostruder"/>
       <machine_identifier product="taz_6_aerostruder"/>
     </machine>
@@ -65,6 +60,11 @@
       <machine_identifier product="taz_pro_long_bed_se"/>
       <machine_identifier product="taz_pro_xt_se"/>
       <machine_identifier product="taz_workhorse_se"/>
+    </machine>
+
+    <machine>
+      <machine_identifier product="mini_1_single"/>
+      <machine_identifier product="taz_6_single"/>
     </machine>
 
     <machine>
