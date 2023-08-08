@@ -15,7 +15,7 @@ import Cura 1.1 as Cura
 //
 Item {
     UM.I18nCatalog { id: catalog; name: "cura" }
-    //SystemPalette { id: palette }
+    SystemPalette { id: palette }
 
     Component
     {

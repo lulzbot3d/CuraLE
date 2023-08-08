@@ -7,55 +7,44 @@ import QtQuick.Controls 1.4
 import UM 1.2 as UM
 import Cura 1.0 as Cura
 
-Tab
-{
+Tab {
     id: base
 
     property int extruderPosition: -1 //Denotes the global stack.
     property var qualityItem: null
 
-    property bool isQualityItemCurrentlyActivated:
-    {
-        if (qualityItem == null)
-        {
+    property bool isQualityItemCurrentlyActivated: {
+        if (qualityItem == null) {
             return false;
         }
         return qualityItem.name == Cura.MachineManager.activeQualityOrQualityChangesName;
     }
 
-    TableView
-    {
+    TableView {
         anchors.fill: parent
         anchors.margins: UM.Theme.getSize("default_margin").width
         id: profileSettingsView
 
-        Component
-        {
+        Component {
             id: itemDelegate
 
-            UM.TooltipArea
-            {
+            UM.TooltipArea {
                 property var setting: qualitySettings.getItem(styleData.row)
                 height: childrenRect.height
                 width: (parent != null) ? parent.width : 0
-                text:
-                {
-                    if (styleData.value === undefined)
-                    {
+                text: {
+                    if (styleData.value === undefined) {
                         return ""
                     }
                     return (styleData.value.substr(0,1) == "=") ? styleData.value : ""
                 }
 
-                Label
-                {
+                Label {
                     anchors.left: parent.left
                     anchors.leftMargin: UM.Theme.getSize("default_margin").width
                     anchors.right: parent.right
-                    text:
-                    {
-                        if (styleData.value === undefined)
-                        {
+                    text: {
+                        if (styleData.value === undefined) {
                             return ""
                         }
                         return (styleData.value.substr(0,1) == "=") ? catalog.i18nc("@info:status", "Calculated") : styleData.value
@@ -69,30 +58,29 @@ Tab
             }
         }
 
-        TableViewColumn
-        {
+        TableViewColumn {
             role: "label"
             title: catalog.i18nc("@title:column", "Setting")
             width: (parent.width * 0.4) | 0
             delegate: itemDelegate
         }
-        TableViewColumn
-        {
+
+        TableViewColumn {
             role: "profile_value"
             title: catalog.i18nc("@title:column", "Profile")
             width: (parent.width * 0.18) | 0
             delegate: itemDelegate
         }
-        TableViewColumn
-        {
+
+        TableViewColumn {
             role: "user_value"
             title: catalog.i18nc("@title:column", "Current");
             visible: base.isQualityItemCurrentlyActivated
             width: (parent.width * 0.18) | 0
             delegate: itemDelegate
         }
-        TableViewColumn
-        {
+
+        TableViewColumn {
             role: "unit"
             title: catalog.i18nc("@title:column", "Unit")
             width: (parent.width * 0.14) | 0
@@ -100,14 +88,12 @@ Tab
         }
 
         section.property: "category"
-        section.delegate: Label
-        {
+        section.delegate: Label {
             text: section
             font.bold: true
         }
 
-        model: Cura.QualitySettingsModel
-        {
+        model: Cura.QualitySettingsModel {
             id: qualitySettings
             selectedPosition: base.extruderPosition
             selectedQualityItem: base.qualityItem == null ? {} : base.qualityItem
