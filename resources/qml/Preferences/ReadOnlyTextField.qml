@@ -42,7 +42,7 @@ Item
         anchors.left: parent.left
         anchors.leftMargin: textField.__panel ? textField.__panel.leftMargin : 0
 
-        color: palette.buttonText
+        // color: palette.buttonText
     }
 
     SystemPalette { id: palette }

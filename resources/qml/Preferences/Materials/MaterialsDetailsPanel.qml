@@ -9,8 +9,7 @@ import QtQuick.Dialogs 1.2
 import UM 1.2 as UM
 import Cura 1.0 as Cura
 
-Item
-{
+Item {
     id: detailsPanel
 
     property var currentItem: null
@@ -52,12 +51,10 @@ Item
         materialProperties.approximate_diameter = currentItem.approximate_diameter || "0"
     }
 
-    Item
-    {
+    Item {
         anchors.fill: parent
 
-        Item    // Material title Label
-        {
+        Item { // Material title Label
             id: profileName
 
             width: parent.width
@@ -71,8 +68,7 @@ Item
             }
         }
 
-        MaterialsView    // Material detailed information view below the title Label
-        {
+        MaterialsView { // Material detailed information view below the title Label
             id: materialDetailsView
             anchors
             {
@@ -91,8 +87,7 @@ Item
             currentMaterialNode: currentItem.container_node
         }
 
-        QtObject
-        {
+        QtObject {
             id: materialProperties
 
             property string guid: "00000000-0000-0000-0000-000000000000"

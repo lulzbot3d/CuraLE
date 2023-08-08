@@ -7,8 +7,7 @@ import QtQuick.Window 2.1
 
 import UM 1.1 as UM
 
-UM.Dialog
-{
+UM.Dialog {
     id: base
 
     //: About dialog title
@@ -19,8 +18,7 @@ UM.Dialog
     width: minimumWidth
     height: minimumHeight
 
-    Rectangle
-    {
+    Rectangle {
         id: header
         width: parent.width + 2 * margin // margin from Dialog.qml
         height: childrenRect.height + topPadding
@@ -33,8 +31,7 @@ UM.Dialog
 
         color: UM.Theme.getColor("main_window_header_background")
 
-        Image
-        {
+        Image {
             id: logo
             width: (base.minimumWidth * 0.85) | 0
             height: (width * (UM.Theme.getSize("logo").height / UM.Theme.getSize("logo").width)) | 0
@@ -50,8 +47,7 @@ UM.Dialog
             UM.I18nCatalog{id: catalog; name: "cura"}
         }
 
-        Label
-        {
+        Label {
             id: version
 
             text: catalog.i18nc("@label","version: %1").arg(UM.Application.version)
@@ -63,8 +59,7 @@ UM.Dialog
         }
     }
 
-    Label
-    {
+    Label {
         id: description
         width: parent.width
 
@@ -76,8 +71,7 @@ UM.Dialog
         anchors.topMargin: UM.Theme.getSize("default_margin").height
     }
 
-    Label
-    {
+    Label {
         id: creditsNotes
         width: parent.width
 
@@ -89,8 +83,7 @@ UM.Dialog
         anchors.topMargin: UM.Theme.getSize("default_margin").height
     }
 
-    ScrollView
-    {
+    ScrollView {
         id: credits
         anchors.top: creditsNotes.bottom
         anchors.topMargin: UM.Theme.getSize("default_margin").height
@@ -98,40 +91,33 @@ UM.Dialog
         width: parent.width
         height: base.height - y - (2 * UM.Theme.getSize("default_margin").height + closeButton.height)
 
-        ListView
-        {
+        ListView {
             id: projectsList
 
             width: parent.width
 
-            delegate: Row
-            {
-                Label
-                {
+            delegate: Row {
+                Label {
                     text: "<a href='%1' title='%2'>%2</a>".arg(model.url).arg(model.name)
                     width: (projectsList.width * 0.25) | 0
                     elide: Text.ElideRight
                     onLinkActivated: Qt.openUrlExternally(link)
                 }
-                Label
-                {
+                Label {
                     text: model.description
                     elide: Text.ElideRight
                     width: (projectsList.width * 0.6) | 0
                 }
-                Label
-                {
+                Label {
                     text: model.license
                     elide: Text.ElideRight
                     width: (projectsList.width * 0.15) | 0
                 }
             }
-            model: ListModel
-            {
+            model: ListModel {
                 id: projectsModel
             }
-            Component.onCompleted:
-            {
+            Component.onCompleted: {
                 projectsModel.append({ name: "Cura LE", description: catalog.i18nc("@label", "Graphical user interface"), license: "LGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot" });
                 projectsModel.append({ name: "Uranium", description: catalog.i18nc("@label", "Application framework"), license: "LGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/uranium" });
                 projectsModel.append({ name: "CuraEngine LE", description: catalog.i18nc("@label", "G-code generator"), license: "AGPLv3", url: "https://gitlab.com/lulzbot3d/cura-le/cura-engine-le" });
@@ -167,8 +153,7 @@ UM.Dialog
         }
     }
 
-    rightButtons: Button
-    {
+    rightButtons: Button {
         //: Close about dialog button
         id: closeButton
         text: catalog.i18nc("@action:button","Close");

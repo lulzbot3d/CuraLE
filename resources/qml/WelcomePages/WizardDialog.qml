@@ -13,8 +13,7 @@ import Cura 1.1 as Cura
 // This is a dialog for showing a set of processes that's defined in a WelcomePagesModel or some other Qt ListModel with
 // a compatible interface.
 //
-Window
-{
+Window {
     UM.I18nCatalog { id: catalog; name: "cura" }
 
     id: dialog
@@ -27,18 +26,16 @@ Window
     maximumWidth: minimumWidth * 1.5
     maximumHeight: minimumHeight * 1.5
 
-    color: UM.Theme.getColor("main_background")
+    // color: UM.Theme.getColor("main_background")
 
     property var model: null  // Needs to be set by whoever is using this dialog.
     property alias progressBarVisible: wizardPanel.progressBarVisible
 
-    function resetModelState()
-    {
+    function resetModelState() {
         model.resetState()
     }
 
-    WizardPanel
-    {
+    WizardPanel {
         id: wizardPanel
         anchors.fill: parent
         model: dialog.model
@@ -46,8 +43,7 @@ Window
     }
 
     // Close this dialog when there's no more page to show
-    Connections
-    {
+    Connections {
         target: model
         function onAllFinished() { dialog.hide() }
     }

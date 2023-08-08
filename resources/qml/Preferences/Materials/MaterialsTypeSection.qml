@@ -25,15 +25,15 @@ Item {
 
     Rectangle {
         id: type_header_background
-        color:
-        {
-            if(!expanded && sectionName == materialList.currentType) {
-                return UM.Theme.getColor("favorites_row_selected")
-            }
-            else {
-                return UM.Theme.getColor("favorites_header_bar")
-            }
-        }
+        // color:
+        // {
+        //     if(!expanded && sectionName == materialList.currentType) {
+        //         return UM.Theme.getColor("favorites_row_selected")
+        //     }
+        //     else {
+        //         return UM.Theme.getColor("favorites_header_bar")
+        //     }
+        // }
         anchors.fill: type_header
     }
 

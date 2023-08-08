@@ -12,8 +12,7 @@ import Cura 1.1 as Cura
 // This item is a wizard panel that contains a progress bar at the top and a content area that's beneath the progress
 // bar.
 //
-Item
-{
+Item {
     id: base
 
     clip: true
@@ -39,15 +38,13 @@ Item
     onGoToPage: model.goToPage(page_id)
     onEndWizard: model.atEnd()
 
-    Rectangle  // Panel background
-    {
+    Rectangle { // Panel background
         id: panelBackground
         anchors.fill: parent
         radius: UM.Theme.getSize("default_radius").width
         color: UM.Theme.getColor("main_background")
 
-        UM.ProgressBar
-        {
+        UM.ProgressBar {
             id: progressBar
             anchors.top: parent.top
             anchors.left: parent.left
@@ -58,11 +55,9 @@ Item
             value: base.progressValue
         }
 
-        Loader
-        {
+        Loader {
             id: contentLoader
-            anchors
-            {
+            anchors {
                 margins: UM.Theme.getSize("wide_margin").width
                 top: progressBar.bottom
                 bottom: parent.bottom

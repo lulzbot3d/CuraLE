@@ -231,8 +231,7 @@ Item {
 
         ScrollView {
             id: materialScrollView
-            anchors
-            {
+            anchors {
                 top: captionLabel.visible ? captionLabel.bottom : parent.top
                 topMargin: captionLabel.visible ? UM.Theme.getSize("default_margin").height : 0
                 bottom: parent.bottom
