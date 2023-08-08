@@ -668,7 +668,7 @@ UM.PreferencesPage {
 
                 CheckBox {
                     id: jobnamePartsAndTimeCheckbox
-                    text: catalog.i18nc("@option:check", "Append part count and print time to job name")
+                    text: catalog.i18nc("@option:check", "Add part count and print time to job name")
                     checked: boolCheck(UM.Preferences.getValue("cura/jobname_parts_and_time"))
                     onCheckedChanged: UM.Preferences.setValue("cura/jobname_parts_and_time", checked)
                 }

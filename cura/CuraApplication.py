@@ -555,7 +555,7 @@ class CuraApplication(QtApplication):
         preferences.addPreference("view/colorscheme_xpos", 0)
         preferences.addPreference("view/colorscheme_ypos", 56)
         # preferences.addPreference("cura/currency", "€") # My keyboard doesn't have a Euro key :( -> Unicode 20ac
-        preferences.addPreference("cura/currency", "$") # We're an American b(r)and :)
+        preferences.addPreference("cura/currency", "$")
         preferences.addPreference("cura/material_settings", "{}")
 
         preferences.addPreference("view/invert_zoom", False)
@@ -568,7 +568,7 @@ class CuraApplication(QtApplication):
 
         preferences.addPreference("general/accepted_user_agreement", False)
 
-        preferences.addPreference("general/is_first_run", True)
+        preferences.addPreference("general/is_first_run", False)
 
         for key in [
             "dialog_load_path",  # dialog_save_path is in LocalFileOutputDevicePlugin

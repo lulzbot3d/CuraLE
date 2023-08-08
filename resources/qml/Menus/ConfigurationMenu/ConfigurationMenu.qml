@@ -99,7 +99,8 @@ Cura.ExpandablePopup
                             }
                             if (extruderItem.valueError)
                             {
-                                return catalog.i18nc("@tooltip", "The configuration of this extruder is not allowed, and prohibits slicing.")
+                                // return catalog.i18nc("@tooltip", "The configuration of this extruder is not allowed, and prohibits slicing.")
+                                return "" // Revisit this...
                             }
                             if (extruderItem.valueWarning)
                             {

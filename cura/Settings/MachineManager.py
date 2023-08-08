@@ -420,16 +420,22 @@ class MachineManager(QObject):
         if new_stack:
             # Check for LCD and BLTouch values
             if new_stack.getMetaDataEntry("has_optional_lcd", False):
-                new_stack.setProperty("machine_has_lcd", "value", lcd, "definition_changes")
+                new_stack.setProperty("machine_has_lcd", "value", lcd, "definition")
             if new_stack.getMetaDataEntry("has_optional_bltouch", False):
-                new_stack.setProperty("machine_has_bltouch", "value", bltouch, "definition_changes")
+                new_stack.setProperty("machine_has_bltouch", "value", bltouch, "definition")
             # Instead of setting the global container stack here, we set the active machine and so the signals are emitted
             self.setActiveMachine(new_stack.getId())
-            if Application.getInstance().getPreferences().getValue("general/is_first_run"):
-                time.sleep(1) # Seems like it tries to load in too fast if there isn't a slight delay.
+
+            # Load new machine STL
+            #time.sleep(10) # Seems like it tries to load in too fast if there isn't a slight delay.
+            if definition_id == "taz_pro_dual" or definition_id == "taz_pro_xt_dual":
+                Application.getInstance()._openFile(os.path.join(Resources.getPath(Resources.Meshes), "TAZ_Pro_Calibration01.stl"))
+                model_will_be_loaded = "TAZ_Pro_Calibration02.stl"
+            elif definition_id == "taz_pro_m175" or definition_id == "taz_workhorse_se":
+                model_will_be_loaded = "octo_gear_v1.stl"
+            else:
                 model_will_be_loaded = "rocktopus.stl"
-                Application.getInstance()._openFile(os.path.join(Resources.getPath(Resources.Meshes), model_will_be_loaded))
-                Application.getInstance().getPreferences().setValue("general/is_first_run", False)
+            Application.getInstance()._openFile(os.path.join(Resources.getPath(Resources.Meshes), model_will_be_loaded))
 
         else:
             Logger.log("w", "Failed creating a new machine!")
