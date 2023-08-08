@@ -17,69 +17,55 @@ Item {
     UM.I18nCatalog { id: catalog; name: "cura" }
     SystemPalette { id: palette }
 
-    Component
-    {
+    Component {
         id: lulzbotSelector
 
-        Item
-        {
-            function getMachineName()
-            {
+        Item {
+            function getMachineName() {
                 var name = toolheadsModel.getItem(toolheadSelection.selectedIndex).name
                 return name
             }
 
-            function addMachine()
-            {
+            function addMachine() {
                 base.visible = true
                 var item = toolheadsModel.getItem(toolheadSelection.selectedIndex).id
                 var success = Cura.MachineManager.addMachine(item, machineName.text, lcdSelection.selectedIndex == 0, bltouchSelection.selectedIndex == 0)
                 return success
             }
 
-            function update()
-            {
+            function update() {
                 machineName.text = getMachineName()
                 printerSelection.lcd = printerSelectionRepeater.model.getItem(0).lcd
                 printerSelection.baseMachine = printerSelectionRepeater.model.getItem(0).id
                 toolheadSelection.bltouch_default = toolheadSelectionRepeater.model.getItem(0).bltouch_default
                 toolheadSelection.bltouch_option = toolheadSelectionRepeater.model.getItem(0).bltouch_option
                 printerSelection.selectedIndex = 0
-                for (var i = 0; i < printerSelectionRepeater.count; i++)
-                {
+                for (var i = 0; i < printerSelectionRepeater.count; i++) {
                     var item = printerSelectionRepeater.itemAt(i)
-                    if (i==0)
-                    {
+                    if (i==0) {
                         item.checked = true
                     }
-                    else
-                    {
+                    else {
                         item.checked = false
                     }
                 }
             }
 
-            function updateToolheads()
-            {
-                for (var i = 0; i < toolheadSelectionRepeater.count; i++)
-                {
+            function updateToolheads() {
+                for (var i = 0; i < toolheadSelectionRepeater.count; i++) {
                     var item = toolheadSelectionRepeater.itemAt(i)
-                    if (i==0)
-                    {
+                    if (i==0) {
                         item.checked = true
                         item.clicked()
                     }
-                    else
-                    {
+                    else {
                         item.checked = false
                     }
                 }
             }
 
-            function updateOptions()
-            {
-                for (var i = 0; i < bltouchSelectionRepeater.count; i++)
-                {
+            function updateOptions() {
+                for (var i = 0; i < bltouchSelectionRepeater.count; i++) {
                     var item = bltouchSelectionRepeater.itemAt(i)
                     if(toolheadSelection.bltouch_default){
                         if(i==0) { item.checked = true }
@@ -91,8 +77,7 @@ Item {
                 }
             }
 
-            GridLayout
-            {
+            GridLayout {
                 anchors.fill: parent
                 anchors.bottomMargin: UM.Theme.getSize("default_margin").width
                 columns: 3
@@ -100,8 +85,7 @@ Item {
                 columnSpacing: 2
                 rowSpacing: 2
 
-                GroupBox
-                {
+                GroupBox {
                     id: printerSelection
 
                     Layout.preferredWidth: parent.width * .25
@@ -122,8 +106,7 @@ Item {
                         Repeater {
                             id: printerSelectionRepeater
                             model: Cura.LulzBotPrintersModel {}
-                            delegate: RadioButton
-                            {
+                            delegate: RadioButton {
                                 text: model.name
 
                                 exclusiveGroup: printerGroup
@@ -161,12 +144,10 @@ Item {
                     property bool bltouch_default: false
 
                     Column {
-
                         Repeater {
                             id: toolheadSelectionRepeater
                             model: Cura.LulzBotToolheadsModel { id: toolheadsModel; baseMachineProperty: printerSelection.baseMachine }
-                            delegate: RadioButton
-                            {
+                            delegate: RadioButton {
                                 text: model.toolhead
                                 exclusiveGroup: toolheadGroup
                                 checked: model.index == 0
@@ -201,8 +182,7 @@ Item {
 
                         Repeater {
                             model: ["Yes", "No"]
-                            delegate: RadioButton
-                            {
+                            delegate: RadioButton {
                                 text: modelData
                                 exclusiveGroup: lcdGroup
                                 checked: model.index == 0
@@ -233,14 +213,11 @@ Item {
 
                     property int selectedIndex: 1
 
-                    Column
-                    {
-                        Repeater
-                        {
+                    Column {
+                        Repeater {
                             id: bltouchSelectionRepeater
                             model: ["Yes", "No"]
-                            delegate: RadioButton
-                            {
+                            delegate: RadioButton {
                                 text: modelData
                                 exclusiveGroup: bltouchGroup
                                 checked: {
@@ -264,8 +241,7 @@ Item {
         id: printerSelectorLoader
         sourceComponent: lulzbotSelector
 
-        anchors
-        {
+        anchors {
             left: parent.left
             right: parent.right
             top: parent.top
@@ -293,8 +269,7 @@ Item {
         anchors.rightMargin: UM.Theme.getSize("default_margin").width
         text: printerSelectorLoader.item.getMachineName()
         maximumLength: 40
-        validator: RegExpValidator
-        {
+        validator: RegExpValidator {
             regExp: {
                 machineName.machine_name_validator.machineNameRegex
             }
@@ -309,8 +284,7 @@ Item {
         anchors.bottom: parent.bottom
         visible: base.currentItem.previous_page_button_text ? true : false
         text: base.currentItem.previous_page_button_text ? base.currentItem.previous_page_button_text : ""
-        onClicked:
-        {
+        onClicked: {
             base.endWizard()
         }
     }
@@ -319,16 +293,14 @@ Item {
         id: nextButton
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        enabled:
-        {
+        enabled: {
             // Printer name cannot be empty
             const localPrinterItem = printerSelectorLoader.item
             return localPrinterItem != null
         }
 
         text: base.currentItem.next_page_button_text
-        onClicked:
-        {
+        onClicked: {
             // Create a local printer
             const localPrinterItem = printerSelectorLoader.item.addMachine()
             if(localPrinterItem)

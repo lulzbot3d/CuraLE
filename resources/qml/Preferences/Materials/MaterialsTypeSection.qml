@@ -25,8 +25,7 @@ Item {
 
     Rectangle {
         id: type_header_background
-        // color:
-        // {
+        // color: {
         //     if(!expanded && sectionName == materialList.currentType) {
         //         return UM.Theme.getColor("favorites_row_selected")
         //     }

@@ -47,7 +47,7 @@ Item
         anchors.left: parent.left
         anchors.leftMargin: spinBox.__style ? spinBox.__style.padding.left : 0
 
-        color: palette.buttonText
+        // color: palette.buttonText
     }
 
     SystemPalette { id: palette }

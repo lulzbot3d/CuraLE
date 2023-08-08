@@ -24,15 +24,14 @@ Item {
 
     Rectangle {
         id: material_brand_header_background
-        color:
-        {
-            if(!expanded && brandName + "_" + materialType == materialList.currentType) {
-                return UM.Theme.getColor("favorites_row_selected")
-            }
-            else {
-                return "transparent"
-            }
-        }
+        // color: {
+        //     if(!expanded && brandName + "_" + materialType == materialList.currentType) {
+        //         return UM.Theme.getColor("favorites_row_selected")
+        //     }
+        //     else {
+        //         return "transparent"
+        //     }
+        // }
         width: parent.width
         height: material_brand_header.height
     }
