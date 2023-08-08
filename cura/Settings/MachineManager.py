@@ -11,6 +11,7 @@ from PyQt5.QtCore import QObject, pyqtProperty, pyqtSignal, QTimer
 
 from UM.ConfigurationErrorMessage import ConfigurationErrorMessage
 from UM.Scene.Iterator.DepthFirstIterator import DepthFirstIterator
+from UM.Scene.SceneNode import SceneNode
 from UM.Settings.InstanceContainer import InstanceContainer
 from UM.Settings.Interfaces import ContainerInterface
 from UM.Signal import Signal
@@ -428,14 +429,19 @@ class MachineManager(QObject):
 
             # Load new machine STL
             #time.sleep(10) # Seems like it tries to load in too fast if there isn't a slight delay.
-            if definition_id == "taz_pro_dual" or definition_id == "taz_pro_xt_dual":
-                Application.getInstance()._openFile(os.path.join(Resources.getPath(Resources.Meshes), "TAZ_Pro_Calibration01.stl"))
-                model_will_be_loaded = "TAZ_Pro_Calibration02.stl"
-            elif definition_id == "taz_pro_m175" or definition_id == "taz_workhorse_se":
-                model_will_be_loaded = "octo_gear_v1.stl"
-            else:
-                model_will_be_loaded = "rocktopus.stl"
-            Application.getInstance()._openFile(os.path.join(Resources.getPath(Resources.Meshes), model_will_be_loaded))
+            nodes = 0
+            for node in DepthFirstIterator(Application.getInstance().getController().getScene().getRoot()):
+                if isinstance(node, SceneNode):
+                    nodes += 1
+            if nodes <= 4:
+                if definition_id == "taz_pro_dual" or definition_id == "taz_pro_xt_dual":
+                    Application.getInstance()._openFile(os.path.join(Resources.getPath(Resources.Meshes), "TAZ_Pro_Calibration01.stl"))
+                    model_will_be_loaded = "TAZ_Pro_Calibration02.stl"
+                elif definition_id == "taz_pro_m175" or definition_id == "taz_workhorse_se":
+                    model_will_be_loaded = "octo_gear_v1.stl"
+                else:
+                    model_will_be_loaded = "rocktopus.stl"
+                Application.getInstance()._openFile(os.path.join(Resources.getPath(Resources.Meshes), model_will_be_loaded))
 
         else:
             Logger.log("w", "Failed creating a new machine!")

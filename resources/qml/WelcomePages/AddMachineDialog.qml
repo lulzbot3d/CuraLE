@@ -13,10 +13,9 @@ import Cura 1.1 as Cura
 //
 // This component contains the content for the "Add a printer" (network) page of the welcome on-boarding process.
 //
-Item
-{
+Item {
     UM.I18nCatalog { id: catalog; name: "cura" }
-    SystemPalette { id: palette }
+    //SystemPalette { id: palette }
 
     Component
     {
@@ -119,10 +118,8 @@ Item
                     property bool lcd: false
                     property string baseMachine: ""
 
-                    Column
-                    {
-                        Repeater
-                        {
+                    Column {
+                        Repeater {
                             id: printerSelectionRepeater
                             model: Cura.LulzBotPrintersModel {}
                             delegate: RadioButton
@@ -147,8 +144,7 @@ Item
                     }
                 }
 
-                GroupBox
-                {
+                GroupBox {
                     id: toolheadSelection
                     Layout.preferredWidth: parent.width * .50
 
@@ -164,11 +160,9 @@ Item
                     property bool bltouch_option: false
                     property bool bltouch_default: false
 
-                    Column
-                    {
+                    Column {
 
-                        Repeater
-                        {
+                        Repeater {
                             id: toolheadSelectionRepeater
                             model: Cura.LulzBotToolheadsModel { id: toolheadsModel; baseMachineProperty: printerSelection.baseMachine }
                             delegate: RadioButton
@@ -188,8 +182,7 @@ Item
                     }
                 }
 
-                GroupBox
-                {
+                GroupBox {
                     id: lcdSelection
                     Layout.preferredWidth: parent.width * .25
                     anchors.bottomMargin: UM.Theme.getSize("default_margin").width
@@ -204,10 +197,9 @@ Item
 
                     property int selectedIndex: 0
 
-                    Column
-                    {
-                        Repeater
-                        {
+                    Column {
+
+                        Repeater {
                             model: ["Yes", "No"]
                             delegate: RadioButton
                             {
@@ -225,8 +217,7 @@ Item
                     }
                 }
 
-                GroupBox
-                {
+                GroupBox {
                     id: bltouchSelection
                     Layout.preferredWidth: parent.width * .25
                     anchors.bottomMargin: UM.Theme.getSize("default_margin").width
@@ -269,8 +260,7 @@ Item
         }
     }
 
-    Loader
-    {
+    Loader {
         id: printerSelectorLoader
         sourceComponent: lulzbotSelector
 
@@ -285,8 +275,7 @@ Item
         onSourceComponentChanged: item.update()
     }
 
-    Label
-    {
+    Label {
         id: printerLabel
         text: catalog.i18nc("@label", "Name:")
         anchors.verticalCenter: machineName.verticalCenter
@@ -294,8 +283,7 @@ Item
         anchors.leftMargin: 10
     }
 
-    TextField
-    {
+    TextField {
         id: machineName
         anchors.top: nextButton.top
         anchors.right: nextButton.left
@@ -315,8 +303,7 @@ Item
     }
 
     // This "Back" button only shows in the "Add Machine" dialog, which has "previous_page_button_text" set to "Cancel"
-    Cura.SecondaryButton
-    {
+    Cura.SecondaryButton {
         id: backButton
         anchors.left: parent.left
         anchors.bottom: parent.bottom
@@ -328,8 +315,7 @@ Item
         }
     }
 
-    Cura.PrimaryButton
-    {
+    Cura.PrimaryButton {
         id: nextButton
         anchors.right: parent.right
         anchors.bottom: parent.bottom
