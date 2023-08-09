@@ -31,10 +31,7 @@ Item {
                 return palette.highlight
             }
             else if (materialIndex % 2) {
-                return palette.base
-            } else {
-                return palette.alternateBase
-            }
+                return palette.light
         }
         anchors.fill: type_header
     }
