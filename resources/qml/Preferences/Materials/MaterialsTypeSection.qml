@@ -16,6 +16,7 @@ Item {
     id: type_section
 
     property var sectionName: ""
+    property var materialIndex
     property var elementsModel   // This can be a MaterialTypesModel or GenericMaterialsModel or FavoriteMaterialsModel
     property var hasMaterialBrands: true  // It indicates whether it has brands or not
     property var expanded: materialList.expandedTypes.indexOf(sectionName) > -1
@@ -25,14 +26,16 @@ Item {
 
     Rectangle {
         id: type_header_background
-        // color: {
-        //     if(!expanded && sectionName == materialList.currentType) {
-        //         return UM.Theme.getColor("favorites_row_selected")
-        //     }
-        //     else {
-        //         return UM.Theme.getColor("favorites_header_bar")
-        //     }
-        // }
+        color: {
+            if(!expanded && sectionName == materialList.currentType) {
+                return palette.highlight
+            }
+            else if (materialIndex % 2) {
+                return palette.base
+            } else {
+                return palette.alternateBase
+            }
+        }
         anchors.fill: type_header
     }
 

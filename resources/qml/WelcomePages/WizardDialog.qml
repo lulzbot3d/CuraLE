@@ -15,6 +15,7 @@ import Cura 1.1 as Cura
 //
 Window {
     UM.I18nCatalog { id: catalog; name: "cura" }
+    SystemPalette { id: palette }
 
     id: dialog
 
@@ -27,6 +28,7 @@ Window {
     maximumHeight: minimumHeight * 1.5
 
     // color: UM.Theme.getColor("main_background")
+    color: "green"
 
     property var model: null  // Needs to be set by whoever is using this dialog.
     property alias progressBarVisible: wizardPanel.progressBarVisible

@@ -11,8 +11,7 @@ import UM 1.2 as UM
 
 import Cura 1.0 as Cura
 
-UM.PreferencesPage
-{
+UM.PreferencesPage {
     title: catalog.i18nc("@title:tab", "Setting Visibility");
 
     property QtObject settingVisibilityPresetsModel: CuraApplication.getSettingVisibilityPresetsModel()
@@ -31,13 +30,11 @@ UM.PreferencesPage
     }
     resetEnabled: true;
 
-    Item
-    {
+    Item {
         id: base;
         anchors.fill: parent;
 
-        CheckBox
-        {
+        CheckBox {
             id: toggleVisibleSettings
             anchors
             {
@@ -62,8 +59,7 @@ UM.PreferencesPage
                 }
             }
 
-            MouseArea
-            {
+            MouseArea {
                 anchors.fill: parent;
                 onClicked:
                 {
@@ -79,8 +75,7 @@ UM.PreferencesPage
             }
         }
 
-        TextField
-        {
+        TextField {
             id: filter;
 
             anchors
@@ -97,8 +92,7 @@ UM.PreferencesPage
             onTextChanged: definitionsModel.filter = {"i18n_label|i18n_description": "*" + text}
         }
 
-        NewControls.ComboBox
-        {
+        NewControls.ComboBox {
             id: visibilityPreset
             width: 150 * screenScaleFactor
             anchors
@@ -111,8 +105,7 @@ UM.PreferencesPage
             model: settingVisibilityPresetsModel.items
             textRole: "name"
 
-            currentIndex:
-            {
+            currentIndex: {
                 var idx = -1;
                 for(var i = 0; i < settingVisibilityPresetsModel.items.length; ++i)
                 {
@@ -125,15 +118,13 @@ UM.PreferencesPage
                 return idx;
             }
 
-            onActivated:
-            {
+            onActivated: {
                 var preset_id = settingVisibilityPresetsModel.items[index].presetId
                 settingVisibilityPresetsModel.setActivePreset(preset_id)
             }
         }
 
-        ScrollView
-        {
+        ScrollView {
             id: scrollView
 
             frameVisible: true
@@ -146,8 +137,7 @@ UM.PreferencesPage
                 right: parent.right;
                 bottom: parent.bottom;
             }
-            ListView
-            {
+            ListView {
                 id: settingsListView
 
                 model: UM.SettingDefinitionsModel
@@ -161,8 +151,7 @@ UM.PreferencesPage
                     visibilityHandler: UM.SettingPreferenceVisibilityHandler {}
                 }
 
-                delegate: Loader
-                {
+                delegate: Loader {
                     id: loader
 
                     width: settingsListView.width
@@ -190,15 +179,13 @@ UM.PreferencesPage
         UM.I18nCatalog { name: "cura"; }
         SystemPalette { id: palette; }
 
-        Component
-        {
+        Component {
             id: settingVisibilityCategory;
 
             UM.SettingVisibilityCategory { }
         }
 
-        Component
-        {
+        Component {
             id: settingVisibilityItem;
 
             UM.SettingVisibilityItem { }

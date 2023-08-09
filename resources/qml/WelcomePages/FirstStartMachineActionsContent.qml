@@ -11,33 +11,27 @@ import Cura 1.1 as Cura
 //
 // This component contains the content for the "What's new in Ultimaker Cura" page of the welcome on-boarding process.
 //
-Item
-{
+Item {
     UM.I18nCatalog { id: catalog; name: "cura" }
 
     property var machineActionsModel: CuraApplication.getFirstStartMachineActionsModel()
 
-    Component.onCompleted:
-    {
+    Component.onCompleted: {
         // Reset the action to start from the beginning when it is shown.
         machineActionsModel.reset()
     }
 
     // Go to the next page when all machine actions have been finished
-    Connections
-    {
+    Connections {
         target: machineActionsModel
-        function onAllFinished()
-        {
-            if (visible)
-            {
+        function onAllFinished() {
+            if (visible) {
                 base.showNextPage()
             }
         }
     }
 
-    Label
-    {
+    Label {
         id: titleLabel
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
@@ -48,10 +42,8 @@ Item
         renderType: Text.NativeRendering
     }
 
-    Item
-    {
-        anchors
-        {
+    Item {
+        anchors {
             top: titleLabel.bottom
             topMargin: UM.Theme.getSize("default_margin").height
             bottom: nextButton.top
@@ -64,13 +56,11 @@ Item
     }
 
     // An empty item in case there's no currentItem.content to show
-    Item
-    {
+    Item {
         id: emptyItem
     }
 
-    Cura.PrimaryButton
-    {
+    Cura.PrimaryButton {
         id: nextButton
         anchors.right: parent.right
         anchors.bottom: parent.bottom

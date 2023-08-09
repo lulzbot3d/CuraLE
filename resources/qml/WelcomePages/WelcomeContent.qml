@@ -10,13 +10,11 @@ import Cura 1.1 as Cura
 //
 // This component contains the content for the "Welcome" page of the welcome on-boarding process.
 //
-Item
-{
+Item {
     UM.I18nCatalog { id: catalog; name: "cura" }
 
     // Arrange the items vertically and put everything in the center
-    Column
-    {
+    Column {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         spacing: UM.Theme.getSize("thick_margin").height
@@ -24,14 +22,12 @@ Item
 
 
         // Filler item
-        Item
-        {
+        Item {
             height: UM.Theme.getSize("thick_margin").width
             width: parent.width
         }
 
-        Image
-        {
+        Image {
             id: curaImage
             anchors.horizontalCenter: parent.horizontalCenter
             source: UM.Theme.getImage("welcome_cura")
@@ -42,14 +38,12 @@ Item
         }
 
         // Filler item
-        Item
-        {
+        Item {
             height: UM.Theme.getSize("thick_margin").width
             width: parent.width
         }
 
-        Label
-        {
+        Label {
             id: titleLabel
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
@@ -59,8 +53,7 @@ Item
             renderType: Text.NativeRendering
         }
 
-        Label
-        {
+        Label {
             id: textLabel
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
@@ -73,14 +66,12 @@ Item
         }
 
         // Filler item
-        Item
-        {
+        Item {
             height: UM.Theme.getSize("thick_margin").height
             width: parent.width
         }
 
-        Cura.PrimaryButton
-        {
+        Cura.PrimaryButton {
             id: getStartedButton
             anchors.horizontalCenter: parent.horizontalCenter
             text: catalog.i18nc("@button", "Get started")
@@ -88,8 +79,7 @@ Item
         }
 
         // Filler item
-        Item
-        {
+        Item {
             height: UM.Theme.getSize("thick_margin").height
             width: parent.width
         }

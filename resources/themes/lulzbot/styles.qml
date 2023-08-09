@@ -7,8 +7,7 @@ import QtQuick.Controls.Styles 1.4
 
 import UM 1.1 as UM
 
-QtObject
-{
+QtObject {
     property Component print_setup_header_button: Component
     {
         ButtonStyle
@@ -96,8 +95,7 @@ QtObject
         }
     }
 
-    property Component main_window_header_tab: Component
-    {
+    property Component main_window_header_tab: Component {
         ButtonStyle
         {
             // This property will be back-propagated when the width of the label is calculated
@@ -169,8 +167,7 @@ QtObject
         }
     }
 
-    property Component tool_button: Component
-    {
+    property Component tool_button: Component {
         ButtonStyle
         {
             background: Item
@@ -211,15 +208,13 @@ QtObject
                     }
                 }
 
-                Rectangle
-                {
+                Rectangle {
                     id: buttonFace
 
                     anchors.fill: parent
                     property bool down: control.pressed || (control.checkable && control.checked)
 
-                    color:
-                    {
+                    color: {
                         if(control.customColor !== undefined && control.customColor !== null)
                         {
                             return control.customColor
@@ -245,10 +240,8 @@ QtObject
                 }
             }
 
-            label: Item
-            {
-                UM.RecolorImage
-                {
+            label: Item {
+                UM.RecolorImage {
                     anchors.centerIn: parent
                     opacity: control.enabled ? 1.0 : 0.2
                     source: control.iconSource
@@ -262,45 +255,35 @@ QtObject
         }
     }
 
-    property Component progressbar: Component
-    {
-        ProgressBarStyle
-        {
-            background: Rectangle
-            {
+    property Component progressbar: Component {
+        ProgressBarStyle {
+            background: Rectangle {
                 implicitWidth: UM.Theme.getSize("message").width - (UM.Theme.getSize("default_margin").width * 2)
                 implicitHeight: UM.Theme.getSize("progressbar").height
                 color: control.hasOwnProperty("backgroundColor") ? control.backgroundColor : UM.Theme.getColor("progressbar_background")
                 radius: UM.Theme.getSize("progressbar_radius").width
             }
-            progress: Rectangle
-            {
-                color:
-                {
-                    if(control.indeterminate)
-                    {
+            progress: Rectangle {
+                color: {
+                    if(control.indeterminate) {
                         return "transparent";
                     }
-                    else if(control.hasOwnProperty("controlColor"))
-                    {
+                    else if(control.hasOwnProperty("controlColor")) {
                         return  control.controlColor;
                     }
-                    else
-                    {
+                    else {
                         return UM.Theme.getColor("progressbar_control");
                     }
                 }
                 radius: UM.Theme.getSize("progressbar_radius").width
-                Rectangle
-                {
+                Rectangle {
                     radius: UM.Theme.getSize("progressbar_radius").width
                     color: control.hasOwnProperty("controlColor") ? control.controlColor : UM.Theme.getColor("progressbar_control")
                     width: UM.Theme.getSize("progressbar_control").width
                     height: UM.Theme.getSize("progressbar_control").height
                     visible: control.indeterminate
 
-                    SequentialAnimation on x
-                    {
+                    SequentialAnimation on x {
                         id: xAnim
                         property int animEndPoint: UM.Theme.getSize("message").width - Math.round((UM.Theme.getSize("default_margin").width * 2.5)) - UM.Theme.getSize("progressbar_control").width
                         running: control.indeterminate && control.visible
@@ -737,8 +720,7 @@ QtObject
         }
     }
 
-    property Component monitor_checkable_button_style: Component
-    {
+    property Component monitor_checkable_button_style: Component {
         ButtonStyle {
             background: Rectangle {
                 border.width: control.checked ? UM.Theme.getSize("default_lining").width * 2 : UM.Theme.getSize("default_lining").width
@@ -808,14 +790,11 @@ QtObject
     }
 
     property Component print_monitor_control_button: Component {
-        ButtonStyle
-        {
-            background: Rectangle
-                {
+        ButtonStyle {
+            background: Rectangle {
                     border.width: UM.Theme.getSize("default_lining").width
                     implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
-                    border.color:
-                    {
+                    border.color: {
                         if(typeof control == "undefined")
                         {
                             return UM.Theme.getColor("action_button_disabled_border");
@@ -837,8 +816,7 @@ QtObject
                             return UM.Theme.getColor("action_button_border");
                         }
                     }
-                    color:
-                    {
+                    color: {
                         if(!control)
                         {
                             return UM.Theme.getColor("action_button_disabled");
@@ -860,38 +838,29 @@ QtObject
                             return UM.Theme.getColor("action_button");
                         }
                     }
-                    Behavior on color
-                    {
-                        ColorAnimation
-                        {
+                    Behavior on color {
+                        ColorAnimation {
                             duration: 50
                         }
                     }
 
-                    Label
-                    {
+                    Label {
                         id: actualLabel
                         anchors.centerIn: parent
-                        color:
-                        {
-                            if(!control)
-                            {
+                        color: {
+                            if(!control) {
                                 return UM.Theme.getColor("action_button_disabled_text");
                             }
-                            else if(!control.enabled)
-                            {
+                            else if(!control.enabled) {
                                 return UM.Theme.getColor("action_button_disabled_text");
                             }
-                            else if(control.pressed)
-                            {
+                            else if(control.pressed) {
                                 return UM.Theme.getColor("action_button_active_text");
                             }
-                            else if(control.hovered)
-                            {
+                            else if(control.hovered) {
                                 return UM.Theme.getColor("action_button_hovered_text");
                             }
-                            else
-                            {
+                            else {
                                 return UM.Theme.getColor("action_button_text");
                             }
                         }

@@ -106,6 +106,7 @@ Item {
             model: materialsModel
             delegate: MaterialsTypeSection {
                 id: typeSection
+                materialIndex: model.index
                 sectionName: model.name
                 elementsModel: model.brands
                 hasMaterialBrands: true

@@ -20,14 +20,14 @@ Rectangle {
 
     height: UM.Theme.getSize("favorites_row").height
     width: parent.width
-    // color: {
-    //     if(material !== null && base.currentItem !== null) {
-    //         if(base.currentItem.root_material_id === material.root_material_id) {
-    //             return UM.Theme.getColor("favorites_row_selected")
-    //         }
-    //     }
-    // return "transparent"
-    // }
+    color: {
+        if(material !== null && base.currentItem !== null) {
+            if(base.currentItem.root_material_id === material.root_material_id) {
+                return palette.highlight
+            }
+        }
+    return palette.alternateBase
+    }
     Rectangle {
         id: swatch
         color: material != null ? material.color_code : "transparent"
