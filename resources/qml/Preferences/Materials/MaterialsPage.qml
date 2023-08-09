@@ -241,6 +241,7 @@ Item {
             Rectangle {
                 parent: viewport
                 anchors.fill: parent
+                color: palette.light
             }
 
             width: (parent.width * 0.4) | 0

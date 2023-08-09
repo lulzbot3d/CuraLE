@@ -98,8 +98,7 @@ Item
         }
 
         // Create button
-        Button
-        {
+        Button {
             id: createMenuButton
             text: catalog.i18nc("@label", "Create")
             iconName: "list-add"
@@ -115,8 +114,7 @@ Item
         }
 
         // Duplicate button
-        Button
-        {
+        Button {
             id: duplicateMenuButton
             text: catalog.i18nc("@label", "Duplicate")
             iconName: "list-add"
@@ -132,8 +130,7 @@ Item
         }
 
         // Remove button
-        Button
-        {
+        Button {
             id: removeMenuButton
             text: catalog.i18nc("@action:button", "Remove")
             iconName: "list-remove"
@@ -146,8 +143,7 @@ Item
         }
 
         // Rename button
-        Button
-        {
+        Button {
             id: renameMenuButton
             text: catalog.i18nc("@action:button", "Rename")
             iconName: "edit-rename"
@@ -161,8 +157,7 @@ Item
         }
 
         // Import button
-        Button
-        {
+        Button {
             id: importMenuButton
             text: catalog.i18nc("@action:button", "Import")
             iconName: "document-import"
@@ -173,8 +168,7 @@ Item
         }
 
         // Export button
-        Button
-        {
+        Button {
             id: exportMenuButton
             text: catalog.i18nc("@action:button", "Export")
             iconName: "document-export"

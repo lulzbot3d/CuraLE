@@ -38,6 +38,8 @@ Item {
     onGoToPage: model.goToPage(page_id)
     onEndWizard: model.atEnd()
 
+    SystemPalette { id: palette }
+
     Rectangle { // Panel background
         id: panelBackground
         anchors.fill: parent
