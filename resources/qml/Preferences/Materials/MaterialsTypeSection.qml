@@ -32,6 +32,7 @@ Item {
             }
             else if (materialIndex % 2) {
                 return palette.light
+            }
         }
         anchors.fill: type_header
     }
