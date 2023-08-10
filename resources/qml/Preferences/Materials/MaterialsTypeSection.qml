@@ -30,9 +30,7 @@ Item {
             if(!expanded && sectionName == materialList.currentType) {
                 return palette.highlight
             }
-            else if (materialIndex % 2) {
-                return palette.light
-            }
+            return palette.light
         }
         anchors.fill: type_header
     }

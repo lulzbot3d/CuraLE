@@ -26,7 +26,7 @@ Rectangle {
                 return palette.highlight
             }
         }
-    return palette.base
+        return palette.base
     }
     Rectangle {
         id: swatch

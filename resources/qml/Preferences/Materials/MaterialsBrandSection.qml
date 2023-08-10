@@ -29,7 +29,7 @@ Item {
                 return palette.highlight
             }
             else {
-                return palette.base
+                return palette.mid
             }
         }
         width: parent.width
