@@ -428,7 +428,6 @@ class MachineManager(QObject):
             self.setActiveMachine(new_stack.getId())
 
             # Load new machine STL
-            #time.sleep(10) # Seems like it tries to load in too fast if there isn't a slight delay.
             nodes = 0
             for node in DepthFirstIterator(Application.getInstance().getController().getScene().getRoot()):
                 if isinstance(node, SceneNode):
@@ -442,6 +441,8 @@ class MachineManager(QObject):
                 else:
                     model_will_be_loaded = "rocktopus.stl"
                 Application.getInstance()._openFile(os.path.join(Resources.getPath(Resources.Meshes), model_will_be_loaded))
+                time.sleep(2)
+                cura.CuraApplication.CuraApplication.arrangeAll(Application.getInstance())
 
         else:
             Logger.log("w", "Failed creating a new machine!")

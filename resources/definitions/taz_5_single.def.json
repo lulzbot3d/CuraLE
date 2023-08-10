@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "TAZ 6 | Single Extruder",
+    "name": "TAZ 5 | Single Extruder",
     "inherits": "taz_5",
     "metadata":
     {
