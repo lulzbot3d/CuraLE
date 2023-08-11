@@ -3,9 +3,10 @@
   <metadata>
     <name>
       <brand>Taulman</brand>
-      <material>Alloy 920 GF</material>
+      <material>Nylon (Very Strong)</material>
       <color>Generic</color>
       <category>Experimental</category>
+      <label>Alloy 920GF</label>
     </name>
     <GUID>8c5eab64-5040-4fca-9903-778ddcbc359b</GUID>
     <color_code>#d3d7cf</color_code>

@@ -3,9 +3,10 @@
   <metadata>
     <name>
       <brand>Keene Village Plastics</brand>
-      <material>PLA</material>
+      <material>PLA (Easy Printing)</material>
       <color>Generic</color>
       <category>Beginner</category>
+      <label>PLA</label>
     </name>
     <GUID>57ffda11-0178-46ea-afc2-26414151975d</GUID>
     <version>1</version>

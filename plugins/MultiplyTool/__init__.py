@@ -10,7 +10,7 @@ def getMetaData():
             "description": "Multiply Selected Model",
             "icon": "Multiply",
             "tool_panel": "MultiplyTool.qml",
-            "weight": 0
+            "weight": 20
         }
     }
 

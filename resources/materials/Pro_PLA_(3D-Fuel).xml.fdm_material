@@ -3,7 +3,7 @@
   <metadata>
     <name>
       <brand>3D-Fuel</brand>
-      <material>PLA</material>
+      <material>PLA (Easy Printing)</material>
       <color>Generic</color>
       <label>Pro PLA+</label>
       <category>Beginner</category>
@@ -50,6 +50,16 @@
       <machine_identifier product="taz_pro_long_bed_he"/>
       <machine_identifier product="taz_pro_xt_he"/>
       <machine_identifier product="taz_workhorse_he"/>
+    </machine>
+
+    <machine>
+      <machine_identifier product="mini_2_met285"/>
+      <machine_identifier product="sidekick_289_met285"/>
+      <machine_identifier product="sidekick_747_met285"/>
+      <machine_identifier product="taz_pro_met285"/>
+      <machine_identifier product="taz_pro_long_bed_met285"/>
+      <machine_identifier product="taz_pro_xt_met285"/>
+      <machine_identifier product="taz_workhorse_met285"/>
     </machine>
 
     <machine>

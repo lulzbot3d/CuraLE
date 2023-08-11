@@ -3,9 +3,10 @@
   <metadata>
     <name>
       <brand>Push Plastic</brand>
-      <material>PC+PBT</material>
+      <material>PC (Very Strong)</material>
       <color>Generic</color>
       <category>Intermediate</category>
+      <label>PC+PBT</label>
     </name>
     <GUID>e22a658e-574d-4f65-a376-5a781be01e74</GUID>
     <version>1</version>

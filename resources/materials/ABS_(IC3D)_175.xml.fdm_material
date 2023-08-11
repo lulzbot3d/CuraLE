@@ -3,9 +3,10 @@
   <metadata>
     <name>
       <brand>IC3D</brand>
-      <material>ABS</material>
+      <material>ABS (Strong)</material>
       <color>Generic</color>
       <category>Intermediate</category>
+      <label>ABS</label>
     </name>
     <GUID>519236cd-d32e-434e-82a7-84e1df1d1e70</GUID>
     <version>1</version>

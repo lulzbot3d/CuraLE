@@ -3,9 +3,10 @@
   <metadata>
     <name>
       <brand>Chroma Strand Labs</brand>
-      <material>INOVA-1800</material>
+      <material>PETg (Strong)</material>
       <color>Generic</color>
       <category>Advanced</category>
+      <label>INOVA-1800</label>
     </name>
     <GUID>1d3424ce-105d-4c91-a609-28838011b8bd</GUID>
     <version>1</version>

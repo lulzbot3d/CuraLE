@@ -3,9 +3,10 @@
   <metadata>
     <name>
       <brand>IC3D</brand>
-      <material>PETg</material>
+      <material>PETg (Strong)</material>
       <color>Generic</color>
       <category>Intermediate</category>
+      <label>PETg</label>
     </name>
     <color_code>#3465a4</color_code>
     <info_link>https://www.lulzbot.com/store/filament/ic3d-petg?pk_campaign=software-cura</info_link>

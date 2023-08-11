@@ -3,9 +3,10 @@
   <metadata>
     <name>
       <brand>Chroma Strand Labs</brand>
-      <material>ABS</material>
+      <material>ABS (Strong)</material>
       <color>Generic</color>
       <category>Intermediate</category>
+      <label>ABS</label>
     </name>
     <GUID>fb233f4f-b639-4d1c-be41-1742e1fb2d64</GUID>
     <version>1</version>

@@ -3,9 +3,10 @@
   <metadata>
     <name>
       <brand>Keene Village Plastics</brand>
-      <material>PC</material>
+      <material>PC (Very Strong)</material>
       <color>Generic</color>
       <category>Expert</category>
+      <label>Polycarbonate</label>
     </name>
     <GUID>1ea9c5d9-46bb-43ce-84fe-3921d27411bc</GUID>
     <version>1</version>

@@ -3,9 +3,10 @@
   <metadata>
     <name>
       <brand>Taulman</brand>
-      <material>PCTPE</material>
+      <material>PC (Very Strong)</material>
       <color>Generic</color>
       <category>Advanced</category>
+      <label>PCTPE</label>
     </name>
     <GUID>1dc306d3-c256-47a0-8bbc-defd65c8c197</GUID>
     <version>1</version>

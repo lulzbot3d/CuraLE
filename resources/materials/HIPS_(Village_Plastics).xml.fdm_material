@@ -3,9 +3,10 @@
   <metadata>
     <name>
       <brand>Keene Village Plastics</brand>
-      <material>HIPS</material>
+      <material>HIPS (Dissolvable)</material>
       <color>Generic</color>
       <category>Expert</category>
+      <label>HIPS</label>
     </name>
     <GUID>b27b936d-324f-4a29-ad99-f95244d8d4f7</GUID>
     <version>1</version>

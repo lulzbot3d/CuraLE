@@ -3,9 +3,10 @@
   <metadata>
     <name>
       <brand>IC3D</brand>
-      <material>PETg</material>
+      <material>PETg (Strong)</material>
       <color>Generic</color>
       <category>Intermediate</category>
+      <label>PETg</label>
     </name>
     <color_code>#3465a4</color_code>
     <GUID>0b33d81d-7d66-4204-8abc-a54fa28deff4</GUID>

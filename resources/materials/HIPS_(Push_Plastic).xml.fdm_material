@@ -3,8 +3,9 @@
   <metadata>
     <name>
       <brand>Push Plastic</brand>
-      <material>HIPS</material>
+      <material>HIPS (Dissolvable)</material>
       <color>Generic</color>
+      <label>HIPS</label>
     </name>
     <GUID>8d9a165a-6dbc-405e-a1b0-7d063742ab34</GUID>
     <version>1</version>
