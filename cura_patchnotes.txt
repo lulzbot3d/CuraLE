@@ -5,6 +5,24 @@ This file is a work-in-progress; some sections may be incomplete, especially
 	will be updated as new versions are released and will continue to be
 	utilized as the project progresses.
 
+4.13.0-BETAv2.3:
+	Bug Fixes:
+		- Fixed background color of add printer screen on MacOS Dark model
+		- Fixed profiles not appearing for TAZ 5 and 6 single extruders
+		- Minor spelling corrections
+	Profile changes:
+		- Expanding profile options for MET285
+		- Consolidating Material Families
+	Changes:
+		Model that loads onto build plate of first start-up will now load any
+			time a new printer is added.
+		The add printer model is now different for the TAZ Pro Dual and TAZ
+			Workhorse with SE Tool Head.
+		Adjusted location of Multiply button in the tool bar.
+	Notable bugs:
+		First launch stl files will still occasionally load off of the build plate.
+			This issue is turning out to be relatively hard to pin down.
+
 4.13.0-BETAv2.2:
 	Fixed a couple of missing gcode files for certain printers
 	Added ability to select Bio, TAZ 5, and Mini 1 printers
