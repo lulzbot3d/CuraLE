@@ -37,6 +37,10 @@ Cura.MachineAction {
         }
 
         Label {
+            text: " " //Spacer
+        }
+
+        Label {
             width: parent.width
             wrapMode: Text.WordWrap
             font.pointSize: 10
@@ -65,7 +69,7 @@ Cura.MachineAction {
             font.pointSize: 10
             text: {
                 catalog.i18nc("@label", " \
-                <b>Before Updating, Note Down: \
+                <b>Before Updating, Note Down:</b> \
                 <ul type=\"bullet\"> \
                     <li>For All Machines: \
                         (<a href='https://ohai.lulzbot.com/project/finding-recording-and-restoring-your-z-axis-offset/maintenance-repairs/'>Z-offset</a>) \
@@ -73,7 +77,7 @@ Cura.MachineAction {
                         (<a href='https://www.youtube.com/watch?v=fwazYrkyaMI'>Backlash Compensation</a>) \
                     <li>For Legacy Machines (Mini 1, TAZ 6, etc): \
                         (<a href='https://ohai.lulzbot.com/project/fine-tune-mini-extruder/calibration/'>E-Steps</a>) \
-                </ul></b>")
+                </ul>")
             }
             onLinkActivated: Qt.openUrlExternally(link)
 
@@ -108,8 +112,8 @@ Cura.MachineAction {
             width: parent.width
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
-            font.pointSize: 10
-            text: catalog.i18nc("@label", "Enjoy enhanced reliability, repeatability, and performance with your updated printer!")
+            font.pointSize: 12
+            text: catalog.i18nc("@label", "Enjoy enhanced reliability, repeatability, and performance from your LulzBot!")
         }
 
         Label {
@@ -122,7 +126,7 @@ Cura.MachineAction {
             horizontalAlignment: Text.AlignHCenter
             font.pointSize: 10
             visible: printerConnected && canUpdateFirmware && firmwareName != ""
-            text: catalog.i18nc("@action:button", "Automatic Upgrade Firmware Version: <b>") + Cura.MachineManager.activeMachineLatestFirmwareVersion + "</b>";
+            text: catalog.i18nc("@action:button", "Newest Firmware For Selected Printer Configuration: <b>") + Cura.MachineManager.activeMachineLatestFirmwareVersion + "</b>";
         }
 
         Label {
@@ -131,7 +135,7 @@ Cura.MachineAction {
             visible: printerConnected && !canUpdateFirmware
             horizontalAlignment: Text.AlignHCenter
             font.pointSize: 8
-            text: catalog.i18nc("@label", "Firmware can not be updated because the connection with the printer does not support upgrading firmware.");
+            text: catalog.i18nc("@label", "Firmware can not be updated because the connection with the printer does not support updating firmware.");
         }
 
         Label {
@@ -148,7 +152,7 @@ Cura.MachineAction {
             anchors.horizontalCenter: parent.horizontalCenter
             width: UM.Theme.getSize("setting_control").width * 2
             height: UM.Theme.getSize("setting_control").height * 2
-            text: catalog.i18nc("@action:button", "Automatically Upgrade Firmware");
+            text: catalog.i18nc("@action:button", "Update Firmware");
             style: UM.Theme.styles.monitor_checkable_button_style
             enabled: printerConnected && firmwareName != ""
             onClicked: {
@@ -161,11 +165,7 @@ Cura.MachineAction {
             id: manualUpgradeTextButton
             anchors.horizontalCenter: parent.horizontalCenter
             text: catalog.i18nc("@action:button", "Upload Custom Firmware")
-            color: {
-                if (printerConnected) {
-                    return "purple"
-                } else { return "grey" }
-            }
+            color: "grey"
             font.pixelSize: 10
             font.underline: true
             font.bold: true
@@ -177,7 +177,7 @@ Cura.MachineAction {
                 cursorShape: {
                     if (printerConnected) {
                         return Qt.PointingHandCursor
-                    } else { return Qt.ArrowCurson }
+                    } else { return Qt.ArrowCursor }
                 }
                 onClicked: {
                     if (printerConnected) {
@@ -244,7 +244,7 @@ Cura.MachineAction {
                         case 6:
                             return catalog.i18nc("@label","Firmware update failed due to missing firmware!");
                         case 7:
-                            return catalog.i18nc("@label","Preparing to upgrade firmware...")
+                            return catalog.i18nc("@label","Preparing to update firmware...")
                         case 8:
                             return catalog.i18nc("@label","Printer not quite ready, please wait...")
                         default:
