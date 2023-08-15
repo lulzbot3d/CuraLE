@@ -641,10 +641,8 @@ QtObject {
         }
     }
 
-    property Component monitor_button_style: Component
-    {
-        ButtonStyle
-        {
+    property Component monitor_button_style: Component {
+        ButtonStyle {
             background: Rectangle
             {
                 border.width: UM.Theme.getSize("default_lining").width
@@ -689,10 +687,8 @@ QtObject {
                 }
             }
 
-            label: Item
-            {
-                UM.RecolorImage
-                {
+            label: Item {
+                UM.RecolorImage {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: Math.floor(control.width / 2)
@@ -763,23 +759,18 @@ QtObject {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.leftMargin: UM.Theme.getSize("default_lining").width * 2
                     anchors.rightMargin: UM.Theme.getSize("default_lining").width * 2
-                    color:
-                    {
-                        if(!control.enabled)
-                        {
+                    color: {
+                        if(!control.enabled) {
                             return UM.Theme.getColor("action_button_disabled_text");
-                        }
-                        else if (control.checked || control.pressed)
-                        {
+                        } else if (control.checked || control.pressed) {
                             return UM.Theme.getColor("action_button_active_text");
-                        }
-                        else if (control.hovered)
-                        {
+                        } else if (control.hovered) {
                             return UM.Theme.getColor("action_button_hovered_text");
-                        }
-                        return UM.Theme.getColor("action_button_text");
+                        } return UM.Theme.getColor("action_button_text");
                     }
-                    font: UM.Theme.getFont("default")
+                    // font: UM.Theme.getFont("default")
+                    font.family: "Lato"
+                    font.pointSize: 10
                     text: control.text
                     horizontalAlignment: Text.AlignHCenter
                     elide: Text.ElideMiddle

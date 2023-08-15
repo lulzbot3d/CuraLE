@@ -305,7 +305,7 @@ Item {
 
         Button {
             id: toolHeadSwapButton
-            text: "Tool Head Swapping and Filament Changing Position"
+            text: "Tool Head and Filament Changing Position"
             Layout.row: 3
             Layout.column: 0
             Layout.columnSpan: 2

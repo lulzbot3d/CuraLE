@@ -432,6 +432,7 @@ class MachineManager(QObject):
             for node in DepthFirstIterator(Application.getInstance().getController().getScene().getRoot()):
                 if isinstance(node, SceneNode):
                     nodes += 1
+            print("Node count: " + str(nodes))
             if nodes <= 4:
                 if definition_id == "taz_pro_dual" or definition_id == "taz_pro_xt_dual":
                     Application.getInstance()._openFile(os.path.join(Resources.getPath(Resources.Meshes), "TAZ_Pro_Calibration01.stl"))

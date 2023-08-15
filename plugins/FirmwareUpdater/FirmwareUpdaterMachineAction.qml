@@ -3,11 +3,12 @@
 
 import QtQuick 2.2
 import QtQuick.Controls 2.15
+import QtQuick.Controls 1.4 as OldControls
 import QtQuick.Layouts 1.1
 import QtQuick.Window 2.1
 import QtQuick.Dialogs 1.2 // For filedialog
 
-import UM 1.2 as UM
+import UM 1.3 as UM
 import Cura 1.0 as Cura
 
 
@@ -22,12 +23,14 @@ Cura.MachineAction {
     Column {
         id: firmwareUpdaterMachineAction
         anchors.fill: parent;
+        anchors.leftMargin: UM.Theme.getSize("default_margin").width * 2
+        anchors.rightMargin: UM.Theme.getSize("default_margin").width * 2
         UM.I18nCatalog { id: catalog; name: "cura"}
         spacing: UM.Theme.getSize("default_margin").height
 
         Label {
             width: parent.width
-            text: catalog.i18nc("@title", "<b>Update Your LulzBot's Firmware</b>")
+            text: catalog.i18nc("@title", "<b>Updating Your LulzBot's Firmware</b>")
             horizontalAlignment: Text.AlignHCenter
             wrapMode: Text.WordWrap
             font.pointSize: 18
@@ -36,40 +39,42 @@ Cura.MachineAction {
         Label {
             width: parent.width
             wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignHCenter
             font.pointSize: 10
-            text: catalog.i18nc("@label", "Firmware is the piece of software running directly on your 3D printer. This firmware controls the step motors, regulates the temperature and ultimately makes your printer work.")
+            text: catalog.i18nc("@label", "<b>What It Does:</b> Firmware controls your 3D printer's mechanical functions.")
+        }
+
+        Label {
+            width: parent.width
+            wrapMode: Text.WordWrap
+            font.pointSize: 10
+            text: catalog.i18nc("@label", "<b>Why Update:</b> Gain new features and boost performance.")
         }
 
         Label {
             width: parent.width
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
-            font.pointSize: 10
-            text: catalog.i18nc("@label", "Your LulzBot 3D Printer ships from our factory ready to help you <i>Make Everything</i>, right out of the box! Get the latest features and the most performance out of your LulzBot 3D Printer by keeping your firmware updated.")
-        }
-
-        Label {
-            width: parent.width
-            wrapMode: Text.WordWrap
             color: "red"
-            text: catalog.i18nc("@label", "
-                <font color=\"red\"><b>WARNING:</b> The firmware updating process will overwrite certain parameters. Restore the tuned values by following the steps below after the firmware update is complete.</font><br>")
+            text: catalog.i18nc("@label", "<b>WARNING:</b> Updating will reset certain machine settings. It's a good idea to note down any settings you might want later.</font><br>")
 
         }
 
         Label {
             width: parent.width
             wrapMode: Text.WordWrap
-            color: "red"
             font.pointSize: 10
-            text: catalog.i18nc("@label", "Please have the following recorded <u>before</u> upgrading firmware:
-                <ul type=\"bullet\">
-                    <li>Extruder steps per unit
-                        (<a href='https://www.lulzbot.com/learn/tutorials/firmware-flashing-through-cura#get-esteps'>E-steps</a>)
-                    <li>Z-axis offset
-                        (<a href='https://www.lulzbot.com/learn/tutorials/Z-axis-offset#get-offset'>Z-offset</a>)
-                </ul>")
+            text: {
+                catalog.i18nc("@label", " \
+                <b>Before Updating, Note Down: \
+                <ul type=\"bullet\"> \
+                    <li>For All Machines: \
+                        (<a href='https://ohai.lulzbot.com/project/finding-recording-and-restoring-your-z-axis-offset/maintenance-repairs/'>Z-offset</a>) \
+                    <li>For TAZ Pro Platform: \
+                        (<a href='https://www.youtube.com/watch?v=fwazYrkyaMI'>Backlash Compensation</a>) \
+                    <li>For Legacy Machines (Mini 1, TAZ 6, etc): \
+                        (<a href='https://ohai.lulzbot.com/project/fine-tune-mini-extruder/calibration/'>E-Steps</a>) \
+                </ul></b>")
+            }
             onLinkActivated: Qt.openUrlExternally(link)
 
             MouseArea {
@@ -83,10 +88,16 @@ Cura.MachineAction {
             width: parent.width
             wrapMode: Text.WordWrap
             font.pointSize: 10
-            text: catalog.i18nc("@label", "You will need to <a href='https://www.lulzbot.com/learn/tutorials/firmware-flashing-through-cura#esteps'>restore the E-steps</a> and <a href='https://www.lulzbot.com/learn/tutorials/Z-axis-offset#restore-offset'>restore the Z-offset</a> after firmware upgrade.")
+            text: {
+                catalog.i18nc("@label", " \
+                <b>After Updating:</b> \
+                <ul type=\"bullet\"> \
+                    <li>Re-enter the noted values or calibrate them anew. \
+                    <li>If using Universal Firmware (2.0.9.X+), <a href='https://ohai.lulzbot.com/project/flashing-firmware-through-cura-3620/firmware-flashing/'>select the proper tool head</a> from the printer's display. \
+                </ul>")
+            }
             onLinkActivated: Qt.openUrlExternally(link)
-            MouseArea
-            {
+            MouseArea {
                 anchors.fill: parent
                 acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
                 cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
@@ -96,42 +107,13 @@ Cura.MachineAction {
         Label {
             width: parent.width
             wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
             font.pointSize: 10
-            color: "red"
-            text: catalog.i18nc("@label", "If installing universal tool head firmware (2.0.9.X+), ensure that you select the installed tool head via your printers LCD prior to printing. (<a href='https://ohai.lulzbot.com/project/flashing-firmware-through-cura-3620/firmware-flashing/#step_4'>Tool Head Selection</a>)<br>")
-            onLinkActivated: Qt.openUrlExternally(link)
-            MouseArea
-            {
-                anchors.fill: parent
-                acceptedButtons: Qt.NoButton
-                cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
-            }
+            text: catalog.i18nc("@label", "Enjoy enhanced reliability, repeatability, and performance with your updated printer!")
         }
 
-
-        Row {
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: childrenRect.width
-            spacing: UM.Theme.getSize("default_margin").width
-            Button {
-                id: autoUpgradeButton
-                text: catalog.i18nc("@action:button", "Automatically Upgrade Firmware");
-                enabled: printerConnected && firmwareName != ""
-                onClicked:
-                {
-                    updateProgressDialog.visible = true;
-                    activeOutputDevice.updateFirmware(firmwareName);
-                }
-            }
-            Button {
-                id: manualUpgradeButton
-                text: catalog.i18nc("@action:button", "Upload Custom Firmware")
-                enabled: printerConnected
-                onClicked:
-                {
-                    customFirmwareDialog.open()
-                }
-            }
+        Label {
+            text: " " // spacer
         }
 
         Label {
@@ -143,38 +125,66 @@ Cura.MachineAction {
             text: catalog.i18nc("@action:button", "Automatic Upgrade Firmware Version: <b>") + Cura.MachineManager.activeMachineLatestFirmwareVersion + "</b>";
         }
 
-        // Label {
-        //     width: parent.width
-        //     wrapMode: Text.WordWrap
-        //     horizontalAlignment: Text.AlignHCenter
-        //     font.pointSize: 8
-        //     visible: printerConnected
-        //     text: catalog.i18nc("@action:button", "Currently Loaded Firmware Version: <i>") + Cura.MachineManager.activeMachineFirmwareVersion + "</i>";
-        // }
-
-        // Button {
-        //     anchors.horizontalCenter: parent.horizontalCenter
-        //     text: "Connect"
-        //     enabled:
-        //     {
-        //         if(activeOutputDevice != null && activeOutputDevice.address != "None")
-        //         {
-        //             if(activeOutputDevice.connectionState == 0 || activeOutputDevice.connectionState > 5)
-        //             {
-        //                 return true
-        //             }
-        //         }
-        //         return false
-        //     }
-        //     onClicked: activeOutputDevice.connect()
-        // }
-
         Label {
             width: parent.width
             wrapMode: Text.WordWrap
             visible: printerConnected && !canUpdateFirmware
             horizontalAlignment: Text.AlignHCenter
+            font.pointSize: 8
             text: catalog.i18nc("@label", "Firmware can not be updated because the connection with the printer does not support upgrading firmware.");
+        }
+
+        Label {
+            width: parent.width
+            wrapMode: Text.WordWrap
+            visible: !printerConnected
+            horizontalAlignment: Text.AlignHCenter
+            color: "red"
+            text: catalog.i18nc("@label", "Firmware can not be updated because there is no 3D printer detected!");
+        }
+
+        OldControls.Button {
+            id: autoUpgradeButton
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: UM.Theme.getSize("setting_control").width * 2
+            height: UM.Theme.getSize("setting_control").height * 2
+            text: catalog.i18nc("@action:button", "Automatically Upgrade Firmware");
+            style: UM.Theme.styles.monitor_checkable_button_style
+            enabled: printerConnected && firmwareName != ""
+            onClicked: {
+                updateProgressDialog.visible = true;
+                activeOutputDevice.updateFirmware(firmwareName);
+            }
+        }
+
+        Text {
+            id: manualUpgradeTextButton
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: catalog.i18nc("@action:button", "Upload Custom Firmware")
+            color: {
+                if (printerConnected) {
+                    return "purple"
+                } else { return "grey" }
+            }
+            font.pixelSize: 10
+            font.underline: true
+            font.bold: true
+
+            MouseArea {
+                id: manualUpgradeTextButtonArea
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: {
+                    if (printerConnected) {
+                        return Qt.PointingHandCursor
+                    } else { return Qt.ArrowCurson }
+                }
+                onClicked: {
+                    if (printerConnected) {
+                        customFirmwareDialog.open()
+                    }
+                }
+            }
         }
     }
 
@@ -184,8 +194,7 @@ Cura.MachineAction {
         nameFilters:  "Firmware image files (*.hex *.bin)"
         folder: "../../resources/firmware"
         selectExisting: true
-        onAccepted:
-        {
+        onAccepted: {
             updateProgressDialog.visible = true;
             activeOutputDevice.updateFirmware(fileUrl);
         }
