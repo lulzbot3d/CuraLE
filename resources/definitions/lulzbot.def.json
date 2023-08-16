@@ -54,7 +54,7 @@
         "acceleration_wall_x": { "default_value": 1000 },
         "brim_line_count": { "default_value": 10 },
         "infill_before_walls": { "default_value": "False" },
-        "infill_pattern": { "value": "grid" },
+        "infill_pattern": { "value": "'grid' if infill_sparse_density > 25 else 'grid'" },
         "jerk_enabled": {
             "description": "Enables adjusting the jerk of print head when the velocity in the X or Y axis changes. Increasing the jerk can reduce printing time at the cost of print quality. Populated values are the firmware defaults."
         },

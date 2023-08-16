@@ -21,13 +21,13 @@
     <density>1.25</density>
   </properties>
   <settings>
-    <setting key="heated bed temperature">50</setting>
-    <setting key="print temperature">240</setting>
-    <setting key="standby temperature">175</setting>
-    <setting key="probe temperature">140</setting>
-    <setting key="wipe temperature">140</setting>
+    <setting key="print temperature">215</setting>
+    <setting key="probe temperature">160</setting>
+    <setting key="soften temperature">170</setting>
+    <setting key="wipe temperature">180</setting>
+    <setting key="heated bed temperature">60</setting>
     <setting key="part removal temperature">45</setting>
-    <setting key="soften temperature">140</setting>
+    <setting key="standby temperature">175</setting>
 
     <machine>
       <machine_identifier product="mini_1_se"/>
