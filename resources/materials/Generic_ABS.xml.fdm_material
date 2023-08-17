@@ -18,12 +18,12 @@
   </properties>
   <settings>
     <setting key="print temperature">240</setting>
-    <setting key="heated bed temperature">100</setting>
-    <setting key="standby temperature">200</setting>
-    <setting key="soften temperature">170</setting>
-    <setting key="probe temperature">160</setting>
-    <setting key="wipe temperature">180</setting>
-    <setting key="part removal temperature">50</setting>
+        <setting key="probe temperature">160</setting>
+        <setting key="soften temperature">170</setting>
+        <setting key="wipe temperature">180</setting>
+        <setting key="heated bed temperature">100</setting>
+        <setting key="part removal temperature">50</setting>
+        <setting key="standby temperature">200</setting>
 
     <machine>
       <machine_identifier product="mini_2_he"/>
