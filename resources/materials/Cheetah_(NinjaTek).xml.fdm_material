@@ -22,16 +22,13 @@
     <density>1.22</density>
   </properties>
   <settings>
-    <setting key="print cooling">100.0</setting>
-    <setting key="retraction amount">2.0</setting>
-    <setting key="heated bed temperature">50.0</setting>
-    <setting key="wipe temperature">180.0</setting>
-    <setting key="retraction speed">25.0</setting>
-    <setting key="soften temperature">170.0</setting>
-    <setting key="standby temperature">150.0</setting>
-    <setting key="print temperature">240.0</setting>
-    <setting key="probe temperature">160.0</setting>
-    <setting key="part removal temperature">0.0</setting>
+    <setting key="print temperature">225</setting>
+    <setting key="probe temperature">160</setting>
+    <setting key="soften temperature">170</setting>
+    <setting key="wipe temperature">180</setting>
+    <setting key="heated bed temperature">60</setting>
+    <setting key="part removal temperature">0</setting>
+    <setting key="standby temperature">175</setting>
 
     <machine>
       <machine_identifier product="taz_pro_dual"/>
@@ -82,6 +79,7 @@
       <machine_identifier product="taz_pro_long_bed_met285"/>
       <machine_identifier product="taz_pro_xt_met285"/>
       <machine_identifier product="taz_workhorse_met285"/>
+      <setting key="print temperature">235</setting>
     </machine>
 
     <machine>

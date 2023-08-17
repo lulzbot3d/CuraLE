@@ -19,12 +19,12 @@
   </properties>
   <settings>
     <setting key="print temperature">225</setting>
-    <setting key="heated bed temperature">50</setting>
-    <setting key="standby temperature">175</setting>
-    <setting key="soften temperature">180</setting>
-    <setting key="probe temperature">180</setting>
-    <setting key="wipe temperature">170</setting>
+    <setting key="probe temperature">160</setting>
+    <setting key="soften temperature">170</setting>
+    <setting key="wipe temperature">180</setting>
+    <setting key="heated bed temperature">60</setting>
     <setting key="part removal temperature">0</setting>
+    <setting key="standby temperature">175</setting>
 
     <machine>
       <machine_identifier product="mini_1_aerostruder"/>
@@ -101,6 +101,7 @@
       <machine_identifier product="taz_workhorse_met285"/>
       <machine_identifier product="sidekick_289_met285"/>
       <machine_identifier product="sidekick_747_met285"/>
+      <setting key="print temperature">235</setting>
     </machine>
 
     <machine>
