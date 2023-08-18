@@ -26,6 +26,18 @@
     <setting key="standby temperature">175</setting>
 
     <machine>
+      <machine_identifier product="mini_2_ast285"/>
+      <machine_identifier product="sidekick_289_ast285"/>
+      <machine_identifier product="sidekick_747_ast285"/>
+      <machine_identifier product="taz_pro_ast285"/>
+      <machine_identifier product="taz_pro_long_bed_ast285"/>
+      <machine_identifier product="taz_pro_xt_ast285"/>
+      <machine_identifier product="taz_workhorse_ast285"/>
+      <setting key="print temperature">210</setting>
+      <setting key="part removal temperature">40</setting>
+    </machine>
+
+    <machine>
       <machine_identifier product="mini_2_he"/>
       <machine_identifier product="sidekick_289_he"/>
       <machine_identifier product="sidekick_747_he"/>
