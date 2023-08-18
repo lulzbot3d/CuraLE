@@ -20,7 +20,7 @@
         "preferred_quality_type": "normal",
         "file_formats": "text/x-gcode",
         "firmware_latest_version": "2.0.9.0.14",
-        "firmware_file": "747/Marlin_289_Universal_2.0.9.0.14_2aed11e.hex",
+        "firmware_file": "747/Marlin_747_Legacy_Universal_2.0.9.0.16_8235204.hex ",
         "firmware_file_no_lcd": "",
         "has_optional_lcd": true,
         "bltouch_is_standard": true
