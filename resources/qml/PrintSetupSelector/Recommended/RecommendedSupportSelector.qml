@@ -13,15 +13,13 @@ import Cura 1.0 as Cura
 //
 //  Enable support
 //
-Item
-{
+Item {
     id: enableSupportRow
     height: childrenRect.height
 
     property real labelColumnWidth: Math.round(width / 3)
 
-    Cura.IconWithText
-    {
+    Cura.IconWithText {
         id: enableSupportRowTitle
         anchors.top: parent.top
         anchors.left: parent.left
@@ -33,20 +31,17 @@ Item
         iconSize: UM.Theme.getSize("medium_button_icon").width
     }
 
-    Item
-    {
+    Item {
         id: enableSupportContainer
         height: enableSupportCheckBox.height
 
-        anchors
-        {
+        anchors {
             left: enableSupportRowTitle.right
             right: parent.right
             verticalCenter: enableSupportRowTitle.verticalCenter
         }
 
-        CheckBox
-        {
+        CheckBox {
             id: enableSupportCheckBox
             anchors.verticalCenter: parent.verticalCenter
 
@@ -58,16 +53,14 @@ Item
             visible: supportEnabled.properties.enabled == "True"
             checked: supportEnabled.properties.value == "True"
 
-            MouseArea
-            {
+            MouseArea {
                 id: enableSupportMouseArea
                 anchors.fill: parent
                 hoverEnabled: true
 
                 onClicked: supportEnabled.setPropertyValue("value", supportEnabled.properties.value != "True")
 
-                onEntered:
-                {
+                onEntered: {
                     base.showTooltip(enableSupportCheckBox, Qt.point(-enableSupportContainer.x - UM.Theme.getSize("thick_margin").width, 0),
                         catalog.i18nc("@label", "Generate structures to support parts of the model which have overhangs. Without these structures, such parts would collapse during printing."))
                 }
@@ -75,13 +68,11 @@ Item
             }
         }
 
-        Controls2.ComboBox
-        {
+        Controls2.ComboBox {
             id: supportExtruderCombobox
 
             height: UM.Theme.getSize("print_setup_big_item").height
-            anchors
-            {
+            anchors {
                 left: enableSupportCheckBox.right
                 right: parent.right
                 leftMargin: UM.Theme.getSize("thick_margin").width
@@ -96,14 +87,11 @@ Item
             model: extruderModel
 
             // knowing the extruder position, try to find the item index in the model
-            function getIndexByPosition(position)
-            {
+            function getIndexByPosition(position) {
                 var itemIndex = -1  // if position is not found, return -1
-                for (var item_index in model.items)
-                {
+                for (var item_index in model.items) {
                     var item = model.getItem(item_index)
-                    if (item.index == position)
-                    {
+                    if (item.index == position) {
                         itemIndex = item_index
                         break
                     }
@@ -111,14 +99,11 @@ Item
                 return itemIndex
             }
 
-            onActivated:
-            {
-                if (model.getItem(index).enabled)
-                {
+            onActivated: {
+                if (model.getItem(index).enabled) {
                     forceActiveFocus();
                     supportExtruderNr.setPropertyValue("value", model.getItem(index).index);
-                } else
-                {
+                } else {
                     currentIndex = supportExtruderNr.properties.value;  // keep the old value
                 }
             }
@@ -126,29 +111,23 @@ Item
             currentIndex: (supportExtruderNr.properties.value !== undefined) ? supportExtruderNr.properties.value : 0
 
             property string color: "#fff"
-            Connections
-            {
+            Connections {
                 target: extruderModel
-                function onModelChanged()
-                {
+                function onModelChanged() {
                     var maybeColor = supportExtruderCombobox.model.getItem(supportExtruderCombobox.currentIndex).color
-                    if (maybeColor)
-                    {
+                    if (maybeColor) {
                         supportExtruderCombobox.color = maybeColor
                     }
                 }
             }
-            onCurrentIndexChanged:
-            {
+            onCurrentIndexChanged: {
                 var maybeColor = supportExtruderCombobox.model.getItem(supportExtruderCombobox.currentIndex).color
-                if(maybeColor)
-                {
+                if(maybeColor) {
                     supportExtruderCombobox.color = maybeColor
                 }
             }
 
-            Binding
-            {
+            Binding {
                 target: supportExtruderCombobox
                 property: "currentIndex"
                 value: supportExtruderCombobox.getIndexByPosition(supportExtruderNr.properties.value)
@@ -157,8 +136,7 @@ Item
                 when: supportExtruderCombobox.model.count > 0
             }
 
-            indicator: UM.RecolorImage
-            {
+            indicator: UM.RecolorImage {
                 id: downArrow
                 x: supportExtruderCombobox.width - width - supportExtruderCombobox.rightPadding
                 y: supportExtruderCombobox.topPadding + Math.round((supportExtruderCombobox.availableHeight - height) / 2)
@@ -172,38 +150,30 @@ Item
                 color: UM.Theme.getColor("setting_control_button")
             }
 
-            background: Rectangle
-            {
-                color:
-                {
-                    if (!enabled)
-                    {
+            background: Rectangle {
+                color: {
+                    if (!enabled) {
                         return UM.Theme.getColor("setting_control_disabled")
                     }
-                    if (supportExtruderCombobox.hovered || base.activeFocus)
-                    {
+                    if (supportExtruderCombobox.hovered || base.activeFocus) {
                         return UM.Theme.getColor("setting_control_highlight")
                     }
                     return UM.Theme.getColor("setting_control")
                 }
                 radius: UM.Theme.getSize("setting_control_radius").width
                 border.width: UM.Theme.getSize("default_lining").width
-                border.color:
-                {
-                    if (!enabled)
-                    {
+                border.color: {
+                    if (!enabled) {
                         return UM.Theme.getColor("setting_control_disabled_border")
                     }
-                    if (supportExtruderCombobox.hovered || supportExtruderCombobox.activeFocus)
-                    {
+                    if (supportExtruderCombobox.hovered || supportExtruderCombobox.activeFocus) {
                         return UM.Theme.getColor("setting_control_border_highlight")
                     }
                     return UM.Theme.getColor("setting_control_border")
                 }
             }
 
-            contentItem: Controls2.Label
-            {
+            contentItem: Controls2.Label {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: UM.Theme.getSize("setting_unit_margin").width
@@ -219,8 +189,7 @@ Item
                 elide: Text.ElideLeft
                 verticalAlignment: Text.AlignVCenter
 
-                background: Rectangle
-                {
+                background: Rectangle {
                     id: swatch
                     height: Math.round(parent.height / 2)
                     width: height
@@ -233,15 +202,13 @@ Item
                 }
             }
 
-            popup: Controls2.Popup
-            {
+            popup: Controls2.Popup {
                 y: supportExtruderCombobox.height - UM.Theme.getSize("default_lining").height
                 width: supportExtruderCombobox.width
                 implicitHeight: contentItem.implicitHeight + 2 * UM.Theme.getSize("default_lining").width
                 padding: UM.Theme.getSize("default_lining").width
 
-                contentItem: ListView
-                {
+                contentItem: ListView {
                     clip: true
                     implicitHeight: contentHeight
                     model: supportExtruderCombobox.popup.visible ? supportExtruderCombobox.delegateModel : null
@@ -250,35 +217,28 @@ Item
                     Controls2.ScrollIndicator.vertical: Controls2.ScrollIndicator { }
                 }
 
-                background: Rectangle
-                {
+                background: Rectangle {
                     color: UM.Theme.getColor("setting_control")
                     border.color: UM.Theme.getColor("setting_control_border")
                 }
             }
 
-            delegate: Controls2.ItemDelegate
-            {
+            delegate: Controls2.ItemDelegate {
                 width: supportExtruderCombobox.width - 2 * UM.Theme.getSize("default_lining").width
                 height: supportExtruderCombobox.height
                 highlighted: supportExtruderCombobox.highlightedIndex == index
 
-                contentItem: Controls2.Label
-                {
+                contentItem: Controls2.Label {
                     anchors.fill: parent
                     anchors.leftMargin: UM.Theme.getSize("setting_unit_margin").width
                     anchors.rightMargin: UM.Theme.getSize("setting_unit_margin").width
 
                     text: model.name
                     renderType: Text.NativeRendering
-                    color:
-                    {
-                        if (model.enabled)
-                        {
+                    color: {
+                        if (model.enabled) {
                             UM.Theme.getColor("setting_control_text")
-                        }
-                        else
-                        {
+                        } else {
                             UM.Theme.getColor("action_button_disabled_text");
                         }
                     }
@@ -287,8 +247,7 @@ Item
                     verticalAlignment: Text.AlignVCenter
                     rightPadding: swatch.width + UM.Theme.getSize("setting_unit_margin").width
 
-                    background: Rectangle
-                    {
+                    background: Rectangle {
                         id: swatch
                         height: Math.round(parent.height / 2)
                         width: height
@@ -301,8 +260,7 @@ Item
                     }
                 }
 
-                background: Rectangle
-                {
+                background: Rectangle {
                     color: parent.highlighted ? UM.Theme.getColor("setting_control_highlight") : "transparent"
                     border.color: parent.highlighted ? UM.Theme.getColor("setting_control_border_highlight") : "transparent"
                 }
@@ -313,8 +271,7 @@ Item
     property var extruderModel: CuraApplication.getExtrudersModel()
 
 
-    UM.SettingPropertyProvider
-    {
+    UM.SettingPropertyProvider {
         id: supportEnabled
         containerStack: Cura.MachineManager.activeMachine
         key: "support_enable"
@@ -322,8 +279,7 @@ Item
         storeIndex: 0
     }
 
-    UM.SettingPropertyProvider
-    {
+    UM.SettingPropertyProvider {
         id: supportExtruderNr
         containerStack: Cura.MachineManager.activeMachine
         key: "support_extruder_nr"
@@ -331,8 +287,7 @@ Item
         storeIndex: 0
     }
 
-    UM.SettingPropertyProvider
-    {
+    UM.SettingPropertyProvider {
         id: machineExtruderCount
         containerStack: Cura.MachineManager.activeMachine
         key: "machine_extruder_count"

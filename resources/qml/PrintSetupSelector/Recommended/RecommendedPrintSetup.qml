@@ -8,8 +8,7 @@ import QtQuick.Controls.Styles 1.4
 import UM 1.2 as UM
 import Cura 1.0 as Cura
 
-Item
-{
+Item {
     id: recommendedPrintSetup
 
     height: childrenRect.height + 2 * padding
@@ -19,8 +18,7 @@ Item
     property bool settingsEnabled: Cura.ExtruderManager.activeExtruderStackId || extrudersEnabledCount.properties.value == 1
     property real padding: UM.Theme.getSize("thick_margin").width
 
-    Column
-    {
+    Column {
         spacing: UM.Theme.getSize("wide_margin").height
 
         anchors
@@ -34,37 +32,32 @@ Item
         // TODO
         property real firstColumnWidth: Math.round(width / 3)
 
-        RecommendedQualityProfileSelector
-        {
+        RecommendedQualityProfileSelector {
             width: parent.width
             // TODO Create a reusable component with these properties to not define them separately for each component
             labelColumnWidth: parent.firstColumnWidth
         }
 
-        RecommendedInfillDensitySelector
-        {
+        RecommendedInfillDensitySelector {
             width: parent.width
             // TODO Create a reusable component with these properties to not define them separately for each component
             labelColumnWidth: parent.firstColumnWidth
         }
 
-        RecommendedSupportSelector
-        {
+        RecommendedSupportSelector {
             width: parent.width
             // TODO Create a reusable component with these properties to not define them separately for each component
             labelColumnWidth: parent.firstColumnWidth
         }
 
-        RecommendedAdhesionSelector
-        {
+        RecommendedAdhesionSelector {
             width: parent.width
             // TODO Create a reusable component with these properties to not define them separately for each component
             labelColumnWidth: parent.firstColumnWidth
         }
     }
 
-    UM.SettingPropertyProvider
-    {
+    UM.SettingPropertyProvider {
         id: extrudersEnabledCount
         containerStack: Cura.MachineManager.activeMachine
         key: "extruders_enabled_count"

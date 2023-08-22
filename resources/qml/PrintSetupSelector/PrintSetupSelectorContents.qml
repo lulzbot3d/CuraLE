@@ -10,8 +10,7 @@ import Cura 1.0 as Cura
 import "Recommended"
 import "Custom"
 
-Item
-{
+Item {
     id: content
 
     property int absoluteMinimumHeight: 200 * screenScaleFactor
@@ -19,51 +18,43 @@ Item
     width: UM.Theme.getSize("print_setup_widget").width - 2 * UM.Theme.getSize("default_margin").width
     height: contents.height + buttonRow.height
 
-    enum Mode
-    {
+    enum Mode {
         Recommended = 0,
         Custom = 1
     }
 
     // Catch all mouse events
-    MouseArea
-    {
+    MouseArea {
         anchors.fill: parent
         hoverEnabled: true
     }
 
     // Set the current mode index to the value that is stored in the preferences or Recommended mode otherwise.
-    property int currentModeIndex:
-    {
+    property int currentModeIndex: {
         var index = Math.round(UM.Preferences.getValue("cura/active_mode"))
 
-        if (index != null && !isNaN(index))
-        {
+        if (index != null && !isNaN(index)) {
             return index
         }
         return PrintSetupSelectorContents.Mode.Recommended
     }
     onCurrentModeIndexChanged: UM.Preferences.setValue("cura/active_mode", currentModeIndex)
 
-    Item
-    {
+    Item {
         id: contents
         // Use the visible property instead of checking the currentModeIndex. That creates a binding that
         // evaluates the new height every time the visible property changes.
         height: recommendedPrintSetup.visible ? recommendedPrintSetup.height : customPrintSetup.height
 
-        anchors
-        {
+        anchors {
             top: parent.top
             left: parent.left
             right: parent.right
         }
 
-        RecommendedPrintSetup
-        {
+        RecommendedPrintSetup {
             id: recommendedPrintSetup
-            anchors
-            {
+            anchors {
                 left: parent.left
                 right: parent.right
                 top: parent.top
@@ -71,32 +62,25 @@ Item
             visible: currentModeIndex == PrintSetupSelectorContents.Mode.Recommended
         }
 
-        CustomPrintSetup
-        {
+        CustomPrintSetup {
             id: customPrintSetup
-            anchors
-            {
+            anchors {
                 left: parent.left
                 right: parent.right
                 top: parent.top
             }
             height: UM.Preferences.getValue("view/settings_list_height") - UM.Theme.getSize("default_margin").height
-            Connections
-            {
+            Connections {
                 target: UM.Preferences
-                function onPreferenceChanged(preference)
-                {
-                    if (preference !== "view/settings_list_height" && preference !== "general/window_height" && preference !== "general/window_state")
-                    {
+                function onPreferenceChanged(preference) {
+                    if (preference !== "view/settings_list_height" && preference !== "general/window_height" && preference !== "general/window_state") {
                         return;
                     }
 
                     customPrintSetup.height =
-                        Math.min
-                        (
+                        Math.min (
                             UM.Preferences.getValue("view/settings_list_height"),
-                            Math.max
-                            (
+                            Math.max (
                                 absoluteMinimumHeight,
                                 base.height - (customPrintSetup.mapToItem(null, 0, 0).y + buttonRow.height + UM.Theme.getSize("default_margin").height)
                             )
@@ -109,8 +93,7 @@ Item
         }
     }
 
-    Rectangle
-    {
+    Rectangle {
         id: buttonsSeparator
 
         // The buttonsSeparator is inside the contents. This is to avoid a double line in the bottom
@@ -120,21 +103,18 @@ Item
         color: UM.Theme.getColor("lining")
     }
 
-    Item
-    {
+    Item {
         id: buttonRow
         property real padding: UM.Theme.getSize("default_margin").width
         height: recommendedButton.height + 2 * padding + (draggableArea.visible ? draggableArea.height : 0)
 
-        anchors
-        {
+        anchors {
             bottom: parent.bottom
             left: parent.left
             right: parent.right
         }
 
-        Cura.SecondaryButton
-        {
+        Cura.SecondaryButton {
             id: recommendedButton
             anchors.top: parent.top
             anchors.left: parent.left
@@ -147,8 +127,7 @@ Item
             onClicked: currentModeIndex = PrintSetupSelectorContents.Mode.Recommended
         }
 
-        Cura.SecondaryButton
-        {
+        Cura.SecondaryButton {
             id: customSettingsButton
             anchors.top: parent.top
             anchors.right: parent.right
@@ -159,19 +138,16 @@ Item
             iconSource: UM.Theme.getIcon("ChevronSingleRight")
             isIconOnRightSide: true
             visible: currentModeIndex == PrintSetupSelectorContents.Mode.Recommended
-            onClicked:
-            {
+            onClicked: {
                 currentModeIndex = PrintSetupSelectorContents.Mode.Custom
                 updateDragPosition();
             }
         }
 
         //Invisible area at the bottom with which you can resize the panel.
-        MouseArea
-        {
+        MouseArea {
             id: draggableArea
-            anchors
-            {
+            anchors {
                 left: parent.left
                 right: parent.right
                 bottom: parent.bottom
@@ -179,56 +155,47 @@ Item
             height: childrenRect.height
             cursorShape: Qt.SplitVCursor
             visible: currentModeIndex == PrintSetupSelectorContents.Mode.Custom
-            drag
-            {
+            drag {
                 target: parent
                 axis: Drag.YAxis
             }
-            onMouseYChanged:
-            {
-                if(drag.active)
-                {
+            onMouseYChanged: {
+                if(drag.active) {
                     // position of mouse relative to dropdown  align vertical centre of mouse area to cursor
                     //      v------------------------------v   v------------v
                     var h = mouseY + buttonRow.y + content.y - height / 2 | 0;
-                    if(h < absoluteMinimumHeight) //Enforce a minimum size.
-                    {
+                    if(h < absoluteMinimumHeight) //Enforce a minimum size. {
                         h = absoluteMinimumHeight;
                     }
 
                     //Absolute mouse Y position in the window, to prevent it from going outside the window.
                     var mouse_absolute_y = mapToGlobal(mouseX, mouseY).y - UM.Preferences.getValue("general/window_top");
-                    if(mouse_absolute_y > base.height)
-                    {
+                    if(mouse_absolute_y > base.height) {
                         h -= mouse_absolute_y - base.height;
                     }
                     // Enforce a minimum size (again).
                     // This is a bit of a hackish way to do it, but we've seen some occasional reports that the size
                     // could get below the the minimum height.
-                    if(h < absoluteMinimumHeight)
-                    {
+                    if(h < absoluteMinimumHeight) {
                         h = absoluteMinimumHeight;
                     }
                     UM.Preferences.setValue("view/settings_list_height", h);
                 }
             }
 
-            Rectangle
-            {
+            Rectangle {
                 width: parent.width
                 height: UM.Theme.getSize("narrow_margin").height
                 color: UM.Theme.getColor("secondary")
 
-                Rectangle
-                {
+                Rectangle {
                     anchors.bottom: parent.top
                     width: parent.width
                     height: UM.Theme.getSize("default_lining").height
                     color: UM.Theme.getColor("lining")
                 }
 
-                UM.RecolorImage
-                {
+                UM.RecolorImage {
                     width: UM.Theme.getSize("drag_icon").width
                     height: UM.Theme.getSize("drag_icon").height
                     anchors.centerIn: parent

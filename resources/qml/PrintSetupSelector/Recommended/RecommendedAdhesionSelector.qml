@@ -12,16 +12,14 @@ import Cura 1.0 as Cura
 //
 //  Adhesion
 //
-Item
-{
+Item {
     id: enableAdhesionRow
     height: childrenRect.height
 
     property real labelColumnWidth: Math.round(width / 3)
     property var curaRecommendedMode: Cura.RecommendedMode {}
 
-    Cura.IconWithText
-    {
+    Cura.IconWithText {
         id: enableAdhesionRowTitle
         anchors.top: parent.top
         anchors.left: parent.left
@@ -32,20 +30,17 @@ Item
         iconSize: UM.Theme.getSize("medium_button_icon").width
     }
 
-    Item
-    {
+    Item {
         id: enableAdhesionContainer
         height: enableAdhesionCheckBox.height
 
-        anchors
-        {
+        anchors {
             left: enableAdhesionRowTitle.right
             right: parent.right
             verticalCenter: enableAdhesionRowTitle.verticalCenter
         }
 
-        CheckBox
-        {
+        CheckBox {
             id: enableAdhesionCheckBox
             anchors.verticalCenter: parent.verticalCenter
 
@@ -58,19 +53,16 @@ Item
             visible: platformAdhesionType.properties.enabled == "True"
             checked: platformAdhesionType.properties.value != "skirt" && platformAdhesionType.properties.value != "none"
 
-            MouseArea
-            {
+            MouseArea {
                 id: adhesionMouseArea
                 anchors.fill: parent
                 hoverEnabled: true
 
-                onClicked:
-                {
+                onClicked: {
                     curaRecommendedMode.setAdhesion(!parent.checked)
                 }
 
-                onEntered:
-                {
+                onEntered: {
                     base.showTooltip(enableAdhesionCheckBox, Qt.point(-enableAdhesionContainer.x - UM.Theme.getSize("thick_margin").width, 0),
                         catalog.i18nc("@label", "Enable printing a brim or raft. This will add a flat area around or under your object which is easy to cut off afterwards."));
                 }
@@ -79,8 +71,7 @@ Item
         }
     }
 
-    UM.SettingPropertyProvider
-    {
+    UM.SettingPropertyProvider {
         id: platformAdhesionType
         containerStack: Cura.MachineManager.activeMachine
         removeUnusedValue: false //Doesn't work with settings that are resolved.

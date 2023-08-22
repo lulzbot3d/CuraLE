@@ -12,35 +12,28 @@ import Cura 1.0 as Cura
 //
 // Infill
 //
-Item
-{
+Item {
     id: infillRow
     height: childrenRect.height
 
     property real labelColumnWidth: Math.round(width / 3)
 
     // Create a binding to update the icon when the infill density changes
-    Binding
-    {
+    Binding {
         target: infillRowTitle
         property: "source"
-        value:
-        {
+        value: {
             var density = parseInt(infillDensity.properties.value)
-            if (parseInt(infillSteps.properties.value) != 0)
-            {
+            if (parseInt(infillSteps.properties.value) != 0) {
                 return UM.Theme.getIcon("InfillGradual")
             }
-            if (density <= 0)
-            {
+            if (density <= 0) {
                 return UM.Theme.getIcon("Infill0")
             }
-            if (density < 40)
-            {
+            if (density < 40) {
                 return UM.Theme.getIcon("Infill3")
             }
-            if (density < 90)
-            {
+            if (density < 90) {
                 return UM.Theme.getIcon("Infill2")
             }
             return UM.Theme.getIcon("Infill100")
@@ -48,16 +41,14 @@ Item
     }
 
     // We use a binding to make sure that after manually setting infillSlider.value it is still bound to the property provider
-    Binding
-    {
+    Binding {
         target: infillSlider
         property: "value"
         value: parseInt(infillDensity.properties.value)
     }
 
     // Here are the elements that are shown in the left column
-    Cura.IconWithText
-    {
+    Cura.IconWithText {
         id: infillRowTitle
         anchors.top: parent.top
         anchors.left: parent.left
@@ -68,20 +59,17 @@ Item
         iconSize: UM.Theme.getSize("medium_button_icon").width
     }
 
-    Item
-    {
+    Item {
         id: infillSliderContainer
         height: childrenRect.height
 
-        anchors
-        {
+        anchors {
             left: infillRowTitle.right
             right: parent.right
             verticalCenter: infillRowTitle.verticalCenter
         }
 
-        Slider
-        {
+        Slider {
             id: infillSlider
 
             width: parent.width
@@ -98,13 +86,10 @@ Item
             // set initial value from stack
             value: parseInt(infillDensity.properties.value)
 
-            style: SliderStyle
-            {
+            style: SliderStyle {
                 //Draw line
-                groove: Item
-                {
-                    Rectangle
-                    {
+                groove: Item {
+                    Rectangle {
                         height: UM.Theme.getSize("print_setup_slider_groove").height
                         width: control.width - UM.Theme.getSize("print_setup_slider_handle").width
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -113,8 +98,7 @@ Item
                     }
                 }
 
-                handle: Rectangle
-                {
+                handle: Rectangle {
                     id: handleButton
                     color: control.enabled ? UM.Theme.getColor("primary") : UM.Theme.getColor("quality_slider_unavailable")
                     implicitWidth: UM.Theme.getSize("print_setup_slider_handle").width
@@ -124,13 +108,11 @@ Item
                     border.width: UM.Theme.getSize("default_lining").height
                 }
 
-                tickmarks: Repeater
-                {
+                tickmarks: Repeater {
                     id: repeater
                     model: control.maximumValue / control.stepSize + 1
 
-                    Rectangle
-                    {
+                    Rectangle {
                         color: control.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
                         implicitWidth: UM.Theme.getSize("print_setup_slider_tickmarks").width
                         implicitHeight: UM.Theme.getSize("print_setup_slider_tickmarks").height
@@ -141,8 +123,7 @@ Item
                         radius: Math.round(implicitWidth / 2)
                         visible: (index % 10) == 0 // Only show steps of 10%
 
-                        Label
-                        {
+                        Label {
                             text: index
                             font: UM.Theme.getFont("default")
                             visible: (index % 20) == 0 // Only show steps of 20%
@@ -155,11 +136,9 @@ Item
                 }
             }
 
-            onValueChanged:
-            {
+            onValueChanged: {
                 // Don't round the value if it's already the same
-                if (parseInt(infillDensity.properties.value) == infillSlider.value)
-                {
+                if (parseInt(infillDensity.properties.value) == infillSlider.value) {
                     return
                 }
 
@@ -174,8 +153,7 @@ Item
                 // same operation
                 var active_mode = UM.Preferences.getValue("cura/active_mode")
 
-                if (active_mode == 0 || active_mode == "simple")
-                {
+                if (active_mode == 0 || active_mode == "simple") {
                     Cura.MachineManager.setSettingForAllExtruders("infill_sparse_density", "value", roundedSliderValue)
                     Cura.MachineManager.resetSettingForAllExtruders("infill_line_distance")
                 }
@@ -184,8 +162,7 @@ Item
     }
 
     //  Gradual Support Infill Checkbox
-    CheckBox
-    {
+    CheckBox {
         id: enableGradualInfillCheckBox
         property alias _hovered: enableGradualInfillMouseArea.containsMouse
 
@@ -199,8 +176,7 @@ Item
         visible: infillSteps.properties.enabled == "True"
         checked: parseInt(infillSteps.properties.value) > 0
 
-        MouseArea
-        {
+        MouseArea {
             id: enableGradualInfillMouseArea
 
             anchors.fill: parent
@@ -209,12 +185,10 @@ Item
 
             property var previousInfillDensity: parseInt(infillDensity.properties.value)
 
-            onClicked:
-            {
+            onClicked: {
                 // Set to 90% only when enabling gradual infill
                 var newInfillDensity;
-                if (parseInt(infillSteps.properties.value) == 0)
-                {
+                if (parseInt(infillSteps.properties.value) == 0) {
                     previousInfillDensity = parseInt(infillDensity.properties.value)
                     newInfillDensity = 90
                 } else {
@@ -223,8 +197,7 @@ Item
                 Cura.MachineManager.setSettingForAllExtruders("infill_sparse_density", "value", String(newInfillDensity))
 
                 var infill_steps_value = 0
-                if (parseInt(infillSteps.properties.value) == 0)
-                {
+                if (parseInt(infillSteps.properties.value) == 0) {
                     infill_steps_value = 5
                 }
 
@@ -238,8 +211,7 @@ Item
         }
     }
 
-    UM.SettingPropertyProvider
-    {
+    UM.SettingPropertyProvider {
         id: infillDensity
         containerStackId: Cura.MachineManager.activeStackId
         key: "infill_sparse_density"
@@ -247,8 +219,7 @@ Item
         storeIndex: 0
     }
 
-    UM.SettingPropertyProvider
-    {
+    UM.SettingPropertyProvider {
         id: infillSteps
         containerStackId: Cura.MachineManager.activeStackId
         key: "gradual_infill_steps"

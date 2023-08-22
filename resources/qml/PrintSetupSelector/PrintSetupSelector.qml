@@ -7,8 +7,7 @@ import QtQuick.Controls 2.0
 import UM 1.3 as UM
 import Cura 1.0 as Cura
 
-Cura.ExpandableComponent
-{
+Cura.ExpandableComponent {
     id: printSetupSelector
 
     dragPreferencesNamePrefix: "view/settings"
@@ -20,8 +19,7 @@ Cura.ExpandableComponent
     enabled: !preSlicedData
     disabledText: catalog.i18nc("@label shown when we load a Gcode file", "Print setup disabled. G-code file can not be modified.")
 
-    UM.I18nCatalog
-    {
+    UM.I18nCatalog {
         id: catalog
         name: "cura"
     }

@@ -10,8 +10,7 @@ import UM 1.2 as UM
 import Cura 1.6 as Cura
 import ".."
 
-Item
-{
+Item {
     id: qualityRow
     height: childrenRect.height
 
@@ -20,33 +19,27 @@ Item
 
     // Here are the elements that are shown in the left column
 
-    Column
-    {
-        anchors
-        {
+    Column {
+        anchors {
             left: parent.left
             right: parent.right
         }
 
         spacing: UM.Theme.getSize("default_margin").height
 
-        Controls2.ButtonGroup
-        {
+        Controls2.ButtonGroup {
             id: activeProfileButtonGroup
             exclusive: true
             onClicked: Cura.IntentManager.selectIntent(button.modelData.intent_category, button.modelData.quality_type)
         }
 
-        Item
-        {
+        Item {
             height: childrenRect.height
-            anchors
-            {
+            anchors {
                 left: parent.left
                 right: parent.right
             }
-            Cura.IconWithText
-            {
+            Cura.IconWithText {
                 id: profileLabel
                 source: UM.Theme.getIcon("PrintQuality")
                 text: catalog.i18nc("@label", "Profiles")
@@ -54,15 +47,13 @@ Item
                 width: labelColumnWidth
                 iconSize: UM.Theme.getSize("medium_button_icon").width
             }
-            UM.SimpleButton
-            {
+            UM.SimpleButton {
                 id: resetToDefaultQualityButton
 
                 visible: Cura.SimpleModeSettingsManager.isProfileCustomized || Cura.MachineManager.hasCustomQuality
                 height: visible ? UM.Theme.getSize("print_setup_icon").height : 0
                 width: height
-                anchors
-                {
+                anchors {
                     right: profileLabel.right
                     rightMargin: UM.Theme.getSize("default_margin").width
                     leftMargin: UM.Theme.getSize("default_margin").width
@@ -72,24 +63,20 @@ Item
                 color: hovered ? UM.Theme.getColor("setting_control_button_hover") : UM.Theme.getColor("setting_control_button")
                 iconSource: UM.Theme.getIcon("ArrowReset")
 
-                onClicked:
-                {
+                onClicked: {
                     // if the current profile is user-created, switch to a built-in quality
                     Cura.MachineManager.resetToUseDefaultQuality()
                 }
-                onEntered:
-                {
+                onEntered: {
                     var tooltipContent = catalog.i18nc("@tooltip","You have modified some profile settings. If you want to change these go to custom mode.")
                     base.showTooltip(qualityRow, Qt.point(-UM.Theme.getSize("thick_margin").width, 0),  tooltipContent)
                 }
                 onExited: base.hideTooltip()
             }
 
-            Cura.LabelBar
-            {
+            Cura.LabelBar {
                 id: labelbar
-                anchors
-                {
+                anchors {
                     left: profileLabel.right
                     right: parent.right
                     verticalCenter: profileLabel.verticalCenter
@@ -101,20 +88,16 @@ Item
         }
 
 
-        Repeater
-        {
+        Repeater {
             model: Cura.IntentCategoryModel {}
-            Item
-            {
-                anchors
-                {
+            Item {
+                anchors {
                     left: parent.left
                     right: parent.right
                 }
                 height: intentCategoryLabel.height
 
-                Label
-                {
+                Label {
                     id: intentCategoryLabel
                     text: model.name
                     width: labelColumnWidth - UM.Theme.getSize("section_icon").width
@@ -126,26 +109,21 @@ Item
                     elide: Text.ElideRight
                 }
 
-                Cura.RadioCheckbar
-                {
-                    anchors
-                    {
+                Cura.RadioCheckbar {
+                    anchors {
                         left: intentCategoryLabel.right
                         right: parent.right
                     }
                     dataModel: model["qualities"]
                     buttonGroup: activeProfileButtonGroup
 
-                    function checkedFunction(modelItem)
-                    {
-                        if(Cura.MachineManager.hasCustomQuality)
-                        {
+                    function checkedFunction(modelItem) {
+                        if(Cura.MachineManager.hasCustomQuality) {
                             // When user created profile is active, no quality tickbox should be active.
                             return false
                         }
 
-                        if(modelItem === null)
-                        {
+                        if(modelItem === null) {
                             return false
                         }
                         return Cura.MachineManager.activeQualityType == modelItem.quality_type && Cura.MachineManager.activeIntentCategory == modelItem.intent_category
@@ -154,16 +132,14 @@ Item
                     isCheckedFunction: checkedFunction
                 }
 
-                MouseArea // Intent description tooltip hover area
-                {
+                MouseArea { // Intent description tooltip hover area
                     id: intentDescriptionHoverArea
                     anchors.fill: parent
                     hoverEnabled: true
                     enabled: model.description !== undefined
                     acceptedButtons: Qt.NoButton // react to hover only, don't steal clicks
 
-                    Timer
-                    {
+                    Timer {
                         id: intentTooltipTimer
                         interval: 500
                         running: false
@@ -176,15 +152,13 @@ Item
                     }
 
                     onEntered: intentTooltipTimer.start()
-                    onExited:
-                    {
+                    onExited: {
                         base.hideTooltip()
                         intentTooltipTimer.stop()
                     }
                 }
 
-                NoIntentIcon // This icon has hover priority over intentDescriptionHoverArea, so draw it above it.
-                {
+                NoIntentIcon { // This icon has hover priority over intentDescriptionHoverArea, so draw it above it.
                     affected_extruders: Cura.MachineManager.extruderPositionsWithNonActiveIntent
                     intent_type: model.name
                     anchors.right: intentCategoryLabel.right
@@ -194,10 +168,7 @@ Item
                     height: width
                     visible: Cura.MachineManager.activeIntentCategory == model.intent_category && affected_extruders.length
                 }
-
-
             }
-
         }
     }
 }
