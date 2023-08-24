@@ -164,7 +164,7 @@ Item {
                     // position of mouse relative to dropdown  align vertical centre of mouse area to cursor
                     //      v------------------------------v   v------------v
                     var h = mouseY + buttonRow.y + content.y - height / 2 | 0;
-                    if(h < absoluteMinimumHeight) //Enforce a minimum size. {
+                    if(h < absoluteMinimumHeight) { //Enforce a minimum size.
                         h = absoluteMinimumHeight;
                     }
 

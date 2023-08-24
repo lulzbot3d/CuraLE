@@ -32,10 +32,15 @@ Item {
         // TODO
         property real firstColumnWidth: Math.round(width / 3)
 
-        RecommendedQualityProfileSelector {
+        // RecommendedQualityProfileSelector {
+        //     width: parent.width
+        //     // TODO Create a reusable component with these properties to not define them separately for each component
+        //     labelColumnWidth: parent.firstColumnWidth
+        // }
+
+        RecommendedRevisedQualityProfileSelector {
             width: parent.width
-            // TODO Create a reusable component with these properties to not define them separately for each component
-            labelColumnWidth: parent.firstColumnWidth
+            // labelColumnWidth: parent.firstColumnWidth
         }
 
         RecommendedInfillDensitySelector {
