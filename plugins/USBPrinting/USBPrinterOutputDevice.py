@@ -564,6 +564,17 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._sendCommand("G27")
 
     def ensureSafeToWrite(self) -> bool:
+
+        if CuraApplication.getInstance().getController().getActiveStage() != "MonitorStage":
+            CuraApplication.getInstance().getController().setActiveStage("MonitorStage")
+
+        if self._accepts_commands == False:
+            message = Message(text = catalog.i18nc("@message",
+                                                   "Printer does not currently accept commands. Are you connected?"),
+                              title = catalog.i18nc("@message", "Printer Not Connected!"),
+                              message_type = Message.MessageType.WARNING)
+            message.show()
+            return False # Printer not connected
         if self._is_printing:
             message = Message(text = catalog.i18nc("@message",
                                                    "A print is still in progress. Cura LE cannot start another action at this time."),
@@ -575,8 +586,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         # cancel any ongoing preheat timer before starting a print
         controller = cast(GenericOutputController, self._printers[0].getController())
         controller.stopPreheatTimers()
-
-        CuraApplication.getInstance().getController().setActiveStage("MonitorStage")
 
         return True
 

@@ -221,7 +221,7 @@ Item {
 
     Row {
         id: buttonsRow
-        height: abortButton.height
+        height: startAbortButton.height
         anchors.top: progressBar.bottom
         anchors.topMargin: UM.Theme.getSize("thick_margin").height
         anchors.right: parent.right
@@ -298,16 +298,36 @@ Item {
         }
 
         Button {
-            id: abortButton
-
-            visible: printerConnected && activePrinter != null && activePrinter.canAbort
-            enabled: printerConnected && printerAcceptsCommands && activePrintJob != null &&
-                     (["paused", "printing", "pre_print"].indexOf(activePrintJob.state) >= 0)
-
+            id: startAbortButton
+            property var startOrAbort: {
+                if (printerConnected && printerAcceptsCommands) {
+                    if (activePrintJob != null && (["paused", "printing", "pre_print"].indexOf(activePrintJob.state) >= 0)) {
+                        return "abort"
+                    } else {
+                        return "start"
+                    }
+                } else {
+                    return ""
+                }
+            }
             height: UM.Theme.getSize("save_button_save_to_button").height
-
-            text: catalog.i18nc("@label", "Abort Print")
-            onClicked: confirmationDialog.visible = true
+            visible: printerConnected && activePrinter != null && activePrinter.canAbort
+            enabled: startOrAbort == "abort" || startOrAbort == "start"
+            text: {
+                if (startOrAbort == "abort") {
+                    return catalog.i18nc("@label", "Abort Print")
+                } else {
+                    return catalog.i18nc("@label", "Start Print")
+                }
+            }
+            onClicked: {
+                if (startOrAbort == "abort") {
+                    confirmationDialog.visible = true
+                } else if (startOrAbort == "start") {
+                    UM.OutputDeviceManager.requestWriteToDevice(printerOutputDevice.address, PrintInformation.jobName,
+                    { "filter_by_machine": true, "preferred_mimetypes": Cura.MachineManager.activeMachine.preferred_output_file_formats });
+                }
+            }
 
             style: UM.Theme.styles.print_setup_action_button
         }

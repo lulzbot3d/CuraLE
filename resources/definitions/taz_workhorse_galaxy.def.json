@@ -9,7 +9,7 @@
         "toolhead_category": "Galaxy",
         "toolhead_selection_name": "Galaxy Tool Head",
         "has_variants": true,
-        "firmware_latest_version": "2.0.9.0.13",
+        "firmware_latest_version": "2.0.9.0.16",
         "firmware_file": "Workhorse/Marlin_TAZWorkhorse_Galaxy_2.0.9.0.16_8235204.hex"
     }
 }
