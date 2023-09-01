@@ -21,8 +21,8 @@
         "preferred_quality_type": "normal",
         "file_formats": "text/x-gcode",
         "bltouch_is_standard": true,
-        "firmware_latest_version": "2.0.0.144.10",
-        "firmware_file": "Pro_LongBed/Marlin_TAZPro_LongBed_Universal_BLTouch_2.0.0.144.10_3e72837.bin"
+        "firmware_latest_version": "2.0.0.144.12",
+        "firmware_file": "Pro_LongBed/Marlin_TAZPro_LongBed_Legacy_Universal_BLTouch_2.0.0.144.12_1b6ad57.bin"
     },
     "overrides":
     {
