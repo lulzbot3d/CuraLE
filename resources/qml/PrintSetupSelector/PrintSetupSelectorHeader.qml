@@ -23,10 +23,10 @@ RowLayout {
                     text += " - " + resultMap["suffix"]
                 }
 
-                if (!Cura.MachineManager.hasNotSupportedQuality) {
-                    text += " - " + layerHeight.properties.value + "mm"
-                    text += Cura.MachineManager.isActiveQualityExperimental ? " - " + catalog.i18nc("@label", "Experimental") : ""
-                }
+                // if (!Cura.MachineManager.hasNotSupportedQuality) {
+                //     text += " - " + layerHeight.properties.value + "mm"
+                //     text += Cura.MachineManager.isActiveQualityExperimental ? " - " + catalog.i18nc("@label", "Experimental") : ""
+                // }
                 return text
             }
             return ""
@@ -72,7 +72,7 @@ RowLayout {
 
     Cura.IconWithText {
         source: UM.Theme.getIcon("Adhesion")
-        text: platformAdhesionType.properties.value != "skirt" && platformAdhesionType.properties.value != "none" ? enabledText : disabledText
+        text: platformAdhesionType.properties.value != "none" ? enabledText : disabledText
         font: UM.Theme.getFont("medium")
         iconSize: UM.Theme.getSize("medium_button_icon").width
 

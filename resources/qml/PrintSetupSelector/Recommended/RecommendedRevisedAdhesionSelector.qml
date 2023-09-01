@@ -32,7 +32,7 @@ Item {
 
     Item {
         id: enableAdhesionContainer
-        height: enableAdhesionCheckBox.height
+        height: adhesionTypeComboBox.height
 
         anchors {
             left: enableAdhesionRowTitle.right
@@ -40,45 +40,13 @@ Item {
             verticalCenter: enableAdhesionRowTitle.verticalCenter
         }
 
-        Cura.ComboBox {
-            id: enableAdhesionCheckBox
+        Cura.ComboBoxWithOptions {
+            id: adhesionTypeComboBox
             anchors.verticalCenter: parent.verticalCenter
-            width: parent.width / 2
-            height: UM.Theme.getSize("setting_control").height
-
-            property alias _hovered: adhesionMouseArea.containsMouse
-
-            //: Setting enable printing build-plate adhesion helper checkbox
-            //style: UM.Theme.styles.checkbox
-            enabled: recommendedPrintSetup.settingsEnabled
-
-            visible: platformAdhesionType.properties.enabled == "True"
-            // checked: platformAdhesionType.properties.value != "skirt" && platformAdhesionType.properties.value != "none"
-
-            MouseArea {
-                id: adhesionMouseArea
-                anchors.fill: parent
-                hoverEnabled: true
-
-                onClicked: {
-                    curaRecommendedMode.setAdhesion(!parent.checked)
-                }
-
-                onEntered: {
-                    base.showTooltip(enableAdhesionCheckBox, Qt.point(-enableAdhesionContainer.x - UM.Theme.getSize("thick_margin").width, 0),
-                        catalog.i18nc("@label", "Enable printing a brim or raft. This will add a flat area around or under your object which is easy to cut off afterwards."));
-                }
-                onExited: base.hideTooltip()
-            }
+            anchors.horizontalCenter: parent.horizontalCenter
+            containerStackId: Cura.MachineManager.activeMachine.id
+            settingKey: "adhesion_type"
+            controlWidth: parent.width - UM.Theme.getSize("default_margin").width
         }
-    }
-
-    UM.SettingPropertyProvider {
-        id: platformAdhesionType
-        containerStack: Cura.MachineManager.activeMachine
-        removeUnusedValue: false //Doesn't work with settings that are resolved.
-        key: "adhesion_type"
-        watchedProperties: [ "value", "resolve", "enabled" ]
-        storeIndex: 0
     }
 }
