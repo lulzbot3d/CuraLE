@@ -55,7 +55,7 @@ Item {
             labelColumnWidth: parent.firstColumnWidth
         }
 
-        RecommendedAdhesionSelector {
+        RecommendedRevisedAdhesionSelector {
             width: parent.width
             // TODO Create a reusable component with these properties to not define them separately for each component
             labelColumnWidth: parent.firstColumnWidth
