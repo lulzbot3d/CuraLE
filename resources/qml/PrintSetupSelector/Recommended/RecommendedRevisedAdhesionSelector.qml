@@ -43,6 +43,8 @@ Item {
         Cura.ComboBox {
             id: enableAdhesionCheckBox
             anchors.verticalCenter: parent.verticalCenter
+            width: parent.width / 2
+            height: UM.Theme.getSize("setting_control").height
 
             property alias _hovered: adhesionMouseArea.containsMouse
 
