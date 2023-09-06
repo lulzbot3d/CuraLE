@@ -1,0 +1,31 @@
+{
+    "name": "TAZ 5 Flexystruder v2",
+    "inherits": "taz_5",
+    "version": 2,
+    "metadata":
+    {
+        "priority": "13",
+        "base_machine": false,
+        "machine_extruder_trains":
+        {
+            "0": "taz_5_flexy_v2_extruder"
+        },
+        "visible": true,
+        "toolhead_selection_name": "Flexystruder v2",
+        "firmware_latest_version": "1.1.9.34",
+        "firmware_file": "TAZ5/Marlin_TAZ5_Flexystruder_1.1.9.34_5f9c029d1.hex",
+        "firmware_update_info": {
+            "id": "lulzbot_taz5_flexy_v2",
+            "check_urls":
+            [
+                "https://firmware.lulzbot.com/TAZ5/Flexystruder/current.version"
+            ],
+            "update_url": "https://firmware.lulzbot.com/TAZ5/Flexystruder/TAZ5FlexystruderFirmware"
+        }
+    },
+    "overrides":
+    {
+        "machine_name": { "default_value": "LulzBot TAZ 5 Flexystruder v2" },
+        "machine_start_gcode": { "default_value_from_file": "taz_5/taz_5_flexy_start" }
+    }
+}
