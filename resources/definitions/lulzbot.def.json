@@ -127,7 +127,7 @@
                         {
                             "label": "Keep Heating",
                             "description": "Keep temperature after print on removal value",
-                            "enabled": "True",
+                            "enabled": true,
                             "type": "bool",
                             "default_value": true,
                             "resolve": "any(extruderValues('material_keep_part_removal_temperature'))",
@@ -138,7 +138,7 @@
                         {
                             "label": "Temperature After Print",
                             "description": "",
-                            "enabled": "False",
+                            "enabled": false,
                             "type": "float",
                             "unit": "°C",
                             "default_value": "material_part_removal_temperature",
@@ -195,6 +195,25 @@
                             "settable_per_extruder": true
                         }
                     }
+                }
+            }
+        },
+        "speed":
+        {
+            "children":
+            {
+                "linear_advance":
+                {
+                    "label": "Linear Advance Factor",
+                    "description": "Sets the K factor for Linear Advance",
+                    "enabled": true,
+                    "type": "float",
+                    "minimum_value": "0.0",
+                    "maximum_value_warning": "2.0",
+                    "maximum_value": "5.0",
+                    "default_value": 0.0,
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true
                 }
             }
         }
