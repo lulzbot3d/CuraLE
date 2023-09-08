@@ -241,7 +241,8 @@ class MachineManager(QObject):
         return len(self.getAllSettingKeys())
 
     def getAllSettingKeys(self) -> Set[str]:
-        general_definition_containers = CuraContainerRegistry.getInstance().findDefinitionContainers(id="fdmprinter")
+        # general_definition_containers = CuraContainerRegistry.getInstance().findDefinitionContainers(id="fdmprinter")
+        general_definition_containers = CuraContainerRegistry.getInstance().findDefinitionContainers(id="lulzbot")
         if not general_definition_containers:
             return set()
         return general_definition_containers[0].getAllKeys()
