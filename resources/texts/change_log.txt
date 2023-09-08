@@ -1,3 +1,10 @@
+[4.13.0-Beta v2.5]
+* Added Linear Advance setting (Does not currently affect prints, but will be added via start gcode)
+* Expanded profile options for AST285 and MET285 slightly
+* Quite a few more profiles are in the works, so more will come soon
+* Added button on Monitor page that will allow you to start a tethered print from there rather than on the Prepare page
+* Made changes to the recommended print settings tab to make it simpler
+
 [4.13.0-Beta v2.4]
 * Language on the Update Firmware page has been updated for clarity.
 * Updated firmware on the Mini 2, SideKicks 289/747, and TAZ Workhorse.

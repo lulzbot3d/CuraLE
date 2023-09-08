@@ -5,6 +5,15 @@ This file is a work-in-progress; some sections may be incomplete, especially
 	will be updated as new versions are released and will continue to be
 	utilized as the project progresses.
 
+4.13.0-BETAv2.5:
+	Changes:
+		- Added Linear Advance setting
+			Does not currently affect prints, but will be added via start gcode
+		- Expanded profile options for AST285 and MET285 slightly
+			Quite a few more profiles are in the works, so more will come soon
+		- Added button on Monitor page that will allow you to start a print
+		- Made changes to the recommended print settings tab to make it simpler
+
 4.13.0-BETAv2.4:
 	Changes:
 		- Language on the Update Firmware page has been updated
