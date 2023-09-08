@@ -23,8 +23,19 @@
     <setting key="soften temperature">170</setting>
     <setting key="wipe temperature">180</setting>
     <setting key="heated bed temperature">80</setting>
-    <setting key="part removal temperature">60</setting>
+    <setting key="part removal temperature">50</setting>
     <setting key="standby temperature">170</setting>
+
+    <machine>
+      <machine_identifier product="mini_2_ast285"/>
+      <machine_identifier product="sidekick_289_ast285"/>
+      <machine_identifier product="sidekick_747_ast285"/>
+      <machine_identifier product="taz_pro_ast285"/>
+      <machine_identifier product="taz_pro_long_bed_ast285"/>
+      <machine_identifier product="taz_pro_xt_ast285"/>
+      <machine_identifier product="taz_workhorse_ast285"/>
+      <setting key="print temperature">230</setting>
+    </machine>
 
     <machine>
       <machine_identifier product="mini_2_he"/>
