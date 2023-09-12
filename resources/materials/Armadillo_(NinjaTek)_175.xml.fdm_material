@@ -55,6 +55,16 @@
     </machine>
 
     <machine>
+      <machine_identifier product="mini_2_met175"/>
+      <machine_identifier product="sidekick_289_met175"/>
+      <machine_identifier product="sidekick_747_met175"/>
+      <machine_identifier product="taz_pro_met175"/>
+      <machine_identifier product="taz_pro_long_bed_met175"/>
+      <machine_identifier product="taz_pro_xt_met175"/>
+      <machine_identifier product="taz_workhorse_met175"/>
+    </machine>
+
+    <machine>
       <machine_identifier product="sidekick_289_sk175"/>
       <machine_identifier product="sidekick_747_sk175"/>
     </machine>
