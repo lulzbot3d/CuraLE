@@ -90,4 +90,4 @@
 	M109 R{material_print_temperature_layer_0}  ; wait for extruder to reach printing temp
 	M190 R{material_bed_temperature_layer_0} ; wait for bed to reach printing temp
 	G1 Z2 E0 F75                        ; prime tiny bit of filament into the nozzle
-	M117 TWAZ 6 Printing...             ; progress indicator message on LCD
+	M117 TAZ 6 Printing...             ; progress indicator message on LCD
