@@ -7,7 +7,7 @@ import QtQuick.Controls.Styles 1.1
 import QtQuick.Dialogs 1.1
 import QtQuick.Layouts 1.1
 
-import UM 1.1 as UM
+import UM 1.2 as UM
 import Cura 1.0 as Cura
 
 Item {
@@ -303,7 +303,7 @@ Item {
                 if (printerConnected && printerAcceptsCommands) {
                     if (activePrintJob != null && (["paused", "printing", "pre_print"].indexOf(activePrintJob.state) >= 0)) {
                         return "abort"
-                    } else {
+                    } else if (UM.Backend.state == UM.Backend.Done || UM.Backend.state == UM.Backend.Disabled) {
                         return "start"
                     }
                 } else {
