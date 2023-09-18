@@ -19,8 +19,7 @@ Component {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
 
-            Cura.PrintMonitor
-            {
+            Cura.PrintMonitor {
                 id: printMonitor
                 anchors.top: parent.top
                 anchors.right: parent.right

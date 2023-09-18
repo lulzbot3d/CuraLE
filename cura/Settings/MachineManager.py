@@ -537,7 +537,11 @@ class MachineManager(QObject):
     def activeMachineLatestFirmwareVersion(self) -> str:
         if self.activeMachine is None:
             return ""
-        version = self.activeMachine.getBottom().getMetaDataEntry("firmware_latest_version")
+        # I don't believe this if statement returns the way I'm expecting it to
+        if self._global_container_stack.getProperty("machine_has_bltouch", "value"):
+            version = self.activeMachine.getBottom().getMetaDataEntry("firmware_bltouch_latest_version")
+        else:
+            version = self.activeMachine.getBottom().getMetaDataEntry("firmware_latest_version")
         return version
 
     @pyqtProperty(str, notify = globalContainerChanged)
