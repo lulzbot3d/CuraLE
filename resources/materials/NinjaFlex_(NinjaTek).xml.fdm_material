@@ -33,6 +33,16 @@
     </machine>
 
     <machine>
+      <machine_identifier product="sidekick_747_ast285"/>
+      <machine_identifier product="taz_pro_ast285"/>
+      <machine_identifier product="taz_pro_long_bed_ast285"/>
+      <machine_identifier product="taz_pro_xt_ast285"/>
+      <machine_identifier product="taz_workhorse_ast285"/>
+      <setting key="print temperature">235</setting>
+      <setting key="part removal temperature">30</setting>
+    </machine>
+
+    <machine>
       <machine_identifier product="taz_pro_dual"/>
       <machine_identifier product="taz_pro_xt_dual"/>
     </machine>
