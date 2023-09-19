@@ -40,6 +40,7 @@
         "brim_line_count": { "default_value": 10 },
         "infill_before_walls": { "default_value": "False" },
         "infill_pattern": { "value": "'grid' if infill_sparse_density > 25 else 'grid'" },
+        "infill_sparse_thickness": { "maximum_value_warning": "machine_nozzle_size" },
         "infill_wipe_dist": { "maximum_value_warning": "machine_nozzle_size * 1.5" },
         "jerk_enabled": {
             "description": "Enables adjusting the jerk of print head when the velocity in the X or Y axis changes. Increasing the jerk can reduce printing time at the cost of print quality. Populated values are the firmware defaults."
@@ -68,6 +69,7 @@
         "prime_tower_position_x": { "default_value": 20 },
         "prime_tower_position_y": { "default_value": 20 },
         "support_angle": { "default_value": 60 },
+        "support_infill_sparse_thickness": { "maximum_value_warning": "machine_nozzle_size" },
         "travel_retract_before_outer_wall": { "default_value": true },
         "wall_thickness":
         {
