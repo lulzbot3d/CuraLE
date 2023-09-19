@@ -5,6 +5,13 @@ This file is a work-in-progress; some sections may be incomplete, especially
 	will be updated as new versions are released and will continue to be
 	utilized as the project progresses.
 
+4.13.0-BETAv2.6:
+	Changes:
+		- Build to revert pro firmware back to an older version
+			Version included in 2.5 is much more unstable than previously
+			thought. Large stability and safety improvements are coming.
+		- Some more profile additions and corrections
+
 4.13.0-BETAv2.5:
 	Changes:
 		- Added Linear Advance setting
@@ -13,6 +20,7 @@ This file is a work-in-progress; some sections may be incomplete, especially
 			Quite a few more profiles are in the works, so more will come soon
 		- Added button on Monitor page that will allow you to start a print
 		- Made changes to the recommended print settings tab to make it simpler
+		- Updated Pro firmware
 
 4.13.0-BETAv2.4:
 	Changes:

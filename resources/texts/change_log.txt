@@ -1,3 +1,8 @@
+[4.13.0-Beta v2.6]
+* Build primarily to revert TAZ Pro firmware back to an older version
+* Newer TAZ Pro firmware with stability improvements is in the works
+* More profile additions and corrections for the Galaxy Series Tool Heads
+
 [4.13.0-Beta v2.5]
 * Added Linear Advance setting (Does not currently affect prints, but will be added via start gcode)
 * Expanded profile options for AST285 and MET285 slightly
