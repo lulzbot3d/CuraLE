@@ -39,6 +39,7 @@
       <machine_identifier product="taz_pro_xt_ast285"/>
       <machine_identifier product="taz_workhorse_ast285"/>
       <setting key="print temperature">235</setting>
+      <setting key="wipe temperature">190</setting>
       <setting key="part removal temperature">30</setting>
     </machine>
 
