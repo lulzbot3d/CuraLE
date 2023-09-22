@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>BASF</brand>
+      <material>TPU (Flexible)</material>
+      <color>Generic</color>
+      <category>Expert</category>
+      <label>Ultrafuse TPU 64D</label>
+    </name>
+    <GUID>c77b4394-9b7f-46a4-af72-b2d2d1ab50cb</GUID>
+    <version>1</version>
+    <color_code>#ffc924</color_code>
+    <info_link></info_link>
+    <adhesion_info></adhesion_info>
+  </metadata>
+  <properties>
+    <density>1.12</density>
+    <diameter>2.85</diameter>
+  </properties>
+  <settings>
+    <setting key="print temperature">225</setting>
+    <setting key="probe temperature">160</setting>
+    <setting key="soften temperature">170</setting>
+    <setting key="wipe temperature">180</setting>
+    <setting key="heated bed temperature">60</setting>
+    <setting key="part removal temperature">0</setting>
+
+  </settings>
+</fdmmaterial>

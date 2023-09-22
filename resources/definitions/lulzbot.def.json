@@ -70,6 +70,11 @@
         "prime_tower_position_y": { "default_value": 20 },
         "support_angle": { "default_value": 60 },
         "support_infill_sparse_thickness": { "maximum_value_warning": "machine_nozzle_size" },
+        "support_join_distance":
+        {
+            "default_value": 5.0,
+            "maximum_value_warning": "15"
+        },
         "travel_retract_before_outer_wall": { "default_value": true },
         "wall_thickness":
         {
