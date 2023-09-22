@@ -62,7 +62,7 @@ UM.TooltipArea
         id: checkBox
         anchors {
             left: fieldLabel.right
-            leftMargin: UM.Theme.getSize("default_margin").width
+            //leftMargin: UM.Theme.getSize("default_margin").width
             verticalCenter: parent.verticalCenter
         }
         checked: String(propertyProvider.properties.value).toLowerCase() != 'false'

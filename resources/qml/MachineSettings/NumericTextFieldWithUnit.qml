@@ -75,7 +75,7 @@ UM.TooltipArea
     {
         id: textFieldWithUnit
         anchors.left: fieldLabel.right
-        anchors.leftMargin: UM.Theme.getSize("default_margin").width
+        //anchors.leftMargin: UM.Theme.getSize("default_margin").width
         verticalAlignment: Text.AlignVCenter
         padding: 0
         leftPadding: UM.Theme.getSize("narrow_margin").width

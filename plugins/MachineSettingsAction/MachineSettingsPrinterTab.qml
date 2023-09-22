@@ -48,6 +48,7 @@ Item
         {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignTop
+            Layout.preferredWidth: parent.width / 2
 
             spacing: base.columnSpacing
 
@@ -204,6 +205,7 @@ Item
         {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignTop
+            Layout.preferredWidth: parent.width / 2
 
             spacing: base.columnSpacing
 

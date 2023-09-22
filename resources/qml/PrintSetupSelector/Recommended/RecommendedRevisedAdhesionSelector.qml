@@ -46,7 +46,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             containerStackId: Cura.MachineManager.activeMachine.id
             settingKey: "adhesion_type"
-            controlWidth: parent.width - UM.Theme.getSize("default_margin").width
+            controlWidth: parent.width
         }
     }
 }
