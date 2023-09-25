@@ -832,12 +832,12 @@ QtObject {
                     // Do not use Math.round otherwise the tickmarks won't be aligned
                     x: ((styleData.handleWidth / 2) - (implicitWidth / 2) + (index * ((repeater.width - styleData.handleWidth) / (repeater.count-1))))
                     radius: Math.round(implicitWidth / 2)
-                    visible: (adjusted_index % (range / 10)) == 0
+                    visible: range >= 10 ? ((adjusted_index % (range / 10)) == 0) : true
 
                     Label {
                         text: adjusted_index
                         font: UM.Theme.getFont("default")
-                        visible: (adjusted_index % (range / 5)) == 0
+                        visible: range >= 5 ? (adjusted_index % (range / 5)) == 0 : true
                         anchors.horizontalCenter: parent.horizontalCenter
                         y: UM.Theme.getSize("thin_margin").height
                         renderType: Text.NativeRendering

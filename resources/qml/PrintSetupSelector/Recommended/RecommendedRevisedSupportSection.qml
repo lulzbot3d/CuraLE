@@ -277,7 +277,7 @@ Item {
             leftMargin: UM.Theme.getSize("wide_margin").width
             right: supportDensityContainer.left
         }
-        text: catalog.i18nc("@label", "Support Density")
+        text: catalog.i18nc("@label", "Support Density (%)")
         font: UM.Theme.getFont("small")
         renderType: Text.NativeRendering
         color: UM.Theme.getColor("text")
@@ -312,7 +312,7 @@ Item {
             stepSize: 1
             tickmarksEnabled: true
 
-            // disable slider when gradual support is enabled
+            // disable slider when support is disabled
             enabled: enableSupportCheckBox.checked
 
             // set initial value from stack
@@ -354,7 +354,7 @@ Item {
             leftMargin: UM.Theme.getSize("wide_margin").width
             right: supportOverhangContainer.left
         }
-        text: catalog.i18nc("@label", "Support Overhang")
+        text: catalog.i18nc("@label", "Support Overhang (°)")
         font: UM.Theme.getFont("small")
         renderType: Text.NativeRendering
         color: UM.Theme.getColor("text")
@@ -389,7 +389,7 @@ Item {
             stepSize: 1
             tickmarksEnabled: true
 
-            // disable slider when gradual support is enabled
+            // disable slider when support is disabled
             enabled: enableSupportCheckBox.checked
 
             // set initial value from stack

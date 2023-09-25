@@ -37,6 +37,11 @@ Item {
             // labelColumnWidth: parent.firstColumnWidth
         }
 
+        RecommendedRevisedWallsSelector {
+            width: parent.width
+            labelColumnWidth: parent.firstColumnWidth
+        }
+
         RecommendedRevisedInfillDensitySelector {
             width: parent.width
             // TODO Create a reusable component with these properties to not define them separately for each component
