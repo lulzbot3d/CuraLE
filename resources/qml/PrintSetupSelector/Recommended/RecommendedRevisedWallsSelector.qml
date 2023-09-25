@@ -74,6 +74,76 @@ Item {
         }
     }
 
+    Label {
+        id: zSeamAlignmentLabel
+        anchors {
+            top: zSeamAlignmentContainer.top
+            bottom: zSeamAlignmentContainer.bottom
+            left: parent.left
+            leftMargin: UM.Theme.getSize("wide_margin").width
+            right: zSeamAlignmentContainer.left
+        }
+        text: catalog.i18nc("@label", "Z Seam Alignment")
+        font: UM.Theme.getFont("small")
+        renderType: Text.NativeRendering
+        color: UM.Theme.getColor("text")
+        verticalAlignment: Text.AlignVCenter
+    }
+
+    Item {
+        id: zSeamAlignmentContainer
+        height: zSeamAlignmentComboBox.height
+
+        anchors {
+            top: wallCountContainer.bottom
+            topMargin: UM.Theme.getSize("wide_margin").height
+            left: wallCountContainer.left
+            right: parent.right
+        }
+
+        Cura.ComboBoxWithOptions {
+            id: zSeamAlignmentComboBox
+            containerStackId: Cura.MachineManager.activeMachine.id
+            settingKey: "z_seam_type"
+            controlWidth: zSeamAlignmentContainer.width
+        }
+    }
+
+    Label {
+        id: zSeamPositionLabel
+        anchors {
+            top: zSeamPositionContainer.top
+            bottom: zSeamPositionContainer.bottom
+            left: parent.left
+            leftMargin: UM.Theme.getSize("wide_margin").width
+            right: zSeamPositionContainer.left
+        }
+        text: catalog.i18nc("@label", "Z Seam Position")
+        font: UM.Theme.getFont("small")
+        renderType: Text.NativeRendering
+        color: UM.Theme.getColor("text")
+        verticalAlignment: Text.AlignVCenter
+    }
+
+    Item {
+        id: zSeamPositionContainer
+        height: zSeamPositionComboBox.height
+
+        anchors {
+            top: zSeamAlignmentContainer.bottom
+            topMargin: UM.Theme.getSize("default_margin").height
+            left: wallCountContainer.left
+            right: parent.right
+        }
+
+        Cura.ComboBoxWithOptions {
+            id: zSeamPositionComboBox
+            containerStackId: Cura.MachineManager.activeMachine.id
+            settingKey: "z_seam_position"
+            controlWidth: zSeamPositionContainer.width
+        }
+    }
+
     UM.SettingPropertyProvider {
         id: wallCount
         containerStackId: Cura.MachineManager.activeStackId

@@ -30,7 +30,7 @@ Item {
         }
 
         // TODO
-        property real firstColumnWidth: Math.round(width / 3)
+        property real firstColumnWidth: Math.round(width * (5/12))
 
         RecommendedRevisedQualityProfileSelector {
             width: parent.width
@@ -38,6 +38,11 @@ Item {
         }
 
         RecommendedRevisedWallsSelector {
+            width: parent.width
+            labelColumnWidth: parent.firstColumnWidth
+        }
+
+        RecommendedRevisedTopBottomSelector {
             width: parent.width
             labelColumnWidth: parent.firstColumnWidth
         }
