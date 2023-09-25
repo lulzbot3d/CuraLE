@@ -86,55 +86,7 @@ Item {
             // set initial value from stack
             value: parseInt(infillDensity.properties.value)
 
-            style: SliderStyle {
-                //Draw line
-                groove: Item {
-                    Rectangle {
-                        height: UM.Theme.getSize("print_setup_slider_groove").height
-                        width: control.width - UM.Theme.getSize("print_setup_slider_handle").width
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.verticalCenter: parent.verticalCenter
-                        color: control.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
-                    }
-                }
-
-                handle: Rectangle {
-                    id: handleButton
-                    color: control.enabled ? UM.Theme.getColor("primary") : UM.Theme.getColor("quality_slider_unavailable")
-                    implicitWidth: UM.Theme.getSize("print_setup_slider_handle").width
-                    implicitHeight: implicitWidth
-                    radius: Math.round(implicitWidth / 2)
-                    border.color: UM.Theme.getColor("slider_groove_fill")
-                    border.width: UM.Theme.getSize("default_lining").height
-                }
-
-                tickmarks: Repeater {
-                    id: repeater
-                    model: control.maximumValue / control.stepSize + 1
-
-                    Rectangle {
-                        color: control.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
-                        implicitWidth: UM.Theme.getSize("print_setup_slider_tickmarks").width
-                        implicitHeight: UM.Theme.getSize("print_setup_slider_tickmarks").height
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        // Do not use Math.round otherwise the tickmarks won't be aligned
-                        x: ((styleData.handleWidth / 2) - (implicitWidth / 2) + (index * ((repeater.width - styleData.handleWidth) / (repeater.count-1))))
-                        radius: Math.round(implicitWidth / 2)
-                        visible: (index % 10) == 0 // Only show steps of 10%
-
-                        Label {
-                            text: index
-                            font: UM.Theme.getFont("default")
-                            visible: (index % 20) == 0 // Only show steps of 20%
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            y: UM.Theme.getSize("thin_margin").height
-                            renderType: Text.NativeRendering
-                            color: UM.Theme.getColor("quality_slider_available")
-                        }
-                    }
-                }
-            }
+            style: UM.Theme.styles.setup_selector_slider
 
             onValueChanged: {
                 // Don't round the value if it's already the same
@@ -161,6 +113,22 @@ Item {
         }
     }
 
+    Label {
+        id: patternLabel
+        anchors {
+            top: infillPatternContainer.top
+            bottom: infillPatternContainer.bottom
+            left: parent.left
+            leftMargin: UM.Theme.getSize("wide_margin").width
+            right: infillPatternContainer.left
+        }
+        text: catalog.i18nc("@label", "Infill Pattern")
+        font: UM.Theme.getFont("small")
+        renderType: Text.NativeRendering
+        color: UM.Theme.getColor("text")
+        verticalAlignment: Text.AlignVCenter
+    }
+
     Item {
         id: infillPatternContainer
         height: infillPatternComboBox.height
@@ -170,7 +138,6 @@ Item {
             topMargin: UM.Theme.getSize("wide_margin").height
             left: infillSliderContainer.left
             right: parent.right
-            horizontalCenter: infillSliderContainer.horizontalCenter
         }
 
         Cura.ComboBoxWithOptions {
@@ -179,6 +146,22 @@ Item {
             settingKey: "infill_pattern"
             controlWidth: infillPatternContainer.width
         }
+    }
+
+    Label {
+        id: gradualInfillLabel
+        anchors {
+            top: enableGradualInfillCheckBox.top
+            bottom: enableGradualInfillCheckBox.bottom
+            left: parent.left
+            leftMargin: UM.Theme.getSize("wide_margin").width
+            right: enableGradualInfillCheckBox.left
+        }
+        text: catalog.i18nc("@label", "Gradual Infill")
+        font: UM.Theme.getFont("small")
+        renderType: Text.NativeRendering
+        color: UM.Theme.getColor("text")
+        verticalAlignment: Text.AlignVCenter
     }
 
     //  Gradual Support Infill Checkbox
@@ -190,7 +173,7 @@ Item {
         anchors.topMargin: UM.Theme.getSize("default_margin").height
         anchors.left: infillSliderContainer.left
 
-        text: catalog.i18nc("@label", "Gradual infill")
+        //text: catalog.i18nc("@label", "Gradual infill")
         style: UM.Theme.styles.checkbox
         enabled: recommendedPrintSetup.settingsEnabled
         visible: infillSteps.properties.enabled == "True"

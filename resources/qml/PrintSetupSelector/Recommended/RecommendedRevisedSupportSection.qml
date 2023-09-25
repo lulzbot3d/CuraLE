@@ -268,6 +268,159 @@ Item {
         }
     }
 
+    Label {
+        id: supportDensityLabel
+        anchors {
+            top: supportDensityContainer.top
+            bottom: supportDensityContainer.bottom
+            left: parent.left
+            leftMargin: UM.Theme.getSize("wide_margin").width
+            right: supportDensityContainer.left
+        }
+        text: catalog.i18nc("@label", "Support Density")
+        font: UM.Theme.getFont("small")
+        renderType: Text.NativeRendering
+        color: UM.Theme.getColor("text")
+        verticalAlignment: Text.AlignVCenter
+    }
+
+    Binding {
+        target: supportDensitySlider
+        property: "value"
+        value: parseInt(supportDensity.properties.value)
+    }
+
+    Item {
+        id: supportDensityContainer
+        height: supportDensitySlider.height
+
+        anchors {
+            top: enableSupportContainer.bottom
+            topMargin: UM.Theme.getSize("wide_margin").height
+            left: enableSupportContainer.left
+            right: parent.right
+        }
+
+        Slider {
+            id: supportDensitySlider
+
+            width: parent.width
+            height: UM.Theme.getSize("print_setup_slider_handle").height // The handle is the widest element of the slider
+
+            minimumValue: 0
+            maximumValue: 100
+            stepSize: 1
+            tickmarksEnabled: true
+
+            // disable slider when gradual support is enabled
+            enabled: enableSupportCheckBox.checked
+
+            // set initial value from stack
+            value: parseInt(supportDensity.properties.value)
+
+            style: UM.Theme.styles.setup_selector_slider
+
+            onValueChanged: {
+                // Don't round the value if it's already the same
+                if (parseInt(supportDensity.properties.value) == supportDensitySlider.value) {
+                    return
+                }
+
+                // Round the slider value to the nearest multiple of 10 (simulate step size of 10)
+                var roundedSliderValue = Math.round(supportDensitySlider.value / 10) * 10
+
+                // Update the slider value to represent the rounded value
+                supportDensitySlider.value = roundedSliderValue
+
+                // Update value only if the Recommended mode is Active,
+                // Otherwise if I change the value in the Custom mode the Recommended view will try to repeat
+                // same operation
+                var active_mode = UM.Preferences.getValue("cura/active_mode")
+
+                if (active_mode == 0 || active_mode == "simple") {
+                    Cura.MachineManager.setSettingForAllExtruders("support_infill_rate", "value", roundedSliderValue)
+                    Cura.MachineManager.resetSettingForAllExtruders("support_line_distance")
+                }
+            }
+        }
+    }
+
+    Label {
+        id: supportOverhangLabel
+        anchors {
+            top: supportOverhangContainer.top
+            bottom: supportOverhangContainer.bottom
+            left: parent.left
+            leftMargin: UM.Theme.getSize("wide_margin").width
+            right: supportOverhangContainer.left
+        }
+        text: catalog.i18nc("@label", "Support Overhang")
+        font: UM.Theme.getFont("small")
+        renderType: Text.NativeRendering
+        color: UM.Theme.getColor("text")
+        verticalAlignment: Text.AlignVCenter
+    }
+
+    Binding {
+        target: supportOverhangSlider
+        property: "value"
+        value: parseInt(supportOverhang.properties.value)
+    }
+
+    Item {
+        id: supportOverhangContainer
+        height: supportOverhangSlider.height
+
+        anchors {
+            top: supportDensityContainer.bottom
+            topMargin: UM.Theme.getSize("wide_margin").height
+            left: enableSupportContainer.left
+            right: parent.right
+        }
+
+        Slider {
+            id: supportOverhangSlider
+
+            width: parent.width
+            height: UM.Theme.getSize("print_setup_slider_handle").height // The handle is the widest element of the slider
+
+            minimumValue: 40
+            maximumValue: 80
+            stepSize: 1
+            tickmarksEnabled: true
+
+            // disable slider when gradual support is enabled
+            enabled: enableSupportCheckBox.checked
+
+            // set initial value from stack
+            value: parseInt(supportOverhang.properties.value)
+
+            style: UM.Theme.styles.setup_selector_slider
+
+            onValueChanged: {
+                // Don't round the value if it's already the same
+                if (parseInt(supportOverhang.properties.value) == supportOverhangSlider.value) {
+                    return
+                }
+
+                // Round the slider value to the nearest multiple of 10 (simulate step size of 10)
+                var roundedSliderValue = Math.round(supportOverhangSlider.value / 2) * 2
+
+                // Update the slider value to represent the rounded value
+                supportOverhangSlider.value = roundedSliderValue
+
+                // Update value only if the Recommended mode is Active,
+                // Otherwise if I change the value in the Custom mode the Recommended view will try to repeat
+                // same operation
+                var active_mode = UM.Preferences.getValue("cura/active_mode")
+
+                if (active_mode == 0 || active_mode == "simple") {
+                    Cura.MachineManager.setSettingForAllExtruders("support_angle", "value", roundedSliderValue)
+                }
+            }
+        }
+    }
+
     property var extruderModel: CuraApplication.getExtrudersModel()
 
 
@@ -291,6 +444,22 @@ Item {
         id: machineExtruderCount
         containerStack: Cura.MachineManager.activeMachine
         key: "machine_extruder_count"
+        watchedProperties: ["value"]
+        storeIndex: 0
+    }
+
+    UM.SettingPropertyProvider {
+        id: supportDensity
+        containerStackId: Cura.MachineManager.activeStackId
+        key: "support_infill_rate"
+        watchedProperties: ["value"]
+        storeIndex: 0
+    }
+
+    UM.SettingPropertyProvider {
+        id: supportOverhang
+        containerStackId: Cura.MachineManager.activeStackId
+        key: "support_angle"
         watchedProperties: ["value"]
         storeIndex: 0
     }

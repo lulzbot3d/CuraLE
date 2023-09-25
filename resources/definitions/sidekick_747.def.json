@@ -13,9 +13,9 @@
         "platform": "sidekick_747.stl",
         "platform_offset":
         [
-            -4.9,
-            -18,
-            5.5
+            -5,
+            -16,
+            2
         ],
         "preferred_quality_type": "normal",
         "file_formats": "text/x-gcode",

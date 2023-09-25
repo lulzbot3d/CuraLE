@@ -415,7 +415,7 @@
         "setting_control_icon_disabled_background": [102, 102, 102, 255],
         "setting_control_selected": [230, 235, 145, 255],
         "setting_control_selected_dark_green": [155, 174, 17, 255],
-        "setting_control_text": [102, 102, 102, 255],
+        "setting_control_text": [52, 52, 52, 255],
         "setting_filter_field": [153, 153, 153, 255],
         "setting_unit": [127, 127, 127, 255],
         "setting_validation_error_background": [255, 66, 60, 255],
