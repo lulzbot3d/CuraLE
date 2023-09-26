@@ -6,6 +6,7 @@
     {
         "priority": "13",
         "base_machine": false,
+        "preferred_material": "NinjaFlex_(NinjaTek)",
         "machine_extruder_trains":
         {
             "0": "taz_5_flexy_v2_extruder"

@@ -36,6 +36,15 @@
     </machine>
 
     <machine>
+      <machine_identifier product="mini_1_flexystruder"/>
+    </machine>
+
+    <machine>
+      <machine_identifier product="taz_5_flexy_v2"/>
+      <machine_identifier product="taz_6_flexy_v2"/>
+    </machine>
+
+    <machine>
       <machine_identifier product="mini_1_he"/>
       <machine_identifier product="mini_2_he"/>
       <machine_identifier product="sidekick_289_he"/>
