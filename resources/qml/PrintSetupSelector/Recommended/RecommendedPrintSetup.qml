@@ -34,7 +34,6 @@ Item {
 
         RecommendedRevisedQualityProfileSelector {
             width: parent.width
-            // labelColumnWidth: parent.firstColumnWidth
         }
 
         RecommendedRevisedWallsSelector {
@@ -62,6 +61,11 @@ Item {
         RecommendedRevisedAdhesionSelector {
             width: parent.width
             // TODO Create a reusable component with these properties to not define them separately for each component
+            labelColumnWidth: parent.firstColumnWidth
+        }
+
+        RecommendedRevisedPrintSequenceSelector {
+            width: parent.width
             labelColumnWidth: parent.firstColumnWidth
         }
     }

@@ -364,7 +364,13 @@ Item {
     Binding {
         target: supportOverhangSlider
         property: "value"
-        value: parseInt(supportOverhang.properties.value)
+        value: {
+            if (supportOverhang.properties.value !== undefined) {
+                return parseInt(supportOverhang.properties.value)
+            } else if (supportOverhangGlobal.properties.value !== undefined) {
+                return parseInt(supportOverhangGlobal.properties.value)
+            } else { return 60 }
+        }
     }
 
     Item {
@@ -393,7 +399,7 @@ Item {
             enabled: enableSupportCheckBox.checked
 
             // set initial value from stack
-            value: parseInt(supportOverhang.properties.value)
+            value: 60
 
             style: UM.Theme.styles.setup_selector_slider
 
@@ -403,7 +409,7 @@ Item {
                     return
                 }
 
-                // Round the slider value to the nearest multiple of 10 (simulate step size of 10)
+                // Round the slider value
                 var roundedSliderValue = Math.round(supportOverhangSlider.value / 2) * 2
 
                 // Update the slider value to represent the rounded value
@@ -457,8 +463,24 @@ Item {
     }
 
     UM.SettingPropertyProvider {
+        id: supportDensityGlobal
+        containerStack: Cura.MachineManager.activeMachine
+        key: "support_infill_rate"
+        watchedProperties: ["value"]
+        storeIndex: 0
+    }
+
+    UM.SettingPropertyProvider {
         id: supportOverhang
         containerStackId: Cura.MachineManager.activeStackId
+        key: "support_angle"
+        watchedProperties: ["value"]
+        storeIndex: 0
+    }
+
+    UM.SettingPropertyProvider {
+        id: supportOverhangGlobal
+        containerStack: Cura.MachineManager.activeMachine
         key: "support_angle"
         watchedProperties: ["value"]
         storeIndex: 0

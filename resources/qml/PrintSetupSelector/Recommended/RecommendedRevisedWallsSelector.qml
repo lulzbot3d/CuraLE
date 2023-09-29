@@ -30,6 +30,18 @@ Item {
         iconSize: UM.Theme.getSize("medium_button_icon").width
     }
 
+    Binding {
+        target: wallCountSlider
+        property: "value"
+        value: {
+            if (wallCount.properties.value === undefined) {
+                return parseInt(wallCountGlobal.properties.value)
+            } else {
+                return parseInt(wallCount.properties.value)
+            }
+        }
+    }
+
     Item {
         id: wallCountContainer
         height: wallCountSlider.height
@@ -52,7 +64,7 @@ Item {
             tickmarksEnabled: true
 
             // set initial value from stack
-            value: parseInt(wallCount.properties.value)
+            value: 2
 
             style: UM.Theme.styles.setup_selector_slider
 
@@ -147,6 +159,14 @@ Item {
     UM.SettingPropertyProvider {
         id: wallCount
         containerStackId: Cura.MachineManager.activeStackId
+        key: "wall_line_count"
+        watchedProperties: [ "value" ]
+        storeIndex: 0
+    }
+
+    UM.SettingPropertyProvider {
+        id: wallCountGlobal
+        containerStack: Cura.MachineManager.activeMachine
         key: "wall_line_count"
         watchedProperties: [ "value" ]
         storeIndex: 0
