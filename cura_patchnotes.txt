@@ -5,6 +5,13 @@ This file is a work-in-progress; some sections may be incomplete, especially
 	will be updated as new versions are released and will continue to be
 	utilized as the project progresses.
 
+4.13.0-BETAv2.7:
+	Changes:
+		- Fixed MacOS bug that prevented USB connections with M1 and M2 chips
+		- Made major changes to the recommended print settings tab to make
+			things a little easier to understand for less experienced users
+		- Continued expanding material profiles for our newer model Tool Heads
+
 4.13.0-BETAv2.6:
 	Changes:
 		- Build to revert pro firmware back to an older version

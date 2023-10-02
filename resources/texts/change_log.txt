@@ -1,3 +1,8 @@
+[4.13.0-Beta v2.7]
+* Fixed MacOS bug that prevented USB connections with M1 and M2 chips
+* Made major changes to the recommended print settings tab to make things a little easier to understand for less experienced users
+* Continued expanding material profiles for our newer model Tool Heads
+
 [4.13.0-Beta v2.6]
 * Build primarily to revert TAZ Pro firmware back to an older version
 * Newer TAZ Pro firmware with stability improvements is in the works
