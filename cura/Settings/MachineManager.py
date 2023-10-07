@@ -1848,7 +1848,7 @@ class MachineManager(QObject):
                 elif "single" in th:
                     th_name = "SINGLE"
                 else:
-                    if "met" in th:
+                    if "met" in th or "twnb" in th:
                         include_diameter = True
                     th_name = names[1]
 
