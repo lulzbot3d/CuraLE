@@ -960,6 +960,11 @@ class CuraEngineBackend(QObject, Backend):
                     Logger.log("d", "Backend finished slicing. Resetting process and socket.")
                 self._process = None # type: ignore
 
+        # This likely could cause issues with automattic slicing, very annoying...
+        cura = CuraApplication.getInstance()
+        if not cura.getPreferences().getValue("general/auto_slice"):
+            cura.getInstance().getController().setActiveStage("PreviewStage")
+
     def _reportBackendError(self, _message_id: str, _action_id: str) -> None:
         """
         Triggered when the user wants to report an error in the back-end.
