@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "TAZ Pro | TWNB175 | 0.50 mm",
+    "name": "TAZ Pro | TWNB175",
     "inherits": "taz_pro_galaxy",
     "metadata":
     {
@@ -8,7 +8,7 @@
         "visible": true,
         "base_machine": false,
         "toolhead_category": "Dual Extruders",
-        "toolhead_selection_name": "TWIN NEBULA 175 | 0.50 mm | Hardened SST",
+        "toolhead_selection_name": "TWIN NEBULA 175 | Nickel-Plated Brass",
         "machine_extruder_trains":
         {
             "0": "taz_pro_twnb175_extruder_1st",

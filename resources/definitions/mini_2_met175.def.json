@@ -1,13 +1,13 @@
 {
     "version": 2,
-    "name": "Mini 2 | MET175 | 0.50 mm",
+    "name": "Mini 2 | MET175",
     "inherits": "mini_2_galaxy",
     "metadata":
     {
         "priority": "02",
         "visible": true,
         "base_machine": false,
-        "toolhead_selection_name": "METEOR 175 | 0.50 mm | Nickel-Plated Brass",
+        "toolhead_selection_name": "METEOR 175 | Nickel-Plated Brass",
         "machine_extruder_trains":
         {
             "0": "mini_2_met175_extruder"

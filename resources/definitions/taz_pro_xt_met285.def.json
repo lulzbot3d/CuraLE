@@ -1,13 +1,13 @@
 {
     "version": 2,
-    "name": "TAZ Pro XT | MET285 | 0.50 mm",
+    "name": "TAZ Pro XT | MET285",
     "inherits": "taz_pro_xt_galaxy",
     "metadata":
     {
         "priority": "01",
         "visible": true,
         "base_machine": false,
-        "toolhead_selection_name": "METEOR 285 | 0.50 mm | Nickel-Plated Brass",
+        "toolhead_selection_name": "METEOR 285 | Nickel-Plated Brass",
         "machine_extruder_trains":
         {
             "0": "taz_pro_xt_met285_extruder"

@@ -1,13 +1,13 @@
 {
     "version": 2,
-    "name": "TAZ Pro Long Bed | MET175 | 0.50 mm",
+    "name": "TAZ Pro Long Bed | MET175",
     "inherits": "taz_pro_long_bed_galaxy",
     "metadata":
     {
         "priority": "02",
         "visible": true,
         "base_machine": false,
-        "toolhead_selection_name": "METEOR 175 | 0.50 mm | Nickel-Plated Brass",
+        "toolhead_selection_name": "METEOR 175 | Nickel-Plated Brass",
         "machine_extruder_trains":
         {
             "0": "taz_pro_long_bed_met175_extruder"

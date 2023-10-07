@@ -1855,7 +1855,11 @@ class MachineManager(QObject):
                 # Nozzle Diameter for machines where it can change
                 # This will need to actually pull the current variant eventually
                 if include_diameter:
-                    nozzle_dia = names[2][:3].replace(".", "")
+                    # nozzle_dia = names[2][:3].replace(".", "")
+                    if th_name == "AST":
+                        nozzle_dia = "12"
+                    else:
+                        nozzle_dia = "05"
 
                 abbr_machine = (machine_name + "-" + th_name + "-" + nozzle_dia).strip("-")
 

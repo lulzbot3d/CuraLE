@@ -152,6 +152,10 @@
     </machine>
 
     <machine>
+      <machine_identifier product="taz_pro_twnb285"/>
+    </machine>
+
+    <machine>
       <machine_identifier product="taz_5_twoolhead"/>
       <machine_identifier product="taz_6_twoolhead"/>
     </machine>
