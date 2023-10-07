@@ -1,12 +1,13 @@
 {
     "version": 2,
-    "name": "Dual Left Hot End",
-    "inherits": "universal_extruder",
+    "name": "TWNB175 Left",
+    "inherits": "galaxy_extruder",
     "metadata": {
-        "machine": "taz_pro_dual",
+        "machine": "taz_pro_twnb175",
         "position": "0"
     },
     "overrides": {
+        "material_diameter": { "default_value": 1.75 },
         "extruder_nr": {
             "default_value": 0,
             "maximum_value": "1"

@@ -1,9 +1,9 @@
 {
     "version": 2,
-    "name": "Dual Left Hot End",
-    "inherits": "universal_extruder",
+    "name": "TWNB285 Left",
+    "inherits": "galaxy_extruder",
     "metadata": {
-        "machine": "taz_pro_dual",
+        "machine": "taz_pro_twnb285",
         "position": "0"
     },
     "overrides": {

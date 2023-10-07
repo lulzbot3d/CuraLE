@@ -1,6 +1,5 @@
 {
     "version": 2,
-    "id": "taz_pro_dual",
     "name": "TAZ Pro | Pro Dual | 0.50 mm",
     "inherits": "taz_pro",
     "metadata":

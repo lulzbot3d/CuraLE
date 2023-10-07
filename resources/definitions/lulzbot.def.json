@@ -14,7 +14,7 @@
         ],
         "has_materials": true,
         "has_machine_quality": true,
-        "preferred_material": "Generic_PLA",
+        "preferred_material": "PolyLite_PLA_(Polymaker)",
         "preferred_quality_type": "normal",
         "variant_machine": false,
         "has_variants": false,
