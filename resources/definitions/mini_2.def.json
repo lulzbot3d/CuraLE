@@ -18,8 +18,8 @@
             100
         ],
         "file_formats": "text/x-gcode",
-        "firmware_latest_version": "2.0.9.0.16",
-        "firmware_file": "Mini2/Marlin_Mini2_Legacy_Universal_2.0.9.0.16_8235204.hex",
+        "firmware_latest_version": "2.0.9.0.17",
+        "firmware_file": "Mini2/Marlin_Mini2_Legacy_Universal_2.0.9.0.17_0453ac1.hex",
         "firmware_update_info": {
             "id": "lulzbot_mini_2",
             "check_urls":
