@@ -101,7 +101,6 @@ UM.TooltipArea
     {
         id: comboBox
         anchors.left: fieldLabel.right
-        //anchors.leftMargin: UM.Theme.getSize("default_margin").width
         width: comboBoxWithOptions.controlWidth
         height: comboBoxWithOptions.controlHeight
         model: defaultOptionsModel

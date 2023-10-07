@@ -819,7 +819,7 @@ QtObject {
             tickmarks: Repeater {
                 id: repeater
                 property int range: control.maximumValue - control.minimumValue
-                model: (range) / control.stepSize + 1
+                model: range / control.stepSize + 1
 
                 Rectangle {
                     property int adjusted_index: index + control.minimumValue
@@ -832,12 +832,12 @@ QtObject {
                     // Do not use Math.round otherwise the tickmarks won't be aligned
                     x: ((styleData.handleWidth / 2) - (implicitWidth / 2) + (index * ((repeater.width - styleData.handleWidth) / (repeater.count-1))))
                     radius: Math.round(implicitWidth / 2)
-                    visible: range >= 10 ? ((adjusted_index % (range / 10)) == 0) : true
+                    visible: adjusted_index % control.tickmarkSpacing == 0
 
                     Label {
                         text: adjusted_index
                         font: UM.Theme.getFont("default")
-                        visible: range >= 5 ? (adjusted_index % (range / 5)) == 0 : true
+                        visible: range / control.tickmarkSpacing > 5 ? adjusted_index % (control.tickmarkSpacing * 2) == 0 : true
                         anchors.horizontalCenter: parent.horizontalCenter
                         y: UM.Theme.getSize("thin_margin").height
                         renderType: Text.NativeRendering

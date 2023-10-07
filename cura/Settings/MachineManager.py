@@ -1514,7 +1514,8 @@ class MachineManager(QObject):
                 message.show()
 
         # See if we need to show the Discard or Keep changes screen
-        if self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
+        # if self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
+        if self.hasUserSettings:
             self._application.discardOrKeepProfileChanges()
 
     @pyqtSlot("QVariant")
@@ -1557,7 +1558,8 @@ class MachineManager(QObject):
             self._updateQualityWithMaterial()
 
         # See if we need to show the Discard or Keep changes screen
-        if self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
+        # if self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
+        if self.hasUserSettings:
             self._application.discardOrKeepProfileChanges()
 
     @pyqtSlot(str, str)
@@ -1582,7 +1584,8 @@ class MachineManager(QObject):
             self._updateQualityWithMaterial()
 
         # See if we need to show the Discard or Keep changes screen
-        if self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
+        # if self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
+        if self.hasUserSettings:
             self._application.discardOrKeepProfileChanges()
 
     @pyqtSlot(str)
@@ -1620,7 +1623,8 @@ class MachineManager(QObject):
             self._setQualityGroup(quality_group)
 
         # See if we need to show the Discard or Keep changes screen
-        if not no_dialog and self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
+        # if not no_dialog and self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
+        if not no_dialog and self.hasUserSettings:
             self._application.discardOrKeepProfileChanges()
 
     # The display name map of currently active quality.
@@ -1732,7 +1736,8 @@ class MachineManager(QObject):
             self._setQualityChangesGroup(quality_changes_group)
 
         # See if we need to show the Discard or Keep changes screen
-        if not no_dialog and self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
+        # if not no_dialog and self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
+        if not no_dialog and self.hasUserSettings:
             self._application.discardOrKeepProfileChanges()
 
     @pyqtSlot()

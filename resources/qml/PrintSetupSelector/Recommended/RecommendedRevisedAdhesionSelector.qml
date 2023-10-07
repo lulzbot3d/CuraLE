@@ -24,7 +24,7 @@ Item {
         anchors.top: parent.top
         anchors.left: parent.left
         source: UM.Theme.getIcon("Adhesion")
-        text: catalog.i18nc("@label", "Adhesion")
+        text: catalog.i18nc("@label", "Bed Adhesion")
         font: UM.Theme.getFont("medium")
         width: labelColumnWidth
         iconSize: UM.Theme.getSize("medium_button_icon").width

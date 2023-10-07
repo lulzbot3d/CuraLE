@@ -11,15 +11,13 @@ import Cura 1.0 as Cura
 Item {
     id: recommendedPrintSetup
 
-    height: childrenRect.height + 2 * padding
-
     property Action configureSettings
 
     property bool settingsEnabled: Cura.ExtruderManager.activeExtruderStackId || extrudersEnabledCount.properties.value == 1
-    property real padding: UM.Theme.getSize("thick_margin").width
+    property real padding: UM.Theme.getSize("default_margin").width
 
     Column {
-        spacing: UM.Theme.getSize("wide_margin").height
+        spacing: UM.Theme.getSize("thick_margin").height
 
         anchors
         {
@@ -29,44 +27,86 @@ Item {
             margins: parent.padding
         }
 
-        // TODO
-        property real firstColumnWidth: Math.round(width * (5/12))
-
         RecommendedRevisedQualityProfileSelector {
+            id: profileSelector
             width: parent.width
         }
 
-        RecommendedRevisedWallsSelector {
-            width: parent.width
-            labelColumnWidth: parent.firstColumnWidth
-        }
+        Rectangle {
+            id: settingsArea
 
-        RecommendedRevisedTopBottomSelector {
             width: parent.width
-            labelColumnWidth: parent.firstColumnWidth
-        }
+            height: recommendedPrintSetup.height - (profileSelector.height + (UM.Theme.getSize("thick_margin").height * 2))
+            color: UM.Theme.getColor("main_background")
 
-        RecommendedRevisedInfillDensitySelector {
-            width: parent.width
-            // TODO Create a reusable component with these properties to not define them separately for each component
-            labelColumnWidth: parent.firstColumnWidth
-        }
+            // Mouse area that gathers the scroll events to not propagate it to the main view.
+            MouseArea {
+                anchors.fill: scrollView
+                acceptedButtons: Qt.AllButtons
+                onWheel: wheel.accepted = true
+            }
 
-        RecommendedRevisedSupportSection {
-            width: parent.width
-            // TODO Create a reusable component with these properties to not define them separately for each component
-            labelColumnWidth: parent.firstColumnWidth
-        }
+            ScrollView {
+                id: scrollView
+                anchors {
+                    fill: parent
+                    topMargin: UM.Theme.getSize("default_margin").height
+                    leftMargin: UM.Theme.getSize("default_margin").width
+                    // Small space for the scrollbar
+                    rightMargin: UM.Theme.getSize("narrow_margin").width
+                    // Compensate for the negative margin in the parent
+                    bottomMargin: UM.Theme.getSize("default_lining").width
+                }
 
-        RecommendedRevisedAdhesionSelector {
-            width: parent.width
-            // TODO Create a reusable component with these properties to not define them separately for each component
-            labelColumnWidth: parent.firstColumnWidth
-        }
+                style: UM.Theme.styles.scrollview
+                flickableItem.flickableDirection: Flickable.VerticalFlick
 
-        RecommendedRevisedPrintSequenceSelector {
-            width: parent.width
-            labelColumnWidth: parent.firstColumnWidth
+                Column {
+
+                    id: settingsColumn
+                    spacing: UM.Theme.getSize("thick_margin").height
+
+                    width: settingsArea.width - 35
+
+                    height: childrenRect.height + 10
+
+                    // TODO
+                    property real firstColumnWidth: Math.round(width * (5/12))
+
+                    // RecommendedRevisedWallsSelector {
+                    //     width: parent.width
+                    //     labelColumnWidth: settingsColumn.firstColumnWidth
+                    // }
+
+                    RecommendedRevisedTopBottomSelector {
+                        width: parent.width
+                        labelColumnWidth: settingsColumn.firstColumnWidth
+                    }
+
+                    RecommendedRevisedInfillDensitySelector {
+                        width: parent.width
+                        // TODO Create a reusable component with these properties to not define them separately for each component
+                        labelColumnWidth: settingsColumn.firstColumnWidth
+                    }
+
+                    RecommendedRevisedSupportSection {
+                        width: parent.width
+                        // TODO Create a reusable component with these properties to not define them separately for each component
+                        labelColumnWidth: settingsColumn.firstColumnWidth
+                    }
+
+                    RecommendedRevisedAdhesionSelector {
+                        width: parent.width
+                        // TODO Create a reusable component with these properties to not define them separately for each component
+                        labelColumnWidth: settingsColumn.firstColumnWidth
+                    }
+
+                    RecommendedRevisedPrintSequenceSelector {
+                        width: parent.width
+                        labelColumnWidth: settingsColumn.firstColumnWidth
+                    }
+                }
+            }
         }
     }
 

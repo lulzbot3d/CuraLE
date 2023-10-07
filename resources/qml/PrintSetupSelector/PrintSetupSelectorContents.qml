@@ -59,6 +59,7 @@ Item {
                 right: parent.right
                 top: parent.top
             }
+            height: UM.Preferences.getValue("view/settings_list_height") - UM.Theme.getSize("default_margin").height
             visible: currentModeIndex == PrintSetupSelectorContents.Mode.Recommended
         }
 
@@ -85,6 +86,7 @@ Item {
                                 base.height - (customPrintSetup.mapToItem(null, 0, 0).y + buttonRow.height + UM.Theme.getSize("default_margin").height)
                             )
                         );
+                    recommendedPrintSetup.height = customPrintSetup.height
 
                     updateDragPosition();
                 }
@@ -154,7 +156,6 @@ Item {
             }
             height: childrenRect.height
             cursorShape: Qt.SplitVCursor
-            visible: currentModeIndex == PrintSetupSelectorContents.Mode.Custom
             drag {
                 target: parent
                 axis: Drag.YAxis

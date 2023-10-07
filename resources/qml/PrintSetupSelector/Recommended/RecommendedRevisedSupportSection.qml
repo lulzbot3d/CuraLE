@@ -268,6 +268,90 @@ Item {
         }
     }
 
+    // Label {
+    //     id: supportOverhangLabel
+    //     anchors {
+    //         top: supportOverhangContainer.top
+    //         bottom: supportOverhangContainer.bottom
+    //         left: parent.left
+    //         leftMargin: UM.Theme.getSize("wide_margin").width
+    //         right: supportOverhangContainer.left
+    //     }
+    //     text: catalog.i18nc("@label", "Support Overhang (°)")
+    //     font: UM.Theme.getFont("small")
+    //     renderType: Text.NativeRendering
+    //     color: UM.Theme.getColor("text")
+    //     verticalAlignment: Text.AlignVCenter
+    // }
+
+    // Binding {
+    //     target: supportOverhangSlider
+    //     property: "value"
+    //     value: {
+    //         if (supportOverhang.properties.value !== undefined) {
+    //             return parseInt(supportOverhang.properties.value)
+    //         } else if (supportOverhangGlobal.properties.value !== undefined) {
+    //             return parseInt(supportOverhangGlobal.properties.value)
+    //         } else { return 60 }
+    //     }
+    // }
+
+    // Item {
+    //     id: supportOverhangContainer
+    //     height: supportOverhangSlider.height
+
+    //     anchors {
+    //         top: enableSupportContainer.bottom
+    //         topMargin: UM.Theme.getSize("default_margin").height
+    //         left: enableSupportContainer.left
+    //         right: parent.right
+    //     }
+
+    //     Slider {
+    //         id: supportOverhangSlider
+
+    //         width: parent.width
+    //         height: UM.Theme.getSize("print_setup_slider_handle").height // The handle is the widest element of the slider
+
+    //         minimumValue: 40
+    //         maximumValue: 80
+    //         stepSize: 1
+    //         tickmarksEnabled: true
+    //         property int tickmarkSpacing: 4
+    //         wheelEnabled: false
+
+    //         // disable slider when support is disabled
+    //         enabled: enableSupportCheckBox.checked
+
+    //         // set initial value from stack
+    //         value: 60
+
+    //         style: UM.Theme.styles.setup_selector_slider
+
+    //         onValueChanged: {
+    //             // Don't round the value if it's already the same
+    //             if (parseInt(supportOverhang.properties.value) == supportOverhangSlider.value) {
+    //                 return
+    //             }
+
+    //             // Round the slider value
+    //             var roundedSliderValue = Math.round(supportOverhangSlider.value / 2) * 2
+
+    //             // Update the slider value to represent the rounded value
+    //             supportOverhangSlider.value = roundedSliderValue
+
+    //             // Update value only if the Recommended mode is Active,
+    //             // Otherwise if I change the value in the Custom mode the Recommended view will try to repeat
+    //             // same operation
+    //             var active_mode = UM.Preferences.getValue("cura/active_mode")
+
+    //             if (active_mode == 0 || active_mode == "simple") {
+    //                 Cura.MachineManager.setSettingForAllExtruders("support_angle", "value", roundedSliderValue)
+    //             }
+    //         }
+    //     }
+    // }
+
     Label {
         id: supportDensityLabel
         anchors {
@@ -295,8 +379,10 @@ Item {
         height: supportDensitySlider.height
 
         anchors {
+            // top: supportOverhangContainer.bottom
             top: enableSupportContainer.bottom
-            topMargin: UM.Theme.getSize("wide_margin").height
+            // topMargin: UM.Theme.getSize("thick_margin").height
+            topMargin: UM.Theme.getSize("default_margin").height
             left: enableSupportContainer.left
             right: parent.right
         }
@@ -311,6 +397,8 @@ Item {
             maximumValue: 100
             stepSize: 1
             tickmarksEnabled: true
+            property int tickmarkSpacing: 10
+            wheelEnabled: false
 
             // disable slider when support is disabled
             enabled: enableSupportCheckBox.checked
@@ -345,87 +433,83 @@ Item {
         }
     }
 
-    Label {
-        id: supportOverhangLabel
-        anchors {
-            top: supportOverhangContainer.top
-            bottom: supportOverhangContainer.bottom
-            left: parent.left
-            leftMargin: UM.Theme.getSize("wide_margin").width
-            right: supportOverhangContainer.left
-        }
-        text: catalog.i18nc("@label", "Support Overhang (°)")
-        font: UM.Theme.getFont("small")
-        renderType: Text.NativeRendering
-        color: UM.Theme.getColor("text")
-        verticalAlignment: Text.AlignVCenter
-    }
+    // Label {
+    //     id: joinDistanceLabel
+    //     anchors {
+    //         top: joinDistanceContainer.top
+    //         bottom: joinDistanceContainer.bottom
+    //         left: parent.left
+    //         leftMargin: UM.Theme.getSize("wide_margin").width
+    //         right: joinDistanceContainer.left
+    //     }
+    //     text: catalog.i18nc("@label", "Support Join Distance")
+    //     font: UM.Theme.getFont("small")
+    //     renderType: Text.NativeRendering
+    //     color: UM.Theme.getColor("text")
+    //     verticalAlignment: Text.AlignVCenter
+    // }
 
-    Binding {
-        target: supportOverhangSlider
-        property: "value"
-        value: {
-            if (supportOverhang.properties.value !== undefined) {
-                return parseInt(supportOverhang.properties.value)
-            } else if (supportOverhangGlobal.properties.value !== undefined) {
-                return parseInt(supportOverhangGlobal.properties.value)
-            } else { return 60 }
-        }
-    }
+    // Binding {
+    //     target: joinDistanceSlider
+    //     property: "value"
+    //     value: parseInt(supportJoinDistance.properties.value)
+    // }
 
-    Item {
-        id: supportOverhangContainer
-        height: supportOverhangSlider.height
+    // Item {
+    //     id: joinDistanceContainer
+    //     height: joinDistanceSlider.height
 
-        anchors {
-            top: supportDensityContainer.bottom
-            topMargin: UM.Theme.getSize("wide_margin").height
-            left: enableSupportContainer.left
-            right: parent.right
-        }
+    //     anchors {
+    //         top: supportDensityContainer.bottom
+    //         topMargin: UM.Theme.getSize("thick_margin").height
+    //         left: enableSupportContainer.left
+    //         right: parent.right
+    //     }
 
-        Slider {
-            id: supportOverhangSlider
+    //     Slider {
+    //         id: joinDistanceSlider
 
-            width: parent.width
-            height: UM.Theme.getSize("print_setup_slider_handle").height // The handle is the widest element of the slider
+    //         width: parent.width
+    //         height: UM.Theme.getSize("print_setup_slider_handle").height // The handle is the widest element of the slider
 
-            minimumValue: 40
-            maximumValue: 80
-            stepSize: 1
-            tickmarksEnabled: true
+    //         minimumValue: 3
+    //         maximumValue: 15
+    //         stepSize: 1
+    //         tickmarksEnabled: true
+    //         property int tickmarkSpacing: 3
+    //         wheelEnabled: false
 
-            // disable slider when support is disabled
-            enabled: enableSupportCheckBox.checked
+    //         // disable slider when support is disabled
+    //         enabled: enableSupportCheckBox.checked
 
-            // set initial value from stack
-            value: 60
+    //         // set initial value from stack
+    //         value: 5
 
-            style: UM.Theme.styles.setup_selector_slider
+    //         style: UM.Theme.styles.setup_selector_slider
 
-            onValueChanged: {
-                // Don't round the value if it's already the same
-                if (parseInt(supportOverhang.properties.value) == supportOverhangSlider.value) {
-                    return
-                }
+    //         onValueChanged: {
+    //             // Don't round the value if it's already the same
+    //             if (parseInt(supportJoinDistance.properties.value) == joinDistanceSlider.value) {
+    //                 return
+    //             }
 
-                // Round the slider value
-                var roundedSliderValue = Math.round(supportOverhangSlider.value / 2) * 2
+    //             // Round the slider value
+    //             var roundedSliderValue = Math.round(joinDistanceSlider.value)
 
-                // Update the slider value to represent the rounded value
-                supportOverhangSlider.value = roundedSliderValue
+    //             // Update the slider value to represent the rounded value
+    //             joinDistanceSlider.value = roundedSliderValue
 
-                // Update value only if the Recommended mode is Active,
-                // Otherwise if I change the value in the Custom mode the Recommended view will try to repeat
-                // same operation
-                var active_mode = UM.Preferences.getValue("cura/active_mode")
+    //             // Update value only if the Recommended mode is Active,
+    //             // Otherwise if I change the value in the Custom mode the Recommended view will try to repeat
+    //             // same operation
+    //             var active_mode = UM.Preferences.getValue("cura/active_mode")
 
-                if (active_mode == 0 || active_mode == "simple") {
-                    Cura.MachineManager.setSettingForAllExtruders("support_angle", "value", roundedSliderValue)
-                }
-            }
-        }
-    }
+    //             if (active_mode == 0 || active_mode == "simple") {
+    //                 Cura.MachineManager.setSettingForAllExtruders("support_join_distance", "value", roundedSliderValue)
+    //             }
+    //         }
+    //     }
+    // }
 
     property var extruderModel: CuraApplication.getExtrudersModel()
 
@@ -483,6 +567,14 @@ Item {
         containerStack: Cura.MachineManager.activeMachine
         key: "support_angle"
         watchedProperties: ["value"]
+        storeIndex: 0
+    }
+
+    UM.SettingPropertyProvider {
+        id: supportJoinDistance
+        containerStackId: Cura.MachineManager.activeStack.id
+        key: "support_join_distance"
+        watchedProperties: [ "value" ]
         storeIndex: 0
     }
 }

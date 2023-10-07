@@ -277,7 +277,7 @@ Popup {
         // spacer
         Item {
             width: 2
-            height: UM.Theme.getSize("default_radius").width 
+            height: UM.Theme.getSize("default_radius").width
         }
     }
 }

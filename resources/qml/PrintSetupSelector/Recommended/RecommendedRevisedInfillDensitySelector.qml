@@ -79,6 +79,8 @@ Item {
             maximumValue: 100
             stepSize: 1
             tickmarksEnabled: true
+            property int tickmarkSpacing: 10
+            wheelEnabled: false
 
             // disable slider when gradual support is enabled
             enabled: parseInt(infillSteps.properties.value) == 0
@@ -135,7 +137,7 @@ Item {
 
         anchors {
             top: infillSliderContainer.bottom
-            topMargin: UM.Theme.getSize("wide_margin").height
+            topMargin: UM.Theme.getSize("thick_margin").height
             left: infillSliderContainer.left
             right: parent.right
         }

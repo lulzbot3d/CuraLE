@@ -17,7 +17,12 @@ Item {
     height: childrenRect.height
 
     property real labelColumnWidth: Math.round(width / 3)
-    property var curaRecommendedMode: Cura.RecommendedMode {}
+
+    Binding {
+        target: wallCountSlider
+        property: "value"
+        value: parseInt(wallCount.properties.value)
+    }
 
     Cura.IconWithText {
         id: wallCountRowTitle
@@ -28,18 +33,6 @@ Item {
         font: UM.Theme.getFont("medium")
         width: labelColumnWidth
         iconSize: UM.Theme.getSize("medium_button_icon").width
-    }
-
-    Binding {
-        target: wallCountSlider
-        property: "value"
-        value: {
-            if (wallCount.properties.value === undefined) {
-                return parseInt(wallCountGlobal.properties.value)
-            } else {
-                return parseInt(wallCount.properties.value)
-            }
-        }
     }
 
     Item {
@@ -62,9 +55,11 @@ Item {
             maximumValue: 5
             stepSize: 1
             tickmarksEnabled: true
+            property int tickmarkSpacing: 1
+            wheelEnabled: false
 
             // set initial value from stack
-            value: 2
+            value: parseInt(wallCount.properties.value)
 
             style: UM.Theme.styles.setup_selector_slider
 
@@ -80,9 +75,17 @@ Item {
                 var active_mode = UM.Preferences.getValue("cura/active_mode")
 
                 if (active_mode == 0 || active_mode == "simple") {
-                    Cura.MachineManager.setSettingForAllExtruders("wall_line_count", "value", wallCountSlider.value) //roundedSliderValue)
+                    Cura.MachineManager.setSettingForAllExtruders("wall_line_count", "value", wallCountSlider.value)
                 }
             }
+        }
+
+        UM.SettingPropertyProvider {
+            id: wallCount
+            containerStackId: Cura.MachineManager.activeStack.id
+            key: "wall_line_count"
+            watchedProperties: [ "value" ]
+            storeIndex: 0
         }
     }
 
@@ -108,7 +111,7 @@ Item {
 
         anchors {
             top: wallCountContainer.bottom
-            topMargin: UM.Theme.getSize("wide_margin").height
+            topMargin: UM.Theme.getSize("thick_margin").height
             left: wallCountContainer.left
             right: parent.right
         }
@@ -139,11 +142,11 @@ Item {
 
     Item {
         id: zSeamPositionContainer
-        height: zSeamPositionComboBox.height
+        height: visible ? zSeamPositionComboBox.height : 0
 
         anchors {
             top: zSeamAlignmentContainer.bottom
-            topMargin: UM.Theme.getSize("default_margin").height
+            topMargin: 5
             left: wallCountContainer.left
             right: parent.right
         }
@@ -154,21 +157,5 @@ Item {
             settingKey: "z_seam_position"
             controlWidth: zSeamPositionContainer.width
         }
-    }
-
-    UM.SettingPropertyProvider {
-        id: wallCount
-        containerStackId: Cura.MachineManager.activeStackId
-        key: "wall_line_count"
-        watchedProperties: [ "value" ]
-        storeIndex: 0
-    }
-
-    UM.SettingPropertyProvider {
-        id: wallCountGlobal
-        containerStack: Cura.MachineManager.activeMachine
-        key: "wall_line_count"
-        watchedProperties: [ "value" ]
-        storeIndex: 0
     }
 }

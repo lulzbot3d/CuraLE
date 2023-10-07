@@ -22,11 +22,6 @@ RowLayout {
                 if (resultMap["suffix"]) {
                     text += " - " + resultMap["suffix"]
                 }
-
-                // if (!Cura.MachineManager.hasNotSupportedQuality) {
-                //     text += " - " + layerHeight.properties.value + "mm"
-                //     text += Cura.MachineManager.isActiveQualityExperimental ? " - " + catalog.i18nc("@label", "Experimental") : ""
-                // }
                 return text
             }
             return ""
