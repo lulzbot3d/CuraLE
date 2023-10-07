@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------
 // Copyright (c) 2022 5@xes
-// 
+//
 // proterties values
 //   "SSize"       : Support Size in mm
 //   "MSize"       : Support Maximum Size in mm
@@ -9,8 +9,8 @@
 //   "YDirection"  : Support Y direction (Abutment)
 //   "EHeights"    : Equalize heights (Abutment)
 //   "SMain"       : Scale Main direction (Freeform)
-//   "SType"       : Support Type ( Cylinder/Tube/Cube/Abutment/Freeform/Custom ) 
-//   "SubType"     : Support Freeform Type ( Cross/Section/Pillar/Bridge/Custom ) 
+//   "SType"       : Support Type ( Cylinder/Tube/Cube/Abutment/Freeform/Custom )
+//   "SubType"     : Support Freeform Type ( Cross/Section/Pillar/Bridge/Custom )
 //   "SMirror"     : Support Mirror for Freeform Type
 //-----------------------------------------------------------------------------
 
@@ -31,15 +31,15 @@ Item
     function setSType(type)
     {
         // set checked state of mesh type buttons
-		cylinderButton.checked = type === 'cylinder'
-		tubeButton.checked = type === 'tube'
+        cylinderButton.checked = type === 'cylinder'
+        tubeButton.checked = type === 'tube'
         cubeButton.checked = type === 'cube'
-		abutmentButton.checked = type === 'abutment'
-		customButton.checked = type === 'custom'
-		freeformButton.checked = type === 'freeform'
+        abutmentButton.checked = type === 'abutment'
+        customButton.checked = type === 'custom'
+        freeformButton.checked = type === 'freeform'
         UM.ActiveTool.setProperty("SType", type)
     }
-	
+
     Column
     {
         id: sTypeItems
@@ -62,7 +62,7 @@ Item
                 onClicked: setSType('cylinder')
                 style: UM.Theme.styles.tool_button
                 checked: UM.ActiveTool.properties.getValue("SType") === 'cylinder'
-                z: 6; // Depth position 
+                z: 6; // Depth position
             }
 
             Button
@@ -75,9 +75,9 @@ Item
                 onClicked: setSType('tube');
                 style: UM.Theme.styles.tool_button;
                 checked: UM.ActiveTool.properties.getValue("SType") === 'tube';
-                z: 5; // Depth position 
+                z: 5; // Depth position
             }
-			
+
             Button
             {
                 id: cubeButton;
@@ -88,7 +88,7 @@ Item
                 onClicked: setSType('cube')
                 style: UM.Theme.styles.tool_button
                 checked: UM.ActiveTool.properties.getValue("SType") === 'cube'
-                z: 4; // Depth position 
+                z: 4; // Depth position
             }
 
             Button
@@ -101,7 +101,7 @@ Item
                 onClicked: setSType('abutment')
                 style: UM.Theme.styles.tool_button
                 checked: UM.ActiveTool.properties.getValue("SType") === 'abutment'
-                z: 3; // Depth position 
+                z: 3; // Depth position
             }
 
             Button
@@ -114,9 +114,9 @@ Item
                 onClicked: setSType('freeform')
                 style: UM.Theme.styles.tool_button
                 checked: UM.ActiveTool.properties.getValue("SType") === 'freeform'
-                z: 2; // Depth position 
+                z: 2; // Depth position
             }
-			
+
             Button
             {
                 id: customButton
@@ -127,7 +127,7 @@ Item
                 onClicked: setSType('custom')
                 style: UM.Theme.styles.tool_button
                 checked: UM.ActiveTool.properties.getValue("SType") === 'custom'
-                z: 1; // Depth position 
+                z: 1; // Depth position
             }
         }
     }
@@ -136,7 +136,7 @@ Item
         id: textfields;
         anchors.leftMargin: UM.Theme.getSize("default_margin").width
         anchors.top: sTypeItems.bottom
-		anchors.topMargin: UM.Theme.getSize("default_margin").height
+        anchors.topMargin: UM.Theme.getSize("default_margin").height
 
         columns: 2
         flow: Grid.TopToBottom
@@ -152,7 +152,7 @@ Item
             renderType: Text.NativeRendering
             width: Math.ceil(contentWidth) //Make sure that the grid cells have an integer width.
         }
- 
+
         Label
         {
             height: UM.Theme.getSize("setting_control").height
@@ -160,7 +160,7 @@ Item
             font: UM.Theme.getFont("default")
             color: UM.Theme.getColor("text")
             verticalAlignment: Text.AlignVCenter
-			visible: !freeformButton.checked
+            visible: !freeformButton.checked
             renderType: Text.NativeRendering
             width: Math.ceil(contentWidth) //Make sure that the grid cells have an integer width.
         }
@@ -172,12 +172,12 @@ Item
             font: UM.Theme.getFont("default")
             color: UM.Theme.getColor("text")
             verticalAlignment: Text.AlignVCenter
-			visible: freeformButton.checked
+            visible: freeformButton.checked
             renderType: Text.NativeRendering
             width: Math.ceil(contentWidth) //Make sure that the grid cells have an integer width.
         }
 
-		Label
+        Label
         {
             height: UM.Theme.getSize("setting_control").height
             text: catalog.i18nc("@label","Interior Size")
@@ -185,10 +185,10 @@ Item
             color: UM.Theme.getColor("text")
             verticalAlignment: Text.AlignVCenter
             renderType: Text.NativeRendering
-			visible: tubeButton.checked
+            visible: tubeButton.checked
             width: Math.ceil(contentWidth) //Make sure that the grid cells have an integer width.
         }
-		
+
         Label
         {
             height: UM.Theme.getSize("setting_control").height
@@ -196,11 +196,11 @@ Item
             font: UM.Theme.getFont("default")
             color: UM.Theme.getColor("text")
             verticalAlignment: Text.AlignVCenter
-			visible: !freeformButton.checked
+            visible: !freeformButton.checked
             renderType: Text.NativeRendering
             width: Math.ceil(contentWidth) //Make sure that the grid cells have an integer width.
         }
-		
+
         TextField
         {
             id: sizeTextField
@@ -230,7 +230,7 @@ Item
             height: UM.Theme.getSize("setting_control").height
             property string unit: "mm"
             style: UM.Theme.styles.text_field
-			visible: !freeformButton.checked
+            visible: !freeformButton.checked
             text: UM.ActiveTool.properties.getValue("MSize")
             validator: DoubleValidator
             {
@@ -246,30 +246,30 @@ Item
             }
         }
 
-		ComboBox {
-			id: supportComboType
-			objectName: "Support_Type"
-			model: ListModel {
+        ComboBox {
+            id: supportComboType
+            objectName: "Support_Type"
+            model: ListModel {
                id: cbItems
                ListElement { text: "cross"}
                ListElement { text: "section"}
                ListElement { text: "pillar"}
-			   ListElement { text: "bridge"}
-			   ListElement { text: "arch-buttress"}
-			   ListElement { text: "t-support"}
-			   ListElement { text: "custom"}
-			}
-			width: UM.Theme.getSize("setting_control").width
-			height: UM.Theme.getSize("setting_control").height
-			visible: freeformButton.checked
-			Component.onCompleted: currentIndex = find(UM.ActiveTool.properties.getValue("SubType"))
-			
-			onCurrentIndexChanged: 
-			{ 
-				UM.ActiveTool.setProperty("SubType",cbItems.get(currentIndex).text);
-			}
-		}	
-				
+               ListElement { text: "bridge"}
+               ListElement { text: "arch-buttress"}
+               ListElement { text: "t-support"}
+               ListElement { text: "custom"}
+            }
+            width: UM.Theme.getSize("setting_control").width
+            height: UM.Theme.getSize("setting_control").height
+            visible: freeformButton.checked
+            Component.onCompleted: currentIndex = find(UM.ActiveTool.properties.getValue("SubType"))
+
+            onCurrentIndexChanged:
+            {
+                UM.ActiveTool.setProperty("SubType",cbItems.get(currentIndex).text);
+            }
+        }
+
         TextField
         {
             id: sizeInteriorTextField
@@ -277,35 +277,35 @@ Item
             height: UM.Theme.getSize("setting_control").height
             property string unit: "mm"
             style: UM.Theme.styles.text_field
-			visible: tubeButton.checked
+            visible: tubeButton.checked
             text: UM.ActiveTool.properties.getValue("ISize")
             validator: DoubleValidator
             {
                 decimals: 2
-				top: s_size
+                top: s_size
                 bottom: 0.1
                 locale: "en_US"
             }
 
             onEditingFinished:
             {
-			    var cur_text = parseFloat(text)
-				if ( cur_text >= s_size )
-				{
-				}
+                var cur_text = parseFloat(text)
+                if ( cur_text >= s_size )
+                {
+                }
                 var modified_text = text.replace(",", ".") // User convenience. We use dots for decimal values
                 UM.ActiveTool.setProperty("ISize", modified_text)
             }
         }
-		
-		TextField
+
+        TextField
         {
             id: angleTextField
             width: UM.Theme.getSize("setting_control").width
             height: UM.Theme.getSize("setting_control").height
             property string unit: "°"
             style: UM.Theme.styles.text_field
-			visible: !freeformButton.checked
+            visible: !freeformButton.checked
             text: UM.ActiveTool.properties.getValue("AAngle")
             validator: IntValidator
             {
@@ -319,90 +319,102 @@ Item
             }
         }
     }
-	Item
-	{
-		id: baseCheckBox
-		width: childrenRect.width
-		height: !freeformButton.checked && !abutmentButton.checked  ? 0 : (abutmentButton.checked ? (UM.Theme.getSize("setting_control").height*2+UM.Theme.getSize("default_margin").height): childrenRect.height)
-		anchors.leftMargin: UM.Theme.getSize("default_margin").width
-		anchors.top: textfields.bottom
-		anchors.topMargin: UM.Theme.getSize("default_margin").height
-		
-		CheckBox
-		{
-			id: useYDirectionCheckbox
-			anchors.top: baseCheckBox.top
-			// anchors.topMargin: UM.Theme.getSize("default_margin").height
-			anchors.left: parent.left
-			text: catalog.i18nc("@option:check","Set on Y direction")
-			style: UM.Theme.styles.partially_checkbox
-			visible: abutmentButton.checked || freeformButton.checked
+    Item
+    {
+        id: baseCheckBox
+        width: childrenRect.width
+        height: !freeformButton.checked && !abutmentButton.checked  ? 0 : (abutmentButton.checked ? (UM.Theme.getSize("setting_control").height*2+UM.Theme.getSize("default_margin").height): childrenRect.height)
+        anchors.leftMargin: UM.Theme.getSize("default_margin").width
+        anchors.top: textfields.bottom
+        anchors.topMargin: UM.Theme.getSize("default_margin").height
 
-			checked: UM.ActiveTool.properties.getValue("YDirection")
-			onClicked: UM.ActiveTool.setProperty("YDirection", checked)
-			
-		}
-		CheckBox
-		{
-			id: mirrorCheckbox
-			anchors.top: useYDirectionCheckbox.bottom
-			anchors.topMargin: UM.Theme.getSize("default_margin").height
-			anchors.left: parent.left
-			text: catalog.i18nc("@option:check","Rotate 180°")
-			style: UM.Theme.styles.partially_checkbox
-			visible: freeformButton.checked
+        CheckBox
+        {
+            id: useYDirectionCheckbox
+            anchors.top: baseCheckBox.top
+            // anchors.topMargin: UM.Theme.getSize("default_margin").height
+            anchors.left: parent.left
+            text: catalog.i18nc("@option:check","Set on Y direction")
+            style: UM.Theme.styles.partially_checkbox
+            visible: abutmentButton.checked || freeformButton.checked
 
-			checked: UM.ActiveTool.properties.getValue("SMirror")
-			onClicked: UM.ActiveTool.setProperty("SMirror", checked)
-			
-		}	
-		CheckBox
-		{
-			id: scaleMainDirectionCheckbox
-			anchors.top: mirrorCheckbox.bottom
-			anchors.topMargin: UM.Theme.getSize("default_margin").height
-			anchors.left: parent.left
-			text: catalog.i18nc("@option:check","Scaling in main Directions")
-			style: UM.Theme.styles.partially_checkbox
-			visible: freeformButton.checked
+            checked: UM.ActiveTool.properties.getValue("YDirection")
+            onClicked: UM.ActiveTool.setProperty("YDirection", checked)
 
-			checked: UM.ActiveTool.properties.getValue("SMain")
-			onClicked: UM.ActiveTool.setProperty("SMain", checked)
-			
-		}	
-		CheckBox
-		{
-			id: equalizeHeightsCheckbox
-			anchors.top: useYDirectionCheckbox.bottom
-			anchors.topMargin: UM.Theme.getSize("default_margin").height
-			anchors.left: parent.left
-			text: catalog.i18nc("@option:check","Equalize heights")
-			style: UM.Theme.styles.partially_checkbox
-			visible: abutmentButton.checked
+        }
+        CheckBox
+        {
+            id: mirrorCheckbox
+            anchors.top: useYDirectionCheckbox.bottom
+            anchors.topMargin: UM.Theme.getSize("default_margin").height
+            anchors.left: parent.left
+            text: catalog.i18nc("@option:check","Rotate 180°")
+            style: UM.Theme.styles.partially_checkbox
+            visible: freeformButton.checked
 
-			checked: UM.ActiveTool.properties.getValue("EHeights")
-			onClicked: UM.ActiveTool.setProperty("EHeights", checked)
-		}
-	}
-	
-	Rectangle {
+            checked: UM.ActiveTool.properties.getValue("SMirror")
+            onClicked: UM.ActiveTool.setProperty("SMirror", checked)
+
+        }
+        CheckBox
+        {
+            id: scaleMainDirectionCheckbox
+            anchors.top: mirrorCheckbox.bottom
+            anchors.topMargin: UM.Theme.getSize("default_margin").height
+            anchors.left: parent.left
+            text: catalog.i18nc("@option:check","Scaling in main Directions")
+            style: UM.Theme.styles.partially_checkbox
+            visible: freeformButton.checked
+
+            checked: UM.ActiveTool.properties.getValue("SMain")
+            onClicked: UM.ActiveTool.setProperty("SMain", checked)
+
+        }
+        CheckBox
+        {
+            id: equalizeHeightsCheckbox
+            anchors.top: useYDirectionCheckbox.bottom
+            anchors.topMargin: UM.Theme.getSize("default_margin").height
+            anchors.left: parent.left
+            text: catalog.i18nc("@option:check","Equalize heights")
+            style: UM.Theme.styles.partially_checkbox
+            visible: abutmentButton.checked
+
+            checked: UM.ActiveTool.properties.getValue("EHeights")
+            onClicked: UM.ActiveTool.setProperty("EHeights", checked)
+        }
+    }
+
+    Rectangle {
         id: rightRect
         anchors.top: baseCheckBox.bottom
-		//color: UM.Theme.getColor("toolbar_background")
-		color: "#00000000"
-		width: UM.Theme.getSize("setting_control").width * 1.8
-		height: UM.Theme.getSize("setting_control").height 
+        //color: UM.Theme.getColor("toolbar_background")
+        color: "#00000000"
+        width: UM.Theme.getSize("setting_control").width * 1.8
+        height: UM.Theme.getSize("setting_control").height
         anchors.left: parent.left
-		anchors.topMargin: UM.Theme.getSize("default_margin").height
+        anchors.topMargin: UM.Theme.getSize("default_margin").height
     }
-	
-	Button
-	{
-		id: removeAllButton
-		anchors.centerIn: rightRect
-		width: UM.Theme.getSize("setting_control").width
-		height: UM.Theme.getSize("setting_control").height	
-		text: catalog.i18nc("@label", UM.ActiveTool.properties.getValue("SMsg"))
-		onClicked: UM.ActiveTool.triggerAction("removeAllSupportMesh")
-	}
+
+    Button {
+        id: removeAllButton
+        anchors.centerIn: rightRect
+        width: UM.Theme.getSize("setting_control").width
+        height: UM.Theme.getSize("setting_control").height
+        text: catalog.i18nc("@label", UM.ActiveTool.properties.getValue("SMsg"))
+        onClicked: UM.ActiveTool.triggerAction("removeAllSupportMesh")
+    }
+
+    CheckBox {
+        id: ensureKeptApartCheckbox
+        anchors {
+            left: rightRect.right
+            verticalCenter: rightRect.verticalCenter
+        }
+        text: catalog.i18nc("@option:check", "Ensure Models/Supports Kept Apart")
+        style: UM.Theme.styles.partially_checkbox
+
+        checked: UM.Preferences.getValue("physics/automatic_push_free")
+        onCheckedChanged: UM.Preferences.setValue("physics/automatic_push_free", checked)
+    }
 }

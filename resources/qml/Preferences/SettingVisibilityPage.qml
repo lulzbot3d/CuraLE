@@ -94,12 +94,14 @@ UM.PreferencesPage {
 
         NewControls.ComboBox {
             id: visibilityPreset
+            height: filter.height
             width: 150 * screenScaleFactor
             anchors
             {
-                top: parent.top
+                //top: parent.top
                 right: parent.right
-                bottom: scrollView.top
+                //bottom: scrollView.top
+                verticalCenter: filter.verticalCenter
             }
 
             model: settingVisibilityPresetsModel.items
