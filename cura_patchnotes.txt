@@ -5,6 +5,26 @@ This file is a work-in-progress; some sections may be incomplete, especially
 	will be updated as new versions are released and will continue to be
 	utilized as the project progresses.
 
+4.13.0-BETAv2.8:
+	Changes:
+		- Did some work on the recommended tab, now can be adjusted in size
+			and has a scroll bar. Some items were temporarily removed to be
+			reworked for better overall functionality
+		- Added the Twin Nebula Tool Heads as an option for the TAZ Pro
+			- A peek at the next entry in our Galaxy Series Tool Heads!
+		- Patched Firmware for Mini 2, SideKicks, and Workhorse to fix an
+			issue where the Tool Head selection screen came up blank
+		- CuraLE now transitions straight to the Preview screen after slicing
+			- Only occurs when "Automatically Slice" is turned off
+		- CuraLE now asks you if you'd like to discard changes when switching
+			between profiles while the recommended tab is open
+		- Adjusted some wordings in various places for clarity
+		- Added a toggle for the "Ensure Models Are Kept Apart" setting into
+			the Custom Supports tool for ease of access
+		- Changed the default material when opening CuraLE to be PolyLite PLA,
+			a sample spool of which is shipped with our printers
+		- Cleaned up printer definitions and profiles in some areas
+
 4.13.0-BETAv2.7:
 	Changes:
 		- Fixed MacOS bug that prevented USB connections with M1 and M2 chips
