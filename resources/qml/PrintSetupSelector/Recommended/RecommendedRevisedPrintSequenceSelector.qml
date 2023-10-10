@@ -23,7 +23,7 @@ Item {
         id: printSequenceRowTitle
         anchors.top: parent.top
         anchors.left: parent.left
-        source: UM.Theme.getIcon("BlackMagic")
+        source: UM.Theme.getIcon("FoodBeverages")
         text: catalog.i18nc("@label", "Print Sequence")
         font: UM.Theme.getFont("medium")
         width: labelColumnWidth
