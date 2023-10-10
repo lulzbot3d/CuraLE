@@ -367,8 +367,8 @@ QtObject {
                 {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
-                    width: Math.round(parent.width / 2.5)
-                    height: Math.round(parent.height / 2.5)
+                    width: Math.round(parent.width / 1)
+                    height: Math.round(parent.height / 1)
                     sourceSize.height: width
                     color: UM.Theme.getColor("checkbox_mark")
                     source: control.exclusiveGroup ? UM.Theme.getIcon("Dot") : UM.Theme.getIcon("Check")
