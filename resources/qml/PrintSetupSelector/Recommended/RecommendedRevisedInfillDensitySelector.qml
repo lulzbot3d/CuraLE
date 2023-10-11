@@ -44,7 +44,7 @@ Item {
     Binding {
         target: infillSlider
         property: "value"
-        value: parseInt(infillDensity.properties.value)
+        value: parseInt(infillDensity.properties.value) - infillSlider.allowedMinimum
     }
 
     // Here are the elements that are shown in the left column
@@ -76,6 +76,7 @@ Item {
             height: UM.Theme.getSize("print_setup_slider_handle").height // The handle is the widest element of the slider
 
             minimumValue: 0
+            property int allowedMinimum: 0
             maximumValue: 100
             stepSize: 1
             tickmarksEnabled: true
@@ -86,7 +87,7 @@ Item {
             enabled: parseInt(infillSteps.properties.value) == 0
 
             // set initial value from stack
-            value: parseInt(infillDensity.properties.value)
+            value: parseInt(infillDensity.properties.value) - allowedMinimum
 
             style: UM.Theme.styles.setup_selector_slider
 
