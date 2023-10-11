@@ -1,4 +1,4 @@
-;This G-Code has been generated specifically for LulzBot TAZ Pro with a Universal Tool Head
+;This G-Code has been generated specifically for LulzBot TAZ Pro with a Single Extruder Tool Head
 ;
 ;The following lines can be uncommented for printer specific fine tuning
 ;More information can be found at https://marlinfw.org/meta/gcode/
@@ -23,10 +23,10 @@ M109 R{material_soften_temperature} 	   ; soften filament before retraction
 M117 TAZ Pro Retracting Filament...		   ; progress indicator message on LCD
 G1 E-15 F75 				               ; retract filament
 M109 R{material_wipe_temperature}          ; wait for extruder to reach wiping temp
-;M206 X0 Y0 Z0                              ; uncomment to adjust wipe position (+X ~ nozzle moves left)(+Y ~ nozzle moves forward)(+Z ~ nozzle moves down)
+M104 S{material_probe_temperature}         ; set extruder to probe temp
+;M206 X0 Y0 Z0                             ; uncomment to adjust wipe position (+X ~ nozzle moves left)(+Y ~ nozzle moves forward)(+Z ~ nozzle moves down)
 G12                                        ; wiping sequence
 M206 X0 Y0 Z0                              ; reseting stock nozzle position ### CAUTION: changing this line can affect print quality ###
-G1 X0 Y0 F3000				               ; move toward first probe point
 M109 R{material_probe_temperature}	       ; wait for extruder to reach probe temp
 M204 S300				                   ; set probing acceleration
 G29					                       ; start auto-leveling sequence
@@ -36,7 +36,7 @@ G1 X5 Y15 Z10 F5000			               ; move up off last probe point
 G4 S1					                   ; pause
 M400					                   ; wait for moves to finish
 M117 Heating...				               ; progress indicator message on LCD
-M109 R{material_print_temperature_layer_0} ; wait for extruder to reach initial printing temp
 M190 R{material_bed_temperature_layer_0}   ; wait for bed to reach printing temp
+M109 R{material_print_temperature_layer_0} ; wait for extruder to reach initial printing temp
 G1 Z2 E0 F75				               ; prime tiny bit of filament into the nozzle
 M117 TAZ Pro Printing...		           ; progress indicator message on LCD
