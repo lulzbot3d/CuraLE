@@ -7,6 +7,7 @@
 ;M301 P21.0 I1.78 D61.93                    ;Set Hotend PID
 ;M906 E960                                  ;TMC Motor Current
 ;
+M900 K{linear_advance}                     ; set linear advance
 G90                                        ; absolute coordinate
 M82                                        ; set extruder to absolute mode
 G92 E0                                     ; set extruder position to 0

@@ -2,7 +2,8 @@
     M73 P0                              ; clear GLCD progress bar
 	G26                                 ; clear potential 'probe fail' condition
 	M107                                ; disable fans
-	G90                                 ; absolute positioning
+	M900 K{linear_advance}              ; set linear advance
+    G90                                 ; absolute positioning
 	M82                                 ; set extruder to absolute mode
 	G92 E0                              ; set extruder position to 0
 	M140 S{material_bed_temperature_layer_0}    ; start bed heating up
