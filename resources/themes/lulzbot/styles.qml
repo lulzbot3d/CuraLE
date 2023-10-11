@@ -822,7 +822,7 @@ QtObject {
                 model: range / control.stepSize + 1
 
                 Rectangle {
-                    property int adjusted_index: index + control.minimumValue
+                    property int adjusted_index: index + control.allowedMinimum
 
                     color: control.enabled ? UM.Theme.getColor("quality_slider_available") : UM.Theme.getColor("quality_slider_unavailable")
                     implicitWidth: UM.Theme.getSize("print_setup_slider_tickmarks").width
