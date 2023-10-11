@@ -4,6 +4,7 @@ M75 			             ; start GLCD timer
 G26                          ; clear potential 'probe fail' condition
 M107                         ; disable fans
 M420 S0                      ; disable leveling matrix
+M900 K{linear_advance}       ; set linear advance
 G90                          ; absolute positioning
 M82                          ; set extruder to absolute mode
 G92 E0                       ; set extruder position to 0

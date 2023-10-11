@@ -4,6 +4,7 @@ M82                                                ;absolute extrusion mode
 M73 P0                                             ; clear GLCD progress bar
 M75			     	                               ; start GLCD timer
 M107                                               ; disable fans
+M900 K{linear_advance}                             ; set linear advance
 G90                                                ; absolute positioning
 M420 S0                                            ; disable previous leveling matrix
 M140 S{material_bed_temperature_layer_0}           ; begin bed temping up
