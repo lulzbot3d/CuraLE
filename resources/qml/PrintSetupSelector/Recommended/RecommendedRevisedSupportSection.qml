@@ -327,7 +327,8 @@ Item {
 
             onValueChanged: {
                 // Don't round the value if it's already the same
-                if (parseInt(supportOverhang.properties.value) == supportOverhangSlider.value + supportOverhangSlider.allowedMinimum) {
+                current = parseInt(supportOverhang.properties.value)
+                if (current == supportOverhangSlider.value + supportOverhangSlider.allowedMinimum || current < supportOverhangSlider.allowedMinimum || current > supportOverhangSlider.maximumValue + supportOverhangSlider.allowedMinimum) {
                     return
                 }
 

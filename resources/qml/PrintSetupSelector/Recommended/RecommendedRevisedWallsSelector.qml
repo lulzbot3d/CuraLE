@@ -60,7 +60,8 @@ Item {
             value: parseInt(wallCount.properties.value)
 
             onValueChanged: {
-                if (parseInt(wallCount.properties.value) == wallCountSpinBox.value) {
+                current = parseInt(wallCount.properties.value)
+                if (current == wallCountSpinBox.value || current > wallCountSpinBox.to) {
                     return
                 }
 
