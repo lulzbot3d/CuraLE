@@ -268,89 +268,92 @@ Item {
         }
     }
 
-    // Label {
-    //     id: supportOverhangLabel
-    //     anchors {
-    //         top: supportOverhangContainer.top
-    //         bottom: supportOverhangContainer.bottom
-    //         left: parent.left
-    //         leftMargin: UM.Theme.getSize("wide_margin").width
-    //         right: supportOverhangContainer.left
-    //     }
-    //     text: catalog.i18nc("@label", "Support Overhang (°)")
-    //     font: UM.Theme.getFont("small")
-    //     renderType: Text.NativeRendering
-    //     color: UM.Theme.getColor("text")
-    //     verticalAlignment: Text.AlignVCenter
-    // }
+    Label {
+        id: supportOverhangLabel
+        anchors {
+            top: supportOverhangContainer.top
+            bottom: supportOverhangContainer.bottom
+            left: parent.left
+            leftMargin: UM.Theme.getSize("wide_margin").width
+            right: supportOverhangContainer.left
+        }
+        text: catalog.i18nc("@label", "Support Overhang (°)")
+        font: UM.Theme.getFont("small")
+        renderType: Text.NativeRendering
+        color: UM.Theme.getColor("text")
+        verticalAlignment: Text.AlignVCenter
+    }
 
-    // Binding {
-    //     target: supportOverhangSlider
-    //     property: "value"
-    //     value: {
-    //         if (supportOverhang.properties.value !== undefined) {
-    //             return parseInt(supportOverhang.properties.value)
-    //         } else if (supportOverhangGlobal.properties.value !== undefined) {
-    //             return parseInt(supportOverhangGlobal.properties.value)
-    //         } else { return 60 }
-    //     }
-    // }
+    Binding {
+        target: supportOverhangSlider
+        property: "value"
+        value: parseInt(supportOverhang.properties.value) - supportOverhangSlider.allowedMinimum
+    }
 
-    // Item {
-    //     id: supportOverhangContainer
-    //     height: supportOverhangSlider.height
+    Item {
+        id: supportOverhangContainer
+        height: supportOverhangSlider.height
 
-    //     anchors {
-    //         top: enableSupportContainer.bottom
-    //         topMargin: UM.Theme.getSize("default_margin").height
-    //         left: enableSupportContainer.left
-    //         right: parent.right
-    //     }
+        anchors {
+            top: enableSupportContainer.bottom
+            topMargin: UM.Theme.getSize("default_margin").height
+            left: enableSupportContainer.left
+            right: parent.right
+        }
 
-    //     Slider {
-    //         id: supportOverhangSlider
+        Slider {
+            id: supportOverhangSlider
 
-    //         width: parent.width
-    //         height: UM.Theme.getSize("print_setup_slider_handle").height // The handle is the widest element of the slider
+            width: parent.width
+            height: UM.Theme.getSize("print_setup_slider_handle").height // The handle is the widest element of the slider
 
-    //         minimumValue: 40
-    //         maximumValue: 80
-    //         stepSize: 1
-    //         tickmarksEnabled: true
-    //         property int tickmarkSpacing: 4
-    //         wheelEnabled: false
+            minimumValue: 0 // Actually 40
+            property int allowedMinimum: 40
+            maximumValue: 40 // Actually 80
+            stepSize: 1
+            tickmarksEnabled: true
+            property int tickmarkSpacing: 4
+            wheelEnabled: false
 
-    //         // disable slider when support is disabled
-    //         enabled: enableSupportCheckBox.checked
+            // disable slider when support is disabled
+            enabled: enableSupportCheckBox.checked
 
-    //         // set initial value from stack
-    //         value: 60
+            // set initial value from stack
+            value: parseInt(supportOverhang.properties.value) - allowedMinimum
 
-    //         style: UM.Theme.styles.setup_selector_slider
+            style: UM.Theme.styles.setup_selector_slider
 
-    //         onValueChanged: {
-    //             // Don't round the value if it's already the same
-    //             if (parseInt(supportOverhang.properties.value) == supportOverhangSlider.value) {
-    //                 return
-    //             }
+            onValueChanged: {
+                // Don't round the value if it's already the same
+                if (parseInt(supportOverhang.properties.value) == supportOverhangSlider.value + supportOverhangSlider.allowedMinimum) {
+                    return
+                }
 
-    //             // Round the slider value
-    //             var roundedSliderValue = Math.round(supportOverhangSlider.value / 2) * 2
+                // Round the slider value
+                var roundedSliderValue = Math.round(supportOverhangSlider.value / 2) * 2
 
-    //             // Update the slider value to represent the rounded value
-    //             supportOverhangSlider.value = roundedSliderValue
+                // Update the slider value to represent the rounded value
+                supportOverhangSlider.value = roundedSliderValue
 
-    //             // Update value only if the Recommended mode is Active,
-    //             // Otherwise if I change the value in the Custom mode the Recommended view will try to repeat
-    //             // same operation
-    //             var active_mode = UM.Preferences.getValue("cura/active_mode")
+                // Update value only if the Recommended mode is Active,
+                // Otherwise if I change the value in the Custom mode the Recommended view will try to repeat
+                // same operation
+                var active_mode = UM.Preferences.getValue("cura/active_mode")
 
-    //             if (active_mode == 0 || active_mode == "simple") {
-    //                 Cura.MachineManager.setSettingForAllExtruders("support_angle", "value", roundedSliderValue)
-    //             }
-    //         }
-    //     }
-    // }
+                if (active_mode == 0 || active_mode == "simple") {
+                    Cura.MachineManager.setSettingForAllExtruders("support_angle", "value", roundedSliderValue + supportOverhangSlider.allowedMinimum)
+                }
+            }
+        }
+
+        UM.SettingPropertyProvider {
+            id: supportOverhang
+            containerStackId: Cura.MachineManager.activeMachine.id
+            key: "support_angle"
+            watchedProperties: ["value"]
+            storeIndex: 0
+        }
+    }
 
     Label {
         id: supportDensityLabel
@@ -379,10 +382,10 @@ Item {
         height: supportDensitySlider.height
 
         anchors {
-            // top: supportOverhangContainer.bottom
-            top: enableSupportContainer.bottom
-            // topMargin: UM.Theme.getSize("thick_margin").height
-            topMargin: UM.Theme.getSize("default_margin").height
+            top: supportOverhangContainer.bottom
+            // top: enableSupportContainer.bottom
+            topMargin: UM.Theme.getSize("thick_margin").height
+            // topMargin: UM.Theme.getSize("default_margin").height
             left: enableSupportContainer.left
             right: parent.right
         }
@@ -394,6 +397,7 @@ Item {
             height: UM.Theme.getSize("print_setup_slider_handle").height // The handle is the widest element of the slider
 
             minimumValue: 0
+            property int allowedMinimum: 0
             maximumValue: 100
             stepSize: 1
             tickmarksEnabled: true
@@ -404,7 +408,7 @@ Item {
             enabled: enableSupportCheckBox.checked
 
             // set initial value from stack
-            value: parseInt(supportDensity.properties.value)
+            value: parseInt(supportDensity.properties.value) - allowedMinimum
 
             style: UM.Theme.styles.setup_selector_slider
 
@@ -542,30 +546,6 @@ Item {
         id: supportDensity
         containerStackId: Cura.MachineManager.activeStackId
         key: "support_infill_rate"
-        watchedProperties: ["value"]
-        storeIndex: 0
-    }
-
-    UM.SettingPropertyProvider {
-        id: supportDensityGlobal
-        containerStack: Cura.MachineManager.activeMachine
-        key: "support_infill_rate"
-        watchedProperties: ["value"]
-        storeIndex: 0
-    }
-
-    UM.SettingPropertyProvider {
-        id: supportOverhang
-        containerStackId: Cura.MachineManager.activeStackId
-        key: "support_angle"
-        watchedProperties: ["value"]
-        storeIndex: 0
-    }
-
-    UM.SettingPropertyProvider {
-        id: supportOverhangGlobal
-        containerStack: Cura.MachineManager.activeMachine
-        key: "support_angle"
         watchedProperties: ["value"]
         storeIndex: 0
     }
