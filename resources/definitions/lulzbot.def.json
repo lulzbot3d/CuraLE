@@ -66,6 +66,7 @@
             "minimum_value": "0",
             "maximum_value_warning": "295"
         },
+        "material_standby_temperature": { "default_value": 160 },
         "prime_tower_position_x": { "default_value": 20 },
         "prime_tower_position_y": { "default_value": 20 },
         "support_angle": { "default_value": 60.0 },
@@ -188,7 +189,7 @@
                             "enabled": true,
                             "type": "float",
                             "unit": "°C",
-                            "default_value": 170,
+                            "default_value": 175,
                             "minimum_value": "0",
                             "maximum_value_warning": "295",
                             "maximum_value": "300",
@@ -202,7 +203,7 @@
                             "enabled": true,
                             "type": "float",
                             "unit": "°C",
-                            "default_value": 160,
+                            "default_value": 175,
                             "minimum_value": "0",
                             "maximum_value_warning": "195",
                             "maximum_value": "200",
@@ -226,7 +227,7 @@
                     "minimum_value": "0.0",
                     "maximum_value_warning": "2.0",
                     "maximum_value": "5.0",
-                    "default_value": 0.0,
+                    "default_value": 0.05,
                     "settable_per_mesh": false,
                     "settable_per_extruder": true
                 }
