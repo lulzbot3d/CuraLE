@@ -270,6 +270,7 @@ Item {
 
     Label {
         id: supportOverhangLabel
+        visible: enableSupportCheckBox.checked
         anchors {
             top: supportOverhangContainer.top
             bottom: supportOverhangContainer.bottom
@@ -292,11 +293,12 @@ Item {
 
     Item {
         id: supportOverhangContainer
-        height: supportOverhangSlider.height
+        height: supportOverhangContainer.visible ? supportOverhangSlider.height : 0
+        visible: enableSupportCheckBox.checked
 
         anchors {
             top: enableSupportContainer.bottom
-            topMargin: UM.Theme.getSize("default_margin").height
+            topMargin: supportOverhangContainer.visible ? UM.Theme.getSize("default_margin").height: 0
             left: enableSupportContainer.left
             right: parent.right
         }
@@ -357,6 +359,7 @@ Item {
 
     Label {
         id: supportDensityLabel
+        visible: enableSupportCheckBox.checked
         anchors {
             top: supportDensityContainer.top
             bottom: supportDensityContainer.bottom
@@ -379,13 +382,12 @@ Item {
 
     Item {
         id: supportDensityContainer
-        height: supportDensitySlider.height
+        height: supportDensityContainer.visible ? supportDensitySlider.height : 0
+        visible: enableSupportCheckBox.checked
 
         anchors {
             top: supportOverhangContainer.bottom
-            // top: enableSupportContainer.bottom
-            topMargin: UM.Theme.getSize("thick_margin").height
-            // topMargin: UM.Theme.getSize("default_margin").height
+            topMargin: supportDensityContainer.visible ? UM.Theme.getSize("thick_margin").height : 0
             left: enableSupportContainer.left
             right: parent.right
         }
