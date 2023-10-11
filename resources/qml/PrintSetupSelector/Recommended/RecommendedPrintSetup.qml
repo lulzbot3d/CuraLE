@@ -73,10 +73,15 @@ Item {
                     // TODO
                     property real firstColumnWidth: Math.round(width * (5/12))
 
-                    // RecommendedRevisedWallsSelector {
-                    //     width: parent.width
-                    //     labelColumnWidth: settingsColumn.firstColumnWidth
-                    // }
+                    RecommendedRevisedWallsSelector {
+                        width: parent.width
+                        labelColumnWidth: settingsColumn.firstColumnWidth
+                    }
+
+                    RecommendedRevisedZSeamSelector {
+                        width: parent.width
+                        labelColumnWidth: settingsColumn.firstColumnWidth
+                    }
 
                     RecommendedRevisedTopBottomSelector {
                         width: parent.width
