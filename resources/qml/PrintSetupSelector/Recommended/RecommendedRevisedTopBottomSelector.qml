@@ -63,12 +63,10 @@ Item {
             stepSize: 1
 
             onValueChanged: {
-                console.log("But does it try")
                 let current = Math.ceil(parseFloat(topBottomThickness.properties.value) / parseFloat(layerHeight.properties.value))
                 if (current == topBottomCountSpinBox.value) {
                     return
                 }
-                console.log("Okay but how about this one")
 
                 let layerCountToHeight = topBottomCountSpinBox.value * parseFloat(layerHeight.properties.value)
 
