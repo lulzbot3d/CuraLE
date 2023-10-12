@@ -17,6 +17,7 @@ Item {
     height: childrenRect.height
 
     property real labelColumnWidth: Math.round(width / 3)
+    property bool alive: Cura.MachineManager.activeMachine != null
 
     Cura.IconWithText {
         id: zSeamRowTitle
@@ -45,7 +46,7 @@ Item {
 
         Cura.ComboBoxWithOptions {
             id: zSeamAlignmentComboBox
-            containerStackId: Cura.MachineManager.activeMachine.id
+            containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
             settingKey: "z_seam_type"
             controlWidth: zSeamAlignmentContainer.width
         }
@@ -74,7 +75,7 @@ Item {
 
         Cura.ComboBoxWithOptions {
             id: zSeamPositionComboBox
-            containerStackId: Cura.MachineManager.activeMachine.id
+            containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
             settingKey: "z_seam_position"
             controlWidth: zSeamPositionContainer.width
         }
@@ -82,7 +83,7 @@ Item {
 
     UM.SettingPropertyProvider {
             id: zSeamType
-            containerStackId: Cura.MachineManager.activeMachine.id
+            containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
             key: "z_seam_type"
             watchedProperties: [ "value" ]
     }

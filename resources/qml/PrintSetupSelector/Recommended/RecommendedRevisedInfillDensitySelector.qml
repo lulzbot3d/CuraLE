@@ -17,6 +17,7 @@ Item {
     height: childrenRect.height
 
     property real labelColumnWidth: Math.round(width / 3)
+    property bool alive: Cura.MachineManager.activeMachine != null
 
     // Create a binding to update the icon when the infill density changes
     Binding {
@@ -145,7 +146,7 @@ Item {
 
         Cura.ComboBoxWithOptions {
             id: infillPatternComboBox
-            containerStackId: Cura.MachineManager.activeMachine.id
+            containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
             settingKey: "infill_pattern"
             controlWidth: infillPatternContainer.width
         }
@@ -153,7 +154,7 @@ Item {
 
     UM.SettingPropertyProvider {
         id: infillDensity
-        containerStackId: Cura.MachineManager.activeStack.id
+        containerStackId: alive ? Cura.MachineManager.activeStack.id : null
         key: "infill_sparse_density"
         watchedProperties: [ "value" ]
         storeIndex: 0

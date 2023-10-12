@@ -18,6 +18,7 @@ Item {
     height: childrenRect.height
 
     property real labelColumnWidth: Math.round(width / 3)
+    property bool alive: Cura.MachineManager.activeMachine != null
 
     Cura.IconWithText {
         id: enableSupportRowTitle
@@ -326,9 +327,15 @@ Item {
             style: UM.Theme.styles.setup_selector_slider
 
             onValueChanged: {
-                // Don't round the value if it's already the same
-                current = parseInt(supportOverhang.properties.value)
-                if (current == supportOverhangSlider.value + supportOverhangSlider.allowedMinimum || current < supportOverhangSlider.allowedMinimum || current > supportOverhangSlider.maximumValue + supportOverhangSlider.allowedMinimum) {
+                let current = parseInt(supportOverhang.properties.value)
+
+                if (current == value + allowedMinimum) {
+                    return
+                }
+                if (current < allowedMinimum && value == minimumValue) {
+                    return
+                }
+                if (current > maximumValue + allowedMinimum && value == maximumValue) {
                     return
                 }
 
@@ -351,7 +358,7 @@ Item {
 
         UM.SettingPropertyProvider {
             id: supportOverhang
-            containerStackId: Cura.MachineManager.activeMachine.id
+            containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
             key: "support_angle"
             watchedProperties: ["value"]
             storeIndex: 0

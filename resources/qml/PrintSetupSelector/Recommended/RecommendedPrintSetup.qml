@@ -37,7 +37,7 @@ Item {
 
             width: parent.width
             height: recommendedPrintSetup.height - (profileSelector.height + (UM.Theme.getSize("thick_margin").height * 2))
-            color: UM.Theme.getColor("main_background")
+            color: UM.Theme.getColor("action_button")
 
             // Mouse area that gathers the scroll events to not propagate it to the main view.
             MouseArea {
@@ -78,12 +78,12 @@ Item {
                         labelColumnWidth: settingsColumn.firstColumnWidth
                     }
 
-                    RecommendedRevisedZSeamSelector {
+                    RecommendedRevisedTopBottomSelector {
                         width: parent.width
                         labelColumnWidth: settingsColumn.firstColumnWidth
                     }
 
-                    RecommendedRevisedTopBottomSelector {
+                    RecommendedRevisedZSeamSelector {
                         width: parent.width
                         labelColumnWidth: settingsColumn.firstColumnWidth
                     }

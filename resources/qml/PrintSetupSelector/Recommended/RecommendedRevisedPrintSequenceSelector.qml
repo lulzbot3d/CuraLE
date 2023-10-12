@@ -17,6 +17,7 @@ Item {
     height: childrenRect.height
 
     property real labelColumnWidth: Math.round(width / 3)
+    property bool alive: Cura.MachineManager.activeMachine != null
     property var curaRecommendedMode: Cura.RecommendedMode {}
 
     Cura.IconWithText {
@@ -44,7 +45,7 @@ Item {
             id: printSequenceComboBox
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-            containerStackId: Cura.MachineManager.activeMachine.id
+            containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
             settingKey: "print_sequence"
             controlWidth: parent.width
         }
