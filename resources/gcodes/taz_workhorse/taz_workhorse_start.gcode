@@ -22,9 +22,11 @@ G28                                         ; Home all axis
 G1 E-15 F100                                ; retract filament
 M109 R{material_wipe_temperature}           ; wait for extruder to reach wiping temp
 M104 S{material_probe_temperature}          ; set extruder to probe temp
+M106 S255                                   ; turn fan on to help drop temp
 ;M206 X0 Y0 Z0                              ; uncomment to adjust wipe position (+X ~ nozzle moves left)(+Y ~ nozzle moves forward)(+Z ~ nozzle moves down)
 G12                                         ; wiping sequence
 M206 X0 Y0 Z0                               ; reseting stock nozzle position ### CAUTION: changing this line can affect print quality ###
+M107                                        ; turn off part cooling fan
 M109 R{material_probe_temperature}          ; wait for extruder to reach probe temp
 M204 S100                                   ; set probing acceleration
 G29                                         ; start auto-leveling sequence
