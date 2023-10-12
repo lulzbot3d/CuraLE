@@ -69,7 +69,11 @@
         "material_standby_temperature": { "default_value": 160 },
         "prime_tower_position_x": { "default_value": 20 },
         "prime_tower_position_y": { "default_value": 20 },
-        "support_angle": { "default_value": 60.0 },
+        "support_angle":
+        {
+            "default_value": 60.0,
+            "minimum_value_warning": 40.0
+        },
         "support_infill_sparse_thickness": { "maximum_value_warning": "machine_nozzle_size" },
         "support_join_distance":
         {
