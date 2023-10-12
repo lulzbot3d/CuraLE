@@ -18,12 +18,6 @@ Item {
 
     property real labelColumnWidth: Math.round(width / 3)
 
-    // Binding {
-    //     target: wallCountSlider
-    //     property: "value"
-    //     value: parseInt(wallCount.properties.value) - wallCountSlider.allowedMinimum
-    // }
-
     Cura.IconWithText {
         id: wallCountRowTitle
         anchors.top: parent.top
@@ -35,13 +29,19 @@ Item {
         iconSize: UM.Theme.getSize("medium_button_icon").width
     }
 
+    Binding {
+        target: wallCountSpinBox
+        property: "value"
+        value: parseInt(wallCount.properties.value)
+    }
+
     Item {
         id: wallCountContainer
-        height: wallCountSpinBox
+        height: Math.ceil(wallCountSpinBox)
+        width: Math.round((parent.width - labelColumnWidth) / 2)
 
         anchors {
             left: wallCountRowTitle.right
-            right: parent.right
             verticalCenter: wallCountRowTitle.verticalCenter
         }
 
@@ -54,13 +54,14 @@ Item {
             width: parent.width
 
             from: 0
-            to: 10
+            to: 999999
+            editable: true
             stepSize: 1
 
             value: parseInt(wallCount.properties.value)
 
             onValueChanged: {
-                current = parseInt(wallCount.properties.value)
+                var current = parseInt(wallCount.properties.value)
                 if (current == wallCountSpinBox.value || current > wallCountSpinBox.to) {
                     return
                 }

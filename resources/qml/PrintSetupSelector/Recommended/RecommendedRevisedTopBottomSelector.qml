@@ -2,7 +2,7 @@
 // Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.7
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.15
 import QtQuick.Controls.Styles 1.4
 
 import UM 1.2 as UM
@@ -13,21 +13,94 @@ import Cura 1.0 as Cura
 //  Top/Bottom
 //
 Item {
-    id: topBottomPatternRow
+    id: topBottomRow
     height: childrenRect.height
 
     property real labelColumnWidth: Math.round(width / 3)
+    property bool alive: Cura.MachineManager.activeMachine != null
     property var curaRecommendedMode: Cura.RecommendedMode {}
 
     Cura.IconWithText {
-        id: topBottomPatternRowTitle
+        id: topBottomRowTitle
         anchors.top: parent.top
         anchors.left: parent.left
         source: UM.Theme.getIcon("PrintTopBottom")
-        text: catalog.i18nc("@label", "Top/Bottom Pattern")
+        text: catalog.i18nc("@label", "Top/Bottom Count")
         font: UM.Theme.getFont("medium")
         width: labelColumnWidth
         iconSize: UM.Theme.getSize("medium_button_icon").width
+    }
+
+    Binding {
+        target: topBottomCountSpinBox
+        property: "value"
+        value: Math.ceil(parseFloat(topBottomThickness.properties.value) / parseFloat(layerHeight.properties.value))
+    }
+
+    Item {
+        id: topBottomCountContainer
+        height: Math.ceil(topBottomCountSpinBox)
+        width: Math.round((parent.width - labelColumnWidth) / 2)
+
+        anchors {
+            left: topBottomRowTitle.right
+            verticalCenter: topBottomRowTitle.verticalCenter
+        }
+
+        SpinBox {
+            id: topBottomCountSpinBox
+
+            anchors.verticalCenter: parent.verticalCenter
+
+            height: topBottomRowTitle.height
+            width: parent.width
+
+            // property int heightInLayers: Math.floor(parseFloat(machineHeight.properties.value) / parseFloat(layerHeight.properties.value))
+
+            from: 0
+            to: 999999
+            editable: true
+            stepSize: 1
+
+            onValueChanged: {
+                console.log("But does it try")
+                let current = Math.ceil(parseFloat(topBottomThickness.properties.value) / parseFloat(layerHeight.properties.value))
+                if (current == topBottomCountSpinBox.value) {
+                    return
+                }
+                console.log("Okay but how about this one")
+
+                let layerCountToHeight = topBottomCountSpinBox.value * parseFloat(layerHeight.properties.value)
+
+                var active_mode = UM.Preferences.getValue("cura/active_mode")
+
+                if (active_mode == 0 || active_mode == "simple") {
+                    Cura.MachineManager.setSettingForAllExtruders("top_bottom_thickness", "value", layerCountToHeight)
+                }
+            }
+        }
+
+        UM.SettingPropertyProvider {
+            id: machineHeight
+            containerStackId: alive ? Cura.MachineManager.activeStack.id : null
+            key: "machine_height"
+            watchedProperties: [ "value" ]
+        }
+
+        UM.SettingPropertyProvider {
+            id: layerHeight
+            containerStackId: alive ? Cura.MachineManager.activeStack.id : null
+            key: "layer_height"
+            watchedProperties: [ "value" ]
+        }
+
+        UM.SettingPropertyProvider {
+            id: topBottomThickness
+            containerStackId: alive ? Cura.MachineManager.activeStack.id : null
+            key: "top_bottom_thickness"
+            watchedProperties: [ "value" ]
+            storeIndex: 0
+        }
     }
 
     Item {
@@ -35,16 +108,17 @@ Item {
         height: topBottomPatternComboBox.height
 
         anchors {
-            left: topBottomPatternRowTitle.right
+            left: topBottomCountContainer.right
+            leftMargin: UM.Theme.getSize("thin_margin").width
             right: parent.right
-            verticalCenter: topBottomPatternRowTitle.verticalCenter
+            verticalCenter: topBottomRowTitle.verticalCenter
         }
 
         Cura.ComboBoxWithOptions {
             id: topBottomPatternComboBox
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-            containerStackId: Cura.MachineManager.activeMachine.id
+            containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
             settingKey: "top_bottom_pattern"
             controlWidth: parent.width
         }
