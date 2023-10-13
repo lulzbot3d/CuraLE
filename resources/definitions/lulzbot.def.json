@@ -175,7 +175,7 @@
                         "material_probe_temperature":
                         {
                             "label": "Probe Temperature",
-                            "description": "The nozzle temperature used before probing. This should be set cool enough that the printing material does not ooze from the nozzle while not cooling the nozzle down entirely.",
+                            "description": "The nozzle temperature used before probing. This should be set cool enough that the printing material does not ooze from the nozzle while also not cooling the nozzle down entirely.",
                             "enabled": true,
                             "type": "float",
                             "unit": "°C",

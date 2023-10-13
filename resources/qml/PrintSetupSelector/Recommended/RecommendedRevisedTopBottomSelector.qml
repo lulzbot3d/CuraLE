@@ -29,6 +29,18 @@ Item {
         font: UM.Theme.getFont("medium")
         width: labelColumnWidth
         iconSize: UM.Theme.getSize("medium_button_icon").width
+
+        MouseArea {
+            id: topBottomMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onEntered: {
+                base.showTooltip(topBottomRowTitle, Qt.point(-topBottomRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
+                    catalog.i18nc("@label", "Set the number of solid layers that will be generated on the top and bottom of your print. In the dropdown to the right, you can also set the pattern that will be used to create those solid layers."))
+            }
+            onExited: base.hideTooltip()
+        }
     }
 
     Binding {
@@ -117,6 +129,7 @@ Item {
             containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
             settingKey: "top_bottom_pattern"
             controlWidth: parent.width
+            useInBuiltTooltip: false
         }
     }
 }

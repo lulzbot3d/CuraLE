@@ -29,6 +29,19 @@ Item {
         font: UM.Theme.getFont("medium")
         width: labelColumnWidth
         iconSize: UM.Theme.getSize("medium_button_icon").width
+
+        MouseArea {
+            id: enableAdhesionMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onEntered: {
+                base.showTooltip(enableAdhesionRowTitle, Qt.point(-enableAdhesionRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
+                    catalog.i18nc("@label", "Select a form of bed adhesion. A skirt is useful for observing adequate bed leveling and z-offsets prior to \
+                    the actual print, while a brim or raft are useful for helping ensure a part stays adhered to the bed and can also potentially help with warping issues."))
+            }
+            onExited: base.hideTooltip()
+        }
     }
 
     Item {
@@ -48,6 +61,7 @@ Item {
             containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
             settingKey: "adhesion_type"
             controlWidth: parent.width
+            useInBuiltTooltip: false
         }
     }
 }

@@ -22,7 +22,7 @@ UM.TooltipArea
 
     height: childrenRect.height
     width: childrenRect.width
-    text: tooltipText
+    text: useInBuiltTooltip ? tooltipText : ""
 
     property int controlWidth: UM.Theme.getSize("setting_control").width
     property int controlHeight: UM.Theme.getSize("setting_control").height
@@ -36,6 +36,7 @@ UM.TooltipArea
     property alias labelWidth: fieldLabel.width
     property alias optionModel: comboBox.model
 
+    property bool useInBuiltTooltip: true
     property string tooltipText: propertyProvider.properties.description ? propertyProvider.properties.description : ""
 
     // callback functions

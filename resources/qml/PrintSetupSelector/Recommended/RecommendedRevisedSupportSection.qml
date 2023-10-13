@@ -31,6 +31,18 @@ Item {
         font: UM.Theme.getFont("medium")
         width: labelColumnWidth
         iconSize: UM.Theme.getSize("medium_button_icon").width
+
+        MouseArea {
+            id: enableSupportMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onEntered: {
+                base.showTooltip(enableSupportRowTitle, Qt.point(-enableSupportRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
+                    catalog.i18nc("@label", "Generate structures to support parts of the model which have overhangs. Without these structures, such parts would collapse during printing."))
+            }
+            onExited: base.hideTooltip()
+        }
     }
 
     Item {
@@ -54,20 +66,6 @@ Item {
 
             visible: supportEnabled.properties.enabled == "True"
             checked: supportEnabled.properties.value == "True"
-
-            MouseArea {
-                id: enableSupportMouseArea
-                anchors.fill: parent
-                hoverEnabled: true
-
-                onClicked: supportEnabled.setPropertyValue("value", supportEnabled.properties.value != "True")
-
-                onEntered: {
-                    base.showTooltip(enableSupportCheckBox, Qt.point(-enableSupportContainer.x - UM.Theme.getSize("thick_margin").width, 0),
-                        catalog.i18nc("@label", "Generate structures to support parts of the model which have overhangs. Without these structures, such parts would collapse during printing."))
-                }
-                onExited: base.hideTooltip()
-            }
         }
 
         Controls2.ComboBox {
@@ -285,6 +283,19 @@ Item {
         renderType: Text.NativeRendering
         color: UM.Theme.getColor("text")
         verticalAlignment: Text.AlignVCenter
+
+        MouseArea {
+            id: supportOverhangMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onEntered: {
+                base.showTooltip(supportOverhangLabel, Qt.point(-supportOverhangLabel.x - UM.Theme.getSize("thick_margin").width, 0),
+                    catalog.i18nc("@label", "Adjusts the minimum angle relative to vertical at which supports will begin to be generated. A higher value \
+                    will lower the amount of supports generated, but could lead to unsupported overhangs collapsing during printing."))
+            }
+            onExited: base.hideTooltip()
+        }
     }
 
     Binding {
@@ -381,6 +392,18 @@ Item {
         renderType: Text.NativeRendering
         color: UM.Theme.getColor("text")
         verticalAlignment: Text.AlignVCenter
+
+        MouseArea {
+            id: supportDensityMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onEntered: {
+                base.showTooltip(supportDensityLabel, Qt.point(-supportDensityLabel.x - UM.Theme.getSize("thick_margin").width, 0),
+                    catalog.i18nc("@label", "Set the percentage of support density."))
+            }
+            onExited: base.hideTooltip()
+        }
     }
 
     Binding {
@@ -471,6 +494,19 @@ Item {
         renderType: Text.NativeRendering
         color: UM.Theme.getColor("text")
         verticalAlignment: Text.AlignVCenter
+
+        MouseArea {
+            id: joinDistanceMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onEntered: {
+                base.showTooltip(joinDistanceLabel, Qt.point(-joinDistanceLabel.x - UM.Theme.getSize("thick_margin").width, 0),
+                    catalog.i18nc("@label", "Set the distance in millimeters under which separate support structures will join together. Increasing this setting can \
+                    help with issues regarding failure of many small support structures around a print."))
+            }
+            onExited: base.hideTooltip()
+        }
     }
 
     Binding {

@@ -29,6 +29,20 @@ Item {
         font: UM.Theme.getFont("medium")
         width: labelColumnWidth
         iconSize: UM.Theme.getSize("medium_button_icon").width
+
+        MouseArea {
+            id: printSequenceMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onEntered: {
+                base.showTooltip(printSequenceRowTitle, Qt.point(-printSequenceRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
+                    catalog.i18nc("@label", "Set whether to print all parts on the build plate All at Once, or One at a Time. Note that if you print parts one at a time, \
+                    you must consider that parts that have been printed will not be in the way of the Tool Head when printing following parts. Only print One at a Time if you \
+                    are confident that you know what you're doing."))
+            }
+            onExited: base.hideTooltip()
+        }
     }
 
     Item {
@@ -48,6 +62,7 @@ Item {
             containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
             settingKey: "print_sequence"
             controlWidth: parent.width
+            useInBuiltTooltip: false
         }
     }
 }

@@ -28,6 +28,18 @@ Item {
         font: UM.Theme.getFont("medium")
         width: labelColumnWidth
         iconSize: UM.Theme.getSize("medium_button_icon").width
+
+        MouseArea {
+            id: wallCountMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onEntered: {
+                base.showTooltip(wallCountRowTitle, Qt.point(-wallCountRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
+                    catalog.i18nc("@label", "Set the number of solid walls that will be generated on the sides of your print."))
+            }
+            onExited: base.hideTooltip()
+        }
     }
 
     Binding {

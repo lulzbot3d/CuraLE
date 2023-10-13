@@ -58,6 +58,18 @@ Item {
         font: UM.Theme.getFont("medium")
         width: labelColumnWidth
         iconSize: UM.Theme.getSize("medium_button_icon").width
+
+        MouseArea {
+            id: infillMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onEntered: {
+                base.showTooltip(infillRowTitle, Qt.point(-infillRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
+                    catalog.i18nc("@label", "Set the percentage of the interior of the print that will be filled in with infill."))
+            }
+            onExited: base.hideTooltip()
+        }
     }
 
     Item {
@@ -131,6 +143,19 @@ Item {
         renderType: Text.NativeRendering
         color: UM.Theme.getColor("text")
         verticalAlignment: Text.AlignVCenter
+
+        MouseArea {
+            id: infillPatternMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onEntered: {
+                base.showTooltip(patternLabel, Qt.point(-patternLabel.x - UM.Theme.getSize("thick_margin").width, 0),
+                    catalog.i18nc("@label", "Set the pattern used for the infill of your print. Grid is our recommended pattern as it is relatively efficient both \
+                    in print time and plastic usage while still giving your prints good structural integrity."))
+            }
+            onExited: base.hideTooltip()
+        }
     }
 
     Item {
@@ -149,6 +174,7 @@ Item {
             containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
             settingKey: "infill_pattern"
             controlWidth: infillPatternContainer.width
+            useInBuiltTooltip: false
         }
     }
 
