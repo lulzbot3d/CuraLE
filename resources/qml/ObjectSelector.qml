@@ -131,10 +131,10 @@ Item
                 }
                 text: model.name
                 width: listView.width
-                property bool outsideBuildArea: model.outside_build_area
-                property int perObjectSettingsCount: model.per_object_settings_count
-                property string meshType: model.mesh_type
-                property int extruderNumber: model.extruder_number
+                property bool outsideBuildArea: model.outside_build_area == undefined ? false : model.outside_build_area
+                property int perObjectSettingsCount: model.per_object_settings_count == undefined ? 0 : model.per_object_settings_count
+                property string meshType: model.mesh_type == undefined ? "" : model.mesh_type
+                property int extruderNumber: model.extruder_number == undefined ? 0 : model.extruder_number
                 property string extruderColor:
                 {
                     if (model.extruder_number == -1)
