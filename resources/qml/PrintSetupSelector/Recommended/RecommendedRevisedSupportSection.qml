@@ -5,6 +5,7 @@ import QtQuick 2.10
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls 2.3 as Controls2
+import QtQuick.Controls 2.15 as Controls3
 
 import UM 1.2 as UM
 import Cura 1.0 as Cura
@@ -18,7 +19,7 @@ Item {
     height: childrenRect.height
 
     property real labelColumnWidth: Math.round(width / 3)
-    property bool alive: Cura.MachineManager.activeMachine != null
+    property bool alive: Cura.MachineManager.activeMachine != null && Cura.MachineManager.activeStack != null
 
     Cura.IconWithText {
         id: enableSupportRowTitle
@@ -279,7 +280,7 @@ Item {
             leftMargin: UM.Theme.getSize("wide_margin").width
             right: supportOverhangContainer.left
         }
-        text: catalog.i18nc("@label", "Support Overhang (°)")
+        text: catalog.i18nc("@label", "Overhang Angle (°)")
         font: UM.Theme.getFont("small")
         renderType: Text.NativeRendering
         color: UM.Theme.getColor("text")
@@ -445,85 +446,95 @@ Item {
                 }
             }
         }
+
+        UM.SettingPropertyProvider {
+            id: supportDensity
+            containerStackId: Cura.MachineManager.activeStackId
+            key: "support_infill_rate"
+            watchedProperties: ["value"]
+            storeIndex: 0
+        }
     }
 
-    // Label {
-    //     id: joinDistanceLabel
-    //     anchors {
-    //         top: joinDistanceContainer.top
-    //         bottom: joinDistanceContainer.bottom
-    //         left: parent.left
-    //         leftMargin: UM.Theme.getSize("wide_margin").width
-    //         right: joinDistanceContainer.left
-    //     }
-    //     text: catalog.i18nc("@label", "Support Join Distance")
-    //     font: UM.Theme.getFont("small")
-    //     renderType: Text.NativeRendering
-    //     color: UM.Theme.getColor("text")
-    //     verticalAlignment: Text.AlignVCenter
-    // }
+    Label {
+        id: joinDistanceLabel
+        visible: enableSupportCheckBox.checked
+        anchors {
+            top: joinDistanceContainer.top
+            bottom: joinDistanceContainer.bottom
+            left: parent.left
+            leftMargin: UM.Theme.getSize("wide_margin").width
+            right: joinDistanceContainer.left
+        }
+        text: catalog.i18nc("@label", "Join Distance (mm)")
+        font: UM.Theme.getFont("small")
+        renderType: Text.NativeRendering
+        color: UM.Theme.getColor("text")
+        verticalAlignment: Text.AlignVCenter
+    }
 
-    // Binding {
-    //     target: joinDistanceSlider
-    //     property: "value"
-    //     value: parseInt(supportJoinDistance.properties.value)
-    // }
+    Binding {
+        target: joinDistanceSpinBox
+        property: "value"
+        value: parseInt(supportJoinDistance.properties.value)
+    }
 
-    // Item {
-    //     id: joinDistanceContainer
-    //     height: joinDistanceSlider.height
+    Item {
+        id: joinDistanceContainer
+        width: Math.round((parent.width - labelColumnWidth) / 2)
+        height: joinDistanceContainer.visible ? joinDistanceSpinBox.height : 0
+        visible: enableSupportCheckBox.checked
 
-    //     anchors {
-    //         top: supportDensityContainer.bottom
-    //         topMargin: UM.Theme.getSize("thick_margin").height
-    //         left: enableSupportContainer.left
-    //         right: parent.right
-    //     }
+        anchors {
+            top: supportDensityContainer.bottom
+            topMargin: supportOverhangContainer.visible ? UM.Theme.getSize("thick_margin").height : 0
+            left: enableSupportContainer.left
+        }
 
-    //     Slider {
-    //         id: joinDistanceSlider
+        Controls3.SpinBox {
+            id: joinDistanceSpinBox
 
-    //         width: parent.width
-    //         height: UM.Theme.getSize("print_setup_slider_handle").height // The handle is the widest element of the slider
+            anchors.verticalCenter: parent.verticalCenter
 
-    //         minimumValue: 3
-    //         maximumValue: 15
-    //         stepSize: 1
-    //         tickmarksEnabled: true
-    //         property int tickmarkSpacing: 3
-    //         wheelEnabled: false
+            height: enableSupportRowTitle.height
+            width: parent.width
 
-    //         // disable slider when support is disabled
-    //         enabled: enableSupportCheckBox.checked
+            from: 0
+            to: 15
+            editable: true
+            stepSize: 1
 
-    //         // set initial value from stack
-    //         value: 5
+            value: parseInt(supportJoinDistance.properties.value)
 
-    //         style: UM.Theme.styles.setup_selector_slider
+            onValueChanged: {
+                // Don't round the value if it's already the same
+                let current = parseInt(supportJoinDistance.properties.value)
+                if (current == value) {
+                    return
+                }
+                if (current > to && value == to) {
+                    return
+                }
 
-    //         onValueChanged: {
-    //             // Don't round the value if it's already the same
-    //             if (parseInt(supportJoinDistance.properties.value) == joinDistanceSlider.value) {
-    //                 return
-    //             }
+                // Update value only if the Recommended mode is Active,
+                // Otherwise if I change the value in the Custom mode the Recommended view will try to repeat
+                // same operation
+                var active_mode = UM.Preferences.getValue("cura/active_mode")
 
-    //             // Round the slider value
-    //             var roundedSliderValue = Math.round(joinDistanceSlider.value)
+                if (active_mode == 0 || active_mode == "simple") {
+                    Cura.MachineManager.setSettingForAllExtruders("support_join_distance", "value", joinDistanceSpinBox.value)
+                }
+            }
+        }
 
-    //             // Update the slider value to represent the rounded value
-    //             joinDistanceSlider.value = roundedSliderValue
-
-    //             // Update value only if the Recommended mode is Active,
-    //             // Otherwise if I change the value in the Custom mode the Recommended view will try to repeat
-    //             // same operation
-    //             var active_mode = UM.Preferences.getValue("cura/active_mode")
-
-    //             if (active_mode == 0 || active_mode == "simple") {
-    //                 Cura.MachineManager.setSettingForAllExtruders("support_join_distance", "value", roundedSliderValue)
-    //             }
-    //         }
-    //     }
-    // }
+        UM.SettingPropertyProvider {
+            id: supportJoinDistance
+            containerStackId: alive ? Cura.MachineManager.activeStack.id : null
+            key: "support_join_distance"
+            watchedProperties: [ "value" ]
+            storeIndex: 0
+        }
+    }
 
     property var extruderModel: CuraApplication.getExtrudersModel()
 
@@ -549,22 +560,6 @@ Item {
         containerStack: Cura.MachineManager.activeMachine
         key: "machine_extruder_count"
         watchedProperties: ["value"]
-        storeIndex: 0
-    }
-
-    UM.SettingPropertyProvider {
-        id: supportDensity
-        containerStackId: Cura.MachineManager.activeStackId
-        key: "support_infill_rate"
-        watchedProperties: ["value"]
-        storeIndex: 0
-    }
-
-    UM.SettingPropertyProvider {
-        id: supportJoinDistance
-        containerStackId: Cura.MachineManager.activeStack.id
-        key: "support_join_distance"
-        watchedProperties: [ "value" ]
         storeIndex: 0
     }
 }
