@@ -21,11 +21,14 @@
     <diameter>2.85</diameter>
   </properties>
   <settings>
-	<setting key="wipe temperature">165.0</setting>
     <setting key="retraction amount">7.0</setting>
     <setting key="part removal temperature">0.0</setting>
     <setting key="heated bed temperature">70.0</setting>
     <setting key="print temperature">260.0</setting>
+    <setting key="standby temperature">200</setting>
+    <setting key="soften temperature">200</setting>
+    <setting key="probe temperature">200</setting>
+    <setting key="wipe temperature">200</setting>
     <setting key="retraction speed">30.0</setting>
 
     <machine>

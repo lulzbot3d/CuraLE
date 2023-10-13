@@ -22,16 +22,12 @@
     <density>1.08</density>
   </properties>
   <settings>
-    <setting key="probe temperature">160.0</setting>
-    <setting key="wipe temperature">180.0</setting>
-    <setting key="soften temperature">170.0</setting>
     <setting key="retraction amount">1.25</setting>
     <setting key="retraction speed">25.0</setting>
     <setting key="heated bed temperature">50.0</setting>
     <setting key="print cooling">50.0</setting>
     <setting key="print temperature">235.0</setting>
     <setting key="part removal temperature">0.0</setting>
-    <setting key="standby temperature">150.0</setting>
 
     <machine>
       <machine_identifier product="taz_pro_dual"/>

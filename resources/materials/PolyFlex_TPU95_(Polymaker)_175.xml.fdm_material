@@ -14,7 +14,6 @@
     <extruder_disabled>False</extruder_disabled>
     <color_code>#fbff06</color_code>
     <GUID>38155011-eb7b-49de-bfc7-56d62acfca53</GUID>
-    <definition>fdmprinter</definition>
     <adhesion_info>Use glue stick with PEI or print directly on glass.</adhesion_info>
   </metadata>
   <properties>
@@ -23,15 +22,11 @@
   </properties>
   <settings>
     <setting key="print cooling">50.0</setting>
-    <setting key="standby temperature">150.0</setting>
     <setting key="retraction speed">15.0</setting>
     <setting key="print temperature">220.0</setting>
     <setting key="part removal temperature">0.0</setting>
     <setting key="heated bed temperature">60.0</setting>
-    <setting key="wipe temperature">160.0</setting>
     <setting key="retraction amount">3.0</setting>
-    <setting key="probe temperature">150.0</setting>
-    <setting key="soften temperature">150.0</setting>
 
     <machine>
       <machine_identifier product="mini_2_h175"/>

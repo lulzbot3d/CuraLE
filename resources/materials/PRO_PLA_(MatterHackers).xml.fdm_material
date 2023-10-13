@@ -11,7 +11,7 @@
     <compatible>True</compatible>
     <GUID>dcdf3bca-204d-4867-8cbd-73fe71ea89f5</GUID>
     <adhesion_info/>
-    <color_code>#00ffff</color_code>
+    <color_code>#C1D82F</color_code>
     <version>1</version>
     <description/>
   </metadata>
@@ -20,12 +20,8 @@
 	<diameter>2.85</diameter>
   </properties>
   <settings>
-    <setting key="probe temperature">140.0</setting>
     <setting key="print temperature">215.0</setting>
     <setting key="heated bed temperature">60.0</setting>
-    <setting key="wipe temperature">140.0</setting>
-    <setting key="soften temperature">140.0</setting>
-    <setting key="standby temperature">175.0</setting>
     <setting key="part removal temperature">45.0</setting>
 
     <machine>

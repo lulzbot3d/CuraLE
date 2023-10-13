@@ -20,10 +20,10 @@
   <settings>
     <setting key="print temperature">240</setting>
     <setting key="heated bed temperature">40</setting>
-    <setting key="standby temperature">175</setting>
-    <setting key="soften temperature">195</setting>
-    <setting key="probe temperature">195</setting>
-    <setting key="wipe temperature">195</setting>
+    <setting key="standby temperature">200</setting>
+    <setting key="soften temperature">200</setting>
+    <setting key="probe temperature">200</setting>
+    <setting key="wipe temperature">200</setting>
     <setting key="part removal temperature">60</setting>
 
     <machine>

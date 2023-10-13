@@ -23,7 +23,6 @@
   </properties>
   <settings>
     <setting key="heated bed temperature">70</setting>
-    <setting key="standby temperature">175</setting>
     <setting key="print temperature">220</setting>
 
     <machine>

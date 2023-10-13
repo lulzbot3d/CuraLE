@@ -10,7 +10,7 @@
     </name>
     <GUID>438b9477-ee0a-4f98-b119-8be3991773f4</GUID>
     <version>1</version>
-    <color_code>#cdc9a5</color_code>
+    <color_code>#C1D82F</color_code>
   </metadata>
   <properties>
     <density>3.9</density>
@@ -19,10 +19,6 @@
   <settings>
     <setting key="print temperature">230</setting>
     <setting key="heated bed temperature">60</setting>
-    <setting key="standby temperature">175</setting>
-    <setting key="soften temperature">150</setting>
-    <setting key="probe temperature">150</setting>
-    <setting key="wipe temperature">150</setting>
     <setting key="part removal temperature">40</setting>
 
     <machine>

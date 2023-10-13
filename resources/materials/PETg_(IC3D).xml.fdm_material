@@ -20,11 +20,11 @@
   <settings>
     <setting key="print temperature">230</setting>
     <setting key="heated bed temperature">65</setting>
-    <setting key="standby temperature">175</setting>
-    <setting key="wipe temperature">170</setting>
-    <setting key="part removal temperature">50</setting>
-    <setting key="soften temperature">170</setting>
+    <setting key="standby temperature">170</setting>
+    <setting key="soften temperature">185</setting>
     <setting key="probe temperature">170</setting>
+    <setting key="wipe temperature">185</setting>
+    <setting key="part removal temperature">50</setting>
 
     <machine>
       <machine_identifier product="mini_1_aerostruder"/>

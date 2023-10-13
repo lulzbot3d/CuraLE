@@ -9,7 +9,7 @@
     </name>
     <GUID>e5195fb9-6af3-4220-845f-bf4a7a888146</GUID>
     <version>25</version>
-    <color_code>#c1d82f</color_code>
+    <color_code>#C1D82F</color_code>
     <info_link></info_link>
   </metadata>
   <properties>
@@ -18,12 +18,8 @@
   </properties>
   <settings>
     <setting key="print temperature">205</setting>
-    <setting key="probe temperature">160</setting>
-    <setting key="soften temperature">170</setting>
-    <setting key="wipe temperature">180</setting>
     <setting key="heated bed temperature">60</setting>
     <setting key="part removal temperature">45</setting>
-    <setting key="standby temperature">175</setting>
 
     <machine>
       <machine_identifier product="sidekick_747_ast285"/>

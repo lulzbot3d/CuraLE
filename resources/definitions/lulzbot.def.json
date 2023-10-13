@@ -175,13 +175,13 @@
                         "material_probe_temperature":
                         {
                             "label": "Probe Temperature",
-                            "description": "The nozzle temperature used before probing.",
+                            "description": "The nozzle temperature used before probing. This should be set cool enough that the printing material does not ooze from the nozzle while not cooling the nozzle down entirely.",
                             "enabled": true,
                             "type": "float",
                             "unit": "°C",
                             "default_value": 160,
                             "minimum_value": "0",
-                            "maximum_value_warning": "295",
+                            "maximum_value_warning": "250",
                             "maximum_value": "300",
                             "settable_per_mesh": false,
                             "settable_per_extruder": true
@@ -189,13 +189,13 @@
                         "material_soften_temperature":
                         {
                             "label": "Soften Temperature",
-                            "description": "The nozzle temperature used before z-axis homing.",
+                            "description": "The nozzle temperature used before z-axis homing. Softens material enough for an initial retraction prior to wiping.",
                             "enabled": true,
                             "type": "float",
                             "unit": "°C",
                             "default_value": 170,
                             "minimum_value": "0",
-                            "maximum_value_warning": "295",
+                            "maximum_value_warning": "250",
                             "maximum_value": "300",
                             "settable_per_mesh": false,
                             "settable_per_extruder": true
@@ -203,14 +203,14 @@
                         "material_wipe_temperature":
                         {
                             "label": "Wipe Temperature",
-                            "description": "The nozzle temperature used before nozzle wiping.",
+                            "description": "The nozzle temperature used during nozzle wiping. This should be set just warm enough that the printing material has softened to the point that the wiper pad will be able to remove excess material from the nozzle.",
                             "enabled": true,
                             "type": "float",
                             "unit": "°C",
                             "default_value": 170,
                             "minimum_value": "0",
-                            "maximum_value_warning": "195",
-                            "maximum_value": "200",
+                            "maximum_value_warning": "250",
+                            "maximum_value": "300",
                             "settable_per_mesh": false,
                             "settable_per_extruder": true
                         }

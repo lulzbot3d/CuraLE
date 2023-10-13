@@ -9,7 +9,7 @@
     </name>
     <GUID>ce747483-8d4e-47ab-96c7-eda81bb3f77f</GUID>
     <version>1</version>
-    <color_code>#8DB6CD</color_code>
+    <color_code>#0000FF</color_code>
     <adhesion_info>Use glue stick.</adhesion_info>
   </metadata>
   <properties>
@@ -19,10 +19,6 @@
   <settings>
     <setting key="print temperature">200</setting>
     <setting key="heated bed temperature">60</setting>
-    <setting key="standby temperature">175</setting>
-    <setting key="soften temperature">150</setting>
-    <setting key="probe temperature">140</setting>
-    <setting key="wipe temperature">140</setting>
     <setting key="part removal temperature">45</setting>
 
     <machine>

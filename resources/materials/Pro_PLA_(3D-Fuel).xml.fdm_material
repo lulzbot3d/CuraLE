@@ -9,7 +9,7 @@
       <category>Beginner</category>
     </name>
     <compatible>True</compatible>
-    <color_code>#c1d82f</color_code>
+    <color_code>#C1D82F</color_code>
     <adhesion_info />
     <GUID>4a93345b-114d-40f9-9781-40216df0e2b4</GUID>
     <description />
@@ -22,12 +22,8 @@
   </properties>
   <settings>
     <setting key="print temperature">215</setting>
-    <setting key="probe temperature">160</setting>
-    <setting key="soften temperature">170</setting>
-    <setting key="wipe temperature">180</setting>
     <setting key="heated bed temperature">60</setting>
     <setting key="part removal temperature">45</setting>
-    <setting key="standby temperature">175</setting>
 
     <machine>
       <machine_identifier product="mini_1_se"/>

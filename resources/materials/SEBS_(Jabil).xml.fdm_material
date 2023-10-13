@@ -22,12 +22,8 @@
   </properties>
   <settings>
     <setting key="print temperature">240</setting>
-    <setting key="probe temperature">160</setting>
-    <setting key="soften temperature">170</setting>
-    <setting key="wipe temperature">180</setting>
     <setting key="heated bed temperature">70</setting>
     <setting key="part removal temperature">0</setting>
-    <setting key="standby temperature">175</setting>
 
     <machine>
       <machine_identifier product="sidekick_747_ast285"/>
