@@ -14,6 +14,7 @@ SettingItem
     property string textBeforeEdit
     property bool textHasChanged
     property bool focusGainedByClick: false
+    property bool defIsNull: definition == null
     onFocusReceived:
     {
         textHasChanged = false;
@@ -101,7 +102,7 @@ SettingItem
                 verticalCenter: parent.verticalCenter
             }
 
-            text: definition.unit
+            text: defIsNull ? "" : definition.unit
             //However the setting value is aligned, align the unit opposite. That way it stays readable with right-to-left languages.
             horizontalAlignment: (input.effectiveHorizontalAlignment == Text.AlignLeft) ? Text.AlignRight : Text.AlignLeft
             textFormat: Text.PlainText
@@ -159,13 +160,13 @@ SettingItem
 
             selectByMouse: true
 
-            maximumLength: (definition.type == "str" || definition.type == "[int]") ? -1 : 10
+            maximumLength: defIsNull ? -1 : (definition.type == "str" || definition.type == "[int]") ? -1 : 10
 
             // Since [int] & str don't have a max length, they need to be clipped (since clipping is expensive, this
             // should be done as little as possible)
-            clip: definition.type == "str" || definition.type == "[int]"
+            clip: defIsNull ? false : definition.type == "str" || definition.type == "[int]"
 
-            validator: RegExpValidator { regExp: (definition.type == "[int]") ? /^\[?(\s*-?[0-9]{0,9}\s*,)*(\s*-?[0-9]{0,9})\s*\]?$/ : (definition.type == "int") ? /^-?[0-9]{0,10}$/ : (definition.type == "float") ? /^-?[0-9]{0,9}[.,]?[0-9]{0,3}$/ : /^.*$/ } // definition.type property from parent loader used to disallow fractional number entry
+            validator: RegExpValidator { regExp: (defIsNull ? /^-?[0-9]{0,10}$/ : definition.type == "[int]") ? /^\[?(\s*-?[0-9]{0,9}\s*,)*(\s*-?[0-9]{0,9})\s*\]?$/ : (definition.type == "int") ? /^-?[0-9]{0,10}$/ : (definition.type == "float") ? /^-?[0-9]{0,9}[.,]?[0-9]{0,3}$/ : /^.*$/ } // definition.type property from parent loader used to disallow fractional number entry
 
             Binding
             {

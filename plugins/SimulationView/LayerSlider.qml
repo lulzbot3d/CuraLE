@@ -25,8 +25,10 @@ Item
 
     // Track properties
     property real trackThickness: UM.Theme.getSize("slider_groove").width // width of the slider track
+    property real trackBorderWidth: UM.Theme.getSize("slider_groove_border").width
     property real trackRadius: UM.Theme.getSize("slider_groove_radius").width
     property color trackColor: UM.Theme.getColor("slider_groove")
+    property color trackBorderColor: UM.Theme.getColor("slider_groove_border")
 
     // value properties
     property real maximumValue: 100

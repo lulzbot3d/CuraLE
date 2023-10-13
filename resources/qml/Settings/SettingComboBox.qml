@@ -16,7 +16,7 @@ SettingItem
     {
         id: control
 
-        model: definition.options
+        model: definition != null ? definition.options : null
         textRole: "value"
 
         anchors.fill: parent

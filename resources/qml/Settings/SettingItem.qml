@@ -28,7 +28,8 @@ Item
     property bool showLinkedSettingIcon: true
     property bool doDepthIndentation: true
     property bool doQualityUserSettingEmphasis: true
-    property var settingKey: definition.key
+    property bool defIsNull: definition == null
+    property var settingKey: !defIsNull ? definition.key : null
 
     // Create properties to put property provider stuff in (bindings break in qt 5.5.1 otherwise)
     property var state: propertyProvider.properties.state
@@ -141,13 +142,13 @@ Item
             anchors.right: settingControls.left
             anchors.verticalCenter: parent.verticalCenter
 
-            text: definition.label
+            text: defIsNull ? "" : definition.label
             elide: Text.ElideMiddle
             renderType: Text.NativeRendering
             textFormat: Text.PlainText
 
             color: UM.Theme.getColor("setting_control_text")
-            opacity: (definition.visible) ? 1 : 0.5
+            opacity: defIsNull ? 0 : (definition.visible) ? 1 : 0.5
             // emphasize the setting if it has a value in the user or quality profile
             font: base.doQualityUserSettingEmphasis && base.stackLevel !== undefined && base.stackLevel <= 1 ? UM.Theme.getFont("default_italic") : UM.Theme.getFont("default")
         }
@@ -170,7 +171,7 @@ Item
             {
                 id: linkedSettingIcon;
 
-                visible: (!definition.settable_per_extruder || String(globalPropertyProvider.properties.limit_to_extruder) != "-1") && base.showLinkedSettingIcon
+                visible: ((defIsNull ? false : !definition.settable_per_extruder) || String(globalPropertyProvider.properties.limit_to_extruder) != "-1") && base.showLinkedSettingIcon
 
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
