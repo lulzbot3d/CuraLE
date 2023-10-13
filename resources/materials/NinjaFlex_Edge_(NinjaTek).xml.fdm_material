@@ -12,7 +12,7 @@
     <definition>fdmprinter</definition>
     <description/>
     <version>2</version>
-    <color_code>#ff10d8</color_code>
+    <color_code>#FFD700</color_code>
     <compatible>True</compatible>
     <GUID>68e27cb2-ab74-4aa5-a138-ede45a463b03</GUID>
     <extruder_disabled>False</extruder_disabled>

@@ -14,7 +14,7 @@
     <GUID>b4da7828-c6df-488c-8a5d-b5a77b15ac9c</GUID>
     <extruder_disabled>False</extruder_disabled>
     <version>1</version>
-    <color_code>#fbff08</color_code>
+    <color_code>#FFD700</color_code>
   </metadata>
   <properties>
     <density>1.05</density>

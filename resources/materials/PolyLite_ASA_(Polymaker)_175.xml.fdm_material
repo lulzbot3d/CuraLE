@@ -13,7 +13,7 @@
     <GUID>9727c6c4-f9c0-4d54-8b26-2c2bab880f2c</GUID>
     <compatible>True</compatible>
     <description/>
-    <color_code>#0000ff</color_code>
+    <color_code>#FFA500</color_code>
     <definition>fdmprinter</definition>
     <extruder_disabled>False</extruder_disabled>
   </metadata>

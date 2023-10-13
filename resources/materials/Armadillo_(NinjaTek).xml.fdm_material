@@ -14,7 +14,7 @@
     <compatible>True</compatible>
     <extruder_disabled>False</extruder_disabled>
     <version>2</version>
-    <color_code>#0000ff</color_code>
+    <color_code>#FFD700</color_code>
     <adhesion_info>Use Gluestick or print directly on glass</adhesion_info>
   </metadata>
   <properties>

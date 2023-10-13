@@ -14,7 +14,7 @@
     <GUID>42ad8dfd-1be6-43e9-aece-11837373ff36</GUID>
     <compatible>True</compatible>
     <adhesion_info>Use Glue Stick</adhesion_info>
-    <color_code>#00aaff</color_code>
+    <color_code>#007FFF</color_code>
   </metadata>
   <properties>
    <density>1.2</density>

@@ -12,7 +12,7 @@
     <description></description>
     <compatible>True</compatible>
     <extruder_disabled>False</extruder_disabled>
-    <color_code>#fbff06</color_code>
+    <color_code>#FFD700</color_code>
     <GUID>38155011-eb7b-49de-bfc7-56d62acfca53</GUID>
     <adhesion_info>Use glue stick with PEI or print directly on glass.</adhesion_info>
   </metadata>

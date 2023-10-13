@@ -13,7 +13,7 @@
         <GUID>d4a13563-4fab-4cb9-9fd7-d9810267c158</GUID>
         <compatible>True</compatible>
         <description />
-        <color_code>#0000ff</color_code>
+        <color_code>#40E0D0</color_code>
         <extruder_disabled>False</extruder_disabled>
     </metadata>
     <properties>

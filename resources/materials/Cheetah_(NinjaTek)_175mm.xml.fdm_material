@@ -9,7 +9,7 @@
       <category/>
     </name>
     <compatible>True</compatible>
-    <color_code>#00ff00</color_code>
+    <color_code>#FFD700</color_code>
     <definition>fdmprinter</definition>
     <extruder_disabled>False</extruder_disabled>
     <description/>
