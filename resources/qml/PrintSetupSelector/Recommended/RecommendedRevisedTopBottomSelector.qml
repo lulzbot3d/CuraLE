@@ -17,7 +17,7 @@ Item {
     height: childrenRect.height
 
     property real labelColumnWidth: Math.round(width / 3)
-    property bool alive: Cura.MachineManager.activeMachine != null
+    property bool alive: Cura.MachineManager.activeMachine != null && Cura.MachineManager.activeStack != null
     property var curaRecommendedMode: Cura.RecommendedMode {}
 
     Cura.IconWithText {
@@ -54,8 +54,6 @@ Item {
 
             height: topBottomRowTitle.height
             width: parent.width
-
-            // property int heightInLayers: Math.floor(parseFloat(machineHeight.properties.value) / parseFloat(layerHeight.properties.value))
 
             from: 0
             to: 999999

@@ -17,7 +17,7 @@ Item {
     height: childrenRect.height
 
     property real labelColumnWidth: Math.round(width / 3)
-    property bool alive: Cura.MachineManager.activeMachine != null
+    property bool alive: Cura.MachineManager.activeMachine != null && Cura.MachineManager.activeStack != null
 
     // Create a binding to update the icon when the infill density changes
     Binding {

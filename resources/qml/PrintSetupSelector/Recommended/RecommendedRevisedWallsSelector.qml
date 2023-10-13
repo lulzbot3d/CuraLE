@@ -17,6 +17,7 @@ Item {
     height: childrenRect.height
 
     property real labelColumnWidth: Math.round(width / 3)
+    property bool alive: Cura.MachineManager.activeStack != null
 
     Cura.IconWithText {
         id: wallCountRowTitle
@@ -76,7 +77,7 @@ Item {
 
         UM.SettingPropertyProvider {
             id: wallCount
-            containerStackId: Cura.MachineManager.activeStack.id
+            containerStackId: alive ? Cura.MachineManager.activeStack.id : null
             key: "wall_line_count"
             watchedProperties: [ "value" ]
             storeIndex: 0
