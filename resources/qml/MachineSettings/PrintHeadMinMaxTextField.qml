@@ -27,7 +27,7 @@ NumericTextFieldWithUnit
     id: printerHeadMinMaxField
     UM.I18nCatalog { id: catalog; name: "cura" }
 
-    containerStackId: Cura.MachineManager.activeMachine.id
+    containerStackId: Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.id : null
     settingKey: "machine_head_with_fans_polygon"
     settingStoreIndex: 1
 

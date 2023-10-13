@@ -94,7 +94,7 @@ Cura.MachineAction
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.leftMargin: UM.Theme.getSize("default_margin").width
-        text: Cura.MachineManager.activeMachine.name
+        text: Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.name : ""
         horizontalAlignment: Text.AlignHCenter
         font: UM.Theme.getFont("large_bold")
         renderType: Text.NativeRendering

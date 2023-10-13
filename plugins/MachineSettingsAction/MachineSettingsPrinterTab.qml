@@ -25,7 +25,7 @@ Item
     property int controlWidth: (columnWidth / 3) | 0
     property var labelFont: UM.Theme.getFont("default")
 
-    property string machineStackId: Cura.MachineManager.activeMachine.id
+    property string machineStackId: Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.id : null
 
     property var forceUpdateFunction: manager.forceUpdate
 
@@ -340,7 +340,8 @@ Item
                     function update()
                     {
                         clear()
-                        for (var i = 1; i <= Cura.MachineManager.activeMachine.maxExtruderCount; i++)
+                        let maxExtruders = Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.maxExtruderCount : 0
+                        for (var i = 1; i <= maxExtruders; i++)
                         {
                             // Use String as value. JavaScript only has Number. PropertyProvider.setPropertyValue()
                             // takes a QVariant as value, and Number gets translated into a float. This will cause problem

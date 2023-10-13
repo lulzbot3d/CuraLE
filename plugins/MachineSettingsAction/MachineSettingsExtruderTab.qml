@@ -16,10 +16,6 @@ Item
     id: base
     UM.I18nCatalog { id: catalog; name: "cura" }
 
-    anchors.left: parent.left
-    anchors.right: parent.right
-    anchors.top: parent.top
-
     property int labelWidth: 210 * screenScaleFactor
     property int controlWidth: (UM.Theme.getSize("setting_control").width * 3 / 4) | 0
     property var labelFont: UM.Theme.getFont("default")
@@ -68,7 +64,7 @@ Item
             Cura.NumericTextFieldWithUnit  // "Nozzle size"
             {
                 id: extruderNozzleSizeField
-                visible: !Cura.MachineManager.activeMachine.hasVariants
+                visible: Cura.MachineManager.activeMachine != null ? !Cura.MachineManager.activeMachine.hasVariants : false
                 containerStackId: base.extruderStackId
                 settingKey: "machine_nozzle_size"
                 settingStoreIndex: propertyStoreIndex
