@@ -15,8 +15,13 @@ Cura.RoundedRectangle
     property alias headerTitle: headerLabel.text
     property alias xPosCloseButton: closeButton.left
 
-    height: UM.Theme.getSize("expandable_component_content_header").height
-    color: UM.Theme.getColor("secondary")
+    property bool headerFull: true
+
+    height: {
+        let headHeight = UM.Theme.getSize("expandable_component_content_header").height
+        return (headerFull ? headHeight : headHeight / 3)
+    }
+    color: headerFull ? UM.Theme.getColor("secondary") : UM.Theme.getColor("main_window_header_background")
     cornerSide: Cura.RoundedRectangle.Direction.Up
     border.width: UM.Theme.getSize("default_lining").width
     border.color: UM.Theme.getColor("lining")
@@ -25,6 +30,7 @@ Cura.RoundedRectangle
     Label
     {
         id: headerLabel
+        visible: headerFull
         text: ""
         font: UM.Theme.getFont("medium")
         renderType: Text.NativeRendering
@@ -43,6 +49,7 @@ Cura.RoundedRectangle
     Button
     {
         id: closeButton
+        visible: headerFull
         width: UM.Theme.getSize("message_close").width
         height: UM.Theme.getSize("message_close").height
         hoverEnabled: true

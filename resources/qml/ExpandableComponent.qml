@@ -48,6 +48,9 @@ Item
     // Adds a title to the content item
     property alias contentHeaderTitle: contentHeader.headerTitle
 
+    // Defines if the content header is full or reduced
+    property alias contentHeaderFull: contentHeader.headerFull
+
     // How much spacing is needed for the contentItem by Y coordinate
     property var contentSpacingY: UM.Theme.getSize("narrow_margin").width
 
@@ -233,6 +236,7 @@ Item
         {
             id: contentHeader
             headerTitle: ""
+            headerFull: true
             anchors
             {
                 top: parent.top
