@@ -11,6 +11,7 @@
         "toolhead_selection_name": "Galaxy Tool Head",
         "preferred_quality_type": "normal",
         "has_variants": true,
+        "preferred_variant_name": "0.5 mm",
         "firmware_latest_version": "2.0.0.144.11",
         "firmware_file": "Pro_LongBed/Marlin_TAZPro_LongBed_Galaxy_BLTouch_2.0.0.144.11_259c25e.bin"
     }

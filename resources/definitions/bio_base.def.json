@@ -17,7 +17,7 @@
             100
         ],
         "preferred_material": "Generic_Sodium_Alginate",
-        "preferred_quality_type": "high",
+        "preferred_quality_type": "25 gauge",
         "firmware_toolhead_name": "SingleExtruder",
         "firmware_latest_version": "2.0.0.175",
         "firmware_file": "Bio/Marlin_Bio_SingleExtruder_2.0.0.175_6c8c1c0d.hex",

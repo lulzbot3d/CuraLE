@@ -19,7 +19,6 @@
         "variant_machine": false,
         "has_variants": false,
         "variants_name": "Nozzle Size",
-        "preferred_variant_name": "0.5 mm",
         "has_optional_lcd": false,
         "has_optional_bltouch": false,
         "bltouch_is_standard": false,

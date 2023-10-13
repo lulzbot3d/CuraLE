@@ -19,7 +19,6 @@
             -11.5,
             0
         ],
-        "preferred_quality_type": "normal",
         "file_formats": "text/x-gcode",
         "firmware_latest_version": "2.0.0.144.8",
         "firmware_bltouch_latest_version": "2.0.0.144.10",

@@ -11,6 +11,7 @@
         "toolhead_selection_name": "Galaxy Tool Head",
         "preferred_quality_type": "normal",
         "has_variants": true,
+        "preferred_variant_name": "0.5 mm",
         "firmware_latest_version": "2.0.0.144.12",
         "firmware_file": "Pro_XT/Marlin_TAZProXT_Galaxy_2.0.0.144.11_259c25e.bin",
         "firmware_file_bltouch": "Pro_XT/Marlin_TAZProXT_Galaxy_BLTouch_2.0.0.144.11_259c25e.bin"

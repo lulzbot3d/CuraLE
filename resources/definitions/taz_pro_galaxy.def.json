@@ -10,6 +10,7 @@
         "toolhead_selection_name": "Galaxy Tool Head",
         "preferred_quality_type": "normal",
         "has_variants": true,
+        "preferred_variant_name": "0.5 mm",
         "firmware_latest_version": "2.0.0.144.11",
         "firmware_file": "Pro/Marlin_TAZPro_Galaxy_2.0.0.144.11_259c25e.bin",
         "firmware_file_bltouch": "Pro/Marlin_TAZPro_Galaxy_BLTouch_2.0.0.144.11_259c25e.bin"
