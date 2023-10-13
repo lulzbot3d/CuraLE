@@ -8,6 +8,7 @@
         "base_machine": false,
         "toolhead_category": "Galaxy",
         "toolhead_selection_name": "Galaxy Tool Head",
+        "preferred_quality_type": "normal",
         "has_variants": true,
         "firmware_latest_version": "2.0.0.144.11",
         "firmware_file": "Pro/Marlin_TAZPro_Galaxy_2.0.0.144.11_259c25e.bin",

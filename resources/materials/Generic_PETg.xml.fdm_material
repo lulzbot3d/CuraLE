@@ -36,6 +36,11 @@
     </machine>
 
     <machine>
+      <machine_identifier product="taz_pro_dual"/>
+      <machine_identifier product="taz_pro_xt"/>
+    </machine>
+
+    <machine>
       <machine_identifier product="mini_2_he"/>
       <machine_identifier product="sidekick_289_he"/>
       <machine_identifier product="sidekick_747_he"/>
