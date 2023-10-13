@@ -37,7 +37,7 @@ Item {
 
             onEntered: {
                 base.showTooltip(topBottomRowTitle, Qt.point(-topBottomRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "Set the number of solid layers that will be generated on the top and bottom of your print. In the dropdown to the right, you can also set the pattern that will be used to create those solid layers."))
+                    catalog.i18nc("@label", "Set the number of solid layers that will be generated on the top and bottom of your print. In the dropdown to the right, you can also set the pattern that those layers will be created with."))
             }
             onExited: base.hideTooltip()
         }

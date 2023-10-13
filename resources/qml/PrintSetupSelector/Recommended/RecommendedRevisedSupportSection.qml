@@ -39,7 +39,7 @@ Item {
 
             onEntered: {
                 base.showTooltip(enableSupportRowTitle, Qt.point(-enableSupportRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "Generate structures to support parts of the model which have overhangs. Without these structures, such parts would collapse during printing."))
+                    catalog.i18nc("@label", "Generate structures to support parts of the model which have overhangs. Without these structures, such parts may collapse during printing."))
             }
             onExited: base.hideTooltip()
         }
@@ -59,13 +59,21 @@ Item {
             id: enableSupportCheckBox
             anchors.verticalCenter: parent.verticalCenter
 
-            property alias _hovered: enableSupportMouseArea.containsMouse
+            property alias _hovered: enableSupportCheckBoxMouseArea.containsMouse
 
             style: UM.Theme.styles.checkbox
             enabled: recommendedPrintSetup.settingsEnabled
 
             visible: supportEnabled.properties.enabled == "True"
             checked: supportEnabled.properties.value == "True"
+
+            MouseArea {
+                id: enableSupportCheckBoxMouseArea
+                anchors.fill: parent
+
+                onClicked: supportEnabled.setPropertyValue("value", supportEnabled.properties.value != "True")
+            }
+
         }
 
         Controls2.ComboBox {
@@ -291,8 +299,7 @@ Item {
 
             onEntered: {
                 base.showTooltip(supportOverhangLabel, Qt.point(-supportOverhangLabel.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "Adjusts the minimum angle relative to vertical at which supports will begin to be generated. A higher value \
-                    will lower the amount of supports generated, but could lead to unsupported overhangs collapsing during printing."))
+                    catalog.i18nc("@label", "Adjusts the minimum angle relative to vertical at which supports will begin to be generated. A higher value will lower the amount of supports generated, but could lead to unsupported overhangs collapsing during printing."))
             }
             onExited: base.hideTooltip()
         }
@@ -502,8 +509,7 @@ Item {
 
             onEntered: {
                 base.showTooltip(joinDistanceLabel, Qt.point(-joinDistanceLabel.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "Set the distance in millimeters under which separate support structures will join together. Increasing this setting can \
-                    help with issues regarding failure of many small support structures around a print."))
+                    catalog.i18nc("@label", "Set the distance in millimeters under which separate support structures will join together. Increasing this setting can help with issues regarding failure of many small support structures around a print."))
             }
             onExited: base.hideTooltip()
         }

@@ -36,7 +36,7 @@ Item {
 
             onEntered: {
                 base.showTooltip(wallCountRowTitle, Qt.point(-wallCountRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "Set the number of solid walls that will be generated on the sides of your print."))
+                    catalog.i18nc("@label", "Set the number of solid walls that will be generated on the sides of your print. This number plays a large factor in the overall strength of your part."))
             }
             onExited: base.hideTooltip()
         }

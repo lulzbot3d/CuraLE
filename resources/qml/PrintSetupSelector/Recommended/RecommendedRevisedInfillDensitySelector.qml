@@ -66,7 +66,7 @@ Item {
 
             onEntered: {
                 base.showTooltip(infillRowTitle, Qt.point(-infillRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "Set the percentage of the interior of the print that will be filled in with infill."))
+                    catalog.i18nc("@label", "Set the percentage of the interior that will be filled with infill by volume."))
             }
             onExited: base.hideTooltip()
         }
@@ -151,8 +151,7 @@ Item {
 
             onEntered: {
                 base.showTooltip(patternLabel, Qt.point(-patternLabel.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "Set the pattern used for the infill of your print. Grid is our recommended pattern as it is relatively efficient both \
-                    in print time and plastic usage while still giving your prints good structural integrity."))
+                    catalog.i18nc("@label", 'Set the pattern used for the infill of your print. "Grid" is our recommended pattern as it is relatively efficient both in print time and plastic usage while still giving your prints good structural integrity. "Gyroid" has excellent compressibility properties. There are additional patterns that may prove useful.'))
             }
             onExited: base.hideTooltip()
         }

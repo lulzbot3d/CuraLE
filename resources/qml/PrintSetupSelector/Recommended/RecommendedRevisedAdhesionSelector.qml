@@ -37,8 +37,7 @@ Item {
 
             onEntered: {
                 base.showTooltip(enableAdhesionRowTitle, Qt.point(-enableAdhesionRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "Select a form of bed adhesion. A skirt is useful for observing adequate bed leveling and z-offsets prior to \
-                    the actual print, while a brim or raft are useful for helping ensure a part stays adhered to the bed and can also potentially help with warping issues."))
+                    catalog.i18nc("@label", 'Select a form of bed adhesion. "Skirt" is useful for observing adequate bed leveling and z-offsets prior to the actual print, while "Brim" or "Raft" are useful for helping ensure a part stays adhered to the bed and can also potentially help with warping issues. Choosing "None" is a way to print to the full extent of the build volume.'))
             }
             onExited: base.hideTooltip()
         }
