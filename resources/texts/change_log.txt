@@ -1,3 +1,11 @@
+[4.13.0-Beta v2.9]
+* Finished revamping the recommended tab, everything should be added back in as intended
+* Plugged in media now takes priority after slicing, so USB drives and SD cards should now be automatically selected when saving (You can still save to drive!)
+* Version Marlin 2.1 Firmware for the TAZ Pro series printers! You may encounter some quirks but we're pretty excited about how this is coming along!
+* Colors of different materials of the same material type (PLA, ABS, etc.) now match for simplicity
+* Made settings for Probe, Wipe, Soften, and Standby temperatures along with Skirt settings much more consistent across profiles
+* Many many small changes related to overall code safety and stability. Should result in much cleaner log files (yay for me)!
+
 [4.13.0-Beta v2.8]
 * Did some work on the recommended tab, Some items were temporarily removed to be reworked for better overall functionality
 * Patched Firmware for Mini 2, SideKicks, and Workhorse to fix an issue where the Tool Head selection screen came up blank

@@ -5,6 +5,21 @@ This file is a work-in-progress; some sections may be incomplete, especially
 	will be updated as new versions are released and will continue to be
 	utilized as the project progresses.
 
+4.13.0-BETAv2.9:
+	Changes:
+		- Finished revamping the recommended tab, everything should be added
+			back in as intended
+		- Plugged in media now takes priority as active device, so USB drives
+			and SD cards should now be the first option when done slicing
+		- Version Marlin 2.1 Firmware for the TAZ Pro series printers!
+			- Couple small quirks may still be present but is very usable and
+			 	is actually safer than current Pro firmware
+		- Unified color scheme of materials in client per type of material
+		- Brought Wipe and Probe temperatures to a global standard everywhere
+			- Also now have Wipe and Probe Temp shown in the custom settings
+				menu by default
+		- Many many small changes related to overall code safety and stability
+
 4.13.0-BETAv2.8:
 	Changes:
 		- Did some work on the recommended tab, now can be adjusted in size
