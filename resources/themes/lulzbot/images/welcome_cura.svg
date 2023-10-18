@@ -39,12 +39,12 @@
      id="namedview24"
      showgrid="false"
      inkscape:zoom="2.707504"
-     inkscape:cx="130.17317"
+     inkscape:cx="74.032902"
      inkscape:cy="112.70471"
      inkscape:window-x="0"
      inkscape:window-y="33"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g12" />
+     inkscape:current-layer="text828" />
   <g
      id="g12"
      style="fill:none;stroke:#666666;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1">
@@ -105,16 +105,14 @@
     <!-- Cura logo border. -->
     <!-- Letter C. -->
   </g>
-  <text
-     xml:space="preserve"
+  <g
+     aria-label="C"
      style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:90.13072205px;line-height:1.25;font-family:Outage;-inkscape-font-specification:'Outage, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.25326824"
-     x="129.88821"
-     y="127.35987"
-     id="text828"
-     inkscape:label="text828"><tspan
-       sodipodi:role="line"
-       id="tspan826"
-       x="129.88821"
-       y="127.35987"
-       style="stroke-width:2.25326824">C</tspan></text>
+     id="text828">
+    <path
+       d="m 154.40377,79.590588 q -0.72105,0 -1.26183,0.450654 -0.45065,0.450653 -0.45065,1.171699 V 110.4153 q 0,0.72104 0.45065,1.26183 0.54078,0.45065 1.26183,0.45065 h 28.93196 q 0.72105,0 1.1717,0.45065 0.54079,0.45066 0.54079,1.1717 v 11.89726 q 0,0.72104 -0.54079,1.26183 -0.45065,0.45065 -1.1717,0.45065 h -27.67013 -5.49797 -1.1717 q -0.72105,0 -1.62236,-0.18026 -0.9013,-0.18026 -1.53222,-0.54078 l -8.29202,-8.29203 q -0.36053,-0.63092 -0.54079,-1.53222 -0.18026,-0.90131 -0.18026,-1.62236 v -0.54078 -9.55386 -21.451109 -4.776929 -2.433529 q 0,-0.721046 0.18026,-1.622353 0.18026,-0.901307 0.54079,-1.532222 l 8.29202,-8.292027 q 0.63092,-0.270392 1.26183,-0.450653 0.72105,-0.270393 1.08157,-0.270393 h 0.81118 1.1717 0.36052 0.18026 2.07301 30.55431 q 0.72105,0 1.1717,0.540785 0.54079,0.450653 0.54079,1.171699 v 11.897256 q 0,0.721045 -0.54079,1.26183 -0.45065,0.450653 -1.1717,0.450653 z"
+       style="stroke-width:2.25326824"
+       id="path825"
+       inkscape:connector-curvature="0" />
+  </g>
 </svg>

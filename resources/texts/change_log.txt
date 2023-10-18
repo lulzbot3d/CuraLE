@@ -1,3 +1,10 @@
+[4.13.0-Beta v2.9.1]
+* Quick patch update
+* Fixed issue causing CuraLE to not be able to locate firmware files for update on some printer configurations
+* Quick update to Firmware for TAZ Pro series printers
+* Updated temperatures for Wipe and Soften slightly across the board for better start performance
+* Looking into bugs regarding the drop-down boxes on the recommended settings tab
+
 [4.13.0-Beta v2.9]
 * Finished revamping the recommended tab, everything should be added back in as intended
 * Plugged in media now takes priority after slicing, so USB drives and SD cards should now be automatically selected when saving (You can still save to drive!)
