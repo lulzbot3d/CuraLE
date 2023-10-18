@@ -1,0 +1,51 @@
+{
+    "version": 2,
+    "name": "TAZ ProXT Long Bed",
+    "inherits": "taz",
+    "metadata":
+    {
+        "visible": false,
+        "machine_priority": "07",
+        "base_machine": false,
+        "variant_machine": true,
+        "base_machine_id": "taz_pro_xt_lb",
+        "toolhead_category": "Universal",
+        "toolhead_selection_name": "Universal Tool Head",
+        "platform": "taz_pro_long_bed.stl",
+        "platform_offset":
+        [
+            0,
+            -11.5,
+            0
+        ],
+        "file_formats": "text/x-gcode",
+        "bltouch_is_standard": true,
+        "firmware_latest_version": "2.1.3.0.9",
+        "firmware_file": "Pro_XT_LongBed/Marlin_TAZProXT_LongBed_Universal_BLTouch_2.1.3.0.9_29bdc7c.bin"
+    },
+    "overrides":
+    {
+        "machine_height": { "default_value": 586 },
+        "machine_depth": { "default_value": 582 },
+        "machine_acceleration": { "default_value": 300 },
+        "acceleration_print": { "default_value": 300 },
+        "acceleration_infill": { "default_value": 300 },
+        "acceleration_wall": { "default_value": 300 },
+        "acceleration_wall_0": { "default_value": 300 },
+        "acceleration_wall_x": { "default_value": 300 },
+        "acceleration_topbottom": { "default_value": 300 },
+        "acceleration_support": { "default_value": 300 },
+        "acceleration_support_infill": { "default_value": 300 },
+        "acceleration_support_interface": { "default_value": 300 },
+        "acceleration_prime_tower": { "default_value": 300 },
+        "acceleration_travel":
+        {
+            "default_value": 300,
+            "value": "acceleration_print if magic_spiralize else 300"
+        },
+        "acceleration_layer_0": { "default_value": 300 },
+        "acceleration_print_layer_0": { "default_value": 300 },
+        "acceleration_travel_layer_0": { "default_value": 300 },
+        "acceleration_skirt_brim": { "default_value": 300 }
+    }
+}

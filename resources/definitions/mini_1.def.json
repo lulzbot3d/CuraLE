@@ -4,7 +4,7 @@
     "version": 2,
     "metadata":
     {
-        "machine_priority": "10",
+        "machine_priority": "11",
         "visible": false,
         "base_machine": true,
         "base_machine_id": "mini_1",

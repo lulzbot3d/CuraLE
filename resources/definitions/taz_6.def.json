@@ -4,7 +4,7 @@
     "inherits": "taz",
     "metadata":
     {
-        "machine_priority": "08",
+        "machine_priority": "09",
         "base_machine": true,
         "base_machine_id": "taz_6",
         "platform": "taz_6.stl",

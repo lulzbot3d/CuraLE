@@ -5,7 +5,7 @@
     "metadata":
     {
         "visible": false,
-        "machine_priority": "09",
+        "machine_priority": "10",
         "base_machine": true,
         "base_machine_id": "taz_5",
         "platform": "taz_5.stl",
