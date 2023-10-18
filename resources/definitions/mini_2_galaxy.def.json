@@ -21,9 +21,5 @@
             ],
             "update_url": ""
         }
-    },
-    "overrides":
-    {
-        "firmware_toolhead_name": { "default_value": "Universal Galaxy-Series"}
     }
 }
