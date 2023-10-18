@@ -433,7 +433,6 @@ class MachineManager(QObject):
             for node in DepthFirstIterator(Application.getInstance().getController().getScene().getRoot()):
                 if isinstance(node, SceneNode):
                     nodes += 1
-            print("Node count: " + str(nodes))
             if nodes <= 4:
                 if definition_id == "taz_pro_dual" or definition_id == "taz_pro_xt_dual":
                     Application.getInstance()._openFile(os.path.join(Resources.getPath(Resources.Meshes), "TAZ_Pro_Calibration01.stl"))
@@ -443,8 +442,7 @@ class MachineManager(QObject):
                 else:
                     model_will_be_loaded = "rocktopus.stl"
                 Application.getInstance()._openFile(os.path.join(Resources.getPath(Resources.Meshes), model_will_be_loaded))
-                time.sleep(2)
-                cura.CuraApplication.CuraApplication.arrangeAll(Application.getInstance())
+                # cura.CuraApplication.CuraApplication.arrangeAll(Application.getInstance())
 
         else:
             Logger.log("w", "Failed creating a new machine!")
