@@ -22,9 +22,9 @@
   </properties>
   <settings>
     <setting key="standby temperature">200</setting>
-    <setting key="soften temperature">200</setting>
+    <setting key="soften temperature">220</setting>
     <setting key="probe temperature">200</setting>
-    <setting key="wipe temperature">200</setting>
+    <setting key="wipe temperature">220</setting>
 
     <machine>
       <machine_identifier product="taz_pro_dual"/>

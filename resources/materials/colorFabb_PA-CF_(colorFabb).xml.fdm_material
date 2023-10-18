@@ -26,9 +26,9 @@
     <setting key="heated bed temperature">70.0</setting>
     <setting key="print temperature">260.0</setting>
     <setting key="standby temperature">200</setting>
-    <setting key="soften temperature">200</setting>
+    <setting key="soften temperature">220</setting>
     <setting key="probe temperature">200</setting>
-    <setting key="wipe temperature">200</setting>
+    <setting key="wipe temperature">220</setting>
     <setting key="retraction speed">30.0</setting>
 
     <machine>
