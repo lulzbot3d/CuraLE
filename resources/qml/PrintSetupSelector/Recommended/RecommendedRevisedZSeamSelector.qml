@@ -17,7 +17,6 @@ Item {
     height: childrenRect.height
 
     property real labelColumnWidth: Math.round(width / 3)
-    property bool alive: Cura.MachineManager.activeMachine != null
 
     Cura.IconWithText {
         id: zSeamRowTitle
@@ -58,105 +57,19 @@ Item {
 
         Cura.ComboBoxWithOptions {
             id: zSeamAlignmentComboBox
-            containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
+            containerStackId: Cura.ExtruderManager.activeExtruderStackId
             settingKey: "z_seam_type"
             controlWidth: zSeamAlignmentContainer.width
             useInBuiltTooltip: false
-            // settingStoreIndex: 0
-            // setValueFunction: function setFunction(newValue) {
-            //     Cura.MachineManager.setSettingForAllExtruders("z_seam_type", "value", newValue)
-            // }
         }
-
-        // Cura.ComboBox {
-        //     id: zSeamAlignmentComboBox
-        //     width: zSeamAlignmentContainer.width
-        //     height: UM.Theme.getSize("setting_control").height
-        //     model: zSeamTypeOptionsModel
-        //     textRole: "text"
-
-        //     currentIndex: {
-        //         var currentValue = zSeamType.properties.value
-        //         var index = 0
-        //         for (var i = 0; i < model.count; i++)
-        //         {
-        //             if (model.get(i).value == currentValue)
-        //             {
-        //                 index = i
-        //                 break
-        //             }
-        //         }
-        //         return index
-        //     }
-
-        //     onActivated: {
-        //         let newValue = model.get(index).value
-        //         console.log(newValue)
-        //         console.log(zSeamType.properties.value)
-        //         if (zSeamType.properties.value == newValue) {
-        //             console.log("Same value, not attempting to change")
-        //             return
-        //         }
-
-        //         var active_mode = UM.Preferences.getValue("cura/active_mode")
-        //         if (active_mode == 0 || active_mode == "simple") {
-        //             //zSeamType.setPropertyValue("value", newValue)
-        //             Cura.MachineManager.setSettingForAllExtruders("z_seam_type", "value", newValue)
-        //         }
-        //     }
-
-        //     Binding {
-        //         target: zSeamAlignmentComboBox
-        //         property: "currentIndex"
-        //         value: {
-        //             var currentValue = zSeamType.properties.value
-        //             //console.log("Current Value: " + currentValue)
-        //             var index = 0
-        //             for (var i = 0; i < zSeamAlignmentComboBox.model.count; i++) {
-        //                 if (zSeamAlignmentComboBox.model.get(i).value == currentValue) {
-        //                     index = i
-        //                     break
-        //                 }
-        //             }
-        //             return index
-        //         }
-        //     }
-
-        //     ListModel {
-        //         id: zSeamTypeOptionsModel
-
-        //         function updateModel() {
-        //             clear()
-        //             // Options come in as a string-representation of an OrderedDict
-        //             if(zSeamType.properties.options) {
-        //                 var options = zSeamType.properties.options.match(/^OrderedDict\(\[\((.*)\)\]\)$/);
-        //                 if(options) {
-        //                     options = options[1].split("), (");
-        //                     for(var i = 0; i < options.length; i++) {
-        //                         var option = options[i].substring(1, options[i].length - 1).split("', '");
-        //                         append({ text: option[1], value: option[0] });
-        //                     }
-        //                 }
-        //             }
-        //         }
-
-        //         Component.onCompleted: updateModel()
-        //     }
-
-        //     Connections {
-        //         target: zSeamType
-        //         function onContainerStackChanged() { zSeamTypeOptionsModel.updateModel() }
-        //         function onIsValueUsedChanged() { zSeamTypeOptionsModel.updateModel() }
-        //     }
 
         UM.SettingPropertyProvider {
             id: zSeamType
-            containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
+            containerStackId: Cura.ExtruderManager.activeExtruderStackId
             key: "z_seam_type"
             watchedProperties: [ "value", "options" ]
             storeIndex: 0
         }
-        //}
     }
 
     Binding {
@@ -182,7 +95,7 @@ Item {
 
         Cura.ComboBoxWithOptions {
             id: zSeamPositionComboBox
-            containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
+            containerStackId: Cura.ExtruderManager.activeExtruderStackId
             settingKey: "z_seam_position"
             controlWidth: zSeamPositionContainer.width
             useInBuiltTooltip: false

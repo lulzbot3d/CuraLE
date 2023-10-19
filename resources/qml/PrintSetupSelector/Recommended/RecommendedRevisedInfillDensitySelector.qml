@@ -170,7 +170,7 @@ Item {
 
         Cura.ComboBoxWithOptions {
             id: infillPatternComboBox
-            containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
+            containerStackId: Cura.ExtruderManager.activeExtruderStackId
             settingKey: "infill_pattern"
             controlWidth: infillPatternContainer.width
             useInBuiltTooltip: false

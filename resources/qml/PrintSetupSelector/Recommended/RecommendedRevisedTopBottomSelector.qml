@@ -126,7 +126,7 @@ Item {
             id: topBottomPatternComboBox
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-            containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
+            containerStackId: Cura.ExtruderManager.activeExtruderStackId
             settingKey: "top_bottom_pattern"
             controlWidth: parent.width
             useInBuiltTooltip: false
