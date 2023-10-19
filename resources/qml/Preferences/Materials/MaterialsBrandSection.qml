@@ -96,7 +96,11 @@ Item {
     }
 
     Column {
-        height: material_brand_section.expanded ? childrenRect.height : 0
+        height: {
+            if (!visible) {
+                return 0
+            }
+        }
         visible: material_brand_section.expanded
         width: parent.width
         anchors.top: material_brand_header.bottom

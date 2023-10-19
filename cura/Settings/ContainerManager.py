@@ -55,6 +55,11 @@ class ContainerManager(QObject):
 
     @pyqtSlot(str, str, result=str)
     def getContainerMetaDataEntry(self, container_id: str, entry_names: str) -> str:
+        if container_id == "Unknown":
+            # This is the default value used in MaterialDetailsPanel, the true ID probably hasn't been set yet.
+            # I'm just going to return with nothing since it does this only once every time you open the Materials page in Preferences
+            return ""
+
         metadatas = cura.CuraApplication.CuraApplication.getInstance().getContainerRegistry().findContainersMetadata(id = container_id)
         if not metadatas:
             Logger.log("w", "Could not get metadata of container %s because it was not found.", container_id)

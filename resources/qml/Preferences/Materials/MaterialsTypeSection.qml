@@ -85,7 +85,11 @@ Item {
         anchors.top: type_header.bottom
         width: parent.width
         anchors.left: parent ? parent.left : undefined
-        height: type_section.expanded ? childrenRect.height : 0
+        height: {
+            if (!visible) {
+                return 0
+            }
+        }
         visible: type_section.expanded
 
         Repeater {
