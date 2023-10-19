@@ -11,7 +11,7 @@
         "base_machine_id": "taz_pro_xt_lb",
         "toolhead_category": "Universal",
         "toolhead_selection_name": "Universal Tool Head",
-        "platform": "taz_pro_long_bed.stl",
+        "platform": "taz_pro_lb.stl",
         "platform_offset":
         [
             0,

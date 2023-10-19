@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "name": "TAZ Pro Long Bed | HE | 0.50 mm",
+    "inherits": "taz_pro_lb",
+    "metadata":
+    {
+        "priority": "06",
+        "visible": true,
+        "base_machine": false,
+        "toolhead_selection_name": "HE | 0.50 mm | Hardened SST",
+        "machine_extruder_trains":
+        {
+            "0": "taz_pro_lb_he_extruder"
+        }
+    }
+}

@@ -42,7 +42,7 @@
       <machine_identifier product="taz_5_hsplus"/>
       <machine_identifier product="taz_6_hsplus"/>
       <machine_identifier product="taz_pro_hsplus"/>
-      <machine_identifier product="taz_pro_long_bed_hsplus"/>
+      <machine_identifier product="taz_pro_lb_hsplus"/>
       <machine_identifier product="taz_pro_xt_hsplus"/>
       <machine_identifier product="taz_workhorse_hsplus"/>
     </machine>

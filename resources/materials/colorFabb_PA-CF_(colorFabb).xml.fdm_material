@@ -40,7 +40,7 @@
       <machine_identifier product="mini_2_he"/>
       <machine_identifier product="taz_6_he"/>
       <machine_identifier product="taz_pro_he"/>
-      <machine_identifier product="taz_pro_long_bed_he"/>
+      <machine_identifier product="taz_pro_lb_he"/>
       <machine_identifier product="taz_pro_xt_he"/>
       <machine_identifier product="taz_workhorse_he"/>
     </machine>
@@ -51,7 +51,7 @@
       <machine_identifier product="taz_5_hs"/>
       <machine_identifier product="taz_6_hs"/>
       <machine_identifier product="taz_pro_hs"/>
-      <machine_identifier product="taz_pro_long_bed_hs"/>
+      <machine_identifier product="taz_pro_lb_hs"/>
       <machine_identifier product="taz_pro_xt_hs"/>
       <machine_identifier product="taz_workhorse_hs"/>
     </machine>
@@ -62,7 +62,7 @@
       <machine_identifier product="taz_5_hsplus"/>
       <machine_identifier product="taz_6_hsplus"/>
       <machine_identifier product="taz_pro_hsplus"/>
-      <machine_identifier product="taz_pro_long_bed_hsplus"/>
+      <machine_identifier product="taz_pro_lb_hsplus"/>
       <machine_identifier product="taz_pro_xt_hsplus"/>
       <machine_identifier product="taz_workhorse_hsplus"/>
     </machine>

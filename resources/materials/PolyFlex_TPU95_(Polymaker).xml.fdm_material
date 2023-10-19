@@ -31,7 +31,7 @@
     <machine>
       <machine_identifier product="sidekick_747_ast285"/>
       <machine_identifier product="taz_pro_ast285"/>
-      <machine_identifier product="taz_pro_long_bed_ast285"/>
+      <machine_identifier product="taz_pro_lb_ast285"/>
       <machine_identifier product="taz_pro_xt_ast285"/>
       <machine_identifier product="taz_workhorse_ast285"/>
       <setting key="soften temperature">180</setting>
@@ -73,7 +73,7 @@
       <machine_identifier product="sidekick_289_met285"/>
       <machine_identifier product="sidekick_747_met285"/>
       <machine_identifier product="taz_pro_met285"/>
-      <machine_identifier product="taz_pro_long_bed_met285"/>
+      <machine_identifier product="taz_pro_lb_met285"/>
       <machine_identifier product="taz_pro_xt_met285"/>
       <machine_identifier product="taz_workhorse_met285"/>
       <setting key="print temperature">220</setting>
@@ -85,7 +85,7 @@
       <machine_identifier product="taz_5_se"/>
       <machine_identifier product="taz_6_se"/>
       <machine_identifier product="taz_pro_se"/>
-      <machine_identifier product="taz_pro_long_bed_se"/>
+      <machine_identifier product="taz_pro_lb_se"/>
       <machine_identifier product="taz_pro_xt_se"/>
       <machine_identifier product="taz_workhorse_se"/>
     </machine>

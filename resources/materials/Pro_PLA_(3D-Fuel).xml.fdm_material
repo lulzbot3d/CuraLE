@@ -33,7 +33,7 @@
       <machine_identifier product="taz_5_se"/>
       <machine_identifier product="taz_6_se"/>
       <machine_identifier product="taz_pro_se"/>
-      <machine_identifier product="taz_pro_long_bed_se"/>
+      <machine_identifier product="taz_pro_lb_se"/>
       <machine_identifier product="taz_pro_xt_se"/>
       <machine_identifier product="taz_workhorse_se"/>
     </machine>
@@ -43,7 +43,7 @@
       <machine_identifier product="sidekick_289_he"/>
       <machine_identifier product="sidekick_747_he"/>
       <machine_identifier product="taz_6_he"/>
-      <machine_identifier product="taz_pro_long_bed_he"/>
+      <machine_identifier product="taz_pro_lb_he"/>
       <machine_identifier product="taz_pro_xt_he"/>
       <machine_identifier product="taz_workhorse_he"/>
     </machine>
@@ -53,7 +53,7 @@
       <machine_identifier product="sidekick_289_met285"/>
       <machine_identifier product="sidekick_747_met285"/>
       <machine_identifier product="taz_pro_met285"/>
-      <machine_identifier product="taz_pro_long_bed_met285"/>
+      <machine_identifier product="taz_pro_lb_met285"/>
       <machine_identifier product="taz_pro_xt_met285"/>
       <machine_identifier product="taz_workhorse_met285"/>
     </machine>
