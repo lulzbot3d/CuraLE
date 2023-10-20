@@ -424,7 +424,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
 
     def _checkFirmware(self):
-        reply = ""
+        reply = b""
         try:
             self._sendCommand("M115")
             last_sent = time()
@@ -435,10 +435,12 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                     self._sendCommand("M115")
                     last_sent = time()
                 reply = self._serial.readline()
-        except SerialTimeoutException:
-            Logger.log("w", "Timeout when attempting to check printer firmware!")
+        except AttributeError:
+            Logger.log("w", "Tried to check firmware of a non-existant serial device. Device may have been disconnected.")
         except SerialException:
             Logger.logException("w", "An unexpected exception occurred while reading from serial!")
+        except SerialTimeoutException:
+            Logger.log("w", "Timeout when attempting to check printer firmware!")
 
 
         if b"FIRMWARE_NAME" not in reply:
