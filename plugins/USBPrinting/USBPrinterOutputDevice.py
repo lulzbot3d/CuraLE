@@ -160,7 +160,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
         self.setConnectionState(ConnectionState.Connecting)
 
-        if self._serial_port is "None":
+        if self._serial_port == "None":
             Logger.log("w", "There was an attempt to connect to the 'None' printer!")
             Logger.log("w", "The 'None' printer is a placeholder for when no serial devices are detected.")
             self.setConnectionState(ConnectionState.Closed)
@@ -172,14 +172,14 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self._baud_rate = CuraApplication.getInstance().getGlobalContainerStack().getProperty("machine_baudrate", "value")
             Logger.log("d", "Pulling active printer Baud Rate setting: %s", self._baud_rate)
 
-        if self._baud_rate is "AUTO":
+        if self._baud_rate == "AUTO":
             Logger.log("d", "Baud Rate set to AUTO, auto-detecting baud rate...")
             if self._use_auto_detect:
                 auto_detect_job = AutoDetectBaudJob(self._serial_port)
                 auto_detect_job.start()
                 auto_detect_job.finished.connect(self._autoDetectFinished)
             return
-        if self._serial is None:
+        if self._serial == None:
             Logger.log("d", "Starting connection to serial port %s", self._serial_port)
             known_baud_job = KnownBaudJob(self._serial_port, self._baud_rate)
             known_baud_job.start()
@@ -517,7 +517,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             Logger.log("i", "Unknown USB output device Firmware name: %s", str(name))
 
     def _setFirmwareData(self, data):
-        data_dict = {m[0] : m[1] for m in re.findall("([A-Z_]+)\:(.*?)(?= [A-Z_]+\:|$)", data)}
+        data_dict = {m[0] : m[1] for m in re.findall(r"([A-Z_]+)\:(.*?)(?= [A-Z_]+\:|$)", data)}
         if data_dict:
             self._firmware_data = data_dict
             Logger.log("i", "Firmware data collected and stored")

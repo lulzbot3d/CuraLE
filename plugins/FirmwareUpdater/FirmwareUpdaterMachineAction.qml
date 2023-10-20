@@ -18,7 +18,7 @@ Cura.MachineAction {
     property bool printerConnected: outputDevicesCount > 1
     property var activeOutputDevice: printerConnected ? Cura.MachineManager.printerOutputDevices[outputDevicesCount - 1] : null
     property bool canUpdateFirmware: activeOutputDevice ? activeOutputDevice.activePrinter.canUpdateFirmware : false
-    property string firmwareName: Cura.MachineManager.activeMachine.getDefaultFirmwareName()
+    property string firmwareName: Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.getDefaultFirmwareName() : ""
 
     Column {
         id: firmwareUpdaterMachineAction

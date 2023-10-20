@@ -17,8 +17,7 @@ Item {
     property var activePrintJob: printerModel != null ? printerModel.activePrintJob : null
     property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
     property var availablePrinter: outputDeviceCount >= 1 ? Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1] : null
-    property var connectedDevice:
-    {
+    property var connectedDevice: {
         if (availablePrinter != null) {
             return availablePrinter.acceptsCommands ? availablePrinter : null
         }
