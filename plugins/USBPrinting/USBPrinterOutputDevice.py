@@ -439,8 +439,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             Logger.log("w", "Tried to check firmware of a non-existant serial device. Device may have been disconnected.")
         except SerialException:
             Logger.logException("w", "An unexpected exception occurred while reading from serial!")
-        except SerialTimeoutException:
-            Logger.log("w", "Timeout when attempting to check printer firmware!")
 
 
         if b"FIRMWARE_NAME" not in reply:
