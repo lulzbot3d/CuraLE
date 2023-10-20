@@ -190,6 +190,8 @@ Cura.ExpandablePopup
             leftPadding: UM.Theme.getSize("default_lining").width
             rightPadding: UM.Theme.getSize("default_lining").width
 
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+
             MachineSelectorList
             {
                 id: machineSelectorList

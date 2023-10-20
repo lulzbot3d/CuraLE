@@ -164,7 +164,7 @@ class CuraApplication(QtApplication):
 
         self.default_theme = "lulzbot"
 
-        self.change_log_url = ""
+        self.change_log_url = "https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot/-/blob/main/cura_patchnotes.txt"
         self.beta_change_log_url = ""
 
         self._boot_loading_time = time.time()
