@@ -93,7 +93,7 @@ class FilamentChange(Script):
                     "default_value": "U",
                     "value": "\\\"L\\\" if machine_gcode_flavor==\\\"RepRap (RepRap)\\\" else \\\"U\\\"",
                     "enabled": "not firmware_config"
-                },                    
+                },
                 "machine_gcode_flavor":
                 {
                     "label": "G-code flavor",
@@ -156,10 +156,10 @@ class FilamentChange(Script):
 
             if x_pos is not None:
                 color_change = color_change + (" X%.2f" % x_pos)
-                
+
             if y_pos is not None:
                 color_change = color_change + (" Y%.2f" % y_pos)
-                
+
             if z_pos is not None and z_pos > 0.:
                 color_change = color_change + (" Z%.2f" % z_pos)
 

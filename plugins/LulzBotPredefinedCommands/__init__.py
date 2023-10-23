@@ -8,7 +8,7 @@ i18n_catalog = i18nCatalog("cura")
 def getMetaData():
     return {
         "plugin": {
-            "name": i18n_catalog.i18nc("@label", "LulzBot predefined commands"),
+            "name": i18n_catalog.i18nc("@label", "LulzBot Predefined Commands"),
             "author": "Victor Larchenko",
             "version": "1.0",
             "description": i18n_catalog.i18nc("@info:whatsthis", ""),
