@@ -8,6 +8,8 @@
         "visible": false,
         "base_machine": true,
         "base_machine_id": "mini_1",
+        "machine_category": "Current",
+        "toolhead_category": "Universal",
         "platform": "mini.stl",
         "platform_offset":
         [

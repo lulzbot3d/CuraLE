@@ -8,6 +8,7 @@
         "visible": false,
         "base_machine": true,
         "base_machine_id": "sidekick_289",
+        "machine_category": "Current",
         "toolhead_category": "Universal",
         "toolhead_selection_name": "Universal Tool Head",
         "platform": "sidekick_289.stl",

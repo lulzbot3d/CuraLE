@@ -124,6 +124,13 @@ Item {
                                 printerSelection.baseMachine = model.getItem(0).id
                             }
                         }
+
+                        // Rectangle {
+                        //     // spacer
+                        //     height: 2
+                        //     width: parent.width
+                        //     color: "black"
+                        // }
                     }
                 }
 

@@ -9,6 +9,7 @@
         "base_machine": true,
         "variant_machine": true,
         "base_machine_id": "taz_pro_xt",
+        "machine_category": "Current",
         "toolhead_category": "Universal",
         "toolhead_selection_name": "Universal Tool Head",
         "has_optional_bltouch": true,

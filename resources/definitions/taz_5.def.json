@@ -8,6 +8,8 @@
         "machine_priority": "10",
         "base_machine": true,
         "base_machine_id": "taz_5",
+        "machine_category": "Current",
+        "toolhead_category": "Universal",
         "platform": "taz_5.stl",
         "platform_offset":
         [
