@@ -595,7 +595,7 @@
         "layerview_row": [11.0, 1.5],
         "layerview_row_spacing": [0.0, 0.5],
         "license_window_minimum": [45, 45],
-        "logo": [16, 3.5],
+        "logo": [28, 2.5],
 
         "machine_selector_widget": [20.0, 4.0],
         "machine_selector_widget_content": [25.0, 32.0],
