@@ -671,6 +671,7 @@
         "setting_control_margin": [0.0, 0.0],
         "setting_unit_margin": [0.5, 0.5],
         "setting_text_maxwidth": [40.0, 0.0],
+        "sidebar_header": [5.0, 10.0],
         "slider_groove": [0.5, 0.5],
         "slider_groove_border": [0.15, 0.15],
         "slider_groove_radius": [0.15, 0.15],
