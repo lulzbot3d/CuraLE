@@ -5,11 +5,22 @@ This file is a work-in-progress; some sections may be incomplete, especially
 	will be updated as new versions are released and will continue to be
 	utilized as the project progresses.
 
+4.13.0-BETAv2.10:
+	Changes:
+		- Some more changes to the recommended tab
+		- Added definitions for a Core XY printer and the planned Mini 3
+		- Some minor refactoring
+		- Small USB printing bugfixes, more on the way
+		- Massively trimming some redundant setting calls
+		- New logo for the header
+		- Tweaks to the job info widget
+		- New preferences regarding job name generation!
+
 4.13.0-BETAv2.9.1:
-	Quick patch update
-	- Fixed issue with missing firmware files some printers
-	- Firmware version bumped on all TAZ Pro series printers
-	- Increased temperatures for Wipe and Soften across the board
+	Quick patch update:
+		- Fixed issue with missing firmware files some printers
+		- Firmware version bumped on all TAZ Pro series printers
+		- Increased temperatures for Wipe and Soften across the board
 
 4.13.0-BETAv2.9:
 	Changes:

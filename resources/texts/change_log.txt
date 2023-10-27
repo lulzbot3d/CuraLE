@@ -1,3 +1,11 @@
+[4.13.0-Beta v2.10]
+* More tweaks to the Recommended tab
+* Small USB printing bugfixes, more on the way
+* New Logo for the application header
+* Tweaks to the job info widget
+* New preferences regarding job name generation!
+* Many more small setting tweaks under the hood
+
 [4.13.0-Beta v2.9.1]
 * Quick patch update
 * Fixed issue causing CuraLE to not be able to locate firmware files for update on some printer configurations
