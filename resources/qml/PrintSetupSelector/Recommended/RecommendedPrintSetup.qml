@@ -71,7 +71,7 @@ Item {
                     height: childrenRect.height + 10
 
                     // TODO
-                    property real firstColumnWidth: Math.round(width * (5/12))
+                    property real firstColumnWidth: Math.round(width * (11/24))
 
                     RecommendedStrengthSection {
                         width: parent.width

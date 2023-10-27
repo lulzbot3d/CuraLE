@@ -25,10 +25,11 @@ Item {
             right: intentSelection.left
         }
         text: catalog.i18nc("@label", "Profile")
-        font: UM.Theme.getFont("medium")
+        font: UM.Theme.getFont("large")
         renderType: Text.NativeRendering
         color: UM.Theme.getColor("text")
         verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
     }
 
     NoIntentIcon {
@@ -47,7 +48,7 @@ Item {
         onClicked: menu.opened ? menu.close() : menu.open()
 
         anchors.right: parent.right
-        width: UM.Theme.getSize("print_setup_big_item").width
+        width: UM.Theme.getSize("print_setup_mid_item").width
         height: textLabel.contentHeight + 2 * UM.Theme.getSize("narrow_margin").height
         hoverEnabled: true
 

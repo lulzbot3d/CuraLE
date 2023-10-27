@@ -28,7 +28,7 @@ Item {
         }
         source: UM.Theme.getIcon("Hammer")
         text: catalog.i18nc("@label", "Strength")
-        font: UM.Theme.getFont("large")
+        font: UM.Theme.getFont("medium")
         width: labelColumnWidth
         iconSize: UM.Theme.getSize("medium_button_icon").width
 
@@ -268,7 +268,7 @@ Item {
     Item {
         id: wallCountContainer
         height: Math.ceil(wallCountSpinBox)
-        width: Math.round((parent.width - labelColumnWidth) / 2)
+        width: Math.round((parent.width - labelColumnWidth) / 1.8)
 
         anchors {
             left: wallCountRowTitle.right
@@ -354,7 +354,7 @@ Item {
     Item {
         id: topBottomCountContainer
         height: Math.ceil(topBottomCountSpinBox)
-        width: Math.round((parent.width - labelColumnWidth) / 2)
+        width: Math.round((parent.width - labelColumnWidth) / 1.8)
 
         anchors {
             left: topBottomRowTitle.right

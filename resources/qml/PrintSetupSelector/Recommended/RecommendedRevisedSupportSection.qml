@@ -530,7 +530,7 @@ Item {
 
     Item {
         id: joinDistanceContainer
-        width: Math.round((parent.width - labelColumnWidth) / 2)
+        width: Math.round((parent.width - labelColumnWidth) / 1.8)
         height: joinDistanceContainer.visible ? joinDistanceSpinBox.height : 0
         visible: enableSupportCheckBox.checked
 
@@ -622,7 +622,7 @@ Item {
 
         anchors {
             top: joinDistanceContainer.bottom
-            topMargin: supportOverhangContainer.visible ? UM.Theme.getSize("thick_margin").height : 0
+            topMargin: supportOverhangContainer.visible ? UM.Theme.getSize("thin_margin").height : 0
             left: enableSupportContainer.left
         }
 
