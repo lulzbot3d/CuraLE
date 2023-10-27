@@ -59,7 +59,7 @@ Item {
             id: enableSupportCheckBox
             anchors.verticalCenter: parent.verticalCenter
 
-            property alias _hovered: enableSupportCheckBoxMouseArea.containsMouse
+            //property alias _hovered: enableSupportCheckBoxMouseArea.containsMouse
 
             style: UM.Theme.styles.checkbox
             enabled: recommendedPrintSetup.settingsEnabled
@@ -74,6 +74,13 @@ Item {
                 onClicked: supportEnabled.setPropertyValue("value", supportEnabled.properties.value != "True")
             }
 
+            UM.SettingPropertyProvider {
+                id: supportEnabled
+                containerStack: Cura.MachineManager.activeMachine
+                key: "support_enable"
+                watchedProperties: [ "value", "enabled", "description" ]
+                storeIndex: 0
+            }
         }
 
         Controls2.ComboBox {
@@ -578,16 +585,74 @@ Item {
         }
     }
 
-    property var extruderModel: CuraApplication.getExtrudersModel()
+    Label {
+        id: supportRoofLabel
+        visible: enableSupportCheckBox.checked
+        anchors {
+            top: supportRoofContainer.top
+            bottom: supportRoofContainer.bottom
+            left: parent.left
+            leftMargin: UM.Theme.getSize("wide_margin").width
+            right: supportRoofContainer.left
+        }
+        text: catalog.i18nc("@label", "Support Roof")
+        font: UM.Theme.getFont("small")
+        renderType: Text.NativeRendering
+        color: UM.Theme.getColor("text")
+        verticalAlignment: Text.AlignVCenter
 
+        MouseArea {
+            id: supportRoofMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
 
-    UM.SettingPropertyProvider {
-        id: supportEnabled
-        containerStack: Cura.MachineManager.activeMachine
-        key: "support_enable"
-        watchedProperties: [ "value", "enabled", "description" ]
-        storeIndex: 0
+            onEntered: {
+                base.showTooltip(supportRoofLabel, Qt.point(-supportRoofLabel.x - UM.Theme.getSize("thick_margin").width, 0),
+                    catalog.i18nc("@label", "Generate a dense slab of material between the top of support and the model. This will create a skin between the model and support."))
+            }
+            onExited: base.hideTooltip()
+        }
     }
+
+    Item {
+        id: supportRoofContainer
+        width: Math.round((parent.width - labelColumnWidth) / 2)
+        height: supportRoofContainer.visible ? supportRoofCheckBox.height : 0
+        visible: enableSupportCheckBox.checked
+
+        anchors {
+            top: joinDistanceContainer.bottom
+            topMargin: supportOverhangContainer.visible ? UM.Theme.getSize("thick_margin").height : 0
+            left: enableSupportContainer.left
+        }
+
+        CheckBox {
+            id: supportRoofCheckBox
+            anchors.verticalCenter: parent.verticalCenter
+
+            style: UM.Theme.styles.checkbox
+            enabled: recommendedPrintSetup.settingsEnabled
+
+            checked: supportRoofEnabled.properties.value == "True"
+
+            MouseArea {
+                id: supportRoofCheckBoxMouseArea
+                anchors.fill: parent
+
+                onClicked: supportRoofEnabled.setPropertyValue("value", supportRoofEnabled.properties.value != "True")
+            }
+
+            UM.SettingPropertyProvider {
+                id: supportRoofEnabled
+                containerStack: Cura.MachineManager.activeMachine
+                key: "support_roof_enable"
+                watchedProperties: [ "value" ]
+                storeIndex: 0
+            }
+        }
+    }
+
+    property var extruderModel: CuraApplication.getExtrudersModel()
 
     UM.SettingPropertyProvider {
         id: supportExtruderNr
