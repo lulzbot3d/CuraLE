@@ -26,7 +26,7 @@ Item
         id: actionPanelWidget
 
         width: UM.Theme.getSize("action_panel_widget").width
-        height: childrenRect.height + 2 * UM.Theme.getSize("thick_margin").height
+        height: childrenRect.height + 2 * UM.Theme.getSize("default_margin").height
         anchors.right: parent.right
         color: UM.Theme.getColor("main_background")
         border.width: UM.Theme.getSize("default_lining").width
@@ -42,11 +42,11 @@ Item
             anchors
             {
                 top: parent.top
-                topMargin: UM.Theme.getSize("thick_margin").height
+                topMargin: UM.Theme.getSize("default_margin").height
                 left: parent.left
-                leftMargin: UM.Theme.getSize("thick_margin").width
+                leftMargin: UM.Theme.getSize("default_margin").width
                 right: parent.right
-                rightMargin: UM.Theme.getSize("thick_margin").width
+                rightMargin: UM.Theme.getSize("default_margin").width
             }
             sourceComponent: actionPanelWidget.outputAvailable ? outputProcessWidget : sliceProcessWidget
             onLoaded:
@@ -78,7 +78,7 @@ Item
         anchors.right: actionPanelWidget.left
         anchors.rightMargin: UM.Theme.getSize("default_margin").width
         anchors.bottom: actionPanelWidget.bottom
-        anchors.bottomMargin: UM.Theme.getSize("thick_margin").height * 2
+        anchors.bottomMargin: UM.Theme.getSize("default_margin").height * 2
         visible: actionPanelWidget.visible
         Row
         {
