@@ -10,6 +10,8 @@
         "base_machine_id": "dev_core_xy",
         "toolhead_category": "Galaxy",
         "toolhead_selection_name": "Galaxy Tool Head",
+        "preferred_material": "Generic_PLA",
+        "preferred_quality_type": "normal",
         "platform": "",
         "platform_offset":
         [
