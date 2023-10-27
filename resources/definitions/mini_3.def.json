@@ -1,0 +1,43 @@
+{
+    "version": 2,
+    "name": "Mini 3",
+    "inherits": "lulzbot",
+    "metadata":
+    {
+        "machine_priority": "02",
+        "visible": false,
+        "base_machine": true,
+        "base_machine_id": "mini_3",
+        "toolhead_category": "Galaxy",
+        "toolhead_selection_name": "Galaxy Tool Head",
+        "preferred_material": "Generic_PLA",
+        "preferred_quality_type": "normal",
+        "platform": "mini.stl",
+        "platform_offset":
+        [
+            -100,
+            -11,
+            100
+        ],
+        "file_formats": "text/x-gcode",
+        "firmware_latest_version": "",
+        "firmware_file": "",
+        "firmware_update_info": {
+            "id": "",
+            "check_urls":
+            [
+                ""
+            ],
+            "update_url": ""
+        }
+    },
+    "overrides":
+    {
+        "machine_name": { "default_value": "LulzBot Mini 3" },
+        "machine_width": { "default_value": 180 },
+        "machine_depth": { "default_value": 180 },
+        "machine_height": { "default_value": 175 },
+        "machine_start_gcode": { "default_value": "START EXTRUDER_TEMP={material_print_temperature_layer_0} BED_TEMP={material_bed_temperature_layer_0}" },
+        "machine_end_gcode": { "default_value": "END" }
+    }
+}
