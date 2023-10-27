@@ -8,7 +8,7 @@
         "visible": false,
         "base_machine": true,
         "base_machine_id": "mini_2",
-        "toolhead_category": "Galaxy",
+        "toolhead_category": "Universal",
         "toolhead_selection_name": "Universal Tool Head",
         "platform": "mini.stl",
         "platform_offset":

@@ -28,6 +28,7 @@ class LulzBotToolheadsModel(ListModel):
         ContainerRegistry.getInstance().containerRemoved.connect(self._onContainerChanged)
 
         self._base_machine_property = ""
+        self._toolhead_category_property = ""
 
         self._filter_dict = {"author": "LulzBot", "visible": True}
         self._update()
@@ -43,6 +44,7 @@ class LulzBotToolheadsModel(ListModel):
         items = []
         new_filter = copy.deepcopy(self._filter_dict)
         new_filter["base_machine_id"] = self._base_machine_property
+        new_filter["toolhead_category"] = self._toolhead_category_property
         definition_containers = ContainerRegistry.getInstance().findDefinitionContainersMetadata(**new_filter)
 
         for metadata in definition_containers:
@@ -69,6 +71,17 @@ class LulzBotToolheadsModel(ListModel):
     @pyqtProperty(str, fset = setBaseMachineProperty, notify = baseMachinePropertyChanged)
     def baseMachineProperty(self):
         return self._base_machine_property
+
+    def setToolheadCategoryProperty(self, new_toolhead_category):
+        if self._toolhead_category_property != new_toolhead_category:
+            self._toolhead_category_property = new_toolhead_category
+            self.toolheadCategoryPropertyChanged.emit()
+            self._update()
+
+    toolheadCategoryPropertyChanged = pyqtSignal()
+    @pyqtProperty(str, fset = setToolheadCategoryProperty, notify = toolheadCategoryPropertyChanged)
+    def toolheadCategoryProperty(self):
+        return self._toolhead_category_property
 
 
     ##  Set the filter of this model based on a string.

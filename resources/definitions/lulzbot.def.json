@@ -19,6 +19,7 @@
         "variant_machine": false,
         "has_variants": false,
         "variants_name": "Nozzle Size",
+        "toolhead_category": "",
         "has_optional_lcd": false,
         "has_optional_bltouch": false,
         "bltouch_is_standard": false,

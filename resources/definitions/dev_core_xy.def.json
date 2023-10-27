@@ -1,0 +1,34 @@
+{
+    "version": 2,
+    "name": "[Developmental] Core XY",
+    "inherits": "taz",
+    "metadata":
+    {
+        "machine_priority": "12",
+        "visible": false,
+        "base_machine": true,
+        "base_machine_id": "dev_core_xy",
+        "toolhead_category": "Galaxy",
+        "toolhead_selection_name": "Galaxy Tool Head",
+        "platform": "",
+        "platform_offset":
+        [
+            0,
+            -11.5,
+            0
+        ],
+        "file_formats": "text/x-gcode",
+        "firmware_latest_version": "",
+        "firmware_bltouch_latest_version": "",
+        "firmware_file": "",
+        "firmware_file_bltouch": ""
+    },
+    "overrides":
+    {
+        "machine_width": { "default_value": 250 },
+        "machine_depth": { "default_value": 250 },
+        "machine_height": { "default_value": 110 },
+        "machine_start_gcode": { "default_value": "START EXTRUDER_TEMP={material_print_temperature_layer_0} BED_TEMP={material_bed_temperature_layer_0}\nPURGE" },
+        "machine_end_gcode": { "default_value": "END" }
+    }
+}

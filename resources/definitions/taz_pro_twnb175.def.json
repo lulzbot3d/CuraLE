@@ -7,7 +7,6 @@
         "priority": "00",
         "visible": true,
         "base_machine": false,
-        "toolhead_category": "Dual Extruders",
         "toolhead_selection_name": "TWIN NEBULA 175 | Nickel-Plated Brass",
         "machine_extruder_trains":
         {
