@@ -595,7 +595,7 @@
         "layerview_row": [11.0, 1.5],
         "layerview_row_spacing": [0.0, 0.5],
         "license_window_minimum": [45, 45],
-        "logo": [16, 3.5],
+        "logo": [28, 2.5],
 
         "machine_selector_widget": [20.0, 4.0],
         "machine_selector_widget_content": [25.0, 32.0],
@@ -671,6 +671,7 @@
         "setting_control_margin": [0.0, 0.0],
         "setting_unit_margin": [0.5, 0.5],
         "setting_text_maxwidth": [40.0, 0.0],
+        "sidebar_header": [5.0, 10.0],
         "slider_groove": [0.5, 0.5],
         "slider_groove_border": [0.15, 0.15],
         "slider_groove_radius": [0.15, 0.15],
@@ -679,7 +680,7 @@
         "small_button": [2, 2],
         "small_button_icon": [1.5, 1.5],
         "small_popup_dialog": [36, 12],
-        "stage_menu": [0.0, 4.0],
+        "stage_menu": [0.0, 3.25],
         "standard_list_lineheight": [1.5, 1.5],
         "standard_arrow": [1.0, 1.0],
 

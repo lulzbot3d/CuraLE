@@ -23,6 +23,7 @@
     <setting key="part removal temperature">0</setting>
 
     <machine>
+      <machine_identifier product="dev_core_xy_ast285"/>
       <machine_identifier product="sidekick_747_ast285"/>
       <machine_identifier product="taz_pro_ast285"/>
       <machine_identifier product="taz_pro_lb_ast285"/>
@@ -76,7 +77,9 @@
     </machine>
 
     <machine>
+      <machine_identifier product="dev_core_xy_met285"/>
       <machine_identifier product="mini_2_met285"/>
+      <machine_identifier product="mini_3_met285"/>
       <machine_identifier product="sidekick_289_met285"/>
       <machine_identifier product="sidekick_747_met285"/>
       <machine_identifier product="taz_pro_met285"/>
