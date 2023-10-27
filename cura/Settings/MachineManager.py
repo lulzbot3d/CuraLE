@@ -1831,8 +1831,8 @@ class MachineManager(QObject):
                         machine_name = "T6"
                     elif "5" in m:
                         machine_name = "T5"
-                elif "viking" in m:
-                    machine_name = "VIK"
+                elif "core" in m:
+                    machine_name = "CXY"
 
                 # Tool Head Name
                 th = names[1].lower()
