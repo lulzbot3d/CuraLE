@@ -56,6 +56,7 @@ Column
                 Layout.fillWidth: true
 
                 text: Cura.MachineManager.activeMachine.id
+                // source: UM.Theme.getIcon("TAZPrinter")
                 source: UM.Theme.getIcon("Printer")
                 font: UM.Theme.getFont("small")
             }
