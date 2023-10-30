@@ -47,7 +47,6 @@
         "jerk_travel_layer_0": { "default_value": 12 },
         "jerk_skirt_brim": { "default_value": 12 },
         "prime_tower_position_x": { "default_value": 200 },
-        "prime_tower_position_y": { "default_value": 200 },
-        "machine_max_feedrate_z": { "default_value": 3 }
+        "prime_tower_position_y": { "default_value": 200 }
     }
 }
