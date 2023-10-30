@@ -71,28 +71,28 @@ Item {
                     height: childrenRect.height + 10
 
                     // TODO
-                    property real firstColumnWidth: Math.round(width * (5/12))
+                    property real firstColumnWidth: Math.round(width * (11/24))
 
-                    RecommendedRevisedWallsSelector {
+                    RecommendedStrengthSection {
                         width: parent.width
                         labelColumnWidth: settingsColumn.firstColumnWidth
                     }
 
-                    RecommendedRevisedTopBottomSelector {
-                        width: parent.width
-                        labelColumnWidth: settingsColumn.firstColumnWidth
-                    }
+                    // RecommendedRevisedWallsSelector {
+                    //     width: parent.width
+                    //     labelColumnWidth: settingsColumn.firstColumnWidth
+                    // }
 
-                    RecommendedRevisedZSeamSelector {
-                        width: parent.width
-                        labelColumnWidth: settingsColumn.firstColumnWidth
-                    }
+                    // RecommendedRevisedTopBottomSelector {
+                    //     width: parent.width
+                    //     labelColumnWidth: settingsColumn.firstColumnWidth
+                    // }
 
-                    RecommendedRevisedInfillDensitySelector {
-                        width: parent.width
-                        // TODO Create a reusable component with these properties to not define them separately for each component
-                        labelColumnWidth: settingsColumn.firstColumnWidth
-                    }
+                    // RecommendedRevisedInfillDensitySelector {
+                    //     width: parent.width
+                    //     // TODO Create a reusable component with these properties to not define them separately for each component
+                    //     labelColumnWidth: settingsColumn.firstColumnWidth
+                    // }
 
                     RecommendedRevisedSupportSection {
                         width: parent.width
@@ -103,6 +103,11 @@ Item {
                     RecommendedRevisedAdhesionSelector {
                         width: parent.width
                         // TODO Create a reusable component with these properties to not define them separately for each component
+                        labelColumnWidth: settingsColumn.firstColumnWidth
+                    }
+
+                    RecommendedRevisedZSeamSelector {
+                        width: parent.width
                         labelColumnWidth: settingsColumn.firstColumnWidth
                     }
 

@@ -317,16 +317,25 @@ class PrintInformation(QObject):
 
         # Only update the job name when it's not user-specified.
         if not self._is_user_specified_job_name:
+            # Load in required settings
             jobname_position = self._application.getInstance().getPreferences().getValue("cura/jobname_lulzbot")
-            add_count_and_time = self._application.getInstance().getPreferences().getValue("cura/jobname_parts_and_time")
+            add_count = self._application.getInstance().getPreferences().getValue("cura/jobname_part_count")
+            add_time = self._application.getInstance().getPreferences().getValue("cura/jobname_print_time")
+            add_weight = self._application.getInstance().getPreferences().getValue("cura/jobname_weight")
+
+            self._job_name = base_name
+
             if jobname_position is not "none":
                 # Don't add abbreviation if it already has the exact same abbreviation.
                 if self._abbr_machine in base_name:
-                    self._job_name = base_name
+                    pass
                 elif jobname_position == "at_start":
                     self._job_name = self._abbr_machine + "_" + base_name
                 elif jobname_position == "at_end":
                     self._job_name = base_name + "_" + self._abbr_machine
+
+                # Printfarm stylization is the most complicated
+                # Expects part name to be very particular and reorders things.
                 elif jobname_position == "printfarm_style":
                     output = ""
                     split_base = base_name.split("_")
@@ -340,15 +349,26 @@ class PrintInformation(QObject):
                     for i in range(len(split_base)):
                         output += split_base[i] + "_"
                     self._job_name = output.strip("_")
-                if add_count_and_time:
-                    # Insert part count
-                    part_count = 0
-                    for i in objects_model.items:
-                        if i['mesh_type'] == "":
-                            part_count += 1
-                    self._job_name += ("_QTY"+ str(part_count) + "_" + str(self.currentPrintTime.getDisplayString()))
-            else:
-                self._job_name = base_name
+
+            # Optional Additional Information
+            if add_count:
+                # Insert part count
+                part_count = 0
+                for i in objects_model.items:
+                    if i['mesh_type'] == "":
+                        part_count += 1
+                self._job_name += ("_QTY"+ str(part_count))
+            if add_time:
+                # Insert print time
+                self._job_name += ("_" + str(self.currentPrintTime.getDisplayString()).replace(" ", ""))
+            if add_weight:
+                # Insert print weight
+                tot_weight = 0
+                weights = self.materialWeights
+                if len(weights) > 0:
+                    for weight in weights:
+                        tot_weight += weight
+                self._job_name += ("_" + str(int(tot_weight)) + "g")
 
         # In case there are several buildplates, a suffix is attached
         if self._multi_build_plate_model.maxBuildPlate > 0:

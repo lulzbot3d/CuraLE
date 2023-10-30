@@ -107,8 +107,12 @@ UM.PreferencesPage {
         topLayerCountCheckbox.checked = boolCheck(UM.Preferences.getValue("view/top_layer_count"))
         UM.Preferences.resetPreference("general/restore_window_geometry")
         restoreWindowPositionCheckbox.checked = boolCheck(UM.Preferences.getValue("general/restore_window_geometry"))
-        UM.Preferences.resetPreference("cura/jobname_parts_and_time")
-        jobnamePartsAndTimeCheckbox.checked = boolCheck(UM.Preferences.getValue("cura/jobname_parts_and_time"))
+        UM.Preferences.resetPreference("cura/jobname_part_count")
+        jobnamePartsAndTimeCheckbox.checked = boolCheck(UM.Preferences.getValue("cura/jobname_part_count"))
+        UM.Preferences.resetPreference("cura/jobname_print_time")
+        jobnamePartsAndTimeCheckbox.checked = boolCheck(UM.Preferences.getValue("cura/jobname_print_time"))
+        UM.Preferences.resetPreference("cura/jobname_weight")
+        jobnamePartsAndTimeCheckbox.checked = boolCheck(UM.Preferences.getValue("cura/jobname_weight"))
 
         UM.Preferences.resetPreference("general/camera_perspective_mode")
         var defaultCameraMode = UM.Preferences.getValue("general/camera_perspective_mode")
@@ -664,13 +668,39 @@ UM.PreferencesPage {
             UM.TooltipArea {
                 width: childrenRect.width
                 height: childrenRect.height
-                text: catalog.i18nc("@info:tooltip", "Should part quantity and print time be added to the end of the job name?")
+                text: catalog.i18nc("@info:tooltip", "Should part quantity be added to the end of the job name?")
 
                 CheckBox {
-                    id: jobnamePartsAndTimeCheckbox
-                    text: catalog.i18nc("@option:check", "Add part count and print time to job name")
-                    checked: boolCheck(UM.Preferences.getValue("cura/jobname_parts_and_time"))
-                    onCheckedChanged: UM.Preferences.setValue("cura/jobname_parts_and_time", checked)
+                    id: jobnamePartCountCheckbox
+                    text: catalog.i18nc("@option:check", "Add part count to job name")
+                    checked: boolCheck(UM.Preferences.getValue("cura/jobname_part_count"))
+                    onCheckedChanged: UM.Preferences.setValue("cura/jobname_part_count", checked)
+                }
+            }
+
+            UM.TooltipArea {
+                width: childrenRect.width
+                height: childrenRect.height
+                text: catalog.i18nc("@info:tooltip", "Should print time be added to the end of the job name?")
+
+                CheckBox {
+                    id: jobnamePrintTimeCheckbox
+                    text: catalog.i18nc("@option:check", "Add print time to job name")
+                    checked: boolCheck(UM.Preferences.getValue("cura/jobname_print_time"))
+                    onCheckedChanged: UM.Preferences.setValue("cura/jobname_print_time", checked)
+                }
+            }
+
+            UM.TooltipArea {
+                width: childrenRect.width
+                height: childrenRect.height
+                text: catalog.i18nc("@info:tooltip", "Should print weight be added to the end of the job name?")
+
+                CheckBox {
+                    id: jobnameWeightCheckbox
+                    text: catalog.i18nc("@option:check", "Add weight to job name")
+                    checked: boolCheck(UM.Preferences.getValue("cura/jobname_weight"))
+                    onCheckedChanged: UM.Preferences.setValue("cura/jobname_weight", checked)
                 }
             }
 

@@ -110,7 +110,7 @@ M420 S1                                            ; enable leveling matrix
 M204 S500                                          ; set accel back to normal
 M104 S{material_print_temperature_layer_0_0}  T0   ; set extruder temp
 M104 S{material_print_temperature_layer_0_1}  T1   ; set extruder temp
-G1 X150 Y-29 Z10 F3000                             ; move to open space
+G1 X120 Y-29 Z10 F3000                             ; move to open space
 M400                                               ; clear buffer
 M117 Heating...                                    ; LCD status message
 M109 R{material_print_temperature_layer_0_0}  T0   ; set extruder temp and wait
@@ -122,18 +122,18 @@ G92 E-30				                           ; set extruder negative amount to purge
 G1 E0 F100				                           ; purge XXmm of filament
 G1 E-3 F200                                        ; purge retraction
 G1 Z1.00                                           ; clear bed (barely)
-G1 X150 Y5.45 F4000                                ; move above bed to shear off filament
+G1 X120 Y5.45 F4000                                ; move above bed to shear off filament
 M106 S255                                          ; turn on fan
 G4 S7                                              ; wait 7 seconds
 M107                                               ; turn off fan
-G1 X150 Y-29 Z5.45 F3000                           ; move to open space
+G1 X120 Y-29 Z5.45 F3000                           ; move to open space
 T1                                                 ; set extruder
 G1 E0 F100                                         ; undo retraction
 G92 E-30                                           ; set extruder negative amount to purge
 G1 E0 F100                                         ; purge XXmm of filament
 G1 E-4 F200                                        ; purge retraction
 G1 Z1.00                                           ; clear bed (barely)
-G1 X150 Y10 F4000                                  ; move above bed to shear off filament
+G1 X120 Y10 F4000                                  ; move above bed to shear off filament
 G0 Z5.45
 T0                                                 ; set extruder
 M190 R60  				                           ; get bed temping up during first layer

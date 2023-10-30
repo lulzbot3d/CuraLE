@@ -16,7 +16,7 @@ ListView
 
     section.delegate: Label
     {
-        text: section == "true" ? catalog.i18nc("@label", "Connected printers") : catalog.i18nc("@label", "Preset printers")
+        text: section == "true" ? catalog.i18nc("@label", "Connected printers") : catalog.i18nc("@label", "Printers")
         width: parent.width
         height: UM.Theme.getSize("action_button").height
         leftPadding: UM.Theme.getSize("default_margin").width
