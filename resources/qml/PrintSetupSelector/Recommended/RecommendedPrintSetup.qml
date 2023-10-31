@@ -17,7 +17,7 @@ Item {
     property real padding: UM.Theme.getSize("default_margin").width
 
     Column {
-        spacing: UM.Theme.getSize("thick_margin").height
+        //spacing: UM.Theme.getSize("default_margin").height
 
         anchors
         {
