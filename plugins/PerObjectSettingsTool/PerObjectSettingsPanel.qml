@@ -217,10 +217,12 @@ Item
                             return excluded_settings
                         }
 
-                        visibilityHandler: Cura.PerObjectSettingVisibilityHandler
-                        {
+                        visibilityHandler: Cura.PerObjectSettingVisibilityHandler {
                             id: visibility_handler
-                            selectedObjectId: UM.ActiveTool.properties.getValue("SelectedObjectId")
+                            selectedObjectId: {
+                                let val = UM.ActiveTool.properties.getValue("SelectedObjectId")
+                                return val != null ? val : 0
+                            }
                         }
 
                         // For some reason the model object is updated after removing him from the memory and
