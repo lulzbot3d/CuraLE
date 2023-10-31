@@ -1,5 +1,5 @@
 {
-    "name": "[Legacy] TAZ 5",
+    "name": "TAZ 5",
     "inherits": "taz",
     "version": 2,
     "metadata":
@@ -8,8 +8,8 @@
         "machine_priority": "10",
         "base_machine": true,
         "base_machine_id": "taz_5",
-        "machine_category": "Current",
-        "toolhead_category": "Universal",
+        "machine_category": "Legacy",
+        "toolhead_category": "",
         "platform": "taz_5.stl",
         "platform_offset":
         [

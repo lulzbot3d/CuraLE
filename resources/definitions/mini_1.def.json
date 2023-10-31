@@ -1,5 +1,5 @@
 {
-    "name": "[Legacy] Mini 1",
+    "name": "Mini 1",
     "inherits": "lulzbot",
     "version": 2,
     "metadata":
@@ -8,8 +8,8 @@
         "visible": false,
         "base_machine": true,
         "base_machine_id": "mini_1",
-        "machine_category": "Current",
-        "toolhead_category": "Universal",
+        "machine_category": "Legacy",
+        "toolhead_category": "",
         "platform": "mini.stl",
         "platform_offset":
         [

@@ -1,14 +1,14 @@
 {
     "version": 2,
-    "name": "[Legacy] TAZ 6",
+    "name": "TAZ 6",
     "inherits": "taz",
     "metadata":
     {
         "machine_priority": "09",
         "base_machine": true,
         "base_machine_id": "taz_6",
-        "machine_category": "Current",
-        "toolhead_category": "Universal",
+        "machine_category": "Legacy",
+        "toolhead_category": "",
         "platform": "taz_6.stl",
         "platform_offset":
         [

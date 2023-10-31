@@ -8,8 +8,6 @@
         "visible": false,
         "base_machine": true,
         "base_machine_id": "taz_pro",
-        "machine_category": "Current",
-        "toolhead_category": "Universal",
         "toolhead_selection_name": "Universal Tool Head",
         "has_optional_bltouch": true,
         "platform": "taz_pro.stl",
