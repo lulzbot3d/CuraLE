@@ -13,12 +13,6 @@
         "preferred_material": "Generic_PLA",
         "preferred_quality_type": "normal",
         "platform": "",
-        "platform_offset":
-        [
-            0,
-            -11.5,
-            0
-        ],
         "file_formats": "text/x-gcode",
         "firmware_latest_version": "",
         "firmware_bltouch_latest_version": "",
