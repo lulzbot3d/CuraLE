@@ -45,7 +45,7 @@ except ImportError:
 try:
     from cura.CuraVersion import CuraAppDisplayName  # type: ignore
     if CuraAppDisplayName == "":
-        CuraAppDisplayName = DEFAULT_CURA_DISPLAY_NAME
+        CuraAppDisplayName = DEFAULT_CURA_DISPLAY_NAME + " - " + DEFAULT_CURA_VERSION
 
 except ImportError:
-    CuraAppDisplayName = DEFAULT_CURA_DISPLAY_NAME
+    CuraAppDisplayName = DEFAULT_CURA_DISPLAY_NAME + " - " + DEFAULT_CURA_VERSION
