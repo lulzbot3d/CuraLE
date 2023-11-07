@@ -156,7 +156,7 @@ Item {
 
                             Label {
                                 id: currentPrinterLabel
-                                text: "Supported Printers"
+                                text: "Current 3D Printers"
                                 font.bold: true
                                 font.pixelSize: 14
                                 visible: currentPrinterSelectionRepeater.model.count > 0
@@ -201,7 +201,7 @@ Item {
 
                             Label {
                                 id: legacyPrinterLabel
-                                text: "Legacy Printers"
+                                text: "Legacy 3D Printers"
                                 font.bold: true
                                 font.pixelSize: 14
                                 visible: legacyPrinterSelectionRepeater.model.count > 0

@@ -428,26 +428,26 @@ class MachineManager(QObject):
             # Instead of setting the global container stack here, we set the active machine and so the signals are emitted
             self.setActiveMachine(new_stack.getId())
 
-            # Load new machine STL
-            nodes = 0
-            for node in DepthFirstIterator(Application.getInstance().getController().getScene().getRoot()):
-                if isinstance(node, SceneNode):
-                    nodes += 1
-            if nodes <= 4:
-                if definition_id == "taz_pro_dual" or definition_id == "taz_pro_xt_dual":
-                    Application.getInstance()._openFile(os.path.join(Resources.getPath(Resources.Meshes), "TAZ_Pro_Calibration01.stl"))
-                    model_will_be_loaded = "TAZ_Pro_Calibration02.stl"
-                elif definition_id == "taz_pro_m175" or definition_id == "taz_workhorse_se":
-                    model_will_be_loaded = "octo_gear_v1.stl"
-                else:
-                    model_will_be_loaded = "rocktopus.stl"
-                Application.getInstance()._openFile(os.path.join(Resources.getPath(Resources.Meshes), model_will_be_loaded))
-                # cura.CuraApplication.CuraApplication.arrangeAll(Application.getInstance())
-
         else:
             Logger.log("w", "Failed creating a new machine!")
             return False
         return True
+
+    @pyqtSlot()
+    def addMachineProvideExampleModel(self) -> None:
+        # Load new machine STL
+        definition_id = self._global_container_stack.getDefinition().getId()
+        res_path = Resources.getPath(Resources.Meshes)
+        load_models = []
+        if "taz_pro_dual" in definition_id or "taz_pro_xt_dual" in definition_id:
+            load_models.append(os.path.join(res_path, "TAZ_Pro_Calibration01.stl"))
+            load_models.append(os.path.join(res_path, "TAZ_Pro_Calibration02.stl"))
+        elif "taz_pro_m175" in definition_id or "taz_workhorse_se" in definition_id:
+            load_models.append(os.path.join(res_path, "octo_gear_v1.stl"))
+        else:
+            load_models.append(os.path.join(res_path, "rocktopus.stl"))
+        for model_path in load_models:
+            self._application._openFile(model_path)
 
     def _checkStacksHaveErrors(self) -> bool:
         time_start = time.time()

@@ -540,7 +540,7 @@ class CuraApplication(QtApplication):
         preferences.addPreference("cura/jobname_part_count", False)
         preferences.addPreference("cura/jobname_print_time", False)
         preferences.addPreference("cura/jobname_weight", False)
-        preferences.addPreference("cura/select_models_on_load", False)
+        preferences.addPreference("cura/select_models_on_load", True)
         preferences.addPreference("view/center_on_select", False)
         preferences.addPreference("mesh/scale_to_fit", False)
         preferences.addPreference("mesh/scale_tiny_meshes", True)

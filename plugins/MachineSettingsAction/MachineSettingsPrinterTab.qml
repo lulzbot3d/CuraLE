@@ -401,41 +401,41 @@ Item
             // Subsection below Printhead for USB
             // =======================================
 
-            Label   // USB Title Label
-            {
-                text: catalog.i18nc("@title:label", "USB Settings (WIP)")
-                font: UM.Theme.getFont("medium_bold")
-                color: UM.Theme.getColor("text")
-                renderType: Text.NativeRendering
-                width: parent.width
-                elide: Text.ElideRight
-            }
+            // Label   // USB Title Label
+            // {
+            //     text: catalog.i18nc("@title:label", "USB Settings (WIP)")
+            //     font: UM.Theme.getFont("medium_bold")
+            //     color: UM.Theme.getColor("text")
+            //     renderType: Text.NativeRendering
+            //     width: parent.width
+            //     elide: Text.ElideRight
+            // }
 
-            Cura.ComboBoxWithOptions  // "Port"
-            {
-                id: portComboBox
-                containerStackId: machineStackId
-                settingKey: "machine_port"
-                settingStoreIndex: propertyStoreIndex
-                labelText: catalog.i18nc("@label", "USB Port")
-                labelFont: base.labelFont
-                labelWidth: base.labelWidth
-                controlWidth: base.controlWidth
-                forceUpdateOnChangeFunction: forceUpdateFunction
-            }
+            // Cura.ComboBoxWithOptions  // "Port"
+            // {
+            //     id: portComboBox
+            //     containerStackId: machineStackId
+            //     settingKey: "machine_port"
+            //     settingStoreIndex: propertyStoreIndex
+            //     labelText: catalog.i18nc("@label", "USB Port")
+            //     labelFont: base.labelFont
+            //     labelWidth: base.labelWidth
+            //     controlWidth: base.controlWidth
+            //     forceUpdateOnChangeFunction: forceUpdateFunction
+            // }
 
-            Cura.ComboBoxWithOptions  // "Baudrate"
-            {
-                id: baudComboBox
-                containerStackId: machineStackId
-                settingKey: "machine_baudrate"
-                settingStoreIndex: propertyStoreIndex
-                labelText: catalog.i18nc("@label", "USB Communication Speed (Baudrate)")
-                labelFont: base.labelFont
-                labelWidth: base.labelWidth
-                controlWidth: base.controlWidth
-                forceUpdateOnChangeFunction: forceUpdateFunction
-            }
+            // Cura.ComboBoxWithOptions  // "Baudrate"
+            // {
+            //     id: baudComboBox
+            //     containerStackId: machineStackId
+            //     settingKey: "machine_baudrate"
+            //     settingStoreIndex: propertyStoreIndex
+            //     labelText: catalog.i18nc("@label", "USB Communication Speed (Baudrate)")
+            //     labelFont: base.labelFont
+            //     labelWidth: base.labelWidth
+            //     controlWidth: base.controlWidth
+            //     forceUpdateOnChangeFunction: forceUpdateFunction
+            // }
         }
     }
 
