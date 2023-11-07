@@ -407,8 +407,8 @@ class MachineManager(QObject):
                 return cast(GlobalStack, machine)
         return None
 
-    @pyqtSlot(str, result=bool)
-    @pyqtSlot(str, str, result = bool)
+    @pyqtSlot(str, bool, bool, result=bool)
+    @pyqtSlot(str, str, bool, bool, result = bool)
     def addMachine(self, definition_id: str, name: Optional[str] = None, lcd: bool = True, bltouch: bool = False) -> bool:
         Logger.log("i", "Trying to add a machine with the definition id [%s]", definition_id)
         if name is None:
@@ -422,12 +422,11 @@ class MachineManager(QObject):
         if new_stack:
             # Check for LCD and BLTouch values
             if new_stack.getMetaDataEntry("has_optional_lcd", False):
-                new_stack.setProperty("machine_has_lcd", "value", lcd, "definition")
+                new_stack.definitionChanges.setProperty("machine_has_lcd", "value", lcd)
             if new_stack.getMetaDataEntry("has_optional_bltouch", False):
-                new_stack.setProperty("machine_has_bltouch", "value", bltouch, "definition")
+                new_stack.definitionChanges.setProperty("machine_has_bltouch", "value", bltouch)
             # Instead of setting the global container stack here, we set the active machine and so the signals are emitted
             self.setActiveMachine(new_stack.getId())
-
         else:
             Logger.log("w", "Failed creating a new machine!")
             return False
