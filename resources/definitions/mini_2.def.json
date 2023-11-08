@@ -9,7 +9,7 @@
         "base_machine": true,
         "base_machine_id": "mini_2",
         "toolhead_selection_name": "Universal Tool Head",
-        "platform": "mini.stl",
+        "platform": "mini_2.stl",
         "platform_offset":
         [
             -100,

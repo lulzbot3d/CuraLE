@@ -438,11 +438,13 @@ class MachineManager(QObject):
         definition_id = self._global_container_stack.getDefinition().getId()
         res_path = Resources.getPath(Resources.Meshes)
         load_models = []
-        if "taz_pro_dual" in definition_id or "taz_pro_xt_dual" in definition_id:
-            load_models.append(os.path.join(res_path, "TAZ_Pro_Calibration01.stl"))
-            load_models.append(os.path.join(res_path, "TAZ_Pro_Calibration02.stl"))
+        if "bio" in definition_id:
+            load_models.append(os.path.join(res_path, "right_coronary_artery_tree.stl"))
+        elif "taz_pro_dual" in definition_id or "taz_pro_xt_dual" in definition_id:
+            load_models.append(os.path.join(res_path, "pro_dual_cal1.stl"))
+            load_models.append(os.path.join(res_path, "pro_dual_cal2.stl"))
         elif "taz_pro_m175" in definition_id or "taz_workhorse_se" in definition_id:
-            load_models.append(os.path.join(res_path, "octo_gear_v1.stl"))
+            load_models.append(os.path.join(res_path, "octo_gear.stl"))
         else:
             load_models.append(os.path.join(res_path, "rocktopus.stl"))
         for model_path in load_models:

@@ -12,12 +12,12 @@
         "toolhead_selection_name": "Galaxy Tool Head",
         "preferred_material": "Generic_PLA",
         "preferred_quality_type": "normal",
-        "platform": "Mini3.stl",
+        "platform": "mini_3.stl",
         "platform_offset":
         [
-            3,
-            -5,
-            27.5
+            0,
+            -7,
+            -4
         ],
         "file_formats": "text/x-gcode",
         "firmware_latest_version": "",
