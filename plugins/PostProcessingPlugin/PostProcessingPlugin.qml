@@ -487,28 +487,24 @@ UM.Dialog
         onClicked: dialog.accept()
     }
 
-    Item
-    {
+    Item {
         objectName: "postProcessingSaveAreaButton"
         visible: activeScriptsList.count > 0
-        height: UM.Theme.getSize("action_button").height
-        width: height
+        height: saveAreaButton.height
+        width: saveAreaButton.width
 
-        Cura.SecondaryButton
-        {
+        Cura.SecondaryButton {
+            id: saveAreaButton
             height: UM.Theme.getSize("action_button").height
-            tooltip:
-            {
+            tooltip: {
                 var tipText = catalog.i18nc("@info:tooltip", "Change active post-processing scripts.");
-                if (activeScriptsList.count > 0)
-                {
+                if (activeScriptsList.count > 0) {
                     tipText += "<br><br>" + catalog.i18ncp("@info:tooltip",
                         "The following script is active:",
                         "The following scripts are active:",
                         activeScriptsList.count
                     ) + "<ul>";
-                    for(var i = 0; i < activeScriptsList.count; i++)
-                    {
+                    for(var i = 0; i < activeScriptsList.count; i++) {
                         tipText += "<li>" + manager.getScriptLabelByKey(manager.scriptList[i]) + "</li>";
                     }
                     tipText += "</ul>";
@@ -521,12 +517,10 @@ UM.Dialog
             fixedWidthMode: false
         }
 
-        Cura.NotificationIcon
-        {
+        Cura.NotificationIcon {
             id: activeScriptCountIcon
             visible: activeScriptsList.count > 0
-            anchors
-            {
+            anchors {
                 horizontalCenter: parent.right
                 verticalCenter: parent.top
             }

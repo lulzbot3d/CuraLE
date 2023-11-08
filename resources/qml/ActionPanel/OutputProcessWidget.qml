@@ -13,16 +13,14 @@ import Cura 1.0 as Cura
 // that is gather after the slicing process, such as printint time, material usage, ...
 // There are also two buttons: one to previsualize the output layers, and the other to
 // select what to do with it (such as print over network, save to file, ...)
-Column
-{
+Column {
     id: widget
 
     spacing: UM.Theme.getSize("thin_margin").height / 2
     property bool preSlicedData: PrintInformation.preSliced
     property alias hasPreviewButton: previewStageShortcut.visible
 
-    UM.I18nCatalog
-    {
+    UM.I18nCatalog {
         id: catalog
         name: "cura"
     }

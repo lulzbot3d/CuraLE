@@ -6,14 +6,13 @@ import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.3
 
 import UM 1.2 as UM
-import Cura 1.0 as Cura
+import Cura 1.1 as Cura
 
 
 // This element hold all the elements needed for the user to trigger the slicing process, and later
 // to get information about the printing times, material consumption and the output process (such as
 // saving to a file, printing over network, ...
-Item
-{
+Item {
     id: base
     width: actionPanelWidget.width + additionalComponents.width
     height: childrenRect.height
@@ -21,8 +20,7 @@ Item
 
     property bool hasPreviewButton: true
 
-    Rectangle
-    {
+    Rectangle {
         id: actionPanelWidget
 
         width: UM.Theme.getSize("action_panel_widget").width
@@ -36,11 +34,9 @@ Item
 
         property bool outputAvailable: UM.Backend.state == UM.Backend.Done || UM.Backend.state == UM.Backend.Disabled
 
-        Loader
-        {
+        Loader {
             id: loader
-            anchors
-            {
+            anchors {
                 top: parent.top
                 topMargin: UM.Theme.getSize("default_margin").height
                 left: parent.left
@@ -49,57 +45,83 @@ Item
                 rightMargin: UM.Theme.getSize("default_margin").width
             }
             sourceComponent: actionPanelWidget.outputAvailable ? outputProcessWidget : sliceProcessWidget
-            onLoaded:
-            {
-                if(actionPanelWidget.outputAvailable)
-                {
+            onLoaded: {
+                if(actionPanelWidget.outputAvailable) {
                     loader.item.hasPreviewButton = base.hasPreviewButton;
                 }
             }
         }
 
-        Component
-        {
+        Component {
             id: sliceProcessWidget
             SliceProcessWidget { }
         }
 
-        Component
-        {
+        Component {
             id: outputProcessWidget
             OutputProcessWidget { }
         }
     }
 
-    Item
-    {
+    Item {
         id: additionalComponents
         width: childrenRect.width
         anchors.right: actionPanelWidget.left
         anchors.rightMargin: UM.Theme.getSize("default_margin").width
         anchors.bottom: actionPanelWidget.bottom
-        anchors.bottomMargin: UM.Theme.getSize("default_margin").height * 2
         visible: actionPanelWidget.visible
-        Row
-        {
-            id: additionalComponentsRow
-            anchors.verticalCenter: parent.verticalCenter
-            spacing: UM.Theme.getSize("default_margin").width
+
+        Column {
+            id: additionalComponentsColumn
+            anchors.bottom: parent.bottom
+            spacing: UM.Theme.getSize("default_margin").height
+
+            Row {
+                id: additionalComponentsRow
+                anchors.right: parent.right
+                spacing: UM.Theme.getSize("default_margin").width
+            }
+
+            Rectangle {
+                id: clearPlateButtonBox
+                height: clearPlateButton.height + (UM.Theme.getSize("default_margin").height * 2)
+                width: clearPlateButton.width + (UM.Theme.getSize("default_margin").width * 2)
+                color: UM.Theme.getColor("main_background")
+                border.width: UM.Theme.getSize("default_lining").width
+                border.color: UM.Theme.getColor("lining")
+                radius: UM.Theme.getSize("default_radius").width
+                visible: actionPanelWidget.outputAvailable
+
+                Cura.PrimaryButton {
+                    id: clearPlateButton
+                    anchors {
+                        centerIn: parent
+                    }
+
+                    height: UM.Theme.getSize("action_button").height
+                    text: catalog.i18nc("@button", "Slice Next Part")
+                    tooltip: "Clears the bed plate and prompts for your next part without resetting your settings!"
+                    toolTipContentAlignment: Cura.ToolTip.ContentAlignment.AlignLeft
+
+                    onClicked: {
+                        CuraApplication.deleteAll()
+                        UM.Controller.setActiveStage("PrepareStage")
+                        Cura.Actions.open.trigger()
+                    }
+                }
+            }
         }
     }
 
     Component.onCompleted: base.addAdditionalComponents()
 
-    Connections
-    {
+    Connections {
         target: CuraApplication
         function onAdditionalComponentsChanged(areaId) { base.addAdditionalComponents() }
     }
 
-    function addAdditionalComponents()
-    {
-        for (var component in CuraApplication.additionalComponents["saveButton"])
-        {
+    function addAdditionalComponents() {
+        for (var component in CuraApplication.additionalComponents["saveButton"]) {
             CuraApplication.additionalComponents["saveButton"][component].parent = additionalComponentsRow
         }
     }
