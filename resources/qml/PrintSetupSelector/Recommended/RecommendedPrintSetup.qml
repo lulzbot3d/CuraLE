@@ -20,10 +20,12 @@ Item {
 
         anchors
         {
-            left: parent.left
-            right: parent.right
             top: parent.top
-            margins: parent.padding
+            topMargin: UM.Theme.getSize("default_margin").height
+            left: parent.left
+            leftMargin: parent.padding
+            right: parent.right
+            rightMargin: parent.padding
         }
 
         RecommendedQualityProfileSelector {
