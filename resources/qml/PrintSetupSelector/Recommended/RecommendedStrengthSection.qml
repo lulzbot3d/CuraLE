@@ -1,8 +1,8 @@
-// Copyright (c) 2018 Ultimaker B.V.
-// Cura is released under the terms of the LGPLv3 or higher.
+// Copyright (c) 2023 Fargo Additive Manufacturing Equipment 3D, LLC.
+// Cura LE is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.7
-import QtQuick.Controls 1.4 as OldControls
+import QtQuick.Controls 1.4 as OldControls // Funny...
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Styles 1.4
 
@@ -11,7 +11,8 @@ import Cura 1.0 as Cura
 
 
 //
-// Strength
+// Strength Section
+// This section contains some useful settings related to overall part strength
 //
 Item {
     id: strengthSection
@@ -78,7 +79,6 @@ Item {
         value: parseInt(infillDensity.properties.value) - infillSlider.allowedMinimum
     }
 
-    // Here are the elements that are shown in the left column
     Cura.IconWithText {
         id: infillSliderTitle
         anchors {
@@ -163,20 +163,19 @@ Item {
         }
     }
 
-    Label {
+    Cura.IconWithText {
         id: patternLabel
         anchors {
             top: infillPatternContainer.top
             bottom: infillPatternContainer.bottom
             left: parent.left
-            leftMargin: UM.Theme.getSize("wide_margin").width * 2.75
+            leftMargin: UM.Theme.getSize("wide_margin").width
             right: infillPatternContainer.left
         }
+        source: UM.Theme.getIcon("InfillGyroid")
+        iconSize: UM.Theme.getSize("medium_button_icon").width
         text: catalog.i18nc("@label", "Infill Pattern")
         font: UM.Theme.getFont("small")
-        renderType: Text.NativeRendering
-        color: UM.Theme.getColor("text")
-        verticalAlignment: Text.AlignVCenter
 
         MouseArea {
             id: infillPatternMouseArea

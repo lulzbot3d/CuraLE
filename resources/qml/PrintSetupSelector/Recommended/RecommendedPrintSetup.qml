@@ -17,7 +17,6 @@ Item {
     property real padding: UM.Theme.getSize("default_margin").width
 
     Column {
-        //spacing: UM.Theme.getSize("default_margin").height
 
         anchors
         {
@@ -27,7 +26,7 @@ Item {
             margins: parent.padding
         }
 
-        RecommendedRevisedQualityProfileSelector {
+        RecommendedQualityProfileSelector {
             id: profileSelector
             width: parent.width
         }
@@ -70,7 +69,8 @@ Item {
 
                     height: childrenRect.height + 10
 
-                    // TODO
+                    // Makes it easier to adjust the overall size of the columns.
+                    // We want the labels to take up just under half of the available space.
                     property real firstColumnWidth: Math.round(width * (11/24))
 
                     RecommendedStrengthSection {
@@ -78,40 +78,24 @@ Item {
                         labelColumnWidth: settingsColumn.firstColumnWidth
                     }
 
-                    // RecommendedRevisedWallsSelector {
-                    //     width: parent.width
-                    //     labelColumnWidth: settingsColumn.firstColumnWidth
-                    // }
-
-                    // RecommendedRevisedTopBottomSelector {
-                    //     width: parent.width
-                    //     labelColumnWidth: settingsColumn.firstColumnWidth
-                    // }
-
-                    // RecommendedRevisedInfillDensitySelector {
-                    //     width: parent.width
-                    //     // TODO Create a reusable component with these properties to not define them separately for each component
-                    //     labelColumnWidth: settingsColumn.firstColumnWidth
-                    // }
-
-                    RecommendedRevisedSupportSection {
+                    RecommendedSupportSection {
                         width: parent.width
                         // TODO Create a reusable component with these properties to not define them separately for each component
                         labelColumnWidth: settingsColumn.firstColumnWidth
                     }
 
-                    RecommendedRevisedAdhesionSelector {
+                    RecommendedAdhesionSelector {
                         width: parent.width
                         // TODO Create a reusable component with these properties to not define them separately for each component
                         labelColumnWidth: settingsColumn.firstColumnWidth
                     }
 
-                    RecommendedRevisedZSeamSelector {
+                    RecommendedZSeamSelector {
                         width: parent.width
                         labelColumnWidth: settingsColumn.firstColumnWidth
                     }
 
-                    RecommendedRevisedPrintSequenceSelector {
+                    RecommendedPrintSequenceSelector {
                         width: parent.width
                         labelColumnWidth: settingsColumn.firstColumnWidth
                     }
