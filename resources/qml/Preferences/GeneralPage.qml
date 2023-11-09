@@ -873,70 +873,74 @@ UM.PreferencesPage {
                 }
             }
 
-            Item {
-                //: Spacer
-                height: UM.Theme.getSize("default_margin").height
-                width: UM.Theme.getSize("default_margin").height
-            }
+            //                                                                              //
+            // vvv Uncomment this all later once you get update checking to actual work vvv //
+            //                                                                              //
 
-            Item {
-                //: Spacer
-                height: UM.Theme.getSize("default_margin").height
-                width: UM.Theme.getSize("default_margin").height
-            }
+            // Item {
+            //     //: Spacer
+            //     height: UM.Theme.getSize("default_margin").height
+            //     width: UM.Theme.getSize("default_margin").height
+            // }
 
-            Label {
-                font.bold: true
-                text: catalog.i18nc("@label", "Updates")
-            }
+            // Item {
+            //     //: Spacer
+            //     height: UM.Theme.getSize("default_margin").height
+            //     width: UM.Theme.getSize("default_margin").height
+            // }
 
-            UM.TooltipArea {
-                width: childrenRect.width
-                height: visible ? childrenRect.height : 0
-                text: catalog.i18nc("@info:tooltip","Should Cura check for updates when the program is started?")
+            // Label {
+            //     font.bold: true
+            //     text: catalog.i18nc("@label", "Updates")
+            // }
 
-                CheckBox
-                {
-                    id: checkUpdatesCheckbox
-                    text: catalog.i18nc("@option:check","Check for updates on start")
-                    checked: boolCheck(UM.Preferences.getValue("info/automatic_update_check"))
-                    onCheckedChanged: UM.Preferences.setValue("info/automatic_update_check", checked)
-                }
-            }
+            // UM.TooltipArea {
+            //     width: childrenRect.width
+            //     height: visible ? childrenRect.height : 0
+            //     text: catalog.i18nc("@info:tooltip","Should Cura check for updates when the program is started?")
 
-            ExclusiveGroup { id: curaUpdatesGroup }
+            //     CheckBox
+            //     {
+            //         id: checkUpdatesCheckbox
+            //         text: catalog.i18nc("@option:check","Check for updates on start")
+            //         checked: boolCheck(UM.Preferences.getValue("info/automatic_update_check"))
+            //         onCheckedChanged: UM.Preferences.setValue("info/automatic_update_check", checked)
+            //     }
+            // }
 
-            UM.TooltipArea {
-                width: childrenRect.width
-                height: visible ? childrenRect.height : 0
-                text: catalog.i18nc("@info:tooltip", "When checking for updates, only check for stable releases.")
-                anchors.left: parent.left
-                anchors.leftMargin: UM.Theme.getSize("default_margin").width
+            // ExclusiveGroup { id: curaUpdatesGroup }
 
-                RadioButton {
-                    text: catalog.i18nc("@option:radio", "Stable releases only")
-                    exclusiveGroup: curaUpdatesGroup
-                    enabled: checkUpdatesCheckbox.checked
-                    checked: UM.Preferences.getValue("info/latest_update_source") == "stable"
-                    onClicked: UM.Preferences.setValue("info/latest_update_source", "stable")
-                }
-            }
+            // UM.TooltipArea {
+            //     width: childrenRect.width
+            //     height: visible ? childrenRect.height : 0
+            //     text: catalog.i18nc("@info:tooltip", "When checking for updates, only check for stable releases.")
+            //     anchors.left: parent.left
+            //     anchors.leftMargin: UM.Theme.getSize("default_margin").width
 
-            UM.TooltipArea {
-                width: childrenRect.width
-                height: visible ? childrenRect.height : 0
-                text: catalog.i18nc("@info:tooltip", "When checking for updates, check for both stable and for beta releases.")
-                anchors.left: parent.left
-                anchors.leftMargin: UM.Theme.getSize("default_margin").width
+            //     RadioButton {
+            //         text: catalog.i18nc("@option:radio", "Stable releases only")
+            //         exclusiveGroup: curaUpdatesGroup
+            //         enabled: checkUpdatesCheckbox.checked
+            //         checked: UM.Preferences.getValue("info/latest_update_source") == "stable"
+            //         onClicked: UM.Preferences.setValue("info/latest_update_source", "stable")
+            //     }
+            // }
 
-                RadioButton {
-                    text: catalog.i18nc("@option:radio", "Stable and Beta releases")
-                    exclusiveGroup: curaUpdatesGroup
-                    enabled: checkUpdatesCheckbox.checked
-                    checked: UM.Preferences.getValue("info/latest_update_source") == "beta"
-                    onClicked: UM.Preferences.setValue("info/latest_update_source", "beta")
-                }
-            }
+            // UM.TooltipArea {
+            //     width: childrenRect.width
+            //     height: visible ? childrenRect.height : 0
+            //     text: catalog.i18nc("@info:tooltip", "When checking for updates, check for both stable and for beta releases.")
+            //     anchors.left: parent.left
+            //     anchors.leftMargin: UM.Theme.getSize("default_margin").width
+
+            //     RadioButton {
+            //         text: catalog.i18nc("@option:radio", "Stable and Beta releases")
+            //         exclusiveGroup: curaUpdatesGroup
+            //         enabled: checkUpdatesCheckbox.checked
+            //         checked: UM.Preferences.getValue("info/latest_update_source") == "beta"
+            //         onClicked: UM.Preferences.setValue("info/latest_update_source", "beta")
+            //     }
+            // }
 
             Connections {
                 target: UM.Preferences
