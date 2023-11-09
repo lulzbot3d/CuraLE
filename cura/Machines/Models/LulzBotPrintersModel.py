@@ -11,13 +11,15 @@ class LulzBotPrintersModel(ListModel):
     NameRole = Qt.UserRole + 1
     IdRole = Qt.UserRole + 2
     LCDRole = Qt.UserRole + 3
-    CategoryRole = Qt.UserRole + 4
+    LCDDefaultRole = Qt.UserRole + 4
+    CategoryRole = Qt.UserRole + 5
 
     def __init__(self, parent = None):
         super().__init__(parent)
         self.addRoleName(self.NameRole, "name")
         self.addRoleName(self.IdRole, "id")
         self.addRoleName(self.LCDRole, "lcd")
+        self.addRoleName(self.LCDDefaultRole, "lcd_default")
         self.addRoleName(self.CategoryRole, "category")
 
         # Listen to changes
@@ -48,6 +50,7 @@ class LulzBotPrintersModel(ListModel):
                 "name": metadata["name"],
                 "id": metadata["id"],
                 "lcd": metadata.get("has_optional_lcd", False),
+                "lcd_default": metadata.get("lcd_is_standard", True),
                 "machine_priority": metadata.get("machine_priority", "90")
             })
         items = sorted(items, key=lambda x: x["machine_priority"]+x["name"])

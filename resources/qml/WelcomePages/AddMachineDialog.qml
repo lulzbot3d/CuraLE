@@ -109,13 +109,23 @@ Item {
             }
 
             function updateOptions() {
-                for (var i = 0; i < bltouchSelectionRepeater.count; i++) {
-                    var item = bltouchSelectionRepeater.itemAt(i)
-                    if(toolheadSelection.bltouch_default){
-                        if(i==0) { item.checked = true }
+                for (let i = 0; i < bltouchSelectionRepeater.count; i++) {
+                    let item = bltouchSelectionRepeater.itemAt(i)
+                    if (toolheadSelection.bltouch_default) {
+                        if (i == 0) { item.checked = true }
                         else { item.checked = false }
                     } else {
-                        if(i==0) { item.checked = false }
+                        if (i == 0) { item.checked = false }
+                        else { item.checked = true }
+                    }
+                }
+                for (let i = 0; i < lcdSelectionRepeater.count; i++) {
+                    let item = lcdSelectionRepeater.itemAt(i)
+                    if (printerSelection.lcd_default) {
+                        if (i == 0) { item.checked = true }
+                        else { item.checked = false }
+                    } else {
+                        if (i == 0) { item.checked = false }
                         else { item.checked = true }
                     }
                 }
@@ -145,6 +155,7 @@ Item {
                     property int selectedIndex: 0
                     property string selectedCategory: "current"
                     property bool lcd: false
+                    property bool lcd_default: true
                     property string baseMachine: ""
 
                     Column {
@@ -171,7 +182,6 @@ Item {
 
                             Repeater {
                                 id: currentPrinterSelectionRepeater
-                                //id: printerSelectionRepeater
                                 model: Cura.LulzBotPrintersModel {
                                     id: currentPrintersModel
                                     machineCategoryProperty: "Current"
@@ -185,6 +195,7 @@ Item {
                                         printerSelection.selectedIndex = model.index
                                         printerSelection.selectedCategory = "current"
                                         printerSelection.lcd = model.lcd
+                                        printerSelection.lcd_default = model.lcd_default
                                         printerSelection.baseMachine = model.id
                                         printerSelectorLoader.item.updateToolheads()
                                     }
@@ -229,6 +240,7 @@ Item {
                                         printerSelection.selectedIndex = model.index
                                         printerSelection.selectedCategory = "legacy"
                                         printerSelection.lcd = model.lcd
+                                        printerSelection.lcd_default = model.lcd_default
                                         printerSelection.baseMachine = model.id
                                         printerSelectorLoader.item.updateToolheads()
                                     }
@@ -390,6 +402,7 @@ Item {
                     Column {
 
                         Repeater {
+                            id: lcdSelectionRepeater
                             model: ["Yes", "No"]
                             delegate: RadioButton {
                                 text: modelData
