@@ -74,7 +74,7 @@ Item {
         Column {
             id: additionalComponentsColumn
             anchors.bottom: parent.bottom
-            spacing: UM.Theme.getSize("default_margin").height
+            spacing: UM.Theme.getSize("thin_margin").height
 
             Row {
                 id: additionalComponentsRow
@@ -99,8 +99,8 @@ Item {
                     }
 
                     height: UM.Theme.getSize("action_button").height
-                    text: catalog.i18nc("@button", "Slice Next Part")
-                    tooltip: "Clears the bed plate and prompts for your next part without resetting your settings!"
+                    text: catalog.i18nc("@button", "  Next Part  ")
+                    tooltip: "Clears build plate and opens folder to slice next part(s) with current settings."
                     toolTipContentAlignment: Cura.ToolTip.ContentAlignment.AlignLeft
 
                     onClicked: {

@@ -59,28 +59,6 @@ Column {
             }
 
             RowLayout {
-                id: materialRow
-
-                Cura.IconWithText {
-                    id: printMaterial
-
-                    text: PrintInformation.materialNames[0]
-                    source: UM.Theme.getIcon("Extruder")
-                    font: UM.Theme.getFont("small")
-                }
-
-                Cura.IconWithText {
-                    id: printMaterial2
-                    visible: PrintInformation.materialNames.length > 1
-                    width: visible ? parent.width / 3 : 0
-
-                    text: visible ? PrintInformation.materialNames[1] : ""
-                    source: UM.Theme.getIcon("Extruder")
-                    font: UM.Theme.getFont("small")
-                }
-            }
-
-            RowLayout {
                 id: timeAndCostsRow
 
                 Cura.IconWithText {
@@ -88,9 +66,16 @@ Column {
 
                     Layout.fillWidth: true
 
-                    text: preSlicedData ? catalog.i18nc("@label", "No time estimation available") : PrintInformation.currentPrintTime.getDisplayString(UM.DurationFormat.Long)
                     source: UM.Theme.getIcon("Clock")
                     font: UM.Theme.getFont("small")
+                    text: {
+                        if (preSlicedData) {
+                            return catalog.i18nc("@label", "No time estimation available")
+                        }
+                        let printDuration = PrintInformation.currentPrintTime
+                        let displayFormat = printDuration.days ? UM.DurationFormat.Short : UM.DurationFormat.Long
+                        return printDuration.getDisplayString(displayFormat)
+                    }
                 }
 
                 Cura.IconWithText {
@@ -98,35 +83,43 @@ Column {
 
                     Layout.fillWidth: true
 
+                    source: UM.Theme.getIcon("Spool")
+                    font: UM.Theme.getFont("small")
+
+                    property int printMaterialsCount: PrintInformation.materialNames.length
+                    property string printMaterialName: PrintInformation.materialNames[0]
+                    property string printMaterialName2: printMaterialsCount > 1 ? PrintInformation.materialNames[1] : ""
                     property var printMaterialLengths: PrintInformation.materialLengths
                     property var printMaterialWeights: PrintInformation.materialWeights
                     property var printMaterialCosts: PrintInformation.materialCosts
 
                     text: {
+                        let outputString = "No cost estimation available"
                         if (preSlicedData) {
-                            return catalog.i18nc("@label", "No cost estimation available")
+                            return outputString
                         }
-                        var totalLengths = 0
-                        var totalWeights = 0
-                        var totalCosts = 0.0
+
+                        // PrintInformation doesn't actually supply just a total number so we've gotta add each part together.
+                        // This should actually probably be done there, might do that eventually.
+                        let totalWeights = 0
+                        let totalLengths = 0.0
+                        let totalCosts = 0.0
                         if (printMaterialLengths) {
-                            for(var index = 0; index < printMaterialLengths.length; index++) {
-                                if(printMaterialLengths[index] > 0) {
-                                    totalLengths += printMaterialLengths[index]
-                                    totalWeights += Math.round(printMaterialWeights[index])
-                                    var cost = printMaterialCosts[index] == undefined ? 0.0 : printMaterialCosts[index]
-                                    totalCosts += cost
+                            for(let i = 0; i < printMaterialLengths.length; i++) {
+                                if(printMaterialLengths[i] > 0) {
+                                    totalLengths += printMaterialLengths[i]
+                                    totalWeights += Math.round(printMaterialWeights[i])
+                                    totalCosts += printMaterialCosts[i] == undefined ? 0.0 : printMaterialCosts[i]
                                 }
                             }
                         }
-                        if(totalCosts > 0) {
-                            var costString = "%1 %2".arg(UM.Preferences.getValue("cura/currency")).arg(totalCosts.toFixed(2))
-                            return totalWeights + "g · " + totalLengths.toFixed(2) + "m · " + costString
+
+                        outputString = printMaterialName + " · " + totalWeights + "g · " + totalLengths.toFixed(2) + "m"
+                        if(totalCosts > 0) { // Add cost only if they've actually told us how much the filament costs
+                            outputString += " · %1%2".arg(UM.Preferences.getValue("cura/currency")).arg(totalCosts.toFixed(2))
                         }
-                        return totalWeights + "g · " + totalLengths.toFixed(2) + "m"
+                        return outputString
                     }
-                    source: UM.Theme.getIcon("Spool")
-                    font: UM.Theme.getFont("small")
                 }
             }
         }
@@ -137,6 +130,8 @@ Column {
         anchors.right: parent.right
         anchors.left: parent.left
         height: UM.Theme.getSize("action_button").height
+        property bool currentlyPreview: UM.Controller.activeStage.stageId == "PreviewStage"
+        property string nextStage: currentlyPreview ? "PrepareStage" : "PreviewStage"
 
         Cura.SecondaryButton {
             id: previewStageShortcut
@@ -148,20 +143,20 @@ Column {
             }
 
             height: UM.Theme.getSize("action_button").height
-            text: catalog.i18nc("@button", "Preview")
+            text: buttonRow.currentlyPreview ? catalog.i18nc("@button", "Prepare") : catalog.i18nc("@button", "Preview")
             tooltip: text
             fixedWidthMode: true
 
             toolTipContentAlignment: Cura.ToolTip.ContentAlignment.AlignLeft
 
-            onClicked: UM.Controller.setActiveStage("PreviewStage")
+            onClicked: UM.Controller.setActiveStage(buttonRow.nextStage)
         }
 
         Cura.OutputDevicesActionButton {
             id: outputDevicesButton
 
             anchors.right: parent.right
-            width: previewStageShortcut.visible ? UM.Theme.getSize("action_button").width : parent.width
+            width: previewStageShortcut.visible ? UM.Theme.getSize("action_button").width * 1.5 : parent.width
             height: UM.Theme.getSize("action_button").height
         }
     }
