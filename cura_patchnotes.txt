@@ -5,6 +5,8 @@ This file is a work-in-progress; some sections may be incomplete, especially
 	will be updated as new versions are released and will continue to be
 	utilized as the project progresses.
 
+4.13.0-BETAv2.11:
+
 4.13.0-BETAv2.10:
 	Changes:
 		- Some more changes to the recommended tab
