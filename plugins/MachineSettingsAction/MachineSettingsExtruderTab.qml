@@ -11,8 +11,7 @@ import Cura 1.1 as Cura
 //
 // This component contains the content for the "Welcome" page of the welcome on-boarding process.
 //
-Item
-{
+Item {
     id: base
     UM.I18nCatalog { id: catalog; name: "cura" }
 
@@ -22,19 +21,18 @@ Item
 
     property int columnWidth: ((parent.width - 2 * UM.Theme.getSize("default_margin").width) / 2) | 0
     property int columnSpacing: 3 * screenScaleFactor
-    property int propertyStoreIndex: manager ? manager.storeContainerIndex : 1  // definition_changes
+    property bool correctManager: manager.label.toLowerCase() == "machine settings"
+    property int propertyStoreIndex: correctManager ? manager.storeContainerIndex : 1 // definition_changes
 
     property string extruderStackId: ""
     property int extruderPosition: 0
     property var forceUpdateFunction: manager.forceUpdate
 
-    function updateMaterialDiameter()
-    {
+    function updateMaterialDiameter() {
         manager.updateMaterialForDiameter(extruderPosition)
     }
 
-    Item
-    {
+    Item {
         id: upperBlock
         anchors.top: parent.top
         anchors.left: parent.left
@@ -46,23 +44,20 @@ Item
         // =======================================
         // Left-side column "Nozzle Settings"
         // =======================================
-        Column
-        {
+        Column {
             anchors.top: parent.top
             anchors.left: parent.left
             width: parent.width * 2 / 3
 
             spacing: base.columnSpacing
 
-            Label   // Title Label
-            {
+            Label { // Title Label
                 text: catalog.i18nc("@title:label", "Nozzle Settings")
                 font: UM.Theme.getFont("medium_bold")
                 renderType: Text.NativeRendering
             }
 
-            Cura.NumericTextFieldWithUnit  // "Nozzle size"
-            {
+            Cura.NumericTextFieldWithUnit { // "Nozzle size"
                 id: extruderNozzleSizeField
                 visible: Cura.MachineManager.activeMachine != null ? !Cura.MachineManager.activeMachine.hasVariants : false
                 containerStackId: base.extruderStackId
@@ -76,8 +71,7 @@ Item
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 
-            Cura.NumericTextFieldWithUnit  // "Compatible material diameter"
-            {
+            Cura.NumericTextFieldWithUnit { // "Compatible material diameter"
                 id: extruderCompatibleMaterialDiameterField
                 containerStackId: base.extruderStackId
                 settingKey: "material_diameter"
@@ -92,8 +86,7 @@ Item
                 afterOnEditingFinishedFunction: updateMaterialDiameter
             }
 
-            Cura.NumericTextFieldWithUnit  // "Nozzle offset X"
-            {
+            Cura.NumericTextFieldWithUnit { // "Nozzle offset X"
                 id: extruderNozzleOffsetXField
                 containerStackId: base.extruderStackId
                 settingKey: "machine_nozzle_offset_x"
@@ -107,8 +100,7 @@ Item
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 
-            Cura.NumericTextFieldWithUnit  // "Nozzle offset Y"
-            {
+            Cura.NumericTextFieldWithUnit { // "Nozzle offset Y"
                 id: extruderNozzleOffsetYField
                 containerStackId: base.extruderStackId
                 settingKey: "machine_nozzle_offset_y"
@@ -122,8 +114,7 @@ Item
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 
-            Cura.NumericTextFieldWithUnit  // "Cooling Fan Number"
-            {
+            Cura.NumericTextFieldWithUnit { // "Cooling Fan Number"
                 id: extruderNozzleCoolingFanNumberField
                 containerStackId: base.extruderStackId
                 settingKey: "machine_extruder_cooling_fan_number"
@@ -139,8 +130,7 @@ Item
         }
     }
 
-    Item  // Extruder Start and End G-code
-    {
+    Item { // Extruder Start and End G-code
         id: lowerBlock
         anchors.top: upperBlock.bottom
         anchors.bottom: parent.bottom
@@ -148,8 +138,7 @@ Item
         anchors.right: parent.right
         anchors.margins: UM.Theme.getSize("default_margin").width
 
-        Cura.GcodeTextArea   // "Extruder Start G-code"
-        {
+        Cura.GcodeTextArea { // "Extruder Start G-code"
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.bottomMargin: UM.Theme.getSize("default_margin").height
@@ -162,8 +151,7 @@ Item
             settingStoreIndex: propertyStoreIndex
         }
 
-        Cura.GcodeTextArea   // "Extruder End G-code"
-        {
+        Cura.GcodeTextArea { // "Extruder End G-code"
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.bottomMargin: UM.Theme.getSize("default_margin").height
