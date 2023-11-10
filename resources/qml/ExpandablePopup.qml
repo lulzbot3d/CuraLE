@@ -103,7 +103,7 @@ Item
     {
         target: background
         property: "color"
-        value: base.enabled ? headerBackgroundColor : UM.Theme.getColor("disabled")
+        value: base.enabled ? headerBackgroundColor : UM.Theme.getColor("action_button_disabled")
     }
 
     implicitHeight: 100 * screenScaleFactor
@@ -117,7 +117,7 @@ Item
         border.width: base.enableHeaderBackgroundBorder ? UM.Theme.getSize("default_lining").width : 0
         border.color: UM.Theme.getColor("lining")
 
-        color: base.enabled ? headerBackgroundColor : UM.Theme.getColor("disabled")
+        color: base.enabled ? headerBackgroundColor : UM.Theme.getColor("action_button_disabled")
         anchors.fill: parent
 
         Label
@@ -126,7 +126,7 @@ Item
             visible: !base.enabled
             leftPadding: background.padding
             text: ""
-            font: UM.Theme.getFont("default")
+            font: UM.Theme.getFont("medium")
             renderType: Text.NativeRendering
             verticalAlignment: Text.AlignVCenter
             color: UM.Theme.getColor("text")

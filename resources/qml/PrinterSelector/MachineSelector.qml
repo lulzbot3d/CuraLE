@@ -12,6 +12,14 @@ Cura.ExpandablePopup {
 
     property bool isGroup: Cura.MachineManager.activeMachineIsGroup
 
+    property int outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
+    property bool printerConnected: outputDeviceCount > 1
+    property var printerOutputDevice: Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1]
+    property bool printerAcceptsCommands: printerConnected && printerOutputDevice.acceptsCommands
+
+    enabled: !printerAcceptsCommands
+    disabledText: "Connected via USB"
+
     contentPadding: UM.Theme.getSize("default_lining").width
     contentAlignment: Cura.ExpandablePopup.ContentAlignment.AlignLeft
 

@@ -74,7 +74,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._all_baud_rates = [115200, 250000]
 
         # Instead of using a timer, we really need the update to be as a thread, as reading from serial can block.
-        self._update_thread = Thread(target = self._update, daemon = True, name = "USBPrinterUpdate")
+        self._update_thread = Thread(target = self._update, daemon = True, name = "USBPrinterConnectionThread")
 
         self._last_temperature_request = None  # type: Optional[int]
         self._firmware_idle_count = 0
@@ -240,7 +240,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self._serial.close()
 
         # Re-create the thread so it can be started again later.
-        self._update_thread = Thread(target=self._update, daemon=True, name = "USBPrinterUpdate")
+        self._update_thread = Thread(target=self._update, daemon=True, name = "USBPrinterConnectionThread")
         self._serial = None
 
     def _update(self):
@@ -261,21 +261,27 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                     break
 
                 if b"pause" in line:
+                    Logger.log("i", "Pause request from printer")
                     self.pausePrint()
 
                 if b"resume" in line:
+                    Logger.log("i", "Resume request from printer")
                     self.resumePrint()
 
                 if b"cancel" in line:
+                    Logger.log("i", "Cancel request from printer")
                     self.cancelPrint()
 
                 if b"disconnect" in line:
                     self.setConnectionState(ConnectionState.Closed)
+                    Logger.log("i", "Printer requested disconnect!")
                     self.close()
                     break
 
                 if b"poweroff" in line:
                     self.setConnectionState(ConnectionState.Error)
+                    Logger.log("w", "Printer signaled poweroff!!")
+                    self.close()
                     break
 
             if line.startswith(b"Error:"):
@@ -290,6 +296,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 # Skip the communication errors, as those get corrected.
                 if b"Extruder switched off" in line or b"Temperature heated bed switched off" in line or b"Something is wrong, please turn off the printer." in line:
                     self.setConnectionState(ConnectionState.Error)
+                    Logger.log("w", "Printer error, closing connection")
+                    self.close()
 
             if self._last_temperature_request is None or time() > self._last_temperature_request + self._timeout:
                 # Timeout, or no request has been sent at all.
@@ -332,7 +340,15 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 # An empty line means that the firmware is idle
                 # Multiple empty lines probably means that the firmware and Cura are waiting
                 # for each other due to a missed "ok", so we keep track of empty lines
-                self._firmware_idle_count += 1
+                if self._firmware_idle_count >= 3:
+                    # For now I'll give it three strikes but honestly this is probably excessive
+                    # If we haven't gotten a response in this long the connection is probably dead.
+                    self.setConnectionState(ConnectionState.Timeout)
+                    Logger.log("w", "Printer connection timeout! Connection lost.")
+                    self.close()
+                    break
+                else:
+                    self._firmware_idle_count += 1
             else:
                 self._firmware_idle_count = 0
 
@@ -363,6 +379,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                         if line.startswith(b"rs"):
                             # In some cases of the RS command it needs to be handled differently.
                             self._gcode_position = int(line.split()[1])
+        # This is outside the loop. Might be good to have a catch here if the loop broke unexpectedly
+        Logger.log("d", "Printer connection loop stopped.")
 
     def sendCommand(self, command: Union[str, bytes]):
         """Send a command to printer."""

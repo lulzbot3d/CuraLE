@@ -9,16 +9,20 @@ import UM 1.2 as UM
 import Cura 1.0 as Cura
 
 
-UM.ManagementPage
-{
+UM.ManagementPage {
     id: base;
+
+    property int outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
+    property bool printerConnected: outputDeviceCount > 1
+    property var printerOutputDevice: Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1]
+    property bool printerAcceptsCommands: printerConnected && printerOutputDevice.acceptsCommands
 
     title: catalog.i18nc("@title:tab", "Printers");
     model: Cura.GlobalStacksModel { }
 
     sectionRole: "discoverySource"
 
-    activeId: Cura.MachineManager.activeMachine !== null ? Cura.MachineManager.activeMachine.id: ""
+    activeId: Cura.MachineManager.activeMachine !== null ? Cura.MachineManager.activeMachine.id : ""
     activeIndex: activeMachineIndex()
 
     function activeMachineIndex()
@@ -34,31 +38,38 @@ UM.ManagementPage
     }
 
     buttons: [
-        Button
-        {
+        Button {
             id: activateMenuButton
             text: catalog.i18nc("@action:button", "Activate");
             iconName: "list-activate";
-            enabled: base.currentItem != null && base.currentItem.id != Cura.MachineManager.activeMachine.id
+            enabled: {
+                if (base.currentItem == null) { return false }
+                if (base.currentItem.id == activeId) { return false }
+                if (printerAcceptsCommands) { return false }
+                return true
+            }
             onClicked: Cura.MachineManager.setActiveMachine(base.currentItem.id)
         },
-        Button
-        {
+        Button {
             id: addMenuButton
             text: catalog.i18nc("@action:button", "Add");
             iconName: "list-add";
+            enabled: !printerAcceptsCommands
             onClicked: Cura.Actions.addMachine.trigger()
         },
-        Button
-        {
+        Button {
             id: removeMenuButton
             text: catalog.i18nc("@action:button", "Remove");
             iconName: "list-remove";
-            enabled: base.currentItem != null && model.count > 1
+            enabled: {
+                if (base.currentItem == null) { return false }
+                if (model.count <= 1) { return false }
+                if (base.currentItem.id == activeId && printerAcceptsCommands) { return false }
+                return true
+            }
             onClicked: confirmDialog.open();
         },
-        Button
-        {
+        Button {
             id: renameMenuButton
             text: catalog.i18nc("@action:button", "Rename");
             iconName: "edit-rename";
@@ -84,7 +95,7 @@ UM.ManagementPage
         Flow
         {
             id: machineActions
-            visible: currentItem && currentItem.id == Cura.MachineManager.activeMachine.id
+            visible: currentItem && currentItem.id == activeId
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: machineName.bottom

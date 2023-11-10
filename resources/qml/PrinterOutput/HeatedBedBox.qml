@@ -21,7 +21,7 @@ Item {
         anchors.fill: parent
 
         Label { //Build plate label.
-            text: catalog.i18nc("@label", "Build plate")
+            text: catalog.i18nc("@label", "Build Plate")
             font: UM.Theme.getFont("default")
             color: UM.Theme.getColor("text")
             anchors.left: parent.left
