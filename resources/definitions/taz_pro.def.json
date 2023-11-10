@@ -9,7 +9,6 @@
         "base_machine": true,
         "base_machine_id": "taz_pro",
         "toolhead_selection_name": "Universal Tool Head",
-        "has_optional_bltouch": true,
         "platform": "taz_pro.stl",
         "platform_offset":
         [
@@ -18,10 +17,11 @@
             8
         ],
         "file_formats": "text/x-gcode",
-        "firmware_latest_version": "2.1.3.0.9",
-        "firmware_bltouch_latest_version": "2.1.3.0.9",
-        "firmware_file": "Pro/Marlin_TAZPro_Universal_2.1.3.0.9_29bdc7c.bin",
-        "firmware_file_bltouch": "Pro/Marlin_TAZPro_Universal_BLTouch_2.1.3.0.9_29bdc7c.bin"
+        "has_optional_bltouch": true,
+        "firmware_latest_version": "2.1.3.0.10",
+        "firmware_file": "Pro/Marlin_TAZPro_Universal_2.1.3.0.10_8b401b1.bin",
+        "firmware_bltouch_latest_version": "2.1.3.0.10-BLTouch",
+        "firmware_file_bltouch": "Pro/Marlin_TAZPro_Universal_BLTouch_2.1.3.0.10_8b401b1.bin"
     },
     "overrides":
     {

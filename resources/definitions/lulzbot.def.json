@@ -6,6 +6,7 @@
     {
         "author": "LulzBot",
         "manufacturer": "Fargo Additive Manufacturing Equipment 3D, LLC",
+        "firmware_type": "Marlin",
         "visible": false,
         "file_formats": "text/x-gcode;application/x-stl-ascii;application/x-stl-binary;application/x-wavefront-obj;application/x3g",
         "first_start_actions":
@@ -22,16 +23,14 @@
         "machine_category": "Current",
         "toolhead_category": "Universal",
         "has_optional_lcd": false,
+        "lcd_is_standard": true,
         "has_optional_bltouch": false,
         "bltouch_is_standard": false,
         "required_actions": ["ChangeToolHead"],
         "supported_actions": ["MachineSettingsAction", "UpgradeFirmware"],
         "firmware_latest_version": "",
         "firmware_bltouch_latest_version": "",
-        "firmware_update_info": {
-            "check_urls": ["https://firmware.lulzbot.com"],
-            "update_url": "https://firmware.lulzbot.com"
-        }
+        "firmware_no_lcd_latest_version": ""
     },
     "overrides":
     {
@@ -113,24 +112,24 @@
             {
                 "machine_has_lcd":
                 {
-                    "label": "LCD",
-                    "description": "LCD",
+                    "label": "Has LCD",
+                    "description": "Machine has a graphical LCD.",
                     "enabled": false,
                     "type": "bool",
                     "default_value": true
                 },
                 "machine_has_bltouch":
                 {
-                    "label": "BLTouch",
-                    "description": "BLTouch",
+                    "label": "Has BLTouch",
+                    "description": "Machine is equipped with a BLTouch probe for build plate leveling.",
                     "enabled": false,
                     "type": "bool",
                     "default_value": false
                 },
                 "firmware_machine_type":
                 {
-                    "label": "firmware type",
-                    "description": "firmware type",
+                    "label": "Firmware Type",
+                    "description": "Machine type as sent via Marlin from an actual machine.",
                     "enabled": false,
                     "type": "str",
                     "default_value": ""

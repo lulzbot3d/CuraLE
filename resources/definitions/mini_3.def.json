@@ -5,6 +5,7 @@
     "metadata":
     {
         "machine_priority": "02",
+        "firmware_type": "Klipper",
         "visible": false,
         "base_machine": true,
         "base_machine_id": "mini_3",
@@ -20,16 +21,7 @@
             -4
         ],
         "file_formats": "text/x-gcode",
-        "firmware_latest_version": "",
-        "firmware_file": "",
-        "firmware_update_info": {
-            "id": "",
-            "check_urls":
-            [
-                ""
-            ],
-            "update_url": ""
-        }
+        "bltouch_is_standard": true
     },
     "overrides":
     {
@@ -39,6 +31,7 @@
         "machine_height": { "default_value": 175 },
         "machine_max_feedrate_z": { "default_value": 200 },
         "machine_start_gcode": { "default_value": "START EXTRUDER_TEMP={material_print_temperature_layer_0} BED_TEMP={material_bed_temperature_layer_0}" },
-        "machine_end_gcode": { "default_value": "END" }
+        "machine_end_gcode": { "default_value": "END" },
+        "machine_has_bltouch": { "value": true }
     }
 }
