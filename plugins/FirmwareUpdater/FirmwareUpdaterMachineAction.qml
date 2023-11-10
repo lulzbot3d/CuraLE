@@ -117,16 +117,12 @@ Cura.MachineAction {
         }
 
         Label {
-            text: " " // spacer
-        }
-
-        Label {
             width: parent.width
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
             font.pointSize: 10
             visible: printerConnected && canUpdateFirmware && firmwareName != ""
-            text: catalog.i18nc("@action:button", "Newest Firmware For Selected Printer Configuration: <b>") + Cura.MachineManager.activeMachineLatestFirmwareVersion + "</b>";
+            text: catalog.i18nc("@label", "Newest Firmware For Selected Printer Configuration: <b>") + Cura.MachineManager.activeMachineLatestFirmwareVersion + "</b>";
         }
 
         Label {
@@ -147,19 +143,37 @@ Cura.MachineAction {
             text: catalog.i18nc("@label", "Firmware can not be updated because there is no 3D printer detected!");
         }
 
-        OldControls.Button {
+        Cura.PrimaryButton {
             id: autoUpgradeButton
             anchors.horizontalCenter: parent.horizontalCenter
             width: UM.Theme.getSize("setting_control").width * 2
             height: UM.Theme.getSize("setting_control").height * 2
-            text: catalog.i18nc("@action:button", "Update Firmware");
-            style: UM.Theme.styles.monitor_checkable_button_style
+            text: catalog.i18nc("@action:button", "Update Firmware")
+            textFont: UM.Theme.getFont("large_bold")
+            outlineColor: "black"
+            fixedWidthMode: true
             enabled: printerConnected && firmwareName != ""
             onClicked: {
                 updateProgressDialog.visible = true;
                 activeOutputDevice.updateFirmware(firmwareName);
             }
         }
+
+        // OldControls.Button {
+        //     id: autoUpgradeButton
+        //     anchors.horizontalCenter: parent.horizontalCenter
+        //     width: UM.Theme.getSize("setting_control").width * 2
+        //     height: UM.Theme.getSize("setting_control").height * 2
+        //     text: catalog.i18nc("@action:button", "Update Firmware")
+        //     font.bold: true
+        //     font.pointSize: 10
+        //     style: UM.Theme.styles.monitor_checkable_button_style
+        //     enabled: printerConnected && firmwareName != ""
+        //     onClicked: {
+        //         updateProgressDialog.visible = true;
+        //         activeOutputDevice.updateFirmware(firmwareName);
+        //     }
+        // }
 
         Text {
             id: manualUpgradeTextButton

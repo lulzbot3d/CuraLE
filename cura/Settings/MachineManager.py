@@ -526,6 +526,18 @@ class MachineManager(QObject):
         """
         return bool(self._stacks_have_errors)
 
+    @pyqtProperty(bool, notify = globalContainerChanged)
+    def activeMachineOptionalLCD(self) -> bool:
+        if self.activeMachine is None:
+            return False
+        return self.activeMachine.getBottom().getMetaDataEntry("has_optional_lcd")
+
+    @pyqtProperty(bool, notify = globalContainerChanged)
+    def activeMachineOptionalBLTouch(self) -> bool:
+        if self.activeMachine is None:
+            return False
+        return self.activeMachine.getBottom().getMetaDataEntry("has_optional_bltouch")
+
     @pyqtProperty(str, notify = printerConnectedStatusChanged)
     def activeMachineFirmwareVersion(self) -> str:
         if not self._printer_output_devices:
@@ -534,13 +546,20 @@ class MachineManager(QObject):
 
     @pyqtProperty(str, notify= globalContainerChanged)
     def activeMachineLatestFirmwareVersion(self) -> str:
+        version = ""
         if self.activeMachine is None:
-            return ""
-        # I don't believe this if statement returns the way I'm expecting it to
-        if self._global_container_stack.getProperty("machine_has_bltouch", "value"):
-            version = self.activeMachine.getBottom().getMetaDataEntry("firmware_bltouch_latest_version")
+            return version
+
+        stack = self._global_container_stack
+        meta = self.activeMachine.getBottom()
+
+        if meta.getMetaDataEntry("has_optional_bltouch") and stack.getProperty("machine_has_bltouch", "value"):
+            version = meta.getMetaDataEntry("firmware_bltouch_latest_version")
+        elif meta.getMetaDataEntry("has_optional_lcd") and not stack.getProperty("machine_has_lcd", "value"):
+            version = meta.getMetaDataEntry("firmware_no_lcd_latest_version")
         else:
-            version = self.activeMachine.getBottom().getMetaDataEntry("firmware_latest_version")
+            version = meta.getMetaDataEntry("firmware_latest_version")
+
         return version
 
     @pyqtProperty(str, notify = globalContainerChanged)
