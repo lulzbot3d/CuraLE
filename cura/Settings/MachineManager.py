@@ -552,14 +552,19 @@ class MachineManager(QObject):
 
         stack = self._global_container_stack
         meta = self.activeMachine.getBottom()
+        tripped = False
 
         if meta.getMetaDataEntry("has_optional_bltouch") and stack.getProperty("machine_has_bltouch", "value"):
             version = meta.getMetaDataEntry("firmware_bltouch_latest_version")
         elif meta.getMetaDataEntry("has_optional_lcd") and not stack.getProperty("machine_has_lcd", "value"):
             version = meta.getMetaDataEntry("firmware_no_lcd_latest_version")
-        else:
+
+        if version == "":
+            if tripped:
+                Logger.log("w", "Printer was determined to have non-standard config firmware, but the version came up blank!")
             version = meta.getMetaDataEntry("firmware_latest_version")
 
+        Logger.log("i", "Found firmware version {0} for current printer configuration.".format(version))
         return version
 
     @pyqtProperty(str, notify = globalContainerChanged)

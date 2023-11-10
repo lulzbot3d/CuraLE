@@ -3,7 +3,6 @@
 
 import QtQuick 2.2
 import QtQuick.Controls 2.15
-import QtQuick.Controls 1.4 as OldControls
 import QtQuick.Layouts 1.1
 import QtQuick.Window 2.1
 import QtQuick.Dialogs 1.2 // For filedialog
@@ -158,22 +157,6 @@ Cura.MachineAction {
                 activeOutputDevice.updateFirmware(firmwareName);
             }
         }
-
-        // OldControls.Button {
-        //     id: autoUpgradeButton
-        //     anchors.horizontalCenter: parent.horizontalCenter
-        //     width: UM.Theme.getSize("setting_control").width * 2
-        //     height: UM.Theme.getSize("setting_control").height * 2
-        //     text: catalog.i18nc("@action:button", "Update Firmware")
-        //     font.bold: true
-        //     font.pointSize: 10
-        //     style: UM.Theme.styles.monitor_checkable_button_style
-        //     enabled: printerConnected && firmwareName != ""
-        //     onClicked: {
-        //         updateProgressDialog.visible = true;
-        //         activeOutputDevice.updateFirmware(firmwareName);
-        //     }
-        // }
 
         Text {
             id: manualUpgradeTextButton
