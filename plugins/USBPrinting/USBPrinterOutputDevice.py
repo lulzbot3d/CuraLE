@@ -242,6 +242,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         Logger.log("d", "Close called on device %s", self._serial_port)
 
         self._setAcceptsCommands(False)
+        self.cancelPrint()
 
         if self._serial is not None:
             self._serial.close()
@@ -259,9 +260,12 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                     self.messageFromPrinter.emit(decoded_line.strip('\n'))
                     ## might want to save these somewhere at some point, could be handy.
                     ##print(decoded_line.strip('\n'))
-            except Exception as e:
-                print(e)
-                continue
+            except SerialException:
+                Logger.log("e", "Encountered serial exception! Closing connection.")
+                self.close()
+                self.setConnectionState(ConnectionState.Error)
+                break
+
 
             if b"//action:" in line:
                 if b"out_of_filament" in line:
@@ -685,7 +689,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
         if print_job is None:
             controller = GenericOutputController(self)
-            controller.setCanUpdateFirmware(True)
+            controller.setCanUpdateFirmware(False)
             print_job = PrintJobOutputModel(output_controller = controller, name = CuraApplication.getInstance().getPrintInformation().jobName)
             print_job.updateState("printing")
             self._printers[0].updateActivePrintJob(print_job)

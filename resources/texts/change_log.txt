@@ -1,3 +1,14 @@
+[4.13.0-Beta v2.11]
+* Added a button on the bottom right that allows you to clear the build plate and open a new file with a single click
+* Pro and Pro XT have an updated bed STL, along with the Mini 3 getting an official one
+* Open File button is now persistent between Prepare and Preview
+* Squashed down the Slice/Output widget a bit for spacial concerns
+* Cleaned up the "Add Printer" menu a little
+* Patched up the visibility of some qualities for TAZ 5, 6, and Mini 1
+* Revisited the Firmware Updater, it should consistently provide the correct firmware files now
+* USB Connections will now properly time-out after several seconds without any response from the 3D Printer
+* Switching printers while there is an active USB connection is now prevented to avoid accidentally cancelling prints
+
 [4.13.0-Beta v2.10]
 * More tweaks to the Recommended tab
 * Small USB printing bugfixes, more on the way

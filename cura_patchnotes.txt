@@ -6,6 +6,28 @@ This file is a work-in-progress; some sections may be incomplete, especially
 	utilized as the project progresses.
 
 4.13.0-BETAv2.11:
+	Additions:
+		- Added a button on the bottom right that will allow the user to
+			clear the build plate and open a new file with a single click
+			without refreshing their print settings.
+		- Added new bed STLs for the TAZ Pro/Pro XT and Mini 3
+		- Added some global qualities for TAZ 5, 6, and Mini 1
+		- Added an SVG representing Gyroid infill for the "Infill Pattern"
+			setting on the recommended tab.
+	Changes:
+		- Cleaned up some printer definitions
+		- Updated a couple printer settings for supports across the board
+		- Open File button is now persistent between Prepare and Preview
+		- Relocated a couple other buttons slightly for ease of use
+		- Squashed down the Slice/Output widget a bit for spacial concerns
+		- Cleaned up the "Add Printer" menu
+	Bug Fixes:
+		- Redid the logic for the Firmware Updater regarding distributing
+			firmware for LCD/No LCD and BLTouch/No BLTouch machines.
+		- USB Connections will now properly time-out after several seconds
+			without any response from the 3D Printer
+		- Switching printers while there is an active USB connection is now
+			prevented, doing this would cause the connection to close.
 
 4.13.0-BETAv2.10:
 	Changes:
