@@ -4,9 +4,6 @@
 from UM.Job import Job
 from UM.Logger import Logger
 
-from .avr_isp import ispBase
-from .avr_isp.stk500v2 import Stk500v2
-
 from time import time, sleep
 from serial import Serial, SerialException
 
@@ -21,14 +18,18 @@ class KnownBaudJob(Job):
         self._baud_rate = baud_rate
 
     def run(self) -> None:
-        wait_response_timeouts = [5, 15, 30]
-        wait_bootloader_times = [5, 10, 15]
+        Logger.log("d", "Known Baud Connection Job started.")
+        wait_response_timeouts = [3, 5]
+        wait_bootloader_times = [1.5]
         write_timeout = 3
         read_timeout = 3
         tries = 2
         serial = None
 
         for retry in range(tries):
+            if retry != 0:
+                Logger.log("d", "Waiting for retry...")
+                sleep(5)  # Give the printer some time to init and try again.
             if retry < len(wait_response_timeouts):
                 wait_response_timeout = wait_response_timeouts[retry]
             else:
@@ -37,6 +38,7 @@ class KnownBaudJob(Job):
                 wait_bootloader = wait_bootloader_times[retry]
             else:
                 wait_bootloader = wait_bootloader_times[-1]
+            Logger.log("d", "Serial creation attempt: {0}.".format(retry + 1))
 
             if serial is None:
                 try:
@@ -49,10 +51,18 @@ class KnownBaudJob(Job):
                         Logger.log("w", "Serial creation failed, printer may be busy... retrying in 10 seconds")
                         sleep(10)
                     continue
-            sleep(wait_bootloader)  # Ensure that we are not talking to the boot loader. 1.5 seconds seems to be the magic number
+            Logger.log("d", "Serial created, waiting {0} seconds for bootloading sequence.".format(wait_bootloader))
+            sleep(wait_bootloader)  # Ensure that we are not talking to the boot loader.
 
-            serial.write(b"\n")  # Ensure we clear out previous responses
-            serial.write(b"M105\n")
+            try:
+                serial.write(b"\n")  # Ensure we clear out previous responses
+                serial.write(b"M105\n")
+            except SerialException:
+                Logger.log("w", "Encountered SerialException while trying to write!")
+                continue
+            Logger.log("d", "Attempting an M105 command...")
+            Logger.log("d", "Wait timout: {0}.".format(wait_response_timeout))
+
 
             start_timeout_time = time()
             timeout_time = time() + wait_response_timeout
@@ -61,13 +71,28 @@ class KnownBaudJob(Job):
                 # If baudrate is wrong, then readline() might never
                 # return, even with timeouts set. Using read_until
                 # with size limit seems to fix this.
-                line = serial.read_until(size = 100)
+                try:
+                    line = serial.read_until(size = 100)
+                except SerialException:
+                    Logger.log("w", "Encountered an exception attempting to read from serial!")
+                    break
+                if b"start" in line:
+                    Logger.log("d", "Recieving boot sequence output, continue waiting for response...")
+                    timeout_time = time() + wait_response_timeout
+                if b"echo" in line:
+                    # Don't spam the logs but just keep the connection going for now
+                    timeout_time = time() + wait_response_timeout
                 if b"ok" in line and b"T:" in line:
+                    Logger.log("d", "M105 returned!")
                     self.setResult(serial)
                     Logger.log("d", "Created serial connection on port {port} on retry {retry} after {time_elapsed:0.2f} seconds.".format(
                         port = self._serial_port, retry = retry, time_elapsed = time() - start_timeout_time))
                     return
-                serial.write(b"M105\n")
+                try:
+                    serial.write(b"M105\n")
+                except SerialException:
+                    Logger.log("w", "Serial Exception during repeated M105 writes.")
+                    break
+            Logger.log("d", "Printer response timeout.")
 
-            sleep(10)  # Give the printer some time to init and try again.
         self.setResult(None)  # Unable to detect the correct baudrate.

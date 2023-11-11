@@ -133,11 +133,12 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self._serial = result[1]
             self.connect()  # Try to connect (actually create serial, etc)
         else:
-            Logger.log("w", "Auto-detect baud rate failed.")
-            message = Message(text = catalog.i18nc("@message",
-                                "The device on {port} did not respond to any of the baud rates that Cura LE tried. Please check the connection and try again.").format(port=self._serial_port),
-                                title = catalog.i18nc("@message", "No Response"),
-                                message_type = Message.MessageType.ERROR)
+            Logger.log("w", "Auto Detect Baud failed.")
+            Message(text = catalog.i18nc("@message",
+                    "The device on {port} did not respond to any of the baud rates that Cura LE tried. Please check the connection and try again.").format(port=self._serial_port),
+                    title = catalog.i18nc("@message", "No Response"),
+                    message_type = Message.MessageType.ERROR).show()
+            self.setConnectionState(ConnectionState.Timeout)
 
     def _knownBaudFinished(self, job: KnownBaudJob):
         result = job.getResult()
@@ -145,6 +146,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self._serial = result
             self.connect() # Finish connection process
         else: # Known baud rate didn't work, try auto-detect
+            Logger.log("w", "Known Baud Job failed to create a connection.")
+            # Message(text = catalog.i18nc("@message",
+            #         "The device on {port} did not respond to Cura LE. Please check the connection and try again.").format(port=self._serial_port),
+            #         title = catalog.i18nc("@message", "No Response"),
+            #         message_type = Message.MessageType.ERROR).show()
             self._baud_rate = "AUTO"
             self.connect()
 
@@ -164,6 +170,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             Logger.log("w", "There was an attempt to connect to the 'None' printer!")
             Logger.log("w", "The 'None' printer is a placeholder for when no serial devices are detected.")
             self.setConnectionState(ConnectionState.Closed)
+            return
 
         self._firmware_name = None  # after each connection ensure that the firmware name is removed
         self._firmware_data = None
@@ -273,15 +280,15 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                     self.cancelPrint()
 
                 if b"disconnect" in line:
+                    self.close()
                     self.setConnectionState(ConnectionState.Closed)
                     Logger.log("i", "Printer requested disconnect!")
-                    self.close()
                     break
 
                 if b"poweroff" in line:
+                    self.close()
                     self.setConnectionState(ConnectionState.Error)
                     Logger.log("w", "Printer signaled poweroff!!")
-                    self.close()
                     break
 
             if line.startswith(b"Error:"):
@@ -295,9 +302,9 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
                 # Skip the communication errors, as those get corrected.
                 if b"Extruder switched off" in line or b"Temperature heated bed switched off" in line or b"Something is wrong, please turn off the printer." in line:
-                    self.setConnectionState(ConnectionState.Error)
                     Logger.log("w", "Printer error, closing connection")
                     self.close()
+                    self.setConnectionState(ConnectionState.Error)
 
             if self._last_temperature_request is None or time() > self._last_temperature_request + self._timeout:
                 # Timeout, or no request has been sent at all.
@@ -340,12 +347,12 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 # An empty line means that the firmware is idle
                 # Multiple empty lines probably means that the firmware and Cura are waiting
                 # for each other due to a missed "ok", so we keep track of empty lines
-                if self._firmware_idle_count >= 3:
+                if self._firmware_idle_count >= 2:
                     # For now I'll give it three strikes but honestly this is probably excessive
                     # If we haven't gotten a response in this long the connection is probably dead.
-                    self.setConnectionState(ConnectionState.Timeout)
                     Logger.log("w", "Printer connection timeout! Connection lost.")
                     self.close()
+                    self.setConnectionState(ConnectionState.Timeout)
                     break
                 else:
                     self._firmware_idle_count += 1
