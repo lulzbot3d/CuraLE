@@ -213,19 +213,19 @@ Item
         target: base.qualityManagementModel
         function onItemsChanged()
         {
-            var toSelectItemName = base.currentItem == null ? "" : base.currentItem.name;
+            let toSelectItemName = base.currentItem == null ? "" : base.currentItem.name;
             if (newQualityNameToSelect != "")
             {
                 toSelectItemName = newQualityNameToSelect;
             }
 
-            var newIdx = -1;  // Default to nothing if nothing can be found
+            let newIdx = -1;  // Default to nothing if nothing can be found
             if (toSelectItemName != "")
             {
                 // Select the required quality name if given
-                for (var idx = 0; idx < base.qualityManagementModel.count; ++idx)
+                for (let idx = 0; idx < base.qualityManagementModel.count; ++idx)
                 {
-                    var item = base.qualityManagementModel.getItem(idx);
+                    let item = base.qualityManagementModel.getItem(idx);
                     if (item && item.name == toSelectItemName)
                     {
                         // Switch to the newly created profile if needed
@@ -428,9 +428,9 @@ Item
                     var selectedItemName = Cura.MachineManager.activeQualityOrQualityChangesName;
 
                     // Select the required quality name if given
-                    for (var idx = 0; idx < base.qualityManagementModel.count; idx++)
+                    for (let idx = 0; idx < base.qualityManagementModel.count; idx++)
                     {
-                        var item = base.qualityManagementModel.getItem(idx);
+                        let item = base.qualityManagementModel.getItem(idx);
                         if (item.name == selectedItemName)
                         {
                             currentIndex = idx;
@@ -549,7 +549,7 @@ Item
                     Button
                     {
                         text: catalog.i18nc("@action:button", "Update profile with current settings/overrides")
-                        enabled: Cura.MachineManager.hasUserSettings && !base.currentItem.is_read_only
+                        enabled: base.currentItem != null ? Cura.MachineManager.hasUserSettings && !base.currentItem.is_read_only : false
                         onClicked: Cura.ContainerManager.updateQualityChanges()
                     }
 

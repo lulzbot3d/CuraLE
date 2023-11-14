@@ -86,12 +86,12 @@ Item {
         Controls2.ComboBox {
             id: supportExtruderCombobox
 
-            height: UM.Theme.getSize("print_setup_big_item").height
+            //height: UM.Theme.getSize("print_setup_mid_item").height
+            height: extruderComboBoxLabel.height + 2 * UM.Theme.getSize("narrow_margin").height
             anchors {
                 left: enableSupportCheckBox.right
                 right: parent.right
-                leftMargin: UM.Theme.getSize("thick_margin").width
-                rightMargin: UM.Theme.getSize("thick_margin").width
+                leftMargin: UM.Theme.getSize("thin_margin").width
                 verticalCenter: parent.verticalCenter
             }
 
@@ -189,6 +189,8 @@ Item {
             }
 
             contentItem: Controls2.Label {
+                id: extruderComboBoxLabel
+                height: contentHeight
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: UM.Theme.getSize("setting_unit_margin").width
