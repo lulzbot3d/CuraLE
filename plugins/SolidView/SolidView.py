@@ -70,7 +70,7 @@ class SolidView(View):
         self._xray_checking_update_time = 30.0 # seconds
         self._xray_warning_cooldown = 60 * 10 # reshow Model error message every 10 minutes
         self._xray_warning_message = Message(
-            catalog.i18nc("@info:status", "The highlighted areas indicate either missing or extraneous surfaces. Fix your model and open it again into Cura."),
+            catalog.i18nc("@info:status", "The highlighted areas indicate either missing or extraneous surfaces. Fix your model and open it again into Cura LE."),
             lifetime = 60 * 5, # leave message for 5 minutes
             title = catalog.i18nc("@info:title", "Model Errors"),
             option_text = catalog.i18nc("@info:option_text", "Do not show this message again"),
@@ -327,12 +327,16 @@ class SolidView(View):
                             "strides": (qimage.bytesPerLine(), 3),  # This does the magic: For each line, skip the correct number of bytes. Bytes per pixel is always 3 due to QImage.Format.Format_RGB888.
                             "version": 3
                         }
-            array = np.asarray(QImageArrayView(xray_img)).view(np.dtype({
-                "r": (np.uint8, 0, "red"),
-                "g": (np.uint8, 1, "green"),
-                "b": (np.uint8, 2, "blue"),
-                "a": (np.uint8, 3, "alpha")  # Never filled since QImage was reformatted to RGB888.
-            }), np.recarray)
+            try:
+                array = np.asarray(QImageArrayView(xray_img)).view(np.dtype({
+                    "r": (np.uint8, 0, "red"),
+                    "g": (np.uint8, 1, "green"),
+                    "b": (np.uint8, 2, "blue"),
+                    "a": (np.uint8, 3, "alpha")  # Never filled since QImage was reformatted to RGB888.
+                }), np.recarray)
+            except TypeError:
+                Logger.logException("e", "Numpy returned a TypeError.")
+                return
             if np.any(np.mod(array.r, 2)):
                 self._next_xray_checking_time = time.time() + self._xray_warning_cooldown
                 self._xray_warning_message.show()

@@ -100,7 +100,7 @@ Item {
                 else { "No Output Device Address" }
             }
             font: UM.Theme.getFont("default_bold")
-            color: UM.Theme.getColor("text_inactive")
+            color: UM.Theme.getColor("text_medium")
             anchors.top: outputDeviceNameLabel.bottom
             anchors.left: parent.left
             anchors.margins: UM.Theme.getSize("default_margin").width

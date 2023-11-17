@@ -21,12 +21,9 @@ UM.MainWindow {
 
     viewportRect: Qt.rect(0, 0, 1.0, 1.0)
 
-    // Cura application window title
+    // Cura LE application window title
     title: {
         let result = "";
-        if(PrintInformation !== null && PrintInformation.jobName != "") {
-            result += PrintInformation.jobName + " - ";
-        }
         result += CuraApplication.applicationDisplayName;
         return result;
     }

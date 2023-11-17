@@ -71,27 +71,28 @@ Item {
                 top: parent.top
             }
             height: UM.Preferences.getValue("view/settings_list_height") - UM.Theme.getSize("default_margin").height
-            Connections {
-                target: UM.Preferences
-                function onPreferenceChanged(preference) {
-                    if (preference !== "view/settings_list_height" && preference !== "general/window_height" && preference !== "general/window_state") {
-                        return;
-                    }
-
-                    customPrintSetup.height =
-                        Math.min (
-                            UM.Preferences.getValue("view/settings_list_height"),
-                            Math.max (
-                                absoluteMinimumHeight,
-                                base.height - (customPrintSetup.mapToItem(null, 0, 0).y + buttonRow.height + UM.Theme.getSize("default_margin").height)
-                            )
-                        );
-                    recommendedPrintSetup.height = customPrintSetup.height
-
-                    updateDragPosition();
-                }
-            }
             visible: currentModeIndex == PrintSetupSelectorContents.Mode.Custom
+        }
+
+        Connections {
+            target: UM.Preferences
+            function onPreferenceChanged(preference) {
+                if (preference !== "view/settings_list_height" && preference !== "general/window_height" && preference !== "general/window_state") {
+                    return;
+                }
+
+                customPrintSetup.height =
+                    Math.min (
+                        UM.Preferences.getValue("view/settings_list_height"),
+                        Math.max (
+                            absoluteMinimumHeight,
+                            base.height - (customPrintSetup.mapToItem(null, 0, 0).y + buttonRow.height + UM.Theme.getSize("default_margin").height)
+                        )
+                    );
+                recommendedPrintSetup.height = customPrintSetup.height
+
+                updateDragPosition();
+            }
         }
     }
 
@@ -118,22 +119,29 @@ Item {
 
         Cura.SecondaryButton {
             id: recommendedButton
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.margins: parent.padding
+            anchors {
+                top: parent.top
+                right: parent.right
+                margins: UM.Theme.getSize("default_margin").width
+            }
             leftPadding: UM.Theme.getSize("default_margin").width
             rightPadding: UM.Theme.getSize("default_margin").width
             text: catalog.i18nc("@button", "Recommended")
             iconSource: UM.Theme.getIcon("ChevronSingleLeft")
             visible: currentModeIndex == PrintSetupSelectorContents.Mode.Custom
-            onClicked: currentModeIndex = PrintSetupSelectorContents.Mode.Recommended
+            onClicked: {
+                currentModeIndex = PrintSetupSelectorContents.Mode.Recommended
+                updateDragPosition();
+            }
         }
 
         Cura.SecondaryButton {
             id: customSettingsButton
-            anchors.top: parent.top
-            anchors.right: parent.right
-            anchors.margins: UM.Theme.getSize("default_margin").width
+            anchors {
+                top: parent.top
+                right: parent.right
+                margins: UM.Theme.getSize("default_margin").width
+            }
             leftPadding: UM.Theme.getSize("default_margin").width
             rightPadding: UM.Theme.getSize("default_margin").width
             text: catalog.i18nc("@button", "Custom")

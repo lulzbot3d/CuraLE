@@ -1,0 +1,37 @@
+{
+    "version": 2,
+    "name": "Mini 3",
+    "inherits": "lulzbot",
+    "metadata":
+    {
+        "machine_priority": "02",
+        "firmware_type": "Klipper",
+        "visible": false,
+        "base_machine": true,
+        "base_machine_id": "mini_3",
+        "toolhead_category": "Galaxy",
+        "toolhead_selection_name": "Galaxy Tool Head",
+        "preferred_material": "Generic_PLA",
+        "preferred_quality_type": "normal",
+        "platform": "mini_3.stl",
+        "platform_offset":
+        [
+            0,
+            -7,
+            -4
+        ],
+        "file_formats": "text/x-gcode",
+        "bltouch_is_standard": true
+    },
+    "overrides":
+    {
+        "machine_name": { "default_value": "LulzBot Mini 3" },
+        "machine_width": { "default_value": 180 },
+        "machine_depth": { "default_value": 180 },
+        "machine_height": { "default_value": 175 },
+        "machine_max_feedrate_z": { "default_value": 200 },
+        "machine_start_gcode": { "default_value": "START EXTRUDER_TEMP={material_print_temperature_layer_0} BED_TEMP={material_bed_temperature_layer_0}" },
+        "machine_end_gcode": { "default_value": "END" },
+        "machine_has_bltouch": { "value": true }
+    }
+}

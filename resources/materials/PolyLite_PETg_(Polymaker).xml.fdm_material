@@ -15,7 +15,7 @@
     <version>1</version>
   </metadata>
   <properties>
-    <density>1.2</density>
+    <density>1.25</density>
     <diameter>2.85</diameter>
   </properties>
   <settings>

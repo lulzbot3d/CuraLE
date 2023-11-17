@@ -537,8 +537,10 @@ class CuraApplication(QtApplication):
         preferences.addPreference("cura/categories_expanded", "")
         preferences.addPreference("cura/jobname_prefix", False)
         preferences.addPreference("cura/jobname_lulzbot", "at_end")
-        preferences.addPreference("cura/jobname_parts_and_time", False)
-        preferences.addPreference("cura/select_models_on_load", False)
+        preferences.addPreference("cura/jobname_part_count", False)
+        preferences.addPreference("cura/jobname_print_time", False)
+        preferences.addPreference("cura/jobname_weight", False)
+        preferences.addPreference("cura/select_models_on_load", True)
         preferences.addPreference("view/center_on_select", False)
         preferences.addPreference("mesh/scale_to_fit", False)
         preferences.addPreference("mesh/scale_tiny_meshes", True)
@@ -548,10 +550,10 @@ class CuraApplication(QtApplication):
         preferences.addPreference("cura/choice_on_open_project", "always_ask")
         preferences.addPreference("cura/use_multi_build_plate", False)
         preferences.addPreference("cura/show_list_of_objects", False)
-        preferences.addPreference("view/settings_list_height", 400)
-        preferences.addPreference("view/settings_visible", False)
+        preferences.addPreference("view/settings_list_height", 450)
+        preferences.addPreference("view/settings_visible", True)
         preferences.addPreference("view/settings_xpos", 0)
-        preferences.addPreference("view/settings_ypos", 56)
+        preferences.addPreference("view/settings_ypos", 45)
         preferences.addPreference("view/colorscheme_xpos", 0)
         preferences.addPreference("view/colorscheme_ypos", 56)
         # preferences.addPreference("cura/currency", "€") # My keyboard doesn't have a Euro key :( -> Unicode 20ac
@@ -1197,7 +1199,7 @@ class CuraApplication(QtApplication):
         qmlRegisterSingletonType(ContainerManager, "Cura", 1, 0, "ContainerManager", ContainerManager.getInstance)
         qmlRegisterType(SidebarCustomMenuItemsModel, "Cura", 1, 0, "SidebarCustomMenuItemsModel")
 
-        qmlRegisterType(PrinterOutputDevice, "Cura", 1, 0, "PrinterOutputDevice")
+        # qmlRegisterType(PrinterOutputDevice, "Cura", 1, 0, "PrinterOutputDevice")
 
         # As of Qt5.7, it is necessary to get rid of any ".." in the path for the singleton to work.
         actions_url = QUrl.fromLocalFile(os.path.abspath(Resources.getPath(CuraApplication.ResourceTypes.QmlFiles, "Actions.qml")))

@@ -1,0 +1,30 @@
+{
+    "version": 2,
+    "name": "[Developmental] Core XY",
+    "inherits": "taz",
+    "metadata":
+    {
+        "machine_priority": "12",
+        "firmware_type": "Klipper",
+        "visible": false,
+        "base_machine": true,
+        "base_machine_id": "dev_core_xy",
+        "toolhead_category": "Galaxy",
+        "toolhead_selection_name": "Galaxy Tool Head",
+        "preferred_material": "Generic_PLA",
+        "preferred_quality_type": "normal",
+        "platform": "",
+        "file_formats": "text/x-gcode",
+        "bltouch_is_standard": true
+    },
+    "overrides":
+    {
+        "machine_width": { "default_value": 250 },
+        "machine_depth": { "default_value": 250 },
+        "machine_height": { "default_value": 110 },
+        "machine_max_feedrate_z": { "default_value": 25 },
+        "machine_start_gcode": { "default_value": "START EXTRUDER_TEMP={material_print_temperature_layer_0} BED_TEMP={material_bed_temperature_layer_0}\nPURGE" },
+        "machine_end_gcode": { "default_value": "END" },
+        "machine_has_bltouch": { "value": true }
+    }
+}

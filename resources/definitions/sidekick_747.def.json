@@ -8,7 +8,6 @@
         "visible": false,
         "base_machine": true,
         "base_machine_id": "sidekick_747",
-        "toolhead_category": "Universal",
         "toolhead_selection_name": "Universal Tool Head",
         "platform": "sidekick_747.stl",
         "platform_offset":
@@ -20,7 +19,7 @@
         "file_formats": "text/x-gcode",
         "firmware_latest_version": "2.0.9.0.17",
         "firmware_file": "747/Marlin_747_Legacy_Universal_2.0.9.0.17_0453ac1.hex",
-        "firmware_file_no_lcd": "",
+        "firmware_no_lcd_latest_version": "2.0.9.0.16-NoLCD",
         "has_optional_lcd": true,
         "bltouch_is_standard": true
     },
@@ -29,6 +28,7 @@
         "machine_start_gcode": { "default_value_from_file": "sidekick/sidekick_start" },
         "machine_end_gcode": { "default_value_from_file": "sidekick/sidekick_747_end" },
         "machine_level_x_axis_gcode": { "default_value_from_file": "sidekick/sidekick_level_x_axis" },
+        "machine_has_bltouch": { "value": true },
         "machine_width": { "default_value": 232.3 },
         "machine_depth": { "default_value": 232.3 },
         "machine_height": { "default_value": 248 },

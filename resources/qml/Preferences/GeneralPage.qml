@@ -103,12 +103,17 @@ UM.PreferencesPage {
         invertZoomCheckbox.checked = boolCheck(UM.Preferences.getValue("view/invert_zoom"))
         UM.Preferences.resetPreference("view/zoom_to_mouse");
         zoomToMouseCheckbox.checked = boolCheck(UM.Preferences.getValue("view/zoom_to_mouse"))
-        UM.Preferences.resetPreference("view/top_layer_count");
-        topLayerCountCheckbox.checked = boolCheck(UM.Preferences.getValue("view/top_layer_count"))
+        // TODO: what is this?
+        // UM.Preferences.resetPreference("view/top_layer_count");
+        // topLayerCountCheckbox.checked = boolCheck(UM.Preferences.getValue("view/top_layer_count"))
         UM.Preferences.resetPreference("general/restore_window_geometry")
         restoreWindowPositionCheckbox.checked = boolCheck(UM.Preferences.getValue("general/restore_window_geometry"))
-        UM.Preferences.resetPreference("cura/jobname_parts_and_time")
-        jobnamePartsAndTimeCheckbox.checked = boolCheck(UM.Preferences.getValue("cura/jobname_parts_and_time"))
+        UM.Preferences.resetPreference("cura/jobname_part_count")
+        jobnamePartsAndTimeCheckbox.checked = boolCheck(UM.Preferences.getValue("cura/jobname_part_count"))
+        UM.Preferences.resetPreference("cura/jobname_print_time")
+        jobnamePartsAndTimeCheckbox.checked = boolCheck(UM.Preferences.getValue("cura/jobname_print_time"))
+        UM.Preferences.resetPreference("cura/jobname_weight")
+        jobnamePartsAndTimeCheckbox.checked = boolCheck(UM.Preferences.getValue("cura/jobname_weight"))
 
         UM.Preferences.resetPreference("general/camera_perspective_mode")
         var defaultCameraMode = UM.Preferences.getValue("general/camera_perspective_mode")
@@ -664,13 +669,39 @@ UM.PreferencesPage {
             UM.TooltipArea {
                 width: childrenRect.width
                 height: childrenRect.height
-                text: catalog.i18nc("@info:tooltip", "Should part quantity and print time be added to the end of the job name?")
+                text: catalog.i18nc("@info:tooltip", "Should part quantity be added to the end of the job name?")
 
                 CheckBox {
-                    id: jobnamePartsAndTimeCheckbox
-                    text: catalog.i18nc("@option:check", "Add part count and print time to job name")
-                    checked: boolCheck(UM.Preferences.getValue("cura/jobname_parts_and_time"))
-                    onCheckedChanged: UM.Preferences.setValue("cura/jobname_parts_and_time", checked)
+                    id: jobnamePartCountCheckbox
+                    text: catalog.i18nc("@option:check", "Add part count to job name")
+                    checked: boolCheck(UM.Preferences.getValue("cura/jobname_part_count"))
+                    onCheckedChanged: UM.Preferences.setValue("cura/jobname_part_count", checked)
+                }
+            }
+
+            UM.TooltipArea {
+                width: childrenRect.width
+                height: childrenRect.height
+                text: catalog.i18nc("@info:tooltip", "Should print time be added to the end of the job name?")
+
+                CheckBox {
+                    id: jobnamePrintTimeCheckbox
+                    text: catalog.i18nc("@option:check", "Add print time to job name")
+                    checked: boolCheck(UM.Preferences.getValue("cura/jobname_print_time"))
+                    onCheckedChanged: UM.Preferences.setValue("cura/jobname_print_time", checked)
+                }
+            }
+
+            UM.TooltipArea {
+                width: childrenRect.width
+                height: childrenRect.height
+                text: catalog.i18nc("@info:tooltip", "Should print weight be added to the end of the job name?")
+
+                CheckBox {
+                    id: jobnameWeightCheckbox
+                    text: catalog.i18nc("@option:check", "Add weight to job name")
+                    checked: boolCheck(UM.Preferences.getValue("cura/jobname_weight"))
+                    onCheckedChanged: UM.Preferences.setValue("cura/jobname_weight", checked)
                 }
             }
 
@@ -843,70 +874,74 @@ UM.PreferencesPage {
                 }
             }
 
-            Item {
-                //: Spacer
-                height: UM.Theme.getSize("default_margin").height
-                width: UM.Theme.getSize("default_margin").height
-            }
+            //                                                                              //
+            // vvv Uncomment this all later once you get update checking to actual work vvv //
+            //                                                                              //
 
-            Item {
-                //: Spacer
-                height: UM.Theme.getSize("default_margin").height
-                width: UM.Theme.getSize("default_margin").height
-            }
+            // Item {
+            //     //: Spacer
+            //     height: UM.Theme.getSize("default_margin").height
+            //     width: UM.Theme.getSize("default_margin").height
+            // }
 
-            Label {
-                font.bold: true
-                text: catalog.i18nc("@label", "Updates")
-            }
+            // Item {
+            //     //: Spacer
+            //     height: UM.Theme.getSize("default_margin").height
+            //     width: UM.Theme.getSize("default_margin").height
+            // }
 
-            UM.TooltipArea {
-                width: childrenRect.width
-                height: visible ? childrenRect.height : 0
-                text: catalog.i18nc("@info:tooltip","Should Cura check for updates when the program is started?")
+            // Label {
+            //     font.bold: true
+            //     text: catalog.i18nc("@label", "Updates")
+            // }
 
-                CheckBox
-                {
-                    id: checkUpdatesCheckbox
-                    text: catalog.i18nc("@option:check","Check for updates on start")
-                    checked: boolCheck(UM.Preferences.getValue("info/automatic_update_check"))
-                    onCheckedChanged: UM.Preferences.setValue("info/automatic_update_check", checked)
-                }
-            }
+            // UM.TooltipArea {
+            //     width: childrenRect.width
+            //     height: visible ? childrenRect.height : 0
+            //     text: catalog.i18nc("@info:tooltip","Should Cura check for updates when the program is started?")
 
-            ExclusiveGroup { id: curaUpdatesGroup }
+            //     CheckBox
+            //     {
+            //         id: checkUpdatesCheckbox
+            //         text: catalog.i18nc("@option:check","Check for updates on start")
+            //         checked: boolCheck(UM.Preferences.getValue("info/automatic_update_check"))
+            //         onCheckedChanged: UM.Preferences.setValue("info/automatic_update_check", checked)
+            //     }
+            // }
 
-            UM.TooltipArea {
-                width: childrenRect.width
-                height: visible ? childrenRect.height : 0
-                text: catalog.i18nc("@info:tooltip", "When checking for updates, only check for stable releases.")
-                anchors.left: parent.left
-                anchors.leftMargin: UM.Theme.getSize("default_margin").width
+            // ExclusiveGroup { id: curaUpdatesGroup }
 
-                RadioButton {
-                    text: catalog.i18nc("@option:radio", "Stable releases only")
-                    exclusiveGroup: curaUpdatesGroup
-                    enabled: checkUpdatesCheckbox.checked
-                    checked: UM.Preferences.getValue("info/latest_update_source") == "stable"
-                    onClicked: UM.Preferences.setValue("info/latest_update_source", "stable")
-                }
-            }
+            // UM.TooltipArea {
+            //     width: childrenRect.width
+            //     height: visible ? childrenRect.height : 0
+            //     text: catalog.i18nc("@info:tooltip", "When checking for updates, only check for stable releases.")
+            //     anchors.left: parent.left
+            //     anchors.leftMargin: UM.Theme.getSize("default_margin").width
 
-            UM.TooltipArea {
-                width: childrenRect.width
-                height: visible ? childrenRect.height : 0
-                text: catalog.i18nc("@info:tooltip", "When checking for updates, check for both stable and for beta releases.")
-                anchors.left: parent.left
-                anchors.leftMargin: UM.Theme.getSize("default_margin").width
+            //     RadioButton {
+            //         text: catalog.i18nc("@option:radio", "Stable releases only")
+            //         exclusiveGroup: curaUpdatesGroup
+            //         enabled: checkUpdatesCheckbox.checked
+            //         checked: UM.Preferences.getValue("info/latest_update_source") == "stable"
+            //         onClicked: UM.Preferences.setValue("info/latest_update_source", "stable")
+            //     }
+            // }
 
-                RadioButton {
-                    text: catalog.i18nc("@option:radio", "Stable and Beta releases")
-                    exclusiveGroup: curaUpdatesGroup
-                    enabled: checkUpdatesCheckbox.checked
-                    checked: UM.Preferences.getValue("info/latest_update_source") == "beta"
-                    onClicked: UM.Preferences.setValue("info/latest_update_source", "beta")
-                }
-            }
+            // UM.TooltipArea {
+            //     width: childrenRect.width
+            //     height: visible ? childrenRect.height : 0
+            //     text: catalog.i18nc("@info:tooltip", "When checking for updates, check for both stable and for beta releases.")
+            //     anchors.left: parent.left
+            //     anchors.leftMargin: UM.Theme.getSize("default_margin").width
+
+            //     RadioButton {
+            //         text: catalog.i18nc("@option:radio", "Stable and Beta releases")
+            //         exclusiveGroup: curaUpdatesGroup
+            //         enabled: checkUpdatesCheckbox.checked
+            //         checked: UM.Preferences.getValue("info/latest_update_source") == "beta"
+            //         onClicked: UM.Preferences.setValue("info/latest_update_source", "beta")
+            //     }
+            // }
 
             Connections {
                 target: UM.Preferences

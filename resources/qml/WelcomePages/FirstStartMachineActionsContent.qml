@@ -3,6 +3,7 @@
 
 import QtQuick 2.10
 import QtQuick.Controls 2.3
+import QtQuick.Controls 1.4 as Controls1
 
 import UM 1.3 as UM
 import Cura 1.1 as Cura
@@ -60,11 +61,33 @@ Item {
         id: emptyItem
     }
 
+    Controls1.CheckBox {
+        id: loadModelCheckbox
+
+        anchors {
+            right: nextButton.left
+            rightMargin: UM.Theme.getSize("default_margin").width
+            verticalCenter: nextButton.verticalCenter
+        }
+
+        text: "Load Example Model"
+        checked: true
+
+        style: UM.Theme.styles.checkbox
+    }
+
     Cura.PrimaryButton {
         id: nextButton
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        anchors {
+            right: parent.right
+            bottom: parent.bottom
+        }
         text: catalog.i18nc("@button", "Finished")
-        onClicked: machineActionsModel.goToNextAction()
+        onClicked: {
+            if (loadModelCheckbox.checked) {
+                Cura.MachineManager.addMachineProvideExampleModel()
+            }
+            machineActionsModel.goToNextAction()
+        }
     }
 }

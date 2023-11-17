@@ -32,6 +32,8 @@ UM.TooltipArea
     property alias labelFont: fieldLabel.font
     property alias labelWidth: fieldLabel.width
 
+    property alias checkBoxEnabled: checkBox.enabled
+
     property string tooltip: propertyProvider.properties.description ? propertyProvider.properties.description : ""
 
     // callback functions
@@ -65,6 +67,7 @@ UM.TooltipArea
             //leftMargin: UM.Theme.getSize("default_margin").width
             verticalCenter: parent.verticalCenter
         }
+        enabled: true
         checked: String(propertyProvider.properties.value).toLowerCase() != 'false'
         height: UM.Theme.getSize("checkbox").height
         text: ""

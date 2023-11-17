@@ -14,15 +14,7 @@
         },
         "toolhead_selection_name": "Dual v3",
         "firmware_latest_version": "1.1.9.34",
-        "firmware_file": "TAZ5/Marlin_TAZ5_DualExtruderV3_1.1.9.34_5f9c029d1.hex",
-        "firmware_update_info": {
-            "id": "lulzbot_taz5_dual_v3",
-            "check_urls":
-            [
-                "https://firmware.lulzbot.com/TAZ5/DualExtruderV3/current.version"
-            ],
-            "update_url": "https://firmware.lulzbot.com/TAZ5/DualExtruderV3/TAZ5DualV3Firmware"
-        }
+        "firmware_file": "TAZ5/Marlin_TAZ5_DualExtruderV3_1.1.9.34_5f9c029d1.hex"
     },
     "overrides":
     {

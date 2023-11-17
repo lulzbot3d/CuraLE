@@ -48,6 +48,5 @@ Item
         anchors.bottom: parent.bottom
         anchors.rightMargin: UM.Theme.getSize("thick_margin").width
         anchors.bottomMargin: UM.Theme.getSize("thick_margin").height
-        hasPreviewButton: false
     }
 }

@@ -35,7 +35,16 @@ Item {
         anchors.fill: parent
 
         Label { //Extruder name.
-            text: Cura.MachineManager.activeMachine.extruderList[position].name !== "" ? Cura.MachineManager.activeMachine.extruderList[position].name : catalog.i18nc("@label", "Extruder")
+            text: {
+                if (Cura.MachineManager.activeMachine) {
+                    let exName = Cura.MachineManager.activeMachine.extruderList[position].name
+                    if (exName !== "") {
+                        return exName
+                    }
+                } else {
+                    return catalog.i18nc("@label", "Extruder")
+                }
+            }
             color: UM.Theme.getColor("text")
             font: UM.Theme.getFont("default")
             anchors.left: parent.left

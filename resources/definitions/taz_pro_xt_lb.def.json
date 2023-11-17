@@ -9,7 +9,6 @@
         "base_machine": false,
         "variant_machine": true,
         "base_machine_id": "taz_pro_xt_lb",
-        "toolhead_category": "Universal",
         "toolhead_selection_name": "Universal Tool Head",
         "platform": "taz_pro_lb.stl",
         "platform_offset":
@@ -20,8 +19,8 @@
         ],
         "file_formats": "text/x-gcode",
         "bltouch_is_standard": true,
-        "firmware_latest_version": "2.1.3.0.9",
-        "firmware_file": "Pro_XT_LongBed/Marlin_TAZProXT_LongBed_Universal_BLTouch_2.1.3.0.9_29bdc7c.bin"
+        "firmware_latest_version": "2.1.3.0.10",
+        "firmware_file": "Pro_XT_LongBed/Marlin_TAZProXT_LongBed_Universal_BLTouch_2.1.3.0.10_8b401b1.bin"
     },
     "overrides":
     {

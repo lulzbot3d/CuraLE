@@ -208,7 +208,10 @@ Item
             height: UM.Theme.getSize("setting_control").height
             property string unit: "mm"
             style: UM.Theme.styles.text_field;
-            text: UM.ActiveTool.properties.getValue("SSize")
+            text: {
+                let val = UM.ActiveTool.properties.getValue("SSize")
+                return val != null ? val : ""
+            }
             validator: DoubleValidator
             {
                 decimals: 2
@@ -231,7 +234,10 @@ Item
             property string unit: "mm"
             style: UM.Theme.styles.text_field
             visible: !freeformButton.checked
-            text: UM.ActiveTool.properties.getValue("MSize")
+            text: {
+                let val = UM.ActiveTool.properties.getValue("MSize")
+                return val != null ? val : ""
+            }
             validator: DoubleValidator
             {
                 decimals: 2
@@ -270,19 +276,21 @@ Item
             }
         }
 
-        TextField
-        {
+        TextField {
             id: sizeInteriorTextField
             width: UM.Theme.getSize("setting_control").width
             height: UM.Theme.getSize("setting_control").height
             property string unit: "mm"
             style: UM.Theme.styles.text_field
             visible: tubeButton.checked
-            text: UM.ActiveTool.properties.getValue("ISize")
+            text: {
+                let val = UM.ActiveTool.properties.getValue("ISize")
+                return val != null ? val : ""
+            }
             validator: DoubleValidator
             {
                 decimals: 2
-                top: s_size
+                top: s_size != null ? s_size : 0.1
                 bottom: 0.1
                 locale: "en_US"
             }
@@ -298,15 +306,17 @@ Item
             }
         }
 
-        TextField
-        {
+        TextField {
             id: angleTextField
             width: UM.Theme.getSize("setting_control").width
             height: UM.Theme.getSize("setting_control").height
             property string unit: "°"
             style: UM.Theme.styles.text_field
             visible: !freeformButton.checked
-            text: UM.ActiveTool.properties.getValue("AAngle")
+            text: {
+                let val = UM.ActiveTool.properties.getValue("AAngle")
+                return val != null ? val : ""
+            }
             validator: IntValidator
             {
                 bottom: 0
@@ -319,8 +329,8 @@ Item
             }
         }
     }
-    Item
-    {
+
+    Item {
         id: baseCheckBox
         width: childrenRect.width
         height: !freeformButton.checked && !abutmentButton.checked  ? 0 : (abutmentButton.checked ? (UM.Theme.getSize("setting_control").height*2+UM.Theme.getSize("default_margin").height): childrenRect.height)
@@ -328,8 +338,7 @@ Item
         anchors.top: textfields.bottom
         anchors.topMargin: UM.Theme.getSize("default_margin").height
 
-        CheckBox
-        {
+        CheckBox {
             id: useYDirectionCheckbox
             anchors.top: baseCheckBox.top
             // anchors.topMargin: UM.Theme.getSize("default_margin").height
@@ -338,12 +347,15 @@ Item
             style: UM.Theme.styles.partially_checkbox
             visible: abutmentButton.checked || freeformButton.checked
 
-            checked: UM.ActiveTool.properties.getValue("YDirection")
+            checked: {
+                let val = UM.ActiveTool.properties.getValue("YDirection")
+                return val != null ? val : false
+            }
             onClicked: UM.ActiveTool.setProperty("YDirection", checked)
 
         }
-        CheckBox
-        {
+
+        CheckBox {
             id: mirrorCheckbox
             anchors.top: useYDirectionCheckbox.bottom
             anchors.topMargin: UM.Theme.getSize("default_margin").height
@@ -352,12 +364,15 @@ Item
             style: UM.Theme.styles.partially_checkbox
             visible: freeformButton.checked
 
-            checked: UM.ActiveTool.properties.getValue("SMirror")
+            checked: {
+                let val = UM.ActiveTool.properties.getValue("SMirror")
+                return val != null ? val : false
+            }
             onClicked: UM.ActiveTool.setProperty("SMirror", checked)
 
         }
-        CheckBox
-        {
+
+        CheckBox {
             id: scaleMainDirectionCheckbox
             anchors.top: mirrorCheckbox.bottom
             anchors.topMargin: UM.Theme.getSize("default_margin").height
@@ -366,12 +381,14 @@ Item
             style: UM.Theme.styles.partially_checkbox
             visible: freeformButton.checked
 
-            checked: UM.ActiveTool.properties.getValue("SMain")
+            checked: {
+                let val = UM.ActiveTool.properties.getValue("SMain")
+                return val != null ? val : false
+            }
             onClicked: UM.ActiveTool.setProperty("SMain", checked)
-
         }
-        CheckBox
-        {
+
+        CheckBox {
             id: equalizeHeightsCheckbox
             anchors.top: useYDirectionCheckbox.bottom
             anchors.topMargin: UM.Theme.getSize("default_margin").height
@@ -380,7 +397,10 @@ Item
             style: UM.Theme.styles.partially_checkbox
             visible: abutmentButton.checked
 
-            checked: UM.ActiveTool.properties.getValue("EHeights")
+            checked: {
+                let val = UM.ActiveTool.properties.getValue("EHeights")
+                return val != null ? val : false
+            }
             onClicked: UM.ActiveTool.setProperty("EHeights", checked)
         }
     }

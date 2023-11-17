@@ -121,11 +121,12 @@ Item {
             spacing: UM.Theme.getSize("default_margin").width
 
             Button {
-                property var machineActions: Cura.MachineActionManager.getSupportedActions(Cura.MachineManager.getDefinitionByMachineId(Cura.MachineManager.activeMachine.id))
+                property var activeMachineId: Cura.MachineManager.activeMachine ? Cura.MachineManager.activeMachine.id : null
+                property var machineActions: Cura.MachineActionManager.getSupportedActions(Cura.MachineManager.getDefinitionByMachineId(activeMachineId))
                 property var updateAction
                 property bool canUpdate: {
                     for (var i = 0; i < machineActions.length; i++) {
-                        if (machineActions[i].label == "Firmware Update") {
+                        if (machineActions[i].label.toLowerCase() == "firmware update") {
                             updateAction = machineActions[i]
                             return true;
                         }

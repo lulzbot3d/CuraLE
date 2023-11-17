@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "name": "Mini 3 | MET175",
+    "inherits": "mini_3",
+    "metadata":
+    {
+        "priority": "02",
+        "visible": true,
+        "base_machine": false,
+        "toolhead_selection_name": "METEOR 175 | Nickel-Plated Brass",
+        "machine_extruder_trains":
+        {
+            "0": "mini_3_met175_extruder"
+        }
+    }
+}

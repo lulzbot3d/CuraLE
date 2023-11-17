@@ -11,6 +11,8 @@ import QtQuick.Controls 1.1
 Cura.MachineAction {
     id: base
 
+    property bool correctManager: manager.label.toLowerCase() == "connect octoprint"
+
     readonly property string defaultHTTP: "80"
     readonly property string defaultHTTPS: "443"
 
@@ -81,7 +83,7 @@ Cura.MachineAction {
                 id: pluginVersion
                 anchors.bottom: pageTitle.bottom
                 anchors.right: parent.right
-                text: manager.pluginVersion
+                text: correctManager ? manager.pluginVersion : ""
                 wrapMode: Text.WordWrap
                 font.pointSize: 8
             }
@@ -165,10 +167,9 @@ Cura.MachineAction {
                         color: palette.light
                     }
 
-                    ListView
-                    {
+                    ListView {
                         id: listview
-                        model: manager.discoveredInstances
+                        model: correctManager ? manager.discoveredInstances : []
                         onModelChanged:
                         {
                             var selectedId = manager.instanceId;
@@ -308,8 +309,8 @@ Cura.MachineAction {
                         Button
                         {
                             id: requestApiKey
-                            visible: manager.instanceSupportsAppKeys
-                            enabled: !manager.instanceApiKeyAccepted
+                            visible: correctManager ? manager.instanceSupportsAppKeys : false
+                            enabled: correctManager ? !manager.instanceApiKeyAccepted : false
                             text: catalog.i18nc("@action", "Request...")
                             onClicked:
                             {
@@ -346,7 +347,7 @@ Cura.MachineAction {
                     }
                     Connections
                     {
-                        target: manager
+                        target: correctManager ? manager : null
                         function onAppKeyReceived() {
                             apiCheckDelay.lastKey = "\0";
                             apiKey.text = manager.getApiKey(base.selectedInstance.getId())
@@ -435,7 +436,7 @@ Cura.MachineAction {
                     {
                         id: autoPrintCheckBox
                         text: catalog.i18nc("@label", "Start print job after uploading")
-                        enabled: manager.instanceApiKeyAccepted
+                        enabled: correctManager ? manager.instanceApiKeyAccepted : false
                         checked: Cura.ContainerManager.getContainerMetaDataEntry(activeMachineId, "octoprint_auto_print") != "false"
                         onClicked:
                         {
@@ -446,7 +447,7 @@ Cura.MachineAction {
                     {
                         id: autoSelectCheckBox
                         text: catalog.i18nc("@label", "Select print job after uploading")
-                        enabled: manager.instanceApiKeyAccepted && !autoPrintCheckBox.checked
+                        enabled: correctManager ? manager.instanceApiKeyAccepted && !autoPrintCheckBox.checked : false
                         checked: Cura.ContainerManager.getContainerMetaDataEntry(activeMachineId, "octoprint_auto_select") == "true"
                         onClicked:
                         {
@@ -464,14 +465,14 @@ Cura.MachineAction {
                             visible: autoPowerControlPlugs.visible
                             enabled: autoPrintCheckBox.checked
                             anchors.verticalCenter: autoPowerControlPlugs.verticalCenter
-                            checked: manager.instanceApiKeyAccepted && Cura.ContainerManager.getContainerMetaDataEntry(activeMachineId, "octoprint_power_control") == "true"
+                            checked: correctManager ? manager.instanceApiKeyAccepted && Cura.ContainerManager.getContainerMetaDataEntry(activeMachineId, "octoprint_power_control") == "true" : false
                             onClicked:
                             {
                                 manager.setContainerMetaDataEntry(activeMachineId, "octoprint_power_control", String(checked))
                             }
                         }
                         Connections {
-                            target: manager
+                            target: correctManager ? manager : null
                             function onInstanceAvailablePowerPluginsChanged() {
                                 autoPowerControlPlugsModel.populateModel()
                             }
@@ -480,7 +481,7 @@ Cura.MachineAction {
                         ComboBox
                         {
                             id: autoPowerControlPlugs
-                            visible: manager.instanceApiKeyAccepted && model.count > 0
+                            visible: correctManager ? manager.instanceApiKeyAccepted && model.count > 0 : false
                             enabled: autoPrintCheckBox.checked
                             property bool populatingModel: false
                             textRole: "text"
@@ -543,7 +544,7 @@ Cura.MachineAction {
                     {
                         id: autoConnectCheckBox
                         text: catalog.i18nc("@label", "Connect to printer before sending print job")
-                        enabled: manager.instanceApiKeyAccepted && autoPrintCheckBox.checked && !autoPowerControlCheckBox.checked
+                        enabled: correctManager ? manager.instanceApiKeyAccepted && autoPrintCheckBox.checked && !autoPowerControlCheckBox.checked : false
                         checked: enabled && Cura.ContainerManager.getContainerMetaDataEntry(activeMachineId, "octoprint_auto_connect") == "true"
                         onClicked:
                         {
@@ -554,8 +555,8 @@ Cura.MachineAction {
                     {
                         id: storeOnSdCheckBox
                         text: catalog.i18nc("@label", "Store G-code on the SD card of the printer")
-                        enabled: manager.instanceSupportsSd
-                        checked: manager.instanceApiKeyAccepted && Cura.ContainerManager.getContainerMetaDataEntry(activeMachineId, "octoprint_store_sd") == "true"
+                        enabled: correctManager ? manager.instanceSupportsSd : false
+                        checked: correctManager ? manager.instanceApiKeyAccepted && Cura.ContainerManager.getContainerMetaDataEntry(activeMachineId, "octoprint_store_sd") == "true" : false
                         onClicked:
                         {
                             manager.setContainerMetaDataEntry(activeMachineId, "octoprint_store_sd", String(checked))
@@ -582,8 +583,8 @@ Cura.MachineAction {
                     {
                         id: showCameraCheckBox
                         text: catalog.i18nc("@label", "Show webcam image")
-                        enabled: manager.instanceSupportsCamera
-                        checked: manager.instanceApiKeyAccepted && Cura.ContainerManager.getContainerMetaDataEntry(activeMachineId, "octoprint_show_camera") != "false"
+                        enabled: correctManager ? manager.instanceSupportsCamera : false
+                        checked: correctManager ? manager.instanceApiKeyAccepted && Cura.ContainerManager.getContainerMetaDataEntry(activeMachineId, "octoprint_show_camera") != "false" : false
                         onClicked:
                         {
                             manager.setContainerMetaDataEntry(activeMachineId, "octoprint_show_camera", String(checked))

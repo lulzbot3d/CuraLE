@@ -12,14 +12,14 @@ import Cura 1.1 as Cura
 //
 // This the content in the "Printer" tab in the Machine Settings dialog.
 //
-Item
-{
+Item {
     id: base
     UM.I18nCatalog { id: catalog; name: "cura" }
 
     property int columnWidth: ((parent.width - 2 * UM.Theme.getSize("default_margin").width) / 2) | 0
     property int columnSpacing: 3 * screenScaleFactor
-    property int propertyStoreIndex: manager ? manager.storeContainerIndex : 1  // definition_changes
+    property bool correctManager: manager.label.toLowerCase() == "machine settings"
+    property int propertyStoreIndex: correctManager ? manager.storeContainerIndex : 6 // definition_changes
 
     property int labelWidth: (columnWidth * 2 / 3 - UM.Theme.getSize("default_margin").width * 2) | 0
     property int controlWidth: (columnWidth / 3) | 0
@@ -29,8 +29,7 @@ Item
 
     property var forceUpdateFunction: manager.forceUpdate
 
-    RowLayout
-    {
+    RowLayout {
         id: upperBlock
         anchors
         {
@@ -44,8 +43,7 @@ Item
         // =======================================
         // Left-side column for "Printer Settings"
         // =======================================
-        Column
-        {
+        Column {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignTop
             Layout.preferredWidth: parent.width / 2
@@ -172,8 +170,7 @@ Item
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 
-            Cura.SimpleCheckBox // "LCD"
-            {
+            Cura.SimpleCheckBox { // "LCD"
                 id: lcdCheckBox
                 containerStackId: machineStackId
                 settingKey: "machine_has_lcd"
@@ -181,11 +178,11 @@ Item
                 labelText: catalog.i18nc("@label", "Has LCD Screen")
                 labelFont: base.labelFont
                 labelWidth: base.labelWidth
+                checkBoxEnabled: Cura.MachineManager.activeMachineOptionalLCD
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 
-            Cura.SimpleCheckBox // "BLTouch"
-            {
+            Cura.SimpleCheckBox { // "BLTouch"
                 id: bltouchCheckBox
                 containerStackId: machineStackId
                 settingKey: "machine_has_bltouch"
@@ -193,6 +190,7 @@ Item
                 labelText: catalog.i18nc("@label", "Has BLTouch")
                 labelFont: base.labelFont
                 labelWidth: base.labelWidth
+                checkBoxEnabled: Cura.MachineManager.activeMachineOptionalBLTouch
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 
@@ -201,8 +199,7 @@ Item
         // =======================================
         // Right-side column for "Printhead Settings"
         // =======================================
-        Column
-        {
+        Column {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignTop
             Layout.preferredWidth: parent.width / 2
@@ -401,53 +398,48 @@ Item
             // Subsection below Printhead for USB
             // =======================================
 
-            Label   // USB Title Label
-            {
-                text: catalog.i18nc("@title:label", "USB Settings (WIP)")
-                font: UM.Theme.getFont("medium_bold")
-                color: UM.Theme.getColor("text")
-                renderType: Text.NativeRendering
-                width: parent.width
-                elide: Text.ElideRight
-            }
+            // Label { // USB Title Label
+            //     text: catalog.i18nc("@title:label", "USB Settings (WIP)")
+            //     font: UM.Theme.getFont("medium_bold")
+            //     color: UM.Theme.getColor("text")
+            //     renderType: Text.NativeRendering
+            //     width: parent.width
+            //     elide: Text.ElideRight
+            // }
 
-            Cura.ComboBoxWithOptions  // "Port"
-            {
-                id: portComboBox
-                containerStackId: machineStackId
-                settingKey: "machine_port"
-                settingStoreIndex: propertyStoreIndex
-                labelText: catalog.i18nc("@label", "USB Port")
-                labelFont: base.labelFont
-                labelWidth: base.labelWidth
-                controlWidth: base.controlWidth
-                forceUpdateOnChangeFunction: forceUpdateFunction
-            }
+            // Cura.ComboBoxWithOptions { // "Port"
+            //     id: portComboBox
+            //     containerStackId: machineStackId
+            //     settingKey: "machine_port"
+            //     settingStoreIndex: propertyStoreIndex
+            //     labelText: catalog.i18nc("@label", "USB Port")
+            //     labelFont: base.labelFont
+            //     labelWidth: base.labelWidth
+            //     controlWidth: base.controlWidth
+            //     forceUpdateOnChangeFunction: forceUpdateFunction
+            // }
 
-            Cura.ComboBoxWithOptions  // "Baudrate"
-            {
-                id: baudComboBox
-                containerStackId: machineStackId
-                settingKey: "machine_baudrate"
-                settingStoreIndex: propertyStoreIndex
-                labelText: catalog.i18nc("@label", "USB Communication Speed (Baudrate)")
-                labelFont: base.labelFont
-                labelWidth: base.labelWidth
-                controlWidth: base.controlWidth
-                forceUpdateOnChangeFunction: forceUpdateFunction
-            }
+            // Cura.ComboBoxWithOptions { // "Baudrate"
+            //     id: baudComboBox
+            //     containerStackId: machineStackId
+            //     settingKey: "machine_baudrate"
+            //     settingStoreIndex: propertyStoreIndex
+            //     labelText: catalog.i18nc("@label", "USB Communication Speed (Baudrate)")
+            //     labelFont: base.labelFont
+            //     labelWidth: base.labelWidth
+            //     controlWidth: base.controlWidth
+            //     forceUpdateOnChangeFunction: forceUpdateFunction
+            // }
         }
     }
 
     // =======================================
     // Bottom section for "Printhead Settings"
     // =======================================
-    RowLayout  // Start and End G-code
-    {
+    RowLayout {  // Start and End G-code
         id: lowerBlock
         spacing: UM.Theme.getSize("default_margin").width
-        anchors
-        {
+        anchors {
             top: upperBlock.bottom
             bottom: parent.bottom
             left: parent.left
@@ -455,8 +447,7 @@ Item
             margins: UM.Theme.getSize("default_margin").width
         }
 
-        Cura.GcodeTextArea   // "Start G-code"
-        {
+        Cura.GcodeTextArea { // "Start G-code"
             Layout.fillWidth: true
             Layout.fillHeight: true
 
@@ -466,8 +457,7 @@ Item
             settingStoreIndex: propertyStoreIndex
         }
 
-        Cura.GcodeTextArea   // "End G-code"
-        {
+        Cura.GcodeTextArea { // "End G-code"
             Layout.fillWidth: true
             Layout.fillHeight: true
 

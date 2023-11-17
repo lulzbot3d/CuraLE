@@ -8,6 +8,8 @@
         "syringe_printer": true,
         "base_machine": true,
         "base_machine_id": "bio_base",
+        "machine_category": "Current",
+        "toolhead_category": "",
         "file_formats": "text/x-gcode",
         "platform": "bio.stl",
         "platform_offset":
@@ -20,15 +22,7 @@
         "preferred_quality_type": "25 gauge",
         "firmware_toolhead_name": "SingleExtruder",
         "firmware_latest_version": "2.0.0.175",
-        "firmware_file": "Bio/Marlin_Bio_SingleExtruder_2.0.0.175_6c8c1c0d.hex",
-        "firmware_update_info": {
-            "id": "lulzbot_bio",
-            "check_urls":
-            [
-                "https://firmware.lulzbot.com/Bio/current.version"
-            ],
-            "update_url": "https://firmware.lulzbot.com/Bio/BioFirmware"
-        }
+        "firmware_file": "Bio/Marlin_Bio_SingleExtruder_2.0.0.175_6c8c1c0d.hex"
     },
     "overrides":
     {

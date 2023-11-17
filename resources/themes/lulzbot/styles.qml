@@ -539,47 +539,34 @@ QtObject {
             background: Rectangle {
                 implicitWidth: UM.Theme.getSize("toolbox_action_button").width
                 implicitHeight: UM.Theme.getSize("toolbox_action_button").height
+                border.width: UM.Theme.getSize("default_lining").width
+                border.color: UM.Theme.getColor("secondary_button_text")
                 color: {
                     if (control.installed) {
                         return UM.Theme.getColor("action_button_disabled");
-                    }
-                    else
-                    {
-                        if (control.hovered)
-                        {
-                            return UM.Theme.getColor("primary_hover");
-                        }
-                        else
-                        {
-                            return UM.Theme.getColor("primary");
+                    } else {
+                        if (control.pressed) {
+                            return UM.Theme.getColor("primary_button_hover")
+                        } else if (control.hovered) {
+                            return UM.Theme.getColor("secondary_button_hover");
+                        } else {
+                            return UM.Theme.getColor("secondary_button");
                         }
                     }
-
                 }
             }
             label: Label {
                 text: control.text
-                color:
-                {
-                    if (control.installed)
-                    {
+                color: {
+                    if (control.installed) {
                         return UM.Theme.getColor("action_button_disabled_text");
-                    }
-                    else
-                    {
-                        if (control.hovered)
-                        {
-                            return UM.Theme.getColor("button_text_hover");
-                        }
-                        else
-                        {
-                            return UM.Theme.getColor("button_text");
-                        }
+                    } else {
+                        return UM.Theme.getColor("secondary_button_text");
                     }
                 }
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
-                font: UM.Theme.getFont("default_bold")
+                font: UM.Theme.getFont("medium")
             }
         }
     }

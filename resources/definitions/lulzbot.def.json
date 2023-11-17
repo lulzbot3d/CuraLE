@@ -6,6 +6,7 @@
     {
         "author": "LulzBot",
         "manufacturer": "Fargo Additive Manufacturing Equipment 3D, LLC",
+        "firmware_type": "Marlin",
         "visible": false,
         "file_formats": "text/x-gcode;application/x-stl-ascii;application/x-stl-binary;application/x-wavefront-obj;application/x3g",
         "first_start_actions":
@@ -19,17 +20,17 @@
         "variant_machine": false,
         "has_variants": false,
         "variants_name": "Nozzle Size",
+        "machine_category": "Current",
+        "toolhead_category": "Universal",
         "has_optional_lcd": false,
+        "lcd_is_standard": true,
         "has_optional_bltouch": false,
         "bltouch_is_standard": false,
         "required_actions": ["ChangeToolHead"],
         "supported_actions": ["MachineSettingsAction", "UpgradeFirmware"],
         "firmware_latest_version": "",
         "firmware_bltouch_latest_version": "",
-        "firmware_update_info": {
-            "check_urls": ["https://firmware.lulzbot.com"],
-            "update_url": "https://firmware.lulzbot.com"
-        }
+        "firmware_no_lcd_latest_version": ""
     },
     "overrides":
     {
@@ -38,6 +39,7 @@
         "acceleration_travel": { "value": "acceleration_print if magic_spiralize else 1000" },
         "brim_line_count": { "default_value": 10 },
         "infill_before_walls": { "default_value": "False" },
+        "infill_overlap": { "value": 5 },
         "infill_pattern": { "value": "'grid' if infill_sparse_density > 25 else 'grid'" },
         "infill_sparse_thickness": { "maximum_value_warning": "machine_nozzle_size" },
         "infill_wipe_dist": { "maximum_value_warning": "machine_nozzle_size * 1.5" },
@@ -54,8 +56,8 @@
         "machine_baudrate": { "default_value": "250000" },
         "machine_center_is_zero": { "default_value": false },
         "machine_heated_bed": { "default_value": true },
-        "machine_max_feedrate_x": { "default_value": 800 },
-        "machine_max_feedrate_y": { "default_value": 800 },
+        "machine_max_feedrate_x": { "default_value": 500 },
+        "machine_max_feedrate_y": { "default_value": 500 },
         "machine_max_feedrate_z": { "default_value": 8 },
         "machine_max_feedrate_e": { "default_value": 40 },
         "machine_nozzle_size": { "default_value": 0.5 },
@@ -68,19 +70,29 @@
         "material_standby_temperature": { "default_value": 160 },
         "prime_tower_position_x": { "default_value": 20 },
         "prime_tower_position_y": { "default_value": 20 },
+        "retraction_combing": { "value": "'no_outer_surfaces'" },
         "skirt_brim_minimal_length": { "default_value": 50 },
         "skirt_line_count": { "default_value": 2 },
+        "speed_travel": { "value": "speed_print if magic_spiralize else 175" },
         "support_angle":
         {
             "default_value": 60.0,
             "minimum_value_warning": 40.0
         },
         "support_infill_sparse_thickness": { "maximum_value_warning": "machine_nozzle_size" },
+        "support_interface_density": { "default_value": 40 },
+        "support_interface_height": { "value": 2.5 },
+        "support_interface_pattern": { "default_value": "triangles" },
         "support_join_distance":
         {
             "default_value": 5.0,
             "maximum_value_warning": "15",
             "minimum_value": "0"
+        },
+        "support_xy_distance": {
+            "maximum_value_warning": "machine_nozzle_size * 3",
+            "default_value": 1.5,
+            "value": "min(machine_nozzle_size * 2, 2.5)"
         },
         "support_z_distance": { "value": "(math.ceil(0.3 / layer_height) * layer_height) if layer_height < 0.3 else layer_height"},
         "travel_retract_before_outer_wall": { "default_value": true },
@@ -88,7 +100,8 @@
         {
             "default_value": 1.0,
             "value": "wall_line_width_0 if magic_spiralize else 1.0"
-        }
+        },
+        "zig_zaggify_infill": { "value": true }
     },
 
     "settings":
@@ -99,24 +112,24 @@
             {
                 "machine_has_lcd":
                 {
-                    "label": "LCD",
-                    "description": "LCD",
+                    "label": "Has LCD",
+                    "description": "Machine has a graphical LCD.",
                     "enabled": false,
                     "type": "bool",
                     "default_value": true
                 },
                 "machine_has_bltouch":
                 {
-                    "label": "BLTouch",
-                    "description": "BLTouch",
+                    "label": "Has BLTouch",
+                    "description": "Machine is equipped with a BLTouch probe for build plate leveling.",
                     "enabled": false,
                     "type": "bool",
                     "default_value": false
                 },
                 "firmware_machine_type":
                 {
-                    "label": "firmware type",
-                    "description": "firmware type",
+                    "label": "Firmware Type",
+                    "description": "Machine type as sent via Marlin from an actual machine.",
                     "enabled": false,
                     "type": "str",
                     "default_value": ""

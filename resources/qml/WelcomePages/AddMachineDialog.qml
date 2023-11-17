@@ -22,56 +22,110 @@ Item {
 
         Item {
             function getMachineName() {
-                var name = toolheadsModel.getItem(toolheadSelection.selectedIndex).name
+                let name = ""
+                if (toolheadSelection.selectedCategory == "galaxy") {
+                    name = galaxyToolheadsModel.getItem(toolheadSelection.selectedIndex).name
+                } else if (toolheadSelection.selectedCategory == "legacy") {
+                    name = legacyToolheadsModel.getItem(toolheadSelection.selectedIndex).name
+                } else {
+                    name = noCategoryToolheadsModel.getItem(toolheadSelection.selectedIndex).name
+                }
                 return name
             }
 
             function addMachine() {
                 base.visible = true
-                var item = toolheadsModel.getItem(toolheadSelection.selectedIndex).id
+                let item = null
+                if (toolheadSelection.selectedCategory == "galaxy") {
+                    item = galaxyToolheadsModel.getItem(toolheadSelection.selectedIndex).id
+                } else if (toolheadSelection.selectedCategory == "legacy") {
+                    item = legacyToolheadsModel.getItem(toolheadSelection.selectedIndex).id
+                } else {
+                    item = noCategoryToolheadsModel.getItem(toolheadSelection.selectedIndex).id
+                }
                 var success = Cura.MachineManager.addMachine(item, machineName.text, lcdSelection.selectedIndex == 0, bltouchSelection.selectedIndex == 0)
                 return success
             }
 
             function update() {
                 machineName.text = getMachineName()
-                printerSelection.lcd = printerSelectionRepeater.model.getItem(0).lcd
-                printerSelection.baseMachine = printerSelectionRepeater.model.getItem(0).id
-                toolheadSelection.bltouch_default = toolheadSelectionRepeater.model.getItem(0).bltouch_default
-                toolheadSelection.bltouch_option = toolheadSelectionRepeater.model.getItem(0).bltouch_option
+                printerSelection.lcd = currentPrinterSelectionRepeater.model.getItem(0).lcd
+                printerSelection.baseMachine = currentPrinterSelectionRepeater.model.getItem(0).id
+                let firstToolhead = null
+                if (galaxyToolheadsModel.count > 0) {
+                    firstToolhead = galaxyToolheadsModel.getItem(0)
+                } else if (legacyToolheadsModel.count > 0) {
+                    firstToolhead = legacyToolheadsModel.getItem(0)
+                } else {
+                    firstToolhead = noCategoryToolheadsModel.getItem(0)
+                }
+                toolheadSelection.bltouch_default = firstToolhead.bltouch_default
+                toolheadSelection.bltouch_option = firstToolhead.bltouch_option
                 printerSelection.selectedIndex = 0
-                for (var i = 0; i < printerSelectionRepeater.count; i++) {
-                    var item = printerSelectionRepeater.itemAt(i)
+                for (let i = 0; i < currentPrinterSelectionRepeater.count; i++) {
+                    let item = currentPrinterSelectionRepeater.itemAt(i)
                     if (i==0) {
                         item.checked = true
                     }
                     else {
                         item.checked = false
                     }
+                }
+                for (let i = 0; i < legacyPrinterSelectionRepeater.count; i++) {
+                    legacyPrinterSelectionRepeater.itemAt(i).checked = false
                 }
             }
 
             function updateToolheads() {
-                for (var i = 0; i < toolheadSelectionRepeater.count; i++) {
-                    var item = toolheadSelectionRepeater.itemAt(i)
-                    if (i==0) {
-                        item.checked = true
-                        item.clicked()
+                let atLeastOne = false
+                let defaultFound = false
+                function resetCategory(iteration, toolhead, isDefault) {
+                    if (isDefault == 0) {
+                        toolhead.checked = true
+                        toolhead.clicked()
+                        defaultFound = true
+                        return
                     }
-                    else {
-                        item.checked = false
+                    if (iteration == 0 && atLeastOne != true) {
+                        toolhead.checked = true
+                        toolhead.clicked()
+                        atLeastOne = true
+                    } else {
+                        toolhead.checked = false
                     }
+                }
+                for (let i = 0; i < galaxyToolheadSelectionRepeater.count; i++) {
+                    resetCategory(i, galaxyToolheadSelectionRepeater.itemAt(i), galaxyToolheadsModel.getItem(i).priority)
+                    if (defaultFound) { return }
+                }
+                for (let i = 0; i < legacyToolheadSelectionRepeater.count; i++) {
+                    resetCategory(i, legacyToolheadSelectionRepeater.itemAt(i), legacyToolheadsModel.getItem(i).priority)
+                    if (defaultFound) { return }
+                }
+                for (let i = 0; i < noCategoryToolheadSelectionRepeater.count; i++) {
+                    resetCategory(i, noCategoryToolheadSelectionRepeater.itemAt(i), noCategoryToolheadsModel.getItem(i).priority)
+                    if (defaultFound) { return }
                 }
             }
 
             function updateOptions() {
-                for (var i = 0; i < bltouchSelectionRepeater.count; i++) {
-                    var item = bltouchSelectionRepeater.itemAt(i)
-                    if(toolheadSelection.bltouch_default){
-                        if(i==0) { item.checked = true }
+                for (let i = 0; i < bltouchSelectionRepeater.count; i++) {
+                    let item = bltouchSelectionRepeater.itemAt(i)
+                    if (toolheadSelection.bltouch_default) {
+                        if (i == 0) { item.checked = true }
                         else { item.checked = false }
                     } else {
-                        if(i==0) { item.checked = false }
+                        if (i == 0) { item.checked = false }
+                        else { item.checked = true }
+                    }
+                }
+                for (let i = 0; i < lcdSelectionRepeater.count; i++) {
+                    let item = lcdSelectionRepeater.itemAt(i)
+                    if (printerSelection.lcd_default) {
+                        if (i == 0) { item.checked = true }
+                        else { item.checked = false }
+                    } else {
+                        if (i == 0) { item.checked = false }
                         else { item.checked = true }
                     }
                 }
@@ -99,29 +153,103 @@ Item {
                     ExclusiveGroup { id: printerGroup }
 
                     property int selectedIndex: 0
+                    property string selectedCategory: "current"
                     property bool lcd: false
+                    property bool lcd_default: true
                     property string baseMachine: ""
 
                     Column {
-                        Repeater {
-                            id: printerSelectionRepeater
-                            model: Cura.LulzBotPrintersModel {}
-                            delegate: RadioButton {
-                                text: model.name
 
-                                exclusiveGroup: printerGroup
-                                checked: model.index == 0
-                                onClicked: {
-                                    printerSelection.selectedIndex = model.index
-                                    printerSelection.lcd = model.lcd
-                                    printerSelection.baseMachine = model.id
-                                    printerSelectorLoader.item.updateToolheads()
-                                }
+                        id: printerColumn
+                        spacing: 10
+
+                        Column {
+
+                            Label {
+                                id: currentPrinterLabel
+                                text: "Current 3D Printers"
+                                font.bold: true
+                                font.pixelSize: 14
+                                visible: currentPrinterSelectionRepeater.model.count > 0
                             }
 
-                            Component.onCompleted: {
-                                printerSelection.lcd = model.getItem(0).lcd;
-                                printerSelection.baseMachine = model.getItem(0).id
+                            Rectangle {
+                                visible: currentPrinterLabel.visible
+                                height: 2
+                                width: printerColumn.width
+                                color: "black"
+                            }
+
+                            Repeater {
+                                id: currentPrinterSelectionRepeater
+                                model: Cura.LulzBotPrintersModel {
+                                    id: currentPrintersModel
+                                    machineCategoryProperty: "Current"
+                                }
+                                delegate: RadioButton {
+                                    text: model.name
+
+                                    exclusiveGroup: printerGroup
+                                    checked: model.index == 0
+                                    onClicked: {
+                                        printerSelection.selectedIndex = model.index
+                                        printerSelection.selectedCategory = "current"
+                                        printerSelection.lcd = model.lcd
+                                        printerSelection.lcd_default = model.lcd_default
+                                        printerSelection.baseMachine = model.id
+                                        printerSelectorLoader.item.updateToolheads()
+                                    }
+                                }
+
+                                Component.onCompleted: {
+                                    printerSelection.lcd = model.getItem(0).lcd;
+                                    printerSelection.baseMachine = model.getItem(0).id
+                                }
+                            }
+                        }
+
+                        Column {
+
+                            Label {
+                                id: legacyPrinterLabel
+                                text: "Legacy 3D Printers"
+                                font.bold: true
+                                font.pixelSize: 14
+                                visible: legacyPrinterSelectionRepeater.model.count > 0
+                            }
+
+                            Rectangle {
+                                visible: legacyPrinterLabel.visible
+                                height: 2
+                                width: printerColumn.width
+                                color: "black"
+                            }
+
+                            Repeater {
+                                id: legacyPrinterSelectionRepeater
+                                model: Cura.LulzBotPrintersModel {
+                                    id: legacyPrintersModel
+                                    machineCategoryProperty: "Legacy"
+                                }
+                                delegate: RadioButton {
+                                    text: model.name
+
+                                    exclusiveGroup: printerGroup
+                                    checked: model.index == 0
+                                    onClicked: {
+                                        printerSelection.selectedIndex = model.index
+                                        printerSelection.selectedCategory = "legacy"
+                                        printerSelection.lcd = model.lcd
+                                        printerSelection.lcd_default = model.lcd_default
+                                        printerSelection.baseMachine = model.id
+                                        printerSelectorLoader.item.updateToolheads()
+                                    }
+                                }
+
+                                Component.onCompleted: {
+                                    printerSelection.lcd = model.getItem(0).lcd;
+                                    printerSelection.baseMachine = model.getItem(0).id
+                                }
                             }
                         }
                     }
@@ -140,23 +268,116 @@ Item {
                     ExclusiveGroup { id: toolheadGroup }
 
                     property int selectedIndex: 0
+                    property string selectedCategory: "galaxy"
                     property bool bltouch_option: false
                     property bool bltouch_default: false
 
                     Column {
-                        Repeater {
-                            id: toolheadSelectionRepeater
-                            model: Cura.LulzBotToolheadsModel { id: toolheadsModel; baseMachineProperty: printerSelection.baseMachine }
-                            delegate: RadioButton {
-                                text: model.toolhead
-                                exclusiveGroup: toolheadGroup
-                                checked: model.index == 0
-                                onClicked: {
-                                    toolheadSelection.selectedIndex = model.index
-                                    machineName.text = model.name
-                                    toolheadSelection.bltouch_option = model.bltouch_option
-                                    toolheadSelection.bltouch_default = model.bltouch_default
-                                    printerSelectorLoader.item.updateOptions()
+
+                        id: toolheadColumn
+                        spacing: 10
+
+                        Column {
+
+                            Label {
+                                id: galaxyToolheadLabel
+                                text: "Galaxy Series Tool Heads"
+                                font.bold: true
+                                font.pixelSize: 14
+                                visible: galaxyToolheadSelectionRepeater.model.count > 0
+                            }
+
+                            Rectangle {
+                                visible: galaxyToolheadLabel.visible
+                                height: 2
+                                width: toolheadColumn.width
+                                color: "black"
+                            }
+
+                            Repeater {
+                                id: galaxyToolheadSelectionRepeater
+                                model: Cura.LulzBotToolheadsModel {
+                                    id: galaxyToolheadsModel;
+                                    baseMachineProperty: printerSelection.baseMachine;
+                                    toolheadCategoryProperty: "Galaxy"
+                                }
+                                delegate: RadioButton {
+                                    text: model.toolhead
+                                    exclusiveGroup: toolheadGroup
+                                    checked: model.index == 0
+                                    onClicked: {
+                                        toolheadSelection.selectedIndex = model.index
+                                        toolheadSelection.selectedCategory = "galaxy"
+                                        machineName.text = model.name
+                                        toolheadSelection.bltouch_option = model.bltouch_option
+                                        toolheadSelection.bltouch_default = model.bltouch_default
+                                        printerSelectorLoader.item.updateOptions()
+                                    }
+                                }
+                            }
+                        }
+
+                        Column {
+
+                            Label {
+                                id: legacyToolheadLabel
+                                text: "Legacy Tool Heads"
+                                font.bold: true
+                                font.pixelSize: 14
+                                visible: legacyToolheadSelectionRepeater.model.count > 0
+                            }
+
+                            Rectangle {
+                                visible: legacyToolheadLabel.visible
+                                height: 2
+                                width: toolheadColumn.width
+                                color: "black"
+                            }
+
+                            Repeater {
+                                id: legacyToolheadSelectionRepeater
+                                model: Cura.LulzBotToolheadsModel {
+                                    id: legacyToolheadsModel;
+                                    baseMachineProperty: printerSelection.baseMachine;
+                                    toolheadCategoryProperty: "Universal"
+                                }
+                                delegate: RadioButton {
+                                    text: model.toolhead
+                                    exclusiveGroup: toolheadGroup
+                                    checked: model.index == 0
+                                    onClicked: {
+                                        toolheadSelection.selectedIndex = model.index
+                                        toolheadSelection.selectedCategory = "legacy"
+                                        machineName.text = model.name
+                                        toolheadSelection.bltouch_option = model.bltouch_option
+                                        toolheadSelection.bltouch_default = model.bltouch_default
+                                        printerSelectorLoader.item.updateOptions()
+                                    }
+                                }
+                            }
+                        }
+
+                        Column {
+
+                            Repeater {
+                                id: noCategoryToolheadSelectionRepeater
+                                model: Cura.LulzBotToolheadsModel {
+                                    id: noCategoryToolheadsModel;
+                                    baseMachineProperty: printerSelection.baseMachine;
+                                    toolheadCategoryProperty: ""
+                                }
+                                delegate: RadioButton {
+                                    text: model.toolhead
+                                    exclusiveGroup: toolheadGroup
+                                    checked: model.index == 0
+                                    onClicked: {
+                                        toolheadSelection.selectedIndex = model.index
+                                        toolheadSelection.selectedCategory = "none"
+                                        machineName.text = model.name
+                                        toolheadSelection.bltouch_option = model.bltouch_option
+                                        toolheadSelection.bltouch_default = model.bltouch_default
+                                        printerSelectorLoader.item.updateOptions()
+                                    }
                                 }
                             }
                         }
@@ -181,6 +402,7 @@ Item {
                     Column {
 
                         Repeater {
+                            id: lcdSelectionRepeater
                             model: ["Yes", "No"]
                             delegate: RadioButton {
                                 text: modelData
@@ -248,6 +470,7 @@ Item {
             bottom: machineName.top
         }
 
+        onLoaded: item.updateToolheads()
         onSourceComponentChanged: item.update()
     }
 

@@ -407,8 +407,8 @@ class MachineManager(QObject):
                 return cast(GlobalStack, machine)
         return None
 
-    @pyqtSlot(str, result=bool)
-    @pyqtSlot(str, str, result = bool)
+    @pyqtSlot(str, bool, bool, result=bool)
+    @pyqtSlot(str, str, bool, bool, result = bool)
     def addMachine(self, definition_id: str, name: Optional[str] = None, lcd: bool = True, bltouch: bool = False) -> bool:
         Logger.log("i", "Trying to add a machine with the definition id [%s]", definition_id)
         if name is None:
@@ -422,32 +422,33 @@ class MachineManager(QObject):
         if new_stack:
             # Check for LCD and BLTouch values
             if new_stack.getMetaDataEntry("has_optional_lcd", False):
-                new_stack.setProperty("machine_has_lcd", "value", lcd, "definition")
+                new_stack.definitionChanges.setProperty("machine_has_lcd", "value", lcd)
             if new_stack.getMetaDataEntry("has_optional_bltouch", False):
-                new_stack.setProperty("machine_has_bltouch", "value", bltouch, "definition")
+                new_stack.definitionChanges.setProperty("machine_has_bltouch", "value", bltouch)
             # Instead of setting the global container stack here, we set the active machine and so the signals are emitted
             self.setActiveMachine(new_stack.getId())
-
-            # Load new machine STL
-            nodes = 0
-            for node in DepthFirstIterator(Application.getInstance().getController().getScene().getRoot()):
-                if isinstance(node, SceneNode):
-                    nodes += 1
-            if nodes <= 4:
-                if definition_id == "taz_pro_dual" or definition_id == "taz_pro_xt_dual":
-                    Application.getInstance()._openFile(os.path.join(Resources.getPath(Resources.Meshes), "TAZ_Pro_Calibration01.stl"))
-                    model_will_be_loaded = "TAZ_Pro_Calibration02.stl"
-                elif definition_id == "taz_pro_m175" or definition_id == "taz_workhorse_se":
-                    model_will_be_loaded = "octo_gear_v1.stl"
-                else:
-                    model_will_be_loaded = "rocktopus.stl"
-                Application.getInstance()._openFile(os.path.join(Resources.getPath(Resources.Meshes), model_will_be_loaded))
-                # cura.CuraApplication.CuraApplication.arrangeAll(Application.getInstance())
-
         else:
             Logger.log("w", "Failed creating a new machine!")
             return False
         return True
+
+    @pyqtSlot()
+    def addMachineProvideExampleModel(self) -> None:
+        # Load new machine STL
+        definition_id = self._global_container_stack.getDefinition().getId()
+        res_path = Resources.getPath(Resources.Meshes)
+        load_models = []
+        if "bio" in definition_id:
+            load_models.append(os.path.join(res_path, "right_coronary_artery_tree.stl"))
+        elif "taz_pro_dual" in definition_id or "taz_pro_xt_dual" in definition_id:
+            load_models.append(os.path.join(res_path, "pro_dual_cal1.stl"))
+            load_models.append(os.path.join(res_path, "pro_dual_cal2.stl"))
+        elif "taz_pro_m175" in definition_id or "taz_workhorse_se" in definition_id:
+            load_models.append(os.path.join(res_path, "octo_gear.stl"))
+        else:
+            load_models.append(os.path.join(res_path, "rocktopus.stl"))
+        for model_path in load_models:
+            self._application._openFile(model_path)
 
     def _checkStacksHaveErrors(self) -> bool:
         time_start = time.time()
@@ -525,6 +526,18 @@ class MachineManager(QObject):
         """
         return bool(self._stacks_have_errors)
 
+    @pyqtProperty(bool, notify = globalContainerChanged)
+    def activeMachineOptionalLCD(self) -> bool:
+        if self.activeMachine is None:
+            return False
+        return self.activeMachine.getBottom().getMetaDataEntry("has_optional_lcd")
+
+    @pyqtProperty(bool, notify = globalContainerChanged)
+    def activeMachineOptionalBLTouch(self) -> bool:
+        if self.activeMachine is None:
+            return False
+        return self.activeMachine.getBottom().getMetaDataEntry("has_optional_bltouch")
+
     @pyqtProperty(str, notify = printerConnectedStatusChanged)
     def activeMachineFirmwareVersion(self) -> str:
         if not self._printer_output_devices:
@@ -533,13 +546,25 @@ class MachineManager(QObject):
 
     @pyqtProperty(str, notify= globalContainerChanged)
     def activeMachineLatestFirmwareVersion(self) -> str:
+        version = ""
         if self.activeMachine is None:
-            return ""
-        # I don't believe this if statement returns the way I'm expecting it to
-        if self._global_container_stack.getProperty("machine_has_bltouch", "value"):
-            version = self.activeMachine.getBottom().getMetaDataEntry("firmware_bltouch_latest_version")
-        else:
-            version = self.activeMachine.getBottom().getMetaDataEntry("firmware_latest_version")
+            return version
+
+        stack = self._global_container_stack
+        meta = self.activeMachine.getBottom()
+        tripped = False
+
+        if meta.getMetaDataEntry("has_optional_bltouch") and stack.getProperty("machine_has_bltouch", "value"):
+            version = meta.getMetaDataEntry("firmware_bltouch_latest_version")
+        elif meta.getMetaDataEntry("has_optional_lcd") and not stack.getProperty("machine_has_lcd", "value"):
+            version = meta.getMetaDataEntry("firmware_no_lcd_latest_version")
+
+        if version == "":
+            if tripped:
+                Logger.log("w", "Printer was determined to have non-standard config firmware, but the version came up blank!")
+            version = meta.getMetaDataEntry("firmware_latest_version")
+
+        Logger.log("i", "Found firmware version {0} for current printer configuration.".format(version))
         return version
 
     @pyqtProperty(str, notify = globalContainerChanged)
@@ -1831,8 +1856,8 @@ class MachineManager(QObject):
                         machine_name = "T6"
                     elif "5" in m:
                         machine_name = "T5"
-                elif "viking" in m:
-                    machine_name = "VIK"
+                elif "core" in m:
+                    machine_name = "CXY"
 
                 # Tool Head Name
                 th = names[1].lower()
