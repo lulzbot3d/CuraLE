@@ -146,6 +146,32 @@ Item
                 }
             }
         }
+
+        // Used to create a rounded rectangle behind the filamentChangeButton
+        Rectangle {
+            anchors {
+                fill: filamentChangeToolButton
+                leftMargin: -radius - border.width
+                rightMargin: -border.width
+                topMargin: -border.width
+                bottomMargin: -border.width
+            }
+            radius: UM.Theme.getSize("default_radius").width
+            color: UM.Theme.getColor("lining")
+            visible: true
+        }
+
+        Cura.FilamentChangeButton {
+            id: filamentChangeToolButton
+            anchors {
+                topMargin: UM.Theme.getSize("default_margin").height
+                top: extruderButtons.bottom
+                right: parent.right
+            }
+
+            isTopElement: true
+            isBottomElement: true
+        }
     }
 
     property var extrudersModel: CuraApplication.getExtrudersModel()
