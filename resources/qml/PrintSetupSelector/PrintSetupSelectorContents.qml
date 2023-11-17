@@ -71,27 +71,28 @@ Item {
                 top: parent.top
             }
             height: UM.Preferences.getValue("view/settings_list_height") - UM.Theme.getSize("default_margin").height
-            Connections {
-                target: UM.Preferences
-                function onPreferenceChanged(preference) {
-                    if (preference !== "view/settings_list_height" && preference !== "general/window_height" && preference !== "general/window_state") {
-                        return;
-                    }
-
-                    customPrintSetup.height =
-                        Math.min (
-                            UM.Preferences.getValue("view/settings_list_height"),
-                            Math.max (
-                                absoluteMinimumHeight,
-                                base.height - (customPrintSetup.mapToItem(null, 0, 0).y + buttonRow.height + UM.Theme.getSize("default_margin").height)
-                            )
-                        );
-                    recommendedPrintSetup.height = customPrintSetup.height
-
-                    updateDragPosition();
-                }
-            }
             visible: currentModeIndex == PrintSetupSelectorContents.Mode.Custom
+        }
+
+        Connections {
+            target: UM.Preferences
+            function onPreferenceChanged(preference) {
+                if (preference !== "view/settings_list_height" && preference !== "general/window_height" && preference !== "general/window_state") {
+                    return;
+                }
+
+                customPrintSetup.height =
+                    Math.min (
+                        UM.Preferences.getValue("view/settings_list_height"),
+                        Math.max (
+                            absoluteMinimumHeight,
+                            base.height - (customPrintSetup.mapToItem(null, 0, 0).y + buttonRow.height + UM.Theme.getSize("default_margin").height)
+                        )
+                    );
+                recommendedPrintSetup.height = customPrintSetup.height
+
+                updateDragPosition();
+            }
         }
     }
 

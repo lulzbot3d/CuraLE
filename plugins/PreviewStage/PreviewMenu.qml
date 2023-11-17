@@ -8,21 +8,18 @@ import QtQuick.Controls 2.3
 import UM 1.3 as UM
 import Cura 1.1 as Cura
 
-Item
-{
+Item {
     id: previewMenu
 
     property real itemHeight: height - 2 * UM.Theme.getSize("default_lining").width
     property var fileProviderModel: CuraApplication.getFileProviderModel()
 
-    UM.I18nCatalog
-    {
+    UM.I18nCatalog {
         id: catalog
         name: "cura"
     }
 
-    anchors
-    {
+    anchors {
         left: parent.left
         right: parent.right
         leftMargin: UM.Theme.getSize("wide_margin").width * 2
@@ -49,18 +46,19 @@ Item
             Cura.ViewsSelector {
                 id: viewsSelector
                 headerCornerSide: Cura.RoundedRectangle.Direction.Left
-                Layout.preferredWidth: parent.viewsSelectorWidth
-                Layout.fillWidth: true
+                popupWidth: parent.viewsSelectorWidth
+                Layout.preferredWidth: viewPanel.source != "" && !viewPanel.placeholder ? parent.viewsSelectorWidth : (parent.width - printSetupSelectorItem.width)
                 Layout.fillHeight: true
             }
 
             // This component will grow freely up to complete the width of the row.
             Loader {
                 id: viewPanel
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-                //Layout.preferredWidth: parent.width - viewsSelector.width - printSetupSelectorItem.width
                 source: UM.Controller.activeView != null && UM.Controller.activeView.stageMenuComponent != null ? UM.Controller.activeView.stageMenuComponent : ""
+                property bool placeholder: String(source).includes("EmptyViewMenuComponent.qml")
+                Layout.fillHeight: true
+                Layout.preferredWidth: !placeholder ? (parent.width - viewsSelector.width - printSetupSelectorItem.width) : 0
+
             }
 
             Item {
@@ -68,8 +66,8 @@ Item
                 // This is a work around to prevent the printSetupSelector from having to be re-loaded every time
                 // a stage switch is done.
                 children: [printSetupSelector]
-                height: childrenRect.height
-                width: childrenRect.width
+                Layout.preferredHeight: childrenRect.height
+                Layout.preferredWidth: childrenRect.width
             }
         }
 
@@ -100,8 +98,7 @@ Item
             {
                 id: popup
 
-                Column
-                {
+                Column {
                     id: openProviderColumn
 
                     //The column doesn't automatically listen to its children rect if the children change internally, so we need to explicitly update the size.
@@ -116,19 +113,16 @@ Item
                         popup.width = childrenRect.width
                     }
 
-                    Repeater
-                    {
+                    Repeater {
                         model: previewMenu.fileProviderModel
-                        delegate: Button
-                        {
+                        delegate: Button {
                             leftPadding: UM.Theme.getSize("default_margin").width
                             rightPadding: UM.Theme.getSize("default_margin").width
                             width: contentItem.width + leftPadding + rightPadding
                             height: UM.Theme.getSize("action_button").height
                             hoverEnabled: true
 
-                            contentItem: Label
-                            {
+                            contentItem: Label {
                                 text: model.displayText
                                 color: UM.Theme.getColor("text")
                                 font: UM.Theme.getFont("medium")
@@ -139,8 +133,7 @@ Item
                                 height: parent.height
                             }
 
-                            onClicked:
-                            {
+                            onClicked: {
                                 if(model.index == 0) //The 0th element is the "From Disk" option, which should activate the open local file dialog.
                                 {
                                     Cura.Actions.open.trigger();
@@ -151,8 +144,7 @@ Item
                                 }
                             }
 
-                            background: Rectangle
-                            {
+                            background: Rectangle {
                                 color: parent.hovered ? UM.Theme.getColor("action_button_hovered") : "transparent"
                                 radius: UM.Theme.getSize("action_button_radius").width
                                 width: popup.width
@@ -164,8 +156,7 @@ Item
         }
 
         //If there is just a single item, show a button instead that directly chooses the one option.
-        Button
-        {
+        Button {
             id: openFileButton
             visible: previewMenu.fileProviderModel.count <= 1
 
@@ -175,10 +166,8 @@ Item
             enabled: visible && previewMenu.fileProviderModel.count > 0
             hoverEnabled: true
 
-            contentItem: Item
-            {
-                UM.RecolorImage
-                {
+            contentItem: Item {
+                UM.RecolorImage {
                     id: buttonIcon
                     source: UM.Theme.getIcon("Folder", "medium")
                     anchors.centerIn: parent
@@ -190,8 +179,7 @@ Item
                 }
             }
 
-            background: Rectangle
-            {
+            background: Rectangle {
                 id: background
                 height: parent.height
                 width: parent.width

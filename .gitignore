@@ -73,6 +73,7 @@ Makefile*
 junit-pytest-*
 CuraVersion.py
 cmake_install.cmake
+.sentry_release.bash
 
 #Debug
 *.gcode

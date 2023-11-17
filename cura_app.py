@@ -49,11 +49,9 @@ if with_sentry_sdk:
         sentry_env = "production"  # A frozen build has the possibility to be a "real" distribution.
 
     if ApplicationMetadata.CuraVersion == "main":
-        sentry_env = "development"  # Master is always a development version.
+        sentry_env = "development"  # Main is always a development version.
     elif "beta" in ApplicationMetadata.CuraVersion or "BETA" in ApplicationMetadata.CuraVersion:
         sentry_env = "beta"
-    # elif "alpha" in ApplicationMetadata.CuraVersion or "ALPHA" in ApplicationMetadata.CuraVersion:
-    #     sentry_env = "alpha"
     try:
         if ApplicationMetadata.CuraVersion.split(".")[2] == "99":
             sentry_env = "nightly"
@@ -66,10 +64,10 @@ if with_sentry_sdk:
         sentry_sdk.init("https://fe9eb14f0ed44aa9b73016bf13443421@o1281016.ingest.sentry.io/6486008",
                         before_send = CrashHandler.sentryBeforeSend,
                         environment = sentry_env,
-                        release = "cura%s" % ApplicationMetadata.CuraVersion,
+                        release = "Cura LE %s" % ApplicationMetadata.CuraVersion,
                         default_integrations = False,
                         max_breadcrumbs = 300,
-                        server_name = "cura",
+                        server_name = "curale",
                         ignore_errors = ignore_errors)
     except Exception:
         with_sentry_sdk = False

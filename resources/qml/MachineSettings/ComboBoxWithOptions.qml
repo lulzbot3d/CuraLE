@@ -14,8 +14,7 @@ import "../Widgets"
 //
 // ComboBox with dropdown options in the Machine Settings dialog.
 //
-UM.TooltipArea
-{
+UM.TooltipArea {
     id: comboBoxWithOptions
 
     UM.I18nCatalog { id: catalog; name: "cura"; }
