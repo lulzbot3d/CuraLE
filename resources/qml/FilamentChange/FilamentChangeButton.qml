@@ -21,5 +21,6 @@ Cura.ToolbarButton {
 
     onClicked: {
         forceActiveFocus() //First grab focus, so all the text fields are updated
+        UM.Controller.setActiveTool(null);
     }
 }

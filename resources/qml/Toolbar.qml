@@ -7,16 +7,14 @@ import QtQuick.Controls 2.3
 import UM 1.2 as UM
 import Cura 1.0 as Cura
 
-Item
-{
+Item {
     id: base
 
     width: buttons.width
     height: buttons.height
     property int activeY
 
-    Item
-    {
+    Item {
         id: buttons
         width: parent.visible ? toolButtons.width : 0
         height: childrenRect.height
@@ -24,10 +22,8 @@ Item
         Behavior on width { NumberAnimation { duration: 100 } }
 
         // Used to create a rounded rectangle behind the toolButtons
-        Rectangle
-        {
-            anchors
-            {
+        Rectangle {
+            anchors {
                 fill: toolButtons
                 leftMargin: -radius - border.width
                 rightMargin: -border.width
@@ -38,23 +34,20 @@ Item
             color: UM.Theme.getColor("lining")
         }
 
-        Column
-        {
+        Column {
             id: toolButtons
 
             anchors.top: parent.top
             anchors.right: parent.right
 
-            Repeater
-            {
+            Repeater {
                 id: repeat
 
                 model: UM.ToolModel { id: toolsModel }
                 width: childrenRect.width
                 height: childrenRect.height
 
-                delegate: ToolbarButton
-                {
+                delegate: ToolbarButton {
                     text: model.name + (model.shortcut ? (" (" + model.shortcut + ")") : "")
                     checkable: true
                     checked: model.active
@@ -63,8 +56,7 @@ Item
                     isTopElement: toolsModel.getItem(0).id == model.id
                     isBottomElement: toolsModel.getItem(toolsModel.count - 1).id == model.id
 
-                    toolItem: UM.RecolorImage
-                    {
+                    toolItem: UM.RecolorImage {
                         source: UM.Theme.getIcon(model.icon) != "" ? UM.Theme.getIcon(model.icon) : "file:///" + model.location + "/" + model.icon
                         color: UM.Theme.getColor("icon")
 
@@ -72,10 +64,8 @@ Item
                         sourceSize.width: Math.round(UM.Theme.getSize("button").width / 2)
                     }
 
-                    onCheckedChanged:
-                    {
-                        if (checked)
-                        {
+                    onCheckedChanged: {
+                        if (checked) {
                             base.activeY = y;
                         }
                         //Clear focus when tools change. This prevents the tool grabbing focus when activated.
@@ -86,18 +76,14 @@ Item
 
                     //Workaround since using ToolButton's onClicked would break the binding of the checked property, instead
                     //just catch the click so we do not trigger that behaviour.
-                    MouseArea
-                    {
+                    MouseArea {
                         anchors.fill: parent;
-                        onClicked:
-                        {
+                        onClicked: {
                             forceActiveFocus() //First grab focus, so all the text fields are updated
-                            if(parent.checked)
-                            {
+                            if(parent.checked) {
                                 UM.Controller.setActiveTool(null);
                             }
-                            else
-                            {
+                            else {
                                 UM.Controller.setActiveTool(model.id);
                             }
 
@@ -109,10 +95,8 @@ Item
         }
 
         // Used to create a rounded rectangle behind the extruderButtons
-        Rectangle
-        {
-            anchors
-            {
+        Rectangle {
+            anchors {
                 fill: extruderButtons
                 leftMargin: -radius - border.width
                 rightMargin: -border.width
@@ -124,22 +108,19 @@ Item
             visible: extrudersModel.items.length > 1
         }
 
-        Column
-        {
+        Column {
             id: extruderButtons
 
             anchors.topMargin: UM.Theme.getSize("default_margin").height
             anchors.top: toolButtons.bottom
             anchors.right: parent.right
 
-            Repeater
-            {
+            Repeater {
                 width: childrenRect.width
                 height: childrenRect.height
                 model: extrudersModel.items.length > 1 ? extrudersModel : 0
 
-                delegate: ExtruderButton
-                {
+                delegate: ExtruderButton {
                     extruder: model
                     isTopElement: extrudersModel.getItem(0).id == model.id
                     isBottomElement: extrudersModel.getItem(extrudersModel.rowCount() - 1).id == model.id
@@ -176,8 +157,7 @@ Item
 
     property var extrudersModel: CuraApplication.getExtrudersModel()
 
-    UM.PointingRectangle
-    {
+    UM.PointingRectangle {
         id: panelBorder
 
         anchors.left: parent.right
@@ -189,14 +169,11 @@ Item
         target: Qt.point(parent.right, base.activeY +  Math.round(UM.Theme.getSize("button").height/2))
         arrowSize: UM.Theme.getSize("default_arrow").width
 
-        width:
-        {
-            if (panel.item && panel.width > 0)
-            {
+        width: {
+            if (panel.item && panel.width > 0) {
                  return Math.max(panel.width + 2 * UM.Theme.getSize("default_margin").width)
             }
-            else
-            {
+            else {
                 return 0;
             }
         }
@@ -209,15 +186,13 @@ Item
         borderColor: UM.Theme.getColor("lining")
         borderWidth: UM.Theme.getSize("default_lining").width
 
-        MouseArea //Catch all mouse events (so scene doesn't handle them)
-        {
+        MouseArea { //Catch all mouse events (so scene doesn't handle them)
             anchors.fill: parent
             acceptedButtons: Qt.AllButtons
             onWheel: wheel.accepted = true
         }
 
-        Loader
-        {
+        Loader {
             id: panel
 
             x: UM.Theme.getSize("default_margin").width
@@ -230,8 +205,7 @@ Item
 
     // This rectangle displays the information about the current angle etc. when
     // dragging a tool handle.
-    Rectangle
-    {
+    Rectangle {
         id: toolInfo
         x: visible ? -base.x + base.mouseX + UM.Theme.getSize("default_margin").width: 0
         y: visible ? -base.y + base.mouseY + UM.Theme.getSize("default_margin").height: 0
@@ -239,8 +213,7 @@ Item
         width: toolHint.width + UM.Theme.getSize("default_margin").width
         height: toolHint.height;
         color: UM.Theme.getColor("tooltip")
-        Label
-        {
+        Label {
             id: toolHint
             text: UM.ActiveTool.properties.getValue("ToolHint") != undefined ? UM.ActiveTool.properties.getValue("ToolHint") : ""
             color: UM.Theme.getColor("tooltip_text")
