@@ -9,10 +9,8 @@
         "visible": false,
         "base_machine": true,
         "base_machine_id": "dev_core_xy",
-        "toolhead_category": "Galaxy",
-        "toolhead_selection_name": "Galaxy Tool Head",
         "preferred_material": "Generic_PLA",
-        "preferred_quality_type": "normal",
+        "toolhead_selection_name": "Universal Tool Head",
         "platform": "",
         "file_formats": "text/x-gcode",
         "bltouch_is_standard": true

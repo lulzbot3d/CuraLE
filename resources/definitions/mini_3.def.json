@@ -9,10 +9,8 @@
         "visible": false,
         "base_machine": true,
         "base_machine_id": "mini_3",
-        "toolhead_category": "Galaxy",
-        "toolhead_selection_name": "Galaxy Tool Head",
+        "toolhead_selection_name": "Universal Tool Head",
         "preferred_material": "Generic_PLA",
-        "preferred_quality_type": "normal",
         "platform": "mini_3.stl",
         "platform_offset":
         [

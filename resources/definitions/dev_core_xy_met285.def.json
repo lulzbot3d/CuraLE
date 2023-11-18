@@ -1,12 +1,11 @@
 {
     "version": 2,
     "name": "[Developmental] Core XY | MET285",
-    "inherits": "dev_core_xy",
+    "inherits": "dev_core_xy_galaxy",
     "metadata":
     {
         "priority": "01",
         "visible": true,
-        "base_machine": false,
         "toolhead_selection_name": "METEOR 285 | Nickel-Plated Brass",
         "machine_extruder_trains":
         {
