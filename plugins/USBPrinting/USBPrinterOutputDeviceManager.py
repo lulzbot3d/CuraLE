@@ -164,10 +164,12 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         self.getOutputDeviceManager().addOutputDevice(device)
 
     def removeOutputDevice(self, serial_port):
-
-        device = self._usb_output_devices.pop(serial_port)
-        device.close()
-        self.getOutputDeviceManager().removeOutputDevice(serial_port)
+        try:
+            device = self._usb_output_devices.pop(serial_port)
+            device.close()
+            self.getOutputDeviceManager().removeOutputDevice(serial_port)
+        except KeyError:
+            Logger.log("w", "Tried to remove USB device on a port no longer in the list.")
         return
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
