@@ -1,3 +1,10 @@
+[4.13.0-Beta v2.12]
+* Small update!
+* Couple more small changes to the Recommended tab! Go figure, huh!
+* Touched on issues noted from a couple of anonymous crash reports; Yes, I do get those, thank you!
+* Updated TAZ Pro and derivatives firmware to 2.1.3.0.13
+* Modified the horizontal expansion value slightly for the METEOR Tool Heads
+
 [4.13.0-Beta v2.11]
 * Added a button on the bottom right that allows you to clear the build plate and open a new file with a single click
 * Pro and Pro XT have an updated bed STL, along with the Mini 3 getting an official one

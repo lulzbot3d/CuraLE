@@ -5,6 +5,15 @@ This file is a work-in-progress; some sections may be incomplete, especially
 	will be updated as new versions are released and will continue to be
 	utilized as the project progresses.
 
+4.13.0-BETAv2.12:
+	Small update!
+		- Couple more small changes to that darn Recommended tab!
+		- Touched on issues noted from anonymous crash reports
+			- Yes, I do get those, thank you!
+		- Updated TAZ Pro and derivatives firmware to 2.1.3.0.13
+		- Modified the horizontal expansion value slightly for the METs
+
+
 4.13.0-BETAv2.11:
 	Additions:
 		- Added a button on the bottom right that will allow the user to
