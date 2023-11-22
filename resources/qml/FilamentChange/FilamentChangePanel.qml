@@ -10,6 +10,8 @@ import Cura 1.0 as Cura
 UM.PointingRectangle {
         id: panelBorder
 
+        property alias panelVisible: panel.visible
+
         //target: Qt.point(parent.width, Math.round(UM.Theme.getSize("button").height / 2))
         arrowSize: UM.Theme.getSize("default_arrow").width
 

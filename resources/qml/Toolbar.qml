@@ -128,46 +128,63 @@ Item {
             }
         }
 
-        // Used to create a rounded rectangle behind the filamentChangeButton
-        Rectangle {
-            anchors {
-                fill: filamentChangeScope //filamentChangeToolButton
-                leftMargin: -radius - border.width
-                rightMargin: -border.width
-                topMargin: -border.width
-                bottomMargin: -border.width
-            }
-            radius: UM.Theme.getSize("default_radius").width
-            color: UM.Theme.getColor("lining")
-            visible: true
-        }
+        FocusScope {
+            id: filamentChangeFocusScope
 
-        Cura.FilamentChangeButton {
-            id: filamentChangeToolButton
             anchors {
                 topMargin: UM.Theme.getSize("default_margin").height
                 top: extruderButtons.visible ? extruderButtons.bottom : toolButtons.bottom
                 right: parent.right
             }
 
-            checkable: true
-            enabled: true
-            isTopElement: true
-            isBottomElement: true
-        }
-
-        Cura.FilamentChangePanel {
-            id: filamentChangeToolPanel
-            anchors {
-                left: filamentChangeToolButton.right
-                leftMargin: UM.Theme.getSize("default_margin").width
-                bottom: filamentChangeToolButton.bottom
+            onActiveFocusChanged: {
+                if (activeFocus) {
+                    UM.Controller.setActiveTool(null);
+                } else {
+                    filamentChangeToolButton.checked = false
+                }
             }
-            z: buttons.z - 1
 
-            target: Qt.point(parent.right, filamentChangeToolButton.y +  Math.round(UM.Theme.getSize("button").height/2))
+            // Used to create a rounded rectangle behind the filamentChangeButton
+            Rectangle {
+                anchors {
+                    fill: filamentChangeToolButton
+                    leftMargin: -radius - border.width
+                    rightMargin: -border.width
+                    topMargin: -border.width
+                    bottomMargin: -border.width
+                }
+                radius: UM.Theme.getSize("default_radius").width
+                color: UM.Theme.getColor("lining")
+                visible: true
+            }
 
-            visible: filamentChangeToolButton.checked
+            Cura.FilamentChangeButton {
+                id: filamentChangeToolButton
+                anchors {
+                    top: parent.top
+                    right: parent.right
+                }
+
+                checkable: true
+                enabled: true
+                isTopElement: true
+                isBottomElement: true
+            }
+
+            Cura.FilamentChangePanel {
+                id: filamentChangeToolPanel
+                anchors {
+                    left: filamentChangeToolButton.right
+                    leftMargin: UM.Theme.getSize("default_margin").width
+                    bottom: filamentChangeToolButton.bottom
+                }
+                z: buttons.z - 1
+
+                target: Qt.point(parent.right, filamentChangeToolButton.y +  Math.round(UM.Theme.getSize("button").height/2))
+
+                panelVisible: filamentChangeToolButton.checked
+            }
         }
     }
 
