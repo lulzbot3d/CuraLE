@@ -4,7 +4,7 @@
     "inherits": "taz_pro_lb",
     "metadata":
     {
-        "priority": "04",
+        "priority": "02",
         "visible": true,
         "base_machine": false,
         "toolhead_selection_name": "SL | 0.25 mm | Nickel-Plated Copper",
