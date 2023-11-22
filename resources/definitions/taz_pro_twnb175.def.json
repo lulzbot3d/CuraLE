@@ -4,7 +4,7 @@
     "inherits": "taz_pro_galaxy",
     "metadata":
     {
-        "priority": "01",
+        "priority": "04",
         "visible": true,
         "base_machine": false,
         "toolhead_selection_name": "TWIN NEBULA 175 | Nickel-Plated Brass",
