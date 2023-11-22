@@ -38,10 +38,48 @@ Item {
 
             spacing: rowSpacing
 
+            function getUserInput() {
+                let user_input = layersTextField.text.replace(/ /g, '').split(',');
+                let filtered_input = user_input.filter((x) => x != '');
+                layersTextField.text = ""
+                return filtered_input;
+            }
+
+            function addUserInput() {
+                let newLayers = getUserInput();
+                let currentLayers = provider.properties.value;
+                console.log("Current: " + currentLayers)
+                if (!currentLayers) {
+                    currentLayers = []
+                } else {
+                    currentLayers = currentLayers.split(',');
+                }
+                for (let i = 0; i < newLayers.length; i++) {
+                    if (currentLayers.includes(newLayers[i])) {
+                        continue;
+                    }
+                    currentLayers.push(newLayers[i]);
+                }
+                currentLayers.sort((a, b) => a - b);
+                let out = currentLayers.join()
+                console.log("Out: " + out)
+                provider.setPropertyValue("value", out)
+            }
+
+            function removeUserInput() {
+                return
+            }
+
             TextField {
                 id: layersTextField
                 Layout.preferredWidth: UM.Theme.getSize("setting_control").width
+
                 placeholderText: "Filament Change TextField"
+                validator: RegExpValidator { regExp: /^\d[\d*\,* *]*/ }
+
+                onAccepted: {
+                    controlsRow.addUserInput()
+                }
 
                 style: UM.Theme.styles.text_field
             }
@@ -51,13 +89,10 @@ Item {
                 Layout.preferredWidth: Math.round(UM.Theme.getSize("setting_control").width / 2)
                 text: "Add"
 
+                enabled: layersTextField.length > 0
+
                 onClicked: {
-                    if (layersTextField.text) {
-                        console.log("wow!")
-                        layersTextField.text = ""
-                    } else {
-                        console.log("Dis bitch empty!!")
-                    }
+                    controlsRow.addUserInput()
                 }
 
                 style: UM.Theme.styles.toolbox_action_button
@@ -67,6 +102,8 @@ Item {
                 id: removeButton
                 Layout.preferredWidth: Math.round(UM.Theme.getSize("setting_control").width / 2)
                 text: "Remove"
+
+                enabled: layersTextField.length > 0
 
                 style: UM.Theme.styles.toolbox_action_button
             }
@@ -96,9 +133,9 @@ Item {
 
             Label {
                 text: {
-                    let val = provider.value
+                    let val = provider.properties.value
                     if (val) {
-                        return val
+                        return val//.replace(/\,/g, ', ')
                     } else {
                         return "None"
                     }

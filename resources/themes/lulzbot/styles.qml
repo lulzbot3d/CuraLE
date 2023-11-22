@@ -540,9 +540,15 @@ QtObject {
                 implicitWidth: UM.Theme.getSize("toolbox_action_button").width
                 implicitHeight: UM.Theme.getSize("toolbox_action_button").height
                 border.width: UM.Theme.getSize("default_lining").width
-                border.color: UM.Theme.getColor("secondary_button_text")
+                border.color: {
+                    if (!control.enabled) {
+                        UM.Theme.getColor("setting_control_disabled_border")
+                    } else {
+                        UM.Theme.getColor("secondary_button_text")
+                    }
+                }
                 color: {
-                    if (control.installed) {
+                    if (control.installed || !control.enabled) {
                         return UM.Theme.getColor("action_button_disabled");
                     } else {
                         if (control.pressed) {
@@ -558,7 +564,7 @@ QtObject {
             label: Label {
                 text: control.text
                 color: {
-                    if (control.installed) {
+                    if (control.installed || !control.enabled) {
                         return UM.Theme.getColor("action_button_disabled_text");
                     } else {
                         return UM.Theme.getColor("secondary_button_text");
