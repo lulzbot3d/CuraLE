@@ -40,6 +40,7 @@ Item {
     property alias multiplyObject: multiplyObjectAction;
 
     property alias selectAll: selectAllAction;
+    property alias clearSelection: clearSelectionAction;
     property alias deleteAll: deleteAllAction;
     property alias reloadAll: reloadAllAction;
     property alias arrangeAllBuildPlates: arrangeAllBuildPlatesAction;
@@ -348,6 +349,13 @@ Item {
         iconName: "edit-select-all";
         shortcut: "Ctrl+A";
         onTriggered: CuraApplication.selectAll();
+    }
+
+    Action {
+        id: clearSelectionAction;
+        text: catalog.i18nc("@action:inmenu menubar:edit", "Clear Selection");
+        enabled: UM.Controller.toolsEnabled;
+        onTriggered: CuraApplication.clearSelection();
     }
 
     Action {

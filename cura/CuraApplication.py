@@ -56,6 +56,7 @@ from cura.Arranging.Arrange import Arrange
 from cura.Arranging.ArrangeObjectsJob import ArrangeObjectsJob
 from cura.Arranging.ArrangeObjectsAllBuildPlatesJob import ArrangeObjectsAllBuildPlatesJob
 from cura.Arranging.Nest2DArrange import arrange
+from cura.FilamentChangeManager import FilamentChangeManager
 from cura.Machines.Models.BuildPlateModel import BuildPlateModel
 from cura.Machines.Models.CustomQualityProfilesDropDownMenuModel import CustomQualityProfilesDropDownMenuModel
 from cura.Machines.Models.DiscoveredCloudPrintersModel import DiscoveredCloudPrintersModel
@@ -221,6 +222,8 @@ class CuraApplication(QtApplication):
         self._quality_profile_drop_down_menu_model = None
         self._custom_quality_profile_drop_down_menu_model = None
         # self._cura_API = CuraAPI(self)
+
+        self._filament_change_manager = None
 
         self._physics = None
         self._volume = None
@@ -1122,6 +1125,11 @@ class CuraApplication(QtApplication):
             self._custom_quality_profile_drop_down_menu_model = CustomQualityProfilesDropDownMenuModel(self)
         return self._custom_quality_profile_drop_down_menu_model
 
+    def getFilamentChangeManager(self, *args) -> FilamentChangeManager:
+        if self._filament_change_manager is None:
+            self._filament_change_manager = FilamentChangeManager(self)
+        return self._filament_change_manager
+
     def registerObjects(self, engine):
         """Registers objects for the QML engine to use.
 
@@ -1198,8 +1206,7 @@ class CuraApplication(QtApplication):
         qmlRegisterType(UserChangesModel, "Cura", 1, 0, "UserChangesModel")
         qmlRegisterSingletonType(ContainerManager, "Cura", 1, 0, "ContainerManager", ContainerManager.getInstance)
         qmlRegisterType(SidebarCustomMenuItemsModel, "Cura", 1, 0, "SidebarCustomMenuItemsModel")
-
-        # qmlRegisterType(PrinterOutputDevice, "Cura", 1, 0, "PrinterOutputDevice")
+        qmlRegisterSingletonType(FilamentChangeManager, "Cura", 1, 0, "FilamentChangeManager", self.getFilamentChangeManager)
 
         # As of Qt5.7, it is necessary to get rid of any ".." in the path for the singleton to work.
         actions_url = QUrl.fromLocalFile(os.path.abspath(Resources.getPath(CuraApplication.ResourceTypes.QmlFiles, "Actions.qml")))
@@ -1331,6 +1338,13 @@ class CuraApplication(QtApplication):
                 continue  # i.e. node with layer data
 
             Selection.add(node)
+
+    @pyqtSlot()
+    def clearSelection(self):
+        """Clear the current selection"""
+        if not self.getController().getToolsEnabled():
+            return
+        Selection.clear()
 
     @pyqtSlot()
     def resetAllTranslation(self):

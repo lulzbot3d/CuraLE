@@ -305,6 +305,7 @@ class PostProcessingPlugin(QObject, Extension):
 
     @pyqtSlot()
     def writeScriptsToStack(self) -> None:
+        Logger.log("i", "Writing Post-Processing Scripts to the Stack")
         script_list_strs = []  # type: List[str]
         for script in self._script_list:
             parser = configparser.ConfigParser(interpolation = None)  # We'll encode the script as a config with one section. The section header is the key and its values are the settings.

@@ -244,7 +244,7 @@
         "favorites_row_selected": [196, 239, 255, 255],
         "first_run_shadow": [50, 50, 50, 255],
 
-        "icon": [8, 7, 63, 255],
+        "icon": [0, 0, 0, 255],
         "info_button": [127, 127, 127, 255],
 
         "job_specs_background": [117, 117, 117, 1],
@@ -504,9 +504,9 @@
         "tool_button_border": [255, 255, 255, 0],
         "tool_panel_background": [255, 255, 255, 255],
         "toolbar_background": [255, 255, 255, 255],
-        "toolbar_button_active": [232, 242, 252, 255],
-        "toolbar_button_active_hover": [232, 242, 252, 255],
-        "toolbar_button_hover": [232, 242, 252, 255],
+        "toolbar_button_active": [193, 216, 47, 255],
+        "toolbar_button_active_hover": [193, 216, 47, 255],
+        "toolbar_button_hover": [226, 232, 104, 255],
         "tooltip": [120, 136, 20, 255],
         "tooltip_text": [255, 255, 255, 255],
         "topbar_background_color": [255, 255, 255, 255],

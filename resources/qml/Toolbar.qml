@@ -131,7 +131,7 @@ Item {
         // Used to create a rounded rectangle behind the filamentChangeButton
         Rectangle {
             anchors {
-                fill: filamentChangeToolButton
+                fill: filamentChangeScope //filamentChangeToolButton
                 leftMargin: -radius - border.width
                 rightMargin: -border.width
                 topMargin: -border.width
@@ -146,12 +146,28 @@ Item {
             id: filamentChangeToolButton
             anchors {
                 topMargin: UM.Theme.getSize("default_margin").height
-                top: extruderButtons.bottom
+                top: extruderButtons.visible ? extruderButtons.bottom : toolButtons.bottom
                 right: parent.right
             }
 
+            checkable: true
+            enabled: true
             isTopElement: true
             isBottomElement: true
+        }
+
+        Cura.FilamentChangePanel {
+            id: filamentChangeToolPanel
+            anchors {
+                left: filamentChangeToolButton.right
+                leftMargin: UM.Theme.getSize("default_margin").width
+                bottom: filamentChangeToolButton.bottom
+            }
+            z: buttons.z - 1
+
+            target: Qt.point(parent.right, filamentChangeToolButton.y +  Math.round(UM.Theme.getSize("button").height/2))
+
+            visible: filamentChangeToolButton.checked
         }
     }
 
