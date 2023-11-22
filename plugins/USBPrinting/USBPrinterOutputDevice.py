@@ -269,7 +269,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
             if b"//action:" in line:
                 if b"out_of_filament" in line:
-                    break
+                    Logger.log("i", "Out of Filament reported by printer")
+                    self.pausePrint()
 
                 if b"pause" in line:
                     Logger.log("i", "Pause request from printer")
