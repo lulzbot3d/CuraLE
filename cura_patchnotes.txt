@@ -5,6 +5,13 @@ This file is a work-in-progress; some sections may be incomplete, especially
 	will be updated as new versions are released and will continue to be
 	utilized as the project progresses.
 
+4.13.0-BETAv2.13:
+	Another small one:
+		- Firmware for Pro and derivatives bumped up once again
+		- Disabled jerk control on our Klipper printer profiles
+		- Some small adjustments to naming schemes
+		- Added 2.4mm variant to AST285 Tool Heads
+
 4.13.0-BETAv2.12:
 	Small update!
 		- Couple more small changes to that darn Recommended tab!
