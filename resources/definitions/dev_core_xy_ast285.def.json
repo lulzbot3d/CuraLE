@@ -12,5 +12,9 @@
         {
             "0": "dev_core_xy_ast285_extruder"
         }
+    },
+    "overrides":
+    {
+        "travel_avoid_supports": { "value" : true }
     }
 }

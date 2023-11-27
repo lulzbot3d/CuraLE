@@ -13,5 +13,9 @@
         {
             "0": "taz_workhorse_ast285_extruder"
         }
+    },
+    "overrides":
+    {
+        "travel_avoid_supports": { "value" : true }
     }
 }

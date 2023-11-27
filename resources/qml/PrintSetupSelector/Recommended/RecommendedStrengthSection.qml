@@ -169,8 +169,8 @@ Item {
                     return
                 }
 
-                // Round the slider value to the nearest multiple of 10 (simulate step size of 10)
-                var roundedSliderValue = Math.round(infillSlider.value / 10) * 10
+                // Round the slider value to the nearest multiple of 5 (simulate step size of 5)
+                var roundedSliderValue = Math.round(infillSlider.value / 5) * 5
 
                 // Update the slider value to represent the rounded value
                 infillSlider.value = roundedSliderValue
