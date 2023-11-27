@@ -262,22 +262,23 @@ class FilamentChangeManager(QObject):
             return
 
         # get gcode list for the active build plate
-        active_build_plate_id = CuraApplication.getInstance().getMultiBuildPlateModel().activeBuildPlate
+        active_build_plate_id = cura.CuraApplication.CuraApplication.getInstance().getMultiBuildPlateModel().activeBuildPlate
         gcode_list = gcode_dict[active_build_plate_id]
         if not gcode_list:
             return
 
-        if ";FILAMENT_CHANGES" not in gcode_list[0]:
+        if ";Includes Filament Changes" not in gcode_list[0]:
             try:
-                gcode_list = self.execute_script(gcode_list)
+                gcode_list_modified = self.execute_script(gcode_list)
             except Exception:
                 Logger.logException("e", "Exception in Filament Change script.")
-            if len(self._script_list):  # Add comment to g-code if any changes were made.
-                gcode_list[0] += ";FILAMENT_CHANGES\n"
+            if gcode_list_modified:  # Add comment to g-code if any changes were made.
+                gcode_list_modified[0] += ";Includes Filament Changes\n"
+                gcode_list = gcode_list_modified
             gcode_dict[active_build_plate_id] = gcode_list
             setattr(scene, "gcode_dict", gcode_dict)
         else:
-            Logger.log("w", "Already added filament changes!")
+            Logger.log("d", "Already added filament changes.")
 
 
     def execute_script(self, data: List[str]) -> List[str]:
@@ -287,6 +288,9 @@ class FilamentChangeManager(QObject):
         :return: A similar list, with filament change commands inserted.
         """
         layer_nums = self.getSettingValueByKey("layer_number") # type: str
+
+        if not layer_nums:
+            return []
 
         if "pro" in self._current_printer:
             color_change = "M25"
@@ -316,8 +320,4 @@ class FilamentChangeManager(QObject):
         if self._stack:
             return self._stack.getId()
         return None
-
-    # @pyqtProperty(str, notify = valueChanged)
-    # def filamentChangeLayers(self) -> str:
-    #     return self.getSettingValueByKey("layer_number")
 
