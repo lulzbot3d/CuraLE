@@ -51,6 +51,7 @@
             "default_value": 20,
             "value": "jerk_print if magic_spiralize else 20"
         },
+        "layer_height_0": { "maximum_value_warning": "0.85 * min(extruderValues('machine_nozzle_size'))" },
         "line_width": { "default_value": 0.5 },
         "machine_acceleration": { "default_value": 1000 },
         "machine_baudrate": { "default_value": "250000" },

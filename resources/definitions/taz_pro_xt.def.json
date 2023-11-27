@@ -20,10 +20,10 @@
         ],
         "file_formats": "text/x-gcode",
         "has_optional_bltouch": true,
-        "firmware_latest_version": "2.1.3.0.13",
-        "firmware_file": "Pro_XT/Marlin_TAZProXT_Universal_2.1.3.0.13_9bb6323.bin",
-        "firmware_bltouch_latest_version": "2.1.3.0.13-BLTouch",
-        "firmware_file_bltouch": "Pro_XT/Marlin_TAZProXT_Universal_BLTouch_2.1.3.0.13_9bb6323.bin"
+        "firmware_latest_version": "2.1.3.0.15",
+        "firmware_file": "Pro_XT/Marlin_TAZProXT_Universal_2.1.3.0.15_30a6ed4.bin",
+        "firmware_bltouch_latest_version": "2.1.3.0.15-BLTouch",
+        "firmware_file_bltouch": "Pro_XT/Marlin_TAZProXT_Universal_BLTouch_2.1.3.0.15_30a6ed4.bin"
     },
     "overrides":
     {
