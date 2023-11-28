@@ -37,6 +37,10 @@
       <setting key="soften temperature">180</setting>
       <setting key="wipe temperature">190</setting>
       <setting key="heated bed temperature">50</setting>
+      <hotend id="1.2 mm" />
+      <hotend id="2.4 mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
     </machine>
 
     <machine>
