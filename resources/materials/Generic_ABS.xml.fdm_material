@@ -33,11 +33,11 @@
       <machine_identifier product="taz_pro_lb_ast285"/>
       <machine_identifier product="taz_pro_xt_ast285"/>
       <machine_identifier product="taz_workhorse_ast285"/>
-      <setting key="hardware compatible">no</setting>
       <setting key="print temperature">250</setting>
       <setting key="heated bed temperature">110</setting>
       <hotend id="1.2 mm" />
       <hotend id="2.4 mm">
+        <setting key="hardware compatible">no</setting>
       </hotend>
     </machine>
 
