@@ -16,7 +16,6 @@ from UM.Settings.ContainerRegistry import ContainerRegistry
 from UM.Settings.ContainerStack import ContainerStack
 from UM.Settings.DefinitionContainer import DefinitionContainer
 from UM.Settings.InstanceContainer import InstanceContainer
-from UM.Signal import Signal, signalemitter
 
 import cura.CuraApplication
 
@@ -24,7 +23,6 @@ if TYPE_CHECKING:
     from UM.Settings.Interfaces import DefinitionContainerInterface
     from cura.CuraApplication import CuraApplication
 
-@signalemitter
 class FilamentChangeManager(QObject):
     """
     Provides the tool to trigger a filament change at specific layers
@@ -48,15 +46,13 @@ class FilamentChangeManager(QObject):
         self._global_container_stack = Application.getInstance().getGlobalContainerStack()
         if self._global_container_stack:
             self._global_container_stack.metaDataChanged.connect(self._restoreSettingsFromMetadata)
-            self._current_printer = self._global_container_stack.getId()
 
         Application.getInstance().getOutputDeviceManager().writeStarted.connect(self.execute)
         Application.getInstance().globalContainerStackChanged.connect(self._onGlobalContainerStackChanged)
 
-        self.initialize()
+        self._onGlobalContainerStackChanged()
 
-    settingsLoaded = Signal()
-    valueChanged = Signal()  # Signal emitted whenever a value of a setting is changed
+
     stackChanged = pyqtSignal()
 
     ##
@@ -70,7 +66,7 @@ class FilamentChangeManager(QObject):
         self._stack = ContainerStack(stack_id=str(id(self)))
         self._stack.setDirty(False)  # This stack does not need to be saved.
 
-        ## Check if the definition of this script already exists. If not, add it to the registry.
+        ## Check if the definition for Filament Change already exists. If not, add it to the registry.
         if "key" in setting_data:
             definitions = ContainerRegistry.getInstance().findDefinitionContainers(id=setting_data["key"])
             if definitions:
@@ -100,9 +96,6 @@ class FilamentChangeManager(QObject):
         if self._global_container_stack is None or self._instance is None:
             return
 
-        for key in ["machine_gcode_flavor"]:
-            self._instance.setProperty(key, "value", self._global_container_stack.getProperty(key, "value"))
-
         self._current_printer = self._global_container_stack.getId()
 
 
@@ -123,7 +116,7 @@ class FilamentChangeManager(QObject):
         if new_stack is None:
             return
         if not new_stack.getMetaDataEntry(self._metadata_name):  # Missing or empty.
-            self.stackChanged.emit() # This *should* generate a stack for us...
+            self.stackChanged.emit()
             return
 
         script_string = new_stack.getMetaDataEntry(self._metadata_name)
@@ -170,7 +163,6 @@ class FilamentChangeManager(QObject):
 
     def _onPropertyChanged(self, key: str, property_name: str) -> None:
         if property_name == "value":
-            self.valueChanged.emit()
 
             # Property changed: trigger reslice
             # To do this we use the global container stack propertyChanged.
@@ -194,10 +186,8 @@ class FilamentChangeManager(QObject):
         serialized = io.StringIO()  # ConfigParser can only write to streams. Fine.
         parser.write(serialized)
         serialized.seek(0)
-        script_str = serialized.read()
-        script_str = script_str.replace("\\\\", r"\\\\").replace("\n", r"\\\n")  # Escape newlines because configparser sees those as section delimiters.
-
-        script_string = "\n".join(script_str)  # ConfigParser should never output three newlines in a row when serialised, so it's a safe delimiter.
+        script_string = serialized.read()
+        script_string = script_string.replace("\\\\", r"\\\\").replace("\n", r"\\\n")  # Escape newlines because configparser sees those as section delimiters.
 
         if self._global_container_stack is None:
             return

@@ -23,11 +23,6 @@ from UM.i18n import i18nCatalog
 from cura import ApplicationMetadata
 from cura.CuraApplication import CuraApplication
 
-import os.path
-import pkgutil
-import sys
-import importlib.util
-
 from UM.i18n import i18nCatalog
 i18n_catalog = i18nCatalog("cura")
 

@@ -12,18 +12,43 @@ Item {
     id: base
 
     height: childrenRect.height
-    width: childrenRect.width
+    width: mainColumn.width //childrenRect.width
     property int columnSpacing: UM.Theme.getSize("default_margin").height
     property int rowSpacing: UM.Theme.getSize("default_margin").width
     UM.I18nCatalog { id: catalog; name: "uranium"}
 
+    property var manager: Cura.FilamentChangeManager
+    property int changeLayerCount: {
+            let layers = provider.properties.value;
+            let layer_count = 0;
+            if (layers) {
+                layer_count = layers.split(",").length;
+            };
+            return layer_count;
+        }
+
+    function showTooltip(item, position, text) {
+        tooltip.text = text;
+        position = item.mapToItem(backgroundItem, position.x - UM.Theme.getSize("default_arrow").width, position.y);
+        tooltip.show(position);
+    }
+
+    function hideTooltip() {
+        tooltip.hide();
+    }
+
     ColumnLayout {
         id: mainColumn
+
+        width: UM.Theme.getSize("setting_control").width * 3
 
         spacing: columnSpacing
 
         RowLayout {
             id: infoRow
+
+            Layout.fillWidth: true
+            Layout.maximumWidth: parent.width
 
             spacing: rowSpacing
 
@@ -36,6 +61,9 @@ Item {
         RowLayout {
             id: controlsRow
 
+            Layout.fillWidth: true
+            Layout.maximumWidth: parent.width
+
             spacing: rowSpacing
 
             function getUserInput() {
@@ -46,54 +74,72 @@ Item {
             }
 
             function addUserInput() {
-                let newLayers = getUserInput();
-                let currentLayers = provider.properties.value;
-                console.log("Current: " + currentLayers)
+                let newLayers = getUserInput()
+                let currentLayers = provider.properties.value
                 if (!currentLayers) {
                     currentLayers = []
                 } else {
-                    currentLayers = currentLayers.split(',');
+                    currentLayers = currentLayers.split(',')
                 }
                 for (let i = 0; i < newLayers.length; i++) {
                     if (currentLayers.includes(newLayers[i])) {
                         continue;
                     }
-                    currentLayers.push(newLayers[i]);
+                    currentLayers.push(newLayers[i])
                 }
-                currentLayers.sort((a, b) => a - b);
-                let out = currentLayers.join()
-                console.log("Out: " + out)
+                currentLayers.sort((a, b) => a - b)
+                let out = currentLayers.join();
                 provider.setPropertyValue("value", out)
+                manager.writeSettingsToStack()
             }
 
             function removeUserInput() {
+                let toRemove = getUserInput();
+                let currentLayers = provider.properties.value
+                if (!currentLayers) {
+                    return;
+                } else {
+                    currentLayers = currentLayers.split(',')
+                }
+                let reducedList = []
+                for (let i = 0; i < currentLayers.length; i++) {
+                    if (toRemove.includes(currentLayers[i])) {
+                        continue;
+                    }
+                    reducedList.push(currentLayers[i])
+                }
+                let out = reducedList.join();
+                provider.setPropertyValue("value", out)
+                manager.writeSettingsToStack()
+            }
+
+            function clearCurrentLayers() {
+                provider.setPropertyValue("value", "")
+                manager.writeSettingsToStack()
                 return
             }
 
             TextField {
                 id: layersTextField
-                Layout.preferredWidth: UM.Theme.getSize("setting_control").width
+                //Layout.preferredWidth: UM.Theme.getSize("setting_control").width
+                Layout.fillWidth: true
 
-                placeholderText: "Filament Change TextField"
+                placeholderText: "Enter layers..."
                 validator: RegExpValidator { regExp: /^\d[\d*\,* *]*/ }
 
-                onAccepted: {
-                    controlsRow.addUserInput()
-                }
+                onAccepted: controlsRow.addUserInput()
 
                 style: UM.Theme.styles.text_field
             }
 
             Button {
                 id: addButton
-                Layout.preferredWidth: Math.round(UM.Theme.getSize("setting_control").width / 2)
+                Layout.preferredWidth: Math.round(UM.Theme.getSize("setting_control").width * .7)
                 text: "Add"
 
                 enabled: layersTextField.length > 0
 
-                onClicked: {
-                    controlsRow.addUserInput()
-                }
+                onClicked: controlsRow.addUserInput()
 
                 style: UM.Theme.styles.toolbox_action_button
             }
@@ -105,12 +151,29 @@ Item {
 
                 enabled: layersTextField.length > 0
 
+                onClicked: controlsRow.removeUserInput()
+
+                style: UM.Theme.styles.toolbox_action_button
+            }
+
+            Button {
+                id: clearButton
+                Layout.preferredWidth: Math.round(UM.Theme.getSize("setting_control").width / 2)
+                text: "Clear"
+
+                enabled: changeLayerCount > 0
+
+                onClicked: controlsRow.clearCurrentLayers()
+
                 style: UM.Theme.styles.toolbox_action_button
             }
         }
 
         RowLayout {
             id: seperatorRow
+
+            Layout.fillWidth: true
+            Layout.maximumWidth: parent.width
 
             spacing: rowSpacing
 
@@ -125,6 +188,9 @@ Item {
         RowLayout {
             id: currentLayersRow
 
+            Layout.fillWidth: true
+            Layout.maximumWidth: parent.width
+
             spacing: rowSpacing
 
             Label {
@@ -132,12 +198,37 @@ Item {
             }
 
             Label {
-                text: {
+                id: currentLayersLabel
+
+                Layout.fillWidth: true
+
+                elide: Text.ElideRight
+                wrapMode: Text.Wrap
+                maximumLineCount: 3
+
+                property string formatLayers: {
                     let val = provider.properties.value
                     if (val) {
-                        return val//.replace(/\,/g, ', ')
+                        return val.replace(/\,/g, ', ')
                     } else {
                         return "None"
+                    }
+                }
+
+                text: {
+                    formatLayers
+                }
+
+                MouseArea {
+                    id: currentLayersMouseArea
+                    anchors.fill: parent
+                    hoverEnabled: true
+
+                    Cura.ToolTip {
+                        id: tooltip
+                        width: UM.Theme.getSize("tooltip").width
+                        tooltipText: currentLayersLabel.formatLayers
+                        visible: parent.containsMouse && currentLayersLabel.truncated
                     }
                 }
             }
@@ -146,7 +237,7 @@ Item {
 
     UM.SettingPropertyProvider {
         id: provider
-        containerStackId: Cura.FilamentChangeManager.currentStackId
+        containerStackId: manager.currentStackId
         key: "layer_number"
         watchedProperties: [ "value" ]
         storeIndex: 0

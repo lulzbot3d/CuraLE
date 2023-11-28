@@ -20,7 +20,7 @@ Popup
 
     contentItem: Grid
     {
-        id: ultimakerPlatformLinksGrid
+        id: platformLinksGrid
         columns: 2
         spacing: UM.Theme.getSize("default_margin").width
 
