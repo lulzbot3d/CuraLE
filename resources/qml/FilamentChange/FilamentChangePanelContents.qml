@@ -125,7 +125,7 @@ Item {
                 Layout.fillWidth: true
 
                 placeholderText: "Enter layers..."
-                validator: RegExpValidator { regExp: /^\d[\d*\,* *]*/ }
+                validator: RegExpValidator { regExp: /^\d[\d*\,*]*/ }
 
                 onAccepted: controlsRow.addUserInput()
 

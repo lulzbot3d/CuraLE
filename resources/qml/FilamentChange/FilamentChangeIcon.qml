@@ -32,10 +32,10 @@ Item {
         UM.RecolorImage {
             id: mainIcon
             anchors.fill: parent
-            sourceSize: UM.Theme.getSize("extruder_icon", iconVariant)
+            sourceSize: UM.Theme.getSize("extruder_icon")
             color: UM.Theme.getColor("icon")
 
-            source: UM.Theme.getIcon("Spool")
+            source: UM.Theme.getIcon("ChangeFilament", iconVariant)
         }
 
         Cura.NotificationIcon {
