@@ -12,7 +12,7 @@ Item {
     id: base
 
     height: childrenRect.height
-    width: mainColumn.width //childrenRect.width
+    width: mainColumn.width
     property int columnSpacing: UM.Theme.getSize("default_margin").height
     property int rowSpacing: UM.Theme.getSize("default_margin").width
     UM.I18nCatalog { id: catalog; name: "uranium"}
@@ -121,7 +121,6 @@ Item {
 
             TextField {
                 id: layersTextField
-                //Layout.preferredWidth: UM.Theme.getSize("setting_control").width
                 Layout.fillWidth: true
 
                 placeholderText: "Enter layers..."
@@ -217,6 +216,7 @@ Item {
 
                 text: {
                     formatLayers
+                    //provider.containerStackId
                 }
 
                 MouseArea {
