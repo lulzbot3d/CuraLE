@@ -16,5 +16,9 @@
         "firmware_file": "Mini/Marlin_MiniLCD_M175_2.0.0.144.1_8c651988.hex",
         "firmware_no_lcd_latest_version": "2.0.0.144.1",
         "firmware_file_no_lcd": "Mini/Marlin_Mini_M175_2.0.0.144.1_8c651988.hex"
+    },
+    "overrides":
+    {
+        "machine_name": { "default_value": "LulzBot Mini 1 | M175" }
     }
 }

@@ -12,5 +12,9 @@
         {
             "0": "taz_pro_lb_sl_extruder"
         }
+    },
+    "overrides":
+    {
+        "machine_name": { "default_value": "LulzBot TAZ Pro Long Bed | SL" }
     }
 }

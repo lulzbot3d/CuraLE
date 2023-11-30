@@ -12,5 +12,9 @@
         {
             "0": "taz_workhorse_sl_extruder"
         }
+    },
+    "overrides":
+    {
+        "machine_name": { "default_value": "LulzBot TAZ Workhorse | SL" }
     }
 }

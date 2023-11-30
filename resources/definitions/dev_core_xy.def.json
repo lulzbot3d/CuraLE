@@ -17,11 +17,12 @@
     },
     "overrides":
     {
+        "machine_name": { "default_value": "LulzBot Core XY" },
         "machine_width": { "default_value": 250 },
         "machine_depth": { "default_value": 250 },
         "machine_height": { "default_value": 110 },
         "machine_max_feedrate_z": { "default_value": 25 },
-        "machine_start_gcode": { "default_value": "START EXTRUDER_TEMP={material_print_temperature_layer_0} BED_TEMP={material_bed_temperature_layer_0}\nPURGE" },
+        "machine_start_gcode": { "default_value_from_file": "dev_core_xy/dev_core_xy_start" },
         "machine_end_gcode": { "default_value": "END" },
         "machine_has_bltouch": { "value": true }
     }

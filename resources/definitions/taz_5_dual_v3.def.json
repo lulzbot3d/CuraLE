@@ -18,7 +18,7 @@
     },
     "overrides":
     {
-        "machine_name": { "default_value": "LulzBot TAZ 5 DualExtruder v3" },
+        "machine_name": { "default_value": "LulzBot TAZ 5 | Dual v3" },
         "machine_start_gcode": { "default_value_from_file": "taz_5/taz_5_dual_start" },
         "machine_end_gcode": { "default_value_from_file": "taz_5/taz_5_dual_end" },
         "machine_extruder_count": { "default_value": 2 },

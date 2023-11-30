@@ -1,4 +1,13 @@
-; This profile was specifically generated for a TAZ 5 3D Printer with Flexystruder v2 Tool Head
+;This G-Code has been generated specifically for the {machine_name}
+
+;SETTINGS
+;Nozzle diameter = {machine_nozzle_size}mm
+;Filament name = {material_brand} {material_name}
+;Filament type = {material_type} {material_diameter}
+;Filament weight = {filament_weight}
+;Extruder temp = M109 S{material_print_temperature}
+;Bed temp = M190 S{material_bed_temperature}
+
 M140 S{material_bed_temperature_layer_0}    ; start bed heating up
 M73 P0                              ; clear GLCD progress bar
 M75			; start GLCD timer
@@ -19,3 +28,4 @@ G92 E0                  ; zero the extruded length again
 G1 F{speed_travel}      ; set travel speed
 M203 X192 Y208 Z3       ; speed limits
 M117 Printing...        ; send message to LCD
+;Start G-Code End

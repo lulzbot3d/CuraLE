@@ -1,4 +1,22 @@
-; This profile is designed specifically for the LulzBot TAZ Pro with Dual Extruder Tool Head
+;This G-Code has been generated specifically for the {machine_name}
+
+;SETTINGS
+;Extruder 1
+;Nozzle diameter = {machine_nozzle_size_0}mm
+;Filament name = {material_brand_0} {material_name_0}
+;Filament type = {material_type_0} {material_diameter_0}
+;Filament weight = {filament_weight}
+;Extruder temp = M109 S{material_print_temperature_0}
+
+;Extruder 2
+;Nozzle diameter = {machine_nozzle_size_1}mm
+;Filament name = {material_brand_1} {material_name_1}
+;Filament type = {material_type_1} {material_diameter_1}
+;Filament weight = {filament_weight_1}
+;Extruder temp = M109 S{material_print_temperature_1}
+
+;Bed temp = M190 S{material_bed_temperature}
+
 T0
 M82                                                ;absolute extrusion mode
 M73 P0                                             ; clear GLCD progress bar
@@ -136,9 +154,10 @@ G1 Z1.00                                           ; clear bed (barely)
 G1 X120 Y10 F4000                                  ; move above bed to shear off filament
 G0 Z5.45
 T0                                                 ; set extruder
-M190 R60  				                           ; get bed temping up during first layer
+M190 R{material_bed_temperature_layer_0}           ; get bed temping up during first layer
 G1 Z2 E0 F75                                       ; raise head and 0 extruder
 M82					                               ; set to absolute mode
 M400                                               ; clear buffer
 M300 T                                             ; play sound at startr of first layer
 M117 TAZ Pro Printing...                           ; LCD status message
+;Start G-Code End

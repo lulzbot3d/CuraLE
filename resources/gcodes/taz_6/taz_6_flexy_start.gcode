@@ -1,4 +1,13 @@
-; This was specifically sliced for a TAZ 6 with Flexystruder V2 Tool Head
+;This G-Code has been generated specifically for the {machine_name}
+
+;SETTINGS
+;Nozzle diameter = {machine_nozzle_size}mm
+;Filament name = {material_brand} {material_name}
+;Filament type = {material_type} {material_diameter}
+;Filament weight = {filament_weight}
+;Extruder temp = M109 S{material_print_temperature}
+;Bed temp = M190 S{material_bed_temperature}
+
 M73 P0                       ; clear GLCD progress bar
 M75 			             ; start GLCD timer
 G26                          ; clear potential 'probe fail' condition
@@ -58,3 +67,4 @@ M109 R{material_print_temperature_layer_0}  ; wait for extruder to reach printin
 M190 R{material_bed_temperature_layer_0}; get bed temping up during first layer
 G1 Z2 E0 F75                 ; extrude filament back into nozzle
 M117 TAZ Printing...         ; LCD status message
+;Start G-Code End

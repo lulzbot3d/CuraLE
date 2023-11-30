@@ -750,13 +750,23 @@ class CuraEngineBackend(QObject, Backend):
             gcode_list = self._scene.gcode_dict[self._start_slice_job_build_plate] #type: ignore #Because we generate this attribute dynamically.
         except KeyError:  # Can occur if the g-code has been cleared while a slice message is still arriving from the other end.
             gcode_list = []
-        application = CuraApplication.getInstance()
+        print_info = CuraApplication.getInstance().getPrintInformation()
+        currency = CuraApplication.getInstance().getPreferences().getValue("cura/currency")
+        # Store these arrays nicely up here so we can display them nicer
+        mat_lengths = print_info.materialLengths
+        mat_weights = print_info.materialWeights
+        mat_costs = print_info.materialCosts
+        is_dual_extruder = len(mat_lengths) > 1
         for index, line in enumerate(gcode_list):
-            replaced = line.replace("{print_time}", str(application.getPrintInformation().currentPrintTime.getDisplayString(DurationFormat.Format.ISO8601)))
-            replaced = replaced.replace("{filament_amount}", str(application.getPrintInformation().materialLengths))
-            replaced = replaced.replace("{filament_weight}", str(application.getPrintInformation().materialWeights))
-            replaced = replaced.replace("{filament_cost}", str(application.getPrintInformation().materialCosts))
-            replaced = replaced.replace("{jobname}", str(application.getPrintInformation().jobName))
+            replaced = line.replace("{print_time}", str(print_info.currentPrintTime.getDisplayString(DurationFormat.Format.ISO8601)))
+            replaced = replaced.replace("{filament_amount}", (str(mat_lengths[0])+"m"))
+            replaced = replaced.replace("{filament_weight}", ("~"+str(round(float(mat_weights[0]), 2))+"g"))
+            replaced = replaced.replace("{filament_cost}", ((currency + '{:.2f}'.format(round(float(mat_costs[0]), 2))) if mat_costs[0] > 0 else "Unknown"))
+            if is_dual_extruder:
+                replaced = replaced.replace("{filament_amount_1}", (str(mat_lengths[1])+"m"))
+                replaced = replaced.replace("{filament_weight_1}", ("~"+str(round(float(mat_weights[1]), 2))+"g"))
+                replaced = replaced.replace("{filament_cost_1}", ((currency + '{:.2f}'.format(round(float(mat_costs[1]), 2))) if mat_costs[0] > 0 else "Unknown"))
+            replaced = replaced.replace("{jobname}", str(print_info.jobName))
 
             gcode_list[index] = replaced
 
@@ -766,7 +776,7 @@ class CuraEngineBackend(QObject, Backend):
         Logger.log("d", "Number of models per buildplate: %s", dict(self._numObjectsPerBuildPlate()))
 
         # See if we need to process the sliced layers job.
-        active_build_plate = application.getMultiBuildPlateModel().activeBuildPlate
+        active_build_plate = CuraApplication.getInstance().getMultiBuildPlateModel().activeBuildPlate
         if (
             self._layer_view_active and
             (self._process_layers_job is None or not self._process_layers_job.isRunning()) and

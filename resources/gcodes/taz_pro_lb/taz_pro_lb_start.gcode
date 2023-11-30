@@ -1,4 +1,13 @@
-;This G-Code has been generated specifically for LulzBot TAZ Pro Long Bed
+;This G-Code has been generated specifically for the {machine_name}
+
+;SETTINGS
+;Nozzle diameter = {machine_nozzle_size}mm
+;Filament name = {material_brand} {material_name}
+;Filament type = {material_type} {material_diameter}
+;Filament weight = {filament_weight}
+;Extruder temp = M109 S{material_print_temperature}
+;Bed temp = M190 S{material_bed_temperature}
+
 M73 P0                                     ; clear LCD progress bar
 M75                                        ; Start LCD Print Timer
 G26                                        ; clear potential 'probe fail' condition
@@ -24,3 +33,4 @@ M109 R{material_print_temperature_layer_0} ; wait for extruder to reach initial 
 G1 Z2 E0 F75                               ; prime tiny bit of filament into the nozzle
 M300 T                                     ; play sound at startr of first layer
 M117 Long Bed Printing...                  ; progress indicator message on LCD
+;Start G-Code End

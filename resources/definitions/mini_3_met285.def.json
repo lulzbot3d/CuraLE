@@ -11,5 +11,9 @@
         {
             "0": "mini_3_met285_extruder"
         }
+    },
+    "overrides":
+    {
+        "machine_name": { "default_value": "LulzBot Mini 3 | MET285" }
     }
 }

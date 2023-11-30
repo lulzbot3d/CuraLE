@@ -376,12 +376,19 @@ class StartSliceJob(Job):
         # Multiple extruder settings
         for extruder_stack in ExtruderManager.getInstance().getMachineExtruders(CuraApplication.getInstance().getGlobalContainerStack().getId()):
             num = extruder_stack.getMetaDataEntry("position")
+
+            # For instances where you're using multiple different materials
+            result["material_id_%s" % num] = extruder_stack.material.getMetaDataEntry("base_file", "")
+            result["material_type_%s" % num] = extruder_stack.material.getMetaDataEntry("material", "")
+            result["material_name_%s" % num] = extruder_stack.material.getMetaDataEntry("name", "")
+            result["material_brand_%s" % num] = extruder_stack.material.getMetaDataEntry("brand", "")
+
             for key in extruder_stack.getAllKeys():
                 if extruder_stack.getProperty(key, "settable_per_extruder") == False:
                     continue
                 if key in ["material_soften_temperature", "material_wipe_temperature", "material_probe_temperature",
-                           "material_print_temperature_layer_0",
-                           "material_print_temperature"]:
+                           "material_print_temperature_layer_0", "material_print_temperature",
+                           "material_diameter", "machine_nozzle_size"]:
                     result["%s_%s" % (key, num)] = extruder_stack.getProperty(key, "value")
 
 

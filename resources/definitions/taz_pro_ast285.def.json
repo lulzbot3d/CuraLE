@@ -16,6 +16,7 @@
     },
     "overrides":
     {
+        "machine_name": { "default_value": "LulzBot TAZ Pro S | AST285" },
         "travel_avoid_supports": { "value" : true }
     }
 }

@@ -11,5 +11,9 @@
         {
             "0": "dev_core_xy_met175_extruder"
         }
+    },
+    "overrides":
+    {
+        "machine_name": { "default_value": "LulzBot Core XY | MET175" }
     }
 }

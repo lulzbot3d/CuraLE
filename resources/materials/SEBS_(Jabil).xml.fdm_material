@@ -33,7 +33,11 @@
       <machine_identifier product="taz_workhorse_ast285"/>
       <setting key="print temperature">245</setting>
       <setting key="soften temperature">180</setting>
-    <setting key="wipe temperature">190</setting>
+      <setting key="wipe temperature">190</setting>
+      <hotend id="1.2 mm" />
+      <hotend id="2.4 mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
     </machine>
 
     <machine>

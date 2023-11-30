@@ -1,4 +1,22 @@
-;This profile is designed specifically for LulzBot TAZ6 Flexy Dually 3D Printer
+;This G-Code has been generated specifically for the {machine_name}
+
+;SETTINGS
+;Extruder 1
+;Nozzle diameter = {machine_nozzle_size_0}mm
+;Filament name = {material_brand_0} {material_name_0}
+;Filament type = {material_type_0} {material_diameter_0}
+;Filament weight = {filament_weight}
+;Extruder temp = M109 S{material_print_temperature_0}
+
+;Extruder 2
+;Nozzle diameter = {machine_nozzle_size_1}mm
+;Filament name = {material_brand_1} {material_name_1}
+;Filament type = {material_type_1} {material_diameter_1}
+;Filament weight = {filament_weight_1}
+;Extruder temp = M109 S{material_print_temperature_1}
+
+;Bed temp = M190 S{material_bed_temperature}
+
 M73 P0                                            ;resetting progress bar on LCD
 G26                                               ; clear potential 'probe fail' condition
 M107                                              ; disable fans
@@ -69,3 +87,4 @@ T0                                                ; switch back to first extrude
 M190 R{material_bed_temperature_layer_0}          ; get bed temping up during first layer
 G1 Z2 E0 F75                                      ; extrude filament back into nozzle
 M117 TAZ Printing...                              ; LCD status message
+;Start G-Code End

@@ -1,4 +1,4 @@
-;This G-Code is for the LulzBot TAZ 5 with the TWOOLHEAD!
+;This G-Code has been generated specifically for the {machine_name}
 M73 P0 ; clear GLCD progress bar
 G26 ; clear potential 'probe fail' condition
 M107 ; disable fans
@@ -16,3 +16,4 @@ M190 R{material_bed_temperature_layer_0} ; wait for bed to reach printing temp
 G28   ; home printer
 G1 Z2 E0 F75 ; prime tiny bit of filament into the nozzle
 M117 TAZ 5 Printing... ; progress indicator message on LCD
+;Start G-Code End
