@@ -1,4 +1,4 @@
-;This profile is designed specifically for LulzBot TAZ6 Flexy Dually 3D Printer
+;This G-Code has been generated specifically for the {machine_name}
 M73 P0                                            ;resetting progress bar on LCD
 G26                                               ; clear potential 'probe fail' condition
 M107                                              ; disable fans

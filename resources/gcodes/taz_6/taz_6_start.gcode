@@ -1,4 +1,4 @@
-;This G-Code has been generated specifically for the LulzBot TAZ 6 with a Universal Tool Head
+;This G-Code has been generated specifically for the {machine_name}
 ;
 ;The following lines can be uncommented for printer specific fine tuning
 ;More information can be found at https://marlinfw.org/meta/gcode/

@@ -1,4 +1,4 @@
-; This profile is designed specifically for the LulzBot TAZ Pro with Dual Extruder Tool Head
+;This G-Code has been generated specifically for the {machine_name}
 T0
 M82                                                ;absolute extrusion mode
 M73 P0                                             ; clear GLCD progress bar
@@ -136,7 +136,7 @@ G1 Z1.00                                           ; clear bed (barely)
 G1 X120 Y10 F4000                                  ; move above bed to shear off filament
 G0 Z5.45
 T0                                                 ; set extruder
-M190 R60  				                           ; get bed temping up during first layer
+M190 R{material_bed_temperature_layer_0}           ; get bed temping up during first layer
 G1 Z2 E0 F75                                       ; raise head and 0 extruder
 M82					                               ; set to absolute mode
 M400                                               ; clear buffer

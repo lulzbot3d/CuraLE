@@ -1,4 +1,4 @@
-; This profile is designed specifically for the LulzBot TAZ Pro XT with Dual Extruder Tool Head
+;This G-Code has been generated specifically for the {machine_name}
 T0
 M82 ;absolute extrusion mode
 M73 P0                                    ; clear GLCD progress bar

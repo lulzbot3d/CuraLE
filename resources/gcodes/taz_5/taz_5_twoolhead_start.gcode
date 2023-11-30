@@ -1,4 +1,4 @@
-;This G-Code is for the LulzBot TAZ 5 with the TWOOLHEAD!
+;This G-Code has been generated specifically for the {machine_name}
 M73 P0 ; clear GLCD progress bar
 G26 ; clear potential 'probe fail' condition
 M107 ; disable fans

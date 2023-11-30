@@ -1,4 +1,4 @@
-; This profile was specifically generated for a LulzBot Mini with Flexystruder V2
+;This G-Code has been generated specifically for the {machine_name}
 M73 P0                       ; clear GLCD progress bar
 M75			     ; Start GLCD Timer
 G26                          ; clear potential 'probe fail' condition

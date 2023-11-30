@@ -1,4 +1,4 @@
-; This profile was specifically generated for a TAZ 5 3D Printer with Flexystruder v2 Tool Head
+;This G-Code has been generated specifically for the {machine_name}
 M140 S{material_bed_temperature_layer_0}    ; start bed heating up
 M73 P0                              ; clear GLCD progress bar
 M75			; start GLCD timer

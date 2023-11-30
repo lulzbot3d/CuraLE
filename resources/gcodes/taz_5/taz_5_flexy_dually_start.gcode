@@ -1,4 +1,4 @@
-; This profile was specifically created for a TAZ 5 3D Printer with Flexy Dually V2 Tool Head
+;This G-Code has been generated specifically for the {machine_name}
 M73 P0 ; clear GLCD progress bar
 M75	   ;start GLCD timer
 M140 S{material_bed_temperature_layer_0}    ; start bed heating up
