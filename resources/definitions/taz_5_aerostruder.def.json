@@ -12,5 +12,9 @@
         {
             "0": "taz_5_aerostruder_extruder"
         }
+    },
+    "overrides":
+    {
+        "machine_name": { "default_value": "LulzBot TAZ 5 | Aerostruder" }
     }
 }

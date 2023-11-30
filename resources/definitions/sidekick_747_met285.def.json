@@ -12,5 +12,9 @@
         {
             "0": "sidekick_747_met285_extruder"
         }
+    },
+    "overrides":
+    {
+        "machine_name": { "default_value": "LulzBot SideKick 747 | MET285" }
     }
 }

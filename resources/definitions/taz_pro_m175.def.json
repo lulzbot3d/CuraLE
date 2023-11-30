@@ -12,5 +12,9 @@
         {
             "0": "taz_pro_m175_extruder"
         }
+    },
+    "overrides":
+    {
+        "machine_name": { "default_value": "LulzBot TAZ Pro S | M175 v2" }
     }
 }

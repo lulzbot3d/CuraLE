@@ -25,6 +25,7 @@
     },
     "overrides":
     {
+        "machine_name": { "default_value": "LulzBot TAZ Pro" },
         "firmware_machine_type": { "default_value": "LulzBot TAZ Pro" },
         "machine_start_gcode": { "default_value_from_file": "taz_pro/taz_pro_start" },
         "machine_end_gcode": { "default_value_from_file": "taz_pro/taz_pro_end" },

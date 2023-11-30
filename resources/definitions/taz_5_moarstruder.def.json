@@ -17,9 +17,6 @@
     },
     "overrides":
     {
-        "machine_name":
-        {
-            "default_value": "LulzBot TAZ 6 MOARstruder"
-        }
+        "machine_name": { "default_value": "LulzBot TAZ 6 | MOARstruder" }
     }
 }

@@ -12,5 +12,9 @@
         {
             "0": "mini_2_hsplus_extruder"
         }
+    },
+    "overrides":
+    {
+        "machine_name": { "default_value": "LulzBot Mini 2 | HS+" }
     }
 }

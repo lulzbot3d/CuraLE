@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "TAZ ProXT Long Bed",
+    "name": "TAZ Pro XT Long Bed",
     "inherits": "taz",
     "metadata":
     {
@@ -24,6 +24,7 @@
     },
     "overrides":
     {
+        "machine_name": { "default_value": "LulzBot TAZ Pro XT Long Bed" },
         "machine_height": { "default_value": 586 },
         "machine_depth": { "default_value": 582 },
         "machine_acceleration": { "default_value": 300 },
