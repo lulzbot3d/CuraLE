@@ -31,3 +31,4 @@ G0 X0 Y0 F5000
 M109 R{material_print_temperature_layer_0} ; wait for extruder to reach initial printing temp
 M117 SideKick Printing...                  ; progress indicator message on LCD
 G1 Z2 E0 F75                               ; prime tiny bit of filament into the nozzle
+;Start G-Code End

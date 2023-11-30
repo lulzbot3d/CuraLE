@@ -44,3 +44,4 @@ G1 F{speed_travel}
 M190 R{material_bed_temperature_layer_0}  ; wait for bed temperature
 ;Put printing message on LCD screen
 M117 Printing...
+;Start G-Code End

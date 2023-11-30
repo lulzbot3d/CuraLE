@@ -16,3 +16,4 @@ M190 R{material_bed_temperature_layer_0} ; wait for bed to reach printing temp
 G28   ; home printer
 G1 Z2 E0 F75 ; prime tiny bit of filament into the nozzle
 M117 TAZ 5 Printing... ; progress indicator message on LCD
+;Start G-Code End

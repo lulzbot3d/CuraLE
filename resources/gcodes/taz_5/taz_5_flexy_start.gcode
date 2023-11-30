@@ -28,3 +28,4 @@ G92 E0                  ; zero the extruded length again
 G1 F{speed_travel}      ; set travel speed
 M203 X192 Y208 Z3       ; speed limits
 M117 Printing...        ; send message to LCD
+;Start G-Code End

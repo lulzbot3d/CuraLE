@@ -67,3 +67,4 @@ M109 R{material_print_temperature_layer_0}  ; wait for extruder to reach printin
 M190 R{material_bed_temperature_layer_0}; get bed temping up during first layer
 G1 Z2 E0 F75                 ; extrude filament back into nozzle
 M117 TAZ Printing...         ; LCD status message
+;Start G-Code End

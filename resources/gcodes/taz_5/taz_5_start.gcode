@@ -27,3 +27,4 @@ G92 E0                                      ; re-set extruder position to 0
 G1 F{speed_travel}                          ; set travel speed
 M203 X192 Y208 Z3                           ; set limits on travel speed
 M117 TAZ 5 Printing...                      ; progress indicator message on LCD
+;Start G-Code End
