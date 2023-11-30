@@ -757,17 +757,7 @@ class CuraEngineBackend(QObject, Backend):
         mat_weights = print_info.materialWeights
         mat_costs = print_info.materialCosts
         is_dual_extruder = len(mat_lengths) > 1
-        generated_with_line = None
-        m82_line = None
         for index, line in enumerate(gcode_list):
-            if index == 1:
-                print(line)
-            if ";Generated with Cura_SteamEngine" in line:
-                generated_with_line = index
-                print(";Generated with Cura_SteamEngine exists at index " + str(generated_with_line))
-            if "M82 ;absolute extrusion mode" in line and generated_with_line != None and m82_line == None:
-                m82_line = index
-                print("M82 ;absolute extrusion mode exists at index " + str(m82_line))
             replaced = line.replace("{print_time}", str(print_info.currentPrintTime.getDisplayString(DurationFormat.Format.ISO8601)))
             replaced = replaced.replace("{filament_amount}", (str(mat_lengths[0])+"m"))
             replaced = replaced.replace("{filament_weight}", ("~"+str(round(float(mat_weights[0]), 2))+"g"))
