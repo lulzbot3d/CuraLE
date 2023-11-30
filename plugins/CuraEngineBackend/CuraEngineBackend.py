@@ -760,11 +760,11 @@ class CuraEngineBackend(QObject, Backend):
         for index, line in enumerate(gcode_list):
             replaced = line.replace("{print_time}", str(print_info.currentPrintTime.getDisplayString(DurationFormat.Format.ISO8601)))
             replaced = replaced.replace("{filament_amount}", (str(mat_lengths[0])+"m"))
-            replaced = replaced.replace("{filament_weight}", (str(round(float(mat_weights[0]), 2))+"g"))
+            replaced = replaced.replace("{filament_weight}", ("~"+str(round(float(mat_weights[0]), 2))+"g"))
             replaced = replaced.replace("{filament_cost}", ((currency + '{:.2f}'.format(round(float(mat_costs[0]), 2))) if mat_costs[0] > 0 else "Unknown"))
             if is_dual_extruder:
                 replaced = replaced.replace("{filament_amount_1}", (str(mat_lengths[1])+"m"))
-                replaced = replaced.replace("{filament_weight_1}", (str(round(float(mat_weights[1]), 2))+"g"))
+                replaced = replaced.replace("{filament_weight_1}", ("~"+str(round(float(mat_weights[1]), 2))+"g"))
                 replaced = replaced.replace("{filament_cost_1}", ((currency + '{:.2f}'.format(round(float(mat_costs[1]), 2))) if mat_costs[0] > 0 else "Unknown"))
             replaced = replaced.replace("{jobname}", str(print_info.jobName))
 
