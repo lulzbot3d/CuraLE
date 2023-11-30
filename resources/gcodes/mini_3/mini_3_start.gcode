@@ -1,5 +1,6 @@
 ;This G-Code has been generated specifically for the {machine_name}
 
+;SETTINGS
 ;Nozzle diameter = {machine_nozzle_size}mm
 ;Filament name = {material_brand} {material_name}
 ;Filament type = {material_type} {material_diameter}

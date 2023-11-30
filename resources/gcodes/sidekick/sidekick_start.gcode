@@ -1,5 +1,13 @@
 ;This G-Code has been generated specifically for the {machine_name}
-;
+
+;SETTINGS
+;Nozzle diameter = {machine_nozzle_size}mm
+;Filament name = {material_brand} {material_name}
+;Filament type = {material_type} {material_diameter}
+;Filament weight = {filament_weight}
+;Extruder temp = M109 S{material_print_temperature}
+;Bed temp = M190 S{material_bed_temperature}
+
 ;The following lines can be uncommented for printer specific fine tuning
 ;More information can be found at https://marlinfw.org/meta/gcode/ (Note: current values are based on SE Tool Head)
 ;
