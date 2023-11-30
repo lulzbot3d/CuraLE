@@ -90,7 +90,7 @@ Item {
                 currentLayers.sort((a, b) => a - b)
                 let out = currentLayers.join();
                 provider.setPropertyValue("value", out)
-                manager.writeSettingsToStack()
+                manager.writeScriptToStack()
             }
 
             function removeUserInput() {
@@ -110,12 +110,12 @@ Item {
                 }
                 let out = reducedList.join();
                 provider.setPropertyValue("value", out)
-                manager.writeSettingsToStack()
+                manager.writeScriptToStack()
             }
 
             function clearCurrentLayers() {
                 provider.setPropertyValue("value", "")
-                manager.writeSettingsToStack()
+                manager.writeScriptToStack()
                 return
             }
 
@@ -237,7 +237,7 @@ Item {
 
     UM.SettingPropertyProvider {
         id: provider
-        containerStackId: manager.currentStackId
+        containerStackId: manager.scriptStackId
         key: "layer_number"
         watchedProperties: [ "value" ]
         storeIndex: 0

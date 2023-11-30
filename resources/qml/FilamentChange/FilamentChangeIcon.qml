@@ -52,7 +52,7 @@ Item {
 
     UM.SettingPropertyProvider {
         id: provider
-        containerStackId: Cura.FilamentChangeManager.currentStackId
+        containerStackId: Cura.FilamentChangeManager.scriptStackId
         key: "layer_number"
         watchedProperties: [ "value" ]
     }
