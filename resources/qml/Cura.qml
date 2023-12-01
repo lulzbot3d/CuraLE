@@ -315,8 +315,6 @@ UM.MainWindow {
                 id: stageMenu
 
                 anchors {
-                    // top: topbar.bottom
-                    // bottom: parent.bottom
                     left: parent.left
                     right: parent.right
                     top: parent.top
