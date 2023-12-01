@@ -37,134 +37,129 @@ Item {
         tooltip.hide();
     }
 
+    function getUserInput() {
+        let user_input = layersTextField.text.replace(/ /g, '').split(',');
+        let filtered_input = user_input.filter((x) => x != '');
+        layersTextField.text = ""
+        return filtered_input;
+    }
+
+    function addUserInput() {
+        let newLayers = getUserInput()
+        let currentLayers = provider.properties.value
+        if (!currentLayers) {
+            currentLayers = []
+        } else {
+            currentLayers = currentLayers.split(',')
+        }
+        for (let i = 0; i < newLayers.length; i++) {
+            if (currentLayers.includes(newLayers[i])) {
+                continue;
+            }
+            currentLayers.push(newLayers[i])
+        }
+        currentLayers.sort((a, b) => a - b)
+        let out = currentLayers.join();
+        provider.setPropertyValue("value", out)
+        manager.writeScriptToStack()
+    }
+
+    function removeLayer(toRemove) {
+        let currentLayers = provider.properties.value
+        if (!currentLayers) {
+            return;
+        } else {
+            currentLayers = currentLayers.split(',')
+        }
+        let reducedList = []
+        for (let i = 0; i < currentLayers.length; i++) {
+            if (toRemove.includes(currentLayers[i])) {
+                continue;
+            }
+            reducedList.push(currentLayers[i])
+        }
+        let out = reducedList.join();
+        provider.setPropertyValue("value", out)
+        manager.writeScriptToStack()
+    }
+
+    function clearCurrentLayers() {
+        provider.setPropertyValue("value", "")
+        manager.writeScriptToStack()
+        return
+    }
+
     ColumnLayout {
         id: mainColumn
 
-        width: UM.Theme.getSize("setting_control").width * 3
+        width: UM.Theme.getSize("setting_control").width * 1.5
 
         spacing: columnSpacing
 
-        RowLayout {
-            id: infoRow
+        Column {
+            id: currentLayersColumn
 
             Layout.fillWidth: true
             Layout.maximumWidth: parent.width
 
-            spacing: rowSpacing
+            spacing: Math.round(columnSpacing / 2)
 
-            Label {
-                id: infoLabel
-                text: "Filament Change Info"
-            }
-        }
+            visible: layersRepeater.count > 0
 
-        RowLayout {
-            id: controlsRow
-
-            Layout.fillWidth: true
-            Layout.maximumWidth: parent.width
-
-            spacing: rowSpacing
-
-            function getUserInput() {
-                let user_input = layersTextField.text.replace(/ /g, '').split(',');
-                let filtered_input = user_input.filter((x) => x != '');
-                layersTextField.text = ""
-                return filtered_input;
-            }
-
-            function addUserInput() {
-                let newLayers = getUserInput()
-                let currentLayers = provider.properties.value
-                if (!currentLayers) {
-                    currentLayers = []
-                } else {
-                    currentLayers = currentLayers.split(',')
-                }
-                for (let i = 0; i < newLayers.length; i++) {
-                    if (currentLayers.includes(newLayers[i])) {
-                        continue;
+            Binding {
+                target: layersRepeater
+                property: "model"
+                value: {
+                    let layers = provider.properties.value
+                    if (layers) {
+                        return layers.split(',')
+                    } else {
+                        return []
                     }
-                    currentLayers.push(newLayers[i])
                 }
-                currentLayers.sort((a, b) => a - b)
-                let out = currentLayers.join();
-                provider.setPropertyValue("value", out)
-                manager.writeScriptToStack()
             }
 
-            function removeUserInput() {
-                let toRemove = getUserInput();
-                let currentLayers = provider.properties.value
-                if (!currentLayers) {
-                    return;
-                } else {
-                    currentLayers = currentLayers.split(',')
-                }
-                let reducedList = []
-                for (let i = 0; i < currentLayers.length; i++) {
-                    if (toRemove.includes(currentLayers[i])) {
-                        continue;
+            Repeater {
+                id: layersRepeater
+
+                model: []
+
+                delegate: ColumnLayout {
+
+                    width: parent.width
+
+                    spacing: Math.round(columnSpacing / 2)
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Layout.maximumWidth: parent.width
+
+                        spacing: rowSpacing
+
+                        Label {
+                            Layout.alignment: Qt.AlignHCenter
+                            Layout.leftMargin: 35
+                            text: modelData
+                        }
+                        Button {
+                            Layout.preferredWidth: Math.round(UM.Theme.getSize("setting_control").width * .5)
+                            Layout.alignment: Qt.AlignRight
+                            text: "Remove"
+
+                            onClicked: base.removeLayer(modelData)
+
+                            style: UM.Theme.styles.toolbox_action_button
+                        }
                     }
-                    reducedList.push(currentLayers[i])
+                    Rectangle {
+                        Layout.preferredHeight: UM.Theme.getSize("default_lining").height
+                        Layout.fillWidth: true
+
+                        visible: layersRepeater.count - 1 != index
+
+                        color: UM.Theme.getColor("text_subtext")
+                    }
                 }
-                let out = reducedList.join();
-                provider.setPropertyValue("value", out)
-                manager.writeScriptToStack()
-            }
-
-            function clearCurrentLayers() {
-                provider.setPropertyValue("value", "")
-                manager.writeScriptToStack()
-                return
-            }
-
-            TextField {
-                id: layersTextField
-                Layout.fillWidth: true
-
-                placeholderText: "Enter layers..."
-                validator: RegExpValidator { regExp: /^\d[\d*\,*]*/ }
-
-                onAccepted: controlsRow.addUserInput()
-
-                style: UM.Theme.styles.text_field
-            }
-
-            Button {
-                id: addButton
-                Layout.preferredWidth: Math.round(UM.Theme.getSize("setting_control").width * .7)
-                text: "Add"
-
-                enabled: layersTextField.length > 0
-
-                onClicked: controlsRow.addUserInput()
-
-                style: UM.Theme.styles.toolbox_action_button
-            }
-
-            Button {
-                id: removeButton
-                Layout.preferredWidth: Math.round(UM.Theme.getSize("setting_control").width / 2)
-                text: "Remove"
-
-                enabled: layersTextField.length > 0
-
-                onClicked: controlsRow.removeUserInput()
-
-                style: UM.Theme.styles.toolbox_action_button
-            }
-
-            Button {
-                id: clearButton
-                Layout.preferredWidth: Math.round(UM.Theme.getSize("setting_control").width / 2)
-                text: "Clear"
-
-                enabled: changeLayerCount > 0
-
-                onClicked: controlsRow.clearCurrentLayers()
-
-                style: UM.Theme.styles.toolbox_action_button
             }
         }
 
@@ -173,6 +168,8 @@ Item {
 
             Layout.fillWidth: true
             Layout.maximumWidth: parent.width
+
+            visible: layersRepeater.visible
 
             spacing: rowSpacing
 
@@ -185,52 +182,82 @@ Item {
         }
 
         RowLayout {
-            id: currentLayersRow
+            id: inputRow
 
             Layout.fillWidth: true
             Layout.maximumWidth: parent.width
 
-            spacing: rowSpacing
+            spacing: rowSpacing / 2
 
-            Label {
-                text: "Filament Change Layers:"
-            }
-
-            Label {
-                id: currentLayersLabel
-
+            TextField {
+                id: layersTextField
                 Layout.fillWidth: true
 
-                elide: Text.ElideRight
-                wrapMode: Text.Wrap
-                maximumLineCount: 3
+                placeholderText: "Enter layers..."
+                validator: RegExpValidator { regExp: /^\d[\d*\,*]*/ }
 
-                property string formatLayers: {
-                    let val = provider.properties.value
-                    if (val) {
-                        return val.replace(/\,/g, ', ')
-                    } else {
-                        return "None"
-                    }
-                }
+                onAccepted: base.addUserInput()
 
-                text: {
-                    formatLayers
-                    //provider.containerStackId
-                }
+                style: UM.Theme.styles.text_field
+            }
+
+            Button {
+                id: addButton
+                Layout.preferredWidth: Math.round(UM.Theme.getSize("setting_control").width * .5)
+                text: "Add"
+
+                enabled: layersTextField.length > 0
+
+                onClicked: base.addUserInput()
+
+                style: UM.Theme.styles.toolbox_action_button
+            }
+
+            UM.RecolorImage {
+                id: toolInfo
+
+                source: UM.Theme.getIcon("Information")
+                width: UM.Theme.getSize("section_icon").width
+                height: UM.Theme.getSize("section_icon").height
+
+                color: UM.Theme.getColor("icon")
 
                 MouseArea {
-                    id: currentLayersMouseArea
+                    id: toolInfoMouseArea
                     anchors.fill: parent
                     hoverEnabled: true
 
                     Cura.ToolTip {
                         id: tooltip
                         width: UM.Theme.getSize("tooltip").width
-                        tooltipText: currentLayersLabel.formatLayers
-                        visible: parent.containsMouse && currentLayersLabel.truncated
+                        tooltipText: "<h3><b>Before using the Filament Change Tool, slice your print to preview the layers using the layer slider.</b></h3>\
+                                    <h3>Input the layer number(s) where you want to start printing with the new filament; you can add multiple layers \
+                                    at once by typing a comma-separated list (e.g., 10,20,30). Click \"Add\" or press Enter to confirm your selection.</h3>\
+                                    <h3><i>Remember, you must reslice the file after adding any filament changes.</i></h3>"
+                        visible: parent.containsMouse
                     }
                 }
+            }
+        }
+
+        RowLayout {
+            id: clearRow
+
+            Layout.fillWidth: true
+            Layout.maximumWidth: parent.width
+
+            spacing: rowSpacing
+
+            Button {
+                id: clearButton
+                Layout.fillWidth: true
+                text: "Clear All"
+
+                enabled: changeLayerCount > 0
+
+                onClicked: base.clearCurrentLayers()
+
+                style: UM.Theme.styles.toolbox_action_button
             }
         }
     }

@@ -80,6 +80,7 @@ Item {
                         anchors.fill: parent;
                         onClicked: {
                             forceActiveFocus() //First grab focus, so all the text fields are updated
+                            filamentChangeToolButton.checked = false
                             if(parent.checked) {
                                 UM.Controller.setActiveTool(null);
                             }
@@ -139,7 +140,7 @@ Item {
 
             onActiveFocusChanged: {
                 if (activeFocus) {
-                    UM.Controller.setActiveTool(null);
+                    UM.Controller.setActiveTool("CameraTool");
                 } else {
                     filamentChangeToolButton.checked = false
                 }
@@ -166,8 +167,15 @@ Item {
                     right: parent.right
                 }
 
+                onEnabledChanged: {
+                    if (!enabled) {
+                        UM.Controller.setActiveTool(null)
+                        checked = false
+                    }
+                }
+
                 checkable: true
-                enabled: true
+                enabled: UM.Selection.hasSelection && UM.Controller.toolsEnabled
                 isTopElement: true
                 isBottomElement: true
             }
