@@ -388,7 +388,7 @@ class StartSliceJob(Job):
                     continue
                 if key in ["material_soften_temperature", "material_wipe_temperature", "material_probe_temperature",
                            "material_print_temperature_layer_0", "material_print_temperature",
-                           "material_diameter", "machine_nozzle_size"]:
+                           "material_diameter", "machine_nozzle_size", "machine_nozzle_z_offset"]:
                     result["%s_%s" % (key, num)] = extruder_stack.getProperty(key, "value")
 
 
