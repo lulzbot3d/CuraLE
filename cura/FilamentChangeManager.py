@@ -335,10 +335,14 @@ class FilamentChangeScript:
 
         if "pro" in self._current_printer.lower():
             color_change += "M25 ; Pause\n"
-            print_temp = None #self._global_container_stack.getProperty("default_material_print_temperature", "value")
+            start_gcode = data[1].split('\n')
+            print_temp = ""
+            for line in start_gcode:
+                if ";Extruder temp" in line:
+                    print_temp = line[len(";Extruder temp = "):]
             if print_temp:
-                color_change += "M109 S{0} ; Return to printing temperature.\n".format(print_temp)
-            # else: Logger.log("d", "Could not retrieve print temperature to reset Pro printer to after pause.")
+                color_change += "{0} ; Return to printing temperature.\n".format(print_temp)
+            else: Logger.log("d", "Could not retrieve print temperature to reset Pro printer to after pause.")
         else:
             color_change += "M600 ; Filament Change\n"
 
