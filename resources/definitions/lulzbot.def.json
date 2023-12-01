@@ -117,6 +117,15 @@
         {
             "children":
             {
+                "nozzle_z_offset":
+                {
+                    "label": "Nozzle Z Offset",
+                    "description": "Setting for modifying position of nozzle when different nozzles have different lengths",
+                    "enabled": false,
+                    "unit": "mm",
+                    "type": "float",
+                    "default_value": 0.0
+                },
                 "machine_has_lcd":
                 {
                     "label": "Has LCD",
