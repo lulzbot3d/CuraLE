@@ -58,6 +58,8 @@ Item {
             text: catalog.i18nc("@action:button","Multiply")
             property bool needBorder: true
 
+            style: UM.Theme.styles.toolbox_action_button
+
             onClicked: CuraActions.multiplySelection(quantityTextField.value)
         }
     }

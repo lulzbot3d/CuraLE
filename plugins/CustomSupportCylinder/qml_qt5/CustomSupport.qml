@@ -422,6 +422,7 @@ Item
         width: UM.Theme.getSize("setting_control").width
         height: UM.Theme.getSize("setting_control").height
         text: catalog.i18nc("@label", UM.ActiveTool.properties.getValue("SMsg"))
+        style: UM.Theme.styles.toolbox_action_button
         onClicked: UM.ActiveTool.triggerAction("removeAllSupportMesh")
     }
 
