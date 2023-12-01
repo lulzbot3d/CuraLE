@@ -36,7 +36,7 @@
       <setting key="print temperature">230</setting>
       <hotend id="1.2 mm" />
       <hotend id="2.4 mm">
-        <setting key="hardware compatible">no</setting>
+        <setting key="print temperature">225</setting>
       </hotend>
     </machine>
 
