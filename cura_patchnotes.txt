@@ -1,6 +1,6 @@
 						CURA LULZBOT EDITION PATCHNOTES
 
-4.13.0-stable:
+4.13.0:
 	We figure it's about time.
 	Additions:
 		- Added some more support for a 2.4mm nozzle on the AST285
@@ -13,6 +13,7 @@
 			casual users to find and make use of
 		- Made slight corrections to most of our current Galaxy Tool
 			Head profiles to improve overall print quality
+		- Updated Pro Series Printer Firmware to 2.1.3.0.17
 		- Modified wording to signify we're comfortable moving this
 			out of Beta
 
