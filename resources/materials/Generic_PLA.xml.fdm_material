@@ -33,7 +33,7 @@
         <setting key="print temperature">210</setting>
       </hotend>
       <hotend id="2.4 mm">
-        <setting key="print temperature">215</setting>
+        <setting key="print temperature">245</setting>
       </hotend>
     </machine>
 
