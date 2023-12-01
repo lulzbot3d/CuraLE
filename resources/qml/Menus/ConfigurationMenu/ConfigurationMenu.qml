@@ -56,8 +56,8 @@ Cura.ExpandablePopup
                     Layout.maximumWidth: Math.round(parent.width / extrudersModel.count)
                     Layout.fillHeight: true
 
-                    property var activeMachineStack: Cura.MachineManager.activeMachine
-                    property var extruderStack: activeMachineStack != null ? activeMachineStack.extruders != null ? activeMachineStack.extruders[model.index] : null : null
+                    property var activeMachine: Cura.MachineManager.activeMachine
+                    property var extruderStack: activeMachine ? activeMachine.extruderList[model.index] : null
                     property bool valueWarning: !Cura.ExtruderManager.getExtruderHasQualityForMaterial(extruderStack)
                     property bool valueError: extruderStack != null ? Cura.ContainerManager.getContainerMetaDataEntry(extruderStack.material.id, "compatible", "") != "True" : true
 
@@ -100,8 +100,7 @@ Cura.ExpandablePopup
                             }
                             if (extruderItem.valueError)
                             {
-                                // return catalog.i18nc("@tooltip", "The configuration of this extruder is not allowed, and prohibits slicing.")
-                                return "" // Revisit this...
+                                return catalog.i18nc("@tooltip", "The configuration of this extruder is not allowed, and prohibits slicing.")
                             }
                             if (extruderItem.valueWarning)
                             {
@@ -126,8 +125,7 @@ Cura.ExpandablePopup
                         width: UM.Theme.getSize("icon_indicator").width
                         height: UM.Theme.getSize("icon_indicator").height
 
-                        // visible: model.enabled && (extruderItem.valueError || extruderItem.valueWarning)
-                        visible: false
+                        visible: model.enabled && (extruderItem.valueError || extruderItem.valueWarning)
 
                         source:
                         {

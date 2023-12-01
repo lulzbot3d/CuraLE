@@ -22,7 +22,7 @@ Item
     Label
     {
         id: header
-        text: catalog.i18nc("@header", "Custom")
+        text: catalog.i18nc("@header", "Configure")
         font: UM.Theme.getFont("medium")
         color: UM.Theme.getColor("small_button_text")
         height: contentHeight
