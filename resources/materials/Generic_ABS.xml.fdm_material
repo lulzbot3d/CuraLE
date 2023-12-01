@@ -93,6 +93,7 @@
       <machine_identifier product="taz_pro_lb_met285"/>
       <machine_identifier product="taz_pro_xt_met285"/>
       <machine_identifier product="taz_workhorse_met285"/>
+      <setting key="print temperature">250</setting>
     </machine>
 
     <machine>
