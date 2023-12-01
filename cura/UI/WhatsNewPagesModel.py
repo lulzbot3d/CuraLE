@@ -62,11 +62,11 @@ class WhatsNewPagesModel(WelcomePagesModel):
 
     def initialize(self) -> None:
         self._pages = []
-        self._pages.append({"id": "whats_new",
-                            "page_url": self._getBuiltinWelcomePagePath("WhatsNewContent.qml"),
-                            "next_page_button_text": self._catalog.i18nc("@action:button", "Skip"),
-                            "next_page_id": "changelog"
-                            })
+        # self._pages.append({"id": "whats_new",
+        #                     "page_url": self._getBuiltinWelcomePagePath("WhatsNewContent.qml"),
+        #                     "next_page_button_text": self._catalog.i18nc("@action:button", "Skip"),
+        #                     "next_page_id": "changelog"
+        #                     })
         self._pages.append({"id": "changelog",
                             "page_url": self._getBuiltinWelcomePagePath("ChangelogContent.qml"),
                             "next_page_button_text": self._catalog.i18nc("@action:button", "Close"),

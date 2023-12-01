@@ -1,9 +1,20 @@
 						CURA LULZBOT EDITION PATCHNOTES
 
-This file is a work-in-progress; some sections may be incomplete, especially
-	older versions. Older version patch notes may be added over time. The file
-	will be updated as new versions are released and will continue to be
-	utilized as the project progresses.
+4.13.0-stable:
+	We figure it's about time.
+	Additions:
+		- Added some more support for a 2.4mm nozzle on the AST285
+		- Added select settings to the start gcode for all printers
+			that should make interactions with Mainsail nicer along
+			with easier debugging
+	Changes:
+		- Moved the Filament Change script out of PostProcessing and
+			into its own Tool Button. This should make it easier for
+			casual users to find and make use of
+		- Made slight corrections to most of our current Galaxy Tool
+			Head profiles to improve overall print quality
+		- Modified wording to signify we're comfortable moving this
+			out of Beta
 
 4.13.0-BETAv2.13:
 	Another small one:
