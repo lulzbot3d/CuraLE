@@ -40,10 +40,10 @@ Item {
 
             onEntered: {
                 base.showTooltip(strengthSectionTitle, Qt.point(-strengthSectionTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", '<b>Settings in this section are most important for determining overall part strength.</b>\
-                    <p>Set the pattern used for the infill of your print. "Grid" is our recommended pattern as it is relatively efficient \
+                    catalog.i18nc("@label", '<h3><b>Settings in this section are most important for determining overall part strength.</b></h3>\
+                    <h3>Set the pattern used for the infill of your print. "Grid" is our recommended pattern as it is relatively efficient \
                     both in print time and plastic usage while still giving your prints good structural integrity. "Gyroid" has excellent \
-                    compressibility properties. There are additional patterns that may prove useful.</p>'))
+                    compressibility properties. There are additional patterns that may prove useful.</h3>'))
             }
             onExited: base.hideTooltip()
         }
@@ -125,7 +125,7 @@ Item {
 
             onEntered: {
                 base.showTooltip(infillSliderTitle, Qt.point(-infillSliderTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "Set the percentage of the interior that will be filled with infill by volume."))
+                    catalog.i18nc("@label", "<h3>Set the percentage of the interior that will be filled with infill by volume.</h3>"))
             }
             onExited: base.hideTooltip()
         }
@@ -188,54 +188,6 @@ Item {
         }
     }
 
-    // We're moving setting up to where the "Strength" header is? Something about saving room.
-    // Cura.IconWithText {
-    //     id: patternLabel
-    //     anchors {
-    //         top: infillPatternContainer.top
-    //         bottom: infillPatternContainer.bottom
-    //         left: parent.left
-    //         leftMargin: UM.Theme.getSize("wide_margin").width
-    //         right: infillPatternContainer.left
-    //     }
-    //     source: UM.Theme.getIcon("InfillGyroid")
-    //     iconSize: UM.Theme.getSize("medium_button_icon").width // I sure am glad I spent time on this if we're not even gonna use it... :D
-    //     text: catalog.i18nc("@label", "Infill Pattern")
-    //     font: UM.Theme.getFont("small")
-
-    //     MouseArea {
-    //         id: infillPatternMouseArea
-    //         anchors.fill: parent
-    //         hoverEnabled: true
-
-    //         onEntered: {
-    //             base.showTooltip(patternLabel, Qt.point(-patternLabel.x - UM.Theme.getSize("thick_margin").width, 0),
-    //                 catalog.i18nc("@label", 'Set the pattern used for the infill of your print. "Grid" is our recommended pattern as it is relatively efficient both in print time and plastic usage while still giving your prints good structural integrity. "Gyroid" has excellent compressibility properties. There are additional patterns that may prove useful.'))
-    //         }
-    //         onExited: base.hideTooltip()
-    //     }
-    // }
-
-    // Item {
-    //     id: infillPatternContainer
-    //     height: infillPatternComboBox.height
-
-    //     anchors {
-    //         top: infillSliderContainer.bottom
-    //         topMargin: UM.Theme.getSize("thick_margin").height
-    //         left: infillSliderContainer.left
-    //         right: parent.right
-    //     }
-
-    //     Cura.ComboBoxWithOptions {
-    //         id: infillPatternComboBox
-    //         containerStackId: Cura.ExtruderManager.activeExtruderStackId
-    //         settingKey: "infill_pattern"
-    //         controlWidth: infillPatternContainer.width
-    //         useInBuiltTooltip: false
-    //     }
-    // }
-
     UM.SettingPropertyProvider {
         id: infillDensity
         containerStackId: alive ? Cura.MachineManager.activeStack.id : null
@@ -281,8 +233,8 @@ Item {
 
             onEntered: {
                 base.showTooltip(wallCountRowTitle, Qt.point(-wallCountRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "Set the number of solid walls that will be generated on the sides of your print. \
-                    This number plays a large factor in the overall strength of your part."))
+                    catalog.i18nc("@label", "<h3>Set the number of solid walls that will be generated on the sides of your print. \
+                    This number plays a large factor in the overall strength of your part.</h3>"))
             }
             onExited: base.hideTooltip()
         }
@@ -368,8 +320,8 @@ Item {
 
             onEntered: {
                 base.showTooltip(topBottomRowTitle, Qt.point(-topBottomRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "Set the number of solid layers that will be generated on the top and bottom of your print. \
-                    In the dropdown to the right, you can also set the pattern that those layers will be created with."))
+                    catalog.i18nc("@label", "<h3>Set the number of solid layers that will be generated on the top and bottom of your print. \
+                    In the dropdown to the right, you can also set the pattern that those layers will be created with.</h3>"))
             }
             onExited: base.hideTooltip()
         }
