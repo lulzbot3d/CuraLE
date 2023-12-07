@@ -157,36 +157,27 @@ Item {
             Layout.preferredHeight: height
             width: (base.width / 2) - (UM.Theme.getSize("default_margin").width * (3 / 2))
             height: UM.Theme.getSize("setting_control").height * 1.5
-            enabled: false
-            // {
-            //     var name = Cura.MachineManager.activeMachine.name
-            //     if(name.includes("Aerostruder"))
-            //     {
-            //         return false;
-            //     }
-            //     else
-            //     {
-            //         return canSendCommand && true
-            //     }
-            // }
+            enabled: checkEnabled()
 
-            onClicked:
-            {
-                connectedPrinter.coldPull(Cura.MonitorStageStorage.extruderNumber)
+            onClicked: {
+                for (var i = 0; i < printerModel.extruders.length; i++) {
+                    var extruder = printerModel.extruders[i];
+                    if (extruder.isPreheating) {
+                        extruder.cancelPreheatHotend()
+                    }
+                    extruder.setTargetHotendTemperature(145.0)
+                }
             }
 
-            onHoveredChanged:
-            {
-                if (hovered)
-                {
+            onHoveredChanged: {
+                if (hovered) {
                     base.showTooltip(
                         base,
                         {x: -200, y: coldPullButton.mapToItem(base, 0, -10).y},
-                        catalog.i18nc("@tooltip of cold pull", "Currently disabled, may be re-enabled later on!")
+                        catalog.i18nc("@tooltip of cold pull", "Heats your hot end temperature(s) to 145. Once at temperature, \
+                        manually remove filament from Tool Head to help remove residue inside the nozzle.")
                     );
-                }
-                else
-                {
+                } else {
                     base.hideTooltip();
                 }
             }
@@ -205,15 +196,12 @@ Item {
             height: UM.Theme.getSize("setting_control").height * 1.5
             enabled: checkEnabled()
 
-            onClicked:
-            {
+            onClicked: {
                 printerModel.sendRawCommand("M18")
             }
 
-            onHoveredChanged:
-            {
-                if (hovered)
-                {
+            onHoveredChanged: {
+                if (hovered) {
                     base.showTooltip(
                         base,
                         {x: -200, y: disableSteppersButton.mapToItem(base, 0, -10).y},
@@ -221,9 +209,7 @@ Item {
                                         "requiring the motors. This is useful if you need to move the bed or Tool Head assembly manually. Take care " +
                                         "if the printer is still hot.")
                     );
-                }
-                else
-                {
+                } else {
                     base.hideTooltip();
                 }
             }
@@ -242,24 +228,19 @@ Item {
             height: UM.Theme.getSize("setting_control").height * 1.5
             enabled: checkEnabled() && connectedPrinter.supportLevelXAxis
 
-            onClicked:
-            {
+            onClicked: {
                 connectedPrinter.levelXAxis()
             }
 
-            onHoveredChanged:
-            {
-                if (hovered)
-                {
+            onHoveredChanged: {
+                if (hovered) {
                     base.showTooltip(
                         base,
                         {x: -200, y: levelXButton.mapToItem(base, 0, -10).y},
                         catalog.i18nc("@tooltip of level x axis", "Levels the X Axis of the printer on certain printers with belt-driven " +
                                         "Z-axes. Runs a provided leveling G-Code file specific to each supported printer.")
                     );
-                }
-                else
-                {
+                } else {
                     base.hideTooltip();
                 }
             }
@@ -279,24 +260,19 @@ Item {
 
             enabled: checkEnabled() && connectedPrinter.supportWipeNozzle
 
-            onClicked:
-            {
+            onClicked: {
                 connectedPrinter.wipeNozzle()
             }
 
-            onHoveredChanged:
-            {
-                if (hovered)
-                {
+            onHoveredChanged: {
+                if (hovered) {
                     base.showTooltip(
                         base,
                         {x: -200, y: wipeNozzleButton.mapToItem(base, 0, -10).y},
                         catalog.i18nc("@tooltip of wipe nozzle", "Cleans Tool Head nozzles by wiping heated nozzles on the wiper pads of supported printers. " +
                                         "Runs a wipe G-Code file provided for each supported printer.")
                     );
-                }
-                else
-                {
+                } else {
                     base.hideTooltip();
                 }
             }
@@ -315,15 +291,12 @@ Item {
             height: UM.Theme.getSize("setting_control").height * 1.5
             enabled: checkEnabled()
 
-            onClicked:
-            {
+            onClicked: {
                 printerModel.sendRawCommand("G28 O\nG27")
             }
 
-            onHoveredChanged:
-            {
-                if (hovered)
-                {
+            onHoveredChanged: {
+                if (hovered) {
                     base.showTooltip(
                         base,
                         {x: -200, y: toolHeadSwapButton.mapToItem(base, 0, -10).y},
@@ -331,8 +304,7 @@ Item {
                                         "or the Tool Head itself.")
                     );
                 }
-                else
-                {
+                else {
                     base.hideTooltip();
                 }
             }

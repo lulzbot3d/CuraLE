@@ -18,7 +18,7 @@ Item {
     property var connectedPrinter: outputDeviceCount >= 1 ? Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1] : null
 
     implicitWidth: parent.width
-    implicitHeight: UM.Theme.getSize("print_setup_extruder_box").height
+    implicitHeight: Math.round(UM.Theme.getSize("print_setup_extruder_box").height * 0.85)
 
     UM.SettingPropertyProvider {
         id: extruderTemperature
@@ -49,7 +49,7 @@ Item {
             font: UM.Theme.getFont("default")
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.margins: UM.Theme.getSize("default_margin").width
+            anchors.leftMargin: UM.Theme.getSize("default_margin").width
         }
 
         Label { //Target temperature.
@@ -150,7 +150,6 @@ Item {
             anchors.right: preheatButton.left
             anchors.rightMargin: UM.Theme.getSize("default_margin").width
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: UM.Theme.getSize("default_margin").height
             width: UM.Theme.getSize("monitor_preheat_temperature_control").width
             height: UM.Theme.getSize("monitor_preheat_temperature_control").height
             visible: true
@@ -250,7 +249,7 @@ Item {
             }
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            anchors.margins: UM.Theme.getSize("default_margin").width
+            anchors.rightMargin: UM.Theme.getSize("default_margin").width
             style: ButtonStyle {
                 background: Rectangle
                 {

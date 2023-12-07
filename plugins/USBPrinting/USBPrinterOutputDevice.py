@@ -90,6 +90,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
         self._paused = False
         self._printer_busy = False  # When printer is preheating and waiting (M190/M109), or when waiting for action on the printer
+        self._printer_sd_card_printing = False
 
         self.setConnectionText(catalog.i18nc("@info:status", "This is the connection text"))
 

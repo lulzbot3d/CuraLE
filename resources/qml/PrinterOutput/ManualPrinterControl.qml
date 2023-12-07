@@ -50,20 +50,18 @@ Item {
 
     Column {
 
+        spacing: UM.Theme.getSize("default_margin").height
+
         MonitorSection {
             label: catalog.i18nc("@label", "Manual Printer Control")
             width: base.width
-        }
-
-        Label {
-            text: " " // This actually acts as a spacer
         }
 
         Row {
             id: baseControls
 
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
-            height: childrenRect.height + UM.Theme.getSize("default_margin").width
+            height: childrenRect.height
             anchors.left: parent.left
             anchors.topMargin: UM.Theme.getSize("default_margin").height * 100
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
@@ -114,7 +112,7 @@ Item {
         Row {
 
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
-            height: childrenRect.height + UM.Theme.getSize("default_margin").width
+            height: childrenRect.height
             anchors.left: parent.left
             anchors.topMargin: UM.Theme.getSize("default_margin").height * 100
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
@@ -150,7 +148,7 @@ Item {
 
         Row {
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
-            height: childrenRect.height + UM.Theme.getSize("default_margin").width
+            height: childrenRect.height
             anchors.left: parent.left
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
 
@@ -318,7 +316,7 @@ Item {
             id: distancesRow
 
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
-            height: childrenRect.height + UM.Theme.getSize("default_margin").width
+            height: childrenRect.height
             anchors.left: parent.left
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
 
@@ -357,6 +355,136 @@ Item {
             }
         }
 
+        Rectangle {
+            color: UM.Theme.getColor("wide_lining")
+            width: parent.width
+            height: UM.Theme.getSize("thick_lining").width
+        }
+
+        Row {
+            id: extruderChoiceRow
+
+            width: base.width - 2 * UM.Theme.getSize("default_margin").width
+            height: childrenRect.height
+            anchors.left: parent.left
+            anchors.leftMargin: UM.Theme.getSize("default_margin").width
+
+            spacing: UM.Theme.getSize("default_margin").width
+
+            visible: extruderRepeater.count > 1
+
+            enabled: checkEnabled()
+
+            property int selectedExtruder: 0
+
+            Label {
+                text: catalog.i18nc("@label", "Extruder Selected")
+                color: UM.Theme.getColor("setting_control_text")
+                font: UM.Theme.getFont("default")
+
+                width: Math.floor(parent.width * 0.4) - UM.Theme.getSize("default_margin").width
+                height: UM.Theme.getSize("setting_control").height
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            Row {
+
+                Repeater {
+                    id: extruderRepeater
+                    model: machineExtruderCount.properties.value
+                    delegate: Button {
+                        height: UM.Theme.getSize("setting_control").height
+                        width: height + UM.Theme.getSize("default_margin").width
+
+                        text: index + 1
+                        exclusiveGroup: extruderGroup
+                        checkable: true
+                        checked: index == extruderChoiceRow.selectedExtruder
+                        onClicked: {
+                            printerModel.sendRawCommand("T" + index.toString())
+                            extruderChoiceRow.selectedExtruder = index
+                        }
+
+                        style: UM.Theme.styles.monitor_checkable_button_style
+                    }
+                }
+            }
+        }
+
+        Row {
+            id: extrudeRow
+
+            width: base.width - 2 * UM.Theme.getSize("default_margin").width
+            height: childrenRect.height
+            anchors.left: parent.left
+            anchors.leftMargin: UM.Theme.getSize("default_margin").width
+
+            spacing: UM.Theme.getSize("default_margin").width
+
+            enabled: checkEnabled() && printerModel.extruders[extruderChoiceRow.selectedExtruder].hotendTemperature > 160
+
+            Label {
+                text: catalog.i18nc("@label", "Extrude")
+                color: UM.Theme.getColor("setting_control_text")
+                font: UM.Theme.getFont("default")
+
+                width: Math.floor(parent.width * 0.4) - UM.Theme.getSize("default_margin").width
+                height: UM.Theme.getSize("setting_control").height
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            Button {
+                text: "Extrude"
+                style: UM.Theme.styles.monitor_checkable_button_style
+                width: (2 * height) + Math.round(1.5 * UM.Theme.getSize("default_margin").width)
+                height: UM.Theme.getSize("setting_control").height
+
+                onClicked: {
+                    printerModel.sendRawCommand("M83")
+                    printerModel.sendRawCommand("G1 E" + extrudeAmountRow.extrudeAmount.toString() + " F120")
+                    printerModel.sendRawCommand("M82")
+                }
+            }
+
+            Button {
+                text: "Retract"
+                style: UM.Theme.styles.monitor_checkable_button_style
+                width: (2 * height) + Math.round(1.5* UM.Theme.getSize("default_margin").width)
+                height: UM.Theme.getSize("setting_control").height
+
+                onClicked: {
+                    printerModel.sendRawCommand("M83")
+                    printerModel.sendRawCommand("G1 E-" + extrudeAmountRow.extrudeAmount.toString() + " F120")
+                    printerModel.sendRawCommand("M82")
+                }
+            }
+        }
+
+        Row {
+            id: extrudeAmountRow
+
+            width: base.width - 2 * UM.Theme.getSize("default_margin").width
+            height: childrenRect.height
+            anchors.left: parent.left
+            anchors.leftMargin: UM.Theme.getSize("default_margin").width
+
+            spacing: UM.Theme.getSize("default_margin").width
+
+            enabled: checkEnabled()
+
+            property int extrudeAmount: 10
+
+            Label {
+                text: catalog.i18nc("@label", "Extrude Amount")
+                color: UM.Theme.getColor("setting_control_text")
+                font: UM.Theme.getFont("default")
+
+                width: Math.floor(parent.width * 0.4) - UM.Theme.getSize("default_margin").width
+                height: UM.Theme.getSize("setting_control").height
+                verticalAlignment: Text.AlignVCenter
+            }
+        }
+
         PrinterControlWindow {
 	        id: printer_control
             activePrinter: printerModel
@@ -380,6 +508,13 @@ Item {
             }
         }
 
+        UM.SettingPropertyProvider {
+            id: machineExtruderCount
+            containerStack: Cura.MachineManager.activeMachine
+            key: "machine_extruder_count"
+            watchedProperties: ["value"]
+        }
+
         ListModel {
             id: distancesModel
             ListElement { label: "0.1"; value: 0.1 }
@@ -388,5 +523,6 @@ Item {
             ListElement { label: "100"; value: 100 }
         }
         ExclusiveGroup { id: distanceGroup }
+        ExclusiveGroup { id: extruderGroup }
     }
 }

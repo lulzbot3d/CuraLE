@@ -59,9 +59,17 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
 
+            spacing: UM.Theme.getSize("default_margin").height
+
             OutputDeviceHeader {
                 outputDevice: connectedDevice
                 activeDevice: activePrinter
+            }
+
+            MonitorSection {
+                label: catalog.i18nc("@label", "Temperatures")
+                width: base.width
+                visible: true
             }
 
             Rectangle {
@@ -158,16 +166,6 @@ Item {
             MonitorItem {
                 label: catalog.i18nc("@label", "Estimated Time Remaining:")
                 value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal - activePrintJob.timeElapsed) : "N/A"
-                // visible: {
-                //     if(activePrintJob == null) {
-                //         return false
-                //     }
-
-                //     return (activePrintJob.state == "printing" ||
-                //             activePrintJob.state == "resuming" ||
-                //             activePrintJob.state == "pausing" ||
-                //             activePrintJob.state == "paused")
-                // }
                 width: base.width
             }
         }
