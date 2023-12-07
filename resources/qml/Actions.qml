@@ -415,6 +415,7 @@ Item {
         // Unassign the shortcut when there are more than one file providers, since then the file provider's shortcut is
         // enabled instead, and Ctrl+O is assigned to the local file provider
         shortcut: fileProviderModel.count == 1 ? StandardKey.Open : "";
+        onTriggered: UM.Controller.setActiveStage("PrepareStage")
     }
 
     Action {
