@@ -483,6 +483,76 @@ Item {
                 height: UM.Theme.getSize("setting_control").height
                 verticalAlignment: Text.AlignVCenter
             }
+
+            Rectangle { //Input field for extrude amount.
+                id: extrudeAmountControl
+                color: !enabled ? UM.Theme.getColor("setting_control_disabled") : showError ? UM.Theme.getColor("setting_validation_error_background") : UM.Theme.getColor("setting_validation_ok")
+                property var showError: {
+                    if (false) {
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+                enabled: checkEnabled()
+                border.width: UM.Theme.getSize("default_lining").width
+                border.color: !enabled ? UM.Theme.getColor("setting_control_disabled_border") : extruderAmountInputMouseArea.containsMouse ? UM.Theme.getColor("setting_control_border_highlight") : UM.Theme.getColor("setting_control_border")
+                width: UM.Theme.getSize("monitor_preheat_temperature_control").width
+                height: UM.Theme.getSize("monitor_preheat_temperature_control").height
+                visible: true
+                Rectangle { //Highlight of input field.
+                    anchors.fill: parent
+                    anchors.margins: UM.Theme.getSize("default_lining").width
+                    color: UM.Theme.getColor("setting_control_highlight")
+                    opacity: extruderAmountControl.hovered ? 1.0 : 0
+                }
+                MouseArea { //Change cursor on hovering.
+                    id: extruderAmountInputMouseArea
+                    hoverEnabled: true
+                    anchors.fill: parent
+                    cursorShape: Qt.IBeamCursor
+                }
+                Label {
+                    id: unit
+                    anchors.right: parent.right
+                    anchors.rightMargin: UM.Theme.getSize("setting_unit_margin").width
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: "mm";
+                    color: UM.Theme.getColor("setting_unit")
+                    font: UM.Theme.getFont("default")
+                }
+                TextInput {
+                    id: extruderAmountInput
+                    font: UM.Theme.getFont("default")
+                    color: !enabled ? UM.Theme.getColor("setting_control_disabled_text") : UM.Theme.getColor("setting_control_text")
+                    selectByMouse: true
+                    maximumLength: 4
+                    enabled: parent.enabled
+                    validator: RegExpValidator { regExp: /^[0-9]{0,4}$/ }
+                    anchors.left: parent.left
+                    anchors.leftMargin: UM.Theme.getSize("setting_unit_margin").width
+                    anchors.right: unit.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    renderType: Text.NativeRendering
+
+                    text: extrudeAmountRow.extrudeAmount
+
+                    onTextEdited: {
+                        if (extruderAmountInput.text == "") {
+                            extrudeAmountRow.extrudeAmount = 0
+                        } else {
+                            extrudeAmountRow.extrudeAmount = parseInt(extruderAmountInput.text)
+                        }
+                    }
+
+                    onEditingFinished: {
+                        if (extruderAmountInput.text == "") {
+                            extruderAmountInput.text = 0
+                        }
+                    }
+                }
+            }
         }
 
         PrinterControlWindow {
