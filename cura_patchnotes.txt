@@ -1,5 +1,19 @@
 						CURA LULZBOT EDITION PATCHNOTES
 
+4.13.1:
+	Additions:
+		- Monitor tab now includes buttons for extruding and
+			retracting filament
+	Changes:
+		- Updated TAZ Pro series printers firmware to 2.1.3.0.18
+		- Expanded build area of TAZ Pro and TAZ Pro XT printers to
+			285mm x 285mm
+		- Opening the "Open File(s)" dialog now reverts Cura LE back
+			to the Prepare screen
+		- Minor change to end gcode files stops printers from disabling
+			the Y motor at the conclusion of a print, which makes it
+			slightly easier to remove a part from the bed
+
 4.13.0:
 	We figure it's about time.
 	Additions:
