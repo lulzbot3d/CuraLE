@@ -394,7 +394,7 @@ Item {
                     model: machineExtruderCount.properties.value
                     delegate: Button {
                         height: UM.Theme.getSize("setting_control").height
-                        width: height + UM.Theme.getSize("default_margin").width
+                        width: extrudeButton.width + Math.round(UM.Theme.getSize("default_margin").width * 0.5)
 
                         text: index + 1
                         exclusiveGroup: extruderGroup
@@ -434,6 +434,7 @@ Item {
             }
 
             Button {
+                id: extrudeButton
                 text: "Extrude"
                 style: UM.Theme.styles.monitor_checkable_button_style
                 width: (2 * height) + Math.round(1.5 * UM.Theme.getSize("default_margin").width)
@@ -447,6 +448,7 @@ Item {
             }
 
             Button {
+                id: retractButton
                 text: "Retract"
                 style: UM.Theme.styles.monitor_checkable_button_style
                 width: (2 * height) + Math.round(1.5* UM.Theme.getSize("default_margin").width)
@@ -497,14 +499,14 @@ Item {
                 enabled: checkEnabled()
                 border.width: UM.Theme.getSize("default_lining").width
                 border.color: !enabled ? UM.Theme.getColor("setting_control_disabled_border") : extruderAmountInputMouseArea.containsMouse ? UM.Theme.getColor("setting_control_border_highlight") : UM.Theme.getColor("setting_control_border")
-                width: UM.Theme.getSize("monitor_preheat_temperature_control").width
+                width: (extrudeButton.width * 2) + UM.Theme.getSize("default_margin").width
                 height: UM.Theme.getSize("monitor_preheat_temperature_control").height
                 visible: true
                 Rectangle { //Highlight of input field.
                     anchors.fill: parent
                     anchors.margins: UM.Theme.getSize("default_lining").width
                     color: UM.Theme.getColor("setting_control_highlight")
-                    opacity: extruderAmountControl.hovered ? 1.0 : 0
+                    opacity: extrudeAmountControl.hovered ? 1.0 : 0
                 }
                 MouseArea { //Change cursor on hovering.
                     id: extruderAmountInputMouseArea

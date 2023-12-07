@@ -260,12 +260,13 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 if decoded_line != "":
                     self.messageFromPrinter.emit(decoded_line.strip('\n'))
                     ## might want to save these somewhere at some point, could be handy.
-                    ##print(decoded_line.strip('\n'))
             except SerialException:
                 Logger.log("e", "Encountered serial exception! Closing connection.")
                 self.close()
                 self.setConnectionState(ConnectionState.Error)
                 break
+            except TypeError:
+                Logger.log("w", "TypeError encountered.")
 
 
             if b"//action:" in line:
