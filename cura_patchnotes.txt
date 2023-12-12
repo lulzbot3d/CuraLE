@@ -1,5 +1,14 @@
 						CURA LULZBOT EDITION PATCHNOTES
 
+4.13.2: [In-Development]
+	Changes:
+		- Updated default travel speed on Pro Long Bed printers to
+			125mm/s as 175mm/s was likely to quick and may have been
+			contributing to layer shifts.
+	Fixes:
+		- Mini 1 should now be able to connect via USB without having
+			the "Connect to Wrong Printers" setting checked.
+
 4.13.1:
 	Additions:
 		- Monitor tab now includes buttons for extruding and
