@@ -32,6 +32,7 @@
             [[-85,-85],[-85,-77],[-77,-85]]
         ]},
         "machine_name": { "default_value": "LulzBot Mini" },
+        "firmware_machine_type": { "resolve": "'LulzBot Mini LCD' if machine_has_lcd else 'LulzBot Mini'"},
         "machine_width": { "default_value": 154 },
         "machine_depth": { "default_value": 154 },
         "machine_height": { "default_value": 158 },
