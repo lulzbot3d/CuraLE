@@ -76,7 +76,7 @@
             "maximum_value_warning": "0.85 * min(extruderValues('machine_nozzle_size'))",
             "value": "layer_height_0"
         },
-        "retraction_combing": { "value": "'no_outer_surfaces'" },
+        "retraction_combing": { "value": "infill" },
         "retraction_min_travel": { "minimum_value_warning": "line_width * 1.5 if line_width < 1.5 else line_width" },
         "skirt_brim_minimal_length": { "default_value": 50 },
         "skirt_line_count": { "default_value": 2 },

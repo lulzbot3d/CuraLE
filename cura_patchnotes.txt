@@ -5,6 +5,8 @@
 		- Updated default travel speed on Pro Long Bed printers to
 			125mm/s as 175mm/s was likely to quick and may have been
 			contributing to layer shifts.
+		- Changed Horizontal Expansion value from -0.113 back to 0
+		- Switched default combing mode back to "Within Infill"
 	Fixes:
 		- Mini 1 should now be able to connect via USB without having
 			the "Connect to Wrong Printers" setting checked.
