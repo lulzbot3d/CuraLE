@@ -8,8 +8,9 @@
 		- Changed Horizontal Expansion value from -0.113 back to 0
 		- Switched default combing mode back to "Within Infill"
 	Fixes:
-		- Mini 1 should now be able to connect via USB without having
-			the "Connect to Wrong Printers" setting checked.
+		- Mini 1 and TAZ Pro Long Bed should now be able to connect
+			via USB without having the "Connect to Wrong Printers"
+			setting checked.
 
 4.13.1:
 	Additions:
