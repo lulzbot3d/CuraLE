@@ -1,6 +1,6 @@
 						CURA LULZBOT EDITION PATCHNOTES
 
-4.13.2: [In-Development]
+4.13.2:
 	Additions:
 		- Added High Speed profiles for MET285 PLA materials
 	Changes:
