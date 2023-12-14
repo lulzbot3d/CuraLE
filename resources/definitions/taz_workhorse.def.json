@@ -22,7 +22,7 @@
     "overrides":
     {
         "machine_name": { "default_value": "LulzBot TAZ Workhorse" },
-        "firmware_machine_type": { "default_value": "TAZ Workhorse Edition" },
+        "firmware_machine_type": { "default_value": "LulzBot Taz Workhorse" },
         "machine_start_gcode": { "default_value_from_file": "taz_workhorse/taz_workhorse_start" },
         "machine_end_gcode": { "default_value_from_file": "taz_workhorse/taz_workhorse_end" },
         "machine_level_x_axis_gcode": { "default_value_from_file": "taz_pro/taz_pro_level_x_axis" },
