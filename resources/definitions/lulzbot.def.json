@@ -38,7 +38,7 @@
         "acceleration_print": { "default_value": 1000 },
         "acceleration_travel": { "value": "acceleration_print if magic_spiralize else 1000" },
         "brim_line_count": { "default_value": 10 },
-        "infill_before_walls": { "default_value": "False" },
+        "infill_before_walls": { "default_value": false },
         "infill_overlap": { "value": 5 },
         "infill_pattern": { "value": "'grid' if infill_sparse_density > 25 else 'grid'" },
         "infill_sparse_thickness": { "maximum_value_warning": "machine_nozzle_size" },
