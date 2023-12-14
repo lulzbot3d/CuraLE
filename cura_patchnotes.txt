@@ -1,6 +1,8 @@
 						CURA LULZBOT EDITION PATCHNOTES
 
 4.13.2: [In-Development]
+	Additions:
+		- Added High Speed profiles for MET285 PLA materials
 	Changes:
 		- Updated TAZ Pro series printers firmware to 2.1.3.0.19
 		- Updated default travel speed on Pro Long Bed printers to
