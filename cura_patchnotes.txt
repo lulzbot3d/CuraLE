@@ -2,14 +2,19 @@
 
 4.13.2: [In-Development]
 	Changes:
+		- Updated TAZ Pro series printers firmware to 2.1.3.0.19
 		- Updated default travel speed on Pro Long Bed printers to
 			125mm/s as 175mm/s was likely to quick and may have been
 			contributing to layer shifts.
 		- Changed Horizontal Expansion value from -0.113 back to 0
 		- Switched default combing mode back to "Within Infill"
 	Fixes:
-		- Mini 1 should now be able to connect via USB without having
-			the "Connect to Wrong Printers" setting checked.
+		- Mini 1 and TAZ Pro Long Bed should now be able to connect
+			via USB without having the "Connect to Wrong Printers"
+			setting checked.
+		- Fixed some glitchy behavior with the rotate and scale tools
+			de-selecting back to the translate tool whenever you would
+			attempt to use the handles
 
 4.13.1:
 	Additions:
