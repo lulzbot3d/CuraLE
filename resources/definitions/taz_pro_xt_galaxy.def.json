@@ -13,9 +13,9 @@
         "has_variants": true,
         "preferred_variant_name": "0.5 mm",
         "firmware_toolhead_name": "Galaxy Series",
-        "firmware_latest_version": "2.1.3.0.18",
-        "firmware_file": "Pro_XT/Marlin_TAZProXT_Galaxy_2.1.3.0.18_11baf07.bin",
-        "firmware_bltouch_latest_version": "2.1.3.0.18-BLTouch",
-        "firmware_file_bltouch": "Pro_XT/Marlin_TAZProXT_Galaxy_BLTouch_2.1.3.0.18_11baf07.bin"
+        "firmware_latest_version": "2.1.3.0.19",
+        "firmware_file": "Pro_XT/Marlin_TAZProXT_Galaxy_2.1.3.0.19_def3f7b.bin",
+        "firmware_bltouch_latest_version": "2.1.3.0.19-BLTouch",
+        "firmware_file_bltouch": "Pro_XT/Marlin_TAZProXT_Galaxy_BLTouch_2.1.3.0.19_def3f7b.bin"
     }
 }
