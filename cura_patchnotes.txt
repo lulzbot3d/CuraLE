@@ -11,6 +11,9 @@
 		- Mini 1 and TAZ Pro Long Bed should now be able to connect
 			via USB without having the "Connect to Wrong Printers"
 			setting checked.
+		- Fixed some glitchy behavior with the rotate and scale tools
+			de-selecting back to the translate tool whenever you would
+			attempt to use the handles
 
 4.13.1:
 	Additions:

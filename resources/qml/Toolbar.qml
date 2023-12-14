@@ -169,7 +169,6 @@ Item {
 
                 onEnabledChanged: {
                     if (!enabled) {
-                        UM.Controller.setActiveTool(null)
                         checked = false
                     }
                 }
