@@ -14,7 +14,7 @@
             "1": "taz_pro_twnb285_extruder_2nd"
         },
         "has_optional_bltouch": false,
-        "firmware_toolhead_name": "DualExtruder",
+        "firmware_toolhead_name": "Galaxy Dual Extruder",
         "firmware_latest_version": "2.1.3.0.18",
         "firmware_file": "Pro/Marlin_TAZPro_Galaxy_DualExtruder_2.1.3.0.18_11baf07.bin",
         "firmware_bltouch_latest_version": "",

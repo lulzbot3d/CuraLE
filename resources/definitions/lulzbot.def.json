@@ -28,6 +28,7 @@
         "bltouch_is_standard": false,
         "required_actions": ["ChangeToolHead"],
         "supported_actions": ["MachineSettingsAction", "UpgradeFirmware"],
+        "firmware_toolhead_name": "",
         "firmware_latest_version": "",
         "firmware_bltouch_latest_version": "",
         "firmware_no_lcd_latest_version": ""
