@@ -11,7 +11,8 @@
         "machine_extruder_trains":
         {
             "0": "taz_5_aerostruder_extruder"
-        }
+        },
+        "firmware_toolhead_name": "Aerostruder"
     },
     "overrides":
     {

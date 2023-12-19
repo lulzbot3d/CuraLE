@@ -1,4 +1,10 @@
 						CURA LULZBOT EDITION PATCHNOTES
+4.13.3: [In-Development]
+	Fixes:
+		- Patched up some of the firmware Tool Head names that have
+			been coming up wrong. Made a mismatch not be a connection-
+			dropping error.
+
 
 4.13.2:
 	Additions:

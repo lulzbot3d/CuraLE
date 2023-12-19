@@ -197,7 +197,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         firmware_response_status = self._checkFirmware()
         ## Check what the firmware status came back as and whether or not we should ignore it.
         if firmware_response_status is not self.CheckFirmwareStatus.OK:
-            overriden = False
+            overridden = False
             allow_wrong = CuraApplication.getInstance().getPreferences().getValue("cura/allow_connection_to_wrong_machine")
             if firmware_response_status is self.CheckFirmwareStatus.TIMEOUT:
                 message = Message(text = catalog.i18nc("@message",
@@ -209,15 +209,18 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                                 "Firmware printer type doesn't match active printer in Cura LE!"),
                                 title = catalog.i18nc("@message", "Wrong Machine!"),
                                 message_type = Message.MessageType.ERROR)
-                if allow_wrong: overriden = True
+                if allow_wrong: overridden = True
             elif firmware_response_status is self.CheckFirmwareStatus.WRONG_TOOLHEAD:
+                overridden = True
                 message = Message(text = catalog.i18nc("@message",
-                                "The printer reports having a different Tool Head than the active printer in Cura LE!"),
+                                "The printer reports having a different Tool Head than the active printer in Cura LE! \n If you're \
+                                    confident your selection matches, you can ignore this error by going to Preferences -> Configure Cura \
+                                    and selecting \"Allow Connection to Wrong Printers\""),
                                 title = catalog.i18nc("@message", "Wrong Tool Head!"),
                                 message_type = Message.MessageType.ERROR)
-                if allow_wrong: overriden = True
+                if allow_wrong: overridden = True
             elif firmware_response_status is self.CheckFirmwareStatus.FIRMWARE_OUTDATED:
-                overriden = True
+                overridden = True
                 message = Message(text = catalog.i18nc("@message",
                                 "Printer appears to have outdated firmware."),
                                 title = catalog.i18nc("@message", "Old Firmware"),
@@ -225,10 +228,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             else:
                 message = Message(text = catalog.i18nc("@message",
                                 "Unknown CheckFirmwareStatus state!"),
-                                title = catalog.i18nc("@message", "Oh No!"),
+                                title = catalog.i18nc("@message", "Oh No! If you got this message, please contact support and get us \
+                                                      some logs because this isn't supposed to happen!"),
                                 message_type = Message.MessageType.ERROR)
             # Ignore it if it's minor or if the user has elected to
-            if not overriden:
+            if not overridden:
                 message.show()
                 self.close()
                 return
@@ -491,7 +495,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             MISSING_VALUE_IN_DEFINITION = 3
 
 
-        def checkValue(fw_key, profile_key, exact_match = True, search_in_properties = False):
+        def checkValue(fw_key, profile_key, exact_match = False, search_in_properties = False):
             expected_value = global_container_stack.getProperty(profile_key, "value") if search_in_properties else\
                 global_container_stack.getMetaDataEntry(profile_key, None)
             if expected_value is None:
@@ -503,7 +507,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             elif exact_match and values[fw_key] != expected_value:
                 Logger.log("e", "Expected that %s was %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
                 return CheckValueStatus.WRONG_VALUE
-            elif not exact_match and not values[fw_key].search(expected_value):
+            elif not exact_match and values[fw_key].find(expected_value) < 0:
                 Logger.log("e", "Expected that %s contained %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
                 return CheckValueStatus.WRONG_VALUE
             return CheckValueStatus.OK
@@ -512,8 +516,9 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             {
                 "reply_key": "MACHINE_TYPE",
                 "definition_key": "firmware_machine_type",
-                "on_fail": self.CheckFirmwareStatus.WRONG_MACHINE,
-                "search_in_properties": True
+                "exact_match": True,
+                "search_in_properties": True,
+                "on_fail": self.CheckFirmwareStatus.WRONG_MACHINE
             },
             {
                 "reply_key": "EXTRUDER_TYPE",
@@ -528,7 +533,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         ]
 
         for option in list_to_check:
-            result = checkValue(option["reply_key"], option["definition_key"], option.get("exact_match", True), option.get("search_in_properties", False))
+            result = checkValue(option["reply_key"], option["definition_key"], option.get("exact_match", False), option.get("search_in_properties", False))
             if result != CheckValueStatus.OK:
                 if result == CheckValueStatus.MISSING_VALUE_IN_DEFINITION:
                     pass
