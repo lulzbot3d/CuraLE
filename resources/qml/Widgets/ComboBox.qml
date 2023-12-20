@@ -133,7 +133,6 @@ ComboBox {
                 _val = model[textRole]
             }
             if (typeof _val === 'undefined') { // try to get textRole from "modelData" if it's still undefined.
-                console.log("We needed to ")
                 _val = modelData[textRole]
             }
             return (typeof _val !== 'undefined') ? _val : ""
