@@ -3,6 +3,11 @@
 	Additions:
 		- Added a button to drop a model to the build plate on the
 			scale tool menu.
+	Changes:
+		- Made red notification icon on the Filament Change Tool more
+			prominent and harder to miss
+		- Changed TAZ Pro Dual start gcode to use a G12 command instead
+			of manually done wiping
 	Fixes:
 		- Patched up some of the firmware Tool Head names that have
 			been coming up wrong. Made a mismatch not be a connection-
