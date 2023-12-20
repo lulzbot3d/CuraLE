@@ -179,6 +179,35 @@ Item {
                 isBottomElement: true
             }
 
+            Cura.NotificationIcon {
+                    id: activeFilamentChangeIcon
+                    visible: changeLayerCount > 0
+                    height: UM.Theme.getSize("notification_icon").width * 1.25
+                    width: height
+                    anchors {
+                        horizontalCenter: filamentChangeToolButton.right
+                        verticalCenter: filamentChangeToolButton.top
+                    }
+
+                    labelText: changeLayerCount
+
+                property int changeLayerCount: {
+                    let layers = layer_provider.properties.value;
+                    let layer_count = 0;
+                    if (layers) {
+                        layer_count = layers.split(",").length;
+                    };
+                    return layer_count;
+                }
+
+                UM.SettingPropertyProvider {
+                    id: layer_provider
+                    containerStackId: Cura.FilamentChangeManager.scriptStackId
+                    key: "layer_number"
+                    watchedProperties: [ "value" ]
+                }
+            }
+
             Cura.FilamentChangePanel {
                 id: filamentChangeToolPanel
                 anchors {
