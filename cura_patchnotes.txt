@@ -1,8 +1,12 @@
 						CURA LULZBOT EDITION PATCHNOTES
-4.13.3: [In-Development]
+4.13.3:
 	Additions:
 		- Added a button to drop a model to the build plate on the
 			scale tool menu.
+		- Added hotkeys for the "`", "1", "2", "3", and "4" keys that
+			toggle between Prepare and Preview, open the Open File
+			dialog, slice, save gcode, and both clear bed/open file
+			for each key respectively
 	Changes:
 		- Made red notification icon on the Filament Change Tool more
 			prominent and harder to miss

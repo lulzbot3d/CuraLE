@@ -1,3 +1,12 @@
+[4.13.3]
+* Added a button to drop a model to the build plate on the scale tool menu.
+* Added hotkeys for the "`", "1", "2", "3", and "4" keys that toggle between Prepare and Preview, open the Open File dialog, slice, save gcode, and both clear bed/open file for each key respectively
+* Made red notification icon on the Filament Change Tool more prominent and harder to miss
+* Changed TAZ Pro Dual start gcode to use a G12 command instead of manually done wiping
+* Patched up some of the firmware Tool Head names that have been coming up wrong. Made a mismatch not be a connection-dropping error.
+* Switched default combing mode to "Within Infill" for realsies
+* Happy Holidays!
+
 [4.13.2]
 * Added High Speed profiles for MET285 PLA materials
 * Updated TAZ Pro series printers firmware to 2.1.3.0.19
