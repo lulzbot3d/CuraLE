@@ -130,6 +130,7 @@ class RemovableDriveOutputDevice(OutputDevice):
         self.writeProgress.emit(self, progress)
 
     def _onFinished(self, job):
+        auto_eject = Application.getInstance().getPreferences().getValue("cura/eject_on_save_to_removable")
         if self._stream:
             # Explicitly closing the stream flushes the write-buffer
             try:
@@ -147,13 +148,16 @@ class RemovableDriveOutputDevice(OutputDevice):
         self._writing = False
         self.writeFinished.emit(self)
         if job.getResult():
-            message = Message(catalog.i18nc("@info:status", "Saved to Removable Drive {0} as {1}").format(self.getName(), os.path.basename(job.getFileName())),
-                              title = catalog.i18nc("@info:title", "File Saved"),
-                              message_type = Message.MessageType.POSITIVE)
-            message.addAction("eject", catalog.i18nc("@action:button", "Eject"), "eject", catalog.i18nc("@action", "Eject removable device {0}").format(self.getName()))
-            message.actionTriggered.connect(self._onActionTriggered)
-            message.show()
-            self.writeSuccess.emit(self)
+            if auto_eject:
+                self._onActionTriggered(job.getFileName(), "auto-eject")
+            else:
+                message = Message(catalog.i18nc("@info:status", "Saved to Removable Drive {0} as {1}").format(self.getName(), os.path.basename(job.getFileName())),
+                                title = catalog.i18nc("@info:title", "File Saved"),
+                                message_type = Message.MessageType.POSITIVE)
+                message.addAction("eject", catalog.i18nc("@action:button", "Eject"), "eject", catalog.i18nc("@action", "Eject removable device {0}").format(self.getName()))
+                message.actionTriggered.connect(self._onActionTriggered)
+                message.show()
+                self.writeSuccess.emit(self)
         else:
             message = Message(catalog.i18nc("@info:status",
                                             "Could not save to removable drive {0}: {1}").format(self.getName(),
@@ -165,12 +169,17 @@ class RemovableDriveOutputDevice(OutputDevice):
         job.getStream().close()
 
     def _onActionTriggered(self, message, action):
-        if action == "eject":
+        if "eject" in action:
             if Application.getInstance().getOutputDeviceManager().getOutputDevicePlugin("RemovableDriveOutputDevice").ejectDevice(self):
-                message.hide()
-                eject_message = Message(catalog.i18nc("@info:status",
-                                                      "Ejected {0}. You can now safely remove the drive.").format(self.getName()),
-                                        title = catalog.i18nc("@info:title", "Safely Remove Hardware"))
+                if action == "eject":
+                    message.hide()
+                    eject_message = Message(catalog.i18nc("@info:status",
+                                                        "Ejected {0}. You can now safely remove the drive.").format(self.getName()),
+                                            title = catalog.i18nc("@info:title", "Safely Remove Hardware"))
+                if action =="auto-eject":
+                    eject_message = Message(catalog.i18nc("@info:status",
+                                                        "Saved file {0} to {1} and ejected the media. You can now safely remove the drive.").format(message, self.getName()),
+                                            title = catalog.i18nc("@info:title", "Safely Remove Hardware"))
             else:
                 eject_message = Message(catalog.i18nc("@info:status",
                                                       "Failed to eject {0}. Another program may be using the drive.").format(self.getName()),

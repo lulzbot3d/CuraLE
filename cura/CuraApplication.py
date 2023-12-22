@@ -551,6 +551,7 @@ class CuraApplication(QtApplication):
         preferences.addPreference("cura/asked_dialog_on_project_save", False)
         preferences.addPreference("cura/choice_on_profile_override", "always_ask")
         preferences.addPreference("cura/choice_on_open_project", "always_ask")
+        preferences.addPreference("cura/eject_on_save_to_removable", False)
         preferences.addPreference("cura/use_multi_build_plate", False)
         preferences.addPreference("cura/show_list_of_objects", False)
         preferences.addPreference("view/settings_list_height", 450)
