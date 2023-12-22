@@ -1,5 +1,5 @@
 [4.13.4 EXPERIMENTAL]
-* New Experimental Pro Firmware
+* New Experimental Pro Firmware (2.1.3.0.20)
 * You can now toggle whether you'd like a removable drive to automatically eject after you save a gcode file to it.
 * Increased Mini 3 default acceleration across the board
 * Changed MET Tool Heads to have 17.5% support density
