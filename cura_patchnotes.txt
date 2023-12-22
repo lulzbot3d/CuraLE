@@ -1,4 +1,14 @@
 						CURA LULZBOT EDITION PATCHNOTES
+4.13.4: [Experimental - In-Development]
+	Additions:
+		- New Experimental Pro Firmware
+	Changes:
+		- You can now toggle whether you'd like a removable drive to
+			automatically eject after you save a gcode file to it.
+		- Increased Mini 3 default acceleration across the board (Be
+			careful I have no idea if this is sane)
+		- Changed MET Tool Heads to have 17.5% support density
+
 4.13.3:
 	Additions:
 		- Added a button to drop a model to the build plate on the

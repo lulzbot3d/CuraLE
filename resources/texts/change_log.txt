@@ -1,3 +1,9 @@
+[4.13.4 EXPERIMENTAL]
+* New Experimental Pro Firmware
+* You can now toggle whether you'd like a removable drive to automatically eject after you save a gcode file to it.
+* Increased Mini 3 default acceleration across the board
+* Changed MET Tool Heads to have 17.5% support density
+
 [4.13.3]
 * Added a button to drop a model to the build plate on the scale tool menu.
 * Added hotkeys for the "`", "1", "2", "3", and "4" keys that toggle between Prepare and Preview, open the Open File dialog, slice, save gcode, and both clear bed/open file for each key respectively
