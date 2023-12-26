@@ -1,7 +1,7 @@
 						CURA LULZBOT EDITION PATCHNOTES
-4.13.4: [Experimental - In-Development]
+4.13.4:
 	Additions:
-		- New Experimental Pro Firmware (2.1.3.0.20)
+		- New Pro Firmware (2.1.3.0.20)
 	Changes:
 		- You can now toggle whether you'd like a removable drive to
 			automatically eject after you save a gcode file to it.
