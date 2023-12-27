@@ -1,3 +1,5 @@
+# YAML 1.2
+---
 cff-version: 1.2.0
 message: >-
   If you use this software, please cite it using the
@@ -16,13 +18,23 @@ url: 'https://lulzbot.com/support/cura'
 repository-code: 'https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot'
 license: LGPL-3.0
 license-url: "https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot/-/blob/main/LICENSE"
-version: 4.13
-date-released: '2023-01-01'
+version: 5.4.0
+date-released: "2023-07-04"
 references:
   - authors:
       - name: Ultimaker B.V.
     type: software
     title: Ultimaker Cura
-    version: 4.13.1
+    version: 5.4.0
     repository-code: https://github.com/Ultimaker/Cura/tree/4.13
     license: LGPL-3.0
+keywords:
+  - Ultimaker
+  - LulzBot
+  - Cura
+  - CuraLE
+  - Slicer
+  - Uranium
+  - Arachne
+  - 3D Printing
+  - Additive Manufacturing

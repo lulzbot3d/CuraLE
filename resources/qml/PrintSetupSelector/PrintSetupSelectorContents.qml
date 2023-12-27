@@ -14,11 +14,10 @@ Item {
     id: content
 
     property int absoluteMinimumHeight: 200 * screenScaleFactor
-
-    width: UM.Theme.getSize("print_setup_widget").width - 2 * UM.Theme.getSize("default_margin").width
-    height: contents.height + buttonRow.height
-
-    enum Mode {
+    implicitWidth: UM.Theme.getSize("print_setup_widget").width
+    implicitHeight: contents.height + buttonRow.height
+    enum Mode
+    {
         Recommended = 0,
         Custom = 1
     }
@@ -54,7 +53,49 @@ Item {
 
         RecommendedPrintSetup {
             id: recommendedPrintSetup
-            anchors {
+            anchors
+            {
+                left: parent.left
+                right: parent.right
+                top: parent.top
+            }
+            visible: currentModeIndex == PrintSetupSelectorContents.Mode.Recommended
+            height: {
+                const height = base.height - (recommendedPrintSetup.mapToItem(null, 0, 0).y + buttonRow.height + UM.Theme.getSize("default_margin").height);
+                const maxHeight = UM.Preferences.getValue("view/settings_list_height");
+                return Math.min(height, maxHeight);
+            }
+
+            Connections
+            {
+                target: UM.Preferences
+                function onPreferenceChanged(preference)
+                {
+                    if (preference !== "view/settings_list_height" && preference !== "general/window_height" && preference !== "general/window_state")
+                    {
+                        return;
+                    }
+
+                    const height = base.height - (recommendedPrintSetup.mapToItem(null, 0, 0).y + buttonRow.height + UM.Theme.getSize("default_margin").height);
+                    const maxHeight = UM.Preferences.getValue("view/settings_list_height");
+
+                    recommendedPrintSetup.height = Math.min(maxHeight, height);
+
+                    updateDragPosition();
+                }
+            }
+
+            function onModeChanged()
+            {
+                currentModeIndex = PrintSetupSelectorContents.Mode.Custom;
+            }
+        }
+
+        CustomPrintSetup
+        {
+            id: customPrintSetup
+            anchors
+            {
                 left: parent.left
                 right: parent.right
                 top: parent.top
@@ -109,7 +150,15 @@ Item {
     Item {
         id: buttonRow
         property real padding: UM.Theme.getSize("default_margin").width
-        height: recommendedButton.height + 2 * padding + (draggableArea.visible ? draggableArea.height : 0)
+        height:
+        {
+            const draggable_area_height = draggableArea.visible ? draggableArea.height : 0;
+            if (currentModeIndex == PrintSetupSelectorContents.Mode.Custom)
+            {
+                return recommendedButton.height + 2 * padding + draggable_area_height;
+            }
+            return draggable_area_height;
+        }
 
         anchors {
             bottom: parent.bottom
@@ -135,25 +184,6 @@ Item {
             }
         }
 
-        Cura.SecondaryButton {
-            id: customSettingsButton
-            anchors {
-                top: parent.top
-                right: parent.right
-                margins: UM.Theme.getSize("default_margin").width
-            }
-            leftPadding: UM.Theme.getSize("default_margin").width
-            rightPadding: UM.Theme.getSize("default_margin").width
-            text: catalog.i18nc("@button", "Custom")
-            iconSource: UM.Theme.getIcon("ChevronSingleRight")
-            isIconOnRightSide: true
-            visible: currentModeIndex == PrintSetupSelectorContents.Mode.Recommended
-            onClicked: {
-                currentModeIndex = PrintSetupSelectorContents.Mode.Custom
-                updateDragPosition();
-            }
-        }
-
         //Invisible area at the bottom with which you can resize the panel.
         MouseArea {
             id: draggableArea
@@ -164,7 +194,8 @@ Item {
             }
             height: childrenRect.height
             cursorShape: Qt.SplitVCursor
-            drag {
+            drag
+            {
                 target: parent
                 axis: Drag.YAxis
             }
@@ -204,7 +235,8 @@ Item {
                     color: UM.Theme.getColor("lining")
                 }
 
-                UM.RecolorImage {
+                UM.ColorImage
+                {
                     width: UM.Theme.getSize("drag_icon").width
                     height: UM.Theme.getSize("drag_icon").height
                     anchors.centerIn: parent

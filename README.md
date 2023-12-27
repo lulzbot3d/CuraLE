@@ -4,17 +4,11 @@ Cura LulzBot Edition is a re-work of [Cura 4.13 by Ultimaker](https://github.com
 
 This repository consists of the main application which is based on a underlying Uranium framework.
 
-Logging Issues
-------------
-For crashes and similar issues, please attach the following information:
-
 * (On Windows) The log as produced by dxdiag (start -> run -> dxdiag -> save output)
 * The Cura GUI log file, located at
   * `%APPDATA%\cura-lulzbot\<Cura LE version>\cura.log` (Windows), or usually `C:\Users\\<your username>\AppData\Roaming\cura-lulzbot\<Cura LE version>\cura-lulzbot.log`
   * `$USER/Library/Application Support/cura-lulzbot/<Cura LE version>/cura-lulzbot.log` (OSX)
   * `$USER/.local/share/cura-lulzbot/<Cura LE version>/cura-lulzbot.log` (Ubuntu/Linux)
-
-If the Cura user interface still starts, you can also reach this directory from the application menu in Help -> Show settings folder
 
 For additional support, you could also ask in the #cura channel on FreeNode IRC. For help with development, there is also the #cura-dev channel.
 

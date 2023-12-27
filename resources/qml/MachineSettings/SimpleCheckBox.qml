@@ -48,15 +48,13 @@ UM.TooltipArea
         watchedProperties: [ "value", "description" ]
     }
 
-    Label
+    UM.Label
     {
         id: fieldLabel
         anchors.left: parent.left
         anchors.verticalCenter: checkBox.verticalCenter
         visible: text != ""
         font: UM.Theme.getFont("medium")
-        color: UM.Theme.getColor("text")
-        renderType: Text.NativeRendering
     }
 
     UM.CheckBox
@@ -64,10 +62,9 @@ UM.TooltipArea
         id: checkBox
         anchors {
             left: fieldLabel.right
-            //leftMargin: UM.Theme.getSize("default_margin").width
+            leftMargin: UM.Theme.getSize("default_margin").width
             verticalCenter: parent.verticalCenter
         }
-        enabled: true
         checked: String(propertyProvider.properties.value).toLowerCase() != 'false'
         height: UM.Theme.getSize("checkbox").height
         text: ""

@@ -1,13 +1,13 @@
-// Copyright (c) 2018 Ultimaker B.V.
+// Copyright (c) 2022 Ultimaker B.V.
 // Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.2
-import QtQuick.Controls 2.15
+import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.1
 import QtQuick.Window 2.1
-import QtQuick.Dialogs 1.2 // For filedialog
+import QtQuick.Dialogs // For filedialog
 
-import UM 1.3 as UM
+import UM 1.5 as UM
 import Cura 1.0 as Cura
 
 
@@ -126,7 +126,6 @@ Cura.MachineAction {
 
         Label {
             width: parent.width
-            wrapMode: Text.WordWrap
             visible: printerConnected && !canUpdateFirmware
             horizontalAlignment: Text.AlignHCenter
             font.pointSize: 8
@@ -193,7 +192,7 @@ Cura.MachineAction {
         selectExisting: true
         onAccepted: {
             updateProgressDialog.visible = true;
-            activeOutputDevice.updateFirmware(fileUrl);
+            activeOutputDevice.updateFirmware(selectedFile);
         }
     }
 
@@ -213,7 +212,7 @@ Cura.MachineAction {
             anchors.fill: parent
             spacing: 5
 
-            Label {
+            UM.Label {
                 id: statusLabel
 
                 anchors {
@@ -248,36 +247,34 @@ Cura.MachineAction {
                             return catalog.i18nc("@label","Unknown State, something has gone wrong!")
                     }
                 }
-
-                wrapMode: Text.Wrap
             }
 
-            ProgressBar {
-                id: progBar
-                value: (manager.firmwareUpdater != null) ? manager.firmwareUpdater.firmwareProgress : 0
-                from: 0
-                to: 100
-                indeterminate: {
-                    if(manager.firmwareUpdater == null) {
+            UM.ProgressBar
+            {
+                id: prog
+                value: (manager.firmwareUpdater != null) ? manager.firmwareUpdater.firmwareProgress / 100 : 0
+                indeterminate:
+                {
+                    if(manager.firmwareUpdater == null)
+                    {
                         return false;
                     }
                     return manager.firmwareUpdater.firmwareProgress < 0
                 }
-                anchors {
-                    left: parent.left;
-                    right: parent.right;
+                anchors
+                {
+                    left: parent.left
+                    right: parent.right
                 }
             }
         }
 
         rightButtons: [
-            Button {
-                id: exitButton
-                text: catalog.i18nc("@action:button","Close");
-                enabled: (manager.firmwareUpdater != null) ? manager.firmwareUpdater.firmwareUpdateState != 1 : true;
-                onClicked: {
-                    updateProgressDialog.visible = false
-                }
+            Cura.SecondaryButton
+            {
+                text: catalog.i18nc("@action:button", "Close")
+                enabled: manager.firmwareUpdater != null ? manager.firmwareUpdater.firmwareUpdateState != 1 : true
+                onClicked: updateProgressDialog.visible = false
             }
         ]
     }

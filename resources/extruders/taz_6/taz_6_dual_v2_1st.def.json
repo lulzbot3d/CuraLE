@@ -6,9 +6,10 @@
         "machine": "taz_6_dual_v2",
         "position": "0"
     },
-
-    "overrides": {
-        "extruder_nr": {
+    "overrides":
+    {
+        "extruder_nr":
+        {
             "default_value": 0,
             "maximum_value": "1"
         }

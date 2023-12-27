@@ -1,9 +1,9 @@
 # Copyright (c) 2020 Ultimaker B.V.
 # Uranium is released under the terms of the LGPLv3 or higher.
 
-from PyQt5.QtCore import Qt, QCoreApplication, QTimer
-from PyQt5.QtGui import QPixmap, QColor, QFont, QPen, QPainter
-from PyQt5.QtWidgets import QSplashScreen
+from PyQt6.QtCore import Qt, QCoreApplication, QTimer
+from PyQt6.QtGui import QPixmap, QColor, QFont, QPen, QPainter
+from PyQt6.QtWidgets import QSplashScreen
 
 from UM.Resources import Resources
 from UM.Application import Application
@@ -14,7 +14,7 @@ import time
 class CuraSplashScreen(QSplashScreen):
     def __init__(self):
         super().__init__()
-        self._scale = 0.7
+        self._scale = 1
         self._version_y_offset = 0  # when extra visual elements are in the background image, move version text down
         splash_image = QPixmap(Resources.getPath(Resources.Images, "cura.jpg"))
 
@@ -56,8 +56,8 @@ class CuraSplashScreen(QSplashScreen):
 
         painter.save()
         painter.setPen(QColor(0, 0, 0, 255))
-        painter.setRenderHint(QPainter.Antialiasing)
-        painter.setRenderHint(QPainter.Antialiasing, True)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing, True)
 
         version = Application.getInstance().getVersion().split("-")
 
@@ -101,7 +101,7 @@ class CuraSplashScreen(QSplashScreen):
 
         self._current_message = message
         self.messageChanged.emit(message)
-        QCoreApplication.flush()
+        QCoreApplication.processEvents()  # Used to be .flush() -- this might be the closest alternative, but uncertain.
         self.repaint()
 
     def close(self):

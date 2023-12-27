@@ -33,7 +33,20 @@ Popup
                     thumbnail: UM.Theme.getIcon("Help", "high"),
                     description: catalog.i18nc("@tooltip:button", "Contact LulzBot support."),
                     link: "https://lulzbot.com/support/contact-us",
-                    DFAccessRequired: false
+                },
+                {
+                    displayName: "UltiMaker Marketplace", //Not translated, since it's a brand name.
+                    thumbnail: UM.Theme.getIcon("Shop", "high"),
+                    description: catalog.i18nc("@tooltip:button", "Extend UltiMaker Cura with plugins and material profiles."),
+                    link: "https://marketplace.ultimaker.com/?utm_source=cura&utm_medium=software&utm_campaign=switcher-marketplace-materials",
+                    permissionsRequired: []
+                },
+                {
+                    displayName: catalog.i18nc("@label:button", "Sponsor Cura"),
+                    thumbnail: UM.Theme.getIcon("Heart"),
+                    description: catalog.i18nc("@tooltip:button", "Show your support for Cura with a donation."),
+                    link: "https://ultimaker.com/software/ultimaker-cura/sponsor/",
+                    permissionsRequired: []
                 },
                 {
                     displayName: catalog.i18nc("@label:button", "Ask the Community"),
@@ -64,7 +77,24 @@ Popup
                 iconSource: modelData.thumbnail
                 tooltipText: modelData.description
                 isExternalLink: true
-                visible: true
+                visible:
+                {
+                    try
+                    {
+                        modelData.permissionsRequired.forEach(function(permission)
+                        {
+                            if(!Cura.API.account.isLoggedIn || !Cura.API.account.permissions.includes(permission)) //This required permission is not in the account.
+                            {
+                                throw "No permission to use this application."; //Can't return from within this lambda. Throw instead.
+                            }
+                        });
+                    }
+                    catch(e)
+                    {
+                        return false;
+                    }
+                    return true;
+                }
 
                 onClicked: Qt.openUrlExternally(modelData.link)
             }
