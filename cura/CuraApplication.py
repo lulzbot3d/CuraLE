@@ -103,6 +103,7 @@ from cura.Settings.SidebarCustomMenuItemsModel import SidebarCustomMenuItemsMode
 from cura.Settings.SimpleModeSettingsManager import SimpleModeSettingsManager
 from cura.SingleInstance import SingleInstance
 from cura.TaskManagement.OnExitCallbackManager import OnExitCallbackManager
+from cura.ThumbnailGenerator import ThumbnailGenerator
 from cura.UI import CuraSplashScreen, MachineActionManager, PrintInformation
 from cura.UI.AddPrinterPagesModel import AddPrinterPagesModel
 from cura.UI.MachineSettingsManager import MachineSettingsManager
@@ -224,6 +225,7 @@ class CuraApplication(QtApplication):
         # self._cura_API = CuraAPI(self)
 
         self._filament_change_manager = None
+        self._thumbnail_generator = None
 
         self._physics = None
         self._volume = None
@@ -833,6 +835,9 @@ class CuraApplication(QtApplication):
         self._container_manager = ContainerManager(self)
         self.processEvents()
 
+        # Try it here!
+        self._thumbnail_generator = ThumbnailGenerator()
+
         # Check if we should run as single instance or not. If so, set up a local socket server which listener which
         # coordinates multiple Cura instances and accepts commands.
         if self._use_single_instance:
@@ -1130,6 +1135,11 @@ class CuraApplication(QtApplication):
         if self._filament_change_manager is None:
             self._filament_change_manager = FilamentChangeManager(self)
         return self._filament_change_manager
+
+    def getThumbnailGenerator(self, *args) -> ThumbnailGenerator:
+        if self._thumbnail_generator is None:
+            self._thumbnail_generator = ThumbnailGenerator(self)
+        return self._thumbnail_generator
 
     def registerObjects(self, engine):
         """Registers objects for the QML engine to use.
