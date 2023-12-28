@@ -42,7 +42,7 @@
 
     <machine>
       <machine_identifier product="taz_pro_dual"/>
-      <machine_identifier product="taz_pro_xt"/>
+      <machine_identifier product="taz_pro_xt_dual"/>
     </machine>
 
     <machine>

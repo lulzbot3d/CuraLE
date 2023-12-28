@@ -5,7 +5,7 @@
     "metadata":
     {
         "priority": "05",
-        "visible": false,
+        "visible": true,
         "base_machine": false,
         "toolhead_selection_name": "TWIN NEBULA 285 | Nickel-Plated Brass",
         "machine_extruder_trains":
