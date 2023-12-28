@@ -17,7 +17,7 @@ class ThumbnailGenerator:
     def __init__(self):
 
         self._valid_printers = ["mini 3", "core xy"]
-        self._current_printer = None
+        self._current_printer = ""
 
         Application.getInstance().getOutputDeviceManager().writeStarted.connect(self.generateThumbnails)
         Application.getInstance().globalContainerStackChanged.connect(self._onGlobalContainerStackChanged)
@@ -25,7 +25,11 @@ class ThumbnailGenerator:
         self._onGlobalContainerStackChanged()
 
     def _onGlobalContainerStackChanged(self):
-        self._current_printer = Application.getInstance().getGlobalContainerStack().getId()
+        global_stack = Application.getInstance().getGlobalContainerStack()
+        if global_stack:
+            self._current_printer = global_stack.getId().lower()
+        else:
+            self._current_printer = ""
 
 
     def generateThumbnails(self, output_device):
@@ -50,7 +54,7 @@ class ThumbnailGenerator:
 
         generate = False
         for printer in self._valid_printers:
-            if printer in self._current_printer.lower():
+            if printer in self._current_printer:
                 generate = True
 
         if not generate:
@@ -111,21 +115,20 @@ class ThumbnailGenerator:
             snap_bytes = encode_snapshot(snap)
             gcodes.append(convert_snap_to_gcode(snap_bytes, size, size))
 
-        # Insert snapshot gcode into provided gcode data
-        for layer in gcode_list:
-                layer_index = gcode_list.index(layer)
-                lines = gcode_list[layer_index].split("\n")
-                for line in lines:
-                    if line.startswith(";Generated with Cura"):
-                        line_index = lines.index(line)
-                        insert_index = line_index
-                        for gcode in gcodes:
-                            insert_index = insert_index + 1
-                            lines[insert_index:insert_index] = gcode
-                        break
+        # Insert snapshot gcode at end of provided gcode data
+        layer_index = -1
+        lines = gcode_list[layer_index].split("\n")
+        for line in lines:
+            if ";End of Gcode" in line:
+                line_index = lines.index(line)
+                insert_index = line_index
+                for gcode in gcodes:
+                    insert_index = insert_index + 1
+                    lines[insert_index:insert_index] = gcode
+                break
 
-                final_lines = "\n".join(lines)
-                gcode_list[layer_index] = final_lines
+        final_lines = "\n".join(lines)
+        gcode_list[layer_index] = final_lines
 
 
         return gcode_list
