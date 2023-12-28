@@ -12,5 +12,5 @@ G1 Y260 F1000                                    ; present finished print
 M140 S{material_keep_part_removal_temperature_t} ; keep temperature or cool down
 M77					                             ; End LCD Print Timer
 G90                                              ; absolute positioning
-M18 X Y E				                         ; turn off x y and e axis
+M18 X E				                             ; turn off x y and e axis
 M117 Print Complete.                             ; print complete message

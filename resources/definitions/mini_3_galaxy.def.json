@@ -6,8 +6,8 @@
     {
         "visible": false,
         "base_machine": false,
-        "toolhead_category": "Universal",
-        "toolhead_selection_name": "Universal Tool Head",
+        "toolhead_category": "Galaxy",
+        "toolhead_selection_name": "Galaxy Tool Head",
         "preferred_quality_type": "normal",
         "has_variants": true,
         "preferred_variant_name": "0.5 mm"

@@ -1,4 +1,3 @@
-;This G-Code has been generated specifically for the LulzBot Sidekick with a Universal Tool Head
 M400                                             ; wait for moves to finish
 M140 S{material_part_removal_temperature}        ; start bed cooling
 M104 S0                                          ; disable hotend

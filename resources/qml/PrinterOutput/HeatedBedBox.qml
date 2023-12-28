@@ -11,7 +11,7 @@ import Cura 1.0 as Cura
 
 Item {
     implicitWidth: parent.width
-    height: visible ? UM.Theme.getSize("print_setup_extruder_box").height : 0
+    height: visible ? Math.round(UM.Theme.getSize("print_setup_extruder_box").height * 0.7) : 0
     property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
     property var connectedPrinter: outputDeviceCount >= 1 ? Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1] : null
     property var printerModel: connectedPrinter != null ? connectedPrinter.activePrinter : null
@@ -26,7 +26,7 @@ Item {
             color: UM.Theme.getColor("text")
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.margins: UM.Theme.getSize("default_margin").width
+            anchors.leftMargin: UM.Theme.getSize("default_margin").width
         }
 
         Label { //Target temperature.
@@ -63,7 +63,7 @@ Item {
             color: UM.Theme.getColor("text")
             anchors.right: bedTargetTemperature.left
             anchors.top: parent.top
-            anchors.margins: UM.Theme.getSize("default_margin").width
+            anchors.rightMargin: UM.Theme.getSize("default_margin").width
 
             MouseArea { //For tooltip.
                 id: bedTemperatureTooltipArea
@@ -113,7 +113,6 @@ Item {
             anchors.right: preheatButton.left
             anchors.rightMargin: UM.Theme.getSize("default_margin").width
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: UM.Theme.getSize("default_margin").height
             width: UM.Theme.getSize("monitor_preheat_temperature_control").width
             height: UM.Theme.getSize("monitor_preheat_temperature_control").height
             visible: true
@@ -207,7 +206,7 @@ Item {
             }
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            anchors.margins: UM.Theme.getSize("default_margin").width
+            anchors.rightMargin: UM.Theme.getSize("default_margin").width
             style: ButtonStyle {
                 background: Rectangle {
                     border.width: UM.Theme.getSize("default_lining").width

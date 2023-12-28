@@ -28,6 +28,7 @@
         "bltouch_is_standard": false,
         "required_actions": ["ChangeToolHead"],
         "supported_actions": ["MachineSettingsAction", "UpgradeFirmware"],
+        "firmware_toolhead_name": "",
         "firmware_latest_version": "",
         "firmware_bltouch_latest_version": "",
         "firmware_no_lcd_latest_version": ""
@@ -38,7 +39,7 @@
         "acceleration_print": { "default_value": 1000 },
         "acceleration_travel": { "value": "acceleration_print if magic_spiralize else 1000" },
         "brim_line_count": { "default_value": 10 },
-        "infill_before_walls": { "default_value": "False" },
+        "infill_before_walls": { "default_value": false },
         "infill_overlap": { "value": 5 },
         "infill_pattern": { "value": "'grid' if infill_sparse_density > 25 else 'grid'" },
         "infill_sparse_thickness": { "maximum_value_warning": "machine_nozzle_size" },
@@ -76,7 +77,10 @@
             "maximum_value_warning": "0.85 * min(extruderValues('machine_nozzle_size'))",
             "value": "layer_height_0"
         },
-        "retraction_combing": { "value": "'no_outer_surfaces'" },
+        "retraction_combing": {
+            "value": "infill",
+            "resolve": "'infill'"
+        },
         "retraction_min_travel": { "minimum_value_warning": "line_width * 1.5 if line_width < 1.5 else line_width" },
         "skirt_brim_minimal_length": { "default_value": 50 },
         "skirt_line_count": { "default_value": 2 },
@@ -117,6 +121,16 @@
         {
             "children":
             {
+                "machine_nozzle_z_offset":
+                {
+                    "label": "Nozzle Z Offset",
+                    "description": "Setting for modifying position of nozzle when different nozzles have different lengths",
+                    "enabled": false,
+                    "unit": "mm",
+                    "type": "float",
+                    "default_value": 0,
+                    "settable_per_extruder": true
+                },
                 "machine_has_lcd":
                 {
                     "label": "Has LCD",

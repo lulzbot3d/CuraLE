@@ -18,7 +18,7 @@ Cura.ExpandablePopup {
     property bool printerAcceptsCommands: printerConnected && printerOutputDevice.acceptsCommands
 
     enabled: !printerAcceptsCommands
-    disabledText: "Connected via USB"
+    disabledText: "Connected to Printer"
 
     contentPadding: UM.Theme.getSize("default_lining").width
     contentAlignment: Cura.ExpandablePopup.ContentAlignment.AlignLeft
@@ -54,6 +54,14 @@ Cura.ExpandablePopup {
             leftPadding: UM.Theme.getSize("default_lining").width
             rightPadding: UM.Theme.getSize("default_lining").width
 
+            // Only show the scrollbar as we need it, but have it stay visible always if we do.
+            ScrollBar.vertical.policy: {
+                if (scroll.height < machineSelectorList.maximumHeight) {
+                    return ScrollBar.AsNeeded
+                } else {
+                    return ScrollBar.AlwaysOn
+                }
+            }
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
             MachineSelectorList {

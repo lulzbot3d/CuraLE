@@ -11,7 +11,8 @@
         {
             "0": "taz_5_twoolhead_extruder"
         },
-        "toolhead_selection_name": "Twoolhead"
+        "toolhead_selection_name": "Twoolhead",
+        "firmware_toolhead_name": "SingleExtruder"
     },
     "overrides":
     {

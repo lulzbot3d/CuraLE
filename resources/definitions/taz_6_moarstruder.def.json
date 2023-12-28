@@ -12,6 +12,7 @@
             "0": "taz_6_moarstruder_extruder"
         },
         "toolhead_selection_name": "MOARstruder",
+        "firmware_toolhead_name": "MOARstruder",
         "firmware_latest_version": "1.1.9.34",
         "firmware_file": "TAZ6/Marlin_TAZ6_Moarstruder_1.1.9.34_5f9c029d1.hex"
     },

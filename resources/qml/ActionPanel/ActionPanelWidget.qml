@@ -105,7 +105,6 @@ Item {
 
                     onClicked: {
                         CuraApplication.deleteAll()
-                        UM.Controller.setActiveStage("PrepareStage")
                         Cura.Actions.open.trigger()
                     }
                 }

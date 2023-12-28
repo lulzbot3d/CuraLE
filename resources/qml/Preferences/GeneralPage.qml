@@ -125,6 +125,9 @@ UM.PreferencesPage {
         UM.Preferences.resetPreference("cura/choice_on_open_project")
         setDefaultOpenProjectOption(UM.Preferences.getValue("cura/choice_on_open_project"))
 
+        UM.Preferences.resetPreference("cura/eject_on_save_to_removable")
+        ejectDriveOnSaveCheckbox.checked = boolCheck(UM.Preferences.getValue("cura/eject_on_save_to_removable"))
+
         UM.Preferences.resetPreference("cura/jobname_lulzbot")
         setDefaultJobNameLulzBotOption(UM.Preferences.getValue("cura/jobname_lulzbot"))
 
@@ -757,6 +760,19 @@ UM.PreferencesPage {
 
                         onActivated: UM.Preferences.setValue("cura/choice_on_open_project", model.get(index).code)
                     }
+                }
+            }
+
+            UM.TooltipArea {
+                width: childrenRect.width
+                height: childrenRect.height
+                text: catalog.i18nc("@info:tooltip", "Should your removable drive be ejected automatically after a file is saved?")
+
+                CheckBox {
+                    id: ejectDriveOnSaveCheckbox
+                    text: catalog.i18nc("@option:check", "Eject removable drive after saving")
+                    checked: boolCheck(UM.Preferences.getValue("cura/eject_on_save_to_removable"))
+                    onCheckedChanged: UM.Preferences.setValue("cura/eject_on_save_to_removable", checked)
                 }
             }
 

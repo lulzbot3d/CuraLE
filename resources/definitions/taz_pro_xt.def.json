@@ -20,20 +20,23 @@
         ],
         "file_formats": "text/x-gcode",
         "has_optional_bltouch": true,
-        "firmware_latest_version": "2.1.3.0.16",
-        "firmware_file": "Pro_XT/Marlin_TAZProXT_Universal_2.1.3.0.16_ae930e1.bin",
-        "firmware_bltouch_latest_version": "2.1.3.0.16-BLTouch",
-        "firmware_file_bltouch": "Pro_XT/Marlin_TAZProXT_Universal_BLTouch_2.1.3.0.16_ae930e1.bin"
+        "firmware_toolhead_name": "Legacy Universal",
+        "firmware_latest_version": "2.1.3.0.20",
+        "firmware_file": "Pro_XT/Marlin_TAZProXT_Universal_2.1.3.0.20_b6e30e3.bin",
+        "firmware_bltouch_latest_version": "2.1.3.0.20-BLTouch",
+        "firmware_file_bltouch": "Pro_XT/Marlin_TAZProXT_Universal_BLTouch_2.1.3.0.20_b6e30e3.bin"
     },
     "overrides":
     {
         "machine_name": { "default_value": "LulzBot TAZ Pro XT" },
         "firmware_machine_type": { "default_value": "LulzBot TAZ ProXT" },
+        "machine_width": { "default_value": 285 },
+        "machine_depth": { "default_value": 285 },
+        "machine_height": { "default_value": 586 },
         "machine_start_gcode": { "default_value_from_file": "taz_pro_xt/taz_pro_xt_start" },
         "machine_end_gcode": { "default_value_from_file": "taz_pro_xt/taz_pro_xt_end" },
         "machine_level_x_axis_gcode": { "default_value_from_file": "taz_pro_xt/taz_pro_xt_level_x_axis" },
         "machine_wipe_gcode": { "default_value_from_file": "taz_pro_xt/taz_pro_xt_wipe" },
-        "machine_height": { "default_value": 586 },
         "machine_acceleration": { "default_value": 300 },
         "acceleration_print": { "default_value": 300 },
         "acceleration_infill": { "default_value": 300 },

@@ -1,9 +1,82 @@
 						CURA LULZBOT EDITION PATCHNOTES
+4.13.4:
+	Additions:
+		- New Pro Firmware (2.1.3.0.20)
+	Changes:
+		- You can now toggle whether you'd like a removable drive to
+			automatically eject after you save a gcode file to it.
+		- Increased Mini 3 default acceleration across the board (Be
+			careful I have no idea if this is sane)
+		- Changed MET Tool Heads to have 17.5% support density
 
-This file is a work-in-progress; some sections may be incomplete, especially
-	older versions. Older version patch notes may be added over time. The file
-	will be updated as new versions are released and will continue to be
-	utilized as the project progresses.
+4.13.3:
+	Additions:
+		- Added a button to drop a model to the build plate on the
+			scale tool menu.
+		- Added hotkeys for the "`", "1", "2", "3", and "4" keys that
+			toggle between Prepare and Preview, open the Open File
+			dialog, slice, save gcode, and both clear bed/open file
+			for each key respectively
+	Changes:
+		- Made red notification icon on the Filament Change Tool more
+			prominent and harder to miss
+		- Changed TAZ Pro Dual start gcode to use a G12 command instead
+			of manually done wiping
+	Fixes:
+		- Patched up some of the firmware Tool Head names that have
+			been coming up wrong. Made a mismatch not be a connection-
+			dropping error.
+		- Switched default combing mode to "Within Infill" for realsies
+
+
+4.13.2:
+	Additions:
+		- Added High Speed profiles for MET285 PLA materials
+	Changes:
+		- Updated TAZ Pro series printers firmware to 2.1.3.0.19
+		- Updated default travel speed on Pro Long Bed printers to
+			125mm/s as 175mm/s was likely to quick and may have been
+			contributing to layer shifts.
+		- Changed Horizontal Expansion value from -0.113 back to 0
+		- Switched default combing mode back to "Within Infill"
+	Fixes:
+		- Mini 1 and TAZ Pro Long Bed should now be able to connect
+			via USB without having the "Connect to Wrong Printers"
+			setting checked.
+		- Fixed some glitchy behavior with the rotate and scale tools
+			de-selecting back to the translate tool whenever you would
+			attempt to use the handles
+
+4.13.1:
+	Additions:
+		- Monitor tab now includes buttons for extruding and
+			retracting filament
+	Changes:
+		- Updated TAZ Pro series printers firmware to 2.1.3.0.18
+		- Expanded build area of TAZ Pro and TAZ Pro XT printers to
+			285mm x 285mm
+		- Opening the "Open File(s)" dialog now reverts Cura LE back
+			to the Prepare screen
+		- Minor change to end gcode files stops printers from disabling
+			the Y motor at the conclusion of a print, which makes it
+			slightly easier to remove a part from the bed
+
+4.13.0:
+	We figure it's about time.
+	Additions:
+		- Added some more support for a 2.4mm nozzle on the AST285
+		- Added select settings to the start gcode for all printers
+			that should make interactions with Mainsail nicer along
+			with easier debugging
+	Changes:
+		- Moved the Filament Change script out of PostProcessing and
+			into its own Tool Button. This should make it easier for
+			casual users to find and make use of
+		- Made slight corrections to most of our current Galaxy Tool
+			Head profiles to improve overall print quality
+		- Updated Pro Series Printer Firmware to 2.1.3.0.17
+		- Modified wording to signify we're comfortable moving this
+			out of Beta
 
 4.13.0-BETAv2.13:
 	Another small one:

@@ -12,6 +12,7 @@
         {
             "0": "taz_5_m175_extruder"
         },
+        "firmware_toolhead_name": "lutefisk",
         "firmware_file": "TAZ5/Marlin_TAZ5_M175_2.0.0.144.1_ffaa466.hex"
     },
     "overrides":

@@ -45,79 +45,10 @@ M104 S{material_wipe_temperature_0} T0    ; set to wipe temp
 M104 S{material_wipe_temperature_1} T1    ; set to wipe temp
 M106                                      ; turn on fans to speed cooling
 T0                                        ; select first extruder for probing
-G1 X-16.5 Y100 F2000                      ; move above wiper pad
 M117 Cooling...                           ; LCD status message
 M109 R{material_wipe_temperature_0} T0    ; wait for T0 to reach temp
 M109 R{material_wipe_temperature_1} T1    ; wait for T1 to reach temp
-M107                                      ; turn off fan
-G1 Z 1.0                                  ; push nozzle into wiper
-G1 X -16.5 Y100 F1000                     ; slow wipe
-G1 X -16.5 Y90 F1000                      ; slow wipe
-G1 X -15.5 Y86 F2000                      ; fast wipe
-G1 X -17.5 Y80 F2000                      ; fast wipe
-G1 X -15.5 Y74 F2000                      ; fast wipe
-G1 X -17.5 Y70 F2000                      ; fast wipe
-G1 X -16.5 Y68 F1000                      ; slow wipe
-G1 X -16.5 Y60 F1000                      ; slow wipe
-G1 X -14.5 Y60 F1000                      ; slow wipe
-G1 X -14.5 Y46 F1000                      ; slow wipe
-G1 X -17.5 Y46 F1000                      ; slow wipe
-G1 X -17.5 Y60 F1000                      ; slow wipe
-G1 X -14.5 Y60 F1000                      ; slow wipe
-G1 X -14.5 Y46 F1000                      ; slow wipe
-G1 X -17.5 Y46 F1000                      ; slow wipe
-G1 X -17.5 Y60 F1000                      ; slow wipe
-G1 X -14.5 Y60 F1000                      ; slow wipe
-G1 X -14.5 Y46 F1000                      ; slow wipe
-G1 X -17.5 Y46 F1000                      ; slow wipe
-G1 X -17.5 Y60 F1000                      ; slow wipe
-G1 X -16.5 Y60 F1000                      ; slow wipe
-G1 X -16.5 Y42 F1000                      ; slow wipe
-G1 X -15.5 Y40 F2000                      ; fast wipe
-G1 X -17.5 Y38 F2000                      ; fast wipe
-G1 X -15.5 Y36 F2000                      ; fast wipe
-G1 X -17.5 Y34 F2000                      ; fast wipe
-G1 X -16.5 Y30 F1000                      ; slow wipe
-G1 X -16.5 Y19 F1000                      ; slow wipe
-G1 X -16.5 Y19 Z20 F1000                  ; raise extruder
-M106 S255                                 ; turn on fan to blow away fuzzies
-G4 S5                                     ; wait 5 seconds
-M107                                      ; turn off fan
-G0 X50 F1000                              ; move over to switch extruders
-T1                                        ; switch to second extruder
-G1 X296.5 Y100  F5000                     ; move E2 above second wiper pad
-G1 Z 1.0                                  ; push nozzle into wiper
-G1 X 296.5 Y100 F1000                     ; slow wipe
-G1 X 296.5 Y90 F1000                      ; slow wipe
-G1 X 297.5 Y86 F2000                      ; fast wipe
-G1 X 295.5 Y80 F2000                      ; fast wipe
-G1 X 297.5 Y74 F2000                      ; fast wipe
-G1 X 295.5 Y70 F2000                      ; fast wipe
-G1 X 296.5 Y68 F1000                      ; slow wipe
-G1 X 296.5 Y60 F1000                      ; slow wipe
-G1 X 298 Y60 F1000                        ; slow wipe
-G1 X 298 Y46 F1000                        ; slow wipe
-G1 X 295 Y46 F1000                        ; slow wipe
-G1 X 295 Y60 F1000                        ; slow wipe
-G1 X 298 Y60 F1000                        ; slow wipe
-G1 X 298 Y46 F1000                        ; slow wipe
-G1 X 295 Y46 F1000                        ; slow wipe
-G1 X 295 Y60 F1000                        ; slow wipe
-G1 X 298 Y60 F1000                        ; slow wipe
-G1 X 298 Y46 F1000                        ; slow wipe
-G1 X 295 Y46 F1000                        ; slow wipe
-G1 X 295 Y60 F1000                        ; slow wipe
-G1 X 296.5 Y60 F1000                      ; slow wipe
-G1 X 296.5 Y42 F1000                      ; slow wipe
-G1 X 297.5 Y40 F2000                      ; fast wipe
-G1 X 295.5 Y38 F2000                      ; fast wipe
-G1 X 297.5 Y36 F2000                      ; fast wipe
-G1 X 295.5 Y34 F2000                      ; fast wipe
-G1 X 297.5 Y30 F1000                      ; slow wipe
-G1 X 296.5 Y19 F1000                      ; slow wipe
-G1 X 296.5 Y19 Z20 F1000                  ; raise extruder
-M106 S255                                 ; turn on fan to blow away fuzzies
-G4 S5                                     ; wait 5 seconds
+G12                                       ; wipe sequence
 M107                                      ; turn off fan
 G0 X247 F1000                             ; move over to switch extruders
 T0                                        ; switch to first extruder
@@ -154,7 +85,7 @@ G1 Z1.00                                  ; clear bed (barely)
 G1 X120 Y10 F4000                         ; move above bed to shear off filament
 G0 Z5.45
 T0                                        ; set extruder
-M190 R60  				                  ; get bed temping up during first layer
+M190 R{material_bed_temperature_layer_0}  ; get bed temping up during first layer
 G1 Z2 E0 F75                              ; raise head and 0 extruder
 M82					                      ; set to absolute mode
 M400                                      ; clear buffer

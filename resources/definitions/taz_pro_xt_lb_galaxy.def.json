@@ -12,7 +12,8 @@
         "preferred_quality_type": "normal",
         "has_variants": true,
         "preferred_variant_name": "0.5 mm",
-        "firmware_latest_version": "2.1.3.0.16",
-        "firmware_file": "Pro_XT_LongBed/Marlin_TAZProXT_LongBed_Galaxy_BLTouch_2.1.3.0.16_ae930e1.bin"
+        "firmware_toolhead_name": "Galaxy Series",
+        "firmware_latest_version": "2.1.3.0.20",
+        "firmware_file": "Pro_XT_LongBed/Marlin_TAZProXT_LongBed_Galaxy_BLTouch_2.1.3.0.20_b6e30e3.bin"
     }
 }

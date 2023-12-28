@@ -6,7 +6,7 @@ pragma Singleton
 import QtQuick 2.10
 import QtQuick.Controls 1.1
 import QtQuick.Controls 2.3 as Controls2
-import UM 1.1 as UM
+import UM 1.4 as UM
 import Cura 1.0 as Cura
 
 Item {
@@ -415,6 +415,7 @@ Item {
         // Unassign the shortcut when there are more than one file providers, since then the file provider's shortcut is
         // enabled instead, and Ctrl+O is assigned to the local file provider
         shortcut: fileProviderModel.count == 1 ? StandardKey.Open : "";
+        onTriggered: UM.Controller.setActiveStage("PrepareStage")
     }
 
     Action {
@@ -441,6 +442,65 @@ Item {
         id: configureSettingVisibilityAction
         text: catalog.i18nc("@action:menu", "Configure setting visibility...");
         iconName: "configure"
+    }
+
+    Action {
+        id: toggleStageAction
+        shortcut: "`"
+        onTriggered: {
+            if (UM.Controller.activeStage.stageId == "PrepareStage") {
+                UM.Controller.setActiveStage("PreviewStage")
+            } else {
+                UM.Controller.setActiveStage("PrepareStage")
+            }
+        }
+    }
+
+    Action {
+        id: numbarOpenAction
+        shortcut: "1"
+        onTriggered: openAction.trigger()
+    }
+
+    Action {
+        id: numbarSliceAction
+        shortcut: "2"
+
+        property bool waitingForSliceToStart: false
+        property var backState: UM.Backend.state
+        onBackStateChanged: waitingForSliceToStart = false
+
+        onTriggered: {
+            if (backState != UM.Backend.Error && !waitingForSliceToStart) {
+                if (backState == UM.Backend.NotStarted) {
+                    waitingForSliceToStart = true
+                    CuraApplication.backend.forceSlice()
+                } else {
+                    waitingForSliceToStart = false
+                    CuraApplication.backend.stopSlicing()
+                }
+            }
+        }
+    }
+
+    Action {
+        id: numbarSaveAction
+        shortcut: "3"
+        onTriggered: {
+            if (UM.Backend.state == UM.Backend.Done) {
+                UM.OutputDeviceManager.requestWriteToDevice(UM.OutputDeviceManager.activeDevice, PrintInformation.jobName,
+                { "filter_by_machine": true, "preferred_mimetypes": Cura.MachineManager.activeMachine.preferred_output_file_formats });
+            }
+        }
+    }
+
+    Action {
+        id: numbarNextPartAction
+        shortcut: "4"
+        onTriggered: {
+            CuraApplication.deleteAll()
+            openAction.trigger()
+        }
     }
 
     // Action {
