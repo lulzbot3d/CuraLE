@@ -120,7 +120,7 @@ Cura.MachineAction {
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
             font.pointSize: 10
-            visible: printerConnected && canUpdateFirmware && firmwareName != ""
+            visible: firmwareName != ""
             text: catalog.i18nc("@label", "Newest Firmware For Selected Printer Configuration: <b>") + Cura.MachineManager.activeMachineLatestFirmwareVersion + "</b>";
         }
 
