@@ -14,6 +14,9 @@
 			Height or Layer" script in the PostProcessingPlugin would
 			not return the Tool Head back down to the print and instead
 			would continue printing a full millimeter above the print.
+		- Custom profile visibility is now limited to which material it
+			was made with. This seems to make more sense than how it was
+			configured prior
 
 4.13.4:
 	Additions:
