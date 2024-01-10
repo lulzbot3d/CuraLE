@@ -9,6 +9,8 @@
 		- Firmware version that Automatic Firmware Update will update
 			to is now displayed regardless of if a printer is actually
 			connected.
+		- Added a label in the print settings drop down window that
+			will list the recommended tension position, if applicable
 	Fixes:
 		- Made a small change to correct a bug where the "Pause At
 			Height or Layer" script in the PostProcessingPlugin would
