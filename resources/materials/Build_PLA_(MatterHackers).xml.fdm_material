@@ -14,10 +14,11 @@
     <color_code>#99AB21</color_code>
     <version>1</version>
     <description/>
+    <tension_position>1</tension_position>
   </metadata>
   <properties>
-	<density>1.25</density>
-	<diameter>2.85</diameter>
+	  <density>1.25</density>
+	  <diameter>2.85</diameter>
   </properties>
   <settings>
     <setting key="print temperature">205.0</setting>

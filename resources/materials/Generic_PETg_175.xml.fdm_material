@@ -12,6 +12,7 @@
     <GUID>1e06333c-f673-4812-8935-ab5cb2a18745</GUID>
     <adhesion_info>Use glue stick.</adhesion_info>
     <version>1</version>
+    <tension_position>1</tension_position>
   </metadata>
   <properties>
     <diameter>1.75</diameter>

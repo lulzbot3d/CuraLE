@@ -15,6 +15,7 @@
     <extruder_disabled>False</extruder_disabled>
     <version>1</version>
     <color_code>#FFD700</color_code>
+    <tension_position>3</tension_position>
   </metadata>
   <properties>
     <density>1.05</density>

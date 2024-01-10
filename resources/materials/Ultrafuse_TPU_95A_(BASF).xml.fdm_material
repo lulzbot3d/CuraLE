@@ -13,6 +13,7 @@
     <color_code>#FFD700</color_code>
     <info_link></info_link>
     <adhesion_info></adhesion_info>
+    <tension_position>2</tension_position>
   </metadata>
   <properties>
     <density>1.15</density>

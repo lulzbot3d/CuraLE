@@ -15,6 +15,7 @@
     <color_code>#FFD700</color_code>
     <GUID>38155011-eb7b-49de-bfc7-56d62acfca53</GUID>
     <adhesion_info>Use glue stick with PEI or print directly on glass.</adhesion_info>
+    <tension_position>2</tension_position>
   </metadata>
   <properties>
     <density>1.24</density>
