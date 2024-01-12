@@ -20,9 +20,21 @@
     <diameter>2.85</diameter>
   </properties>
   <settings>
-    <setting key="print temperature">225</setting>
-    <setting key="heated bed temperature">60</setting>
+    <setting key="print temperature">220</setting>
+    <setting key="heated bed temperature">40</setting>
     <setting key="part removal temperature">0</setting>
+    <setting key="soften temperature">180</setting>
+    <setting key="wipe temperature">190</setting>
+
+    <machine>
+      <machine_identifier product="mini_2_met285"/>
+      <machine_identifier product="taz_pro_met285"/>
+      <machine_identifier product="taz_pro_xt_met285"/>
+      <machine_identifier product="taz_pro_lb_met285"/>
+      <machine_identifier product="taz_workhorse_met285"/>
+      <machine_identifier product="sidekick_289_met285"/>
+      <machine_identifier product="sidekick_747_met285"/>
+    </machine>
 
   </settings>
 </fdmmaterial>
