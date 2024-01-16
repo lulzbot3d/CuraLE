@@ -20,6 +20,8 @@
 		- Custom profile visibility is now limited to which material it
 			was made with. This seems to make more sense than how it was
 			configured prior
+		- Fixed a small quirk with the Mini 3 End gcode causing odd behavior
+			when cancelling a print job
 
 4.13.4:
 	Additions:
