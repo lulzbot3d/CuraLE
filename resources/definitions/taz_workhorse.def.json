@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "TAZ Workhorse",
+    "name": "TAZ Workhorse(+)",
     "inherits": "taz",
     "metadata":
     {
