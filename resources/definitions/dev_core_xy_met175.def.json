@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "[Developmental] Core XY | MET175",
+    "name": "[DEV] Core XY | MET175",
     "inherits": "dev_core_xy_galaxy",
     "metadata":
     {
