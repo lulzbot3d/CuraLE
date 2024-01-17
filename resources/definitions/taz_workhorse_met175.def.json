@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "TAZ Workhorse | MET175",
+    "name": "TAZ Workhorse+ | MET175",
     "inherits": "taz_workhorse_galaxy",
     "metadata":
     {

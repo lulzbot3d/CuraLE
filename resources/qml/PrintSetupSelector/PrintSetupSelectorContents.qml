@@ -117,19 +117,19 @@ Item {
             right: parent.right
         }
 
-        Label {
-            id: galaxyTension
-            anchors {
-                left: parent.left
-                verticalCenter: customSettingsButton.visible ? customSettingsButton.verticalCenter : recommendedButton.verticalCenter
-                margins: UM.Theme.getSize("default_margin").width
-            }
+        // Label {
+        //     id: galaxyTension
+        //     anchors {
+        //         left: parent.left
+        //         verticalCenter: customSettingsButton.visible ? customSettingsButton.verticalCenter : recommendedButton.verticalCenter
+        //         margins: UM.Theme.getSize("default_margin").width
+        //     }
 
-            property var pos: Cura.MachineManager.activeStack != null ? Cura.ContainerManager.getContainerMetaDataEntry(Cura.MachineManager.activeStack.material.id, "tension_position", "") : NaN
+        //     property var pos: Cura.MachineManager.activeStack != null ? Cura.ContainerManager.getContainerMetaDataEntry(Cura.MachineManager.activeStack.material.id, "tension_position", "") : NaN
 
-            visible: Cura.MachineManager.activeMachine != null ? Cura.ContainerManager.getContainerMetaDataEntry(Cura.MachineManager.activeMachine.definition.id, "toolhead_category", "") == "Galaxy" : false
-            text: isNaN(parseInt(pos)) ? "" : "Tension Position: " + pos
-        }
+        //     visible: Cura.MachineManager.activeMachine != null ? Cura.ContainerManager.getContainerMetaDataEntry(Cura.MachineManager.activeMachine.definition.id, "toolhead_category", "") == "Galaxy" : false
+        //     text: isNaN(parseInt(pos)) ? "" : "Tension Position: " + pos
+        // }
 
         Cura.SecondaryButton {
             id: recommendedButton
