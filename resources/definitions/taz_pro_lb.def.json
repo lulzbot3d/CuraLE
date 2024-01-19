@@ -20,8 +20,8 @@
         "file_formats": "text/x-gcode",
         "bltouch_is_standard": true,
         "firmware_toolhead_name": "Legacy Universal",
-        "firmware_latest_version": "2.1.3.0.20",
-        "firmware_file": "Pro_LongBed/Marlin_TAZPro_LongBed_Universal_BLTouch_2.1.3.0.20_b6e30e3.bin"
+        "firmware_latest_version": "2.1.3.0.21",
+        "firmware_file": "Pro_LongBed/Marlin_TAZPro_LongBed_Universal_BLTouch_2.1.3.0.21_c3bfdcf.bin"
     },
     "overrides":
     {
