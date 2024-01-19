@@ -43,6 +43,7 @@ Item {
 
     property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
     property var connectedDevice: outputDeviceCount >= 1 ? Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1] : null
+    property bool klipperPrinter: connectedDevice != null ? Cura.MachineManager.activeMachineFirmwareType == "Klipper" : false
     property var activePrinter: connectedDevice != null && connectedDevice.address != "None" ? connectedDevice.activePrinter : null
     property var activePrintJob: activePrinter != null ? activePrinter.activePrintJob: null
 
@@ -58,6 +59,8 @@ Item {
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
+
+            visible: !klipperPrinter
 
             spacing: UM.Theme.getSize("default_margin").height
 
@@ -167,6 +170,83 @@ Item {
                 label: catalog.i18nc("@label", "Estimated Time Remaining:")
                 value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal - activePrintJob.timeElapsed) : "N/A"
                 width: base.width
+            }
+        }
+
+        Column {
+            id: klipperMonitor
+
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+                margins: UM.Theme.getSize("default_margin").width
+            }
+
+            visible: klipperPrinter
+
+            spacing: UM.Theme.getSize("default_margin").height
+
+            Label {
+                //text: machineAssociatedUrls.properties.value
+                text: "Klipper printers cannot be printed tethered to Cura LE. \nThis section will be updated to be more useful in a later update."
+            }
+
+            // GridLayout {
+            //     id: addIPGrid
+            //     anchors.horizontalCenter: parent.horizontalCenter
+            //     columns: 2
+
+            //     Label {
+            //         Layout.row: 0
+            //         Layout.column: 0
+            //         text: "Name:"
+            //     }
+
+            //     TextField {
+            //         id: ipNameField
+            //         Layout.row: 0
+            //         Layout.column: 1
+            //     }
+
+            //     Label {
+            //         Layout.row: 1
+            //         Layout.column: 0
+            //         text: "IP: "
+            //     }
+
+            //     TextField {
+            //         id: ipAddressField
+            //         Layout.row: 1
+            //         Layout.column: 1
+            //     }
+
+            //     Button {
+            //         Layout.row: 2
+            //         Layout.column: 1
+            //         text: "Wow!"
+            //         onClicked: {
+
+            //             let newName = ipNameField.text
+            //             let newIP = ipAddressField.text
+            //             let jsonString = machineAssociatedUrls.properties.value
+            //             let urlsObj = JSON.parse(jsonString)
+            //             if (urlsObj[newName] == undefined) {
+            //                 urlsObj[newName] = newIP
+            //                 ipNameField.text = ""
+            //                 ipAddressField.text = ""
+            //                 machineAssociatedUrls.setPropertyValue("value", JSON.stringify(urlsObj))
+            //             }
+
+            //         }
+            //     }
+            // }
+
+            UM.SettingPropertyProvider {
+                id: machineAssociatedUrls
+                containerStack: Cura.MachineManager.activeMachine
+                key: "machine_associated_urls"
+                watchedProperties: ["value"]
             }
         }
     }

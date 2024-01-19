@@ -12,9 +12,11 @@ import Cura 1.0 as Cura
 
 
 Cura.MachineAction {
+    UM.I18nCatalog { id: catalog; name: "cura"}
     anchors.fill: parent;
     property int outputDevicesCount: Cura.MachineManager.printerOutputDevices.length
     property bool printerConnected: outputDevicesCount > 1
+    property bool klipperPrinter: Cura.MachineManager.activeMachineFirmwareType == "Klipper"
     property var activeOutputDevice: printerConnected ? Cura.MachineManager.printerOutputDevices[outputDevicesCount - 1] : null
     property bool canUpdateFirmware: activeOutputDevice ? activeOutputDevice.activePrinter.canUpdateFirmware : false
     property string firmwareName: Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.getDefaultFirmwareName() : ""
@@ -24,8 +26,9 @@ Cura.MachineAction {
         anchors.fill: parent;
         anchors.leftMargin: UM.Theme.getSize("default_margin").width * 2
         anchors.rightMargin: UM.Theme.getSize("default_margin").width * 2
-        UM.I18nCatalog { id: catalog; name: "cura"}
         spacing: UM.Theme.getSize("default_margin").height
+
+        visible: !klipperPrinter
 
         Label {
             width: parent.width
@@ -121,7 +124,7 @@ Cura.MachineAction {
             horizontalAlignment: Text.AlignHCenter
             font.pointSize: 10
             visible: firmwareName != ""
-            text: catalog.i18nc("@label", "Included Firmware For Selected Printer Configuration: <b>") + Cura.MachineManager.activeMachineLatestFirmwareVersion + "</b>";
+            text: catalog.i18nc("@label", "Firmware Version to be Flashed: <b>") + Cura.MachineManager.activeMachineLatestFirmwareVersion + "</b>";
         }
 
         Label {
@@ -182,6 +185,36 @@ Cura.MachineAction {
                     }
                 }
             }
+        }
+    }
+
+    Column {
+        id: klipperFirmwareUpdateScreen
+
+        anchors.fill: parent;
+        anchors.leftMargin: UM.Theme.getSize("default_margin").width * 2
+        anchors.rightMargin: UM.Theme.getSize("default_margin").width * 2
+        spacing: UM.Theme.getSize("default_margin").height
+
+        visible: klipperPrinter
+
+        Label {
+            width: parent.width
+            text: catalog.i18nc("@title", "<b>Firmware Updating for Klipper Printers</b>")
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.WordWrap
+            font.pointSize: 18
+        }
+
+        Label {
+            width: parent.width
+
+            text: catalog.i18nc("@title", "<p>Klipper firmware printers will need to have their firmware updated via Mainsail, \
+            it cannot be done through Cura LE. This section will be updated with more detailed information at a later date</p>")
+
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.WordWrap
+            font.pointSize: 12
         }
     }
 
