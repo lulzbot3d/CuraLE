@@ -538,6 +538,12 @@ class MachineManager(QObject):
             return False
         return self.activeMachine.getBottom().getMetaDataEntry("has_optional_bltouch")
 
+    @pyqtProperty(str, notify = globalContainerChanged)
+    def activeMachineFirmwareType(self) -> str:
+        if self.activeMachine is None:
+            return ""
+        return self.activeMachine.getBottom().getMetaDataEntry("firmware_type")
+
     @pyqtProperty(str, notify = printerConnectedStatusChanged)
     def activeMachineFirmwareVersion(self) -> str:
         if not self._printer_output_devices:

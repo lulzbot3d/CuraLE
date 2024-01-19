@@ -147,9 +147,17 @@
                     "type": "bool",
                     "default_value": false
                 },
+                "machine_associated_urls":
+                {
+                    "label": "Machine Associated URLs",
+                    "description": "A dictionary of user-entered URLs associated with this machine in Cura LE.",
+                    "enabled": false,
+                    "type": "str",
+                    "default_value": "{}"
+                },
                 "firmware_machine_type":
                 {
-                    "label": "Firmware Type",
+                    "label": "Firmware Machine Type",
                     "description": "Machine type as sent via Marlin from an actual machine.",
                     "enabled": false,
                     "type": "str",
