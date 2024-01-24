@@ -1,9 +1,7 @@
 						CURA LULZBOT EDITION PATCHNOTES
 4.13.5: [In-Development]
 	Changes:
-		- Removed Linear Advance set command from TAZ 5 and Mini 1
-			start gcodes. Left it commented out in TAZ 6. There was
-			some evidence this command was problematic.
+		- Removed Linear Advance set command from start gcodes.
 
 4.13.5-Experimental:
 	Additions:
