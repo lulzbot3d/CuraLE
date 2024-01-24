@@ -21,7 +21,7 @@ M73 P0                                            ;resetting progress bar on LCD
 G26                                               ; clear potential 'probe fail' condition
 M107                                              ; disable fans
 M420 S0                                           ; disable leveling matrix
-M900 K{linear_advance}                            ; set linear advance
+;M900 K{linear_advance}                            ; set linear advance
 G90                                               ; absolute positioning
 T0                                                ; select this extruder first
 M82                                               ; set extruder to absolute mode
