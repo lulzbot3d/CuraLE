@@ -21,15 +21,16 @@ M117 Starting {print_job_name}...          ; progress indicator message on LCD
 G26 					                   ; clear potential 'probe fail' condition
 M107 					                   ; disable fans
 M420 S0                                    ; disable leveling matrix
+M900 K{linear_advance}                     ; set linear advance K factor
 G90 					                   ; absolute positioning
 M82 					                   ; set extruder to absolute mode
 G92 E0 					                   ; set extruder position to 0
 M140 S{material_bed_temperature_layer_0}   ; start bed heating up
 G28 					                   ; home all axes
 G0 X145 Y187 Z156 F3000 			       ; move away from endstops
-M117 Heating Up...			               ; progress indicator message on LCD
+M117 TAZ Pro Heating Up...			       ; progress indicator message on LCD
 M109 R{material_soften_temperature} 	   ; soften filament before retraction
-M117 Retracting Filament...		           ; progress indicator message on LCD
+M117 TAZ Pro Retracting Filament...		   ; progress indicator message on LCD
 G1 E-15 F75 				               ; retract filament
 M109 R{material_wipe_temperature}          ; wait for extruder to reach wiping temp
 M104 S{material_probe_temperature}         ; set extruder to probe temp
@@ -37,12 +38,12 @@ M106 S255                                  ; turn fan on to help drop temp
 ; Use M206 below to adjust nozzle wipe position (Replace "{machine_nozz1e_z_offset}" to adjust Z value)
 ; X ~ (+)left/(-)right, Y ~ (+)front/(-)back, Z ~ (+)down/(-)up
 M206 X0 Y0 Z{machine_nozzle_z_offset}
-M117 Wiping...                             ; progress indicator message on LCD
+M117 TAZ Pro Wiping...                     ; progress indicator message on LCD
 G12                                        ; wiping sequence
 M206 X0 Y0 Z0                              ; reseting stock nozzle position ### CAUTION: changing this line can affect print quality ###
 M107                                       ; turn off part cooling fan
 M109 R{material_probe_temperature}	       ; wait for extruder to reach probe temp
-M117 Probing...                            ; Progress indicator message on LCD
+M117 TAZ Pro Probing...                    ; Progress indicator message on LCD
 M204 S300				                   ; set probing acceleration
 G29					                       ; start auto-leveling sequence
 M420 S1                                    ; enable leveling matrix

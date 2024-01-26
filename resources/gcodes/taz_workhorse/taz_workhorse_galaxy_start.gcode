@@ -21,6 +21,7 @@ M117 Starting {print_job_name}...           ; progress indicator message on LCD
 G26                                         ; clear potential 'probe fail' condition
 M107                                        ; disable fans
 M420 S0                                     ; disable previous leveling matrix
+M900 K{linear_advance}                      ; set linear advance K factor
 G90                                         ; absolute positioning
 M82                                         ; set extruder to absolute mode
 G92 E0                                      ; set extruder position to 0

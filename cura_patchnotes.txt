@@ -1,7 +1,9 @@
 						CURA LULZBOT EDITION PATCHNOTES
 4.13.5: [In-Development]
 	Changes:
-		- Removed Linear Advance set command from start gcodes.
+		- Removed Linear Advance K factor command from all
+			pre-galaxy start gcodes, only galaxies have them now.
+		- Added a couple more status messages into start gcodes
 	Fixes:
 		- Fixed TAZ 6 with the Aerostruder Tool Head receiving the
 			wrong firmware on an automatic update

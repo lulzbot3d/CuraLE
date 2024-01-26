@@ -269,7 +269,7 @@
                 "linear_advance":
                 {
                     "label": "Linear Advance Factor",
-                    "description": "Sets the K factor for Linear Advance",
+                    "description": "Sets the K factor for Linear Advance. This setting will only have an effect if there is an \"M900\" command in the start gcode.",
                     "enabled": true,
                     "type": "float",
                     "minimum_value": "0.0",

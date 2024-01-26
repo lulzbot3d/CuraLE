@@ -15,5 +15,9 @@
         "firmware_latest_version": "2.1.3.0.21",
         "firmware_file": "747/Marlin_747_Galaxy_2.1.3.0.21_c3bfdcf.hex",
         "has_optional_lcd": false
+    },
+    "overrides":
+    {
+        "machine_start_gcode": { "default_value_from_file": "sidekick/sidekick_galaxy_start" }
     }
 }

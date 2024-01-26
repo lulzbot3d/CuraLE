@@ -18,6 +18,7 @@
 G90                                        ; absolute coordinate
 M82                                        ; set extruder to absolute mode
 G92 E0                                     ; set extruder position to 0
+M900 K{linear_advance}                     ; set linear advance K factor
 M117 Starting {print_job_name}             ; progress indicator message on LCD
 M140 S{material_bed_temperature_layer_0}   ; start bed heating up
 M109 R{material_soften_temperature}        ; soften filament before homing Z

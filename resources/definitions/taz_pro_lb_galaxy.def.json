@@ -15,5 +15,9 @@
         "firmware_toolhead_name": "Galaxy Series",
         "firmware_latest_version": "2.1.3.0.21",
         "firmware_file": "Pro_LongBed/Marlin_TAZPro_LongBed_Galaxy_BLTouch_2.1.3.0.21_c3bfdcf.bin"
+    },
+    "overrides":
+    {
+        "machine_start_gcode": { "default_value_from_file": "taz_pro_lb/taz_pro_lb_galaxy_start" }
     }
 }
