@@ -131,52 +131,6 @@ Item {
 
             color: UM.Theme.getColor("icon")
             source: UM.Theme.getIcon("Information")
-
-            MouseArea {
-                id: materialInfoArea
-                anchors.fill: parent
-                hoverEnabled: true
-
-                property var activeMachine: Cura.MachineManager.activeMachine
-                property string activeMaterialID: Cura.MachineManager.activeStack != null ? Cura.MachineManager.activeStack.material.id : null
-                property string toolheadCategory: activeMachine != null ? Cura.ContainerManager.getContainerMetaDataEntry(activeMachine.definition.id, "toolhead_category", "") : null
-                property string materialName: activeMaterialID != null ? Cura.ContainerManager.getContainerMetaDataEntry(activeMaterialID, "name", "") : "No Material Metadata"
-                property string materialDescription: activeMaterialID != null ? Cura.ContainerManager.getContainerMetaDataEntry(activeMaterialID, "description", "") : "No Material Metadata"
-                property string materialAdhesionInfo: activeMaterialID != null ? Cura.ContainerManager.getContainerMetaDataEntry(activeMaterialID, "adhesion_info", "") : "No Material Metadata"
-                property string materialTensionPosition: activeMaterialID != null ? Cura.ContainerManager.getContainerMetaDataEntry(activeMaterialID, "tension_position", "") : "No Material Metadata"
-                property string materialInfoLink: activeMaterialID != null ? Cura.ContainerManager.getContainerMetaDataEntry(activeMaterialID, "info_link", "https://lulzbot.com/store/filaments") : null
-                property string toolTipString: ""
-
-                function concatTipString() {
-                    let infoAdded = false
-                    toolTipString = "<b><h3>" + materialName + "<h3></b>"
-                    if (materialAdhesionInfo != "") {
-                        toolTipString += "<p>Adhesion Info: " + materialAdhesionInfo + "</p>"
-                        infoAdded = true
-                    }
-                    if (toolheadCategory == "Galaxy" && materialTensionPosition != "") {
-                        toolTipString += "<p>Extruder tension position: " + materialTensionPosition + "</p>"
-                        infoAdded = true
-                    }
-                    toolTipString += "<p>Click the ⓘ icon for more information</p>"
-                }
-
-                onEntered: {
-                    concatTipString()
-                    if (toolTipString != "") {
-                        base.showTooltip(materialInfo, Qt.point(-materialInfoIcon.x - UM.Theme.getSize("thick_margin").width, 0),
-                            catalog.i18nc("@label", toolTipString))
-                    }
-                }
-                onExited: base.hideTooltip()
-
-                onClicked: {
-                    if (materialInfoLink != null) {
-                        Qt.openUrlExternally(materialInfoLink)
-                    }
-                }
-
-            }
         }
 
         Label {
@@ -190,6 +144,56 @@ Item {
             visible: materialInfoIcon.visible
             text: catalog.i18nc("@label", "Material Printing Tips")
             font: UM.Theme.getFont("medium")
+        }
+
+        MouseArea {
+            id: materialInfoArea
+            anchors {
+                top: materialInfoIcon.top
+                left: materialInfoIcon.left
+                right: materialInfo.right
+            }
+            height: materialInfoIcon.height
+            hoverEnabled: true
+
+            property var activeMachine: Cura.MachineManager.activeMachine
+            property string activeMaterialID: Cura.MachineManager.activeStack != null ? Cura.MachineManager.activeStack.material.id : null
+            property string toolheadCategory: activeMachine != null ? Cura.ContainerManager.getContainerMetaDataEntry(activeMachine.definition.id, "toolhead_category", "") : null
+            property string materialName: activeMaterialID != null ? Cura.ContainerManager.getContainerMetaDataEntry(activeMaterialID, "name", "") : "No Material Metadata"
+            property string materialDescription: activeMaterialID != null ? Cura.ContainerManager.getContainerMetaDataEntry(activeMaterialID, "description", "") : "No Material Metadata"
+            property string materialAdhesionInfo: activeMaterialID != null ? Cura.ContainerManager.getContainerMetaDataEntry(activeMaterialID, "adhesion_info", "") : "No Material Metadata"
+            property string materialTensionPosition: activeMaterialID != null ? Cura.ContainerManager.getContainerMetaDataEntry(activeMaterialID, "tension_position", "") : "No Material Metadata"
+            property string materialInfoLink: activeMaterialID != null ? Cura.ContainerManager.getContainerMetaDataEntry(activeMaterialID, "info_link", "https://lulzbot.com/store/filaments") : null
+            property string toolTipString: ""
+
+            function concatTipString() {
+                let infoAdded = false
+                toolTipString = "<b><h3>" + materialName + "<h3></b>"
+                if (materialAdhesionInfo != "") {
+                    toolTipString += "<h3>Adhesion Info: " + materialAdhesionInfo + "</h3>"
+                    infoAdded = true
+                }
+                if (toolheadCategory == "Galaxy" && materialTensionPosition != "") {
+                    toolTipString += "<h3>Extruder tension position: " + materialTensionPosition + "</h3>"
+                    infoAdded = true
+                }
+                toolTipString += "<h3>Click the ⓘ icon for more information and ordering</h3>"
+            }
+
+            onEntered: {
+                concatTipString()
+                if (toolTipString != "") {
+                    base.showTooltip(materialInfo, Qt.point(-materialInfoIcon.x - UM.Theme.getSize("thick_margin").width, 0),
+                        catalog.i18nc("@label", toolTipString))
+                }
+            }
+            onExited: base.hideTooltip()
+
+            onClicked: {
+                if (materialInfoLink != null) {
+                    Qt.openUrlExternally(materialInfoLink)
+                }
+            }
         }
 
         Cura.SecondaryButton {
