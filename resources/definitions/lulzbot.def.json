@@ -63,6 +63,8 @@
         "machine_max_feedrate_z": { "default_value": 8 },
         "machine_max_feedrate_e": { "default_value": 40 },
         "machine_nozzle_size": { "default_value": 0.5 },
+        "magic_fuzzy_skin_point_density": { "default_value": 4 },
+        "magic_fuzzy_skin_thickness": { "default_value": 0.1 },
         "material_print_temperature":
         {
             "enabled": true,
