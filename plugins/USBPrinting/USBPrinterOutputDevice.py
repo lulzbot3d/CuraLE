@@ -85,6 +85,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         ## Set when print is started in order to check running time.
         self._print_start_time = None  # type: Optional[float]
         self._print_estimated_time = None  # type: Optional[int]
+        self._print_progress = 0
 
         self._accepts_commands = False
 
@@ -257,6 +258,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._serial = None
 
     def _update(self):
+        ### This is the main connection loop
         while self._connection_state == ConnectionState.Connected and self._serial is not None:
             try:
                 line = self._serial.readline()
@@ -317,6 +319,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                     self.close()
                     self.setConnectionState(ConnectionState.Error)
 
+            # M105 commands (report temperature) are effectively used to keep the connection alive
             if self._last_temperature_request is None or time() > self._last_temperature_request + self._timeout:
                 # Timeout, or no request has been sent at all.
                 if not self._printer_busy: # Don't flood the printer with temperature requests while it is busy
@@ -397,6 +400,15 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                         if line.startswith(b"rs"):
                             # In some cases of the RS command it needs to be handled differently.
                             self._gcode_position = int(line.split()[1])
+                else:
+                    # Set progress
+                    curr_prog = round(self.activePrinter.activePrintJob.progress * 100)
+                    if curr_prog != self._print_progress:
+                        self._print_progress = curr_prog
+                        if self._print_progress != 0:
+                            time_remaining = round(self.activePrinter.activePrintJob.timeRemaining / 60)
+                            comp_cmd = "M73 P" + str(self._print_progress) + " R" + str(time_remaining)
+                            self.sendCommand(comp_cmd)
         # This is outside the loop. Might be good to have a catch here if the loop broke unexpectedly
         Logger.log("d", "Printer connection loop stopped.")
 
