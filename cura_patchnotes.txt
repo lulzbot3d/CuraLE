@@ -4,9 +4,16 @@
 		- Removed Linear Advance K factor command from all
 			pre-galaxy start gcodes, only galaxies have them now.
 		- Added a couple more status messages into start gcodes
+		- Tethered printing now communicates print completion
+			percentages to your printer to display on the LCD
 	Fixes:
 		- Fixed TAZ 6 with the Aerostruder Tool Head receiving the
 			wrong firmware on an automatic update
+		- Slight changes to the rotate tool to correct the degrees
+			of rotation for each axis deviating from the actual
+			rotation values, also limits them to 0-360 degrees
+		- Patched a small bug related to the progress message when
+			performing a "Lay Flat" operation that takes too long
 
 4.13.5-Experimental:
 	Additions:
