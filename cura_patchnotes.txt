@@ -1,5 +1,9 @@
 						CURA LULZBOT EDITION PATCHNOTES
 4.13.5: [In-Development]
+	Additions:
+		- Added a dropdown on the recommended tab that allows
+			you to create parts with textured walls to better
+			hide z seams
 	Changes:
 		- Removed Linear Advance K factor command from all
 			pre-galaxy start gcodes, only galaxies have them now.

@@ -177,7 +177,7 @@ Item {
                     toolTipString += "<h3>Extruder tension position: " + materialTensionPosition + "</h3>"
                     infoAdded = true
                 }
-                toolTipString += "<h3>Click the ⓘ icon for more information and ordering</h3>"
+                toolTipString += "<h3>Click the ⓘ icon for more information and ordering.</h3>"
             }
 
             onEntered: {

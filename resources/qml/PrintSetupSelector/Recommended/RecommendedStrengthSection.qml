@@ -294,6 +294,79 @@ Item {
         }
     }
 
+    Item {
+        id: wallFuzzyContainer
+        height: wallFuzzyComboBox.height
+
+        anchors {
+            left: wallCountContainer.right
+            leftMargin: UM.Theme.getSize("thin_margin").width
+            right: parent.right
+            verticalCenter: wallCountRowTitle.verticalCenter
+        }
+
+        Cura.ComboBox {
+            id: wallFuzzyComboBox
+            width: parent.width
+            height: UM.Theme.getSize("setting_control").height
+            anchors {
+                verticalCenter: parent.verticalCenter
+                horizontalCenter: parent.horizontalCenter
+            }
+
+            model: ListModel {
+                ListElement { key: "smooth"; value: "Smooth" }
+                ListElement { key: "textured"; value: "Textured" }
+            }
+            textRole: "value"
+
+            currentIndex: {
+                let currentValue = magicFuzzySkin.properties.value
+                if (currentValue === "True") {
+                    return 1
+                } else {
+                    return 0
+                }
+            }
+
+            onActivated: {
+                let newValue = false
+                let oldValue = false
+                if (magicFuzzySkin.properties.value === "True") {
+                    oldValue = true
+                }
+                if (index == 1) {
+                    newValue = true
+                }
+                if (oldValue != newValue) {
+                    if (newValue) {
+                        console.log(zSeamType.properties.value)
+                        zSeamType.setPropertyValue("value", "random")
+                    } else {
+                        zSeamType.setPropertyValue("value", "sharpest_corner")
+                    }
+                    magicFuzzySkin.setPropertyValue("value", newValue)
+                }
+            }
+        }
+
+        UM.SettingPropertyProvider {
+            id: magicFuzzySkin
+            containerStackId: alive ? Cura.ExtruderManager.activeExtruderStackId : null
+            key: "magic_fuzzy_skin_enabled"
+            watchedProperties: [ "value" ]
+            storeIndex: 0
+        }
+
+        UM.SettingPropertyProvider {
+            id: zSeamType
+            containerStackId: alive ? Cura.ExtruderManager.activeExtruderStackId : null
+            key: "z_seam_type"
+            watchedProperties: [ "value" ]
+            storeIndex: 0
+        }
+    }
+
 
     //
     // Top/Bottom Chunk
@@ -320,8 +393,8 @@ Item {
 
             onEntered: {
                 base.showTooltip(topBottomRowTitle, Qt.point(-topBottomRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "<h3>Set the number of solid layers that will be generated on the top and bottom of your print. \
-                    In the dropdown to the right, you can also set the pattern that those layers will be created with.</h3>"))
+                    catalog.i18nc("@label", "<h3>Set the number of solid layers that will be generated on the top and bottom of your print.</h3> \
+                    <h3>In the dropdown to the right, you can also set the pattern that those layers will be created with.</h3>"))
             }
             onExited: base.hideTooltip()
         }
@@ -330,7 +403,7 @@ Item {
     Binding {
         target: topBottomCountSpinBox
         property: "value"
-        value: Math.ceil(parseFloat(topBottomThickness.properties.value) / parseFloat(layerHeight.properties.value))
+        value: Math.max(parseInt(bottomLayers.properties.value), parseInt(topLayers.properties.value))
     }
 
     Item {
@@ -357,39 +430,32 @@ Item {
             stepSize: 1
 
             onValueChanged: {
-                let current = Math.ceil(parseFloat(topBottomThickness.properties.value) / parseFloat(layerHeight.properties.value))
+                let current = Math.max(parseInt(topLayers.properties.value), parseInt(bottomLayers.properties.value))
                 if (current == topBottomCountSpinBox.value) {
                     return
                 }
 
-                let layerCountToHeight = topBottomCountSpinBox.value * parseFloat(layerHeight.properties.value)
-
                 var active_mode = UM.Preferences.getValue("cura/active_mode")
 
                 if (active_mode == 0 || active_mode == "simple") {
-                    Cura.MachineManager.setSettingForAllExtruders("top_bottom_thickness", "value", layerCountToHeight)
+                    Cura.MachineManager.setSettingForAllExtruders("top_layers", "value", topBottomCountSpinBox.value)
+                    Cura.MachineManager.setSettingForAllExtruders("bottom_layers", "value", topBottomCountSpinBox.value)
                 }
             }
         }
 
         UM.SettingPropertyProvider {
-            id: machineHeight
+            id: bottomLayers
             containerStackId: alive ? Cura.MachineManager.activeStack.id : null
-            key: "machine_height"
+            key: "bottom_layers"
             watchedProperties: [ "value" ]
+            storeIndex: 0
         }
 
         UM.SettingPropertyProvider {
-            id: layerHeight
+            id: topLayers
             containerStackId: alive ? Cura.MachineManager.activeStack.id : null
-            key: "layer_height"
-            watchedProperties: [ "value" ]
-        }
-
-        UM.SettingPropertyProvider {
-            id: topBottomThickness
-            containerStackId: alive ? Cura.MachineManager.activeStack.id : null
-            key: "top_bottom_thickness"
+            key: "top_layers"
             watchedProperties: [ "value" ]
             storeIndex: 0
         }
