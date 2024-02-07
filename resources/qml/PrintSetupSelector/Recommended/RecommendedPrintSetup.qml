@@ -107,6 +107,11 @@ Item {
                     width: parent.width
                     labelColumnWidth: settingsColumn.firstColumnWidth
                 }
+
+                RecommendedVaseModeSelector {
+                    width: parent.width
+                    labelColumnWidth: settingsColumn.firstColumnWidth
+                }
             }
         }
     }
