@@ -574,6 +574,8 @@ class CuraApplication(QtApplication):
         preferences.addPreference("cura/expanded_brands", "")
         preferences.addPreference("cura/expanded_types", "")
 
+        preferences.addPreference("filament_change/ensure_pause", False)
+
         preferences.addPreference("general/accepted_user_agreement", False)
 
         preferences.addPreference("general/is_first_run", False)

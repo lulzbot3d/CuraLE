@@ -260,6 +260,22 @@ Item {
                 style: UM.Theme.styles.toolbox_action_button
             }
         }
+
+        RowLayout {
+            id: pauseRow
+
+            Layout.fillWidth: true
+            Layout.maximumWidth: parent.width
+
+            spacing: rowSpacing
+
+            CheckBox {
+                id: pauseCheckbox
+                text: catalog.i18nc("@action:button", "Use simple pause")
+                checked: boolCheck(UM.Preferences.getValue("filament_change/ensure_pause"))
+                onClicked: UM.Preferences.setValue("filament_change/ensure_pause", checked)
+            }
+        }
     }
 
     UM.SettingPropertyProvider {
