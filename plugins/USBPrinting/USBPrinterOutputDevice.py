@@ -218,13 +218,18 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                                     confident your selection matches, you can ignore this error by going to Preferences -> Configure Cura \
                                     and selecting \"Allow Connection to Wrong Printers\""),
                                 title = catalog.i18nc("@message", "Wrong Tool Head!"),
-                                message_type = Message.MessageType.ERROR)
+                                message_type = Message.MessageType.WARNING)
                 if allow_wrong: overridden = True
             elif firmware_response_status is self.CheckFirmwareStatus.FIRMWARE_OUTDATED:
                 overridden = True
                 message = Message(text = catalog.i18nc("@message",
                                 "Printer appears to have outdated firmware."),
                                 title = catalog.i18nc("@message", "Old Firmware"),
+                                message_type = Message.MessageType.WARNING)
+            elif firmware_response_status is self.CheckFirmwareStatus.COMMUNICATION_ERROR:
+                message = Message(text = catalog.i18nc("@message",
+                                "There was an error when attempting to communicate with the printer. Check the cable connection"),
+                                title = catalog.i18nc("@message", "Communication Error!"),
                                 message_type = Message.MessageType.ERROR)
             else:
                 message = Message(text = catalog.i18nc("@message",
@@ -469,6 +474,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         WRONG_MACHINE = 2
         WRONG_TOOLHEAD = 3
         FIRMWARE_OUTDATED = 4
+        COMMUNICATION_ERROR = 5
 
 
     def _checkFirmware(self):
@@ -494,7 +500,13 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self.setConnectionState(ConnectionState.Timeout)
             return self.CheckFirmwareStatus.TIMEOUT
 
-        firmware_string = reply.decode()
+        try:
+            firmware_string = reply.decode()
+        except UnicodeDecodeError:
+            # This can occur if the response is a jumbled mess but "FIRMWARE_NAME" manages to survive
+            Logger.log("w", "Failed to decode response from serial. Response may be corrupted.")
+            self.setConnectionState(ConnectionState.Error)
+            return self.CheckFirmwareStatus.COMMUNICATION_ERROR
         self._setFirmwareData(firmware_string)
         values = self._firmware_data
 
