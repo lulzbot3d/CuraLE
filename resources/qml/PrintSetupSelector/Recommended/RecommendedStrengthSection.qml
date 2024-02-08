@@ -234,7 +234,9 @@ Item {
             onEntered: {
                 base.showTooltip(wallCountRowTitle, Qt.point(-wallCountRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
                     catalog.i18nc("@label", "<h3>Set the number of solid walls that will be generated on the sides of your print. \
-                    This number plays a large factor in the overall strength of your part.</h3>"))
+                    This number plays a large factor in the overall strength of your part.</h3>\
+                    <h3>In the dropdown to the right, you can select textured walls. This will enable a setting called \"Fuzzy Skin\".\
+                    You can fine-tune this setting in the \"Experimental\" section of the Custom menu.</h3>"))
             }
             onExited: base.hideTooltip()
         }

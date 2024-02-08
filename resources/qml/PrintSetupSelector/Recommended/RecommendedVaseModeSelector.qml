@@ -37,7 +37,11 @@ Item {
 
             onEntered: {
                 base.showTooltip(enableVaseModeRowTitle, Qt.point(-enableVaseModeRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", '<h3>it make vases :)))</h3>'))
+                    catalog.i18nc("@label", "<h3>FOR ADVANCED USE ONLY</h3><h3>Vase Mode prints objects with continuous walls \
+                    by extruding in a spiral pattern. This mode eliminates the need for layer-by-layer printing and infill, \
+                    resulting in fast prints that only have a single wall. For best results, experiment with increasing your Line Width.</h3>\
+                    <h3>This will enable a setting called \"Spiralize Outer Contour\". You can find this setting in the \"Special Modes\" section of the \
+                    Custom menu.</h3>"))
             }
             onExited: base.hideTooltip()
         }

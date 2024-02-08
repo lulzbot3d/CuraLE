@@ -37,8 +37,8 @@ Item {
                 base.showTooltip(zSeamRowTitle, Qt.point(-zSeamRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
                     catalog.i18nc("@label", '<h3>Select where the Z Seam of the print will be generated. The "Z Seam" \
                     refers to the point on the outer walls of your print where the layer starts and ends. These layer \
-                    transitions can often leave a small bump or dip that can affect the cosmetics of the finished part. \
-                    "Shortest" will prioritize print speed; "Random" will place the seam in a random place each layer, \
+                    transitions can often leave a small bump or dip that can affect the cosmetics of the finished part.</h3> \
+                    <h3>"Shortest" will prioritize print speed; "Random" will place the seam in a random place each layer, \
                     which reduces its prominence; "Sharpest Corner" attempts to place the seam in the sharpest corner of \
                     the print, which tends to disguise it well; and "User Specified" will allow you to choose which side \
                     of the print the seam is generated on.</h3>'))
