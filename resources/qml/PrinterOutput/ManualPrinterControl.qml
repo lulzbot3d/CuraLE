@@ -69,7 +69,7 @@ Item {
 
             Button {
                 height: UM.Theme.getSize("setting_control").height
-                width: base.width / 3 - (UM.Theme.getSize("default_margin").width * 1.3)
+                width: base.width / 2 - (UM.Theme.getSize("default_margin").width * 1.5)
                 text: "Connect"
                 enabled: {
                     if(availablePrinter != null && availablePrinter.address != "None") {
@@ -85,7 +85,7 @@ Item {
 
             Button {
                 height: UM.Theme.getSize("setting_control").height
-                width: base.width / 3 - (UM.Theme.getSize("default_margin").width * 1.4)
+                width: base.width / 2 - (UM.Theme.getSize("default_margin").width * 1.5)
                 text: "Disconnect"
                 enabled: checkEnabled()
                 onClicked: {
@@ -94,10 +94,20 @@ Item {
                 }
                 style: UM.Theme.styles.monitor_checkable_button_style
             }
+        }
+
+        Row {
+
+            width: base.width - 2 * UM.Theme.getSize("default_margin").width
+            height: childrenRect.height
+            anchors.left: parent.left
+            anchors.topMargin: UM.Theme.getSize("default_margin").height * 100
+            anchors.leftMargin: UM.Theme.getSize("default_margin").width
+            spacing: UM.Theme.getSize("default_margin").width
 
             Button {
                 height: UM.Theme.getSize("setting_control").height
-                width: base.width / 3 - (UM.Theme.getSize("default_margin").width * 1.3)
+                width: base.width - UM.Theme.getSize("default_margin").width - UM.Theme.getSize("default_margin").width
                 text: catalog.i18nc("@label", "Console")
                 enabled: availablePrinter.acceptsCommands ? availablePrinter.connectionState == 2 : false
                 onClicked: {
