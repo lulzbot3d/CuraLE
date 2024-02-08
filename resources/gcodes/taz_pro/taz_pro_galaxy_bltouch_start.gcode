@@ -34,16 +34,6 @@ M109 S{material_soften_temperature}        ; soften filament before retraction
 M117 Retracting Hotend Filament...;        ; progress indicator message on LCD
 G1 E-7 F75                                 ; retract filament
 G92 E-12                                   ; set extruder position to -12 to account for 5mm retract at end of previous print
-M109 R{material_wipe_temperature}          ; wait for extruder to reach wiping temp
-M104 S{material_probe_temperature}         ; start cooling to probe temp during wipe
-M106 S255                                  ; turn fan on to help drop temp
-; Use M206 below to adjust nozzle wipe position (Replace "{machine_nozz1e_z_offset}" to adjust Z value)
-; X ~ (+)left/(-)right, Y ~ (+)front/(-)back, Z ~ (+)down/(-)up
-M206 X0 Y0 Z{machine_nozzle_z_offset}      ; restoring offsets and adjusting offset if AST285 is enabled
-M117 Commencing Nozzle Wipe...;            ; progress indicator message on LCD
-G12                                        ; wiping sequence
-M206 X0 Y0 Z0                              ; reseting stock nozzle position ### CAUTION: changing this line can affect print quality ###
-M107                                       ; turn off part cooling fan
 M104 S{material_probe_temperature}         ; set probe temp
 M117 Sending Space Probes...;              ; Progress indicator message on LCD
 M204 S300                                  ; set probing acceleration
