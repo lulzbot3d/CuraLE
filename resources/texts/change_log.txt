@@ -1,4 +1,4 @@
-[4.13.5]
+[4.13.6]
 * STILL IN DEVELOPMENT
 * Updated TAZ Pro firmware
 * Updated firmware on all current-model single extruder Tool Head printers to 2.1.3.0.23
