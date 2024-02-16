@@ -1,7 +1,6 @@
 						CURA LULZBOT EDITION PATCHNOTES
-4.13.5: [In-Development]
 
-4.13.5-Experimental:
+4.13.5:
 	Additions:
 		- Added in Twin Nebula Tool Heads for the TAZ Pro XT
 		- Added profiles for BASF Ultrafuse TPU on MET285 Tool Heads
