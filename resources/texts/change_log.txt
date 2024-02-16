@@ -1,4 +1,8 @@
 [4.13.5]
+* STILL IN DEVELOPMENT
+* Updated TAZ Pro firmware
+
+[4.13.5]
 * Added in Twin Nebula Tool Heads for the TAZ Pro XT
 * Added profiles for BASF Ultrafuse TPU on MET285 Tool Heads
 * Added the developmental "TAZ Pro XT Long Bed" configuration for experimental use.

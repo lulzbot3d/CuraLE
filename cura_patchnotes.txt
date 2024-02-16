@@ -1,5 +1,9 @@
 						CURA LULZBOT EDITION PATCHNOTES
 
+4.13.6 Exp: [Experimental]
+	Changes:
+		- Slight changes to TAZ Pro starting gcode
+
 4.13.5:
 	Additions:
 		- Added in Twin Nebula Tool Heads for the TAZ Pro XT
