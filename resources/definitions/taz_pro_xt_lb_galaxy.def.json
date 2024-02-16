@@ -1,7 +1,7 @@
 {
     "version": 2,
-    "name": "TAZ ProXT",
-    "inherits": "taz_pro_xt",
+    "name": "[DEV] TAZ ProXT Long Bed",
+    "inherits": "taz_pro_xt_lb",
     "metadata":
     {
         "visible": false,
@@ -13,7 +13,7 @@
         "has_variants": true,
         "preferred_variant_name": "0.5 mm",
         "firmware_toolhead_name": "Galaxy Series",
-        "firmware_latest_version": "2.1.3.0.20",
-        "firmware_file": "Pro_XT_LongBed/Marlin_TAZProXT_LongBed_Galaxy_BLTouch_2.1.3.0.20_b6e30e3.bin"
+        "firmware_latest_version": "2.1.3.0.22",
+        "firmware_file": "Pro_XT_LongBed/Marlin_TAZProXT_LongBed_Galaxy_BLTouch_2.1.3.0.22_17516df.bin"
     }
 }

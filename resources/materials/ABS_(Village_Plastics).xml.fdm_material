@@ -11,6 +11,7 @@
     <GUID>f8786edb-7a9f-40fa-a861-76633d250ada</GUID>
     <version>1</version>
     <color_code>#40E0D0</color_code>
+    <tension_position>1</tension_position>
   </metadata>
   <properties>
     <density>1.06</density>

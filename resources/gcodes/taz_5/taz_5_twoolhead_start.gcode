@@ -2,7 +2,6 @@
 M73 P0 ; clear GLCD progress bar
 G26 ; clear potential 'probe fail' condition
 M107 ; disable fans
-M900 K{linear_advance}  ; set linear advance
 G90 ; absolute positioning
 M82 ; set extruder to absolute mode
 G92 E0 ; set extruder position to 0

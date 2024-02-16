@@ -260,6 +260,36 @@ Item {
                 style: UM.Theme.styles.toolbox_action_button
             }
         }
+
+        RowLayout {
+            id: pauseRow
+
+            Layout.fillWidth: true
+            Layout.maximumWidth: parent.width
+
+            spacing: rowSpacing
+
+            CheckBox {
+                id: pauseCheckbox
+                text: catalog.i18nc("@action:button", "Pause Only")
+                checked: UM.Preferences.getValue("filament_change/ensure_pause")
+                onClicked: UM.Preferences.setValue("filament_change/ensure_pause", checked)
+
+                MouseArea {
+                    id: pauseMouseArea
+                    anchors.fill: parent
+                    hoverEnabled: true
+
+                    Cura.ToolTip {
+                        id: pauseTooltip
+                        width: UM.Theme.getSize("tooltip").width
+                        tooltipText: "<h3>The 3D printer will pause at specified layers without starting a filament change.</h3> \
+                        <h3>This is useful for inserting captive hardware into your prints.</h3>"
+                        visible: parent.containsMouse
+                    }
+                }
+            }
+        }
     }
 
     UM.SettingPropertyProvider {

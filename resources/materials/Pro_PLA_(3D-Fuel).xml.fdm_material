@@ -15,6 +15,7 @@
     <description />
     <version>2</version>
     <extruder_disabled>False</extruder_disabled>
+    <tension_position>1</tension_position>
   </metadata>
   <properties>
     <diameter>2.85</diameter>

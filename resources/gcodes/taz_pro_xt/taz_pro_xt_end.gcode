@@ -1,3 +1,4 @@
+; This end gcode is unique to the TAZ Pro XT due to it's cooling position
 M400                                             ; wait for moves to finish
 M140 S{material_part_removal_temperature}        ; start bed cooling
 M104 S0                                          ; disable hotend

@@ -63,6 +63,8 @@
         "machine_max_feedrate_z": { "default_value": 8 },
         "machine_max_feedrate_e": { "default_value": 40 },
         "machine_nozzle_size": { "default_value": 0.5 },
+        "magic_fuzzy_skin_point_density": { "default_value": 4 },
+        "magic_fuzzy_skin_thickness": { "default_value": 0.1 },
         "material_print_temperature":
         {
             "enabled": true,
@@ -147,9 +149,17 @@
                     "type": "bool",
                     "default_value": false
                 },
+                "machine_associated_urls":
+                {
+                    "label": "Machine Associated URLs",
+                    "description": "A dictionary of user-entered URLs associated with this machine in Cura LE.",
+                    "enabled": false,
+                    "type": "str",
+                    "default_value": "{}"
+                },
                 "firmware_machine_type":
                 {
-                    "label": "Firmware Type",
+                    "label": "Firmware Machine Type",
                     "description": "Machine type as sent via Marlin from an actual machine.",
                     "enabled": false,
                     "type": "str",
@@ -261,7 +271,7 @@
                 "linear_advance":
                 {
                     "label": "Linear Advance Factor",
-                    "description": "Sets the K factor for Linear Advance",
+                    "description": "Sets the K factor for Linear Advance. This setting will only have an effect if there is an \"M900\" command in the start gcode.",
                     "enabled": true,
                     "type": "float",
                     "minimum_value": "0.0",

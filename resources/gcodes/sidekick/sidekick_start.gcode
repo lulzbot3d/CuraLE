@@ -15,20 +15,21 @@
 ;M301 P21.0 I1.78 D61.93                    ;Set Hotend PID
 ;M906 E960                                  ;TMC Motor Current
 ;
-M900 K{linear_advance}                     ; set linear advance
 G90                                        ; absolute coordinate
 M82                                        ; set extruder to absolute mode
 G92 E0                                     ; set extruder position to 0
-M117 Heating...                            ; progress indicator message on LCD
+M117 Starting {print_job_name}             ; progress indicator message on LCD
 M140 S{material_bed_temperature_layer_0}   ; start bed heating up
 M109 R{material_soften_temperature}        ; soften filament before homing Z
 G28                                        ; Home all axis
 G1 E-15 F100                               ; retract filament
+M117 Heating...                            ; progress indicator message on LCD
 M104 S{material_probe_temperature}         ; start extruder heating to probe temp
 M190 S{material_bed_temperature_layer_0}   ; wait for bed to reach printing temp
+M117 Probing...                            ; progress indicator message on LCD
 G29                                        ; start auto leveling
 G0 X0 Y0 F5000
 M109 R{material_print_temperature_layer_0} ; wait for extruder to reach initial printing temp
-M117 SideKick Printing...                  ; progress indicator message on LCD
+M117 Printing {print_job_name}...          ; progress indicator message on LCD
 G1 Z2 E0 F75                               ; prime tiny bit of filament into the nozzle
 ;Start G-Code End

@@ -11,6 +11,7 @@
     <version>25</version>
     <color_code>#40E0D0</color_code>
     <info_link></info_link>
+    <tension_position>1</tension_position>
   </metadata>
   <properties>
     <density>1.13</density>

@@ -302,7 +302,7 @@ class PauseAtHeightorLayer(Script):
 
                             # Move the head back
                             if xyz_absolute:
-                                prepend_gcode += "G1 Z%f F300\n" % (current_z + 1)
+                                prepend_gcode += "G1 Z%f F300\n" % (current_z)
                                 prepend_gcode += "G1 X%f Y%f F9000\n" % (x, y)
                             else:
                                 prepend_gcode += "G1 Z-1 F300\n"

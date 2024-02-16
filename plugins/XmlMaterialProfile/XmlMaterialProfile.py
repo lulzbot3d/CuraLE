@@ -550,6 +550,9 @@ class XmlMaterialProfile(InstanceContainer):
         if "adhesion_info" not in meta_data:
             meta_data["adhesion_info"] = ""
 
+        if "tension_position" not in meta_data:
+            meta_data["tension_position"] = ""
+
         validation_message = XmlMaterialValidator.validateMaterialMetaData(meta_data)
         if validation_message is not None:
             ConfigurationErrorMessage.getInstance().addFaultyContainers(self.getId())
@@ -850,6 +853,8 @@ class XmlMaterialProfile(InstanceContainer):
             base_metadata["description"] = ""
         if "adhesion_info" not in base_metadata:
             base_metadata["adhesion_info"] = ""
+        if "tension_position" not in base_metadata:
+            base_metadata["tension_position"] = ""
 
         property_values = {}
         properties = data.iterfind("./um:properties/*", cls.__namespaces)

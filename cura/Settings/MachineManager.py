@@ -538,6 +538,12 @@ class MachineManager(QObject):
             return False
         return self.activeMachine.getBottom().getMetaDataEntry("has_optional_bltouch")
 
+    @pyqtProperty(str, notify = globalContainerChanged)
+    def activeMachineFirmwareType(self) -> str:
+        if self.activeMachine is None:
+            return ""
+        return self.activeMachine.getBottom().getMetaDataEntry("firmware_type")
+
     @pyqtProperty(str, notify = printerConnectedStatusChanged)
     def activeMachineFirmwareVersion(self) -> str:
         if not self._printer_output_devices:
@@ -1331,6 +1337,24 @@ class MachineManager(QObject):
                    current_quality_type, quality_type)
         self._setQualityGroup(candidate_quality_groups[quality_type], empty_quality_changes = True)
 
+
+    def _updateQualityToPreferred(self, *args: Any) -> None:
+
+        candidate_quality_groups = ContainerTree.getInstance().getCurrentQualityGroups()
+        available_quality_types = {qt for qt, g in candidate_quality_groups.items() if g.is_available}
+
+        quality_type = sorted(list(available_quality_types))[0]
+        if self._global_container_stack is None:
+            Logger.log("e", "Global stack not present!")
+            return
+        preferred_quality_type = self._global_container_stack.getMetaDataEntry("preferred_quality_type")
+        if preferred_quality_type in available_quality_types:
+            quality_type = preferred_quality_type
+
+        Logger.log("i", "Switching to [%s] quality", quality_type)
+        self._setQualityGroup(candidate_quality_groups[quality_type], empty_quality_changes = True)
+
+
     def _updateIntentWithQuality(self):
         """Update the current intent after the quality changed"""
 
@@ -1578,7 +1602,8 @@ class MachineManager(QObject):
         self.blurSettings.emit()
         with postponeSignals(*self._getContainerChangedSignals(), compress = CompressTechnique.CompressPerParameterValue):
             self._setMaterial(position, container_node)
-            self._updateQualityWithMaterial()
+            # self._updateQualityWithMaterial()
+            self._updateQualityToPreferred()
 
         # See if we need to show the Discard or Keep changes screen
         # if self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:

@@ -21,7 +21,6 @@ M75                                         ; start GLCD timer
 G26                                         ; clear potential 'probe fail' condition
 M107                                        ; disable fans
 M420 S0                                     ; disable leveling matrix
-M900 K{linear_advance}                      ; set linear advance
 G90                                         ; absolute positioning
 M82                                         ; set extruder to absolute mode
 G92 E0                                      ; set extruder position to 0
@@ -35,6 +34,7 @@ M109 R{material_wipe_temperature}           ; wait for extruder to reach wiping 
 ;M206 X0 Y0 Z0                               ; uncomment to adjust wipe position (+X ~ nozzle moves left)(+Y ~ nozzle moves forward)(+Z ~ nozzle moves down)
 G12                                         ; wiping sequence
 M206 X0 Y0 Z0                               ; reseting stock nozzle position ### CAUTION: changing this line can affect print quality ###
+G1 Z10 F5000                                ; raise nozzle after wipe
 M109 R{material_probe_temperature}          ; wait for extruder to reach probe temp
 G1 X-10 Y293 F4000                          ; move above first probe point
 M204 S100                                   ; set probing acceleration

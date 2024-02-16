@@ -85,6 +85,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         ## Set when print is started in order to check running time.
         self._print_start_time = None  # type: Optional[float]
         self._print_estimated_time = None  # type: Optional[int]
+        self._print_progress = 0
 
         self._accepts_commands = False
 
@@ -217,13 +218,18 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                                     confident your selection matches, you can ignore this error by going to Preferences -> Configure Cura \
                                     and selecting \"Allow Connection to Wrong Printers\""),
                                 title = catalog.i18nc("@message", "Wrong Tool Head!"),
-                                message_type = Message.MessageType.ERROR)
+                                message_type = Message.MessageType.WARNING)
                 if allow_wrong: overridden = True
             elif firmware_response_status is self.CheckFirmwareStatus.FIRMWARE_OUTDATED:
                 overridden = True
                 message = Message(text = catalog.i18nc("@message",
                                 "Printer appears to have outdated firmware."),
                                 title = catalog.i18nc("@message", "Old Firmware"),
+                                message_type = Message.MessageType.WARNING)
+            elif firmware_response_status is self.CheckFirmwareStatus.COMMUNICATION_ERROR:
+                message = Message(text = catalog.i18nc("@message",
+                                "There was an error when attempting to communicate with the printer. Check the cable connection"),
+                                title = catalog.i18nc("@message", "Communication Error!"),
                                 message_type = Message.MessageType.ERROR)
             else:
                 message = Message(text = catalog.i18nc("@message",
@@ -257,6 +263,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._serial = None
 
     def _update(self):
+        ### This is the main connection loop
         while self._connection_state == ConnectionState.Connected and self._serial is not None:
             try:
                 line = self._serial.readline()
@@ -317,6 +324,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                     self.close()
                     self.setConnectionState(ConnectionState.Error)
 
+            # M105 commands (report temperature) are effectively used to keep the connection alive
             if self._last_temperature_request is None or time() > self._last_temperature_request + self._timeout:
                 # Timeout, or no request has been sent at all.
                 if not self._printer_busy: # Don't flood the printer with temperature requests while it is busy
@@ -397,6 +405,15 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                         if line.startswith(b"rs"):
                             # In some cases of the RS command it needs to be handled differently.
                             self._gcode_position = int(line.split()[1])
+                else:
+                    # Set progress
+                    curr_prog = round(self.activePrinter.activePrintJob.progress * 100)
+                    if curr_prog != self._print_progress:
+                        self._print_progress = curr_prog
+                        if self._print_progress != 0:
+                            time_remaining = round(self.activePrinter.activePrintJob.timeRemaining / 60)
+                            comp_cmd = "M73 P" + str(self._print_progress) + " R" + str(time_remaining)
+                            self.sendCommand(comp_cmd)
         # This is outside the loop. Might be good to have a catch here if the loop broke unexpectedly
         Logger.log("d", "Printer connection loop stopped.")
 
@@ -457,6 +474,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         WRONG_MACHINE = 2
         WRONG_TOOLHEAD = 3
         FIRMWARE_OUTDATED = 4
+        COMMUNICATION_ERROR = 5
 
 
     def _checkFirmware(self):
@@ -482,7 +500,13 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self.setConnectionState(ConnectionState.Timeout)
             return self.CheckFirmwareStatus.TIMEOUT
 
-        firmware_string = reply.decode()
+        try:
+            firmware_string = reply.decode()
+        except UnicodeDecodeError:
+            # This can occur if the response is a jumbled mess but "FIRMWARE_NAME" manages to survive
+            Logger.log("w", "Failed to decode response from serial. Response may be corrupted.")
+            self.setConnectionState(ConnectionState.Error)
+            return self.CheckFirmwareStatus.COMMUNICATION_ERROR
         self._setFirmwareData(firmware_string)
         values = self._firmware_data
 

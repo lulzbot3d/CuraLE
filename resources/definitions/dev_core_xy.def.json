@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "[Developmental] Core XY",
+    "name": "[DEV] Core XY",
     "inherits": "taz",
     "metadata":
     {
@@ -23,7 +23,7 @@
         "machine_height": { "default_value": 110 },
         "machine_max_feedrate_z": { "default_value": 25 },
         "machine_start_gcode": { "default_value_from_file": "dev_core_xy/dev_core_xy_start" },
-        "machine_end_gcode": { "default_value": "END" },
+        "machine_end_gcode": { "default_value_from_file": "dev_core_xy/dev_core_xy_end" },
         "machine_has_bltouch": { "value": true }
     }
 }

@@ -333,7 +333,7 @@ class FilamentChangeScript:
 
         color_change = "; vvv\n"
 
-        if "pro" in self._current_printer.lower():
+        if "pro" in self._current_printer.lower() or Application.getInstance().getPreferences().getValue("filament_change/ensure_pause"):
             color_change += "M25 ; Pause\n"
         else:
             color_change += "M600 ; Filament Change\n"

@@ -37,7 +37,7 @@ Item {
 
             onEntered: {
                 base.showTooltip(printSequenceRowTitle, Qt.point(-printSequenceRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", '<h3>Set whether to print all parts on the build plate "All at Once" or "One at a Time". \
+                    catalog.i18nc("@label", '<h3>FOR ADVANCED USE ONLY</h3><h3>Set whether to print all parts on the build plate "All at Once" or "One at a Time". \
                     Note that if you print parts "One at a Time", special care should be taken to ensure the Tool Head does not \
                     run into pieces that have been completed. This can be done by previewing the gcode and ensuring parts print \
                     in the order intended.</h3>'))

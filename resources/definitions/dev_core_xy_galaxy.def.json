@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "[Developmental] Core XY | Galaxy",
+    "name": "[DEV] Core XY | Galaxy",
     "inherits": "dev_core_xy",
     "metadata":
     {

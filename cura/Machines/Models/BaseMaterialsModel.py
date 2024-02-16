@@ -77,6 +77,7 @@ class BaseMaterialsModel(ListModel):
         self.addRoleName(Qt.UserRole + 14, "is_read_only")
         self.addRoleName(Qt.UserRole + 15, "container_node")
         self.addRoleName(Qt.UserRole + 16, "is_favorite")
+        self.addRoleName(Qt.UserRole + 17, "tension_position")
 
     def _onChanged(self) -> None:
         self._update_timer.start()
@@ -208,6 +209,7 @@ class BaseMaterialsModel(ListModel):
             "adhesion_info":        metadata["adhesion_info"],
             "is_read_only":         self._container_registry.isReadOnly(metadata["id"]),
             "container_node":       container_node,
-            "is_favorite":          root_material_id in self._favorite_ids
+            "is_favorite":          root_material_id in self._favorite_ids,
+            "tension_position":     metadata["tension_position"]
         }
         return item

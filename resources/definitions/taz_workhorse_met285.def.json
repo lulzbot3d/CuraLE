@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "TAZ Workhorse | MET285",
+    "name": "TAZ Workhorse+ | MET285",
     "inherits": "taz_workhorse_galaxy",
     "metadata":
     {

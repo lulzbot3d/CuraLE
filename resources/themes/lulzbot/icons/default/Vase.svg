@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   viewBox="0 0 24 24"
+   id="svg4"
+   sodipodi:docname="Vase.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="972"
+     id="namedview6"
+     showgrid="false"
+     inkscape:zoom="16"
+     inkscape:cx="9.4149105"
+     inkscape:cy="9.8045609"
+     inkscape:window-x="0"
+     inkscape:window-y="33"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4" />
+  <path
+     style="display:inline;opacity:1;stroke-width:0.93541437"
+     d="M 13 6.1269531 L 13 8.2304688 A 4 7 0 0 1 16 15 A 4 7 0 0 1 14.798828 20 L 9.2070312 20 A 4 7 0 0 1 8 15 A 4 7 0 0 1 11 8.2285156 L 11 6.1367188 A 6 9 0 0 0 6 15 A 6 9 0 0 0 8.2304688 22 L 8.5996094 22 L 12 22 L 12.974609 22 L 15.599609 22 L 15.763672 22 A 6 9 0 0 0 18 15 A 6 9 0 0 0 13 6.1269531 z "
+     id="path2" />
+  <path
+     style="display:inline;stroke-width:0.85280287"
+     d="m 9,4 v 4 h 2 V 4 Z m 4,0 v 4 h 2 V 4 Z"
+     id="path15"
+     inkscape:connector-curvature="0"
+     inkscape:label="neck" />
+  <path
+     style="display:inline;opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.80503148;stroke-opacity:1"
+     d="M 7.8457031,2 9,4 h 2 A 2,2 0 0 0 10.730469,3.0019531 L 10.732422,3 10.154297,2 Z m 5.9999999,0 -0.578125,1 0.002,0.00195 A 2,2 0 0 0 13,4 h 2 l 1.154297,-2 z"
+     id="path8"
+     inkscape:label="lip"
+     inkscape:connector-curvature="0" />
+</svg>

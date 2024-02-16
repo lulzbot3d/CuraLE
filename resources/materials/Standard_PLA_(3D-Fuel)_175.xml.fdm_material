@@ -12,6 +12,7 @@
     <version>1</version>
     <color_code>#99AB21</color_code>
     <info_link>https://www.lulzbot.com/store/filament/175-mm-standard-pla</info_link>
+    <tension_position>1</tension_position>
   </metadata>
   <properties>
     <density>1.25</density>

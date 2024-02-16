@@ -22,7 +22,6 @@ M82                                                ;absolute extrusion mode
 M73 P0                                             ; clear GLCD progress bar
 M75			     	                               ; start GLCD timer
 M107                                               ; disable fans
-M900 K{linear_advance}                             ; set linear advance
 G90                                                ; absolute positioning
 M420 S0                                            ; disable previous leveling matrix
 M140 S{material_bed_temperature_layer_0}           ; begin bed temping up
@@ -90,5 +89,5 @@ G1 Z2 E0 F75                                       ; raise head and 0 extruder
 M82					                               ; set to absolute mode
 M400                                               ; clear buffer
 M300 T                                             ; play sound at startr of first layer
-M117 TAZ Pro Printing...                           ; LCD status message
+M117 Printing {print_job_name}...                           ; LCD status message
 ;Start G-Code End
