@@ -1,10 +1,14 @@
 						CURA LULZBOT EDITION PATCHNOTES
 
 4.13.6 Exp: [Experimental]
-	Changes:
-		- Slight changes to TAZ Pro starting gcode
+	Additions:
 		- Updated firmware on all TAZ Pro printers to 2.1.3.0.23
 		- Updated firmware on remaining GLCD printers to 2.1.3.0.24
+	Changes:
+		- Slight changes to TAZ Pro starting gcode
+		- Bumped up first layer speed on some Galaxy profiles
+	Fixes:
+		- Patched typos resulting in incorrect Bio profile values
 
 4.13.5:
 	Additions:

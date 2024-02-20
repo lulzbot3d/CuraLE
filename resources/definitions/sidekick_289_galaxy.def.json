@@ -19,6 +19,7 @@
     "overrides":
     {
         "cool_min_layer_time": { "value": 15 },
-        "machine_start_gcode": { "default_value_from_file": "sidekick/sidekick_galaxy_start" }
+        "machine_start_gcode": { "default_value_from_file": "sidekick/sidekick_galaxy_start" },
+        "speed_travel_layer_0": { "value": 100 }
     }
 }

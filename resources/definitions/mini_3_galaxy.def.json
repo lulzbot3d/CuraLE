@@ -14,6 +14,7 @@
     },
     "overrides":
     {
-        "cool_min_layer_time": { "value": 15 }
+        "cool_min_layer_time": { "value": 15 },
+        "speed_travel_layer_0": { "value": 100 }
     }
 }
