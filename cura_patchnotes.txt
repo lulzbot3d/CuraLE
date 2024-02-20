@@ -3,8 +3,8 @@
 4.13.6 Exp: [Experimental]
 	Changes:
 		- Slight changes to TAZ Pro starting gcode
-		- Updated firmware on all current single extruder Tool Head
-			printers to 2.1.3.0.23
+		- Updated firmware on all TAZ Pro printers to 2.1.3.0.23
+		- Updated firmware on remaining GLCD printers to 2.1.3.0.24
 
 4.13.5:
 	Additions:
