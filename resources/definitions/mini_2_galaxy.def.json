@@ -17,6 +17,7 @@
     },
     "overrides":
     {
+        "cool_min_layer_time": { "value": 15 },
         "machine_start_gcode": { "default_value_from_file": "mini_2/mini_2_galaxy_start" }
     }
 }
