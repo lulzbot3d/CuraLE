@@ -7,55 +7,67 @@ import QtQuick.Controls 2.1
 import UM 1.1 as UM
 import Cura 1.0 as Cura
 
-UM.RecolorImage
-{
-    id: widget
+Rectangle {
+    id: infoRectangle
+    width: widget.width + detailsLabel.width + UM.Theme.getSize("narrow_margin").width
+    height: widget.height
 
-    source: UM.Theme.getIcon("Information")
-    width: visible ? UM.Theme.getSize("section_icon").width : 0
-    height: UM.Theme.getSize("section_icon").height
+    UM.RecolorImage {
+        id: widget
 
-    color: UM.Theme.getColor("icon")
+        source: UM.Theme.getIcon("Information")
+        width: visible ? UM.Theme.getSize("section_icon").width : 0
+        height: UM.Theme.getSize("section_icon").height
 
-    MouseArea
-    {
+        color: UM.Theme.getColor("icon")
+
+        Popup {
+            id: popup
+
+            y: -(height + UM.Theme.getSize("default_arrow").height + UM.Theme.getSize("thin_margin").height)
+            x: parent.width - width + UM.Theme.getSize("thin_margin").width
+
+            closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+
+            opacity: opened ? 1 : 0
+            Behavior on opacity { NumberAnimation { duration: 100 } }
+
+            contentWidth: printJobInformation.width
+            contentHeight: printJobInformation.implicitHeight
+
+            contentItem: PrintJobInformation {
+                id: printJobInformation
+                width: UM.Theme.getSize("action_panel_information_widget").width
+            }
+
+            background: UM.PointingRectangle {
+                color: UM.Theme.getColor("tool_panel_background")
+                borderColor: UM.Theme.getColor("lining")
+                borderWidth: UM.Theme.getSize("default_lining").width
+
+                target: Qt.point(width - (widget.width / 2) - UM.Theme.getSize("thin_margin").width,
+                                height + UM.Theme.getSize("default_arrow").height - UM.Theme.getSize("thin_margin").height)
+
+                arrowSize: UM.Theme.getSize("default_arrow").width
+            }
+        }
+    }
+
+    Label {
+        id: detailsLabel
+
+        anchors {
+            left: widget.right
+            leftMargin: UM.Theme.getSize("narrow_margin").width
+            verticalCenter: parent.verticalCenter
+        }
+        text: "Details"
+    }
+
+    MouseArea {
         anchors.fill: parent
         hoverEnabled: true
         onEntered: popup.open()
         onExited: popup.close()
-    }
-
-    Popup
-    {
-        id: popup
-
-        y: -(height + UM.Theme.getSize("default_arrow").height + UM.Theme.getSize("thin_margin").height)
-        x: parent.width - width + UM.Theme.getSize("thin_margin").width
-
-        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
-
-        opacity: opened ? 1 : 0
-        Behavior on opacity { NumberAnimation { duration: 100 } }
-
-        contentWidth: printJobInformation.width
-        contentHeight: printJobInformation.implicitHeight
-
-        contentItem: PrintJobInformation
-        {
-            id: printJobInformation
-            width: UM.Theme.getSize("action_panel_information_widget").width
-        }
-
-        background: UM.PointingRectangle
-        {
-            color: UM.Theme.getColor("tool_panel_background")
-            borderColor: UM.Theme.getColor("lining")
-            borderWidth: UM.Theme.getSize("default_lining").width
-
-            target: Qt.point(width - (widget.width / 2) - UM.Theme.getSize("thin_margin").width,
-                            height + UM.Theme.getSize("default_arrow").height - UM.Theme.getSize("thin_margin").height)
-
-            arrowSize: UM.Theme.getSize("default_arrow").width
-        }
     }
 }
