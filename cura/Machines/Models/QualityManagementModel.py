@@ -152,6 +152,9 @@ class QualityManagementModel(ListModel):
         roles of this list model.
         """
 
+        machine_manager = cura.CuraApplication.CuraApplication.getInstance().getMachineManager()
+        active_machine = machine_manager.activeMachine
+
         global_stack = cura.CuraApplication.CuraApplication.getInstance().getGlobalContainerStack()
         if not global_stack:
             Logger.log("i", "No active global stack, cannot duplicate quality (changes) profile.")
@@ -160,7 +163,12 @@ class QualityManagementModel(ListModel):
         container_registry = cura.CuraApplication.CuraApplication.getInstance().getContainerRegistry()
         new_name = container_registry.uniqueName(new_name)
 
-        material_id = quality_model_item["material"]
+        active_machine_def_id = active_machine.definition.id
+
+        if "material" in quality_model_item:
+            material_id = quality_model_item["material"]
+        else:
+            material_id = machine_manager.activeMaterialId.split("_" + active_machine_def_id)[0]
         intent_category = quality_model_item["intent_category"]
         quality_group = quality_model_item["quality_group"]
         quality_changes_group = quality_model_item["quality_changes_group"]
@@ -210,7 +218,7 @@ class QualityManagementModel(ListModel):
             return
 
         active_machine_def_id = global_stack.definition.id
-        active_material_id = machine_manager.activeMaterialId.replace("_" + active_machine_def_id, "")
+        active_material_id = machine_manager.activeMaterialId.split("_" + active_machine_def_id)[0]
 
         machine_manager.blurSettings.emit()
         if base_name is None or base_name == "":
