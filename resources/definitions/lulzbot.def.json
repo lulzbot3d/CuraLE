@@ -282,6 +282,26 @@
                     "settable_per_extruder": true
                 }
             }
+        },
+        "lulzbot_addons":
+        {
+            "label": "LulzBot Add-Ons",
+            "type": "category",
+            "description": "Settings specific to LulzBot printers",
+            "icon": "Lulz_Simple",
+            "children":
+            {
+                "lulzbot_test_setting":
+                {
+                    "label": "Test Setting",
+                    "description": "Non-functional. This setting is only here as a placeholder.",
+                    "enabled": true,
+                    "type": "bool",
+                    "default_value": false,
+                    "settable_per_mesh": false,
+                    "settable_per_extruder": true
+                }
+            }
         }
     }
 }
