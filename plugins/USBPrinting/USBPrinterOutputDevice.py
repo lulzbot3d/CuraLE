@@ -200,17 +200,20 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         if firmware_response_status is not self.CheckFirmwareStatus.OK:
             overridden = False
             allow_wrong = CuraApplication.getInstance().getPreferences().getValue("cura/allow_connection_to_wrong_machine")
+
             if firmware_response_status is self.CheckFirmwareStatus.TIMEOUT:
                 message = Message(text = catalog.i18nc("@message",
                                 "The printer did not respond to the firmware check. Is firmware loaded?"),
                                 title = catalog.i18nc("@message", "No Response"),
                                 message_type = Message.MessageType.ERROR)
+
             elif firmware_response_status is self.CheckFirmwareStatus.WRONG_MACHINE:
                 message = Message(text = catalog.i18nc("@message",
                                 "Firmware printer type doesn't match active printer in Cura LE!"),
                                 title = catalog.i18nc("@message", "Wrong Machine!"),
                                 message_type = Message.MessageType.ERROR)
                 if allow_wrong: overridden = True
+
             elif firmware_response_status is self.CheckFirmwareStatus.WRONG_TOOLHEAD:
                 overridden = True
                 message = Message(text = catalog.i18nc("@message",
@@ -220,23 +223,27 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                                 title = catalog.i18nc("@message", "Wrong Tool Head!"),
                                 message_type = Message.MessageType.WARNING)
                 if allow_wrong: overridden = True
+
             elif firmware_response_status is self.CheckFirmwareStatus.FIRMWARE_OUTDATED:
                 overridden = True
                 message = Message(text = catalog.i18nc("@message",
                                 "Printer appears to have outdated firmware."),
                                 title = catalog.i18nc("@message", "Old Firmware"),
                                 message_type = Message.MessageType.WARNING)
+
             elif firmware_response_status is self.CheckFirmwareStatus.COMMUNICATION_ERROR:
                 message = Message(text = catalog.i18nc("@message",
                                 "There was an error when attempting to communicate with the printer. Check the cable connection"),
                                 title = catalog.i18nc("@message", "Communication Error!"),
                                 message_type = Message.MessageType.ERROR)
+
             else:
                 message = Message(text = catalog.i18nc("@message",
                                 "Unknown CheckFirmwareStatus state!"),
                                 title = catalog.i18nc("@message", "Oh No! If you got this message, please contact support and get us \
                                                       some logs because this isn't supposed to happen!"),
                                 message_type = Message.MessageType.ERROR)
+
             # Ignore it if it's minor or if the user has elected to
             if not overridden:
                 message.show()
