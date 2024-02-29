@@ -209,7 +209,9 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
             elif firmware_response_status is self.CheckFirmwareStatus.WRONG_MACHINE:
                 message = Message(text = catalog.i18nc("@message",
-                                "Firmware printer type doesn't match active printer in Cura LE!"),
+                                "Firmware reports printer type doesn't match active printer in Cura LE! Make sure your \n\
+                                    active printer in Cura LE matches the printer you're trying to connect to and that \
+                                    your firmware is up-to-date."),
                                 title = catalog.i18nc("@message", "Wrong Machine!"),
                                 message_type = Message.MessageType.ERROR)
                 if allow_wrong: overridden = True
