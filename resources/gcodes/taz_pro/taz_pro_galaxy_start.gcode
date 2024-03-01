@@ -54,8 +54,8 @@ M204 S2000                                 ; restore standard acceleration
 G1 X5 Y15 Z10 F8000                        ; move up off last probe point
 G4 S1                                      ; pause
 M400                                       ; wait for moves to finish
-M117 Reaching Mission Temp...;             ; progress indicator message on LCD
 M109 S{material_bed_temperature_layer_0}   ; wait for bed heating up
+M117 Reaching Mission Temp...;             ; progress indicator message on LCD
 M109 R{material_print_temperature_layer_0} ; wait for extruder to reach initial printing temp
 G1 Z2 E0 F75                               ; prime tiny bit of filament into the nozzle
 M300 T                                     ; play sound at start of first layer
