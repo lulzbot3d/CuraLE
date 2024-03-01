@@ -488,21 +488,16 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     def _checkFirmware(self):
         reply = b""
-        print("Checking firmware")
         try:
-            print("sending initial M115")
             self._sendCommand("M115")
             last_sent = time()
             timeout = time() + 5.5
             reply = self._serial.readline()
-            print("first reply: " + str(reply))
             while b"FIRMWARE_NAME" not in reply and time() < timeout:
                 if (time() - last_sent) > 1:
-                    print("sending additional M115")
                     self._sendCommand("M115")
                     last_sent = time()
                 reply = self._serial.readline()
-                print("reply: " + str(reply))
         except AttributeError:
             Logger.log("w", "Tried to check firmware of a non-existant serial device. Device may have been disconnected.")
         except SerialException:
