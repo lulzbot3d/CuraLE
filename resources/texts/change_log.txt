@@ -1,3 +1,12 @@
+[4.13.7]
+* Still In Development!
+* Added some Standard profiles for 0.3, 0.4, and 0.8mm nozzles on the Meteor Tool Heads
+* Started work on a potential new setting category
+* Fixed a bug where duplicating profiles crashed the application
+* Fixed an issue with the Workhorse looking for the wrong name in Firmware
+* Fixed an issue with Mini 1s potentially being created with and LCD when they aren't supposed to have one
+* Corrected some flawed logic in the checkFirmware stage of USB connections that may have overwhelmed some printers.
+
 [4.13.6]
 * Primarily a firmware update
 * Updated firmware on all TAZ Pro printers to 2.1.3.0.23
