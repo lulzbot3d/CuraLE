@@ -102,7 +102,9 @@
     </machine>
 
     <machine>
+      <machine_identifier product="dev_core_xy_met285"/>
       <machine_identifier product="mini_2_met285"/>
+      <machine_identifier product="mini_3_met285"/>
       <machine_identifier product="sidekick_289_met285"/>
       <machine_identifier product="sidekick_747_met285"/>
       <machine_identifier product="taz_pro_met285"/>
@@ -111,14 +113,14 @@
       <machine_identifier product="taz_workhorse_met285"/>
       <setting key="print temperature">210</setting>
       <hotend id="0.3 mm">
-        <setting key="hardware compatible">no</setting>
       </hotend>
       <hotend id="0.4 mm">
-        <setting key="hardware compatible">no</setting>
+        <setting key="print temperature">215</setting>
       </hotend>
-      <hotend id="0.5 mm" />
+      <hotend id="0.5 mm">
+      </hotend>
       <hotend id="0.8 mm">
-        <setting key="hardware compatible">no</setting>
+        <setting key="print temperature">220</setting>
       </hotend>
     </machine>
 

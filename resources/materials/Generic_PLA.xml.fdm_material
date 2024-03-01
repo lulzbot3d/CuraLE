@@ -92,14 +92,14 @@
       <machine_identifier product="taz_workhorse_met285"/>
       <setting key="print temperature">210</setting>
       <hotend id="0.3 mm">
-        <setting key="hardware compatible">no</setting>
       </hotend>
       <hotend id="0.4 mm">
-        <setting key="hardware compatible">no</setting>
+        <setting key="print temperature">215</setting>
       </hotend>
-      <hotend id="0.5 mm" />
+      <hotend id="0.5 mm">
+      </hotend>
       <hotend id="0.8 mm">
-        <setting key="hardware compatible">no</setting>
+        <setting key="print temperature">220</setting>
       </hotend>
     </machine>
 
