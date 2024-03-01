@@ -12,14 +12,16 @@
         "has_variants": true,
         "preferred_variant_name": "0.5 mm",
         "firmware_toolhead_name": "Galaxy Series",
-        "firmware_latest_version": "2.1.3.0.22",
-        "firmware_file": "Pro/Marlin_TAZPro_Galaxy_2.1.3.0.22_17516df.bin",
-        "firmware_bltouch_latest_version": "2.1.3.0.22-BLTouch",
-        "firmware_file_bltouch": "Pro/Marlin_TAZPro_Galaxy_BLTouch_2.1.3.0.22_17516df.bin"
+        "firmware_latest_version": "2.1.3.0.23",
+        "firmware_file": "Pro/Marlin_TAZPro_Galaxy_2.1.3.0.23_ffcd962.bin",
+        "firmware_bltouch_latest_version": "2.1.3.0.23-BLTouch",
+        "firmware_file_bltouch": "Pro/Marlin_TAZPro_Galaxy_BLTouch_2.1.3.0.23_ffcd962.bin"
     },
     "overrides":
     {
+        "cool_min_layer_time": { "value": 15 },
         "machine_start_gcode": { "default_value_from_file": "taz_pro/taz_pro_galaxy_start" },
-        "machine_end_gcode": { "default_value_from_file": "taz_pro/taz_pro_galaxy_end" }
+        "machine_end_gcode": { "default_value_from_file": "taz_pro/taz_pro_galaxy_end" },
+        "speed_travel_layer_0": { "value": 100 }
     }
 }

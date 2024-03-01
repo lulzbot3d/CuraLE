@@ -11,5 +11,10 @@
         "preferred_quality_type": "normal",
         "has_variants": true,
         "preferred_variant_name": "0.5 mm"
+    },
+    "overrides":
+    {
+        "cool_min_layer_time": { "value": 15 },
+        "speed_travel_layer_0": { "value": 100 }
     }
 }

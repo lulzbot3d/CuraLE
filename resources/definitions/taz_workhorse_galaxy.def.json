@@ -12,11 +12,13 @@
         "has_variants": true,
         "preferred_variant_name": "0.5 mm",
         "firmware_toolhead_name": "Universal Galaxy-Series",
-        "firmware_latest_version": "2.1.3.0.22",
-        "firmware_file": "Workhorse/Marlin_TAZWorkhorse_Galaxy_2.1.3.0.22_17516df.hex"
+        "firmware_latest_version": "2.1.3.0.24",
+        "firmware_file": "Workhorse/Marlin_TAZWorkhorse_Galaxy_2.1.3.0.24_e39c6d1.hex"
     },
     "overrides":
     {
-        "machine_start_gcode": { "default_value_from_file": "taz_workhorse/taz_workhorse_galaxy_start" }
+        "cool_min_layer_time": { "value": 15 },
+        "machine_start_gcode": { "default_value_from_file": "taz_workhorse/taz_workhorse_galaxy_start" },
+        "speed_travel_layer_0": { "value": 100 }
     }
 }
