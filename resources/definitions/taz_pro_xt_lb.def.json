@@ -28,25 +28,6 @@
         "machine_name": { "default_value": "LulzBot TAZ Pro XT Long Bed" },
         "machine_height": { "default_value": 586 },
         "machine_depth": { "default_value": 582 },
-        "machine_acceleration": { "default_value": 300 },
-        "acceleration_print": { "default_value": 300 },
-        "acceleration_infill": { "default_value": 300 },
-        "acceleration_wall": { "default_value": 300 },
-        "acceleration_wall_0": { "default_value": 300 },
-        "acceleration_wall_x": { "default_value": 300 },
-        "acceleration_topbottom": { "default_value": 300 },
-        "acceleration_support": { "default_value": 300 },
-        "acceleration_support_infill": { "default_value": 300 },
-        "acceleration_support_interface": { "default_value": 300 },
-        "acceleration_prime_tower": { "default_value": 300 },
-        "acceleration_travel":
-        {
-            "default_value": 300,
-            "value": "acceleration_print if magic_spiralize else 300"
-        },
-        "acceleration_layer_0": { "default_value": 300 },
-        "acceleration_print_layer_0": { "default_value": 300 },
-        "acceleration_travel_layer_0": { "default_value": 300 },
-        "acceleration_skirt_brim": { "default_value": 300 }
+        "acceleration_travel": { "value": 4000 }
     }
 }

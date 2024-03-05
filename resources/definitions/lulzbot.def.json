@@ -36,8 +36,8 @@
     "overrides":
     {
         "acceleration_enabled": { "description": "Enables adjusting the print head acceleration. Increasing the accelerations can reduce printing time at the cost of print quality. Populated values are the firmware defaults." },
-        "acceleration_print": { "default_value": 1000 },
-        "acceleration_travel": { "value": "acceleration_print if magic_spiralize else 1000" },
+        "acceleration_print": { "default_value": 2000 },
+        "acceleration_travel": { "value": 4000 },
         "brim_line_count": { "default_value": 10 },
         "infill_before_walls": { "default_value": false },
         "infill_overlap": { "value": 5 },
@@ -54,7 +54,7 @@
         },
         "layer_height_0": { "maximum_value_warning": "0.85 * min(extruderValues('machine_nozzle_size'))" },
         "line_width": { "default_value": 0.5 },
-        "machine_acceleration": { "default_value": 1000 },
+        "machine_acceleration": { "default_value": 2000 },
         "machine_baudrate": { "default_value": "250000" },
         "machine_center_is_zero": { "default_value": false },
         "machine_heated_bed": { "default_value": true },

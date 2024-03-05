@@ -36,26 +36,6 @@
         "machine_start_gcode": { "default_value_from_file": "taz_pro/taz_pro_universal_start" },
         "machine_end_gcode": { "default_value_from_file": "taz_pro_xt/taz_pro_xt_end" },
         "machine_level_x_axis_gcode": { "default_value_from_file": "taz_pro/taz_pro_level_x_axis" },
-        "machine_wipe_gcode": { "default_value_from_file": "taz_pro/taz_pro_wipe" },
-        "machine_acceleration": { "default_value": 300 },
-        "acceleration_print": { "default_value": 300 },
-        "acceleration_infill": { "default_value": 300 },
-        "acceleration_wall": { "default_value": 300 },
-        "acceleration_wall_0": { "default_value": 300 },
-        "acceleration_wall_x": { "default_value": 300 },
-        "acceleration_topbottom": { "default_value": 300 },
-        "acceleration_support": { "default_value": 300 },
-        "acceleration_support_infill": { "default_value": 300 },
-        "acceleration_support_interface": { "default_value": 300 },
-        "acceleration_prime_tower": { "default_value": 300 },
-        "acceleration_travel":
-        {
-            "default_value": 300,
-            "value": "acceleration_print if magic_spiralize else 300"
-        },
-        "acceleration_layer_0": { "default_value": 300 },
-        "acceleration_print_layer_0": { "default_value": 300 },
-        "acceleration_travel_layer_0": { "default_value": 300 },
-        "acceleration_skirt_brim": { "default_value": 300 }
+        "machine_wipe_gcode": { "default_value_from_file": "taz_pro/taz_pro_wipe" }
     }
 }
