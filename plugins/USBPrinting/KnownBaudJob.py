@@ -65,7 +65,10 @@ class KnownBaudJob(Job):
 
 
             start_timeout_time = time()
+            resend_m105_time = time() + 1
+            duplicate_lines = 0
             timeout_time = time() + wait_response_timeout
+            previous_line = None
 
             while timeout_time > time():
                 # If baudrate is wrong, then readline() might never
@@ -73,6 +76,10 @@ class KnownBaudJob(Job):
                 # with size limit seems to fix this.
                 try:
                     line = serial.read_until(size = 100)
+                    if line == previous_line:
+                        duplicate_lines += 1
+                    else: duplicate_lines = 0
+                    previous_line = line
                 except SerialException:
                     Logger.log("w", "Encountered an exception attempting to read from serial!")
                     break
@@ -88,11 +95,14 @@ class KnownBaudJob(Job):
                     Logger.log("d", "Created serial connection on port {port} on retry {retry} after {time_elapsed:0.2f} seconds.".format(
                         port = self._serial_port, retry = retry, time_elapsed = time() - start_timeout_time))
                     return
-                try:
-                    serial.write(b"M105\n")
-                except SerialException:
-                    Logger.log("w", "Serial Exception during repeated M105 writes.")
-                    break
+                if resend_m105_time > time() and duplicate_lines > 3:
+                    try:
+                        Logger.log("d", "No new output for a while, trying an M105 again.")
+                        serial.write(b"M105\n")
+                        resend_m105_time = time() + 1
+                    except SerialException:
+                        Logger.log("w", "Serial Exception during repeated M105 writes.")
+                        break
             Logger.log("d", "Printer response timeout.")
 
         self.setResult(None)  # Unable to detect the correct baudrate.
