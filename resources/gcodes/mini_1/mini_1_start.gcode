@@ -10,7 +10,6 @@
 
 M73 P0                                     ; clear GLCD progress bar
 M75                                        ; Start GLCD Timer
-G26                                        ; clear potential 'probe fail' condition
 M107                                       ; disable fans
 M420 S0                                    ; disable leveling matrix
 G90                                        ; absolute positioning

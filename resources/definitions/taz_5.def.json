@@ -28,6 +28,9 @@
         "machine_max_feedrate_z": { "default_value": 3 },
         "machine_start_gcode": { "default_value_from_file": "taz_5/taz_5_start" },
         "machine_end_gcode": { "default_value_from_file": "taz_5/taz_5_end" },
-        "firmware_machine_type": { "default_value": "LulzBot TAZ 5" }
+        "firmware_machine_type": { "default_value": "LulzBot TAZ 5" },
+        "machine_acceleration": { "default_value": 500 },
+        "acceleration_print": { "default_value": 500 },
+        "acceleration_travel": { "default_value": 500 }
     }
 }

@@ -34,6 +34,7 @@
         "machine_width": { "default_value": 232.3 },
         "machine_depth": { "default_value": 232.3 },
         "machine_height": { "default_value": 248 },
-        "firmware_machine_type": { "default_value": "Taz SideKick 747" }
+        "firmware_machine_type": { "default_value": "Taz SideKick 747" },
+        "acceleration_travel": { "value": 4750 }
     }
 }

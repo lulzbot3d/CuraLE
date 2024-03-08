@@ -10,7 +10,6 @@
 
 M73 P0                       ; clear GLCD progress bar
 M75			     ; Start GLCD Timer
-G26                          ; clear potential 'probe fail' condition
 G90                          ; absolute positioning
 M82                          ; set extruder to absolute mode
 M107                         ; start with the fan off

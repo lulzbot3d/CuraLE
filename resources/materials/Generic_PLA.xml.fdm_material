@@ -91,6 +91,16 @@
       <machine_identifier product="taz_pro_xt_met285"/>
       <machine_identifier product="taz_workhorse_met285"/>
       <setting key="print temperature">210</setting>
+      <hotend id="0.3 mm">
+      </hotend>
+      <hotend id="0.4 mm">
+        <setting key="print temperature">215</setting>
+      </hotend>
+      <hotend id="0.5 mm">
+      </hotend>
+      <hotend id="0.8 mm">
+        <setting key="print temperature">220</setting>
+      </hotend>
     </machine>
 
     <machine>

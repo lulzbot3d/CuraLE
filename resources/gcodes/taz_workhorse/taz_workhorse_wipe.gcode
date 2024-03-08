@@ -1,6 +1,5 @@
 ;This G-Code has been generated specifically for the LulzBot TAZ Workhorse
 M75                                 ; start GLCD timer
-G26                                 ; clear potential 'probe fail' condition
 M107                                ; disable fans
 M420 S0                             ; disable previous leveling matrix
 G90                                 ; absolute positioning

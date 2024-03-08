@@ -18,7 +18,6 @@
 ;Bed temp = M190 S{material_bed_temperature}
 
 M73 P0                                            ;resetting progress bar on LCD
-G26                                               ; clear potential 'probe fail' condition
 M107                                              ; disable fans
 M420 S0                                           ; disable leveling matrix
 G90                                               ; absolute positioning

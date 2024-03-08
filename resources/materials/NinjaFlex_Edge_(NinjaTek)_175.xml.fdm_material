@@ -59,6 +59,16 @@
       <machine_identifier product="taz_pro_lb_met175"/>
       <machine_identifier product="taz_pro_xt_met175"/>
       <machine_identifier product="taz_workhorse_met175"/>
+      <hotend id="0.3 mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
+      <hotend id="0.4 mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
+      <hotend id="0.5 mm" />
+      <hotend id="0.8 mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
     </machine>
 
     <machine>

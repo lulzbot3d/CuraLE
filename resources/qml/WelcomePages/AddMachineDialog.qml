@@ -114,9 +114,11 @@ Item {
                     if (toolheadSelection.bltouch_default) {
                         if (i == 0) { item.checked = true }
                         else { item.checked = false }
+                        bltouchSelection.selectedIndex = 0
                     } else {
                         if (i == 0) { item.checked = false }
                         else { item.checked = true }
+                        bltouchSelection.selectedIndex = 1
                     }
                 }
                 for (let i = 0; i < lcdSelectionRepeater.count; i++) {
@@ -124,9 +126,11 @@ Item {
                     if (printerSelection.lcd_default) {
                         if (i == 0) { item.checked = true }
                         else { item.checked = false }
+                        lcdSelection.selectedIndex = 0
                     } else {
                         if (i == 0) { item.checked = false }
                         else { item.checked = true }
+                        lcdSelection.selectedIndex = 1
                     }
                 }
             }

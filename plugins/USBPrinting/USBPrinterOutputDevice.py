@@ -200,19 +200,23 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         if firmware_response_status is not self.CheckFirmwareStatus.OK:
             overridden = False
             allow_wrong = CuraApplication.getInstance().getPreferences().getValue("cura/allow_connection_to_wrong_machine")
+
             if firmware_response_status is self.CheckFirmwareStatus.TIMEOUT:
                 message = Message(text = catalog.i18nc("@message",
                                 "The printer did not respond to the firmware check. Is firmware loaded?"),
                                 title = catalog.i18nc("@message", "No Response"),
                                 message_type = Message.MessageType.ERROR)
+
             elif firmware_response_status is self.CheckFirmwareStatus.WRONG_MACHINE:
                 message = Message(text = catalog.i18nc("@message",
-                                "Firmware printer type doesn't match active printer in Cura LE!"),
+                                "Firmware reports printer type doesn't match active printer in Cura LE! Make sure your \n\
+                                    active printer in Cura LE matches the printer you're trying to connect to and that \
+                                    your firmware is up-to-date."),
                                 title = catalog.i18nc("@message", "Wrong Machine!"),
                                 message_type = Message.MessageType.ERROR)
                 if allow_wrong: overridden = True
+
             elif firmware_response_status is self.CheckFirmwareStatus.WRONG_TOOLHEAD:
-                overridden = True
                 message = Message(text = catalog.i18nc("@message",
                                 "The printer reports having a different Tool Head than the active printer in Cura LE! \n If you're \
                                     confident your selection matches, you can ignore this error by going to Preferences -> Configure Cura \
@@ -220,26 +224,30 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                                 title = catalog.i18nc("@message", "Wrong Tool Head!"),
                                 message_type = Message.MessageType.WARNING)
                 if allow_wrong: overridden = True
+
             elif firmware_response_status is self.CheckFirmwareStatus.FIRMWARE_OUTDATED:
                 overridden = True
                 message = Message(text = catalog.i18nc("@message",
                                 "Printer appears to have outdated firmware."),
                                 title = catalog.i18nc("@message", "Old Firmware"),
                                 message_type = Message.MessageType.WARNING)
+
             elif firmware_response_status is self.CheckFirmwareStatus.COMMUNICATION_ERROR:
                 message = Message(text = catalog.i18nc("@message",
                                 "There was an error when attempting to communicate with the printer. Check the cable connection"),
                                 title = catalog.i18nc("@message", "Communication Error!"),
                                 message_type = Message.MessageType.ERROR)
+
             else:
                 message = Message(text = catalog.i18nc("@message",
                                 "Unknown CheckFirmwareStatus state!"),
                                 title = catalog.i18nc("@message", "Oh No! If you got this message, please contact support and get us \
                                                       some logs because this isn't supposed to happen!"),
                                 message_type = Message.MessageType.ERROR)
+
+            message.show()
             # Ignore it if it's minor or if the user has elected to
             if not overridden:
-                message.show()
                 self.close()
                 return
         self.setConnectionState(ConnectionState.Connected)
@@ -482,10 +490,10 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         try:
             self._sendCommand("M115")
             last_sent = time()
-            timeout = time() + 3
+            timeout = time() + 5.5
             reply = self._serial.readline()
             while b"FIRMWARE_NAME" not in reply and time() < timeout:
-                if last_sent > 1:
+                if (time() - last_sent) > 1:
                     self._sendCommand("M115")
                     last_sent = time()
                 reply = self._serial.readline()
@@ -522,6 +530,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         def checkValue(fw_key, profile_key, exact_match = False, search_in_properties = False):
             expected_value = global_container_stack.getProperty(profile_key, "value") if search_in_properties else\
                 global_container_stack.getMetaDataEntry(profile_key, None)
+            if fw_key == "FIRMWARE_VERSION":
+                expected_value = expected_value.split("-")[0]
             if expected_value is None:
                 Logger.log("d", "Missing %s in profile. Skipping check." % profile_key)
                 return CheckValueStatus.MISSING_VALUE_IN_DEFINITION
@@ -555,6 +565,13 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 "on_fail": self.CheckFirmwareStatus.FIRMWARE_OUTDATED
             }
         ]
+        if not global_container_stack.getProperty("machine_has_lcd", "value"):
+            list_to_check[1]["definition_key"] = "firmware_toolhead_name_no_lcd"
+            list_to_check[2]["definition_key"] = "firmware_no_lcd_latest_version"
+        if global_container_stack.getProperty("machine_has_bltouch", "value"):
+            if not global_container_stack.getMetaDataEntry("bltouch_is_standard"):
+                list_to_check[2]["definition_key"] = "firmware_bltouch_latest_version"
+
 
         for option in list_to_check:
             result = checkValue(option["reply_key"], option["definition_key"], option.get("exact_match", False), option.get("search_in_properties", False))

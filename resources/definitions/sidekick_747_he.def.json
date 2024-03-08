@@ -12,6 +12,7 @@
         {
             "0": "sidekick_747_he_extruder"
         },
+        "firmware_toolhead_name_no_lcd": "Titan Areo",
         "firmware_file_no_lcd": "747/Marlin_747_SLSEHE_2.0.9.0.16_8235204.hex"
     },
     "overrides":
