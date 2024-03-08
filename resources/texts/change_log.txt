@@ -1,5 +1,4 @@
 [4.13.7]
-* Still In Development!
 * Added some Standard profiles for 0.3, 0.4, and 0.8mm nozzles on the Meteor Tool Heads
 * Started work on a potential new setting category
 * Fixed a bug where duplicating profiles crashed the application
