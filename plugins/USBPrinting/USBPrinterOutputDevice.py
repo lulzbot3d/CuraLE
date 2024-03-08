@@ -217,7 +217,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 if allow_wrong: overridden = True
 
             elif firmware_response_status is self.CheckFirmwareStatus.WRONG_TOOLHEAD:
-                overridden = True
                 message = Message(text = catalog.i18nc("@message",
                                 "The printer reports having a different Tool Head than the active printer in Cura LE! \n If you're \
                                     confident your selection matches, you can ignore this error by going to Preferences -> Configure Cura \
@@ -246,9 +245,9 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                                                       some logs because this isn't supposed to happen!"),
                                 message_type = Message.MessageType.ERROR)
 
+            message.show()
             # Ignore it if it's minor or if the user has elected to
             if not overridden:
-                message.show()
                 self.close()
                 return
         self.setConnectionState(ConnectionState.Connected)
@@ -531,6 +530,8 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         def checkValue(fw_key, profile_key, exact_match = False, search_in_properties = False):
             expected_value = global_container_stack.getProperty(profile_key, "value") if search_in_properties else\
                 global_container_stack.getMetaDataEntry(profile_key, None)
+            if fw_key == "FIRMWARE_VERSION":
+                expected_value = expected_value.split("-")[0]
             if expected_value is None:
                 Logger.log("d", "Missing %s in profile. Skipping check." % profile_key)
                 return CheckValueStatus.MISSING_VALUE_IN_DEFINITION
@@ -564,6 +565,13 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                 "on_fail": self.CheckFirmwareStatus.FIRMWARE_OUTDATED
             }
         ]
+        if not global_container_stack.getProperty("machine_has_lcd", "value"):
+            list_to_check[1]["definition_key"] = "firmware_toolhead_name_no_lcd"
+            list_to_check[2]["definition_key"] = "firmware_no_lcd_latest_version"
+        if global_container_stack.getProperty("machine_has_bltouch", "value"):
+            if not global_container_stack.getMetaDataEntry("bltouch_is_standard"):
+                list_to_check[2]["definition_key"] = "firmware_bltouch_latest_version"
+
 
         for option in list_to_check:
             result = checkValue(option["reply_key"], option["definition_key"], option.get("exact_match", False), option.get("search_in_properties", False))
