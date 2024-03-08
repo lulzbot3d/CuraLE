@@ -18,7 +18,6 @@
 M73 P0                                      ; clear GLCD progress bar
 M75                                         ; start GLCD timer
 M117 Starting {print_job_name}...           ; progress indicator message on LCD
-G26                                         ; clear potential 'probe fail' condition
 M107                                        ; disable fans
 M420 S0                                     ; disable previous leveling matrix
 M900 K{linear_advance}                      ; set linear advance K factor

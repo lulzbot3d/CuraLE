@@ -22,7 +22,6 @@ M117 Homing Axes... Please Wait.;          ; progress indicator message on LCD
 G28O                                       ; home all axes
 M73 P0                                     ; clear LCD progress bar
 M75                                        ; Start LCD Print Timer
-G26                                        ; clear potential 'probe fail' condition
 M107                                       ; disable fans
 M420 S0                                    ; disable leveling matrix
 M900 K{linear_advance}                     ; set linear advance

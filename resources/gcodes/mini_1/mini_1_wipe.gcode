@@ -1,5 +1,4 @@
 ;This G-Code has been generated specifically for the LulzBot Mini with standard extruder
-G26                                ; clear potential 'probe fail' condition
 G21                                ; set units to Millimetres
 M107                               ; disable fans
 G90                                ; absolute positioning

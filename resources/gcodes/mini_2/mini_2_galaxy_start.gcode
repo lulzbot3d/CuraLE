@@ -17,7 +17,6 @@
 ;
 M73 P0                                     ; clear GLCD progress bar
 M75 					                   ; Start GLCD Print Timer
-G26 					                   ; clear potential 'probe fail' condition
 M117 Starting {print_job_name}             ; progress indicator message on LCD
 M107 					                   ; disable fans
 M420 S0                                    ; disable leveling matrix

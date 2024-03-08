@@ -1,6 +1,5 @@
 ;This G-Code has been generated specifically for the {machine_name}
 M73 P0 ; clear GLCD progress bar
-G26 ; clear potential 'probe fail' condition
 M107 ; disable fans
 G90 ; absolute positioning
 M82 ; set extruder to absolute mode
