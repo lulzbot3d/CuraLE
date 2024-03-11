@@ -7,7 +7,7 @@
         "priority": "01",
         "visible": true,
         "base_machine": false,
-        "toolhead_selection_name": "SK285 | 0.50 mm | Nickel-Plated Copper",
+        "toolhead_selection_name": "SK285 | 0.50 mm | Brass",
         "machine_extruder_trains":
         {
             "0": "sidekick_289_sk285_extruder"
