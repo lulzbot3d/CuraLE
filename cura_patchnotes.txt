@@ -15,6 +15,7 @@
 			USB connections that may have overwhelmed some printers.
 		- (Patched) Corrected incorrect Tool Head names in printer
 			definitions that caused checkFirmware to drop connections
+		- (Patched) Added a M420 S1 command to the SideKick start gcode.
 
 4.13.6:
 	Additions:

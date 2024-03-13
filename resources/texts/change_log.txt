@@ -4,8 +4,9 @@
 * Fixed a bug where duplicating profiles crashed the application
 * Fixed an issue with the Workhorse looking for the wrong name in Firmware
 * Fixed an issue with Mini 1s potentially being created with and LCD when they aren't supposed to have one
-* Corrected some flawed logic in the checkFirmware stage of USB connections that may have overwhelmed some printers.
+* Corrected some flawed logic in the checkFirmware stage of USB connections that may have overwhelmed some printers
 * (Patched) Fixed some incorrect Tool Head names that caused a mismatch between what the firmware reported and what Cura LE expected during a USB connection
+* (Patched) Added a missing M420 S1 command to SideKick start gcode
 
 [4.13.6]
 * Primarily a firmware update

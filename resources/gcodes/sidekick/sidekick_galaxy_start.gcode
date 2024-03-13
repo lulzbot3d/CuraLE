@@ -29,6 +29,7 @@ M104 S{material_probe_temperature}         ; start extruder heating to probe tem
 M190 S{material_bed_temperature_layer_0}   ; wait for bed to reach printing temp
 M117 Probing...                            ; progress indicator message on LCD
 G29                                        ; start auto leveling
+M420 S1                                    ; enable leveling matrix
 G0 X0 Y0 F5000
 M109 R{material_print_temperature_layer_0} ; wait for extruder to reach initial printing temp
 M117 Printing {print_job_name}...          ; progress indicator message on LCD
