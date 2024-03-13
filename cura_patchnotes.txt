@@ -13,6 +13,8 @@
 			and LCD when they aren't supposed to have one
 		- Corrected some flawed logic in the checkFirmware stage of
 			USB connections that may have overwhelmed some printers.
+		- (Patched) Corrected incorrect Tool Head names in printer
+			definitions that caused checkFirmware to drop connections
 
 4.13.6:
 	Additions:
