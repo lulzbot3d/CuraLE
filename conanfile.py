@@ -13,11 +13,11 @@ from conan.errors import ConanInvalidConfiguration, ConanException
 required_conan_version = ">=1.58.0 <2.0.0"
 
 
-class CuraConan(ConanFile):
-    name = "cura"
+class CuraLEConan(ConanFile):
+    name = "cura-le"
     license = "LGPL-3.0"
-    author = "UltiMaker"
-    url = "https://github.com/Ultimaker/cura"
+    author = "Fargo Additive Manufacturing Equipment 3D"
+    url = "https://github.com/lulzbot3d/CuraLE"
     description = "3D printer / slicing GUI built on top of the Uranium framework"
     topics = ("conan", "python", "pyqt6", "qt", "qml", "3d-printing", "slicer")
     build_policy = "missing"
@@ -25,7 +25,8 @@ class CuraConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
 
     # FIXME: Remove specific branch once merged to main
-    python_requires = "translationextractor/[>=2.2.0]@ultimaker/stable"
+    # This might need even more fixing!!!
+    python_requires = "translationextractor/[>=2.2.0]@lulzbot/stable"
 
     options = {
         "enterprise": ["True", "False", "true", "false"],  # Workaround for GH Action passing boolean as lowercase string
@@ -42,7 +43,7 @@ class CuraConan(ConanFile):
         "staging": "False",
         "devtools": False,
         "cloud_api_version": "1",
-        "display_name": "UltiMaker Cura",
+        "display_name": "Cura LulzBot Edition",
         "cura_debug_mode": False,  # Not yet implemented
         "internal": False,
         "enable_i18n": False,
@@ -99,8 +100,8 @@ class CuraConan(ConanFile):
     @property
     def requirements_txts(self):
         if self.options.devtools:
-            return ["requirements.txt", "requirements-ultimaker.txt", "requirements-dev.txt"]
-        return ["requirements.txt", "requirements-ultimaker.txt"]
+            return ["requirements.txt", "requirements-lulzbot.txt", "requirements-dev.txt"]
+        return ["requirements.txt", "requirements-lulzbot.txt"]
 
     @property
     def _base_dir(self):
@@ -258,13 +259,13 @@ class CuraConan(ConanFile):
         # Collect all dll's from PyQt6 and place them in the root
         binaries.extend([(f"{p}", ".") for p in Path(self._site_packages, "PyQt6", "Qt6").glob("**/*.dll")])
 
-        with open(os.path.join(self.recipe_folder, "UltiMaker-Cura.spec.jinja"), "r") as f:
+        with open(os.path.join(self.recipe_folder, "CuraLE.spec.jinja"), "r") as f:
             pyinstaller = Template(f.read())
 
         version = self.conf.get("user.cura:version", default = self.version, check_type = str)
         cura_version = Version(version)
 
-        with open(os.path.join(location, "UltiMaker-Cura.spec"), "w") as f:
+        with open(os.path.join(location, "CuraLE.spec"), "w") as f:
             f.write(pyinstaller.render(
                 name = str(self.options.display_name).replace(" ", "-"),
                 display_name = self._app_name,
@@ -276,7 +277,7 @@ class CuraConan(ConanFile):
                 collect_all = pyinstaller_metadata["collect_all"],
                 icon = icon_path,
                 entitlements_file = entitlements_file,
-                osx_bundle_identifier = "'nl.ultimaker.cura'" if self.settings.os == "Macos" else "None",
+                osx_bundle_identifier = "'com.lulzbot.curale'" if self.settings.os == "Macos" else "None",
                 upx = str(self.settings.os == "Windows"),
                 strip = False,  # This should be possible on Linux and MacOS but, it can also cause issues on some distributions. Safest is to disable it for now
                 target_arch = self._pyinstaller_spec_arch,
@@ -294,7 +295,7 @@ class CuraConan(ConanFile):
         copy(self, "*", os.path.join(self.recipe_folder, ".run_templates"), os.path.join(self.export_sources_folder, ".run_templates"))
         copy(self, "requirements.txt", self.recipe_folder, self.export_sources_folder)
         copy(self, "requirements-dev.txt", self.recipe_folder, self.export_sources_folder)
-        copy(self, "requirements-ultimaker.txt", self.recipe_folder, self.export_sources_folder)
+        copy(self, "requirements-lulzbot.txt", self.recipe_folder, self.export_sources_folder)
         copy(self, "cura_app.py", self.recipe_folder, self.export_sources_folder)
 
     def config_options(self):
