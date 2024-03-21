@@ -46,11 +46,9 @@ M206 X0 Y0 Z0                              ; reseting stock nozzle position ### 
 M107                                       ; turn off part cooling fan
 M104 S{material_probe_temperature}         ; set probe temp
 M117 Leveling Print Bed...;                ; Progress indicator message on LCD
-M204 S300                                  ; set probing acceleration
 G29                                        ; start auto-leveling sequence
 M104 S{material_print_temperature_layer_0} ; start extruder to reach initial printing temp
 M420 S1                                    ; enable leveling matrix
-M204 S2000                                 ; restore standard acceleration
 G1 X5 Y15 Z10 F8000                        ; move up off last probe point
 G4 S1                                      ; pause
 M400                                       ; wait for moves to finish
