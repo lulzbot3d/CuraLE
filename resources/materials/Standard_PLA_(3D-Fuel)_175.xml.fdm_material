@@ -61,7 +61,10 @@
       <hotend id="0.4 mm">
         <setting key="hardware compatible">no</setting>
       </hotend>
-      <hotend id="0.5 mm" />
+      <hotend id="0.5 mm">
+        <setting key="retraction amount">1</setting>
+        <setting key="retraction speed">10</setting>
+      </hotend>
       <hotend id="0.8 mm">
         <setting key="hardware compatible">no</setting>
       </hotend>
