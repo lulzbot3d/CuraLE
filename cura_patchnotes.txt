@@ -1,5 +1,15 @@
 						CURA LULZBOT EDITION PATCHNOTES
 
+4.13.9:
+	Additions:
+		- Added experimental high speed detailed qualities for the
+			Generic PLA on MET175/285 Tool Heads
+	Changes:
+		- Adjusted TAZ Pro XT and LB accelerations back down to
+			500mm/s/s
+		- Adjusted MET175 PLA retraction values to 1mm at 10mm/s
+		- Cleaned up Dual Extruder start gcode scripts
+
 4.13.8:
 	Small Fixes:
 		- Corrected incorrect Tool Head names in printer
