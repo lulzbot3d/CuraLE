@@ -30,6 +30,8 @@
     {
         "machine_name": { "default_value": "LulzBot TAZ Pro XT" },
         "firmware_machine_type": { "default_value": "LulzBot TAZ ProXT" },
+        "machine_acceleration": { "default_value": 500 },
+        "acceleration_print": { "default_value": 500 },
         "machine_width": { "default_value": 285 },
         "machine_depth": { "default_value": 285 },
         "machine_height": { "default_value": 586 },
