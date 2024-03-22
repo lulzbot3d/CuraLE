@@ -18,8 +18,8 @@
         ],
         "file_formats": "text/x-gcode",
         "firmware_toolhead_name": "Legacy Universal",
-        "firmware_latest_version": "2.1.3.0.24",
-        "firmware_file": "747/Marlin_747_Universal_2.1.3.0.24_e39c6d1.hex",
+        "firmware_latest_version": "2.1.3.0.25",
+        "firmware_file": "747/Marlin_747_Universal_2.1.3.0.25_005f6b8.hex",
         "firmware_no_lcd_latest_version": "2.0.9.0.16-NoLCD",
         "has_optional_lcd": true,
         "bltouch_is_standard": true

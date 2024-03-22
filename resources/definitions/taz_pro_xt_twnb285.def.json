@@ -15,8 +15,8 @@
         },
         "has_optional_bltouch": false,
         "firmware_toolhead_name": "DualExtruder",
-        "firmware_latest_version": "2.1.3.0.21",
-        "firmware_file": "Pro/Marlin_TAZProXT_Galaxy_DualExtruder_2.1.3.0.21_c3bfdcf.bin",
+        "firmware_latest_version": "2.1.3.0.25",
+        "firmware_file": "Pro/Marlin_TAZProXT_Galaxy_DualExtruder_2.1.3.0.25_005f6b8.bin",
         "firmware_bltouch_latest_version": "",
         "firmware_file_bltouch": ""
     },
