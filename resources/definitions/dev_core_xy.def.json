@@ -4,7 +4,7 @@
     "inherits": "taz",
     "metadata":
     {
-        "machine_priority": "12",
+        "machine_priority": "02",
         "firmware_type": "Klipper",
         "visible": false,
         "base_machine": true,

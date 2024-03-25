@@ -4,7 +4,7 @@
     "inherits": "lulzbot",
     "metadata":
     {
-        "machine_priority": "02",
+        "machine_priority": "00",
         "firmware_type": "Klipper",
         "visible": false,
         "base_machine": true,
