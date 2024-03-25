@@ -1,9 +1,12 @@
 [4.13.9]
 * STILL IN DEVELOPMENT
+* Added 2.1.3.0.25 firmware for Mini 2, SideKick, Workhorse
+* Added 2.1.3.0.26 firmware for Pro Platform printers
 * Added experimental high speed detailed qualities for the Generic PLA on MET175/285 Tool Heads
 * Adjusted TAZ Pro XT and LB accelerations back down to 500mm/s/s
 * Adjusted MET175 PLA retraction values to 1mm at 10mm/s
 * Cleaned up Dual Extruder start gcode scripts
+* Shuffled around the Printer list on the "Add Printer" screen
 
 [4.13.8]
 * Small patch build
