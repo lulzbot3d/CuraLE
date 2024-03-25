@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "[DEV] TAZ Pro XT Long Bed",
+    "name": "TAZ Pro XT Long Bed",
     "inherits": "taz",
     "metadata":
     {
@@ -9,6 +9,7 @@
         "base_machine": true,
         "variant_machine": true,
         "base_machine_id": "taz_pro_xt_lb",
+        "machine_category": "Dev",
         "toolhead_selection_name": "Universal Tool Head",
         "platform": "taz_pro_lb.stl",
         "platform_offset":

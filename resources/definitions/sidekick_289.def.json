@@ -4,10 +4,11 @@
     "inherits": "lulzbot",
     "metadata":
     {
-        "machine_priority": "04",
+        "machine_priority": "00",
         "visible": false,
         "base_machine": true,
         "base_machine_id": "sidekick_289",
+        "machine_category": "Legacy",
         "toolhead_selection_name": "Universal Tool Head",
         "platform": "sidekick_289.stl",
         "platform_offset":

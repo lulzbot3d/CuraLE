@@ -5,7 +5,7 @@
     "metadata":
     {
         "visible": false,
-        "machine_priority": "10",
+        "machine_priority": "02",
         "base_machine": true,
         "base_machine_id": "taz_5",
         "machine_category": "Legacy",

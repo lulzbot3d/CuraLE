@@ -5,7 +5,7 @@
     "metadata":
     {
         "visible": false,
-        "machine_priority": "05",
+        "machine_priority": "02",
         "base_machine": true,
         "variant_machine": true,
         "base_machine_id": "taz_pro_lb",

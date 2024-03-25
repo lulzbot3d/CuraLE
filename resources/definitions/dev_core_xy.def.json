@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "[DEV] Core XY",
+    "name": "Core XY",
     "inherits": "taz",
     "metadata":
     {
@@ -9,6 +9,7 @@
         "visible": false,
         "base_machine": true,
         "base_machine_id": "dev_core_xy",
+        "machine_category": "Dev",
         "preferred_material": "Generic_PLA",
         "toolhead_selection_name": "Universal Tool Head",
         "platform": "",

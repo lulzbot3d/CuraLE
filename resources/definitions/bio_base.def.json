@@ -8,7 +8,7 @@
         "syringe_printer": true,
         "base_machine": true,
         "base_machine_id": "bio_base",
-        "machine_category": "Current",
+        "machine_category": "Bio",
         "toolhead_category": "",
         "file_formats": "text/x-gcode",
         "platform": "bio.stl",
