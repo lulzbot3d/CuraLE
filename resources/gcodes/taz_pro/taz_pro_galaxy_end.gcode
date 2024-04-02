@@ -3,7 +3,7 @@ M140 S{material_part_removal_temperature}         ; start bed cooling
 M104 S0                                           ; disable hotend
 M107                                              ; disable fans
 G92 E5                                            ; set extruder to 5mm for retract on print end
-M117 Cooling Thrusters. Stand by for Print Bed Presentation.;                     ; progress indicator message on LCD
+M117 Cooling Thrusters. Stand by for Print Bed Presentation.; progress indicator message on LCD
 G28 Z                                             ; homing Z axis
 G1 X5 Y5 E0 F3000                                 ; move to cooling position
 M190 R{material_part_removal_temperature}         ; wait for bed to cool down to removal temp

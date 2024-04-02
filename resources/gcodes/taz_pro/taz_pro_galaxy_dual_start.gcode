@@ -38,11 +38,11 @@ M109 R{material_soften_temperature_1} T1           ; wait for temp
 T0                                                 ; select this extruder first
 M82                                                ; set extruder to absolute mode
 G92 E0                                             ; set extruder to zero
-G1 E-10 F100                                       ; retract 10mm of filament on first extruder
+G1 E-7 F100                                        ; retract 10mm of filament on first extruder
 T1                                                 ; switch extruders
 M82                                                ; set extruder to absolute mode
 G92 E0                                             ; set extruder to zero
-G1  E-10 F100                                      ; retract 10mm of filament on second extruder
+G1 E-7 F100                                        ; retract 10mm of filament on second extruder
 T0                                                 ; select first extruder for probing
 M106                                               ; turn on fans to speed cooling
 M117 Wiping...
@@ -55,11 +55,11 @@ M107                                               ; turn off fan
 M117 Sending Space Probes...
 G29                                                ; probe sequence (for auto-leveling)
 M420 S1                                            ; enable leveling matrix
-M104 S{material_print_temperature_layer_0_0} T0   ; set extruder temp
+M104 S{material_print_temperature_layer_0_0} T0    ; set extruder temp
 G0 X5 Y15 Z10 F5000                                ; move to start location
 M400                                               ; clear buffer
 M117 Reaching Mission Temp...
-M109 R{material_print_temperature_layer_0_0} T0   ; set extruder temp and wait
+M109 R{material_print_temperature_layer_0_0} T0    ; set extruder temp and wait
 M190 R{material_bed_temperature_layer_0}           ; get bed temping up during first layer
 G1 Z2 E0 F75                                       ; raise head and 0 extruder
 M82					                               ; set to absolute mode

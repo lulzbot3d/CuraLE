@@ -3,13 +3,9 @@ M104 S0 T0                                        ; T0 hotend off
 M104 S0 T1                                        ; T1 hotend off
 M107                                              ; fans off
 G91                                               ; relative positioning
-T0
 G1 E-1 F300                                       ; retract the filament a bit before lifting the nozzle, to release some of the pressure
 G1 Z20 E-1 X-20 Y-20 F2000                        ; move Z up a bit and retract filament even more
-G1 E0                                             ; re-prime extruder 1
-T1
-G1 E-1 F300                                       ; retract the filament a bit before lifting the nozzle, to release some of the pressure
-G1 E0                                             ; re-prime extruder 2
+G1 E0                                             ; re-prime extruder
 T0
 M117 Cooling please wait                          ; progress indicator message
 G90                                               ; absolute positioning
