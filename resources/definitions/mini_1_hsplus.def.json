@@ -12,8 +12,8 @@
         {
             "0": "mini_1_hsplus_extruder"
         },
-        "firmware_file": "Mini/Marlin_MiniLCD_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex",
-        "firmware_file_no_lcd": "Mini/Marlin_Mini_HardenedSteelPlus_1.1.9.34_5f9c029d1.hex"
+        "firmware_file": "Mini/Marlin_MiniLCD_HardenedSteelPlus_2.0.0.144_aded3b617.hex",
+        "firmware_file_no_lcd": "Mini/Marlin_Mini_HardenedSteelPlus_2.0.0.144_aded3b617.hex"
     },
     "overrides":
     {
