@@ -28,7 +28,7 @@ M900 K{linear_advance}                             ; set linear advance
 M900 K{linear_advance} T1                          ; set linear advance
 M140 S{material_bed_temperature_layer_0}           ; begin bed temping up
 M104 S{material_soften_temperature_0} T0           ; soften filament
-M104 S{material_soften_temperature_1} T1           ; soften filament
+M104 S{material_probe_temperature_1} T1            ; soften filament
 M117 Homing for Engine Start...
 G28                                                ; home
 G0 X50 Y25 Z10 F2000
@@ -38,19 +38,12 @@ M109 R{material_soften_temperature_1} T1           ; wait for temp
 T0                                                 ; select this extruder first
 M82                                                ; set extruder to absolute mode
 G92 E0                                             ; set extruder to zero
-G1 E-7 F100                                        ; retract 10mm of filament on first extruder
-T1                                                 ; switch extruders
-M82                                                ; set extruder to absolute mode
-G92 E0                                             ; set extruder to zero
-G1 E-7 F100                                        ; retract 10mm of filament on second extruder
-T0                                                 ; select first extruder for probing
+G1 E-7 F100                                        ; retract 7mm of filament on first extruder
 M106                                               ; turn on fans to speed cooling
 M117 Wiping...
 M109 R{material_wipe_temperature_0} T0             ; wait for T0 wipe temp
-M109 R{material_wipe_temperature_1} T1             ; wait for T1 wipe temp
 M104 S{material_probe_temperature_0} T0            ; cool to probe temp
 G12                                                ; wipe sequence
-M104 S{material_probe_temperature_1} T1            ; cool to probe temp
 M107                                               ; turn off fan
 M117 Sending Space Probes...
 G29                                                ; probe sequence (for auto-leveling)
