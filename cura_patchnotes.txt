@@ -19,7 +19,8 @@
 			similar printers for the time being
 		- Shuffled around the Printer list on the "Add Printer" screen
 		- FilamentChangeManager now inserts an M600 for all printers instead
-			of using an M25 for Pro series printers.
+			of using an M25 for Pro series printers
+		- Added printer names to the build plates in the view window
 
 4.13.8:
 	Small Fixes:
