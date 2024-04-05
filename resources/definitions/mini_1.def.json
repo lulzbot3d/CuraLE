@@ -10,12 +10,12 @@
         "base_machine_id": "mini_1",
         "machine_category": "Legacy",
         "toolhead_category": "",
-        "platform": "bed_plates/unlabeled/mini_2.stl",
+        "platform": "bed_plates/labeled/mini_1_labeled.stl",
         "platform_offset":
         [
-            -100,
-            -11,
-            100
+            10,
+            -11.3,
+            -2
         ],
         "file_formats": "text/x-gcode",
         "firmware_latest_version": "2.0.0.144-LCD",

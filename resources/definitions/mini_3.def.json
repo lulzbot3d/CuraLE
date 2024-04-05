@@ -12,12 +12,12 @@
         "machine_category": "Dev",
         "toolhead_selection_name": "Universal Tool Head",
         "preferred_material": "Generic_PLA",
-        "platform": "bed_plates/unlabeled/mini_3.stl",
+        "platform": "bed_plates/labeled/mini_3_labeled.stl",
         "platform_offset":
         [
             0,
-            -7,
-            -4
+            -15.5,
+            0
         ],
         "file_formats": "text/x-gcode",
         "bltouch_is_standard": true

@@ -11,12 +11,12 @@
         "machine_category": "Bio",
         "toolhead_category": "",
         "file_formats": "text/x-gcode",
-        "platform": "bed_plates/unlabeled/bio.stl",
+        "platform": "bed_plates/labeled/bio_labeled.stl",
         "platform_offset":
         [
-            -100,
-            -13,
-            100
+            0,
+            -14.8,
+            -2
         ],
         "preferred_material": "Generic_Sodium_Alginate",
         "preferred_quality_type": "25 gauge",

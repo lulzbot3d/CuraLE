@@ -11,12 +11,12 @@
         "base_machine_id": "taz_pro_xt",
         "toolhead_category": "Universal",
         "toolhead_selection_name": "Universal Tool Head",
-        "platform": "bed_plates/unlabeled/taz_pro.stl",
+        "platform": "bed_plates/labeled/taz_pro_xt_labeled.stl",
         "platform_offset":
         [
             0,
-            -9,
-            8
+            -14.6,
+            2
         ],
         "file_formats": "text/x-gcode",
         "has_optional_bltouch": true,

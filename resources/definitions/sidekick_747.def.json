@@ -9,12 +9,12 @@
         "base_machine": true,
         "base_machine_id": "sidekick_747",
         "toolhead_selection_name": "Universal Tool Head",
-        "platform": "bed_plates/unlabeled/sidekick_747.stl",
+        "platform": "bed_plates/labeled/sidekick_747_labeled.stl",
         "platform_offset":
         [
-            -5,
-            -16,
-            2
+            0,
+            -16.1,
+            -2
         ],
         "file_formats": "text/x-gcode",
         "firmware_toolhead_name": "Legacy Universal",

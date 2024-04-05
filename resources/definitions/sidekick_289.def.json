@@ -10,11 +10,11 @@
         "base_machine_id": "sidekick_289",
         "machine_category": "Legacy",
         "toolhead_selection_name": "Universal Tool Head",
-        "platform": "bed_plates/unlabeled/sidekick_289.stl",
+        "platform": "bed_plates/labeled/sidekick_289_labeled.stl",
         "platform_offset":
         [
             0,
-            -18,
+            -17.3,
             0
         ],
         "file_formats": "text/x-gcode",
