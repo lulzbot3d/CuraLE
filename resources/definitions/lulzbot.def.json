@@ -59,6 +59,7 @@
         "machine_baudrate": { "default_value": "250000" },
         "machine_center_is_zero": { "default_value": false },
         "machine_heated_bed": { "default_value": true },
+        "machine_heat_zone_length": { "default_value": 20 },
         "machine_max_feedrate_x": { "default_value": 500 },
         "machine_max_feedrate_y": { "default_value": 500 },
         "machine_max_feedrate_z": { "default_value": 8 },
