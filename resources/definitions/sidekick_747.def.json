@@ -9,7 +9,7 @@
         "base_machine": true,
         "base_machine_id": "sidekick_747",
         "toolhead_selection_name": "Universal Tool Head",
-        "platform": "sidekick_747.stl",
+        "platform": "bed_plates/unlabeled/sidekick_747.stl",
         "platform_offset":
         [
             -5,

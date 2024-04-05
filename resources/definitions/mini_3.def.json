@@ -12,7 +12,7 @@
         "machine_category": "Dev",
         "toolhead_selection_name": "Universal Tool Head",
         "preferred_material": "Generic_PLA",
-        "platform": "mini_3.stl",
+        "platform": "bed_plates/unlabeled/mini_3.stl",
         "platform_offset":
         [
             0,

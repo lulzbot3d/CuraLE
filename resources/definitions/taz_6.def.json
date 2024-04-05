@@ -9,7 +9,7 @@
         "base_machine_id": "taz_6",
         "machine_category": "Legacy",
         "toolhead_category": "",
-        "platform": "taz_6.stl",
+        "platform": "bed_plates/unlabeled/taz_6.stl",
         "platform_offset":
         [
             0,

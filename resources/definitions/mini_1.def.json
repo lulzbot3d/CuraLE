@@ -10,7 +10,7 @@
         "base_machine_id": "mini_1",
         "machine_category": "Legacy",
         "toolhead_category": "",
-        "platform": "mini_2.stl",
+        "platform": "bed_plates/unlabeled/mini_2.stl",
         "platform_offset":
         [
             -100,

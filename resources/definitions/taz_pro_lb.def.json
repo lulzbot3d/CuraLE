@@ -10,7 +10,7 @@
         "variant_machine": true,
         "base_machine_id": "taz_pro_lb",
         "toolhead_selection_name": "Universal Tool Head",
-        "platform": "taz_pro_lb.stl",
+        "platform": "bed_plates/unlabeled/taz_pro_lb.stl",
         "platform_offset":
         [
             0,
