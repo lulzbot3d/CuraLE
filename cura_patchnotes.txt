@@ -4,7 +4,7 @@
 	Additions:
 		- Added experimental high speed detailed qualities for all PLA
 			materials on MET175/285 Tool Heads
-		- Added experimental high speed stamdard qualities for all PLA
+		- Added experimental high speed standard qualities for all PLA
 			materials on MET175/285 Tool Heads
 		- Added "MarlinCancelObject" script to the PostProcessingPlugin
 			by default, credit to Aapo Saaristo, repo can be found here:
@@ -14,7 +14,7 @@
 		- Adjusted TAZ Pro XT and LB accelerations back down to
 			500mm/s/s
 		- Adjusted MET175 PLA retraction values to 1mm at 10mm/s
-		- Cleaned up Dual Extruder start gcode scripts
+		- Cleaned up Dual Extruder start and end gcode scripts
 		- Adjusted Mini 3 accelerations to be in line with other
 			similar printers for the time being
 		- Shuffled around the Printer list on the "Add Printer" screen
