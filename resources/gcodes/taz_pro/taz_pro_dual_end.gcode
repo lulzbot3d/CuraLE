@@ -7,21 +7,19 @@ G1 Z25 E-1 X20 Y20 F2000                          ; move Z up a bit and retract 
 M104 S{material_print_temperature_0} T0           ; T0 to print temp
 M104 S{material_print_temperature_1} T1           ; T1 to print temp
 G90                                               ; absolute positioning
-G0 X290 Y-30 F3000                                ; move to cooling position
+G0 X285 Y-30 F3000                                ; move to cooling position
 G91                                               ; relative positioning
 M117 Purging for next print;                        progress indicator message
 T0
 M109 S{material_print_temperature_0}              ; wait for temp
 G92 E0                                            ; set extruder position to purge amount
-G1 E20 F75                                        ; purge
-G1 E17 F200                                       ; retract slightly to prevent ooze
+G1 E15 F75                                        ; purge
 M400                                              ; wait for purge
 M104 S0                                           ; T0 hotend off
 T1
 M109 S{material_print_temperature_1}              ; wait for temp
 G92 E0                                            ; set extruder position to purge amount
-G1 E20 F75                                       ; purge
-G1 E17 F200                                       ; retract slightly to prevent ooze
+G1 E15 F75                                        ; purge
 M400                                              ; wait for purge
 M104 S0                                           ; T1 hotend off
 T0
