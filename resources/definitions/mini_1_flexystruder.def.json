@@ -13,6 +13,8 @@
         {
             "0": "mini_1_flexystruder_extruder"
         },
+        "firmware_toolhead_name": "Flexystruder",
+        "firmware_toolhead_name_no_lcd": "Flexystruder",
         "firmware_file": "Mini/Marlin_MiniLCD_Flexystruder_2.0.0.144_aded3b617.hex",
         "firmware_file_no_lcd": "Mini/Marlin_Mini_Flexystruder_2.0.0.144_aded3b617.hex"
     },

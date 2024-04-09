@@ -12,6 +12,8 @@
         {
             "0": "mini_1_m175_extruder"
         },
+        "firmware_toolhead_name": "lutefisk",
+        "firmware_toolhead_name_no_lcd": "lutefisk",
         "firmware_latest_version": "2.0.0.144.1-LCD",
         "firmware_file": "Mini/Marlin_MiniLCD_M175_2.0.0.144.1_8c651988.hex",
         "firmware_no_lcd_latest_version": "2.0.0.144.1",
