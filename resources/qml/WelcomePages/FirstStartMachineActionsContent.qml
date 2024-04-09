@@ -71,7 +71,13 @@ Item {
         }
 
         text: "Load Example Model"
-        checked: true
+        checked: {
+            if (UM.Preferences.getValue("general/is_first_run")) {
+                return true
+            } else {
+                return false
+            }
+        }
 
         style: UM.Theme.styles.checkbox
     }
@@ -84,6 +90,9 @@ Item {
         }
         text: catalog.i18nc("@button", "Finished")
         onClicked: {
+            if (UM.Preferences.getValue("general/is_first_run")) {
+                UM.Preferences.setValue("general/is_first_run", false)
+            }
             if (loadModelCheckbox.checked) {
                 Cura.MachineManager.addMachineProvideExampleModel()
             }
