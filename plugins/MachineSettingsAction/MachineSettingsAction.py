@@ -97,27 +97,6 @@ class MachineSettingsAction(MachineAction):
             self._backend.enableTimer()
             self._backend.tickle()
 
-    #containerIndexChanged = pyqtSignal()
-
-    # @pyqtProperty(int, notify = containerIndexChanged)
-    # def containerIndex(self):
-    #     return self._container_index
-
-    # def _onGlobalContainerChanged(self):
-    #     self._global_container_stack = Application.getInstance().getGlobalContainerStack()
-
-    #     # This additional emit is needed because we cannot connect a UM.Signal directly to a pyqtSignal
-    #     self.globalContainerChanged.emit()
-
-    #globalContainerChanged = pyqtSignal()
-
-    # @pyqtProperty(int, notify = globalContainerChanged)
-    # def definedExtruderCount(self):
-    #     if not self._global_container_stack:
-    #         return 0
-
-    #     return len(self._global_container_stack.getMetaDataEntry("machine_extruder_trains"))
-
     @pyqtSlot(int)
     def setMachineExtruderCount(self, extruder_count: int) -> None:
         # Note: this method was in this class before, but since it's quite generic and other plugins also need it

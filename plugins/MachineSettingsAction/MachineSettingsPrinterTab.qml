@@ -373,63 +373,93 @@ Item {
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 
-            /* The "Shared Heater" feature is temporarily disabled because its
-            implementation is incomplete. Printers with multiple filaments going
-            into one nozzle will keep the inactive filaments retracted at the
-            start of a print. However CuraEngine assumes that all filaments
-            start at the nozzle tip. So it'll start printing the second filament
-            without unretracting it.
-            See: https://github.com/Ultimaker/Cura/issues/8148
-
-            Cura.SimpleCheckBox  // "Shared Heater"
-            {
-                id: sharedHeaterCheckBox
-                containerStackId: machineStackId
-                settingKey: "machine_extruders_share_heater"
-                settingStoreIndex: propertyStoreIndex
-                labelText: catalog.i18nc("@label", "Shared Heater")
-                labelFont: base.labelFont
-                labelWidth: base.labelWidth
-                forceUpdateOnChangeFunction: forceUpdateFunction
-            }
-            */
-
             // =======================================
             // Subsection below Printhead for USB
             // =======================================
 
-            // Label { // USB Title Label
-            //     text: catalog.i18nc("@title:label", "USB Settings (WIP)")
-            //     font: UM.Theme.getFont("medium_bold")
-            //     color: UM.Theme.getColor("text")
-            //     renderType: Text.NativeRendering
-            //     width: parent.width
-            //     elide: Text.ElideRight
-            // }
+            Label { // USB Title Label
+                text: catalog.i18nc("@title:label", "USB Settings")
+                font: UM.Theme.getFont("medium_bold")
+                color: UM.Theme.getColor("text")
+                renderType: Text.NativeRendering
+                width: parent.width
+                elide: Text.ElideRight
+            }
 
-            // Cura.ComboBoxWithOptions { // "Port"
-            //     id: portComboBox
-            //     containerStackId: machineStackId
-            //     settingKey: "machine_port"
-            //     settingStoreIndex: propertyStoreIndex
-            //     labelText: catalog.i18nc("@label", "USB Port")
-            //     labelFont: base.labelFont
-            //     labelWidth: base.labelWidth
-            //     controlWidth: base.controlWidth
-            //     forceUpdateOnChangeFunction: forceUpdateFunction
-            // }
+            Cura.ComboBoxWithOptions { // "Port"
+                id: portComboBox
+                containerStackId: machineStackId
+                settingKey: "machine_port"
+                settingStoreIndex: propertyStoreIndex
+                labelText: catalog.i18nc("@label", "USB Port")
+                labelFont: base.labelFont
+                labelWidth: base.labelWidth
+                controlWidth: base.controlWidth
+                forceUpdateOnChangeFunction: forceUpdateFunction
 
-            // Cura.ComboBoxWithOptions { // "Baudrate"
-            //     id: baudComboBox
-            //     containerStackId: machineStackId
-            //     settingKey: "machine_baudrate"
-            //     settingStoreIndex: propertyStoreIndex
-            //     labelText: catalog.i18nc("@label", "USB Communication Speed (Baudrate)")
-            //     labelFont: base.labelFont
-            //     labelWidth: base.labelWidth
-            //     controlWidth: base.controlWidth
-            //     forceUpdateOnChangeFunction: forceUpdateFunction
-            // }
+                optionModel: ListModel {
+                    id: portModel
+
+                    Component.onCompleted: {
+                        update()
+                    }
+
+                    function update() {
+                        clear()
+                        let ports = Cura.USBPrinterOutputDeviceManager.serialPorts
+                        for (var i = 0; i < ports.length; i++)
+                        {
+                            // Use String as value. JavaScript only has Number. PropertyProvider.setPropertyValue()
+                            // takes a QVariant as value, and Number gets translated into a float. This will cause problem
+                            // for integer settings such as "Number of Extruders".
+                            append({ text: String(ports[i]), value: String(ports[i]) })
+                        }
+                        append({text: "AUTO", value: "AUTO"})
+                    }
+                }
+
+                Connections {
+                    target: Cura.USBPrinterOutputDeviceManager
+                    function onSerialListChanged() { portModel.update() }
+                }
+            }
+
+            Cura.ComboBoxWithOptions { // "Baudrate"
+                id: baudComboBox
+                containerStackId: machineStackId
+                settingKey: "machine_baudrate"
+                settingStoreIndex: propertyStoreIndex
+                labelText: catalog.i18nc("@label", "USB Communication Speed (Baudrate)")
+                labelFont: base.labelFont
+                labelWidth: base.labelWidth
+                controlWidth: base.controlWidth
+                forceUpdateOnChangeFunction: forceUpdateFunction
+
+                optionModel: ListModel {
+                    id: baudrateModel
+
+                    Component.onCompleted: {
+                        update()
+                    }
+
+                    function update() {
+                        clear()
+                        let baudrates = ["AUTO", "250000", "230400", "115200", "57600", "38400", "19200", "9600"]
+                        for (var i = 0; i < baudrates.length; i++)
+                        {
+                            // Use String as value. JavaScript only has Number. PropertyProvider.setPropertyValue()
+                            // takes a QVariant as value, and Number gets translated into a float. This will cause problem
+                            // for integer settings such as "Number of Extruders".
+                            append({ text: String(baudrates[i]), value: String(baudrates[i]) })
+                        }
+                    }
+                }
+
+                Connections {
+                    target: Cura.MachineManager
+                    function onGlobalContainerChanged() { baudrateModel.update() }
+                }
+            }
         }
     }
 

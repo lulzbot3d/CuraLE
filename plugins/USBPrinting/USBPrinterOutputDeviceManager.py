@@ -30,6 +30,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
 
     addUSBOutputDeviceSignal = Signal()
     removeUSBOutputDeviceSignal = Signal()
+    serialListChanged = pyqtSignal()
 
     def __init__(self, application, parent = None):
         if USBPrinterOutputDeviceManager.__instance is not None:
@@ -162,15 +163,25 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         device.connectionStateChanged.connect(self._onConnectionStateChanged)
         self._usb_output_devices[serial_port] = device
         self.getOutputDeviceManager().addOutputDevice(device)
+        self.serialListChanged.emit()
 
     def removeOutputDevice(self, serial_port):
         try:
             device = self._usb_output_devices.pop(serial_port)
             device.close()
             self.getOutputDeviceManager().removeOutputDevice(serial_port)
+            self.serialListChanged.emit()
         except KeyError:
             Logger.log("w", "Tried to remove USB device on a port no longer in the list.")
         return
+
+    @pyqtProperty(list)
+    def serialPorts(self):
+        sanitized_ports = []
+        for port in self._serial_port_list:
+            if port != "None":
+                sanitized_ports.append(port)
+        return sanitized_ports
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
