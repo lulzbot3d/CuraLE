@@ -25,28 +25,29 @@ M107                                               ; disable fans
 G90                                                ; absolute positioning
 M420 S0                                            ; disable previous leveling matrix
 M140 S{material_bed_temperature_layer_0}           ; begin bed temping up
-M104 S{material_soften_temperature_0} T0           ; soften filament
+M104 S{material_soften_temperature_0}              ; soften filament
 M104 S{material_probe_temperature_1} T1            ; soften filament
 G28                                                ; home
 G0 X50 Y25 Z10 F2000
 M117 Heating...
-M109 R{material_soften_temperature_0} T0           ; wait for temp
+M109 R{material_soften_temperature_0}              ; wait for temp
 M82                                                ; set extruder to absolute mode
 G92 E0                                             ; set extruder to zero
 G1 E-7 F100                                        ; retract 7mm of filament on first extruder
 M106                                               ; turn on fans to speed cooling
 M117 Wiping...
-M109 R{material_wipe_temperature_0} T0             ; wait for T0 wipe temp
-M104 S{material_probe_temperature_0} T0            ; cool to probe temp
+M109 R{material_wipe_temperature_0}                ; wait for T0 wipe temp
+M104 S{material_probe_temperature_0}               ; cool to probe temp
 G12                                                ; wipe sequence
 M107                                               ; turn off fan
 G29                                                ; probe sequence (for auto-leveling)
 M420 S1                                            ; enable leveling matrix
-M104 S{material_print_temperature_layer_0_0} T0    ; set extruder temp
+T{initial_extruder_nr}                             ; ensure we're using the first extruder
+M104 S{material_print_temperature_layer_0_init}    ; set extruder temp
 G0 X5 Y15 Z10 F5000                                ; move to start location
 M400                                               ; clear buffer
 M117 Heating...
-M109 R{material_print_temperature_layer_0_0} T0    ; set extruder temp and wait
+M109 R{material_print_temperature_layer_0_init}    ; set extruder temp and wait
 M190 R{material_bed_temperature_layer_0}           ; get bed temping up during first layer
 G1 Z2 E0 F75                                       ; raise head and 0 extruder
 M82					                               ; set to absolute mode
