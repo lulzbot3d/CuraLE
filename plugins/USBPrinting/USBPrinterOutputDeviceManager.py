@@ -93,6 +93,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         :param only_list_usb: If true, only usb ports are listed
         """
         base_list = ["None"]
+        required_port = self._application.getGlobalContainerStack().getProperty("machine_port", "value")
         try:
             port_list = serial.tools.list_ports.comports()
         except TypeError:  # Bug in PySerial causes a TypeError if port gets disconnected while processing.
@@ -104,6 +105,9 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
                 continue
             if only_list_usb and not port[2].startswith("USB"):
                 continue
+            if required_port != "AUTO":
+                if port[0] != required_port:
+                    continue
 
             # To prevent cura from messing with serial ports of other devices,
             # filter by regular expressions passed in as environment variables.
