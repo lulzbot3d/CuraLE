@@ -51,6 +51,7 @@
 
     <machine>
       <machine_identifier product="mini_2_met285"/>
+      <machine_identifier product="mini_3_met285"/>
       <machine_identifier product="sidekick_289_met285"/>
       <machine_identifier product="sidekick_747_met285"/>
       <machine_identifier product="taz_pro_met285"/>
