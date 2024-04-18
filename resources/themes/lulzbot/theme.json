@@ -374,6 +374,7 @@
         "radio_disabled": [24, 41, 77, 101],
         "radio_dot": [0, 0, 0, 0],
         "radio_dot_disabled": [24, 41, 77, 101],
+        "radio_selected": [120, 136, 20, 255],
         "radio_text": [0, 0, 0, 255],
         "radio_text_disabled": [24, 41, 77, 101],
         "rating_star": [90, 90, 90, 255],
