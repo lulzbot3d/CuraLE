@@ -4,12 +4,11 @@
     "inherits": "lulzbot",
     "metadata":
     {
-        "machine_priority": "00",
+        "machine_priority": "04",
         "firmware_type": "Klipper",
         "visible": false,
         "base_machine": true,
         "base_machine_id": "mini_3",
-        "machine_category": "Dev",
         "toolhead_selection_name": "Universal Tool Head",
         "preferred_material": "Generic_PLA",
         "platform": "bed_plates/labeled/mini_3_labeled.stl",
