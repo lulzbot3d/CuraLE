@@ -10,7 +10,6 @@
         "base_machine": true,
         "base_machine_id": "dev_core_xy",
         "machine_category": "Dev",
-        "preferred_material": "Generic_PLA",
         "toolhead_selection_name": "Universal Tool Head",
         "platform": "",
         "file_formats": "text/x-gcode",
