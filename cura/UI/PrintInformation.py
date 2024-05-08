@@ -325,7 +325,7 @@ class PrintInformation(QObject):
 
             self._job_name = base_name
 
-            if jobname_position is not "none":
+            if jobname_position != "none":
                 # Don't add abbreviation if it already has the exact same abbreviation.
                 if self._abbr_machine in base_name:
                     pass

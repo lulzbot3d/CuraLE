@@ -10,7 +10,6 @@
         "base_machine": true,
         "base_machine_id": "mini_3",
         "toolhead_selection_name": "Universal Tool Head",
-        "preferred_material": "Generic_PLA",
         "platform": "bed_plates/labeled/mini_3_labeled.stl",
         "platform_offset":
         [
