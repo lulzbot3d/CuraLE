@@ -41,7 +41,6 @@
         "acceleration_travel": { "value": 4000 },
         "brim_line_count": { "default_value": 10 },
         "infill_before_walls": { "default_value": false },
-        "infill_overlap": { "value": 5 },
         "infill_pattern": { "value": "'grid' if infill_sparse_density > 25 else 'grid'" },
         "infill_sparse_thickness": { "maximum_value_warning": "machine_nozzle_size" },
         "infill_wipe_dist": { "maximum_value_warning": "machine_nozzle_size * 1.5" },

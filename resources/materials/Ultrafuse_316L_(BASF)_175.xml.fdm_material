@@ -19,6 +19,14 @@
     <weight>3000</weight>
   </properties>
   <settings>
+    <setting key="print temperature">235</setting>
+    <setting key="soften temperature">200</setting>
+    <setting key="probe temperature">180</setting>
+    <setting key="wipe temperature">200</setting>
+    <setting key="heated bed temperature">110</setting>
+    <setting key="retraction amount">6.5</setting>
+    <setting key="part removal temperature">0.0</setting>
+    <setting key="print cooling">0.0</setting>
 
     <machine>
       <machine_identifier product="mini_2_m175"/>
@@ -26,7 +34,6 @@
       <machine_identifier product="sidekick_747_m175"/>
       <machine_identifier product="taz_6_m175"/>
       <machine_identifier product="taz_pro_m175"/>
-      <machine_identifier product="taz_pro_lb_m175"/>
       <machine_identifier product="taz_pro_xt_m175"/>
       <machine_identifier product="taz_workhorse_m175"/>
     </machine>
@@ -37,7 +44,6 @@
       <machine_identifier product="sidekick_289_met175"/>
       <machine_identifier product="sidekick_747_met175"/>
       <machine_identifier product="taz_pro_met175"/>
-      <machine_identifier product="taz_pro_lb_met175"/>
       <machine_identifier product="taz_pro_xt_met175"/>
       <machine_identifier product="taz_workhorse_met175"/>
       <hotend id="0.3 mm">
