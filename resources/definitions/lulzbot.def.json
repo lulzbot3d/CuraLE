@@ -105,6 +105,9 @@
             "maximum_value_warning": "15",
             "minimum_value": "0"
         },
+        "support_tower_diameter": { "default_value": 8 },
+        "support_tower_maximum_supported_diameter": { "default_value": 8 },
+        "support_tower_roof_angle": { "default_value": 55 },
         "support_xy_distance": {
             "maximum_value_warning": "machine_nozzle_size * 3",
             "default_value": 1.5,
