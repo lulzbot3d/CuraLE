@@ -197,7 +197,16 @@ Item {
 
             Label {
                 // text: machineAssociatedUrls.properties.value
-                text: "Klipper printers cannot be printed tethered to Cura LE. \nThis section will be updated to be more useful in a later update."
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Printers running Klipper firmware cannot be printed tethered to Cura LE.\n Please see the Mini 3 Quick Start Guide for more information."
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                height: UM.Theme.getSize("setting_control").height * 2
+                width: base.width / 2 - (UM.Theme.getSize("default_margin").width * 1.5)
+                text: "Quick Start Guide"
+                onClicked: Qt.openUrlExternally("https://lulzbot.com/mini-3-monitor-page")
             }
 
         //     GridLayout {
