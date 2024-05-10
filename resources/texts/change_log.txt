@@ -1,5 +1,13 @@
 [4.13.10]
-* In progress
+* Added a couple requested profiles for TPUs
+* Added the "Ultrafuse 316L" material in 1.75mm
+* 2.1.3.0.29 Firmware for all Single Extruder TAZ printers
+* 2.1.3.0.30 Firmware for all TAZ Pro Dual Extruders
+* Many slight fixes to many Galaxy profiles
+* Renamed "Experimental High Speed" profiles to "Rapid"
+* Added some missing profiles on Mini 3 that caused a crash
+* Cleaned up the Pro bed model
+* Build mostly focused on stability
 
 [4.13.9]
 * Added experimental high speed detailed qualities for all PLA materials on MET175/285 Tool Heads
