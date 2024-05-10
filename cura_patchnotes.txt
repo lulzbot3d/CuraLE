@@ -1,4 +1,48 @@
 						CURA LULZBOT EDITION PATCHNOTES
+4.13.10:
+	Additions:
+		- Added a couple requested profiles for TPUs
+		- Added the "Ultrafuse 316L" material in 1.75mm
+		- Added a button linking to the Mini 3 QSG when viewing
+			the Monitor tab with a Mini 3
+	Changes:
+		- 2.1.3.0.29 Firmware for all Single Extruder TAZ printers
+		- 2.1.3.0.30 Firmware for all TAZ Pro Dual Extruders
+		- Many slight fixes to many Galaxy profiles
+		- Renamed "Experimental High Speed" profiles to "Rapid"
+	Fixes:
+		- Added some missing profiles on Mini 3 that caused a crash
+		- Cleaned up the Pro bed model
+		- Build mostly focused on stability
+
+
+4.13.9:
+	Additions:
+		- Added experimental high speed detailed qualities for all PLA
+			materials on MET175/285 Tool Heads
+		- Added experimental high speed standard qualities for all PLA
+			materials on MET175/285 Tool Heads
+		- Added "MarlinCancelObject" script to the PostProcessingPlugin
+			by default, credit to Aapo Saaristo, repo can be found here:
+			https://github.com/shinmai/cura-M486
+		- Re-added the missing USB Port and Baudrate machine settings
+			that had existed in 3.6
+		- Expanded profiles to the Mini 3 and Twin Nebulas
+	Changes:
+		- 2.1.3.0.28 Firmware to all LulzBot TAZ printers and went to
+			2.1.3.0.27 for all other current LulzBot printers
+		- Adjusted TAZ Pro XT and LB accelerations back down to
+			500mm/s/s
+		- Adjusted MET175 PLA retraction values to 1mm at 10mm/s
+		- Cleaned up Dual Extruder start and end gcode scripts
+		- Moved Mini 3 to the current printers list
+		- Adjusted Mini 3 accelerations to be in line with other
+			similar printers for the time being
+		- Shuffled around the Printer list on the "Add Printer" screen
+		- FilamentChangeManager now inserts an M600 for all printers instead
+			of using an M25 for Pro series printers
+		- Added printer names to the build plates in the view window
+		- "Load Example Model" checkbox is now only checked on first load
 
 4.13.8:
 	Small Fixes:

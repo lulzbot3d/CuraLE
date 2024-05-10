@@ -41,7 +41,6 @@
         "acceleration_travel": { "value": 4000 },
         "brim_line_count": { "default_value": 10 },
         "infill_before_walls": { "default_value": false },
-        "infill_overlap": { "value": 5 },
         "infill_pattern": { "value": "'grid' if infill_sparse_density > 25 else 'grid'" },
         "infill_sparse_thickness": { "maximum_value_warning": "machine_nozzle_size" },
         "infill_wipe_dist": { "maximum_value_warning": "machine_nozzle_size * 1.5" },
@@ -59,6 +58,7 @@
         "machine_baudrate": { "default_value": "250000" },
         "machine_center_is_zero": { "default_value": false },
         "machine_heated_bed": { "default_value": true },
+        "machine_heat_zone_length": { "default_value": 20 },
         "machine_max_feedrate_x": { "default_value": 500 },
         "machine_max_feedrate_y": { "default_value": 500 },
         "machine_max_feedrate_z": { "default_value": 8 },
@@ -66,12 +66,14 @@
         "machine_nozzle_size": { "default_value": 0.5 },
         "magic_fuzzy_skin_point_density": { "default_value": 4 },
         "magic_fuzzy_skin_thickness": { "default_value": 0.1 },
+        "material_bed_temp_prepend": { "default_value": false },
         "material_print_temperature":
         {
             "enabled": true,
             "minimum_value": "0",
             "maximum_value_warning": "295"
         },
+        "material_print_temp_prepend": { "default_value": false },
         "material_standby_temperature": { "default_value": 160 },
         "prime_tower_position_x": { "default_value": 20 },
         "prime_tower_position_y": { "default_value": 20 },
@@ -103,12 +105,15 @@
             "maximum_value_warning": "15",
             "minimum_value": "0"
         },
+        "support_tower_diameter": { "default_value": 8 },
+        "support_tower_maximum_supported_diameter": { "default_value": 8 },
+        "support_tower_roof_angle": { "default_value": 55 },
         "support_xy_distance": {
             "maximum_value_warning": "machine_nozzle_size * 3",
             "default_value": 1.5,
             "value": "min(machine_nozzle_size * 2, 2.5)"
         },
-        "support_z_distance": { "value": "(math.ceil(0.3 / layer_height) * layer_height) if layer_height < 0.3 else layer_height"},
+        "support_z_distance": { "value": "(math.ceil(0.25 / layer_height) * layer_height) if layer_height < 0.25 else layer_height"},
         "travel_retract_before_outer_wall": { "default_value": true },
         "wall_thickness":
         {

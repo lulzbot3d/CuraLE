@@ -149,10 +149,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             self.connect() # Finish connection process
         else: # Known baud rate didn't work, try auto-detect
             Logger.log("w", "Known Baud Job failed to create a connection.")
-            # Message(text = catalog.i18nc("@message",
-            #         "The device on {port} did not respond to Cura LE. Please check the connection and try again.").format(port=self._serial_port),
-            #         title = catalog.i18nc("@message", "No Response"),
-            #         message_type = Message.MessageType.ERROR).show()
             self._baud_rate = "AUTO"
             self.connect()
 

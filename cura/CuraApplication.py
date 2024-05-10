@@ -578,7 +578,7 @@ class CuraApplication(QtApplication):
 
         preferences.addPreference("general/accepted_user_agreement", False)
 
-        preferences.addPreference("general/is_first_run", False)
+        preferences.addPreference("general/is_first_run", True)
 
         for key in [
             "dialog_load_path",  # dialog_save_path is in LocalFileOutputDevicePlugin

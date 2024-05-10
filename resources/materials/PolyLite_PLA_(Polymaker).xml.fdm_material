@@ -17,6 +17,7 @@
   <properties>
     <density>1.17</density>
     <diameter>2.85</diameter>
+    <weight>1000</weight>
   </properties>
   <settings>
     <setting key="print temperature">205</setting>

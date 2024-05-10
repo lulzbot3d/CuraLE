@@ -1,15 +1,15 @@
 {
     "version": 2,
-    "name": "[DEV] Core XY",
+    "name": "Core XY",
     "inherits": "taz",
     "metadata":
     {
-        "machine_priority": "12",
+        "machine_priority": "02",
         "firmware_type": "Klipper",
         "visible": false,
         "base_machine": true,
         "base_machine_id": "dev_core_xy",
-        "preferred_material": "Generic_PLA",
+        "machine_category": "Dev",
         "toolhead_selection_name": "Universal Tool Head",
         "platform": "",
         "file_formats": "text/x-gcode",

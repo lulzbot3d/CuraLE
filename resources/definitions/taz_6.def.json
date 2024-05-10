@@ -4,20 +4,20 @@
     "inherits": "taz",
     "metadata":
     {
-        "machine_priority": "09",
+        "machine_priority": "01",
         "base_machine": true,
         "base_machine_id": "taz_6",
         "machine_category": "Legacy",
         "toolhead_category": "",
-        "platform": "taz_6.stl",
+        "platform": "bed_plates/labeled/taz_6_labeled.stl",
         "platform_offset":
         [
-            0,
-            0,
+            -14,
+            -19.1,
             0
         ],
         "visible": false,
-        "firmware_toolhead_name": "Legacy Universal",
+        "firmware_toolhead_name": "Universal",
         "firmware_latest_version": "2.0.9.0.13",
         "firmware_file": "TAZ6/Marlin_TAZ6_Universal_2.0.9.0.13_80a6628.hex"
     },

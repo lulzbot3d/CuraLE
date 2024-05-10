@@ -67,6 +67,7 @@
 
     <machine>
       <machine_identifier product="mini_2_met285"/>
+      <machine_identifier product="mini_3_met285"/>
       <machine_identifier product="sidekick_289_met285"/>
       <machine_identifier product="sidekick_747_met285"/>
       <machine_identifier product="taz_pro_met285"/>
@@ -99,6 +100,21 @@
     <machine>
       <machine_identifier product="mini_1_single"/>
       <machine_identifier product="taz_6_single"/>
+    </machine>
+
+    <machine>
+      <machine_identifier product="taz_pro_twnb285"/>
+      <machine_identifier product="taz_pro_xt_twnb285"/>
+      <hotend id="0.3 mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
+      <hotend id="0.4 mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
+      <hotend id="0.5 mm" />
+      <hotend id="0.8 mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
     </machine>
 
     <machine>

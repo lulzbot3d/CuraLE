@@ -49,6 +49,7 @@
 
     <machine>
       <machine_identifier product="mini_2_met175"/>
+      <machine_identifier product="mini_3_met175"/>
       <machine_identifier product="sidekick_289_met175"/>
       <machine_identifier product="sidekick_747_met175"/>
       <machine_identifier product="taz_pro_met175"/>
@@ -61,7 +62,10 @@
       <hotend id="0.4 mm">
         <setting key="hardware compatible">no</setting>
       </hotend>
-      <hotend id="0.5 mm" />
+      <hotend id="0.5 mm">
+        <setting key="retraction amount">1</setting>
+        <setting key="retraction speed">10</setting>
+      </hotend>
       <hotend id="0.8 mm">
         <setting key="hardware compatible">no</setting>
       </hotend>
@@ -70,6 +74,21 @@
     <machine>
       <machine_identifier product="sidekick_289_sk175"/>
       <machine_identifier product="sidekick_747_sk175"/>
+    </machine>
+
+    <machine>
+      <machine_identifier product="taz_pro_twnb175"/>
+      <machine_identifier product="taz_pro_xt_twnb175"/>
+      <hotend id="0.3 mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
+      <hotend id="0.4 mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
+      <hotend id="0.5 mm" />
+      <hotend id="0.8 mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
     </machine>
 
   </settings>

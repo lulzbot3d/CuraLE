@@ -187,67 +187,201 @@ Item {
 
             spacing: UM.Theme.getSize("default_margin").height
 
-            Label {
-                //text: machineAssociatedUrls.properties.value
-                text: "Klipper printers cannot be printed tethered to Cura LE. \nThis section will be updated to be more useful in a later update."
-            }
-
-            // GridLayout {
-            //     id: addIPGrid
-            //     anchors.horizontalCenter: parent.horizontalCenter
-            //     columns: 2
-
-            //     Label {
-            //         Layout.row: 0
-            //         Layout.column: 0
-            //         text: "Name:"
-            //     }
-
-            //     TextField {
-            //         id: ipNameField
-            //         Layout.row: 0
-            //         Layout.column: 1
-            //     }
-
-            //     Label {
-            //         Layout.row: 1
-            //         Layout.column: 0
-            //         text: "IP: "
-            //     }
-
-            //     TextField {
-            //         id: ipAddressField
-            //         Layout.row: 1
-            //         Layout.column: 1
-            //     }
-
-            //     Button {
-            //         Layout.row: 2
-            //         Layout.column: 1
-            //         text: "Wow!"
-            //         onClicked: {
-
-            //             let newName = ipNameField.text
-            //             let newIP = ipAddressField.text
-            //             let jsonString = machineAssociatedUrls.properties.value
-            //             let urlsObj = JSON.parse(jsonString)
-            //             if (urlsObj[newName] == undefined) {
-            //                 urlsObj[newName] = newIP
-            //                 ipNameField.text = ""
-            //                 ipAddressField.text = ""
-            //                 machineAssociatedUrls.setPropertyValue("value", JSON.stringify(urlsObj))
-            //             }
-
-            //         }
-            //     }
+            // Label {
+            //     id: klipperConnectionInfoTitle
+            //     font: UM.Theme.getFont("large_bold")
+            //     color: UM.Theme.getColor("text")
+            //     anchors.margins: UM.Theme.getSize("default_margin").width
+            //     text: "Yeehaw!"
             // }
 
-            UM.SettingPropertyProvider {
-                id: machineAssociatedUrls
-                containerStack: Cura.MachineManager.activeMachine
-                key: "machine_associated_urls"
-                watchedProperties: ["value"]
+            Label {
+                // text: machineAssociatedUrls.properties.value
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Printers running Klipper firmware cannot be printed tethered to Cura LE.\n Please see the Mini 3 Quick Start Guide for more information."
             }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                height: UM.Theme.getSize("setting_control").height * 2
+                width: base.width / 2 - (UM.Theme.getSize("default_margin").width * 1.5)
+                text: "Quick Start Guide"
+                onClicked: Qt.openUrlExternally("https://lulzbot.com/mini-3-monitor-page")
+            }
+
+        //     GridLayout {
+        //         id: addIPGrid
+        //         anchors.horizontalCenter: parent.horizontalCenter
+        //         columns: 2
+
+        //         Label {
+        //             Layout.row: 0
+        //             Layout.column: 0
+        //             text: "Nickname: "
+        //         }
+
+        //         TextField {
+        //             id: ipNameField
+        //             Layout.row: 0
+        //             Layout.column: 1
+        //         }
+
+        //         Label {
+        //             Layout.row: 1
+        //             Layout.column: 0
+        //             text: "Address: "
+        //         }
+
+        //         TextField {
+        //             id: ipAddressField
+        //             Layout.row: 1
+        //             Layout.column: 1
+        //         }
+
+        //         Button {
+        //             Layout.row: 2
+        //             Layout.column: 1
+        //             Layout.fillWidth: true
+        //             text: "Add Web Interface"
+        //             onClicked: {
+
+        //                 let newName = ipNameField.text
+        //                 let newIP = ipAddressField.text
+        //                 let jsonString = machineAssociatedUrls.properties.value
+        //                 let urlsObj = JSON.parse(jsonString)
+        //                 if (newName == "") {
+        //                     klipperIPAddWarningLabel.text = "Please provide a name!"
+        //                     klipperIPAddWarningLabel.visible = true
+        //                 }
+        //                 else if (newIP == "") {
+        //                     klipperIPAddWarningLabel.text = "Please provide a web address!"
+        //                     klipperIPAddWarningLabel.visible = true
+        //                 }
+        //                 else if (urlsObj[newName] == undefined) {
+        //                     klipperIPAddWarningLabel.visible = false
+        //                     urlsObj[newName] = newIP
+        //                     ipModel.append({ text: newName, value: newIP })
+        //                     ipSelectionComboBox.currentIndex = 0
+        //                     openLinkButton.userLink = get(0).value
+        //                     ipNameField.text = ""
+        //                     ipAddressField.text = ""
+        //                     jsonString = JSON.stringify(urlsObj)
+        //                     machineAssociatedUrls.setPropertyValue("value", jsonString)
+        //                 }
+
+        //             }
+        //         }
+
+        //         Label {
+        //             id: klipperIPAddWarningLabel
+        //             Layout.row: 3
+        //             Layout.column: 1
+        //             Layout.fillWidth: true
+        //             visible: false
+        //             color: "red"
+        //             text: ""
+        //         }
+        //     }
+
+        //     GridLayout {
+        //         id: comboBoxIPGrid
+        //         anchors.horizontalCenter: parent.horizontalCenter
+        //         columns: 2
+
+        //         Cura.ComboBox {
+        //             id: ipSelectionComboBox
+        //             Layout.row: 0
+        //             Layout.column : 0
+        //             Layout.columnSpan: 2
+        //             Layout.fillWidth: true
+        //             Layout.preferredHeight: UM.Theme.getSize("setting_control").height
+
+        //             model: ipModel
+
+        //             textRole: "text"
+
+        //             currentIndex: 0
+
+        //             onActivated: {
+        //                 var newValue = model.get(index).value
+        //                 openLinkButton.userLink = newValue
+        //             }
+        //         }
+
+        //         Button {
+        //             id: openLinkButton
+        //             Layout.row: 1
+        //             Layout.column: 0
+
+        //             text: "Open Link"
+        //             enabled: userLink != ""
+        //             visible: true
+
+        //             property string userLink: ""
+
+        //             onClicked: {
+        //                 if (userLink.startsWith("http")) {
+        //                     Qt.openUrlExternally(userLink)
+        //                 } else {
+        //                     Qt.openUrlExternally("http://" + userLink)
+        //                 }
+        //             }
+        //         }
+
+        //         Button {
+        //             id: deleteLinkButton
+        //             Layout.row: 1
+        //             Layout.column: 1
+
+        //             enabled: ipModel.get(ipSelectionComboBox.currentIndex) != undefined
+
+        //             text: "Remove"
+
+        //             onClicked: {
+        //                 let keyToDelete = ipModel.get(ipSelectionComboBox.currentIndex).text
+        //                 let jsonString = machineAssociatedUrls.properties.value
+        //                 let urlsObj = JSON.parse(jsonString)
+        //                 ipModel.remove(ipSelectionComboBox.currentIndex)
+        //                 ipSelectionComboBox.currentIndex = 0
+        //                 openLinkButton.userLink = get(0).value
+        //                 delete urlsObj[keyToDelete]
+        //                 jsonString = JSON.stringify(urlsObj)
+        //                 machineAssociatedUrls.setPropertyValue("value", jsonString)
+        //             }
+        //         }
+        //     }
+
+        //     ListModel {
+        //         id: ipModel
+        //         function updateModel() {
+        //             clear()
+        //             if(machineAssociatedUrls.properties.value) {
+        //                 let dataModel = JSON.parse(machineAssociatedUrls.properties.value)
+        //                 for(const nickname in dataModel) {
+        //                     append({ text: nickname, value: dataModel[nickname] });
+        //                 }
+        //                 ipSelectionComboBox.currentIndex = 0
+        //                 openLinkButton.userLink = get(0).value
+        //             }
+        //         }
+
+        //         Component.onCompleted: updateModel()
+        //     }
+
+        //     // Remake the model when the model is bound to a different container stack
+        //     Connections
+        //     {
+        //         target: machineAssociatedUrls
+        //         function onContainerStackChanged() { ipModel.updateModel() }
+        //         function onIsValueUsedChanged() { ipModel.updateModel() }
+        //     }
+
+        //     UM.SettingPropertyProvider {
+        //         id: machineAssociatedUrls
+        //         containerStack: Cura.MachineManager.activeMachine
+        //         key: "machine_associated_urls"
+        //         watchedProperties: ["value"]
+        //     }
         }
     }
 

@@ -362,19 +362,19 @@ class StartSliceJob(Job):
         result["material_name"] = stack.material.getMetaDataEntry("name", "")
         result["material_brand"] = stack.material.getMetaDataEntry("brand", "")
 
-        # Renamed settings.
+        # Renamed settings
         result["print_bed_temperature"] = result["material_bed_temperature"]
         result["print_temperature"] = result["material_print_temperature"]
         result["travel_speed"] = result["speed_travel"]
 
-        #Some extra settings.
+        # Some extra settings
         result["time"] = time.strftime("%H:%M:%S")
         result["date"] = time.strftime("%d-%m-%Y")
         result["day"] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][int(time.strftime("%w"))]
-        result["initial_extruder_nr"] = CuraApplication.getInstance().getExtruderManager().getInitialExtruderNr()
 
         # Multiple extruder settings
-        for extruder_stack in ExtruderManager.getInstance().getMachineExtruders(CuraApplication.getInstance().getGlobalContainerStack().getId()):
+        extruder_manager = ExtruderManager.getInstance()
+        for extruder_stack in extruder_manager.getMachineExtruders(CuraApplication.getInstance().getGlobalContainerStack().getId()):
             num = extruder_stack.getMetaDataEntry("position")
 
             # For instances where you're using multiple different materials
@@ -390,6 +390,12 @@ class StartSliceJob(Job):
                            "material_print_temperature_layer_0", "material_print_temperature",
                            "material_diameter", "machine_nozzle_size", "machine_nozzle_z_offset"]:
                     result["%s_%s" % (key, num)] = extruder_stack.getProperty(key, "value")
+
+        # Get values specific to initial extruder
+        initial_extruder = str(extruder_manager.getInitialExtruderNr())
+        result["initial_extruder_nr"] = initial_extruder
+        num_used_extruders = len(extruder_manager.getUsedExtruderStacks())
+        result["material_print_temperature_layer_0_init"] = result["material_print_temperature_layer_0_%s" % initial_extruder]
 
 
         return result
@@ -478,17 +484,6 @@ class StartSliceJob(Job):
             return
 
         settings = self._all_extruders_settings["-1"].copy()
-
-        # Pre-compute material material_bed_temp_prepend and material_print_temp_prepend
-        start_gcode = settings["machine_start_gcode"]
-        # Remove all the comments from the start g-code
-        start_gcode = re.sub(r";.+?(\n|$)", "\n", start_gcode)
-        bed_temperature_settings = ["material_bed_temperature", "material_bed_temperature_layer_0"]
-        pattern = r"\{(%s)(,\s?\w+)?\}" % "|".join(bed_temperature_settings) # match {setting} as well as {setting, extruder_nr}
-        settings["material_bed_temp_prepend"] = re.search(pattern, start_gcode) == None
-        print_temperature_settings = ["material_print_temperature", "material_print_temperature_layer_0", "default_material_print_temperature", "material_initial_print_temperature", "material_final_print_temperature", "material_standby_temperature", "print_temperature"]
-        pattern = r"\{(%s)(,\s?\w+)?\}" % "|".join(print_temperature_settings) # match {setting} as well as {setting, extruder_nr}
-        settings["material_print_temp_prepend"] = re.search(pattern, start_gcode) is None
 
         # Replace the setting tokens in start and end g-code.
         # Use values from the first used extruder by default so we get the expected temperatures

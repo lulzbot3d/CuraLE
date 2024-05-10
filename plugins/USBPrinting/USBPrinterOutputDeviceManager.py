@@ -30,6 +30,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
 
     addUSBOutputDeviceSignal = Signal()
     removeUSBOutputDeviceSignal = Signal()
+    serialListChanged = pyqtSignal()
 
     def __init__(self, application, parent = None):
         if USBPrinterOutputDeviceManager.__instance is not None:
@@ -92,6 +93,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         :param only_list_usb: If true, only usb ports are listed
         """
         base_list = ["None"]
+        required_port = self._application.getGlobalContainerStack().getProperty("machine_port", "value")
         try:
             port_list = serial.tools.list_ports.comports()
         except TypeError:  # Bug in PySerial causes a TypeError if port gets disconnected while processing.
@@ -103,6 +105,9 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
                 continue
             if only_list_usb and not port[2].startswith("USB"):
                 continue
+            if required_port != "AUTO":
+                if port[0] != required_port:
+                    continue
 
             # To prevent cura from messing with serial ports of other devices,
             # filter by regular expressions passed in as environment variables.
@@ -162,15 +167,25 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         device.connectionStateChanged.connect(self._onConnectionStateChanged)
         self._usb_output_devices[serial_port] = device
         self.getOutputDeviceManager().addOutputDevice(device)
+        self.serialListChanged.emit()
 
     def removeOutputDevice(self, serial_port):
         try:
             device = self._usb_output_devices.pop(serial_port)
             device.close()
             self.getOutputDeviceManager().removeOutputDevice(serial_port)
+            self.serialListChanged.emit()
         except KeyError:
             Logger.log("w", "Tried to remove USB device on a port no longer in the list.")
         return
+
+    @pyqtProperty(list)
+    def serialPorts(self):
+        sanitized_ports = []
+        for port in self._serial_port_list:
+            if port != "None":
+                sanitized_ports.append(port)
+        return sanitized_ports
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -5,16 +5,16 @@
     "metadata":
     {
         "visible": false,
-        "machine_priority": "10",
+        "machine_priority": "02",
         "base_machine": true,
         "base_machine_id": "taz_5",
         "machine_category": "Legacy",
         "toolhead_category": "",
-        "platform": "taz_5.stl",
+        "platform": "bed_plates/labeled/taz_5_labeled.stl",
         "platform_offset":
         [
             0,
-            0,
+            -17.6,
             0
         ],
         "firmware_latest_version": "1.1.9.34"

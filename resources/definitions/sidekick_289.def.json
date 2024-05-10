@@ -4,22 +4,23 @@
     "inherits": "lulzbot",
     "metadata":
     {
-        "machine_priority": "04",
+        "machine_priority": "00",
         "visible": false,
         "base_machine": true,
         "base_machine_id": "sidekick_289",
+        "machine_category": "Legacy",
         "toolhead_selection_name": "Universal Tool Head",
-        "platform": "sidekick_289.stl",
+        "platform": "bed_plates/labeled/sidekick_289_labeled.stl",
         "platform_offset":
         [
             0,
-            -18,
+            -17.3,
             0
         ],
         "file_formats": "text/x-gcode",
         "firmware_toolhead_name": "Legacy Universal",
-        "firmware_latest_version": "2.1.3.0.24",
-        "firmware_file": "289/Marlin_289_Universal_2.1.3.0.24_e39c6d1.hex",
+        "firmware_latest_version": "2.1.3.0.27",
+        "firmware_file": "289/Marlin_289_Universal_2.1.3.0.27_ed7bb14.hex",
         "firmware_no_lcd_latest_version": "2.0.9.0.16-NoLCD",
         "has_optional_lcd": true,
         "bltouch_is_standard": true

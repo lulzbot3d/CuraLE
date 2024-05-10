@@ -71,8 +71,14 @@ Item {
                         item.checked = false
                     }
                 }
+                for (let i = 0; i < bioPrinterSelectionRepeater.count; i++) {
+                    bioPrinterSelectionRepeater.itemAt(i).checked = false
+                }
                 for (let i = 0; i < legacyPrinterSelectionRepeater.count; i++) {
                     legacyPrinterSelectionRepeater.itemAt(i).checked = false
+                }
+                for (let i = 0; i < devPrinterSelectionRepeater.count; i++) {
+                    devPrinterSelectionRepeater.itemAt(i).checked = false
                 }
             }
 
@@ -171,7 +177,7 @@ Item {
 
                             Label {
                                 id: currentPrinterLabel
-                                text: "Current 3D Printers"
+                                text: "3D Printers"
                                 font.bold: true
                                 font.pixelSize: 14
                                 visible: currentPrinterSelectionRepeater.model.count > 0
@@ -189,6 +195,51 @@ Item {
                                 model: Cura.LulzBotPrintersModel {
                                     id: currentPrintersModel
                                     machineCategoryProperty: "Current"
+                                }
+                                delegate: RadioButton {
+                                    text: model.name
+
+                                    exclusiveGroup: printerGroup
+                                    checked: model.index == 0
+                                    onClicked: {
+                                        printerSelection.selectedIndex = model.index
+                                        printerSelection.selectedCategory = "current"
+                                        printerSelection.lcd = model.lcd
+                                        printerSelection.lcd_default = model.lcd_default
+                                        printerSelection.baseMachine = model.id
+                                        printerSelectorLoader.item.updateToolheads()
+                                    }
+                                }
+
+                                Component.onCompleted: {
+                                    printerSelection.lcd = model.getItem(0).lcd;
+                                    printerSelection.baseMachine = model.getItem(0).id
+                                }
+                            }
+                        }
+
+                        Column {
+
+                            Label {
+                                id: bioPrinterLabel
+                                text: "Bio Printers"
+                                font.bold: true
+                                font.pixelSize: 14
+                                visible: bioPrinterSelectionRepeater.model.count > 0
+                            }
+
+                            Rectangle {
+                                visible: bioPrinterLabel.visible
+                                height: 2
+                                width: printerColumn.width
+                                color: "black"
+                            }
+
+                            Repeater {
+                                id: bioPrinterSelectionRepeater
+                                model: Cura.LulzBotPrintersModel {
+                                    id: bioPrintersModel
+                                    machineCategoryProperty: "Bio"
                                 }
                                 delegate: RadioButton {
                                     text: model.name
@@ -243,6 +294,51 @@ Item {
                                     onClicked: {
                                         printerSelection.selectedIndex = model.index
                                         printerSelection.selectedCategory = "legacy"
+                                        printerSelection.lcd = model.lcd
+                                        printerSelection.lcd_default = model.lcd_default
+                                        printerSelection.baseMachine = model.id
+                                        printerSelectorLoader.item.updateToolheads()
+                                    }
+                                }
+
+                                Component.onCompleted: {
+                                    printerSelection.lcd = model.getItem(0).lcd;
+                                    printerSelection.baseMachine = model.getItem(0).id
+                                }
+                            }
+                        }
+
+                        Column {
+
+                            Label {
+                                id: devPrinterLabel
+                                text: "Developmental"
+                                font.bold: true
+                                font.pixelSize: 14
+                                visible: devPrinterSelectionRepeater.model.count > 0
+                            }
+
+                            Rectangle {
+                                visible: devPrinterLabel.visible
+                                height: 2
+                                width: printerColumn.width
+                                color: "black"
+                            }
+
+                            Repeater {
+                                id: devPrinterSelectionRepeater
+                                model: Cura.LulzBotPrintersModel {
+                                    id: devPrintersModel
+                                    machineCategoryProperty: "Dev"
+                                }
+                                delegate: RadioButton {
+                                    text: model.name
+
+                                    exclusiveGroup: printerGroup
+                                    checked: model.index == 0
+                                    onClicked: {
+                                        printerSelection.selectedIndex = model.index
+                                        printerSelection.selectedCategory = "current"
                                         printerSelection.lcd = model.lcd
                                         printerSelection.lcd_default = model.lcd_default
                                         printerSelection.baseMachine = model.id

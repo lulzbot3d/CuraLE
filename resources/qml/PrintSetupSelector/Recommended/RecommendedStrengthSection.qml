@@ -156,7 +156,7 @@ Item {
             wheelEnabled: false
 
             // disable slider when gradual support is enabled
-            enabled: parseInt(infillSteps.properties.value) == 0
+            // enabled: parseInt(infillSteps.properties.value) == 0
 
             // set initial value from stack
             value: parseInt(infillDensity.properties.value) - allowedMinimum

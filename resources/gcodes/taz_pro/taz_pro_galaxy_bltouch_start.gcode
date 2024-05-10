@@ -35,11 +35,9 @@ G1 E-7 F75                                 ; retract filament
 G92 E-12                                   ; set extruder position to -12 to account for 5mm retract at end of previous print
 M104 S{material_probe_temperature}         ; set probe temp
 M117 Sending Space Probes...;              ; Progress indicator message on LCD
-M204 S300                                  ; set probing acceleration
 G29                                        ; start auto-leveling sequence
 M104 S{material_print_temperature_layer_0} ; start extruder to reach initial printing temp
 M420 S1                                    ; enable leveling matrix
-M204 S2000                                 ; restore standard acceleration
 G1 X5 Y15 Z10 F8000                        ; move up off last probe point
 G4 S1                                      ; pause
 M400                                       ; wait for moves to finish
