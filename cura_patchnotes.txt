@@ -1,4 +1,9 @@
 						CURA LULZBOT EDITION PATCHNOTES
+4.13.10:
+	Changes:
+		- 2.1.3.0.29 Firmware for all Single Extruder TAZ printers
+		- 2.1.3.0.30 Firmware for all TAZ Pro Dual Extruders
+
 
 4.13.9:
 	Additions:

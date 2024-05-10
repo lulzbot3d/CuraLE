@@ -1,5 +1,7 @@
+[4.13.10]
+* In progress
+
 [4.13.9]
-* STILL IN DEVELOPMENT
 * Added experimental high speed detailed qualities for all PLA materials on MET175/285 Tool Heads
 * Added experimental high speed standard qualities for all PLA materials on MET175/285 Tool Heads
 * Added "MarlinCancelObject" script to the PostProcessingPlugin	by default, credit to Aapo Saaristo
