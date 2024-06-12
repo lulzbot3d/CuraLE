@@ -266,17 +266,3 @@ jobs:
           path: |
             run_info.sh
           retention-days: 5
-
-
-  notify-export:
-    if: ${{ always() }}
-    needs: [ cura-installer-create ]
-
-    uses: lulzbot3d/CuraLE/.github/workflows/notify.yml@main
-    with:
-      success: ${{ contains(join(needs.*.result, ','), 'success') }}
-      success_title: "Create the Cura distributions"
-      success_body: "Installers for ${{ inputs.cura_conan_version }}"
-      failure_title: "Failed to create the Cura distributions"
-      failure_body: "Failed to create at least 1 installer for ${{ inputs.cura_conan_version }}"
-    secrets: inherit

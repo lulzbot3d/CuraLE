@@ -10,7 +10,6 @@ on:
       - 'tests/**'
       - 'packaging/**'
       - '.github/workflows/conan-*.yml'
-      - '.github/workflows/notify.yml'
       - '.github/workflows/requirements-conan-package.txt'
       - 'requirements*.txt'
       - 'conanfile.py'
