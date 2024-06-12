@@ -21,6 +21,7 @@ on:
       - '*.jinja'
     branches:
       - main
+      - 'main-*'
       - 'CURA-*'
       - '[1-9]+.[0-9]+'
     tags:

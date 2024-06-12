@@ -56,15 +56,15 @@ jobs:
         import datetime
         cura_conan_version = "cura/latest@lulzbot/testing"
         release_tag = "nightly"
-  
+
         # Get current UTC time
         now = datetime.datetime.utcnow()
-  
+
         # Check if current hour is 8
         if now.hour == 8:
             cura_conan_version = "cura/latest@lulzbot/stable"
             release_tag = "nightly-5.6"
-  
+
         # Set cura_conan_version environment variable
         output_env = os.environ["GITHUB_OUTPUT"]
         content = ""
