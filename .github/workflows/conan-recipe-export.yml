@@ -60,9 +60,9 @@ jobs:
 
       - name: Install Python requirements and Create default Conan profile
         run: |
-          pip install -r https://raw.githubusercontent.com/Ultimaker/Cura/main/.github/workflows/requirements-conan-package.txt
+          pip install -r https://raw.githubusercontent.com/lulzbot3d/CuraLE/main/.github/workflows/requirements-conan-package.txt
           conan profile new default --detect
-        #  Note the runner requirements are always installed from the main branch in the Ultimaker/Cura repo
+        #  Note the runner requirements are always installed from the main branch in the lulzbot3d/CuraLE repo
 
       - name: Cache Conan local repository packages
         uses: actions/cache@v3
@@ -72,15 +72,15 @@ jobs:
 
       - name: Get Conan configuration from branch
         if: ${{ inputs.conan_config_branch != '' }}
-        run: conan config install https://github.com/Ultimaker/conan-config.git -a "-b ${{ inputs.conan_config_branch }}"
+        run: conan config install https://github.com/lulzbot3d/conan-config-le.git -a "-b ${{ inputs.conan_config_branch }}"
 
       - name: Get Conan configuration
         run: |
-          conan config install https://github.com/Ultimaker/conan-config.git
-          conan config install https://github.com/Ultimaker/conan-config.git -a "-b runner/${{ runner.os }}/${{ runner.arch }}"
+          conan config install https://github.com/lulzbot3d/conan-config-le.git
+          conan config install https://github.com/lulzbot3d/conan-config-le.git -a "-b runner/${{ runner.os }}/${{ runner.arch }}"
 
       - name: Add Cura private Artifactory remote
-        run: conan remote add cura-private https://ultimaker.jfrog.io/artifactory/api/conan/cura-private True
+        run: conan remote add cura-private https://artifacts.lulzbot.com/artifactory/api/conan/cura-private True
 
       - name: Export the Package (binaries)
         if: ${{ inputs.conan_export_binaries }}

@@ -74,8 +74,8 @@ jobs:
 
       - name: Get Conan configuration
         run: |
-          conan config install https://github.com/Ultimaker/conan-config.git
-          conan config install https://github.com/Ultimaker/conan-config.git -a "-b runner/${{ runner.os }}/${{ runner.arch }}"
+          conan config install https://github.com/lulzbot3d/conan-config-le.git
+          conan config install https://github.com/lulzbot3d/conan-config-le.git -a "-b runner/${{ runner.os }}/${{ runner.arch }}"
 
       - name: generate the files using Conan install
         run: conan install . --build=missing --update -o cura:devtools=True

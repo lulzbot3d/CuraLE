@@ -73,8 +73,8 @@ jobs:
           cache-dependency-path: .github/workflows/requirements-conan-package.txt
 
       - name: Install Python requirements for runner
-        run: pip install -r https://raw.githubusercontent.com/Ultimaker/Cura/main/.github/workflows/requirements-conan-package.txt
-        #  Note the runner requirements are always installed from the main branch in the Ultimaker/Cura repo
+        run: pip install -r https://raw.githubusercontent.com/lulzbot3d/CuraLE/main/.github/workflows/requirements-conan-package.txt
+        #  Note the runner requirements are always installed from the main branch in the lulzbot3d/CuraLE repo
 
       - name: Use Conan download cache (Bash)
         if: ${{ runner.os != 'Windows' }}
@@ -131,15 +131,15 @@ jobs:
 
       - name: Get Conan configuration from branch
         if: ${{ inputs.conan_config_branch != '' }}
-        run: conan config install https://github.com/Ultimaker/conan-config.git -a "-b ${{ inputs.conan_config_branch }}"
+        run: conan config install https://github.com/lulzbot3d/conan-config-le.git -a "-b ${{ inputs.conan_config_branch }}"
 
       - name: Get Conan configuration
         run: |
-          conan config install https://github.com/Ultimaker/conan-config.git
-          conan config install https://github.com/Ultimaker/conan-config.git -a "-b runner/${{ runner.os }}/${{ runner.arch }}"
+          conan config install https://github.com/lulzbot3d/conan-config-le.git
+          conan config install https://github.com/lulzbot3d/conan-config-le.git -a "-b runner/${{ runner.os }}/${{ runner.arch }}"
 
       - name: Add Cura private Artifactory remote
-        run: conan remote add cura-private https://ultimaker.jfrog.io/artifactory/api/conan/cura-private True
+        run: conan remote add cura-private https://artifacts.lulzbot.com/artifactory/api/conan/cura-private True
 
       - name: Create the Packages
         run: conan install ${{ inputs.recipe_id_full }} --build=missing --update -c tools.build:skip_test=True

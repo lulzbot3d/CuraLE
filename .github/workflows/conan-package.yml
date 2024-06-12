@@ -63,9 +63,9 @@ jobs:
     permissions:
       contents: read
 
-    uses: ultimaker/cura/.github/workflows/conan-recipe-version.yml@main
+    uses: lulzbot3d/CuraLE/.github/workflows/conan-recipe-version.yml@main
     with:
-      project_name: cura
+      project_name: CuraLE
 
   conan-package-create-linux:
     needs: [ conan-recipe-version ]
@@ -115,8 +115,8 @@ jobs:
 
       - name: Get Conan configuration
         run: |
-          conan config install https://github.com/Ultimaker/conan-config.git
-          conan config install https://github.com/Ultimaker/conan-config.git -a "-b runner/${{ runner.os }}/${{ runner.arch }}"
+          conan config install https://github.com/lulzbot3d/conan-config-le.git
+          conan config install https://github.com/lulzbot3d/conan-config-le.git -a "-b runner/${{ runner.os }}/${{ runner.arch }}"
 
       - name: Set GH service account for remote cura-conan-dev
         run: conan user -p ${{ secrets.CONAN_GH_RUNNER_PASS }} -r cura-conan-dev "${{ secrets.CONAN_GH_RUNNER_USER }}"
@@ -140,7 +140,7 @@ jobs:
     if: ${{ always() && (github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'master' || needs.conan-recipe-version.outputs.is_release_branch == 'true')) }}
     needs: [ conan-recipe-version, conan-package-create-linux ]
 
-    uses: ultimaker/cura/.github/workflows/notify.yml@main
+    uses: lulzbot3d/CuraLE/.github/workflows/notify.yml@main
     with:
       success: ${{ contains(join(needs.*.result, ','), 'success') }}
       success_title: "New binaries created in ${{ github.repository }}"

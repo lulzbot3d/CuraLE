@@ -6,7 +6,7 @@ on:
     inputs:
       cura_conan_version:
         description: 'Cura Conan Version'
-        default: 'cura/latest@ultimaker/testing'
+        default: 'cura/latest@lulzbot/testing'
         required: true
         type: string
       conan_args:
@@ -46,7 +46,7 @@ on:
     inputs:
       cura_conan_version:
         description: 'Cura Conan Version'
-        default: 'cura/latest@ultimaker/testing'
+        default: 'cura/latest@lulzbot/testing'
         required: true
         type: string
       conan_args:
@@ -149,8 +149,8 @@ jobs:
 
       - name: Get Conan configuration
         run: |
-          conan config install https://github.com/Ultimaker/conan-config.git
-          conan config install https://github.com/Ultimaker/conan-config.git -a "-b runner/${{ runner.os }}/${{ runner.arch }}"
+          conan config install https://github.com/lulzbot3d/conan-config-le.git
+          conan config install https://github.com/lulzbot3d/conan-config-le.git -a "-b runner/${{ runner.os }}/${{ runner.arch }}"
 
       - name: Use Conan download cache (Bash)
         run: conan config set storage.download_cache="$HOME/.conan/conan_download_cache"
@@ -187,10 +187,10 @@ jobs:
       - name: Copy OpenSSL shared (Bash)
         run: |
           cp ./openssl/lib/*.so* ./cura_inst/bin/ || true
-          cp ./openssl/lib/*.dylib* ./cura_inst/bin/ || true                    
+          cp ./openssl/lib/*.dylib* ./cura_inst/bin/ || true
 
       - name: Create the Cura dist
-        run: pyinstaller ./cura_inst/UltiMaker-Cura.spec
+        run: pyinstaller ./cura_inst/CuraLE.spec
 
       - name: Output the name file name and extension
         id: filename
@@ -198,7 +198,7 @@ jobs:
         run: |
           import os
           enterprise = "-Enterprise" if "${{ inputs.enterprise }}" == "true" else ""
-          installer_filename = f"UltiMaker-Cura-{os.getenv('CURA_VERSION_FULL')}{enterprise}-macos-${{ inputs.architecture }}"
+          installer_filename = f"Cura_LulzBot_Edition-{os.getenv('CURA_VERSION_FULL')}{enterprise}-macos-${{ inputs.architecture }}"
           output_env = os.environ["GITHUB_OUTPUT"]
           content = ""
           if os.path.exists(output_env):
@@ -212,15 +212,15 @@ jobs:
         shell: python
         run: |
           import os
-          
+
           from cura.CuraVersion import ConanInstalls, PythonInstalls
-          
+
           summary_env = os.environ["GITHUB_STEP_SUMMARY"]
           content = ""
           if os.path.exists(summary_env):
               with open(summary_env, "r") as f:
                   content = f.read()
-          
+
           with open(summary_env, "w") as f:
               f.write(content)
               f.writelines("# ${{ steps.filename.outputs.INSTALLER_FILENAME }}\n")
@@ -272,7 +272,7 @@ jobs:
     if: ${{ always() }}
     needs: [ cura-installer-create ]
 
-    uses: ultimaker/cura/.github/workflows/notify.yml@main
+    uses: lulzbot3d/CuraLE/.github/workflows/notify.yml@main
     with:
       success: ${{ contains(join(needs.*.result, ','), 'success') }}
       success_title: "Create the Cura distributions"
