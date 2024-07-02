@@ -18,11 +18,11 @@ Component {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
 
-            Cura.PrintMonitor {
-                id: printMonitor
+            Cura.PrintMonitor
+            {
                 anchors.top: parent.top
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
                 anchors.bottom: footerSeparator.top
             }
 

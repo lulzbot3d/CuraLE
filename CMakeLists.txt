@@ -10,8 +10,10 @@ cmake_minimum_required(VERSION 3.18)
 
 include(GNUInstallDirs)
 
-set(URANIUM_DIR "${CMAKE_SOURCE_DIR}/../uranium" CACHE DIRECTORY "The location of the uranium repository")
-set(URANIUM_SCRIPTS_DIR "${URANIUM_DIR}/scripts" CACHE DIRECTORY "The location of the scripts directory of the uranium repository")
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+
+set(URANIUM_DIR "${CMAKE_SOURCE_DIR}/../Uranium" CACHE PATH "The location of the Uranium repository")
+set(URANIUM_SCRIPTS_DIR "${URANIUM_DIR}/scripts" CACHE PATH "The location of the scripts directory of the Uranium repository")
 
 option(GENERATE_TRANSLATIONS "Should the translations be generated?" ON)
 

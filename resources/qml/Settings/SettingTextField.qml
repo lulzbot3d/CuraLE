@@ -224,7 +224,7 @@ SettingItem
 
                 cursorShape: Qt.IBeamCursor
 
-                onPressed: {
+                onPressed:(mouse)=> {
                     if (!input.activeFocus)
                     {
                         base.focusGainedByClick = true

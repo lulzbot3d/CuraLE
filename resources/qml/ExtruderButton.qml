@@ -14,7 +14,8 @@ UM.ToolbarButton
     property var extruder
     property var extruderNumberFont: UM.Theme.getFont("small_emphasis")
 
-    toolItem: ExtruderIcon {
+    toolItem: ExtruderIcon
+    {
         materialColor: extruder.color
         extruderEnabled: extruder.stack.isEnabled
         iconVariant: "default"

@@ -71,12 +71,26 @@ Cura.Menu
     Cura.MenuItem { action: Cura.Actions.reloadAll }
     Cura.MenuItem { action: Cura.Actions.resetAllTranslation }
     Cura.MenuItem { action: Cura.Actions.resetAll }
+    Cura.MenuItem { action: Cura.Actions.dropAll }
 
     // Group actions
     Cura.MenuSeparator {}
     Cura.MenuItem { action: Cura.Actions.groupObjects }
     Cura.MenuItem { action: Cura.Actions.mergeObjects }
     Cura.MenuItem { action: Cura.Actions.unGroupObjects }
+
+    // Edit print sequence actions
+    Cura.MenuSeparator { visible: PrintOrderManager.shouldShowEditPrintOrderActions }
+    Cura.MenuItem
+    {
+        action: Cura.Actions.printObjectBeforePrevious
+        visible: PrintOrderManager.shouldShowEditPrintOrderActions
+    }
+    Cura.MenuItem
+    {
+        action: Cura.Actions.printObjectAfterNext
+        visible: PrintOrderManager.shouldShowEditPrintOrderActions
+    }
 
     Connections {
         target: UM.Controller
@@ -168,25 +182,4 @@ Cura.Menu
 
         }
     }
-
-    // Find the index of an item in the list of child items of this menu.
-    //
-    // This is primarily intended as a helper function so we do not have to
-    // hard-code the position of the extruder selection actions.
-    //
-    // \param item The item to find the index of.
-    //
-    // \return The index of the item or -1 if it was not found.
-    function findItemIndex(item) {
-        for(var i in base.items)
-        {
-            if(base.items[i] == item)
-            {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    UM.I18nCatalog { id: catalog; name: "cura" }
 }

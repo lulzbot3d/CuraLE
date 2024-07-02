@@ -24,7 +24,7 @@ UM.Dialog {
     function storeDontShowAgain()
     {
         UM.Preferences.setValue("cura/dialog_on_project_save", !dontShowAgainCheckbox.checked)
-        UM.Preferences.setValue("asked_dialog_on_project_save", true)
+        UM.Preferences.setValue("cura/asked_dialog_on_project_save", true)
     }
 
     onClosing: storeDontShowAgain()

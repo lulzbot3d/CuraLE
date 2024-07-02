@@ -31,6 +31,21 @@ ScrollView
     }
     clip: true
 
+    contentHeight: printMonitor.height
+
+    ScrollBar.vertical: UM.ScrollBar
+    {
+        id: scrollbar
+        parent: base.parent
+        anchors
+        {
+            right: parent.right
+            top: parent.top
+            bottom: parent.bottom
+        }
+    }
+    clip: true
+
     function showTooltip(item, position, text) {
         tooltip.text = text;
         position = item.mapToItem(base, position.x - UM.Theme.getSize("default_arrow").width, position.y);

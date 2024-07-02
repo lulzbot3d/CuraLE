@@ -37,7 +37,8 @@ Window {
         model.resetState()
     }
 
-    WizardPanel {
+    WizardPanel
+    {
         id: wizardPanel
         anchors.fill: parent
         model: dialog.model

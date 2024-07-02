@@ -35,8 +35,11 @@ Item
     property alias mergeObjects: mergeObjectsAction
     //property alias unMergeObjects: unMergeObjectsAction
 
-    property alias multiplyObject: multiplyObjectAction
+    property alias printObjectBeforePrevious: printObjectBeforePreviousAction
+    property alias printObjectAfterNext: printObjectAfterNextAction
 
+    property alias multiplyObject: multiplyObjectAction
+    property alias dropAll: dropAllAction
     property alias selectAll: selectAllAction
     property alias deleteAll: deleteAllAction
     property alias reloadAll: reloadAllAction
@@ -82,6 +85,15 @@ Item
         return all_enabled_packages.includes("3MFReader") && all_enabled_packages.includes("3MFWriter");
     }
 
+    property alias paste: pasteAction
+    property alias copy: copyAction
+    property alias cut: cutAction
+
+    readonly property bool copy_paste_enabled: {
+        const all_enabled_packages = CuraApplication.getPackageManager().allEnabledPackages;
+        return all_enabled_packages.includes("3MFReader") && all_enabled_packages.includes("3MFWriter");
+    }
+
     UM.I18nCatalog{id: catalog; name: "cura"}
 
 
@@ -89,6 +101,13 @@ Item
         id: showTroubleShootingAction
         onTriggered: Qt.openUrlExternally("https://ultimaker.com/en/troubleshooting?utm_source=cura&utm_medium=software&utm_campaign=dropdown-troubleshooting")
         text: catalog.i18nc("@action:inmenu", "Show Online Troubleshooting")
+    }
+
+    Action
+    {
+        id: openSponsershipPageAction
+        onTriggered: Qt.openUrlExternally("https://ultimaker.com/software/ultimaker-cura/sponsor/")
+        text: catalog.i18nc("@action:inmenu", "Sponsor Cura")
     }
 
     Action
@@ -107,7 +126,6 @@ Item
 
     Action {
         id: exitFullScreenAction
-        shortcut: StandardKey.Cancel
         text: catalog.i18nc("@action:inmenu", "Exit Full Screen")
         icon.name: "view-fullscreen"
     }
@@ -118,8 +136,8 @@ Item
         text: catalog.i18nc("@action:inmenu menubar:edit", "&Undo")
         icon.name: "edit-undo"
         shortcut: StandardKey.Undo
-        onTriggered: UM.OperationStack.undo()
-        enabled: UM.OperationStack.canUndo
+        onTriggered: CuraActions.undo()
+        enabled: CuraActions.canUndo
     }
 
     Action
@@ -128,8 +146,8 @@ Item
         text: catalog.i18nc("@action:inmenu menubar:edit", "&Redo")
         icon.name: "edit-redo"
         shortcut: StandardKey.Redo
-        onTriggered: UM.OperationStack.redo()
-        enabled: UM.OperationStack.canRedo
+        onTriggered: CuraActions.redo()
+        enabled: CuraActions.canRedo
     }
 
     Action {
@@ -389,6 +407,26 @@ Item
         onTriggered: CuraApplication.ungroupSelected()
     }
 
+    Action
+    {
+        id: printObjectBeforePreviousAction
+        text: catalog.i18nc("@action:inmenu menubar:edit","Print Before") + " " + PrintOrderManager.previousNodeName
+        enabled: PrintOrderManager.shouldEnablePrintBeforeAction
+        icon.name: "print-before"
+        shortcut: "PgUp"
+        onTriggered: PrintOrderManager.swapSelectedAndPreviousNodes()
+    }
+
+    Action
+    {
+        id: printObjectAfterNextAction
+        text: catalog.i18nc("@action:inmenu menubar:edit","Print After") + " " + PrintOrderManager.nextNodeName
+        enabled: PrintOrderManager.shouldEnablePrintAfterAction
+        icon.name: "print-after"
+        shortcut: "PgDown"
+        onTriggered: PrintOrderManager.swapSelectedAndNextNodes()
+    }
+
     Action {
         id: mergeObjectsAction
         text: catalog.i18nc("@action:inmenu menubar:edit","&Merge Models")
@@ -452,6 +490,14 @@ Item
 
     Action
     {
+        id: dropAllAction
+        text: catalog.i18nc("@action:inmenu menubar:edit","Drop All Models to buildplate")
+        shortcut: "Ctrl+B"
+        onTriggered: CuraApplication.setWorkplaceDropToBuildplate()
+    }
+
+    Action
+    {
         id: resetAllTranslationAction
         text: catalog.i18nc("@action:inmenu menubar:edit","Reset All Model Positions")
         onTriggered: CuraApplication.resetAllTranslation()
@@ -474,6 +520,13 @@ Item
         // Unassign the shortcut when there are more than one file providers, since then the file provider's shortcut is
         // enabled instead, and Ctrl+O is assigned to the local file provider
         shortcut: fileProviderModel.count == 1 ? StandardKey.Open : ""
+    }
+
+    Action
+    {
+        id: arrangeSelectionAction
+        text: catalog.i18nc("@action:inmenu menubar:edit", "Arrange Selection")
+        onTriggered: Printer.arrangeSelection()
     }
 
     Action

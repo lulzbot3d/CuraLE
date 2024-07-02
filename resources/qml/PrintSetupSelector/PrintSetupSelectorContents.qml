@@ -160,10 +160,14 @@ Item {
             return draggable_area_height;
         }
 
-        anchors {
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
+        anchors
+        {
+            const draggable_area_height = draggableArea.visible ? draggableArea.height : 0;
+            if (currentModeIndex == PrintSetupSelectorContents.Mode.Custom)
+            {
+                return recommendedButton.height + 2 * padding + draggable_area_height;
+            }
+            return draggable_area_height;
         }
 
         Cura.SecondaryButton {

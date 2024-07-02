@@ -2,7 +2,7 @@
     "name": "Firmware Updater",
     "author": "Ultimaker B.V.; FAME3D, LLC",
     "version": "1.0.1",
-    "description": "Provides a machine action for updating firmware.",
+    "description": "Provides a machine actions for updating firmware.",
     "api": 8,
     "i18n-catalog": "cura"
 }

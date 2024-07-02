@@ -10,7 +10,7 @@ import Cura 1.1 as Cura
 Cura.ExpandablePopup {
     id: machineSelector
 
-    property Cura.MachineManager machineManager
+    property var machineManager: Cura.MachineManager
     property bool isNetworkPrinter: machineManager.activeMachineHasNetworkConnection
     property bool isConnectedCloudPrinter: machineManager.activeMachineHasCloudConnection
     property bool isCloudRegistered: machineManager.activeMachineHasCloudRegistration
@@ -100,8 +100,14 @@ Cura.ExpandablePopup {
             if (isGroup)
             {
                 return UM.Theme.getIcon("PrinterTriple", "medium")
-            } else {
-                // return UM.Theme.getIcon("TAZPrinter")
+            }
+            else if (isNetworkPrinter || isCloudRegistered)
+            {
+                return UM.Theme.getIcon("Printer", "medium")
+            }
+
+            else
+            {
                 return ""
             }
         }

@@ -58,10 +58,11 @@ Item {
                 }
             }
         }
-        //Current temperature.
-        UM.Label {
+        // Current temperature.
+        UM.Label
+        {
             id: bedCurrentTemperature
-            text: printerModel != null ? printerModel.bedTemperature == -1 ? "0°C" : printerModel.bedTemperature + "°C" : ""
+            text: printerModel != null ? printerModel.bedTemperature == -1 ? "0°C" : Math.round(printerModel.bedTemperature) + "°C" : ""
             font: UM.Theme.getFont("large_bold")
             anchors.right: bedTargetTemperature.left
             anchors.top: parent.top
@@ -88,7 +89,8 @@ Item {
             }
         }
         //Input field for pre-heat temperature.
-        Rectangle {
+        Rectangle
+        {
             id: preheatTemperatureControl
             color: !enabled ? UM.Theme.getColor("setting_control_disabled") : showError ? UM.Theme.getColor("setting_validation_error_background") : UM.Theme.getColor("setting_validation_ok")
             property var showError: {
@@ -147,7 +149,8 @@ Item {
                     }
                 }
             }
-            UM.Label {
+            UM.Label
+            {
                 id: unit
                 anchors.right: parent.right
                 anchors.rightMargin: UM.Theme.getSize("setting_unit_margin").width
@@ -174,21 +177,14 @@ Item {
                     if (!bedTemperature.properties.value) {
                         return "";
                     }
-                    if ((bedTemperature.resolve != "None" && bedTemperature.resolve) && (bedTemperature.stackLevels[0] != 0) && (bedTemperature.stackLevels[0] != 1)) {
-                        // We have a resolve function. Indicates that the setting is not settable per extruder and that
-                        // we have to choose between the resolved value (default) and the global value
-                        // (if user has explicitly set this).
-                        return bedTemperature.resolve
-                    }
-                    else {
-                        return bedTemperature.properties.value
-                    }
+                    return bedTemperature.properties.value;
                 }
             }
         }
 
         // The pre-heat button.
-        Cura.SecondaryButton {
+        Cura.SecondaryButton
+        {
             id: preheatButton
             height: UM.Theme.getSize("setting_control").height
             visible: printerModel != null ? printerModel.canPreHeatBed: true

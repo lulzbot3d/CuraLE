@@ -38,14 +38,7 @@ Popup
                     displayName: "UltiMaker Marketplace", //Not translated, since it's a brand name.
                     thumbnail: UM.Theme.getIcon("Shop", "high"),
                     description: catalog.i18nc("@tooltip:button", "Extend UltiMaker Cura with plugins and material profiles."),
-                    link: "https://marketplace.ultimaker.com/?utm_source=cura&utm_medium=software&utm_campaign=switcher-marketplace-materials",
-                    permissionsRequired: []
-                },
-                {
-                    displayName: catalog.i18nc("@label:button", "Sponsor Cura"),
-                    thumbnail: UM.Theme.getIcon("Heart"),
-                    description: catalog.i18nc("@tooltip:button", "Show your support for Cura with a donation."),
-                    link: "https://ultimaker.com/software/ultimaker-cura/sponsor/",
+                    link: "https://marketplace.ultimaker.com/",
                     permissionsRequired: []
                 },
                 {
@@ -59,7 +52,7 @@ Popup
                     displayName: catalog.i18nc("@label:button", "Report a Bug"),
                     thumbnail: UM.Theme.getIcon("Bug", "high"),
                     description: catalog.i18nc("@tooltip:button", "Let developers know that something is going wrong."),
-                    link: "https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot/-/issues/new",
+                    link: "https://github.com/lulzbot3d/CuraLE/issues/new/choose",
                     DFAccessRequired: false
                 },
                 {

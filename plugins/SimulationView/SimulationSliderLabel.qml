@@ -85,8 +85,8 @@ UM.PointingRectangle
             top: sliderLabelRoot.maximumValue + startFrom // +startFrom because maybe we want to start in a different value rather than 0
         }
     }
-/*
-    BusyIndicator {
+    BusyIndicator
+    {
         id: busyIndicator
 
         anchors

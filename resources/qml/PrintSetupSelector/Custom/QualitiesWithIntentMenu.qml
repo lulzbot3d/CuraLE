@@ -38,7 +38,8 @@ Popup {
 
     contentItem: Column {
         // This repeater adds the intent labels
-        ScrollView {
+        ScrollView
+        {
             id: qualityListScrollView
             property real maximumHeight: screenScaleFactor * 400
             contentHeight: dataColumn.height
@@ -171,9 +172,11 @@ Popup {
                         }
 
                         //Add all the custom profiles.
-                        Repeater {
-                            model: Cura.CustomQualityProfilesDropDownMenuModel
-                            MenuButton {
+                        Repeater
+                        {
+                            model: CuraApplication.getCustomQualityProfilesDropDownMenuModel()
+                            MenuButton
+                            {
                                 onClicked: Cura.MachineManager.setQualityChangesGroup(model.quality_changes_group)
 
                                 width: parent.width
