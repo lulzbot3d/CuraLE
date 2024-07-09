@@ -15,7 +15,7 @@ required_conan_version = ">=1.58.0 <2.0.0"
 
 
 class CuraLEConan(ConanFile):
-    name = "cura-le"
+    name = "curale"
     license = "LGPL-3.0"
     author = "Fargo Additive Manufacturing Equipment 3D"
     url = "https://github.com/lulzbot3d/CuraLE"
