@@ -6,7 +6,7 @@ on:
     inputs:
       cura_conan_version:
         description: 'Cura Conan Version'
-        default: 'CuraLE/latest@lulzbot/testing'
+        default: 'curale/latest@lulzbot/testing'
         required: true
         type: string
       conan_args:

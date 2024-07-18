@@ -77,7 +77,7 @@ jobs:
           conan config install https://github.com/lulzbot3d/conan-config-le.git -a "-b runner/${{ runner.os }}/${{ runner.arch }}"
 
       - name: generate the files using Conan install
-        run: conan install . --build=missing --update -o cura:devtools=True
+        run: conan install . --build=missing --update -o curale:devtools=True
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
