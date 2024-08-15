@@ -42,7 +42,6 @@ This Repository is still a work-in-progress.
 [Logo]: resources/images/cura-icon.png
 [#]: #
 
-
 <!---------------------------------[ Badges ]---------------------------------->
 
 [Badge PullRequests]: https://img.shields.io/github/issues-pr/lulzbot3d/curale?style=for-the-badge&logoColor=white&labelColor=bb9f3e&color=937d31&logo=GitExtensions

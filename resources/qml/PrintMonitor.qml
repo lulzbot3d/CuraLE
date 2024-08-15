@@ -122,82 +122,69 @@ ScrollView
                 height: UM.Theme.getSize("thick_lining").width
             }
 
-            HeatedBedBox {
-                width: base.width
-            }
+        UM.SettingPropertyProvider
+        {
+            id: bedTemperature
+            containerStack: Cura.MachineManager.activeMachine
+            key: "material_bed_temperature_layer_0"
+            watchedProperties: ["value", "minimum_value", "maximum_value", "resolve"]
+            storeIndex: 0
+        }
 
-            UM.SettingPropertyProvider {
-                id: bedTemperature
-                containerStack: Cura.MachineManager.activeMachine
-                key: "material_bed_temperature"
-                watchedProperties: ["value", "minimum_value", "maximum_value", "resolve"]
-                storeIndex: 0
+        UM.SettingPropertyProvider
+        {
+            id: machineExtruderCount
+            containerStack: Cura.MachineManager.activeMachine
+            key: "machine_extruder_count"
+            watchedProperties: ["value"]
+        }
 
-                property var resolve: Cura.MachineManager.activeStack != Cura.MachineManager.activeMachine ? properties.resolve : "None"
-            }
+        ManualPrinterControl
+        {
+            printerModel: activePrinter
+            visible: activePrinter != null ? activePrinter.canControlManually : false
+        }
 
-            UM.SettingPropertyProvider {
-                id: machineExtruderCount
-                containerStack: Cura.MachineManager.activeMachine
-                key: "machine_extruder_count"
-                watchedProperties: ["value"]
-            }
 
-            ManualPrinterControl {
-                width: base.width
-                printerModel: activePrinter
-                visible: true
-            }
+        MonitorSection
+        {
+            label: catalog.i18nc("@label", "Active print")
+            width: base.width
+            visible: activePrinter != null
+        }
 
-            function loadSection(label, path) {
-                var title = Qt.createQmlObject('import QtQuick 2.2; Loader {property string label: ""}', printMonitor);
-                title.label = label
-                var content = Qt.createQmlObject('import QtQuick 2.2; Loader {}', printMonitor);
-                content.source = "file:///" + path
-                content.item.width = base.width - (2 * UM.Theme.getSize("default_margin").width)
-            }
 
-            Repeater {
-                model: Printer.printMonitorAdditionalSections
-                delegate: Item
+        MonitorItem
+        {
+            label: catalog.i18nc("@label", "Job Name")
+            value: activePrintJob != null ? activePrintJob.name : ""
+            width: base.width
+            visible: activePrinter != null
+        }
+
+        MonitorItem
+        {
+            label: catalog.i18nc("@label", "Printing Time")
+            value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal) : ""
+            width: base.width
+            visible: activePrinter != null
+        }
+
+        MonitorItem
+        {
+            label: catalog.i18nc("@label", "Estimated time left")
+            value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal - activePrintJob.timeElapsed) : ""
+            visible:
+            {
+                if(activePrintJob == null)
                 {
-                    Component.onCompleted: printMonitor.loadSection(modelData["name"], modelData["path"])
+                    return false
                 }
-            }
 
-            MonitorSection {
-                label: catalog.i18nc("@label", "Active Print")
-                width: base.width
-                visible: true //activePrintJob != null
-            }
-
-
-            MonitorItem {
-                label: catalog.i18nc("@label", "Job Name:")
-                value: activePrintJob != null ? activePrintJob.name : "N/A"
-                width: base.width
-            }
-
-            MonitorItem {
-                label: catalog.i18nc("@label", "Printing Time:")
-                value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal) : "N/A"
-                width: base.width
-            }
-
-            MonitorItem {
-                label: catalog.i18nc("@label", "Estimated Time Remaining:")
-                value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal - activePrintJob.timeElapsed) : "N/A"
-                // visible: {
-                //     if(activePrintJob == null) {
-                //         return false
-                //     }
-
-                //     return (activePrintJob.state == "printing" ||
-                //             activePrintJob.state == "resuming" ||
-                //             activePrintJob.state == "pausing" ||
-                //             activePrintJob.state == "paused")
-                // }
-                width: base.width
+                return (activePrintJob.state == "printing" ||
+                        activePrintJob.state == "resuming" ||
+                        activePrintJob.state == "pausing" ||
+                        activePrintJob.state == "paused")
             }
         }
     }
