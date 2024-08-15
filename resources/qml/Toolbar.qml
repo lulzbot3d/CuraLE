@@ -248,7 +248,7 @@ Item {
             x: UM.Theme.getSize("default_margin").width
             y: UM.Theme.getSize("default_margin").height
 
-            source: UM.ActiveTool.valid ? UM.ActiveTool.activeToolPanel : ""
+            source: UM.Controller.valid ? UM.Controller.activeToolPanel : ""
             enabled: UM.Controller.toolsEnabled
         }
     }
@@ -266,7 +266,7 @@ Item {
         UM.Label
         {
             id: toolHint
-            text: UM.ActiveTool.properties.getValue("ToolHint") != undefined ? UM.ActiveTool.properties.getValue("ToolHint") : ""
+            text: UM.Controller.properties.getValue("ToolHint") != undefined ? UM.Controller.properties.getValue("ToolHint") : ""
             color: UM.Theme.getColor("tooltip_text")
             anchors.horizontalCenter: parent.horizontalCenter
         }

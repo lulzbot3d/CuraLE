@@ -332,10 +332,8 @@ Item {
 
                     function updateModel()
                     {
-                        clear()
-                        let maxExtruders = Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.maxExtruderCount : 0
-                        for (var i = 1; i <= maxExtruders; i++)
-                        {
+                        clear();
+                        for (var i = 1; i <= Cura.MachineManager.activeMachine.maxExtruderCount; i ++) {
                             // Use String as value. JavaScript only has Number. PropertyProvider.setPropertyValue()
                             // takes a QVariant as value, and Number gets translated into a float. This will cause problem
                             // for integer settings such as "Number of Extruders".

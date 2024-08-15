@@ -74,7 +74,7 @@ UM.TooltipArea
     {
         id: textFieldWithUnit
         anchors.left: fieldLabel.right
-        //anchors.leftMargin: UM.Theme.getSize("default_margin").width
+        anchors.leftMargin: spacing
         verticalAlignment: Text.AlignVCenter
 
         // The control is set up for left to right. So we force it to that. If we don't, it will take the OS reading

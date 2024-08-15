@@ -3,11 +3,11 @@ version: 1
 AppDir:
   path: {{ app_dir }}
   app_info:
-    id: com.ultimaker.cura
-    name: UltiMaker Cura
+    id: com.lulzbot.curale
+    name: Cura LulzBot Edition
     icon: {{ icon }}
     version: {{ version }}
-    exec: UltiMaker-Cura
+    exec: Cura_LulzBot_Edition
     exec_args: $@
   apt:
     arch:
@@ -38,6 +38,7 @@ AppDir:
       - usr/share/doc/*/changelog.*
       - usr/share/doc/*/NEWS.*
       - usr/share/doc/*/TODO.*
+      - usr/lib/x86_64-linux-gnu/libssl.so*
   runtime:
     env:
       APPDIR_LIBRARY_PATH: "$APPDIR:$APPDIR/runtime/compat/:$APPDIR/usr/lib/x86_64-linux-gnu:$APPDIR/lib/x86_64-linux-gnu:$APPDIR/usr/lib:$APPDIR/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders"

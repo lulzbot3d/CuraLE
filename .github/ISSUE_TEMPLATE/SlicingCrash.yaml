@@ -8,13 +8,13 @@ body:
        ### Project File
        **⚠️ Before you continue, we need your project file to troubleshoot a slicing crash.**
        It contains the printer and settings we need for troubleshooting. 
-       
+
        ![Alt Text](https://user-images.githubusercontent.com/40423138/240616958-5a9751f2-bd34-4808-9752-6fde2e27516e.gif)
-       
+
        To save a project file go to File -> Save project. 
        Please make sure to .zip your project file. 
        For big files, you may need to use [WeTransfer](https://wetransfer.com/) or similar file-sharing sites.
-       
+
        🤔 Before you share, please think to yourself. Is this a model that can be shared?
            Unfortunately we cannot help if this file is missing. 
            Do you have the project file? Than let's continue ⬇️
@@ -23,19 +23,19 @@ body:
 - type: input
   attributes:
     label: Cura Version
-    placeholder: 5.3.1
+    placeholder: 5.6.0
   validations:
     required: true
 - type: markdown
   attributes:
     value: |
-      We work hard on improving our slicing crashes. Our most recent release is 5.3.1.
-      If you are not on the latest version of Cura, [you can download it here](https://github.com/Ultimaker/Cura/releases/tag/5.3.1)
+      We work hard on improving our slicing crashes. Our most recent release is 5.6.0.
+      If you are not on the latest version of Cura, [you can download it here](https://github.com/Ultimaker/Cura/releases/latest)
 - type: input
   attributes:
     label: Operating System
     description: Information about the operating system the issue occurs on. Include at least the operating system and maybe GPU.
-    placeholder: Windows 11 / MacOS Catalina / MX Linux 
+    placeholder: Windows 11 / MacOS Catalina / MX Linux
   validations:
     required: true
 - type: input
@@ -68,4 +68,3 @@ body:
     description: You can add the zip file and additional information that is relevant to the issue in the comments below.
   validations:
     required: true
-

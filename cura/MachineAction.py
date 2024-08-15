@@ -85,10 +85,10 @@ class MachineAction(QObject, PluginObject):
     @pyqtSlot()
     def execute(self) -> None:
         self._execute()
-
+    
     def _execute(self) -> None:
         """Protected implementation of execute."""
-
+        
         pass
 
     @pyqtSlot()

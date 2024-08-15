@@ -43,7 +43,8 @@ Item {
             font: UM.Theme.getFont("medium")
         }
 
-        Button {
+        Button
+        {
             id: intentSelection
             onClicked: menu.opened ? menu.close() : menu.open()
 

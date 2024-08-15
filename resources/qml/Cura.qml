@@ -611,9 +611,9 @@ UM.MainWindow {
                 return;
             }
 
-            if (hasProjectFile) {
-                var projectFile = projectFileUrlList[0];
-
+            if (hasProjectFile)
+            {
+                var projectFile = projectFileUrlList[0]
                 // check preference
                 var choice = UM.Preferences.getValue("cura/choice_on_open_project");
                 if (choice == "open_as_project") {
@@ -624,6 +624,7 @@ UM.MainWindow {
                 }
                 else {  // always ask
                     // ask whether to open as project or as models
+                    askOpenAsProjectOrModelsDialog.is_ucp = CuraApplication.isProjectUcp(projectFile);
                     askOpenAsProjectOrModelsDialog.fileUrl = projectFile;
                     askOpenAsProjectOrModelsDialog.addToRecent = true;
                     askOpenAsProjectOrModelsDialog.show();
@@ -673,7 +674,9 @@ UM.MainWindow {
 
     Connections {
         target: CuraApplication
-        function onOpenProjectFile(project_file, add_to_recent_files) {
+        function onOpenProjectFile(project_file, add_to_recent_files)
+        {
+            askOpenAsProjectOrModelsDialog.is_ucp = CuraApplication.isProjectUcp(project_file);
             askOpenAsProjectOrModelsDialog.fileUrl = project_file;
             askOpenAsProjectOrModelsDialog.addToRecent = add_to_recent_files;
             askOpenAsProjectOrModelsDialog.show();
@@ -735,6 +738,7 @@ UM.MainWindow {
                 if(!visible)
                 {
                     wizardDialog = null
+                    Cura.API.account.startSyncing()
                 }
             }
         }
@@ -759,6 +763,7 @@ UM.MainWindow {
         target: Cura.Actions.addMachine
         function onTriggered()
         {
+            Cura.API.account.stopSyncing()
             wizardDialog = addMachineDialogLoader.createObject()
             wizardDialog.show()
         }

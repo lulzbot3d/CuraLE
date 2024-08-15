@@ -9,18 +9,16 @@ import UM 1.5 as UM
 import Cura 1.0 as Cura
 
 
-UM.ManagementPage {
-    id: base;
-
+UM.ManagementPage
+{
+    id: base
     property int outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
     property bool printerConnected: outputDeviceCount > 1
     property var printerOutputDevice: Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1]
     property bool printerAcceptsCommands: printerConnected && printerOutputDevice.acceptsCommands
-
-    title: catalog.i18nc("@title:tab", "Printers");
-
     Item { enabled: false; UM.I18nCatalog { id: catalog; name: "cura"} }
 
+    title: catalog.i18nc("@title:tab", "Printers")
     detailsPlaneCaption: base.currentItem && base.currentItem.name ? base.currentItem.name : ""
 
     model: Cura.GlobalStacksModel { filterAbstractMachines: false }
@@ -64,10 +62,11 @@ UM.ManagementPage {
         anchors.fill: parent
         spacing: UM.Theme.getSize("default_margin").height
 
+
         Repeater
         {
             id: machineActionRepeater
-            model: base.currentItem ? Cura.MachineActionManager.getSupportedActions(Cura.MachineManager.getDefinitionByMachineId(base.currentItem.id)) : null
+            model: base.currentItem ? CuraApplication.getSupportedActionMachineList(base.currentItem.id) : null
 
             Item
             {

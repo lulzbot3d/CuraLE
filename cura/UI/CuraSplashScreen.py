@@ -16,7 +16,14 @@ class CuraSplashScreen(QSplashScreen):
         super().__init__()
         self._scale = 1
         self._version_y_offset = 0  # when extra visual elements are in the background image, move version text down
-        splash_image = QPixmap(Resources.getPath(Resources.Images, "cura.jpg"))
+
+        if ApplicationMetadata.IsAlternateVersion:
+            splash_image = QPixmap(Resources.getPath(Resources.Images, "cura_wip.png"))
+        elif ApplicationMetadata.IsEnterpriseVersion:
+            splash_image = QPixmap(Resources.getPath(Resources.Images, "cura_enterprise.png"))
+            self._version_y_offset = 26
+        else:
+            splash_image = QPixmap(Resources.getPath(Resources.Images, "cura.png"))
 
         self.setPixmap(splash_image)
 
@@ -55,7 +62,7 @@ class CuraSplashScreen(QSplashScreen):
             return
 
         painter.save()
-        painter.setPen(QColor(0, 0, 0, 255))
+        painter.setPen(QColor(255, 255, 255, 255))
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing, True)
 
@@ -65,6 +72,7 @@ class CuraSplashScreen(QSplashScreen):
         font = QFont()  # Using system-default font here
         font.setPixelSize(24)
         painter.setFont(font)
+
         painter.drawText(420, 105 + self._version_y_offset, round(330 * self._scale), round(230 * self._scale), Qt.AlignLeft | Qt.AlignTop, version[0])
         if len(version) > 1:
             font.setPixelSize(26)
@@ -89,7 +97,7 @@ class CuraSplashScreen(QSplashScreen):
             painter.setPen(pen)
             painter.setFont(font)
             painter.drawText(100, 128, 606, 600,
-                             Qt.AlignLeft | Qt.AlignVCenter | Qt.TextWordWrap,
+                             Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter | Qt.TextFlag.TextWordWrap,
                              self._current_message)
 
         painter.restore()

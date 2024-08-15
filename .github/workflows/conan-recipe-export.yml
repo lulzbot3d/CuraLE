@@ -80,7 +80,7 @@ jobs:
           conan config install https://github.com/lulzbot3d/conan-config-le.git -a "-b runner/${{ runner.os }}/${{ runner.arch }}"
 
       - name: Add Cura private Artifactory remote
-        run: conan remote add cura-private https://artifacts.lulzbot.com/artifactory/api/conan/cura-private True
+        run: conan remote add cura-le-private https://artifacts.lulzbot.com/artifactory/api/conan/cura-le-private True
 
       - name: Export the Package (binaries)
         if: ${{ inputs.conan_export_binaries }}
@@ -97,11 +97,11 @@ jobs:
       - name: Upload the Package(s)
         if: ${{ always() && inputs.conan_upload_community }}
         run: |
-          conan upload ${{ inputs.recipe_id_full }} -r cura --all -c
-          conan upload ${{ inputs.recipe_id_latest }} -r cura -c
+          conan upload ${{ inputs.recipe_id_full }} -r cura-le --all -c
+          conan upload ${{ inputs.recipe_id_latest }} -r cura-le -c
 
       - name: Upload the Package(s) to the private Artifactory
         if: ${{ always() && ! inputs.conan_upload_community }}
         run: |
-          conan upload ${{ inputs.recipe_id_full }} -r cura-private --all -c
-          conan upload ${{ inputs.recipe_id_latest }} -r cura-private -c
+          conan upload ${{ inputs.recipe_id_full }} -r cura-le-private --all -c
+          conan upload ${{ inputs.recipe_id_latest }} -r cura-le-private -c

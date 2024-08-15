@@ -120,6 +120,8 @@ UM.Dialog
                         UM.Label
                         {
                             Layout.fillWidth: true
+                            Layout.preferredHeight: height
+                            elide: Text.ElideRight
                             text: manager.getScriptLabelByKey(modelData.toString())
                         }
 
@@ -478,7 +480,8 @@ UM.Dialog
         Cura.NotificationIcon {
             id: activeScriptCountIcon
             visible: activeScriptsList.count > 0
-            anchors {
+            anchors
+            {
                 horizontalCenter: parent.right
                 verticalCenter: parent.top
             }

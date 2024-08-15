@@ -24,35 +24,24 @@ Item {
         key: "material_print_temperature"
         watchedProperties: ["value", "minimum_value", "maximum_value", "resolve"]
         storeIndex: 0
-
-        property var resolve: Cura.MachineManager.activeStack != Cura.MachineManager.activeMachine ? properties.resolve : "None"
     }
 
     Rectangle {
         id: background
         anchors.fill: parent
 
-        //Extruder name.
-        UM.Label {
-            text: {
-                if (Cura.MachineManager.activeMachine) {
-                    let exName = Cura.MachineManager.activeMachine.extruderList[position].name
-                    if (exName !== "") {
-                        return exName
-                    }
-                } else {
-                    return catalog.i18nc("@label", "Extruder")
-                }
-            }
-            color: UM.Theme.getColor("text")
-            font: UM.Theme.getFont("default")
+        // Extruder name.
+        UM.Label
+        {
+            text: Cura.MachineManager.activeMachine.extruderList[position].name !== "" ? Cura.MachineManager.activeMachine.extruderList[position].name : catalog.i18nc("@label", "Extruder")
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.margins: UM.Theme.getSize("default_margin").width
         }
 
         // Target temperature.
-        UM.Label {
+        UM.Label
+        {
             id: extruderTargetTemperature
             text: Math.round(extruderModel.targetHotendTemperature) + "°C"
             font: UM.Theme.getFont("default_bold")
@@ -62,7 +51,8 @@ Item {
             anchors.bottom: extruderCurrentTemperature.bottom
 
             //For tooltip.
-            MouseArea {
+            MouseArea
+            {
                 id: extruderTargetTemperatureTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
@@ -85,7 +75,8 @@ Item {
         }
 
         //Temperature indication.
-        UM.Label {
+        UM.Label
+        {
             id: extruderCurrentTemperature
             text: Math.round(extruderModel.hotendTemperature) + "°C"
             font: UM.Theme.getFont("large_bold")
@@ -93,8 +84,10 @@ Item {
             anchors.top: parent.top
             anchors.margins: UM.Theme.getSize("default_margin").width
 
+
             //For tooltip.
-            MouseArea{
+            MouseArea
+            {
                 id: extruderCurrentTemperatureTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
@@ -117,7 +110,8 @@ Item {
         }
 
         //Input field for pre-heat temperature.
-        Rectangle {
+        Rectangle
+        {
             id: preheatTemperatureControl
             color: !enabled ? UM.Theme.getColor("setting_control_disabled") : showError ? UM.Theme.getColor("setting_validation_error_background") : UM.Theme.getColor("setting_validation_ok")
             property var showError:
@@ -159,14 +153,16 @@ Item {
             height: UM.Theme.getSize("monitor_preheat_temperature_control").height
             visible: extruderModel != null ? enabled && extruderModel.canPreHeatHotends && !extruderModel.isPreheating : true
             //Highlight of input field.
-            Rectangle {
+            Rectangle
+            {
                 anchors.fill: parent
                 anchors.margins: UM.Theme.getSize("default_lining").width
                 color: UM.Theme.getColor("setting_control_highlight")
                 opacity: preheatTemperatureControl.hovered ? 1.0 : 0
             }
             //Change cursor on hovering.
-            MouseArea {
+            MouseArea
+            {
                 id: preheatTemperatureInputMouseArea
                 hoverEnabled: true
                 anchors.fill: parent
@@ -188,7 +184,8 @@ Item {
                     }
                 }
             }
-            UM.Label {
+            UM.Label
+            {
                 id: unit
                 anchors.right: parent.right
                 anchors.rightMargin: UM.Theme.getSize("setting_unit_margin").width
@@ -225,7 +222,8 @@ Item {
             }
         }
 
-        Cura.SecondaryButton {
+        Cura.SecondaryButton
+        {
             id: preheatButton
             height: UM.Theme.getSize("setting_control").height
             visible: extruderModel != null ? extruderModel.canPreHeatHotends: true
@@ -302,7 +300,8 @@ Item {
         }
 
         //Material colour indication.
-        Rectangle {
+        Rectangle
+        {
             id: materialColor
             width: Math.floor(materialName.height * 0.75)
             height: Math.floor(materialName.height * 0.75)
@@ -316,7 +315,8 @@ Item {
             anchors.verticalCenter: materialName.verticalCenter
 
             //For tooltip.
-            MouseArea {
+            MouseArea
+            {
                 id: materialColorTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
@@ -335,7 +335,8 @@ Item {
             }
         }
         //Material name.
-        UM.Label {
+        UM.Label
+        {
             id: materialName
             text: extruderModel.activeMaterial != null ? extruderModel.activeMaterial.type : ""
             anchors.left: materialColor.right
@@ -343,7 +344,8 @@ Item {
             anchors.margins: UM.Theme.getSize("default_margin").width
 
             //For tooltip.
-            MouseArea {
+            MouseArea
+            {
                 id: materialNameTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
@@ -363,7 +365,8 @@ Item {
         }
 
         //Variant name.
-        UM.Label {
+        UM.Label
+        {
             id: variantName
             text: extruderModel.hotendID
             anchors.right: parent.right
@@ -371,7 +374,8 @@ Item {
             anchors.margins: UM.Theme.getSize("default_margin").width
 
             //For tooltip.
-            MouseArea {
+            MouseArea
+            {
                 id: variantNameTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent

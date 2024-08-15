@@ -21,14 +21,13 @@ ComboBox {
     property bool forceHighlight: false
     property int contentLeftPadding: UM.Theme.getSize("setting_unit_margin").width
     property var textFont: UM.Theme.getFont("default")
+    property bool showDropdownSwatch: false
 
     enabled: delegateModel.count > 0
 
-    property bool showDropdownSwatch: false
+    height: UM.Theme.getSize("combobox").height
 
-    onVisibleChanged: {
-        popup.close()
-    }
+    onVisibleChanged: { popup.close() }
 
     states: [
         State {

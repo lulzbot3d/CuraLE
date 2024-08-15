@@ -9,9 +9,9 @@ from enum import IntEnum
 
 from UM.i18n import i18nCatalog
 from UM.Logger import Logger
-from UM.Mesh.MeshWriter import MeshWriter #To get the g-code output.
-from UM.Message import Message #Show an error when already printing.
-from UM.PluginRegistry import PluginRegistry #To get the g-code output.
+from UM.Mesh.MeshWriter import MeshWriter # To get the g-code output.
+from UM.Message import Message # Show an error when already printing.
+from UM.PluginRegistry import PluginRegistry # To get the g-code output.
 from UM.Qt.Duration import DurationFormat
 
 from cura.CuraApplication import CuraApplication
@@ -26,7 +26,7 @@ from .LulzFirmwareUpdater import LulzFirmwareUpdater
 
 from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QUrl
 
-from io import StringIO #To write the g-code output.
+from io import StringIO # To write the g-code output.
 from queue import Queue
 from serial import Serial, SerialException, SerialTimeoutException
 from threading import Thread, Event
@@ -667,7 +667,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             line = line[:line.find(";")]
 
         line = line.strip()
-
+ 
         # Don't send empty lines. But we do have to send something, so send M105 instead.
         # Don't send the M0 or M1 to the machine, as M0 and M1 are handled as an LCD menu pause.
         if line == "" or line == "M0" or line == "M1":

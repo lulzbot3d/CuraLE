@@ -40,6 +40,10 @@ class CuraAPI(QObject):
         super().__init__(parent = CuraAPI._application)
         CuraAPI.__instance = self
 
+        self._account = Account(self._application)
+
+        self._backups = Backups(self._application)
+
         self._connectionStatus = ConnectionStatus()
 
         # Interface API

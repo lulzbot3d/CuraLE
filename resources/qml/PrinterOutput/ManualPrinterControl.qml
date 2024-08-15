@@ -158,7 +158,8 @@ Item {
 
             enabled: checkEnabled()
 
-            UM.Label {
+            UM.Label
+            {
                 text: catalog.i18nc("@label", "Jog Position")
                 color: UM.Theme.getColor("setting_control_text")
 
@@ -307,7 +308,8 @@ Item {
 
             enabled: checkEnabled()
 
-            UM.Label {
+            UM.Label
+            {
                 text: catalog.i18nc("@label", "Jog Distance")
                 color: UM.Theme.getColor("setting_control_text")
 

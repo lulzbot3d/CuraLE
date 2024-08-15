@@ -59,8 +59,7 @@ Item
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
             width: titleLabel.width + 2 * UM.Theme.getSize("thick_margin").width
-            text: catalog.i18nc("@text", "Please follow these steps to set up Cura LE. This will only take a few moments.")
-            wrapMode: Text.Wrap
+            text: "Please follow these steps to set up Cura LulzBot Edition. This will only take a few moments."
             font: UM.Theme.getFont("medium")
         }
 
