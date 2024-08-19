@@ -17,7 +17,7 @@ required_conan_version = ">=1.58.0 <2.0.0"
 class CuraLEConan(ConanFile):
     name = "curale"
     license = "LGPL-3.0"
-    author = "Fargo Additive Manufacturing Equipment 3D"
+    author = "FAME3D LLC."
     url = "https://github.com/lulzbot3d/CuraLE"
     description = "3D printer / slicing GUI built on top of the Uranium framework"
     topics = ("conan", "python", "pyqt6", "qt", "qml", "3d-printing", "slicer")
@@ -526,7 +526,7 @@ echo "CURA_APP_NAME={{ cura_app_name }}" >> ${{ env_prefix }}GITHUB_ENV
 
     def package_info(self):
         self.user_info.pip_requirements = "requirements.txt"
-        self.user_info.pip_requirements_git = "requirements-ultimaker.txt"
+        self.user_info.pip_requirements_git = "requirements-lulzbot.txt"
         self.user_info.pip_requirements_build = "requirements-dev.txt"
 
         if self.in_local_cache:
