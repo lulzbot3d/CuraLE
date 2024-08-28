@@ -1,17 +1,16 @@
-version: "5.8.0"
+version: "5.8.1"
 requirements:
-  - "curale_resources/5.8.0"
-  - "uraniumle/5.8.0"
-  - "curaenginele/5.8.0"
-  - "curale_binary_data/5.8.0"
-  - "fdm_materialsle/5.8.0"
+  - "curale_resources/5.8.1"
+  - "uraniumle/5.8.1"
+  - "curaenginele/5.8.1"
+  - "curale_binary_data/5.8.1"
+  - "fdm_materialsle/5.8.1"
   - "curaenginele_plugin_gradual_flow/0.1.0-beta.4"
   - "dulcificumle/0.2.1"
   - "pysavitarle/5.3.0"
   - "pynest2dle/5.3.0"
-  - "native_cad_plugin/2.0.0"
 requirements_internal:
-  - "fdm_materialsle/5.8.0"
+  - "fdm_materialsle/5.8.1"
   - "curale_private_data/(latest)@internal/testing"
 urls:
     default:
@@ -30,56 +29,48 @@ pyinstaller:
     runinfo:
         entrypoint: "cura_app.py"
     datas:
-        cura_plugins:
+        curale_plugins:
             package: "curale"
             src: "plugins"
             dst: "share/curale/plugins"
-        curaengine_gradual_flow_plugin:
+        curaenginele_gradual_flow_plugin:
             package: "curaenginele_plugin_gradual_flow"
             src: "res/plugins/CuraEngineLEGradualFlow"
             dst: "share/curale/plugins/CuraEngineLEGradualFlow"
-        curaengine_gradual_flow_plugin_bundled:
+        curaenginele_gradual_flow_plugin_bundled:
             package: "curaenginele_plugin_gradual_flow"
             src: "res/bundled_packages"
             dst: "share/curale/resources/bundled_packages"
-        native_cad_plugin:
-          package: "native_cad_plugin"
-          src: "res/plugins/NativeCADplugin"
-          dst: "share/curale/plugins/NativeCADplugin"
-        native_cad_plugin_bundled:
-          package: "native_cad_plugin"
-          src: "res/bundled_packages"
-          dst: "share/curale/resources/bundled_packages"
-        cura_resources:
+        curale_resources:
             package: "curale"
             src: "resources"
             dst: "share/curale/resources"
-        cura_shared_resources:
+        curale_shared_resources:
             package: "curale_resources"
             src: "res"
             dst: "share/curale/resources"
-        cura_private_data:
+        curale_private_data:
             package: "curale_private_data"
             src: "res"
             dst: "share/curale"
             internal: true
-        uranium_plugins:
+        uraniumle_plugins:
             package: "uraniumle"
             src: "plugins"
             dst: "share/uraniumle/plugins"
-        uranium_resources:
+        uraniumle_resources:
             package: "uraniumle"
             src: "resources"
             dst: "share/uraniumle/resources"
-        uranium_um_qt_qml_um:
+        uraniumle_um_qt_qml_um:
             package: "uraniumle"
             src: "site-packages/UM/Qt/qml/UM"
             dst: "PyQt6/Qt6/qml/UM"
-        cura_binary_data:
+        curale_binary_data:
             package: "curale_binary_data"
             src: "resources/curale/resources"
             dst: "share/curale/resources"
-        uranium_binary_data:
+        uraniumle_binary_data:
             package: "curale_binary_data"
             src: "resources/uranium/resources"
             dst: "share/uranium/resources"
@@ -87,7 +78,7 @@ pyinstaller:
             package: "curale_binary_data"
             src: "windows"
             dst: "share/windows"
-        fdm_materials:
+        fdm_materialsle:
             package: "fdm_materialsle"
             src: "res/resources/materials"
             dst: "share/curale/resources/materials"
@@ -100,12 +91,12 @@ pyinstaller:
             src: "lib/tk8.6"
             dst: "tk"
     binaries:
-        curaengine:
+        curaenginele:
             package: "curaenginele"
             src: "bin"
             dst: "."
             binary: "CuraEngineLE"
-        curaengine_gradual_flow_plugin_service:
+        curaenginele_gradual_flow_plugin_service:
             package: "curaenginele_plugin_gradual_flow"
             src: "bin"
             dst: "."
