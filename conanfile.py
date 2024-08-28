@@ -194,7 +194,7 @@ class CuraLEConan(ConanFile):
 
         # If you want a specific Cura version to show up on the splash screen add the user configuration `user.cura:version=VERSION`
         # the global.conf, profile, package_info (of dependency) or via the cmd line `-c user.cura:version=VERSION`
-        cura_version = Version(self.conf.get("user.cura:version", default = self.version, check_type = str))
+        cura_version = Version(self.conf.get("user.curale:version", default = self.version, check_type = str))
         pre_tag = f"-{cura_version.pre}" if cura_version.pre else ""
         build_tag = f"+{cura_version.build}" if cura_version.build else ""
         internal_tag = f"+internal" if self._internal else ""
@@ -278,7 +278,7 @@ class CuraLEConan(ConanFile):
         with open(os.path.join(self.recipe_folder, "CuraLE.spec.jinja"), "r") as f:
             pyinstaller = Template(f.read())
 
-        version = self.conf.get("user.cura:version", default = self.version, check_type = str)
+        version = self.conf.get("user.curale:version", default = self.version, check_type = str)
         cura_version = Version(version)
 
         with open(os.path.join(location, "CuraLE.spec"), "w") as f:
@@ -322,29 +322,29 @@ class CuraLEConan(ConanFile):
             del self.options.enable_i18n
 
     def configure(self):
-        self.options["pyarcus"].shared = True
-        self.options["pysavitar"].shared = True
-        self.options["pynest2d"].shared = True
-        self.options["dulcificum"].shared = self.settings.os != "Windows"
+        self.options["pyarcusle"].shared = True
+        self.options["pysavitarle"].shared = True
+        self.options["pynest2dle"].shared = True
+        self.options["dulcificumle"].shared = self.settings.os != "Windows"
         self.options["cpython"].shared = True
         self.options["boost"].header_only = True
         if self.settings.os == "Linux":
             self.options["openssl"].shared = True
-        if self.conf.get("user.curaengine:sentry_url", "", check_type=str) != "":
-            self.options["curaengine"].enable_sentry = True
-            self.options["arcus"].enable_sentry = True
+        if self.conf.get("user.curaenginele:sentry_url", "", check_type=str) != "":
+            self.options["curaenginele"].enable_sentry = True
+            self.options["arcusle"].enable_sentry = True
             self.options["clipper"].enable_sentry = True
 
     def validate(self):
-        version = self.conf.get("user.cura:version", default = self.version, check_type = str)
+        version = self.conf.get("user.curale:version", default = self.version, check_type = str)
         if version and Version(version) <= Version("4"):
             raise ConanInvalidConfiguration("Only versions 5+ are support")
 
     def requirements(self):
         for req in self.conan_data["requirements"]:
-            if self._internal and "fdm_materials" in req:
+            if self._internal and "fdm_materialsle" in req:
                 continue
-            if not self._enterprise and "native_cad_plugin" in req:
+            if "native_cad_plugin" in req:
                 continue
             self.requires(req)
         if self._internal:
@@ -384,20 +384,20 @@ class CuraLEConan(ConanFile):
         self._generate_cura_version(os.path.join(self.source_folder, "cura"))
 
         if not self.in_local_cache:
-            # Copy CuraEngine.exe to bindirs of Virtual Python Environment
-            curaengine = self.dependencies["curaengine"].cpp_info
-            copy(self, "CuraEngine.exe", curaengine.bindirs[0], self.source_folder, keep_path = False)
-            copy(self, "CuraEngine", curaengine.bindirs[0], self.source_folder, keep_path = False)
+            # Copy CuraEngineLE.exe to bindirs of Virtual Python Environment
+            curaenginele = self.dependencies["curaenginele"].cpp_info
+            copy(self, "CuraEngineLE.exe", curaenginele.bindirs[0], self.source_folder, keep_path = False)
+            copy(self, "CuraEngineLE", curaenginele.bindirs[0], self.source_folder, keep_path = False)
 
             # Copy the external plugins that we want to bundle with Cura
-            rmdir(self,str(self.source_path.joinpath("plugins", "CuraEngineGradualFlow")))
-            curaengine_plugin_gradual_flow = self.dependencies["curaengine_plugin_gradual_flow"].cpp_info
-            copy(self, "*", curaengine_plugin_gradual_flow.resdirs[0], str(self.source_path.joinpath("plugins", "CuraEngineGradualFlow")), keep_path = True)
-            copy(self, "*", curaengine_plugin_gradual_flow.bindirs[0], self.source_folder, keep_path = False)
-            copy(self, "bundled_*.json", curaengine_plugin_gradual_flow.resdirs[1], str(self.source_path.joinpath("resources", "bundled_packages")), keep_path = False)
+            rmdir(self,str(self.source_path.joinpath("plugins", "CuraEngineLEGradualFlow")))
+            curaenginele_plugin_gradual_flow = self.dependencies["curaenginele_plugin_gradual_flow"].cpp_info
+            copy(self, "*", curaenginele_plugin_gradual_flow.resdirs[0], str(self.source_path.joinpath("plugins", "CuraEngineLEGradualFlow")), keep_path = True)
+            copy(self, "*", curaenginele_plugin_gradual_flow.bindirs[0], self.source_folder, keep_path = False)
+            copy(self, "bundled_*.json", curaenginele_plugin_gradual_flow.resdirs[1], str(self.source_path.joinpath("resources", "bundled_packages")), keep_path = False)
 
         # Copy resources of cura_binary_data
-        cura_binary_data = self.dependencies["cura_binary_data"].cpp_info
+        cura_binary_data = self.dependencies["curale_binary_data"].cpp_info
         copy(self, "*", cura_binary_data.resdirs[0], str(self._share_dir.joinpath("cura")), keep_path = True)
         copy(self, "*", cura_binary_data.resdirs[1], str(self._share_dir.joinpath("uranium")), keep_path = True)
         if self.settings.os == "Windows":
@@ -413,8 +413,13 @@ class CuraLEConan(ConanFile):
 
         # Copy materials (flat)
         rmdir(self, os.path.join(self.source_folder, "resources", "materials"))
-        fdm_materials = self.dependencies["fdm_materials"].cpp_info
-        copy(self, "*", fdm_materials.resdirs[0], self.source_folder)
+        fdm_materialsle = self.dependencies["fdm_materialsle"].cpp_info
+        copy(self, "*", fdm_materialsle.resdirs[0], self.source_folder)
+
+        # Copy other resources
+        curale_resources = self.dependencies["curale_resources"].cpp_info
+        for res_dir in curale_resources.resdirs:
+            copy(self, "*", res_dir, str(self._share_dir.joinpath("cura", "resources", Path(res_dir).name)), keep_path = True)
 
         # Copy internal resources
         if self._internal:
@@ -422,7 +427,7 @@ class CuraLEConan(ConanFile):
             copy(self, "*", cura_private_data.resdirs[0], str(self._share_dir.joinpath("cura")))
 
         if self.options.devtools:
-            entitlements_file = "'{}'".format(os.path.join(self.source_folder, "packaging", "MacOS", "cura.entitlements"))
+            entitlements_file = "'{}'".format(os.path.join(self.source_folder, "packaging", "MacOS", "curale.entitlements"))
             self._generate_pyinstaller_spec(
                 location=self.generators_folder,
                 entrypoint_location="'{}'".format(
@@ -455,38 +460,37 @@ class CuraLEConan(ConanFile):
     def deploy(self):
         copy(self, "*", os.path.join(self.package_folder, self.cpp.package.resdirs[2]), os.path.join(self.install_folder, "packaging"), keep_path = True)
 
-        # Copy resources of Cura (keep folder structure) needed by pyinstaller to determine the module structure
+        # Copy resources of CuraLE (keep folder structure) needed by pyinstaller to determine the module structure
         copy(self, "*", os.path.join(self.package_folder, self.cpp_info.bindirs[0]), str(self._base_dir), keep_path = False)
         copy(self, "*", os.path.join(self.package_folder, self.cpp_info.libdirs[0]), str(self._site_packages.joinpath("cura")), keep_path = True)
         copy(self, "*", os.path.join(self.package_folder, self.cpp_info.resdirs[0]), str(self._share_dir.joinpath("cura", "resources")), keep_path = True)
         copy(self, "*", os.path.join(self.package_folder, self.cpp_info.resdirs[1]), str(self._share_dir.joinpath("cura", "plugins")), keep_path = True)
 
-        # Copy the cura_resources resources from the package
-        rm(self, "conanfile.py", os.path.join(self.package_folder, self.cpp.package.resdirs[0]))
-        cura_resources = self.dependencies["cura_resources"].cpp_info
-        for res_dir in cura_resources.resdirs:
+        # Copy the curale_resources resources from the package
+        curale_resources = self.dependencies["curale_resources"].cpp_info
+        for res_dir in curale_resources.resdirs:
             copy(self, "*", res_dir, str(self._share_dir.joinpath("cura", "resources", Path(res_dir).name)), keep_path = True)
 
         # Copy resources of Uranium (keep folder structure)
-        uranium = self.dependencies["uranium"].cpp_info
-        copy(self, "*", uranium.resdirs[0], str(self._share_dir.joinpath("uranium", "resources")), keep_path = True)
-        copy(self, "*", uranium.resdirs[1], str(self._share_dir.joinpath("uranium", "plugins")), keep_path = True)
-        copy(self, "*", uranium.libdirs[0], str(self._site_packages.joinpath("UM")), keep_path = True)
+        uraniumle = self.dependencies["uraniumle"].cpp_info
+        copy(self, "*", uraniumle.resdirs[0], str(self._share_dir.joinpath("uranium", "resources")), keep_path = True)
+        copy(self, "*", uraniumle.resdirs[1], str(self._share_dir.joinpath("uranium", "plugins")), keep_path = True)
+        copy(self, "*", uraniumle.libdirs[0], str(self._site_packages.joinpath("UM")), keep_path = True)
 
         # Generate the GitHub Action version info Environment
-        version = self.conf.get("user.cura:version", default = self.version, check_type = str)
-        cura_version = Version(version)
+        version = self.conf.get("user.curale:version", default = self.version, check_type = str)
+        curale_version = Version(version)
         env_prefix = "Env:" if self.settings.os == "Windows" else ""
-        activate_github_actions_version_env = Template(r"""echo "CURA_VERSION_MAJOR={{ cura_version_major }}" >> ${{ env_prefix }}GITHUB_ENV
-echo "CURA_VERSION_MINOR={{ cura_version_minor }}" >> ${{ env_prefix }}GITHUB_ENV
-echo "CURA_VERSION_PATCH={{ cura_version_patch }}" >> ${{ env_prefix }}GITHUB_ENV
-echo "CURA_VERSION_BUILD={{ cura_version_build }}" >> ${{ env_prefix }}GITHUB_ENV
-echo "CURA_VERSION_FULL={{ cura_version_full }}" >> ${{ env_prefix }}GITHUB_ENV
-echo "CURA_APP_NAME={{ cura_app_name }}" >> ${{ env_prefix }}GITHUB_ENV
-        """).render(cura_version_major = cura_version.major,
-                    cura_version_minor = cura_version.minor,
-                    cura_version_patch = cura_version.patch,
-                    cura_version_build = cura_version.build if cura_version.build != "" else "0",
+        activate_github_actions_version_env = Template(r"""echo "CURA_VERSION_MAJOR={{ curale_version_major }}" >> ${{ env_prefix }}GITHUB_ENV
+echo "CURA_VERSION_MINOR={{ curale_version_minor }}" >> ${{ env_prefix }}GITHUB_ENV
+echo "CURA_VERSION_PATCH={{ curale_version_patch }}" >> ${{ env_prefix }}GITHUB_ENV
+echo "CURA_VERSION_BUILD={{ curale_version_build }}" >> ${{ env_prefix }}GITHUB_ENV
+echo "CURA_VERSION_FULL={{ curale_version_full }}" >> ${{ env_prefix }}GITHUB_ENV
+echo "CURA_APP_NAME={{ curale_app_name }}" >> ${{ env_prefix }}GITHUB_ENV
+        """).render(cura_version_major = curale_version.major,
+                    cura_version_minor = curale_version.minor,
+                    cura_version_patch = curale_version.patch,
+                    cura_version_build = curale_version.build if curale_version.build != "" else "0",
                     cura_version_full = self.version,
                     cura_app_name = self._app_name,
                     env_prefix = env_prefix)
@@ -496,7 +500,7 @@ echo "CURA_APP_NAME={{ cura_app_name }}" >> ${{ env_prefix }}GITHUB_ENV
 
         self._generate_cura_version(os.path.join(self._site_packages, "cura"))
 
-        entitlements_file = "'{}'".format(Path(self.cpp_info.res_paths[2], "MacOS", "cura.entitlements"))
+        entitlements_file = "'{}'".format(Path(self.cpp_info.res_paths[2], "MacOS", "curale.entitlements"))
         self._generate_pyinstaller_spec(location = self._base_dir,
                                         entrypoint_location = "'{}'".format(os.path.join(self.package_folder, self.cpp_info.bindirs[0], self.conan_data["pyinstaller"]["runinfo"]["entrypoint"])).replace("\\", "\\\\"),
                                         icon_path = "'{}'".format(os.path.join(self.package_folder, self.cpp_info.resdirs[2], self.conan_data["pyinstaller"]["icon"][str(self.settings.os)])).replace("\\", "\\\\"),
@@ -511,17 +515,16 @@ echo "CURA_APP_NAME={{ cura_app_name }}" >> ${{ env_prefix }}GITHUB_ENV
         copy(self, "requirement*.txt", src = self.source_folder, dst = os.path.join(self.package_folder, self.cpp.package.resdirs[-1]))
         copy(self, "*", src = os.path.join(self.source_folder, "packaging"), dst = os.path.join(self.package_folder, self.cpp.package.resdirs[2]))
 
-        # Remove the CuraEngineGradualFlow plugin from the package
-        rmdir(self, os.path.join(self.package_folder, self.cpp.package.resdirs[1], "CuraEngineGradualFlow"))
+        # Remove the CuraEngineLEGradualFlow plugin from the package
+        rmdir(self, os.path.join(self.package_folder, self.cpp.package.resdirs[1], "CuraEngineLEGradualFlow"))
         rm(self, "bundled_*.json", os.path.join(self.package_folder, self.cpp.package.resdirs[0], "bundled_packages"), recursive = False)
 
         # Remove the fdm_materials from the package
         rmdir(self, os.path.join(self.package_folder, self.cpp.package.resdirs[0], "materials"))
 
         # Remove the cura_resources resources from the package
-        rm(self, "conanfile.py", os.path.join(self.package_folder, self.cpp.package.resdirs[0]))
-        cura_resources = self.dependencies["cura_resources"].cpp_info
-        for res_dir in cura_resources.resdirs:
+        curale_resources = self.dependencies["curale_resources"].cpp_info
+        for res_dir in curale_resources.resdirs:
             rmdir(self, os.path.join(self.package_folder, self.cpp.package.resdirs[0], Path(res_dir).name))
 
     def package_info(self):

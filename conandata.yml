@@ -42,7 +42,7 @@ pyinstaller:
             src: "res/bundled_packages"
             dst: "share/curale/resources/bundled_packages"
         curale_resources:
-            package: "curale"
+            package: "curale_resources"
             src: "resources"
             dst: "share/curale/resources"
         curale_shared_resources:
