@@ -1,11 +1,11 @@
 name: Prepare Release Candidate
-run-name: Release Candidate for Cura LE ${{ inputs.cura_version }} by @${{ github.actor }}
+run-name: Release Candidate for CuraLE ${{ inputs.cura_version }} by @${{ github.actor }}
 
 on:
   workflow_dispatch:
     inputs:
       cura_version:
-        description: 'Cura LE version number, e.g. 5.7.0, 5.7.2 or 5.8.0-beta.2'
+        description: 'CuraLE version number, e.g. 5.7.0, 5.7.2 or 5.8.0-beta.2'
         required: true
         type: string
 

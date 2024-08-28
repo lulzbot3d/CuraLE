@@ -1,11 +1,11 @@
 name: Feature Freeze
-run-name: Feature freeze Cura ${{ inputs.cura_version }} by @${{ github.actor }}
+run-name: Feature freeze CuraLE ${{ inputs.cura_version }} by @${{ github.actor }}
 
 on:
   workflow_dispatch:
     inputs:
       cura_version:
-        description: 'Cura version major and minor, e.g. 5.7'
+        description: 'CuraLE version major and minor, e.g. 5.7'
         required: true
         type: string
 
@@ -24,7 +24,7 @@ jobs:
 
   feature-freeze:
     name: Process feature freeze
-    uses: Ultimaker/Cura-workflows/.github/workflows/cura-set-packages-versions.yml@main
+    uses: lulzbot3d/cura-le-workflows/.github/workflows/cura-set-packages-versions.yml@main
     needs: [parse-version]
     with:
       cura_version: ${{ needs.parse-version.outputs.package_version }}

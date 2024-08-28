@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       cura_conan_version:
-        description: 'Cura Conan Version'
+        description: 'CuraLE Conan Version'
         default: 'curale/latest@lulzbot/testing'
         required: true
         type: string
@@ -15,7 +15,7 @@ on:
         required: false
         type: string
       enterprise:
-        description: 'Build Cura as an Enterprise edition'
+        description: 'Build CuraLE as an Enterprise edition'
         default: false
         required: true
         type: boolean
@@ -63,7 +63,7 @@ jobs:
     uses: lulzbot3d/cura-le-workflows/.github/workflows/cura-installer-default-value.yml@main
     with:
       cura_conan_version: ${{ inputs.cura_conan_version }}
-      latest_release: '5.6'
+      latest_release: '5.8'
       latest_release_schedule_hour: 4
       latest_release_tag: 'nightly'
 
@@ -76,7 +76,7 @@ jobs:
       enterprise: ${{ github.event.inputs.enterprise == 'true' }}
       staging: ${{ github.event.inputs.staging == 'true' }}
       architecture: X64
-      operating_system: self-hosted-Windows-X64
+      operating_system: windows-2022
     secrets: inherit
 
   linux-installer:
@@ -88,7 +88,7 @@ jobs:
       enterprise: ${{ github.event.inputs.enterprise == 'true' }}
       staging: ${{ github.event.inputs.staging == 'true' }}
       architecture: X64
-      operating_system: self-hosted-Ubuntu22-X64
+      operating_system: ubuntu-latest
     secrets: inherit
 
   macos-installer:
@@ -100,7 +100,7 @@ jobs:
       enterprise: ${{ github.event.inputs.enterprise == 'true' }}
       staging: ${{ github.event.inputs.staging == 'true' }}
       architecture: X64
-      operating_system: self-hosted-X64
+      operating_system: macos-12
     secrets: inherit
 
   macos-arm-installer:
@@ -112,7 +112,7 @@ jobs:
       enterprise: ${{ github.event.inputs.enterprise == 'true' }}
       staging: ${{ github.event.inputs.staging == 'true' }}
       architecture: ARM64
-      operating_system: self-hosted-ARM64
+      operating_system: macos-12
     secrets: inherit
 
   # Run and update nightly release when the nightly input is set to true or if the schedule is triggered
