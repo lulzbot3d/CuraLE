@@ -31,7 +31,7 @@ LC_MESSAGES
 .directory
 .idea
 cura.desktop
-.vscode/settings.json
+.vscode
 *.bak
 
 # Eclipse+PyDev
