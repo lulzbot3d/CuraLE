@@ -23,7 +23,7 @@ This Repository is still a work-in-progress.
 [Test]: https://github.com/lulzbot3d/CuraLE/actions/workflows/unit-test.yml
 
 [License]: LICENSE
-[Logo]: resources/images/cura-icon.png
+[Logo]: curale_logo.png
 [Size]: https://github.com/lulzbot3d/CuraLE
 
 <!---------------------------------[ Badges ]---------------------------------->

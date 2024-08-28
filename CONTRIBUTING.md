@@ -2,9 +2,7 @@
 
 ## Submitting bug reports
 
-Please submit bug reports for all of Cura LulzBot Edition and CuraEngineLE to the [Cura LulzBot Edition repository](https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot/-/issues). Depending on the type of issue, we will usually ask for the CuraLE log or a project file.
-
-If a bug report would contain private information, such as a proprietary 3D model, you may also e-mail us. Ask for contact information in the issue.
+Please submit bug reports for all of Cura LulzBot Edition and CuraEngineLE to the [Cura LulzBot Edition repository](https://github.com/lulzbot3d/CuraLE/issues). Depending on the type of issue, we will usually ask for the CuraLE log or a project file.
 
 ## Requesting features
 

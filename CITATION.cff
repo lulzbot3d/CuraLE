@@ -7,26 +7,26 @@ message: >-
 type: software
 title: Cura LulzBot Edition
 abstract: >-
-  Fork of Ultimaker Cura 3D slicer software for LulzBot
-  brand 3D printers.
+  Fork of UltiMaker Cura, 3D slicer software for LulzBot
+  brand 3D Printers.
 authors:
   - name: Fargo Additive Manufacturing Equipment 3D, LLC
 contact:
   - email: it@lulzbot.com
     name: "LulzBot IT"
 url: 'https://lulzbot.com/support/cura'
-repository-code: 'https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot'
+repository-code: 'https://github.com/lulzbot3d/CuraLE'
 license: LGPL-3.0
-license-url: "https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot/-/blob/main/LICENSE"
-version: 5.4.0
-date-released: "2023-07-04"
+license-url: "https://github.com/lulzbot3d/CuraLE/blob/main/LICENSE"
+version: 5.8.0
+date-released: "2024-09"
 references:
   - authors:
-      - name: Ultimaker B.V.
+      - name: UltiMaker
     type: software
-    title: Ultimaker Cura
+    title: UltiMaker Cura
     version: 5.4.0
-    repository-code: https://github.com/Ultimaker/Cura/tree/4.13
+    repository-code: https://github.com/Ultimaker/Cura/
     license: LGPL-3.0
 keywords:
   - Ultimaker
