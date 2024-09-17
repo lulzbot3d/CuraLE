@@ -85,7 +85,8 @@ cmake_install.cmake
 *.gcode
 run.sh
 run_debug.sh
-CuraEngine
+CuraEngineLE
+curaenginele_plugin_gradual_flow
 debug.html
 .scannerwork/
 
@@ -102,10 +103,10 @@ conan.lock
 conan_imports_manifest.txt
 conanbuildinfo.txt
 graph_info.json
-Ultimaker-Cura.spec
+CuraLE.spec
 .run/
 /printer-linter/src/printerlinter.egg-info/
-/plugins/CuraEngineGradualFlow
+/plugins/CuraEngineLEGradualFlow
 /resources/bundled_packages/bundled_*.json
 curaengine_plugin_gradual_flow
 curaengine_plugin_gradual_flow.exe
