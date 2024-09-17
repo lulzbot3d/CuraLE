@@ -1,6 +1,6 @@
 from UM.Qt.ListModel import ListModel
 
-from PyQt5.QtCore import pyqtProperty, Qt, pyqtSignal
+from PyQt6.QtCore import pyqtProperty, Qt, pyqtSignal
 
 from UM.Settings.ContainerRegistry import ContainerRegistry
 from UM.Settings.DefinitionContainer import DefinitionContainer
@@ -8,11 +8,11 @@ from UM.Settings.DefinitionContainer import DefinitionContainer
 import copy
 
 class LulzBotPrintersModel(ListModel):
-    NameRole = Qt.UserRole + 1
-    IdRole = Qt.UserRole + 2
-    LCDRole = Qt.UserRole + 3
-    LCDDefaultRole = Qt.UserRole + 4
-    CategoryRole = Qt.UserRole + 5
+    NameRole = Qt.ItemDataRole.UserRole + 1
+    IdRole = Qt.ItemDataRole.UserRole + 2
+    LCDRole = Qt.ItemDataRole.UserRole + 3
+    LCDDefaultRole = Qt.ItemDataRole.UserRole + 4
+    CategoryRole = Qt.ItemDataRole.UserRole + 5
 
     def __init__(self, parent = None):
         super().__init__(parent)

@@ -1,7 +1,7 @@
 # Copyright (c) 2017 Ultimaker B.V.
 # Cura is released under the terms of the LGPLv3 or higher.
 
-from PyQt5.QtQml import qmlRegisterSingletonType
+from PyQt6.QtQml import qmlRegisterSingletonType
 from .USBPrinterOutputDeviceManager import USBPrinterOutputDeviceManager
 
 def getMetaData():

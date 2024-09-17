@@ -99,9 +99,9 @@ class Account(QObject):
             OAUTH_SERVER_URL= self._oauth_root,
             CALLBACK_PORT=self._callback_port,
             CALLBACK_URL="http://localhost:{}/callback".format(self._callback_port),
-            CLIENT_ID="um----------------------------ultimaker_cura",
+            CLIENT_ID="lulz----------------------------cura-lulzbot-edition",
             CLIENT_SCOPES=self.CLIENT_SCOPES,
-            AUTH_DATA_PREFERENCE_KEY="general/ultimaker_auth_data",
+            AUTH_DATA_PREFERENCE_KEY="",
             AUTH_SUCCESS_REDIRECT="{}/app/auth-success".format(self._oauth_root),
             AUTH_FAILED_REDIRECT="{}/app/auth-error".format(self._oauth_root)
         )

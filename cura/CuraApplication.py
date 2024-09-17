@@ -59,6 +59,7 @@ from UM.View.SelectionPass import SelectionPass
 from UM.Workspace.WorkspaceReader import WorkspaceReader
 from UM.i18n import i18nCatalog
 from UM.Version import Version
+import cura.Settings.cura_empty_instance_containers
 from cura import ApplicationMetadata
 from cura.API import CuraAPI
 from cura.API.Account import Account
@@ -119,6 +120,7 @@ from cura.UI.RecommendedMode import RecommendedMode
 from cura.UI.TextManager import TextManager
 from cura.UI.WelcomePagesModel import WelcomePagesModel
 from cura.UI.WhatsNewPagesModel import WhatsNewPagesModel
+from cura.UltimakerCloud import UltimakerCloudConstants
 from cura.Utils.NetworkingUtil import NetworkingUtil
 
 from cura.Machines.Models.LulzBotPrintersModel import LulzBotPrintersModel

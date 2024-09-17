@@ -3,6 +3,6 @@
     "author": "Fargo Additive Manufacturing Equipment 3D, LLC",
     "version": "2.0.0",
     "description": "Provides predefined commands for lulzbot printers",
-    "api": "7.9",
+    "api": "8.8.0",
     "i18n-catalog": "cura"
 }
