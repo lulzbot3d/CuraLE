@@ -5,7 +5,7 @@ from . import MonitorStage
 
 
 from UM.i18n import i18nCatalog
-from PyQt5.QtQml import qmlRegisterSingletonType
+from PyQt6.QtQml import qmlRegisterSingletonType
 from .MonitorStageStorage import MonitorStageStorage
 
 i18n_catalog = i18nCatalog("cura")

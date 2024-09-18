@@ -71,8 +71,8 @@
         "package_info": {
             "package_id": "CuraEngineBackend",
             "package_type": "plugin",
-            "display_name": "CuraEngine Backend",
-            "description": "Provides the link to the CuraEngine slicing backend.",
+            "display_name": "CuraEngineLE Backend",
+            "description": "Provides the link to the CuraEngineLE slicing backend.",
             "package_version": "1.0.1",
             "sdk_version": "8.6.0",
             "website": "https://ultimaker.com",

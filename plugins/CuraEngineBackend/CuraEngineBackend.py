@@ -70,7 +70,7 @@ class CuraEngineBackend(QObject, Backend):
         super().__init__()
         # Find out where the engine is located, and how it is called.
         # This depends on how Cura is packaged and which OS we are running on.
-        executable_name = "CuraEngine"
+        executable_name = "CuraEngineLE"
         if Platform.isWindows():
             executable_name += ".exe"
         self._default_engine_location = executable_name
@@ -104,9 +104,9 @@ class CuraEngineBackend(QObject, Backend):
         self._machine_error_checker: Optional[MachineErrorChecker] = None
 
         if not self._default_engine_location:
-            raise EnvironmentError("Could not find CuraEngine")
+            raise EnvironmentError("Could not find CuraEngineLE")
 
-        Logger.log("i", "Found CuraEngine at: %s", self._default_engine_location)
+        Logger.log("i", "Found CuraEngineLE at: %s", self._default_engine_location)
 
         self._default_engine_location = os.path.abspath(self._default_engine_location)
         application.getPreferences().addPreference("backend/location", self._default_engine_location)
