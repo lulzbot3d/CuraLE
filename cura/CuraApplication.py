@@ -184,7 +184,7 @@ class CuraApplication(QtApplication):
                          tray_icon_name = "cura-icon-32.png" if not ApplicationMetadata.IsAlternateVersion else "cura-icon-32_wip.png",
                          **kwargs)
 
-        self.default_theme = "lulzbot"
+        self.default_theme = "cura-le-light"
 
         self.change_log_url = "https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot/-/blob/main/cura_patchnotes.txt"
         self.beta_change_log_url = ""
