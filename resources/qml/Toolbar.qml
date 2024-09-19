@@ -138,71 +138,71 @@ Item {
             }
         }
 
-        FocusScope {
-            id: filamentChangeFocusScope
+        // FocusScope {
+        //     id: filamentChangeFocusScope
 
-            anchors {
-                topMargin: UM.Theme.getSize("default_margin").height
-                top: extruderButtons.visible ? extruderButtons.bottom : toolButtons.bottom
-                right: parent.right
-            }
+        //     anchors {
+        //         topMargin: UM.Theme.getSize("default_margin").height
+        //         top: extruderButtons.visible ? extruderButtons.bottom : toolButtons.bottom
+        //         right: parent.right
+        //     }
 
-            onActiveFocusChanged: {
-                if (activeFocus) {
-                    UM.Controller.setActiveTool("CameraTool");
-                } else {
-                    filamentChangeToolButton.checked = false
-                }
-            }
+        //     onActiveFocusChanged: {
+        //         if (activeFocus) {
+        //             UM.Controller.setActiveTool("CameraTool");
+        //         } else {
+        //             filamentChangeToolButton.checked = false
+        //         }
+        //     }
 
-            // Used to create a rounded rectangle behind the filamentChangeButton
-            Rectangle {
-                anchors {
-                    fill: filamentChangeToolButton
-                    leftMargin: -radius - border.width
-                    rightMargin: -border.width
-                    topMargin: -border.width
-                    bottomMargin: -border.width
-                }
-                radius: UM.Theme.getSize("default_radius").width
-                color: UM.Theme.getColor("lining")
-                visible: true
-            }
+        //     // Used to create a rounded rectangle behind the filamentChangeButton
+        //     Rectangle {
+        //         anchors {
+        //             fill: filamentChangeToolButton
+        //             leftMargin: -radius - border.width
+        //             rightMargin: -border.width
+        //             topMargin: -border.width
+        //             bottomMargin: -border.width
+        //         }
+        //         radius: UM.Theme.getSize("default_radius").width
+        //         color: UM.Theme.getColor("lining")
+        //         visible: true
+        //     }
 
-            Cura.FilamentChangeButton {
-                id: filamentChangeToolButton
-                anchors {
-                    top: parent.top
-                    right: parent.right
-                }
+        //     Cura.FilamentChangeButton {
+        //         id: filamentChangeToolButton
+        //         anchors {
+        //             top: parent.top
+        //             right: parent.right
+        //         }
 
-                onEnabledChanged: {
-                    if (!enabled) {
-                        UM.Controller.setActiveTool(null)
-                        checked = false
-                    }
-                }
+        //         onEnabledChanged: {
+        //             if (!enabled) {
+        //                 UM.Controller.setActiveTool(null)
+        //                 checked = false
+        //             }
+        //         }
 
-                checkable: true
-                enabled: UM.Selection.hasSelection && UM.Controller.toolsEnabled
-                isTopElement: true
-                isBottomElement: true
-            }
+        //         checkable: true
+        //         enabled: UM.Selection.hasSelection && UM.Controller.toolsEnabled
+        //         isTopElement: true
+        //         isBottomElement: true
+        //     }
 
-            Cura.FilamentChangePanel {
-                id: filamentChangeToolPanel
-                anchors {
-                    left: filamentChangeToolButton.right
-                    leftMargin: UM.Theme.getSize("default_margin").width
-                    bottom: filamentChangeToolButton.bottom
-                }
-                z: buttons.z - 1
+        //     Cura.FilamentChangePanel {
+        //         id: filamentChangeToolPanel
+        //         anchors {
+        //             left: filamentChangeToolButton.right
+        //             leftMargin: UM.Theme.getSize("default_margin").width
+        //             bottom: filamentChangeToolButton.bottom
+        //         }
+        //         z: buttons.z - 1
 
-                target: Qt.point(parent.right, filamentChangeToolButton.y +  Math.round(UM.Theme.getSize("button").height/2))
+        //         target: Qt.point(parent.right, filamentChangeToolButton.y +  Math.round(UM.Theme.getSize("button").height/2))
 
-                panelVisible: filamentChangeToolButton.checked
-            }
-        }
+        //         panelVisible: filamentChangeToolButton.checked
+        //     }
+        // }
     }
 
     property var extrudersModel: CuraApplication.getExtrudersModel()

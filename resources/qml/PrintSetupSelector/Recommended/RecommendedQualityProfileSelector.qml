@@ -8,7 +8,6 @@ import QtQuick.Layouts 2.10
 import UM 1.5 as UM
 import Cura 1.7 as Cura
 import ".."
-import "../Custom"
 
 Item
 {
@@ -50,12 +49,5 @@ Item
                 }
             }
         }
-    }
-
-    QualitiesWithIntentMenu {
-        id: menu
-        y: intentSelection.y + intentSelection.height
-        x: intentSelection.x
-        width: intentSelection.width
     }
 }

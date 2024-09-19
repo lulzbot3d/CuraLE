@@ -67,7 +67,22 @@ Cura.ComboBox {
     property UM.SettingPropertyProvider propertyProvider: UM.SettingPropertyProvider
     {
         id: propertyProvider
-        containerStackId: updateAllExtruders ? Cura.ExtruderManager.extruderIds[defaultExtruderIndex] : Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.id : null
+        containerStackId:
+        {
+            let output = "";
+            if (updateAllExtruders)
+            {
+                if (Cura.ExtruderManager.extruderIds[defaultExtruderIndex] != undefined)
+                {
+                    output = Cura.ExtruderManager.extruderIds[defaultExtruderIndex];
+                }
+                else if (Cura.MachineManager.activeMachine != null)
+                {
+                    output = Cura.MachineManager.activeMachine.id;
+                }
+            }
+            return output;
+        }
         removeUnusedValue: false
         watchedProperties: ["value", "validationState",  "resolve", "options"]
     }

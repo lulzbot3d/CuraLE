@@ -54,7 +54,22 @@ UM.TextField
         id: propertyProvider
         watchedProperties: ["value", "validationState",  "resolve"]
         removeUnusedValue: false
-        containerStackId: updateAllExtruders ? Cura.ExtruderManager.extruderIds[defaultExtruderIndex] : Cura.MachineManager.activeMachine.id
+        containerStackId:
+        {
+            let output = "";
+            if (updateAllExtruders)
+            {
+                if (Cura.ExtruderManager.extruderIds[defaultExtruderIndex] != undefined)
+                {
+                    output = Cura.ExtruderManager.extruderIds[defaultExtruderIndex];
+                }
+                else if (Cura.MachineManager.activeMachine != null)
+                {
+                    output = Cura.MachineManager.activeMachine.id;
+                }
+            }
+            return output;
+        }
     }
 
     Connections

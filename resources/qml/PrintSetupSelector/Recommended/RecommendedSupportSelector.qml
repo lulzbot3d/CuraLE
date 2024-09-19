@@ -57,7 +57,7 @@ RecommendedSettingSection
                 settingName: "support_structure"
                 propertyRemoveUnusedValue: false
                 updateAllExtruders: false
-                defaultExtruderIndex: supportExtruderProvider.properties.value
+                defaultExtruderIndex: supportExtruderProvider.properties.value != undefined ? supportExtruderProvider.properties.value : 0
             }
         },
         RecommendedSettingItem
@@ -92,7 +92,7 @@ RecommendedSettingSection
                 width: parent.width
                 settingName: "support_type"
                 updateAllExtruders: true
-                defaultExtruderIndex: supportExtruderProvider.properties.value
+                defaultExtruderIndex: supportExtruderProvider.properties.value != undefined ? supportExtruderProvider.properties.value : 0
             }
         }
     ]
