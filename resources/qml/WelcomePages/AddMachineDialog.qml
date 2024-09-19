@@ -492,8 +492,8 @@ Item {
         anchors.rightMargin: UM.Theme.getSize("default_margin").width
         text: printerSelectorLoader.item.getMachineName()
         maximumLength: 40
-        validator: RegExpValidator {
-            regExp: {
+        validator: RegularExpressionValidator {
+            regularExpression: {
                 machineName.machine_name_validator.machineNameRegex
             }
         }

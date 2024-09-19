@@ -64,6 +64,7 @@ from cura import ApplicationMetadata
 from cura.API import CuraAPI
 from cura.API.Account import Account
 from cura.Arranging.ArrangeObjectsJob import ArrangeObjectsJob
+from cura.FilamentChangeManager import FilamentChangeManager
 from cura.Machines.MachineErrorChecker import MachineErrorChecker
 from cura.Machines.Models.BuildPlateModel import BuildPlateModel
 from cura.Machines.Models.CustomQualityProfilesDropDownMenuModel import CustomQualityProfilesDropDownMenuModel
@@ -246,7 +247,7 @@ class CuraApplication(QtApplication):
 
         self._quality_profile_drop_down_menu_model = None
         self._custom_quality_profile_drop_down_menu_model = None
-        # self._cura_API = CuraAPI(self)
+        self._cura_API = CuraAPI(self)
 
         self._filament_change_manager = None
 
@@ -1277,6 +1278,12 @@ class CuraApplication(QtApplication):
         if self._custom_quality_profile_drop_down_menu_model is None:
             self._custom_quality_profile_drop_down_menu_model = CustomQualityProfilesDropDownMenuModel(self)
         return self._custom_quality_profile_drop_down_menu_model
+    
+    @pyqtSlot(result=QObject)
+    def getFilamentChangeManager(self, *args, **kwargs) -> FilamentChangeManager:
+        if self._filament_change_manager is None:
+            self._filament_change_manager = FilamentChangeManager(self)
+        return self._filament_change_manager
 
     @deprecated("SimpleModeSettingsManager is deprecated and will be removed in major SDK release, Use getSimpleModeSettingsManager() instead", since = "5.7.0")
     def getSimpleModeSettingsManagerWrapper(self, *args, **kwargs):
@@ -1334,6 +1341,7 @@ class CuraApplication(QtApplication):
         qmlRegisterSingletonType(SettingInheritanceManager, "Cura", 1, 0, self.getSettingInheritanceManager, "SettingInheritanceManager")
         qmlRegisterSingletonType(SimpleModeSettingsManager, "Cura", 1, 0, self.getSimpleModeSettingsManagerWrapper, "SimpleModeSettingsManager")
         qmlRegisterSingletonType(MachineActionManager, "Cura", 1, 0, self.getMachineActionManagerWrapper, "MachineActionManager")
+        # qmlRegisterSingletonType(FilamentChangeManager, "Cura", 1, 0, self.getFilamentChangeManager, "FilamentChangeManager")
 
         self.processEvents()
         qmlRegisterType(NetworkingUtil, "Cura", 1, 5, "NetworkingUtil")

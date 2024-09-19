@@ -2,7 +2,6 @@
 // Cura LE is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.11
-import QtQuick.Controls 1.1
 import UM 1.2 as UM
 import Cura 1.0 as Cura
 
@@ -13,7 +12,7 @@ Item {
     implicitHeight: UM.Theme.getSize("extruder_icon").height
 
     property bool checked: true
-    property alias iconSize: mainIcon.sourceSize
+    property alias iconSize: mainIcon.width
     property string iconVariant: "default"
 
     Item {
@@ -29,12 +28,10 @@ Item {
             return layer_count;
         }
 
-        UM.RecolorImage {
+        UM.ColorImage {
             id: mainIcon
             anchors.fill: parent
-            sourceSize: UM.Theme.getSize("extruder_icon")
             color: UM.Theme.getColor("icon")
-
             source: UM.Theme.getIcon("ChangeFilament", iconVariant)
         }
 

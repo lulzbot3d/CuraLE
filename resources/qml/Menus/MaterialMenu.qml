@@ -40,9 +40,9 @@ Cura.Menu
         enabled: updateModels
     }
 
-    Cura.MaterialBrandsModel
+    Cura.MaterialTypesModel
     {
-        id: brandModel
+        id: typeModel
         extruderPosition: materialMenu.extruderIndex
         enabled: updateModels
     }
@@ -97,7 +97,7 @@ Cura.Menu
 
     Instantiator
     {
-        model: brandModel
+        model: typeModel
         delegate: Cura.MaterialBrandMenu
         {
             materialTypesModel: model

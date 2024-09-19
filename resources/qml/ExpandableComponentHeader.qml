@@ -15,8 +15,13 @@ Cura.RoundedRectangle
     property alias headerTitle: headerLabel.text
     property alias xPosCloseButton: closeButton.left
 
-    height: UM.Theme.getSize("expandable_component_content_header").height
-    color: UM.Theme.getColor("background_1")
+    property bool headerFull: true
+
+    height: {
+        let headHeight = UM.Theme.getSize("expandable_component_content_header").height
+        return (headerFull ? headHeight : headHeight / 3)
+    }
+    color: headerFull ? UM.Theme.getColor("background_1") : UM.Theme.getColor("main_window_header_background")
     cornerSide: Cura.RoundedRectangle.Direction.Up
     border.width: UM.Theme.getSize("default_lining").width
     border.color: UM.Theme.getColor("lining")

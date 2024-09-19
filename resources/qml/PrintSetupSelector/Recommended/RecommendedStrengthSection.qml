@@ -2,9 +2,7 @@
 // Cura LE is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.7
-import QtQuick.Controls 1.4 as OldControls // Funny...
 import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.4
 
 import UM 1.2 as UM
 import Cura 1.0 as Cura
@@ -141,7 +139,7 @@ Item {
             verticalCenter: infillSliderTitle.verticalCenter
         }
 
-        OldControls.Slider {
+        Slider {
             id: infillSlider
 
             width: parent.width
@@ -151,7 +149,6 @@ Item {
             property int allowedMinimum: 0
             maximumValue: 100
             stepSize: 1
-            tickmarksEnabled: true
             property int tickmarkSpacing: 10
             wheelEnabled: false
 
@@ -160,8 +157,6 @@ Item {
 
             // set initial value from stack
             value: parseInt(infillDensity.properties.value) - allowedMinimum
-
-            style: UM.Theme.styles.setup_selector_slider
 
             onValueChanged: {
                 // Don't round the value if it's already the same

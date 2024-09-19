@@ -32,7 +32,8 @@ UM.Dialog
         height: logo.height + 2 * UM.Theme.getSize("wide_margin").height
         color: UM.Theme.getColor("main_window_header_background")
 
-        Image {
+        Image
+        {
             id: logo
             width: Math.floor(base.width * 0.85)
             height: Math.floor(width * UM.Theme.getSize("logo").height / UM.Theme.getSize("logo").width)
@@ -44,10 +45,20 @@ UM.Dialog
             anchors.centerIn: parent
         }
 
+        Image
+        {
+            id: enterpriseLogo
+            visible: CuraApplication.isEnterprise
+            source: UM.Theme.getImage("enterprise")
+            fillMode: Image.PreserveAspectFit
+
+            anchors.bottom: parent.bottom
+        }
+
         UM.Label
         {
             id: version
-            text: catalog.i18nc("@label","version: %1").arg(UM.Application.version)
+            text: catalog.i18nc("@label","version: %1").arg(CuraApplication.version())
             font: UM.Theme.getFont("large_bold")
             color: UM.Theme.getColor("button_text")
             anchors.right : logo.right
@@ -131,7 +142,7 @@ UM.Dialog
 
             UM.Label
             {
-                text: catalog.i18nc("@info:credit", "Cura is developed by UltiMaker in cooperation with the community.\nCura proudly uses the following open source projects:")
+                text: catalog.i18nc("@info:credit", "Cura LulzBot Edition is a fork (maintained by FAME3D) \nof Cura, developed by UltiMaker in cooperation with the community.\nCura LulzBot Edition proudly uses the following open source projects:")
                 font: UM.Theme.getFont("system")
                 wrapMode: Text.WordWrap
             }
@@ -162,16 +173,15 @@ UM.Dialog
                     }
                     Component.onCompleted:
                     {
-                        //Do NOT add dependencies of our dependencies here, nor CI-dependencies!
-                        //UltiMaker's own projects and forks.
-                        projectsModel.append({ name: "Cura", description: catalog.i18nc("@label Description for application component", "Graphical user interface"), license: "LGPLv3", url: "https://github.com/Ultimaker/Cura" });
-                        projectsModel.append({ name: "Uranium", description: catalog.i18nc("@label Description for application component", "Application framework"), license: "LGPLv3", url: "https://github.com/Ultimaker/Uranium" });
-                        projectsModel.append({ name: "CuraEngine", description: catalog.i18nc("@label Description for application component", "G-code generator"), license: "AGPLv3", url: "https://github.com/Ultimaker/CuraEngine" });
-                        projectsModel.append({ name: "libArcus", description: catalog.i18nc("@label Description for application component", "Interprocess communication library"), license: "LGPLv3", url: "https://github.com/Ultimaker/libArcus" });
-                        projectsModel.append({ name: "pynest2d", description: catalog.i18nc("@label Description for application component", "Python bindings for libnest2d"), license: "LGPL", url: "https://github.com/Ultimaker/pynest2d" });
-                        projectsModel.append({ name: "libnest2d", description: catalog.i18nc("@label Description for application component", "Polygon packing library, developed by Prusa Research"), license: "LGPL", url: "https://github.com/tamasmeszaros/libnest2d" });
-                        projectsModel.append({ name: "libSavitar", description: catalog.i18nc("@label Description for application component", "Support library for handling 3MF files"), license: "LGPLv3", url: "https://github.com/ultimaker/libsavitar" });
-                        projectsModel.append({ name: "libCharon", description: catalog.i18nc("@label Description for application component", "Support library for file metadata and streaming"), license: "LGPLv3", url: "https://github.com/ultimaker/libcharon" });
+                        //LulzBot's own projects and forks.
+                        projectsModel.append({ name: "CuraLE", description: catalog.i18nc("@label Description for application component", "Graphical user interface"), license: "LGPLv3", url: "https://github.com/lulzbot3d/CuraLE" });
+                        projectsModel.append({ name: "UraniumLE", description: catalog.i18nc("@label Description for application component", "Application framework"), license: "LGPLv3", url: "https://github.com/lulzbot3d/UraniumLE" });
+                        projectsModel.append({ name: "CuraEngineLE", description: catalog.i18nc("@label Description for application component", "G-code generator"), license: "AGPLv3", url: "https://github.com/lulzbot3d/CuraEngineLE" });
+                        projectsModel.append({ name: "libArcusLE", description: catalog.i18nc("@label Description for application component", "Interprocess communication library"), license: "LGPLv3", url: "https://github.com/lulzbot3d/libArcusLE" });
+                        projectsModel.append({ name: "pynest2dLE", description: catalog.i18nc("@label Description for application component", "Python bindings for libnest2d"), license: "LGPL", url: "https://github.com/lulzbot3d/pynest2dLE" });
+                        projectsModel.append({ name: "libnest2dLE", description: catalog.i18nc("@label Description for application component", "Polygon packing library, developed by Prusa Research"), license: "LGPL", url: "https://github.com/tamasmeszaros/libnest2dLE" });
+                        projectsModel.append({ name: "libSavitarLE", description: catalog.i18nc("@label Description for application component", "Support library for handling 3MF files"), license: "LGPLv3", url: "https://github.com/lulzbot3d/libSavitarLE" });
+                        //projectsModel.append({ name: "libCharonLE", description: catalog.i18nc("@label Description for application component", "Support library for file metadata and streaming"), license: "LGPLv3", url: "https://github.com/lulzbot3d/libCharonLE" });
 
                         //Direct dependencies of the front-end.
                         projectsModel.append({ name: "Python", description: catalog.i18nc("@label Description for application dependency", "Programming language"), license: "Python", url: "http://python.org/" });

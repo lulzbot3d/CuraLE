@@ -8,7 +8,7 @@ from threading import Thread
 from time import sleep
 import platform
 
-from PyQt5.QtCore import pyqtSignal
+from PyQt6.QtCore import pyqtSignal
 
 from UM.Logger import Logger
 

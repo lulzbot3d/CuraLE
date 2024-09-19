@@ -1,8 +1,8 @@
 // Copyright (c) 2023 Fargo Additive Manufacturing Equipment 3D, LLC.
 // CuraLE is released under the terms of the LGPLv3 or higher.
 
-import QtQuick 2.2
-import QtQuick.Controls 1.2
+import QtQuick 2.15
+import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.15
 
 import UM 1.2 as UM
@@ -147,8 +147,6 @@ Item {
                             text: "Remove"
 
                             onClicked: base.removeLayer(modelData)
-
-                            style: UM.Theme.styles.toolbox_action_button
                         }
                     }
                     Rectangle {
@@ -194,11 +192,9 @@ Item {
                 Layout.fillWidth: true
 
                 placeholderText: "Enter layers..."
-                validator: RegExpValidator { regExp: /^\d[\d*\,*]*/ }
+                validator: RegularExpressionValidator { regularExpression: /^\d[\d*\,*]*/ }
 
                 onAccepted: base.addUserInput()
-
-                style: UM.Theme.styles.text_field
             }
 
             Button {
@@ -209,11 +205,9 @@ Item {
                 enabled: layersTextField.length > 0
 
                 onClicked: base.addUserInput()
-
-                style: UM.Theme.styles.toolbox_action_button
             }
 
-            UM.RecolorImage {
+            UM.ColorImage {
                 id: toolInfo
 
                 source: UM.Theme.getIcon("Information")
@@ -256,8 +250,6 @@ Item {
                 enabled: changeLayerCount > 0
 
                 onClicked: base.clearCurrentLayers()
-
-                style: UM.Theme.styles.toolbox_action_button
             }
         }
     }

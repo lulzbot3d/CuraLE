@@ -33,7 +33,7 @@ class MaterialManagementModel(QObject):
 
     def __init__(self, parent: Optional[QObject] = None) -> None:
         super().__init__(parent = parent)
-        self._material_sync = CloudMaterialSync(parent=self)
+        # self._material_sync = CloudMaterialSync(parent=self)
 
     @pyqtSlot("QVariant", result = bool)
     def canMaterialBeRemoved(self, material_node: "MaterialNode") -> bool:

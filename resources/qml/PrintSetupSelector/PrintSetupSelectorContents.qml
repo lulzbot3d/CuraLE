@@ -104,17 +104,6 @@ Item {
             visible: currentModeIndex == PrintSetupSelectorContents.Mode.Recommended
         }
 
-        CustomPrintSetup {
-            id: customPrintSetup
-            anchors {
-                left: parent.left
-                right: parent.right
-                top: parent.top
-            }
-            height: UM.Preferences.getValue("view/settings_list_height") - UM.Theme.getSize("default_margin").height
-            visible: currentModeIndex == PrintSetupSelectorContents.Mode.Custom
-        }
-
         Connections {
             target: UM.Preferences
             function onPreferenceChanged(preference) {
@@ -162,12 +151,9 @@ Item {
 
         anchors
         {
-            const draggable_area_height = draggableArea.visible ? draggableArea.height : 0;
-            if (currentModeIndex == PrintSetupSelectorContents.Mode.Custom)
-            {
-                return recommendedButton.height + 2 * padding + draggable_area_height;
-            }
-            return draggable_area_height;
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
         }
 
         Cura.SecondaryButton {

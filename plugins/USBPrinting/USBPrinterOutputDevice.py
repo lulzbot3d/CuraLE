@@ -24,7 +24,7 @@ from .AutoDetectBaudJob import AutoDetectBaudJob
 from .KnownBaudJob import KnownBaudJob
 from .LulzFirmwareUpdater import LulzFirmwareUpdater
 
-from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QUrl
+from PyQt6.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QUrl
 
 from io import StringIO # To write the g-code output.
 from queue import Queue

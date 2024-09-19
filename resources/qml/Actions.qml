@@ -85,15 +85,6 @@ Item
         return all_enabled_packages.includes("3MFReader") && all_enabled_packages.includes("3MFWriter");
     }
 
-    property alias paste: pasteAction
-    property alias copy: copyAction
-    property alias cut: cutAction
-
-    readonly property bool copy_paste_enabled: {
-        const all_enabled_packages = CuraApplication.getPackageManager().allEnabledPackages;
-        return all_enabled_packages.includes("3MFReader") && all_enabled_packages.includes("3MFWriter");
-    }
-
     UM.I18nCatalog{id: catalog; name: "cura"}
 
 
@@ -106,14 +97,7 @@ Item
     Action
     {
         id: openSponsershipPageAction
-        onTriggered: Qt.openUrlExternally("https://ultimaker.com/software/ultimaker-cura/sponsor/")
-        text: catalog.i18nc("@action:inmenu", "Sponsor Cura")
-    }
-
-    Action
-    {
-        id: openSponsershipPageAction
-        onTriggered: Qt.openUrlExternally("https://ultimaker.com/software/ultimaker-cura/sponsor/")
+        onTriggered: Qt.openUrlExternally("")
         text: catalog.i18nc("@action:inmenu", "Sponsor Cura")
     }
 
@@ -520,13 +504,6 @@ Item
         // Unassign the shortcut when there are more than one file providers, since then the file provider's shortcut is
         // enabled instead, and Ctrl+O is assigned to the local file provider
         shortcut: fileProviderModel.count == 1 ? StandardKey.Open : ""
-    }
-
-    Action
-    {
-        id: arrangeSelectionAction
-        text: catalog.i18nc("@action:inmenu menubar:edit", "Arrange Selection")
-        onTriggered: Printer.arrangeSelection()
     }
 
     Action

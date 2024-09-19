@@ -159,9 +159,10 @@ SettingItem
             {
                 id: extruderText
 
-            text: control.currentText
-            textFormat: Text.PlainText
-            color: enabled ? UM.Theme.getColor("setting_control_text") : UM.Theme.getColor("setting_control_disabled_text")
+                text: control.currentText
+                textFormat: Text.PlainText
+                color: enabled ? UM.Theme.getColor("setting_control_text") : UM.Theme.getColor("setting_control_disabled_text")
+            }
 
             background: Rectangle
             {
