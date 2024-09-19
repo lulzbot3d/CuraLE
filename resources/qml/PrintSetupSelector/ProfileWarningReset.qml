@@ -74,7 +74,7 @@ Item
                 {
                     target: warning
                     text: {
-                        var profile_name = Cura.MachineManager.activeQualityChangesGroup.name
+                        var profile_name = Cura.MachineManager.activeQualityChangesGroup != null ? Cura.MachineManager.activeQualityChangesGroup.name : null
                         return catalog.i18nc("@info, %1 is the name of the custom profile", "<b>%1</b> custom profile is overriding some settings.").arg(profile_name)
                     }
                 }

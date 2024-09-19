@@ -31,7 +31,7 @@ class Marketplace(Extension, QObject):
         # Since that in turn will trigger notifications to be shown, we do need to construct it here and make sure
         # that it checks for updates...
         preferences = CuraApplication.getInstance().getPreferences()
-        preferences.addPreference("info/automatic_plugin_update_check", True)
+        preferences.addPreference("info/automatic_plugin_update_check", False)
         self._local_package_list = LocalPackageList(self)
         if preferences.getValue("info/automatic_plugin_update_check"):
             self._local_package_list.checkForUpdates(self._package_manager.local_packages)

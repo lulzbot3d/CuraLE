@@ -914,8 +914,8 @@ class CuraApplication(QtApplication):
 
         self._log_hardware_info()
 
-        Logger.debug("Using conan dependencies: {}", str(self.conanInstalls))
-        Logger.debug("Using python dependencies: {}", str(self.pythonInstalls))
+        #Logger.debug("Using conan dependencies: {}", str(self.conanInstalls))
+        #Logger.debug("Using python dependencies: {}", str(self.pythonInstalls))
 
         Logger.log("i", "Initializing machine error checker")
         self._machine_error_checker = MachineErrorChecker(self)
@@ -1076,6 +1076,10 @@ class CuraApplication(QtApplication):
     @pyqtSlot(result = QObject)
     def getDiscoveredPrintersModel(self, *args) -> "DiscoveredPrintersModel":
         return self._discovered_printer_model
+
+    @pyqtSlot(result=QObject)
+    def getDiscoveredCloudPrintersModel(self, *args) -> "DiscoveredCloudPrintersModel":
+        return self._discovered_cloud_printers_model
 
     @pyqtSlot(result = QObject)
     def getFirstStartMachineActionsModel(self, *args) -> "FirstStartMachineActionsModel":

@@ -9,6 +9,8 @@ def getMetaData():
 
 
 def register(app):
+    if True: # Disable
+        return
     df_controller = DigitalFactoryController.DigitalFactoryController(app)
     return {
         "file_provider": DigitalFactoryFileProvider.DigitalFactoryFileProvider(df_controller),

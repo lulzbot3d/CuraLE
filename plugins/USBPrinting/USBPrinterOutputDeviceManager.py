@@ -69,7 +69,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
     def createUpdateThread(self):
         # Sets _update_thread to a new Thread object
         self._update_thread = Thread(target = self._updateThread)
-        self._update_thread.setDaemon(True)
+        self._update_thread.daemon = True
 
     # Update thread is the USB printer discovery loop. Gets a list of viable serial ports and hands them to our add/remove ports method.
     def _updateThread(self):
