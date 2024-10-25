@@ -277,7 +277,7 @@ class CuraApplication(QtApplication):
         self._open_url_queue = []  # A list of urls to open (after the application has started)
         self._update_platform_activity_timer = None
 
-        self._sidebar_custom_menu_items = []  # type: list # Keeps list of custom menu items for the side bar
+        self._sidebar_custom_menu_items = []  # type: list # Keeps list of custom menu items for the sidebar
 
         self._plugins_loaded = False
 
@@ -371,7 +371,7 @@ class CuraApplication(QtApplication):
         self._initializeSettingFunctions()
         self.__addAllResourcesAndContainerResources()
         self.__addAllEmptyContainers()
-        self.__setLatestResouceVersionsForVersionUpgrade()
+        self.__setLatestResourceVersionsForVersionUpgrade()
 
         self._machine_action_manager = MachineActionManager(self)
         self._machine_action_manager.initialize()
@@ -521,7 +521,7 @@ class CuraApplication(QtApplication):
         self._container_registry.addContainer(cura.Settings.cura_empty_instance_containers.empty_quality_changes_container)
         self.empty_quality_changes_container = cura.Settings.cura_empty_instance_containers.empty_quality_changes_container
 
-    def __setLatestResouceVersionsForVersionUpgrade(self):
+    def __setLatestResourceVersionsForVersionUpgrade(self):
         """Initializes the version upgrade manager with by providing the paths for each resource type and the latest
         versions. """
 
@@ -705,7 +705,7 @@ class CuraApplication(QtApplication):
 
         # Workaround: Before closing the window, remove the global stack.
         # This is necessary because as the main window gets closed, hundreds of QML elements get updated which often
-        # request the global stack. However as the Qt-side of the Machine Manager is being dismantled, the conversion of
+        # request the global stack. However, as the Qt-side of the Machine Manager is being dismantled, the conversion of
         # the Global Stack to a QObject fails.
         # If instead we first take down the global stack, PyQt will just convert `None` to `null` which succeeds, and
         # the QML code then gets `null` as the global stack and can deal with that as it deems fit.
@@ -1532,7 +1532,7 @@ class CuraApplication(QtApplication):
             if not node.getMeshData() and not node.callDecoration("isGroup"):
                 continue  # Node that doesn't have a mesh and is not a group.
             if node.getParent() and node.getParent().callDecoration("isGroup") or node.getParent().callDecoration("isSliceable"):
-                continue  # Grouped nodes don't need resetting as their parent (the group) is reset)
+                continue  # Grouped nodes don't need resetting as their parent (the group) is reset
             if not node.isSelectable():
                 continue  # i.e. node with layer data
             if not node.callDecoration("isSliceable") and not node.callDecoration("isGroup"):
@@ -1559,7 +1559,7 @@ class CuraApplication(QtApplication):
             if not node.getMeshData() and not node.callDecoration("isGroup"):
                 continue  # Node that doesn't have a mesh and is not a group.
             if node.getParent() and node.getParent().callDecoration("isGroup"):
-                continue  # Grouped nodes don't need resetting as their parent (the group) is reset)
+                continue  # Grouped nodes don't need resetting as their parent (the group) is reset
             if not node.isSelectable():
                 continue  # i.e. node with layer data
             nodes.append(node)
@@ -1588,7 +1588,7 @@ class CuraApplication(QtApplication):
             if not node.getMeshData() and not node.callDecoration("isGroup"):
                 continue  # Node that doesn't have a mesh and is not a group.
             if node.getParent() and node.getParent().callDecoration("isGroup"):
-                continue  # Grouped nodes don't need resetting as their parent (the group) is reset)
+                continue  # Grouped nodes don't need resetting as their parent (the group) is reset
             if not node.callDecoration("isSliceable") and not node.callDecoration("isGroup"):
                 continue  # i.e. node with layer data
             nodes.append(node)
@@ -1627,7 +1627,7 @@ class CuraApplication(QtApplication):
 
             parent_node = node.getParent()
             if parent_node and parent_node.callDecoration("isGroup"):
-                continue  # Grouped nodes don't need resetting as their parent (the group) is reset)
+                continue  # Grouped nodes don't need resetting as their parent (the group) is reset
 
             if not node.isSelectable():
                 continue  # i.e. node with layer data
@@ -1771,7 +1771,7 @@ class CuraApplication(QtApplication):
         for node in DepthFirstIterator(self.getController().getScene().getRoot()):
             if isinstance(node, CuraSceneNode) and node.getName() == "MergedMesh":
 
-                # Checking by name might be not enough, the merged mesh should has "GroupDecorator" decorator
+                # Checking by name might be not enough, the merged mesh should have "GroupDecorator" decorator
                 for decorator in node.getDecorators():
                     if isinstance(decorator, GroupDecorator):
                         group_nodes.append(node)
@@ -2062,7 +2062,7 @@ class CuraApplication(QtApplication):
 
         :param project_mode: How to handle project files. Either None(default): Follow user preference, "open_as_model"
          or "open_as_project". This parameter is only considered if the file is a project file.
-        :param add_to_recent_files: Whether or not to add the file as an option to the Recent Files list.
+        :param add_to_recent_files: Whether to add the file as an option to the Recent Files list.
         """
         Logger.log("i", "Attempting to read file %s", file.toString())
         if not file.isValid():
@@ -2228,7 +2228,7 @@ class CuraApplication(QtApplication):
             elif self._open_project_mode == "open_as_model":
                 nodes_to_arrange.append(node)
 
-            # This node is deep copied from some other node which already has a BuildPlateDecorator, but the deepcopy
+            # This node is deep-copied from some other node which already has a BuildPlateDecorator, but the deepcopy
             # of BuildPlateDecorator produces one that's associated with build plate -1. So, here we need to check if
             # the BuildPlateDecorator exists or not and always set the correct build plate number.
             build_plate_decorator = node.getDecorator(BuildPlateDecorator)
@@ -2355,7 +2355,7 @@ class CuraApplication(QtApplication):
             if only_selectable and not node.isSelectable():
                 continue  # Only remove nodes that are selectable.
             if not node.callDecoration("isSliceable") and not node.callDecoration("getLayerData") and not node.callDecoration("isGroup"):
-                continue  # Grouped nodes don't need resetting as their parent (the group) is reset)
+                continue  # Grouped nodes don't need resetting as their parent (the group) is reset
             nodes.append(node)
         if nodes:
             from UM.Operations.GroupedOperation import GroupedOperation
