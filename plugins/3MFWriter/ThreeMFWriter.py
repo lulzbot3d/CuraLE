@@ -226,7 +226,7 @@ class ThreeMFWriter(MeshWriter):
                 if export_settings_model != None:
                     self._addLogoToThumbnail(snapshot, "cura-share.png")
                 elif export_settings_model == None and self._store_archive:
-                    self._addLogoToThumbnail(snapshot, "cura-icon.png")
+                    self._addLogoToThumbnail(snapshot, "curale-icon.png")
                 thumbnail_buffer = QBuffer()
                 thumbnail_buffer.open(QBuffer.OpenModeFlag.ReadWrite)
                 snapshot.save(thumbnail_buffer, "PNG")

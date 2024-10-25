@@ -181,7 +181,7 @@ class CuraApplication(QtApplication):
                          api_version = ApplicationMetadata.CuraSDKVersion,
                          build_type = ApplicationMetadata.CuraBuildType,
                          is_debug_mode = ApplicationMetadata.CuraDebugMode,
-                         tray_icon_name = "cura-icon-32.png" if not ApplicationMetadata.IsAlternateVersion else "cura-icon-32_wip.png",
+                         tray_icon_name = "curale-icon-32.png" if not ApplicationMetadata.IsAlternateVersion else "cura-icon-32_wip.png",
                          **kwargs)
 
         self.default_theme = "cura-le-light"
@@ -579,7 +579,7 @@ class CuraApplication(QtApplication):
 
         if not self.getIsHeadLess():
             try:
-                self.setWindowIcon(QIcon(Resources.getPath(Resources.Images, "cura-icon.png" if not ApplicationMetadata.IsAlternateVersion else "cura-icon_wip.png")))
+                self.setWindowIcon(QIcon(Resources.getPath(Resources.Images, "curale-icon.png" if not ApplicationMetadata.IsAlternateVersion else "cura-icon_wip.png")))
             except FileNotFoundError:
                 Logger.log("w", "Unable to find the window icon.")
 
@@ -1282,7 +1282,7 @@ class CuraApplication(QtApplication):
         if self._custom_quality_profile_drop_down_menu_model is None:
             self._custom_quality_profile_drop_down_menu_model = CustomQualityProfilesDropDownMenuModel(self)
         return self._custom_quality_profile_drop_down_menu_model
-    
+
     @pyqtSlot(result=QObject)
     def getFilamentChangeManager(self, *args, **kwargs) -> FilamentChangeManager:
         if self._filament_change_manager is None:

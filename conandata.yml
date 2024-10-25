@@ -1,10 +1,10 @@
 version: "5.8.1"
 requirements:
-  - "curale_resources/5.8.1"
+  - "curale_resources/5.8.1@lulzbot/testing"
   - "uraniumle/5.8.1"
   - "curaenginele/5.8.1"
   - "curale_binary_data/5.8.1"
-  - "fdm_materialsle/5.8.1"
+  - "fdm_materialsle/5.8.1@lulzbot/testing"
   - "curaenginele_plugin_gradual_flow/0.1.0"
   - "pysavitarle/5.3.0"
   - "pynest2dle/5.3.0"

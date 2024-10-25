@@ -31,10 +31,10 @@ def copy_metadata_files(dist_path, version):
     """
     copied_files = {
         os.path.join("..", "icons", "cura-icon.svg"):         os.path.join("usr", "share", "icons", "hicolor", "scalable", "apps", "cura-icon.svg"),
-        os.path.join("..", "icons", "cura-icon_64x64.png"):   os.path.join("usr", "share", "icons", "hicolor", "64x64", "apps", "cura-icon.png"),
-        os.path.join("..", "icons", "cura-icon_128x128.png"): os.path.join("usr", "share", "icons", "hicolor", "128x128", "apps", "cura-icon.png"),
-        os.path.join("..", "icons", "cura-icon_256x256.png"): os.path.join("usr", "share", "icons", "hicolor", "256x256", "apps", "cura-icon.png"),
-        os.path.join("..", "icons", "cura-icon_256x256.png"): "cura-icon.png",
+        os.path.join("..", "icons", "cura-icon_64x64.png"):   os.path.join("usr", "share", "icons", "hicolor", "64x64", "apps", "curale-icon.png"),
+        os.path.join("..", "icons", "cura-icon_128x128.png"): os.path.join("usr", "share", "icons", "hicolor", "128x128", "apps", "curale-icon.png"),
+        os.path.join("..", "icons", "cura-icon_256x256.png"): os.path.join("usr", "share", "icons", "hicolor", "256x256", "apps", "curale-icon.png"),
+        os.path.join("..", "icons", "cura-icon_256x256.png"): "curale-icon.png",
         "cura.appdata.xml": "cura.appdata.xml",
         "AppRun": "AppRun"
     }
