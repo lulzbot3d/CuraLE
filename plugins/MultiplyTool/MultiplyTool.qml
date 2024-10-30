@@ -19,6 +19,7 @@ Item {
         selected_item.selectAll()
         selected_item.focus = true
     }
+
     GridLayout {
 
         columns: 2

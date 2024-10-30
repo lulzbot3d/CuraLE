@@ -1,9 +1,9 @@
-// Copyright (c) 2018 Ultimaker B.V.
+// Copyright (c) 2022 Ultimaker B.V.
 // Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.10
 import QtQuick.Controls 2.0
-import UM 1.3 as UM
+import UM 1.5 as UM
 import Cura 1.0 as Cura
 
 // We show a nice overlay on the 3D viewer when the current output device has no monitor view
@@ -69,13 +69,79 @@ Rectangle {
         visible: monitorViewComponent.sourceComponent == null
 
         // CASE 2: CAN MONITOR & NOT CONNECTED
-        Label {
+        UM.Label
+        {
+            anchors
+            {
+                horizontalCenter: parent.horizontalCenter
+            }
+            visible: isNetworkConfigured && !isConnected
+            text: catalog.i18nc("@info", "Please make sure your printer has a connection:\n- Check if the printer is turned on.\n- Check if the printer is connected to the network.\n- Check if you are signed in to discover cloud-connected printers.")
+            font: UM.Theme.getFont("medium")
+            width: contentWidth
+        }
+
+        UM.Label
+        {
+            id: noNetworkLabel
+            anchors
+            {
+                horizontalCenter: parent.horizontalCenter
+            }
+            visible: !isNetworkConfigured && isNetworkConfigurable
+            text: catalog.i18nc("@info", "Please connect your printer to the network.")
+            font: UM.Theme.getFont("medium")
+            width: contentWidth
+        }
+
+        Item
+        {
+            anchors
+            {
+                left: noNetworkLabel.left
+            }
+            visible: !isNetworkConfigured && isNetworkConfigurable
+            width: childrenRect.width
+            height: childrenRect.height
+
+            UM.ColorImage
+            {
+                id: externalLinkIcon
+                anchors.verticalCenter: parent.verticalCenter
+                color: UM.Theme.getColor("text_link")
+                source: UM.Theme.getIcon("LinkExternal")
+                width: UM.Theme.getSize("icon_indicator").width
+                height: UM.Theme.getSize("icon_indicator").height
+            }
+            UM.Label
+            {
+                id: manageQueueText
+                anchors
+                {
+                    left: externalLinkIcon.right
+                    leftMargin: UM.Theme.getSize("narrow_margin").width
+                    verticalCenter: externalLinkIcon.verticalCenter
+                }
+                color: UM.Theme.getColor("text_link")
+                font: UM.Theme.getFont("medium")
+                text: catalog.i18nc("@label link to technical assistance", "View user manuals online")
+            }
+            MouseArea
+            {
+                anchors.fill: parent
+                hoverEnabled: true
+                onClicked: Qt.openUrlExternally("https://ultimaker.com/in/cura/troubleshooting/network?utm_source=cura&utm_medium=software&utm_campaign=monitor-not-connected")
+                onEntered: manageQueueText.font.underline = true
+                onExited: manageQueueText.font.underline = false
+            }
+        }
+        UM.Label
+        {
             id: noConnectionLabel
             anchors.horizontalCenter: parent.horizontalCenter
             visible: !isNetworkConfigurable
             text: catalog.i18nc("@info", "In order to monitor your print from Cura LE, please connect the printer.")
             font: UM.Theme.getFont("medium")
-            color: UM.Theme.getColor("text")
             wrapMode: Text.WordWrap
             width: contentWidth
         }

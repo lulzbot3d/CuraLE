@@ -2,19 +2,49 @@
 // Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.7
-import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.1
 import QtQuick.Layouts 1.1
+import QtQuick.Controls 2.15
 
-import UM 1.2 as UM
+import UM 1.5 as UM
 import Cura 1.0 as Cura
 
 import "PrinterOutput"
 
-
-Item {
+ScrollView
+{
     id: base
-    UM.I18nCatalog { id: catalog; name: "cura"}
+    width: parent.width
+    height: parent.height
+
+    contentHeight: printMonitor.height
+
+    ScrollBar.vertical: UM.ScrollBar
+    {
+        id: scrollbar
+        parent: base.parent
+        anchors
+        {
+            right: parent.right
+            top: parent.top
+            bottom: parent.bottom
+        }
+    }
+    clip: true
+
+    contentHeight: printMonitor.height
+
+    ScrollBar.vertical: UM.ScrollBar
+    {
+        id: scrollbar
+        parent: base.parent
+        anchors
+        {
+            right: parent.right
+            top: parent.top
+            bottom: parent.bottom
+        }
+    }
+    clip: true
 
     function showTooltip(item, position, text) {
         tooltip.text = text;
@@ -49,10 +79,9 @@ Item {
 
     ScrollView {
 
-        anchors.fill: base
-        clip: true
-        contentHeight: contentItem.children[0].childrenRect.height * 1.2
-        ScrollBar.vertical.policy: ScrollBar.AsNeeded
+        UM.I18nCatalog { id: catalog; name: "cura" }
+
+        width: parent.width - scrollbar.width
 
         Column {
             id: printMonitor
@@ -104,72 +133,69 @@ Item {
                 height: UM.Theme.getSize("thick_lining").width
             }
 
-            HeatedBedBox {
-                width: base.width
-            }
+        UM.SettingPropertyProvider
+        {
+            id: bedTemperature
+            containerStack: Cura.MachineManager.activeMachine
+            key: "material_bed_temperature_layer_0"
+            watchedProperties: ["value", "minimum_value", "maximum_value", "resolve"]
+            storeIndex: 0
+        }
 
-            UM.SettingPropertyProvider {
-                id: bedTemperature
-                containerStack: Cura.MachineManager.activeMachine
-                key: "material_bed_temperature"
-                watchedProperties: ["value", "minimum_value", "maximum_value", "resolve"]
-                storeIndex: 0
+        UM.SettingPropertyProvider
+        {
+            id: machineExtruderCount
+            containerStack: Cura.MachineManager.activeMachine
+            key: "machine_extruder_count"
+            watchedProperties: ["value"]
+        }
 
-                property var resolve: Cura.MachineManager.activeStack != Cura.MachineManager.activeMachine ? properties.resolve : "None"
-            }
+        ManualPrinterControl
+        {
+            printerModel: activePrinter
+            visible: activePrinter != null ? activePrinter.canControlManually : false
+        }
 
-            UM.SettingPropertyProvider {
-                id: machineExtruderCount
-                containerStack: Cura.MachineManager.activeMachine
-                key: "machine_extruder_count"
-                watchedProperties: ["value"]
-            }
 
-            ManualPrinterControl {
-                width: base.width
-                printerModel: activePrinter
-                visible: true
-            }
+        MonitorSection
+        {
+            label: catalog.i18nc("@label", "Active print")
+            width: base.width
+            visible: activePrinter != null
+        }
 
-            function loadSection(label, path) {
-                var title = Qt.createQmlObject('import QtQuick 2.2; Loader {property string label: ""}', printMonitor);
-                title.label = label
-                var content = Qt.createQmlObject('import QtQuick 2.2; Loader {}', printMonitor);
-                content.source = "file:///" + path
-                content.item.width = base.width - (2 * UM.Theme.getSize("default_margin").width)
-            }
 
-            Repeater {
-                model: Printer.printMonitorAdditionalSections
-                delegate: Item
+        MonitorItem
+        {
+            label: catalog.i18nc("@label", "Job Name")
+            value: activePrintJob != null ? activePrintJob.name : ""
+            width: base.width
+            visible: activePrinter != null
+        }
+
+        MonitorItem
+        {
+            label: catalog.i18nc("@label", "Printing Time")
+            value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal) : ""
+            width: base.width
+            visible: activePrinter != null
+        }
+
+        MonitorItem
+        {
+            label: catalog.i18nc("@label", "Estimated time left")
+            value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal - activePrintJob.timeElapsed) : ""
+            visible:
+            {
+                if(activePrintJob == null)
                 {
-                    Component.onCompleted: printMonitor.loadSection(modelData["name"], modelData["path"])
+                    return false
                 }
-            }
 
-            MonitorSection {
-                label: catalog.i18nc("@label", "Active Print")
-                width: base.width
-                visible: true //activePrintJob != null
-            }
-
-
-            MonitorItem {
-                label: catalog.i18nc("@label", "Job Name:")
-                value: activePrintJob != null ? activePrintJob.name : "N/A"
-                width: base.width
-            }
-
-            MonitorItem {
-                label: catalog.i18nc("@label", "Printing Time:")
-                value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal) : "N/A"
-                width: base.width
-            }
-
-            MonitorItem {
-                label: catalog.i18nc("@label", "Estimated Time Remaining:")
-                value: activePrintJob != null ? getPrettyTime(activePrintJob.timeTotal - activePrintJob.timeElapsed) : "N/A"
-                width: base.width
+                return (activePrintJob.state == "printing" ||
+                        activePrintJob.state == "resuming" ||
+                        activePrintJob.state == "pausing" ||
+                        activePrintJob.state == "paused")
             }
         }
 
@@ -187,14 +213,6 @@ Item {
 
             spacing: UM.Theme.getSize("default_margin").height
 
-            // Label {
-            //     id: klipperConnectionInfoTitle
-            //     font: UM.Theme.getFont("large_bold")
-            //     color: UM.Theme.getColor("text")
-            //     anchors.margins: UM.Theme.getSize("default_margin").width
-            //     text: "Yeehaw!"
-            // }
-
             Label {
                 // text: machineAssociatedUrls.properties.value
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -208,180 +226,6 @@ Item {
                 text: "Quick Start Guide"
                 onClicked: Qt.openUrlExternally("https://lulzbot.com/mini-3-monitor-page")
             }
-
-        //     GridLayout {
-        //         id: addIPGrid
-        //         anchors.horizontalCenter: parent.horizontalCenter
-        //         columns: 2
-
-        //         Label {
-        //             Layout.row: 0
-        //             Layout.column: 0
-        //             text: "Nickname: "
-        //         }
-
-        //         TextField {
-        //             id: ipNameField
-        //             Layout.row: 0
-        //             Layout.column: 1
-        //         }
-
-        //         Label {
-        //             Layout.row: 1
-        //             Layout.column: 0
-        //             text: "Address: "
-        //         }
-
-        //         TextField {
-        //             id: ipAddressField
-        //             Layout.row: 1
-        //             Layout.column: 1
-        //         }
-
-        //         Button {
-        //             Layout.row: 2
-        //             Layout.column: 1
-        //             Layout.fillWidth: true
-        //             text: "Add Web Interface"
-        //             onClicked: {
-
-        //                 let newName = ipNameField.text
-        //                 let newIP = ipAddressField.text
-        //                 let jsonString = machineAssociatedUrls.properties.value
-        //                 let urlsObj = JSON.parse(jsonString)
-        //                 if (newName == "") {
-        //                     klipperIPAddWarningLabel.text = "Please provide a name!"
-        //                     klipperIPAddWarningLabel.visible = true
-        //                 }
-        //                 else if (newIP == "") {
-        //                     klipperIPAddWarningLabel.text = "Please provide a web address!"
-        //                     klipperIPAddWarningLabel.visible = true
-        //                 }
-        //                 else if (urlsObj[newName] == undefined) {
-        //                     klipperIPAddWarningLabel.visible = false
-        //                     urlsObj[newName] = newIP
-        //                     ipModel.append({ text: newName, value: newIP })
-        //                     ipSelectionComboBox.currentIndex = 0
-        //                     openLinkButton.userLink = get(0).value
-        //                     ipNameField.text = ""
-        //                     ipAddressField.text = ""
-        //                     jsonString = JSON.stringify(urlsObj)
-        //                     machineAssociatedUrls.setPropertyValue("value", jsonString)
-        //                 }
-
-        //             }
-        //         }
-
-        //         Label {
-        //             id: klipperIPAddWarningLabel
-        //             Layout.row: 3
-        //             Layout.column: 1
-        //             Layout.fillWidth: true
-        //             visible: false
-        //             color: "red"
-        //             text: ""
-        //         }
-        //     }
-
-        //     GridLayout {
-        //         id: comboBoxIPGrid
-        //         anchors.horizontalCenter: parent.horizontalCenter
-        //         columns: 2
-
-        //         Cura.ComboBox {
-        //             id: ipSelectionComboBox
-        //             Layout.row: 0
-        //             Layout.column : 0
-        //             Layout.columnSpan: 2
-        //             Layout.fillWidth: true
-        //             Layout.preferredHeight: UM.Theme.getSize("setting_control").height
-
-        //             model: ipModel
-
-        //             textRole: "text"
-
-        //             currentIndex: 0
-
-        //             onActivated: {
-        //                 var newValue = model.get(index).value
-        //                 openLinkButton.userLink = newValue
-        //             }
-        //         }
-
-        //         Button {
-        //             id: openLinkButton
-        //             Layout.row: 1
-        //             Layout.column: 0
-
-        //             text: "Open Link"
-        //             enabled: userLink != ""
-        //             visible: true
-
-        //             property string userLink: ""
-
-        //             onClicked: {
-        //                 if (userLink.startsWith("http")) {
-        //                     Qt.openUrlExternally(userLink)
-        //                 } else {
-        //                     Qt.openUrlExternally("http://" + userLink)
-        //                 }
-        //             }
-        //         }
-
-        //         Button {
-        //             id: deleteLinkButton
-        //             Layout.row: 1
-        //             Layout.column: 1
-
-        //             enabled: ipModel.get(ipSelectionComboBox.currentIndex) != undefined
-
-        //             text: "Remove"
-
-        //             onClicked: {
-        //                 let keyToDelete = ipModel.get(ipSelectionComboBox.currentIndex).text
-        //                 let jsonString = machineAssociatedUrls.properties.value
-        //                 let urlsObj = JSON.parse(jsonString)
-        //                 ipModel.remove(ipSelectionComboBox.currentIndex)
-        //                 ipSelectionComboBox.currentIndex = 0
-        //                 openLinkButton.userLink = get(0).value
-        //                 delete urlsObj[keyToDelete]
-        //                 jsonString = JSON.stringify(urlsObj)
-        //                 machineAssociatedUrls.setPropertyValue("value", jsonString)
-        //             }
-        //         }
-        //     }
-
-        //     ListModel {
-        //         id: ipModel
-        //         function updateModel() {
-        //             clear()
-        //             if(machineAssociatedUrls.properties.value) {
-        //                 let dataModel = JSON.parse(machineAssociatedUrls.properties.value)
-        //                 for(const nickname in dataModel) {
-        //                     append({ text: nickname, value: dataModel[nickname] });
-        //                 }
-        //                 ipSelectionComboBox.currentIndex = 0
-        //                 openLinkButton.userLink = get(0).value
-        //             }
-        //         }
-
-        //         Component.onCompleted: updateModel()
-        //     }
-
-        //     // Remake the model when the model is bound to a different container stack
-        //     Connections
-        //     {
-        //         target: machineAssociatedUrls
-        //         function onContainerStackChanged() { ipModel.updateModel() }
-        //         function onIsValueUsedChanged() { ipModel.updateModel() }
-        //     }
-
-        //     UM.SettingPropertyProvider {
-        //         id: machineAssociatedUrls
-        //         containerStack: Cura.MachineManager.activeMachine
-        //         key: "machine_associated_urls"
-        //         watchedProperties: ["value"]
-        //     }
         }
     }
 

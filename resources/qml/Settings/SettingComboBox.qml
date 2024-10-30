@@ -18,6 +18,7 @@ SettingItem
 
         model: definition != null ? definition.options : null
         textRole: "value"
+        forceHighlight: base.hovered
 
         anchors.fill: parent
 

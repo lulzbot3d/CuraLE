@@ -64,7 +64,7 @@ class VersionUpgrade22to24(VersionUpgrade):
 
             config.remove_option("general", "containers")
 
-            for idx in range(len(container_list)):
+            for idx, _ in enumerate(container_list):
                 config.set("containers", str(idx), container_list[idx])
 
         output = io.StringIO()
@@ -152,9 +152,3 @@ class VersionUpgrade22to24(VersionUpgrade):
         config.write(output)
         return [filename], [output.getvalue()]
 
-    def getCfgVersion(self, serialised: str) -> int:
-        parser = configparser.ConfigParser(interpolation = None)
-        parser.read_string(serialised)
-        format_version = int(parser.get("general", "version")) #Explicitly give an exception when this fails. That means that the file format is not recognised.
-        setting_version = int(parser.get("metadata", "setting_version", fallback = "0"))
-        return format_version * 1000000 + setting_version

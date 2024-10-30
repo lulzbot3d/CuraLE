@@ -1,7 +1,9 @@
 # Copyright (c) 2023 Fargo Additive Manufacturing Equipment 3D, LLC
 # Cura LE is released under the terms of the LGPLv3 or higher.
 
-from PyQt5.QtCore import Qt, pyqtSignal
+from PyQt6.QtCore import Qt, pyqtSignal
+from PyQt6.QtQml import QQmlEngine
+
 from UM.Qt.ListModel import ListModel
 from cura.Machines.Models.BaseMaterialsModel import BaseMaterialsModel
 
@@ -12,10 +14,11 @@ class MaterialBrandsModel(ListModel):
 
     def __init__(self, parent = None):
         super().__init__(parent)
+        QQmlEngine.setObjectOwnership(self, QQmlEngine.ObjectOwnership.CppOwnership)
 
-        self.addRoleName(Qt.UserRole + 1, "name")
-        self.addRoleName(Qt.UserRole + 2, "type")
-        self.addRoleName(Qt.UserRole + 3, "colors")
+        self.addRoleName(Qt.ItemDataRole.UserRole + 1, "name")
+        self.addRoleName(Qt.ItemDataRole.UserRole + 2, "type")
+        self.addRoleName(Qt.ItemDataRole.UserRole + 3, "colors")
 
 class MaterialTypesModel(BaseMaterialsModel):
 
@@ -23,9 +26,10 @@ class MaterialTypesModel(BaseMaterialsModel):
 
     def __init__(self, parent = None):
         super().__init__(parent)
+        QQmlEngine.setObjectOwnership(self, QQmlEngine.ObjectOwnership.CppOwnership)
 
-        self.addRoleName(Qt.UserRole + 1, "name")
-        self.addRoleName(Qt.UserRole + 2, "brands")
+        self.addRoleName(Qt.ItemDataRole.UserRole + 1, "name")
+        self.addRoleName(Qt.ItemDataRole.UserRole + 2, "brands")
 
         self._update()
 

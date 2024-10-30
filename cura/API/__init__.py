@@ -2,10 +2,12 @@
 # Cura is released under the terms of the LGPLv3 or higher.
 from typing import Optional, TYPE_CHECKING
 
-from PyQt5.QtCore import QObject, pyqtProperty
+from PyQt6.QtCore import QObject, pyqtProperty
 
+from cura.API.Backups import Backups
 from cura.API.ConnectionStatus import ConnectionStatus
 from cura.API.Interface import Interface
+from cura.API.Account import Account
 
 if TYPE_CHECKING:
     from cura.CuraApplication import CuraApplication
@@ -32,12 +34,17 @@ class CuraAPI(QObject):
             raise RuntimeError("Tried to create singleton '{class_name}' more than once.".format(class_name = CuraAPI.__name__))
         if application is None:
             raise RuntimeError("Upon first time creation, the application must be set.")
-        cls.__instance = super(CuraAPI, cls).__new__(cls)
+        instance = super(CuraAPI, cls).__new__(cls)
         cls._application = application
-        return cls.__instance
+        return instance
 
     def __init__(self, application: Optional["CuraApplication"] = None) -> None:
         super().__init__(parent = CuraAPI._application)
+        CuraAPI.__instance = self
+
+        self._account = Account(self._application)
+
+        self._backups = Backups(self._application)
 
         self._connectionStatus = ConnectionStatus()
 
@@ -48,18 +55,20 @@ class CuraAPI(QObject):
         self._account.initialize()
 
     @pyqtProperty(QObject, constant = True)
-    def account(self):
+    def account(self) -> "Account":
         """Accounts API"""
-        raise NotImplementedError("Ultimaker accounts are not supported!")
+
+        return self._account
 
     @pyqtProperty(QObject, constant = True)
     def connectionStatus(self) -> "ConnectionStatus":
         return self._connectionStatus
 
     @property
-    def backups(self):
+    def backups(self) -> "Backups":
         """Backups API"""
-        raise NotImplementedError("Ultimaker backups are not supported!")
+
+        return self._backups
 
     @property
     def interface(self) -> "Interface":

@@ -1,6 +1,6 @@
 from typing import Optional
 
-from PyQt5.QtCore import QObject, pyqtSignal, pyqtProperty
+from PyQt6.QtCore import QObject, pyqtSignal, pyqtProperty
 
 from UM.TaskManagement.HttpRequestManager import HttpRequestManager
 
@@ -38,4 +38,3 @@ class ConnectionStatus(QObject):
         if reachable != self._is_internet_reachable:
             self._is_internet_reachable = reachable
             self.internetReachableChanged.emit()
-

@@ -55,14 +55,13 @@ QtObject {
                         return UM.Theme.getColor("setting_control_disabled_border");
                     }
                 }
-                UM.RecolorImage {
+                UM.ColorImage {
                     id: downArrow
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     anchors.rightMargin: UM.Theme.getSize("default_margin").width
                     width: UM.Theme.getSize("standard_arrow").width
                     height: UM.Theme.getSize("standard_arrow").height
-                    sourceSize.height: width
                     color: control.enabled ? UM.Theme.getColor("setting_control_button") : UM.Theme.getColor("setting_category_disabled_text")
                     source: UM.Theme.getIcon("ChevronSingleDown")
                 }
@@ -220,15 +219,13 @@ QtObject {
             }
 
             label: Item {
-                UM.RecolorImage {
+                UM.ColorImage {
                     anchors.centerIn: parent
                     opacity: control.enabled ? 1.0 : 0.2
                     source: control.iconSource
                     width: UM.Theme.getSize("medium_button_icon").width
                     height: UM.Theme.getSize("medium_button_icon").height
                     color: UM.Theme.getColor("icon")
-
-                    sourceSize: UM.Theme.getSize("medium_button_icon")
                 }
             }
         }
@@ -330,7 +327,7 @@ QtObject {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                UM.RecolorImage {
+                UM.ColorImage {
                     id: downArrow
                     anchors.right: parent.right
                     anchors.rightMargin: UM.Theme.getSize("default_lining").width * 2
@@ -339,8 +336,6 @@ QtObject {
                     source: UM.Theme.getIcon("ChevronSingleDown")
                     width: UM.Theme.getSize("standard_arrow").width
                     height: UM.Theme.getSize("standard_arrow").height
-                    sourceSize.width: width + 5 * screenScaleFactor
-                    sourceSize.height: width + 5 * screenScaleFactor
 
                     color: UM.Theme.getColor("setting_control_button");
                 }
@@ -363,13 +358,12 @@ QtObject {
                 border.width: UM.Theme.getSize("default_lining").width
                 border.color: (control.hovered || control._hovered) ? UM.Theme.getColor("checkbox_border_hover") : UM.Theme.getColor("checkbox_border")
 
-                UM.RecolorImage
+                UM.ColorImage
                 {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: Math.round(parent.width / 1)
                     height: Math.round(parent.height / 1)
-                    sourceSize.height: width
                     color: UM.Theme.getColor("checkbox_mark")
                     source: control.exclusiveGroup ? UM.Theme.getIcon("Dot") : UM.Theme.getIcon("Check")
                     opacity: control.checked
@@ -401,12 +395,11 @@ QtObject {
                 border.width: UM.Theme.getSize("default_lining").width;
                 border.color: (control.hovered || control._hovered) ? UM.Theme.getColor("checkbox_border_hover") : UM.Theme.getColor("checkbox_border");
 
-                UM.RecolorImage {
+                UM.ColorImage {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: Math.round(parent.width / 2.5)
                     height: Math.round(parent.height / 2.5)
-                    sourceSize.height: width
                     color: UM.Theme.getColor("checkbox_mark")
                     source: {
                         if (control.checkbox_state == 2) {
@@ -624,12 +617,11 @@ QtObject {
             }
 
             label: Item {
-                UM.RecolorImage {
+                UM.ColorImage {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: Math.floor(control.width / 2)
                     height: Math.floor(control.height / 2)
-                    sourceSize.height: width
                     color:
                     {
                         if(!control.enabled)

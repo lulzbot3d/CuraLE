@@ -4,7 +4,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.3
 
-import UM 1.2 as UM
+import UM 1.5 as UM
 import Cura 1.0 as Cura
 
 // Header of the popup
@@ -21,21 +21,18 @@ Cura.RoundedRectangle
         let headHeight = UM.Theme.getSize("expandable_component_content_header").height
         return (headerFull ? headHeight : headHeight / 3)
     }
-    color: headerFull ? UM.Theme.getColor("secondary") : UM.Theme.getColor("main_window_header_background")
+    color: headerFull ? UM.Theme.getColor("background_1") : UM.Theme.getColor("main_window_header_background")
     cornerSide: Cura.RoundedRectangle.Direction.Up
     border.width: UM.Theme.getSize("default_lining").width
     border.color: UM.Theme.getColor("lining")
     radius: UM.Theme.getSize("default_radius").width
 
-    Label
+    UM.Label
     {
         id: headerLabel
         visible: headerFull
         text: ""
         font: UM.Theme.getFont("medium")
-        renderType: Text.NativeRendering
-        verticalAlignment: Text.AlignVCenter
-        color: UM.Theme.getColor("small_button_text")
         height: parent.height
 
         anchors
@@ -61,10 +58,9 @@ Cura.RoundedRectangle
             verticalCenter: parent.verticalCenter
         }
 
-        contentItem: UM.RecolorImage
+        contentItem: UM.ColorImage
         {
             anchors.fill: parent
-            sourceSize.width: width
             color: closeButton.hovered ? UM.Theme.getColor("small_button_text_hover") : UM.Theme.getColor("small_button_text")
             source: UM.Theme.getIcon("Cancel")
         }

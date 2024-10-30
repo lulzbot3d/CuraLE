@@ -1,13 +1,14 @@
-# Copyright (c) 2019 Ultimaker B.V.
+# Copyright (c) 2022 Ultimaker B.V.
 # Cura is released under the terms of the LGPLv3 or higher.
 
-from PyQt5.QtCore import QObject, pyqtProperty, pyqtSignal, pyqtSlot
+from PyQt6.QtCore import QObject, pyqtProperty, pyqtSignal, pyqtSlot
 from typing import Any, Dict, List, Set, Tuple, TYPE_CHECKING
 
 from UM.Logger import Logger
 from UM.Settings.InstanceContainer import InstanceContainer
 
 import cura.CuraApplication
+from UM.Signal import Signal
 from cura.Machines.ContainerTree import ContainerTree
 from cura.Settings.cura_empty_instance_containers import empty_intent_container
 
@@ -29,6 +30,7 @@ class IntentManager(QObject):
         return cls.__instance
 
     intentCategoryChanged = pyqtSignal() #Triggered when we switch categories.
+    intentCategoryChangedSignal = Signal()
 
     def intentMetadatas(self, definition_id: str, nozzle_name: str, material_base_file: str) -> List[Dict[str, Any]]:
         """Gets the metadata dictionaries of all intent profiles for a given
@@ -143,10 +145,24 @@ class IntentManager(QObject):
     @pyqtProperty(str, notify = intentCategoryChanged)
     def currentIntentCategory(self) -> str:
         application = cura.CuraApplication.CuraApplication.getInstance()
-        active_extruder_stack = application.getMachineManager().activeStack
-        if active_extruder_stack is None:
-            return ""
-        return active_extruder_stack.intent.getMetaDataEntry("intent_category", "")
+        global_stack = application.getGlobalContainerStack()
+
+        active_intent = "default"
+        if global_stack is None:
+            return active_intent
+
+        # Loop over all active extruders and check if they have an intent that isn't default.
+        # The logic behind this is that support materials (for instance, PVA) don't have intents, but they should be
+        # combinable with all other intents. So if one extruder has "engineering" as an intent and the other has
+        # "default" the 'dominant' intent is "engineering"
+        for extruder_stack in global_stack.extruderList:
+            if not extruder_stack.isEnabled:  # Ignore disabled stacks
+                continue
+            extruder_intent = extruder_stack.intent.getMetaDataEntry("intent_category", "")
+            if extruder_intent != "default":
+                active_intent = extruder_intent
+
+        return active_intent
 
     @pyqtSlot(str, str)
     def selectIntent(self, intent_category: str, quality_type: str) -> None:
@@ -189,3 +205,4 @@ class IntentManager(QObject):
         application.getMachineManager().setQualityGroupByQualityType(quality_type)
         if old_intent_category != intent_category:
             self.intentCategoryChanged.emit()
+            self.intentCategoryChangedSignal.emit()

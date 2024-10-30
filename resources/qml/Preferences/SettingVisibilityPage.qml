@@ -1,22 +1,30 @@
-// Copyright (c) 2016 Ultimaker B.V.
+// Copyright (c) 2022 Ultimaker B.V.
 // Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.1
-import QtQuick.Controls 1.1
-import QtQuick.Controls.Styles 1.1
+import QtQuick.Controls 2.15
 
-import QtQuick.Controls 2.3 as NewControls
-
-import UM 1.2 as UM
+import UM 1.5 as UM
 
 import Cura 1.0 as Cura
 
-UM.PreferencesPage {
-    title: catalog.i18nc("@title:tab", "Setting Visibility");
+UM.PreferencesPage
+{
+    title: catalog.i18nc("@title:tab", "Setting Visibility")
+
+    Item { enabled: false; UM.I18nCatalog { id: catalog; name: "cura"} }
 
     property QtObject settingVisibilityPresetsModel: CuraApplication.getSettingVisibilityPresetsModel()
 
     property int scrollToIndex: 0
+
+    buttons: [
+        Cura.SecondaryButton
+        {
+            text: catalog.i18nc("@action:button", "Defaults")
+            onClicked: reset()
+        }
+    ]
 
     signal scrollToSection( string key )
     onScrollToSection:
@@ -30,20 +38,22 @@ UM.PreferencesPage {
     }
     resetEnabled: true;
 
-    Item {
-        id: base;
-        anchors.fill: parent;
+    Item
+    {
+        id: base
+        anchors.fill: parent
 
-        CheckBox {
+        UM.CheckBox
+        {
             id: toggleVisibleSettings
             anchors
             {
-                verticalCenter: filter.verticalCenter;
-                left: parent.left;
+                verticalCenter: filter.verticalCenter
+                left: parent.left
                 leftMargin: UM.Theme.getSize("default_margin").width
             }
             text: catalog.i18nc("@label:textbox", "Check all")
-            checkedState:
+            checkState:
             {
                 if(definitionsModel.visibleCount == definitionsModel.categoryCount)
                 {
@@ -58,12 +68,13 @@ UM.PreferencesPage {
                     return Qt.PartiallyChecked
                 }
             }
-
-            MouseArea {
+            tristate: true
+            MouseArea
+            {
                 anchors.fill: parent;
                 onClicked:
                 {
-                    if(parent.checkedState == Qt.Unchecked || parent.checkedState == Qt.PartiallyChecked)
+                    if (parent.checkState == Qt.Unchecked || parent.checkState == Qt.PartiallyChecked)
                     {
                         definitionsModel.setAllExpandedVisible(true)
                     }
@@ -75,8 +86,9 @@ UM.PreferencesPage {
             }
         }
 
-        TextField {
-            id: filter;
+        Cura.TextField
+        {
+            id: filter
 
             anchors
             {
@@ -92,15 +104,14 @@ UM.PreferencesPage {
             onTextChanged: definitionsModel.filter = {"i18n_label|i18n_description": "*" + text}
         }
 
-        NewControls.ComboBox {
+        Cura.ComboBox
+        {
             id: visibilityPreset
-            height: filter.height
-            width: 150 * screenScaleFactor
+            width: UM.Theme.getSize("action_button").width
             anchors
             {
                 //top: parent.top
                 right: parent.right
-                //bottom: scrollView.top
                 verticalCenter: filter.verticalCenter
             }
 
@@ -111,7 +122,7 @@ UM.PreferencesPage {
                 var idx = -1;
                 for(var i = 0; i < settingVisibilityPresetsModel.items.length; ++i)
                 {
-                    if(settingVisibilityPresetsModel.items[i].presetId == settingVisibilityPresetsModel.activePreset)
+                    if(settingVisibilityPresetsModel.items[i].presetId === settingVisibilityPresetsModel.activePreset)
                     {
                         idx = i;
                         break;
@@ -126,71 +137,58 @@ UM.PreferencesPage {
             }
         }
 
-        ScrollView {
-            id: scrollView
-
-            frameVisible: true
-
+        ListView
+        {
+            id: settingsListView
             anchors
             {
-                top: filter.bottom;
+                top: filter.bottom
                 topMargin: UM.Theme.getSize("default_margin").height
-                left: parent.left;
-                right: parent.right;
-                bottom: parent.bottom;
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
             }
-            ListView {
-                id: settingsListView
 
-                model: UM.SettingDefinitionsModel
+            clip: true
+            ScrollBar.vertical: UM.ScrollBar { id: scrollBar }
+
+            model: UM.SettingDefinitionsModel
+            {
+                id: definitionsModel
+                containerId: Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.definition.id: ""
+                showAll: true
+                exclude: ["machine_settings", "command_line_settings", "ppr"]
+                showAncestors: true
+                expanded: ["*"]
+                visibilityHandler: UM.SettingPreferenceVisibilityHandler {}
+            }
+
+            property Component settingVisibilityCategory: Cura.SettingVisibilityCategory {}
+            property Component settingVisibilityItem: Cura.SettingVisibilityItem {}
+
+            delegate: Loader
+            {
+                id: loader
+
+                width: settingsListView.width - scrollBar.width
+                height: model.type !== undefined ? UM.Theme.getSize("section").height : 0
+
+                property var definition: model
+                property var settingDefinitionsModel: definitionsModel
+
+                asynchronous: true
+                active: model.type !== undefined
+                sourceComponent:
                 {
-                    id: definitionsModel
-                    containerId: Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.definition.id: ""
-                    showAll: true
-                    exclude: ["machine_settings", "command_line_settings"]
-                    showAncestors: true
-                    expanded: ["*"]
-                    visibilityHandler: UM.SettingPreferenceVisibilityHandler {}
-                }
-
-                delegate: Loader {
-                    id: loader
-
-                    width: settingsListView.width
-                    height: model.type != undefined ? UM.Theme.getSize("section").height : 0
-
-                    property var definition: model
-                    property var settingDefinitionsModel: definitionsModel
-
-                    asynchronous: true
-                    active: model.type != undefined
-                    sourceComponent:
+                    switch (model.type)
                     {
-                        switch(model.type)
-                        {
-                            case "category":
-                                return settingVisibilityCategory
-                            default:
-                                return settingVisibilityItem
-                        }
+                        case "category":
+                            return settingsListView.settingVisibilityCategory
+                        default:
+                            return settingsListView.settingVisibilityItem
                     }
                 }
             }
-        }
-
-        UM.I18nCatalog { name: "cura"; }
-        SystemPalette { id: palette; }
-
-        Component {
-            id: settingVisibilityCategory;
-
-            UM.SettingVisibilityCategory { }
-        }
-
-        Component {
-            id: settingVisibilityItem;
-
-            UM.SettingVisibilityItem { }
         }
     }
 }

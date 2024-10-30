@@ -1,20 +1,18 @@
-// Copyright (c) 2018 Ultimaker B.V.
+// Copyright (c) 2022 UltiMaker
 // Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.7
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Layouts 1.3
 
-import UM 1.2 as UM
-import Cura 1.0 as Cura
+import UM 1.5 as UM
+import Cura 1.7 as Cura
 
 
 //
 //  Adhesion
 //
-Item {
+RecommendedSettingSection {
     id: enableAdhesionRow
-    height: childrenRect.height
 
     property real labelColumnWidth: Math.round(width / 3)
     property bool alive: Cura.MachineManager.activeMachine != null
@@ -62,7 +60,7 @@ Item {
             containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
             settingKey: "adhesion_type"
             controlWidth: parent.width
-            useInBuiltTooltip: false
+            //useInBuiltTooltip: false
         }
     }
 }

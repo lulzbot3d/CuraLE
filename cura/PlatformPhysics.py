@@ -1,8 +1,7 @@
-# Copyright (c) 2021 Ultimaker B.V.
+# Copyright (c) 2022 Ultimaker B.V.
 # Cura is released under the terms of the LGPLv3 or higher.
 
-from PyQt5.QtCore import QTimer
-from shapely.errors import TopologicalError
+from PyQt6.QtCore import QTimer
 
 from UM.Application import Application
 from UM.Logger import Logger
@@ -40,6 +39,11 @@ class PlatformPhysics:
 
         Application.getInstance().getPreferences().addPreference("physics/automatic_push_free", True)
         Application.getInstance().getPreferences().addPreference("physics/automatic_drop_down", False)
+        self._app_all_model_drop = False
+
+    def setAppAllModelDropDown(self):
+        self._app_all_model_drop = True
+        self._onChangeTimerFinished()
 
     def _onSceneChanged(self, source):
         if not source.callDecoration("isSliceable"):
@@ -51,8 +55,13 @@ class PlatformPhysics:
         if not self._enabled:
             return
 
+        app_instance = Application.getInstance()
+        app_preferences = app_instance.getPreferences()
+        app_automatic_drop_down = app_preferences.getValue("physics/automatic_drop_down")
+        app_automatic_push_free = app_preferences.getValue("physics/automatic_push_free")
+
         root = self._controller.getScene().getRoot()
-        build_volume = Application.getInstance().getBuildVolume()
+        build_volume = app_instance.getBuildVolume()
         build_volume.updateNodeBoundaryCheck()
 
         # Keep a list of nodes that are moving. We use this so that we don't move two intersecting objects in the
@@ -76,16 +85,16 @@ class PlatformPhysics:
             # Move it downwards if bottom is above platform
             move_vector = Vector()
 
-            if Application.getInstance().getPreferences().getValue("physics/automatic_drop_down") and not (node.getParent() and node.getParent().callDecoration("isGroup") or node.getParent() != root) and node.isEnabled(): #If an object is grouped, don't move it down
+            if (node.getSetting(SceneNodeSettings.AutoDropDown, app_automatic_drop_down) or self._app_all_model_drop) and not (node.getParent() and node.getParent().callDecoration("isGroup") or node.getParent() != root)  and node.isEnabled():
                 z_offset = node.callDecoration("getZOffset") if node.getDecorator(ZOffsetDecorator.ZOffsetDecorator) else 0
-                move_vector = move_vector.set(y = -bbox.bottom + z_offset)
+                move_vector = move_vector.set(y=-bbox.bottom + z_offset)
 
             # If there is no convex hull for the node, start calculating it and continue.
-            if not node.getDecorator(ConvexHullDecorator) and not node.callDecoration("isNonPrintingMesh"):
+            if not node.getDecorator(ConvexHullDecorator) and not node.callDecoration("isNonPrintingMesh") and node.callDecoration("getLayerData") is None:
                 node.addDecorator(ConvexHullDecorator())
 
             # only push away objects if this node is a printing mesh
-            if not node.callDecoration("isNonPrintingMesh") and Application.getInstance().getPreferences().getValue("physics/automatic_push_free"):
+            if not node.callDecoration("isNonPrintingMesh") and app_automatic_push_free:
                 # Do not move locked nodes
                 if node.getSetting(SceneNodeSettings.LockPosition):
                     continue
@@ -138,11 +147,7 @@ class PlatformPhysics:
                             own_convex_hull = node.callDecoration("getConvexHull")
                             other_convex_hull = other_node.callDecoration("getConvexHull")
                             if own_convex_hull and other_convex_hull:
-                                try:
-                                    overlap = own_convex_hull.translate(move_vector.x, move_vector.z).intersectsPolygon(other_convex_hull)
-                                except TopologicalError as e: # Can happen if the convex hull is degenerate?
-                                    Logger.warning("Got a topological error when calculating convex hull intersection: {err}".format(err = str(e)))
-                                    overlap = False
+                                overlap = own_convex_hull.translate(move_vector.x, move_vector.z).intersectsPolygon(other_convex_hull)
                                 if overlap:  # Moving ensured that overlap was still there. Try anew!
                                     temp_move_vector = move_vector.set(x = move_vector.x + overlap[0] * self._move_factor,
                                                                        z = move_vector.z + overlap[1] * self._move_factor)
@@ -168,6 +173,8 @@ class PlatformPhysics:
                 op = PlatformPhysicsOperation.PlatformPhysicsOperation(node, move_vector)
                 op.push()
 
+        # setting this drop to model same as app_automatic_drop_down
+        self._app_all_model_drop = False
         # After moving, we have to evaluate the boundary checks for nodes
         build_volume.updateNodeBoundaryCheck()
 

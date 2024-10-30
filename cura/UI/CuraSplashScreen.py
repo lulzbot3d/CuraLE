@@ -1,9 +1,9 @@
 # Copyright (c) 2020 Ultimaker B.V.
 # Uranium is released under the terms of the LGPLv3 or higher.
 
-from PyQt5.QtCore import Qt, QCoreApplication, QTimer
-from PyQt5.QtGui import QPixmap, QColor, QFont, QPen, QPainter
-from PyQt5.QtWidgets import QSplashScreen
+from PyQt6.QtCore import Qt, QCoreApplication, QTimer
+from PyQt6.QtGui import QPixmap, QColor, QFont, QPen, QPainter
+from PyQt6.QtWidgets import QSplashScreen
 
 from UM.Resources import Resources
 from UM.Application import Application
@@ -14,9 +14,16 @@ import time
 class CuraSplashScreen(QSplashScreen):
     def __init__(self):
         super().__init__()
-        self._scale = 0.7
+        self._scale = 1
         self._version_y_offset = 0  # when extra visual elements are in the background image, move version text down
-        splash_image = QPixmap(Resources.getPath(Resources.Images, "cura.jpg"))
+
+        if ApplicationMetadata.IsAlternateVersion:
+            splash_image = QPixmap(Resources.getPath(Resources.Images, "curale-splashscreen.png"))
+        elif ApplicationMetadata.IsEnterpriseVersion:
+            splash_image = QPixmap(Resources.getPath(Resources.Images, "curale-splashscreen.png"))
+            self._version_y_offset = 26
+        else:
+            splash_image = QPixmap(Resources.getPath(Resources.Images, "curale-splashscreen.png"))
 
         self.setPixmap(splash_image)
 
@@ -56,8 +63,8 @@ class CuraSplashScreen(QSplashScreen):
 
         painter.save()
         painter.setPen(QColor(0, 0, 0, 255))
-        painter.setRenderHint(QPainter.Antialiasing)
-        painter.setRenderHint(QPainter.Antialiasing, True)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing, True)
 
         version = Application.getInstance().getVersion().split("-")
 
@@ -65,20 +72,19 @@ class CuraSplashScreen(QSplashScreen):
         font = QFont()  # Using system-default font here
         font.setPixelSize(24)
         painter.setFont(font)
-        painter.drawText(420, 105 + self._version_y_offset, round(330 * self._scale), round(230 * self._scale), Qt.AlignLeft | Qt.AlignTop, version[0])
-        if len(version) > 1:
-            font.setPixelSize(26)
-            painter.setFont(font)
-            painter.setPen(QColor(0, 0, 0, 255))
-            painter.drawText(400, 435 + self._version_y_offset, round(330 * self._scale), round(255 * self._scale), Qt.AlignLeft | Qt.AlignTop, version[1])
+
+        if len(version) == 1:
+            painter.drawText(420, 105 + self._version_y_offset, round(330 * self._scale), round(230 * self._scale), Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop, version[0] if not ApplicationMetadata.IsAlternateVersion else ApplicationMetadata.CuraBuildType)
+        elif len(version) > 1:
+            painter.drawText(420, 105 + self._version_y_offset, round(330 * self._scale), round(230 * self._scale), Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop, f"{version[0]}-{version[1]}" if not ApplicationMetadata.IsAlternateVersion else ApplicationMetadata.CuraBuildType)
         painter.setPen(QColor(255, 255, 255, 255))
 
         # Draw the loading image
         pen = QPen()
-        pen.setWidthF(6 * self._scale)
+        pen.setWidthF(3 * self._scale)
         pen.setColor(QColor(193, 216, 47, 255))
         painter.setPen(pen)
-        painter.drawArc(60, 417, round(32 * self._scale), round(32 * self._scale), round(self._loading_image_rotation_angle * 16), 300 * 16)
+        painter.drawArc(55, 412, round(32 * self._scale), round(32 * self._scale), round(self._loading_image_rotation_angle * 16), 300 * 16)
 
         # Draw message text
         if self._current_message:
@@ -89,7 +95,7 @@ class CuraSplashScreen(QSplashScreen):
             painter.setPen(pen)
             painter.setFont(font)
             painter.drawText(100, 128, 606, 600,
-                             Qt.AlignLeft | Qt.AlignVCenter | Qt.TextWordWrap,
+                             Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter | Qt.TextFlag.TextWordWrap,
                              self._current_message)
 
         painter.restore()
@@ -101,7 +107,7 @@ class CuraSplashScreen(QSplashScreen):
 
         self._current_message = message
         self.messageChanged.emit(message)
-        QCoreApplication.flush()
+        QCoreApplication.processEvents()  # Used to be .flush() -- this might be the closest alternative, but uncertain.
         self.repaint()
 
     def close(self):

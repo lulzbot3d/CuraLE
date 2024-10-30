@@ -19,7 +19,7 @@ class AutoDetectBaudJob(Job):
         self._all_baud_rates = [250000, 115200]
 
     def run(self) -> None:
-        Logger.log("d", "Auto Detect Baud Connection Job started.")
+        Logger.debug(f"Auto detect baud rate started for {self._serial_port}")
         wait_response_timeouts = [3, 5]
         wait_bootloader_times = [1.5]
         write_timeout = 3
@@ -41,7 +41,7 @@ class AutoDetectBaudJob(Job):
                     wait_bootloader = wait_bootloader_times[retry]
                 else:
                     wait_bootloader = wait_bootloader_times[-1]
-                Logger.log("d", "Checking baud rate {0}.".format(baud_rate))
+                Logger.debug(f"Checking baud rate {baud_rate}.")
 
                 if serial is None:
                     try:
@@ -49,9 +49,9 @@ class AutoDetectBaudJob(Job):
                     except SerialException:
                         if retry == tries - 1:
                             Logger.logException("w", "Unable to create serial")
-                            Logger.log("w", "AutoDetect Baud Failed")
+                            Logger.warning(f"AutoDetect Baud Failed")
                         else:
-                            Logger.log("w", "Serial creation failed, printer may be busy... retrying in 10 seconds")
+                            Logger.warning(f"Serial creation failed, printer may be busy... retrying in 10 seconds")
                             sleep(10)
                         continue
                 else:
@@ -60,7 +60,7 @@ class AutoDetectBaudJob(Job):
                         serial.baudrate = baud_rate
                     except ValueError:
                         continue
-                Logger.log("d", "Serial created, waiting {0} seconds for bootloading sequence.".format(wait_bootloader))
+                Logger.debug(f"Serial created, waiting {wait_bootloader} seconds for bootloading sequence.")
                 sleep(wait_bootloader)  # Ensure that we are not talking to the boot loader. 1.5 seconds seems to be the magic number
 
                 try:

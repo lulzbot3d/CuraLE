@@ -1,16 +1,15 @@
-//Copyright (c) 2019 Ultimaker B.V.
+//Copyright (c) 2022 Ultimaker B.V.
 //Cura is released under the terms of the LGPLv3 or higher.
 
-import QtQuick 2.2
-import QtQuick.Controls 1.1
-import QtQuick.Controls.Styles 1.1
-import QtQuick.Layouts 1.1
+import QtQuick 2.15
+import QtQuick.Controls 2.1
 
-import UM 1.2 as UM
+import UM 1.5 as UM
 import Cura 1.0 as Cura
 
 
-Item {
+Item
+{
     property alias color: background.color
     property var extruderModel
     property var position: index
@@ -20,39 +19,32 @@ Item {
     implicitWidth: parent.width
     implicitHeight: Math.round(UM.Theme.getSize("print_setup_extruder_box").height * 0.85)
 
-    UM.SettingPropertyProvider {
+    UM.SettingPropertyProvider
+    {
         id: extruderTemperature
         containerStackId: Cura.ExtruderManager.extruderIds[position]
-        key: "material_print_temperature"
+        key: "material_print_temperature_layer_0"
         watchedProperties: ["value", "minimum_value", "maximum_value", "resolve"]
         storeIndex: 0
-
-        property var resolve: Cura.MachineManager.activeStack != Cura.MachineManager.activeMachine ? properties.resolve : "None"
     }
 
-    Rectangle {
+    Rectangle
+    {
         id: background
         anchors.fill: parent
 
-        Label { //Extruder name.
-            text: {
-                if (Cura.MachineManager.activeMachine) {
-                    let exName = Cura.MachineManager.activeMachine.extruderList[position].name
-                    if (exName !== "") {
-                        return exName
-                    }
-                } else {
-                    return catalog.i18nc("@label", "Extruder")
-                }
-            }
-            color: UM.Theme.getColor("text")
-            font: UM.Theme.getFont("default")
+        // Extruder name.
+        UM.Label
+        {
+            text: Cura.MachineManager.activeMachine.extruderList[position].name !== "" ? Cura.MachineManager.activeMachine.extruderList[position].name : catalog.i18nc("@label", "Extruder")
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
         }
 
-        Label { //Target temperature.
+        // Target temperature.
+        UM.Label
+        {
             id: extruderTargetTemperature
             text: Math.round(extruderModel.targetHotendTemperature) + "°C"
             font: UM.Theme.getFont("default_bold")
@@ -61,7 +53,9 @@ Item {
             anchors.rightMargin: UM.Theme.getSize("default_margin").width
             anchors.bottom: extruderCurrentTemperature.bottom
 
-            MouseArea { //For tooltip.
+            //For tooltip.
+            MouseArea
+            {
                 id: extruderTargetTemperatureTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
@@ -82,16 +76,21 @@ Item {
                 }
             }
         }
-        Label { //Temperature indication.
+
+        //Temperature indication.
+        UM.Label
+        {
             id: extruderCurrentTemperature
             text: Math.round(extruderModel.hotendTemperature) + "°C"
-            color: UM.Theme.getColor("text")
             font: UM.Theme.getFont("large_bold")
             anchors.right: extruderTargetTemperature.left
             anchors.top: parent.top
             anchors.margins: UM.Theme.getSize("default_margin").width
 
-            MouseArea { //For tooltip.
+
+            //For tooltip.
+            MouseArea
+            {
                 id: extruderCurrentTemperatureTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
@@ -113,7 +112,9 @@ Item {
             }
         }
 
-        Rectangle { //Input field for pre-heat temperature.
+        //Input field for pre-heat temperature.
+        Rectangle
+        {
             id: preheatTemperatureControl
             color: !enabled ? UM.Theme.getColor("setting_control_disabled") : showError ? UM.Theme.getColor("setting_validation_error_background") : UM.Theme.getColor("setting_validation_ok")
             property var showError:
@@ -152,14 +153,18 @@ Item {
             anchors.bottom: parent.bottom
             width: UM.Theme.getSize("monitor_preheat_temperature_control").width
             height: UM.Theme.getSize("monitor_preheat_temperature_control").height
-            visible: true
-            Rectangle { //Highlight of input field.
+            visible: extruderModel != null ? enabled && extruderModel.canPreHeatHotends && !extruderModel.isPreheating : true
+            //Highlight of input field.
+            Rectangle
+            {
                 anchors.fill: parent
                 anchors.margins: UM.Theme.getSize("default_lining").width
                 color: UM.Theme.getColor("setting_control_highlight")
                 opacity: preheatTemperatureControl.hovered ? 1.0 : 0
             }
-            MouseArea { //Change cursor on hovering.
+            //Change cursor on hovering.
+            MouseArea
+            {
                 id: preheatTemperatureInputMouseArea
                 hoverEnabled: true
                 anchors.fill: parent
@@ -181,7 +186,8 @@ Item {
                     }
                 }
             }
-            Label {
+            UM.Label
+            {
                 id: unit
                 anchors.right: parent.right
                 anchors.rightMargin: UM.Theme.getSize("setting_unit_margin").width
@@ -189,7 +195,6 @@ Item {
 
                 text: "°C";
                 color: UM.Theme.getColor("setting_unit")
-                font: UM.Theme.getFont("default")
             }
             TextInput {
                 id: preheatTemperatureInput
@@ -198,7 +203,7 @@ Item {
                 selectByMouse: true
                 maximumLength: 5
                 enabled: parent.enabled
-                validator: RegExpValidator { regExp: /^-?[0-9]{0,9}[.,]?[0-9]{0,10}$/ } //Floating point regex.
+                validator: RegularExpressionValidator { regularExpression: /^-?[0-9]{0,9}[.,]?[0-9]{0,10}$/ } //Floating point regex.
                 anchors.left: parent.left
                 anchors.leftMargin: UM.Theme.getSize("setting_unit_margin").width
                 anchors.right: unit.left
@@ -219,7 +224,8 @@ Item {
             }
         }
 
-        Button { //The pre-heat button.
+        Cura.SecondaryButton
+        {
             id: preheatButton
             height: UM.Theme.getSize("setting_control").height
             visible: extruderModel != null ? extruderModel.canPreHeatHotends: true
@@ -295,49 +301,25 @@ Item {
                     }
                     Behavior on color
                     {
-                        ColorAnimation {
+                        ColorAnimation
+                        {
                             duration: 50
                         }
                     }
-
-                    Label {
-                        id: actualLabel
-                        anchors.centerIn: parent
-                        color:
-                        {
-                            if(!control.enabled)
-                            {
-                                return UM.Theme.getColor("action_button_disabled_text");
-                            }
-                            else if(control.pressed)
-                            {
-                                return UM.Theme.getColor("action_button_active_text");
-                            }
-                            else if(control.hovered)
-                            {
-                                return UM.Theme.getColor("action_button_hovered_text");
-                            }
-                            else
-                            {
-                                return UM.Theme.getColor("action_button_text");
-                            }
-                        }
-                        font: UM.Theme.getFont("medium")
-                        text:
-                        {
-                            if(extruderModel == null)
-                            {
-                                return ""
-                            }
-                            if(extruderModel.isPreheating )
-                            {
-                                return catalog.i18nc("@button Cancel pre-heating", "Cancel")
-                            } else
-                            {
-                                return catalog.i18nc("@button", "Pre-heat")
-                            }
-                        }
-                    }
+                }
+            }
+            text:
+            {
+                if(extruderModel == null)
+                {
+                    return ""
+                }
+                if(extruderModel.isPreheating )
+                {
+                    return catalog.i18nc("@button Cancel pre-heating", "Cancel")
+                } else
+                {
+                    return catalog.i18nc("@button", "Pre-heat")
                 }
             }
 
@@ -370,7 +352,9 @@ Item {
             }
         }
 
-        Rectangle { //Material colour indication.
+        //Material colour indication.
+        Rectangle
+        {
             id: materialColor
             width: Math.floor(materialName.height * 0.75)
             height: Math.floor(materialName.height * 0.75)
@@ -383,7 +367,9 @@ Item {
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
             anchors.verticalCenter: materialName.verticalCenter
 
-            MouseArea { //For tooltip.
+            //For tooltip.
+            MouseArea
+            {
                 id: materialColorTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
@@ -401,16 +387,18 @@ Item {
                 }
             }
         }
-        Label { //Material name.
+        //Material name.
+        UM.Label
+        {
             id: materialName
             text: extruderModel.activeMaterial != null ? extruderModel.activeMaterial.type : ""
-            font: UM.Theme.getFont("default")
-            color: UM.Theme.getColor("text")
             anchors.left: materialColor.right
             anchors.bottom: parent.bottom
             anchors.margins: UM.Theme.getSize("default_margin").width
 
-            MouseArea { //For tooltip.
+            //For tooltip.
+            MouseArea
+            {
                 id: materialNameTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
@@ -428,16 +416,19 @@ Item {
                 }
             }
         }
-        Label { //Variant name.
+
+        //Variant name.
+        UM.Label
+        {
             id: variantName
             text: extruderModel.hotendID
-            font: UM.Theme.getFont("default")
-            color: UM.Theme.getColor("text")
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.margins: UM.Theme.getSize("default_margin").width
 
-            MouseArea { //For tooltip.
+            //For tooltip.
+            MouseArea
+            {
                 id: variantNameTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
@@ -445,7 +436,7 @@ Item {
                     if (containsMouse) {
                         base.showTooltip(
                             base,
-                            {x: 0, y: parent.mapToItem(base, 0, -parent.height / 4).y},
+                            { x: 0, y: parent.mapToItem(base, 0, -parent.height / 4).y },
                             catalog.i18nc("@tooltip", "The nozzle inserted in this extruder.")
                         );
                     }

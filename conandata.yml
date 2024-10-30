@@ -1,0 +1,247 @@
+version: "5.8.1"
+requirements:
+  - "curale_resources/5.8.1@lulzbot/testing"
+  - "uraniumle/5.8.1"
+  - "curaenginele/5.8.1"
+  - "curale_binary_data/5.8.1"
+  - "fdm_materialsle/5.8.1@lulzbot/testing"
+  - "curaenginele_plugin_gradual_flow/0.1.0"
+  - "pysavitarle/5.3.0"
+  - "pynest2dle/5.3.0"
+requirements_internal:
+  - "fdm_materialsle/5.8.1"
+  - "curale_private_data/(latest)@internal/testing"
+urls:
+    default:
+        cloud_api_root: ""
+        cloud_account_api_root: ""
+        marketplace_root: ""
+        digital_factory_url: ""
+        cura_latest_url: "https://software.lulzbot.com/latest.json"
+    staging:
+        cloud_api_root: ""
+        cloud_account_api_root: ""
+        marketplace_root: ""
+        digital_factory_url: ""
+        cura_latest_url: "https://software.lulzbot.com/latest.json"
+pyinstaller:
+    runinfo:
+        entrypoint: "cura_app.py"
+    datas:
+        curale_plugins:
+            package: "curale"
+            src: "plugins"
+            dst: "share/curale/plugins"
+        curaenginele_gradual_flow_plugin:
+            package: "curaenginele_plugin_gradual_flow"
+            src: "res/plugins/CuraEngineLEGradualFlow"
+            dst: "share/curale/plugins/CuraEngineLEGradualFlow"
+        curaenginele_gradual_flow_plugin_bundled:
+            package: "curaenginele_plugin_gradual_flow"
+            src: "res/bundled_packages"
+            dst: "share/curale/resources/bundled_packages"
+        curale_resources:
+            package: "curale_resources"
+            src: "resources"
+            dst: "share/curale/resources"
+        curale_shared_resources:
+            package: "curale_resources"
+            src: "res"
+            dst: "share/curale/resources"
+        curale_private_data:
+            package: "curale_private_data"
+            src: "res"
+            dst: "share/curale"
+            internal: true
+        uraniumle_plugins:
+            package: "uraniumle"
+            src: "plugins"
+            dst: "share/uraniumle/plugins"
+        uraniumle_resources:
+            package: "uraniumle"
+            src: "resources"
+            dst: "share/uraniumle/resources"
+        uraniumle_um_qt_qml_um:
+            package: "uraniumle"
+            src: "site-packages/UM/Qt/qml/UM"
+            dst: "PyQt6/Qt6/qml/UM"
+        curale_binary_data:
+            package: "curale_binary_data"
+            src: "resources/curale/resources"
+            dst: "share/curale/resources"
+        uraniumle_binary_data:
+            package: "curale_binary_data"
+            src: "resources/uranium/resources"
+            dst: "share/uranium/resources"
+        windows_binary_data:
+            package: "curale_binary_data"
+            src: "windows"
+            dst: "share/windows"
+        fdm_materialsle:
+            package: "fdm_materialsle"
+            src: "res/resources/materials"
+            dst: "share/curale/resources/materials"
+        tcl:
+            package: "tcl"
+            src: "lib/tcl8.6"
+            dst: "tcl"
+        tk:
+            package: "tk"
+            src: "lib/tk8.6"
+            dst: "tk"
+    binaries:
+        curaenginele:
+            package: "curaenginele"
+            src: "bin"
+            dst: "."
+            binary: "CuraEngineLE"
+        curaenginele_gradual_flow_plugin_service:
+            package: "curaenginele_plugin_gradual_flow"
+            src: "bin"
+            dst: "."
+            binary: "curaenginele_plugin_gradual_flow"
+    hiddenimports:
+        - "pySavitarLE"
+        - "pyArcusLE"
+        - "pynest2dLE"
+        - "PyQt6"
+        - "PyQt6.QtNetwork"
+        - "PyQt6.sip"
+        - "logging.handlers"
+        - "zeroconf"
+        - "fcntl"
+        - "stl"
+        - "serial"
+    collect_all:
+        - "cura"
+        - "UM"
+        - "serial"
+        - "Charon"
+        - "sqlite3"
+        - "trimesh"
+        - "win32ctypes"
+        - "PyQt6.QtNetwork"
+        - "PyQt6.sip"
+        - "stl"
+    icon:
+        Windows: "./icons/CuraLE.ico"
+        Macos: "./icons/curale.icns"
+        Linux: "./icons/curale-128.png"
+pycharm_targets:
+  - jinja_path: .run_templates/pycharm_cura_run.run.xml.jinja
+    module_name: CuraLE
+    name: curale
+    script_name: cura_app.py
+  - jinja_path: .run_templates/pycharm_cura_run.run.xml.jinja
+    module_name: CuraLE
+    name: curale_external_engine
+    parameters: --external-backend
+    script_name: cura_app.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in tests
+    script_name: tests/
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestBuildVolume.py
+    script_name: tests/TestBuildVolume.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestConvexHullDecorator.py
+    script_name: tests/TestConvexHullDecorator.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestCuraSceneNode.py
+    script_name: tests/TestCuraSceneNode.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestCuraSceneNode.py
+    script_name: tests/TestExtruderManager.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestGCodeListDecorator.py
+    script_name: tests/TestGCodeListDecorator.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestHitChecker.py
+    script_name: tests/TestHitChecker.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestIntentManager.py
+    script_name: tests/TestIntentManager.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestLayer.py
+    script_name: tests/TestLayer.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestMachineAction.py
+    script_name: tests/TestMachineAction.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestMachineManager.py
+    script_name: tests/TestMachineManager.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestOAuth2.py
+    script_name: tests/TestOAuth2.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestObjectsModel.py
+    script_name: tests/TestObjectsModel.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestPrintInformation.py
+    script_name: tests/TestPrintInformation.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestPrintOrderManager.py
+    script_name: tests/TestPrintOrderManager.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestProfileRequirements.py
+    script_name: tests/TestProfileRequirements.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestThemes.py
+    script_name: tests/TestThemes.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestContainerManager.py
+    script_name: tests/Settings/TestContainerManager.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestCuraContainerRegistry.py
+    script_name: tests/Settings/TestCuraContainerRegistry.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestCuraStackBuilder.py
+    script_name: tests/Settings/TestCuraStackBuilder.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestDefinitionContainer.py
+    script_name: tests/Settings/TestDefinitionContainer.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestExtruderStack.py
+    script_name: tests/Settings/TestExtruderStack.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestGlobalStack.py
+    script_name: tests/Settings/TestGlobalStack.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestProfiles.py
+    script_name: tests/Settings/TestProfiles.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestSettingInheritanceManager.py
+    script_name: tests/Settings/TestSettingInheritanceManager.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestSettingOverrideDecorator.py
+    script_name: tests/Settings/TestSettingOverrideDecorator.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestSettingVisibilityPresets.py
+    script_name: tests/Settings/TestSettingVisibilityPresets.py

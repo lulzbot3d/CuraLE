@@ -1,97 +1,32 @@
-project(cura NONE)
-cmake_minimum_required(VERSION 2.8.12)
+# Copyright (c) 2022 Ultimaker B.V.
+# Cura is released under the terms of the LGPLv3 or higher.
 
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/
-                      ${CMAKE_MODULE_PATH})
+# NOTE: This is only being used for translation scripts.
+
+# For MSVC flags, will be ignored on non-Windows OS's and this project in general. Only needed for cura-build-environment.
+cmake_policy(SET CMP0091 NEW)
+project(curale)
+cmake_minimum_required(VERSION 3.18)
 
 include(GNUInstallDirs)
 
-set(URANIUM_DIR "${CMAKE_SOURCE_DIR}/../uranium" CACHE DIRECTORY "The location of the uranium repository")
-set(URANIUM_SCRIPTS_DIR "${URANIUM_DIR}/scripts" CACHE DIRECTORY "The location of the scripts directory of the uranium repository")
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
-# Tests
-include(CuraTests)
-
-option(CURA_DEBUGMODE "Enable debug dialog and other debug features" OFF)
-if(CURA_DEBUGMODE)
-    set(_cura_debugmode "ON")
-endif()
+set(URANIUMLE_DIR "${CMAKE_SOURCE_DIR}/../UraniumLE" CACHE PATH "The location of the UraniumLE repository")
+set(URANIUMLE_SCRIPTS_DIR "${URANIUMLE_DIR}/scripts" CACHE PATH "The location of the scripts directory of the UraniumLE repository")
 
 option(GENERATE_TRANSLATIONS "Should the translations be generated?" ON)
 
-set(CURA_APP_NAME "CuraLE" CACHE STRING "Short name of Cura LulzBot Edition, used for configuration folder")
-set(CURA_VERSION "Stable" CACHE STRING "Version name of Cura LE")
-set(CURA_APP_DISPLAY_NAME "Cura LulzBot Edition - ${CURA_VERSION}" CACHE STRING "Display name of Cura LE")
-set(CURA_BUILDTYPE "" CACHE STRING "Build type of Cura LE, eg. 'PPA'")
-configure_file(${CMAKE_SOURCE_DIR}/cura-lulzbot.desktop.in ${CMAKE_BINARY_DIR}/cura-lulzbot.desktop @ONLY)
-configure_file(cura/CuraVersion.py.in CuraVersion.py @ONLY)
-
-
-# FIXME: The new FindPython3 finds the system's Python3.6 rather than the Python3.5 that we built for Cura's environment.
-# So we're using the old method here, with FindPythonInterp for now.
-find_package(PythonInterp 3 REQUIRED)
-
-set(Python3_EXECUTABLE ${PYTHON_EXECUTABLE})
-
-set(Python3_VERSION ${PYTHON_VERSION_STRING})
-set(Python3_VERSION_MAJOR ${PYTHON_VERSION_MAJOR})
-set(Python3_VERSION_MINOR ${PYTHON_VERSION_MINOR})
-set(Python3_VERSION_PATCH ${PYTHON_VERSION_PATCH})
-
-if(NOT ${URANIUM_DIR} STREQUAL "")
-    set(CMAKE_MODULE_PATH "${URANIUM_DIR}/cmake")
+if(NOT ${URANIUMLE_DIR} STREQUAL "")
+    set(CMAKE_MODULE_PATH "${URANIUMLE_DIR}/cmake")
 endif()
-if(NOT ${URANIUM_SCRIPTS_DIR} STREQUAL "")
-    list(APPEND CMAKE_MODULE_PATH ${URANIUM_DIR}/cmake)
+if(NOT ${URANIUMLE_SCRIPTS_DIR} STREQUAL "")
+    list(APPEND CMAKE_MODULE_PATH ${URANIUMLE_DIR}/cmake)
     include(UraniumTranslationTools)
     # Extract Strings
-    add_custom_target(extract-messages ${URANIUM_SCRIPTS_DIR}/extract-messages ${CMAKE_SOURCE_DIR} cura)
+    add_custom_target(extract-messages ${URANIUMLE_SCRIPTS_DIR}/extract-messages ${CMAKE_SOURCE_DIR} curale)
     # Build Translations
-    CREATE_TRANSLATION_TARGETS()
-endif()
-
-find_package(PythonInterp 3.5.0 REQUIRED)
-
-install(DIRECTORY resources
-        DESTINATION ${CMAKE_INSTALL_DATADIR}/cura)
-install(DIRECTORY plugins
-        DESTINATION lib${LIB_SUFFIX}/cura)
-if(NOT APPLE AND NOT WIN32)
-    install(FILES cura_app.py
-            DESTINATION ${CMAKE_INSTALL_BINDIR}
-            PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
-            RENAME cura)
-    if(EXISTS /etc/debian_version)
-        install(DIRECTORY cura
-            DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}/dist-packages
-            FILES_MATCHING PATTERN *.py)
-        install(FILES ${CMAKE_BINARY_DIR}/CuraVersion.py
-            DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}/dist-packages/cura)
-    else()
-        install(DIRECTORY cura
-            DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages
-            FILES_MATCHING PATTERN *.py)
-        install(FILES ${CMAKE_BINARY_DIR}/CuraVersion.py
-            DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages/cura)
+    if(${GENERATE_TRANSLATIONS})
+        CREATE_TRANSLATION_TARGETS()
     endif()
-    install(FILES ${CMAKE_BINARY_DIR}/cura-lulzbot.desktop
-            DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
-    install(FILES ${CMAKE_SOURCE_DIR}/resources/images/cura-icon.png
-            DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/128x128/apps/)
-    install(FILES cura.appdata.xml
-            DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
-    install(FILES cura.sharedmimeinfo
-            DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages/
-            RENAME cura.xml )
-else()
-    install(FILES cura_app.py
-            DESTINATION ${CMAKE_INSTALL_BINDIR}
-            PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
-    install(DIRECTORY cura
-            DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages
-            FILES_MATCHING PATTERN *.py)
-    install(FILES ${CMAKE_BINARY_DIR}/CuraVersion.py
-            DESTINATION lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages/cura)
 endif()
-
-# include(CPackConfig.cmake)

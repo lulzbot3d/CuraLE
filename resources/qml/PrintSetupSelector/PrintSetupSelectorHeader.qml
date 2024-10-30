@@ -15,21 +15,13 @@ RowLayout {
     Cura.IconWithText {
         source: UM.Theme.getIcon("Sliders", "medium")
         iconSize: UM.Theme.getSize("button_icon").width
-        text: {
-            if (Cura.MachineManager.activeStack) {
-                var resultMap = Cura.MachineManager.activeQualityDisplayNameMap
-                var text = resultMap["main"]
-                if (resultMap["suffix"]) {
-                    text += " - " + resultMap["suffix"]
-                }
-                return text
-            }
-            return ""
-        }
+
+        text: Cura.MachineManager.activeQualityDisplayNameStringParts.join(" - ")
         font: UM.Theme.getFont("medium")
         elide: Text.ElideMiddle
-
-        UM.SettingPropertyProvider {
+        wrapMode: Text.NoWrap
+        UM.SettingPropertyProvider
+        {
             id: layerHeight
             containerStack: Cura.MachineManager.activeStack
             key: "layer_height"

@@ -5,7 +5,7 @@ import QtQuick 2.10
 import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.3
 
-import UM 1.3 as UM
+import UM 1.5 as UM
 import Cura 1.1 as Cura
 
 
@@ -50,12 +50,10 @@ Item {
 
             spacing: base.columnSpacing
 
-            Label   // Printer Title Label
+            UM.Label   // Title Label
             {
                 text: catalog.i18nc("@title:label", "Printer Settings")
                 font: UM.Theme.getFont("medium_bold")
-                color: UM.Theme.getColor("text")
-                renderType: Text.NativeRendering
                 width: parent.width
                 elide: Text.ElideRight
             }
@@ -178,7 +176,7 @@ Item {
                 labelText: catalog.i18nc("@label", "Has LCD Screen")
                 labelFont: base.labelFont
                 labelWidth: base.labelWidth
-                checkBoxEnabled: Cura.MachineManager.activeMachineOptionalLCD
+                //checkBoxEnabled: Cura.MachineManager.activeMachineOptionalLCD
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 
@@ -190,7 +188,7 @@ Item {
                 labelText: catalog.i18nc("@label", "Has BLTouch")
                 labelFont: base.labelFont
                 labelWidth: base.labelWidth
-                checkBoxEnabled: Cura.MachineManager.activeMachineOptionalBLTouch
+                //checkBoxEnabled: Cura.MachineManager.activeMachineOptionalBLTouch
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 
@@ -206,12 +204,10 @@ Item {
 
             spacing: base.columnSpacing
 
-            Label   // Printhead Title Label
+            UM.Label   // Title Label
             {
                 text: catalog.i18nc("@title:label", "Printhead Settings")
                 font: UM.Theme.getFont("medium_bold")
-                color: UM.Theme.getColor("text")
-                renderType: Text.NativeRendering
                 width: parent.width
                 elide: Text.ElideRight
             }
@@ -331,19 +327,17 @@ Item {
 
                     Component.onCompleted:
                     {
-                        update()
+                        updateModel();
                     }
 
-                    function update()
+                    function updateModel()
                     {
-                        clear()
-                        let maxExtruders = Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.maxExtruderCount : 0
-                        for (var i = 1; i <= maxExtruders; i++)
-                        {
+                        clear();
+                        for (var i = 1; i <= Cura.MachineManager.activeMachine.maxExtruderCount; i ++) {
                             // Use String as value. JavaScript only has Number. PropertyProvider.setPropertyValue()
                             // takes a QVariant as value, and Number gets translated into a float. This will cause problem
                             // for integer settings such as "Number of Extruders".
-                            append({ text: String(i), value: String(i) })
+                            append({ text: String(i), value: String(i) });
                         }
                     }
                 }
@@ -351,7 +345,9 @@ Item {
                 Connections
                 {
                     target: Cura.MachineManager
-                    function onGlobalContainerChanged() { extruderCountModel.update() }
+                    function onGlobalContainerChanged() {
+                        extruderCountModel.updateModel();
+                    }
                 }
             }
 

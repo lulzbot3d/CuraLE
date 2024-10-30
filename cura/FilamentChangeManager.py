@@ -7,7 +7,7 @@ import io
 import json
 from typing import Any, Dict, List, Optional, TYPE_CHECKING
 
-from PyQt5.QtCore import QObject, pyqtProperty, pyqtSignal, pyqtSlot
+from PyQt6.QtCore import QObject, pyqtProperty, pyqtSignal, pyqtSlot
 
 from UM.Application import Application
 from UM.Logger import Logger

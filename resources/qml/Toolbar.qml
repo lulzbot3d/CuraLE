@@ -4,8 +4,8 @@
 import QtQuick 2.2
 import QtQuick.Controls 2.3
 
-import UM 1.2 as UM
-import Cura 1.0 as Cura
+import UM 1.5 as UM
+import Cura 1.7 as Cura
 
 Item {
     id: base
@@ -25,13 +25,13 @@ Item {
         Rectangle {
             anchors {
                 fill: toolButtons
-                leftMargin: -radius - border.width
-                rightMargin: -border.width
-                topMargin: -border.width
-                bottomMargin: -border.width
+                leftMargin: -radius - border.width // Removes border on left side
             }
             radius: UM.Theme.getSize("default_radius").width
-            color: UM.Theme.getColor("lining")
+            color: UM.Theme.getColor("toolbar_background")
+            border.color: UM.Theme.getColor("lining")
+            border.width: UM.Theme.getSize("default_lining").width
+
         }
 
         Column {
@@ -47,8 +47,9 @@ Item {
                 width: childrenRect.width
                 height: childrenRect.height
 
-                delegate: ToolbarButton {
-                    text: model.name + (model.shortcut ? (" (" + model.shortcut + ")") : "")
+                delegate: UM.ToolbarButton
+                {
+                    text: model.name + (model.shortcut ? ` ("${model.shortcut}")` : "")
                     checkable: true
                     checked: model.active
                     enabled: model.enabled && UM.Selection.hasSelection && UM.Controller.toolsEnabled
@@ -56,12 +57,10 @@ Item {
                     isTopElement: toolsModel.getItem(0).id == model.id
                     isBottomElement: toolsModel.getItem(toolsModel.count - 1).id == model.id
 
-                    toolItem: UM.RecolorImage {
+                    toolItem: UM.ColorImage
+                    {
                         source: UM.Theme.getIcon(model.icon) != "" ? UM.Theme.getIcon(model.icon) : "file:///" + model.location + "/" + model.icon
                         color: UM.Theme.getColor("icon")
-
-                        sourceSize.height: Math.round(UM.Theme.getSize("button").height / 2)
-                        sourceSize.width: Math.round(UM.Theme.getSize("button").width / 2)
                     }
 
                     onCheckedChanged: {
@@ -99,13 +98,12 @@ Item {
         Rectangle {
             anchors {
                 fill: extruderButtons
-                leftMargin: -radius - border.width
-                rightMargin: -border.width
-                topMargin: -border.width
-                bottomMargin: -border.width
+                leftMargin: -radius - border.width // Removes border on left side
             }
             radius: UM.Theme.getSize("default_radius").width
-            color: UM.Theme.getColor("lining")
+            color: UM.Theme.getColor("toolbar_background")
+            border.color: UM.Theme.getColor("lining")
+            border.width: UM.Theme.getSize("default_lining").width
             visible: extrudersModel.items.length > 1
         }
 
@@ -121,13 +119,15 @@ Item {
                 height: childrenRect.height
                 model: extrudersModel.items.length > 1 ? extrudersModel : 0
 
-                delegate: ExtruderButton {
+                delegate: Cura.ExtruderButton
+                {
                     extruder: model
-                    isTopElement: extrudersModel.getItem(0).id == model.id
-                    isBottomElement: extrudersModel.getItem(extrudersModel.rowCount() - 1).id == model.id
-                }
-            }
-        }
+                    isTopElement: extrudersModel.getItem(0).id === model.id
+                    isBottomElement: extrudersModel.getItem(extrudersModel.rowCount() - 1).id === model.id
+                    text: catalog.i18ncp("@label %1 is filled in with the name of an extruder", "Print Selected Model with %1", "Print Selected Models with %1", UM.Selection.selectionCount).arg(extruder.name)
+                    checked: Cura.ExtruderManager.selectedObjectExtruders.indexOf(extruder.id) !== -1
+                    enabled: UM.Selection.hasSelection && extruder.stack.isEnabled
+                    font: UM.Theme.getFont("small_emphasis")
 
         FocusScope {
             id: filamentChangeFocusScope
@@ -235,7 +235,7 @@ Item {
         anchors.topMargin: base.activeY
         z: buttons.z - 1
 
-        target: Qt.point(parent.right, base.activeY +  Math.round(UM.Theme.getSize("button").height/2))
+        target: Qt.point(-1, base.activeY +  Math.round(UM.Theme.getSize("button").height / 2))
         arrowSize: UM.Theme.getSize("default_arrow").width
 
         width: {
@@ -267,7 +267,7 @@ Item {
             x: UM.Theme.getSize("default_margin").width
             y: UM.Theme.getSize("default_margin").height
 
-            source: UM.ActiveTool.valid ? UM.ActiveTool.activeToolPanel : ""
+            source: UM.Controller.valid ? UM.Controller.activeToolPanel : ""
             enabled: UM.Controller.toolsEnabled
         }
     }
@@ -282,11 +282,11 @@ Item {
         width: toolHint.width + UM.Theme.getSize("default_margin").width
         height: toolHint.height;
         color: UM.Theme.getColor("tooltip")
-        Label {
+        UM.Label
+        {
             id: toolHint
-            text: UM.ActiveTool.properties.getValue("ToolHint") != undefined ? UM.ActiveTool.properties.getValue("ToolHint") : ""
+            text: UM.Controller.properties.getValue("ToolHint") != undefined ? UM.Controller.properties.getValue("ToolHint") : ""
             color: UM.Theme.getColor("tooltip_text")
-            font: UM.Theme.getFont("default")
             anchors.horizontalCenter: parent.horizontalCenter
         }
 

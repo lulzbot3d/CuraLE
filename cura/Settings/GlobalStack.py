@@ -1,4 +1,4 @@
-# Copyright (c) 2019 Ultimaker B.V.
+# Copyright (c) 2022 Ultimaker B.V.
 # Cura is released under the terms of the LGPLv3 or higher.
 
 from collections import defaultdict
@@ -6,14 +6,11 @@ import threading
 from typing import Any, Dict, Optional, Set, TYPE_CHECKING, List
 import uuid
 
-import inspect
+from PyQt6.QtCore import pyqtProperty, pyqtSlot, pyqtSignal
 
-from PyQt5.QtCore import pyqtProperty, pyqtSlot, pyqtSignal
-
-from UM.Decorators import deprecated, override
+from UM.Decorators import override
 from UM.MimeTypeDatabase import MimeType, MimeTypeDatabase
 from UM.Settings.ContainerStack import ContainerStack
-from UM.Settings.SettingInstance import InstanceState
 from UM.Settings.ContainerRegistry import ContainerRegistry
 from UM.Settings.Interfaces import PropertyEvaluationContext
 from UM.Logger import Logger
@@ -62,16 +59,6 @@ class GlobalStack(CuraContainerStack):
     extrudersChanged = pyqtSignal()
     configuredConnectionTypesChanged = pyqtSignal()
 
-    #@pyqtProperty("QVariantMap", notify = extrudersChanged)
-    @deprecated("Please use extruderList instead.", "4.4")
-    def extruders(self) -> Dict[str, "ExtruderStack"]:
-        """Get the list of extruders of this stack.
-
-        :return: The extruders registered with this stack.
-        """
-
-        return self._extruders
-
     @pyqtProperty("QVariantList", notify = extrudersChanged)
     def extruderList(self) -> List["ExtruderStack"]:
         result_tuple_list = sorted(list(self._extruders.items()), key=lambda x: int(x[0]))
@@ -96,6 +83,15 @@ class GlobalStack(CuraContainerStack):
         """
         return self.getMetaDataEntry("supports_material_export", False)
 
+    @pyqtProperty("QVariantList", constant = True)
+    def getOutputFileFormats(self) -> List[str]:
+        """
+        Which output formats the printer supports.
+        :return: A list of strings with MIME-types.
+        """
+        all_formats_str = self.getMetaDataEntry("file_formats", "")
+        return all_formats_str.split(";")
+
     @classmethod
     def getLoadingPriority(cls) -> int:
         return 2
@@ -103,7 +99,6 @@ class GlobalStack(CuraContainerStack):
     @pyqtProperty("QVariantList", notify=configuredConnectionTypesChanged)
     def configuredConnectionTypes(self) -> List[int]:
         """The configured connection types can be used to find out if the global
-
         stack is configured to be connected with a printer, without having to
         know all the details as to how this is exactly done (and without
         actually setting the stack to be active).
@@ -240,8 +235,6 @@ class GlobalStack(CuraContainerStack):
         # Handle the "limit_to_extruder" property.
         limit_to_extruder = super().getProperty(key, "limit_to_extruder", context)
         if limit_to_extruder is not None:
-            if limit_to_extruder == -1:
-                limit_to_extruder = int(cura.CuraApplication.CuraApplication.getInstance().getMachineManager().defaultExtruderPosition)
             limit_to_extruder = str(limit_to_extruder)
         if limit_to_extruder is not None and limit_to_extruder != "-1" and limit_to_extruder in self._extruders:
             if super().getProperty(key, "settable_per_extruder", context):
@@ -305,7 +298,6 @@ class GlobalStack(CuraContainerStack):
         for extruder_train in extruder_trains:
             extruder_position = extruder_train.getMetaDataEntry("position")
             extruder_check_position.add(extruder_position)
-
         for check_position in range(machine_extruder_count):
             if str(check_position) not in extruder_check_position:
                 return False
@@ -359,13 +351,17 @@ class GlobalStack(CuraContainerStack):
     def getName(self) -> str:
         return self._metadata.get("group_name", self._metadata.get("name", ""))
 
-    def setName(self, name: "str") -> None:
+    def setName(self, name: str) -> None:
         super().setName(name)
 
     nameChanged = pyqtSignal()
     name = pyqtProperty(str, fget=getName, fset=setName, notify=nameChanged)
 
-
+    def hasNetworkedConnection(self) -> bool:
+        has_connection = False
+        for connection_type in [ConnectionType.NetworkConnection.value, ConnectionType.CloudConnection.value]:
+            has_connection |= connection_type in self.configuredConnectionTypes
+        return has_connection
 
 ## private:
 global_stack_mime = MimeType(

@@ -1,4 +1,4 @@
-# Copyright (c) 2021 Ultimaker B.V.
+# Copyright (c) 2022 Ultimaker B.V.
 # Cura is released under the terms of the LGPLv3 or higher.
 
 import os
@@ -7,7 +7,7 @@ import re
 import unicodedata
 from typing import Any, List, Dict, TYPE_CHECKING, Optional, cast, Set
 
-from PyQt5.QtCore import QObject, pyqtProperty, pyqtSignal, QTimer
+from PyQt6.QtCore import QObject, pyqtProperty, pyqtSignal, QTimer
 
 from UM.ConfigurationErrorMessage import ConfigurationErrorMessage
 from UM.Scene.Iterator.DepthFirstIterator import DepthFirstIterator
@@ -22,6 +22,7 @@ from UM.Message import Message
 from UM.Application import Application
 from UM.Resources import Resources
 from UM.Settings.SettingFunction import SettingFunction
+from UM.Settings.ContainerStack import ContainerStack
 from UM.Signal import postponeSignals, CompressTechnique
 
 import cura.CuraApplication  # Imported like this to prevent circular references.
@@ -41,6 +42,8 @@ from cura.Settings.ExtruderStack import ExtruderStack
 from cura.Settings.cura_empty_instance_containers import (empty_definition_changes_container, empty_variant_container,
                                                           empty_material_container, empty_quality_container,
                                                           empty_quality_changes_container, empty_intent_container)
+from cura.UltimakerCloud.UltimakerCloudConstants import META_UM_LINKED_TO_ACCOUNT
+from .ActiveQuality import ActiveQuality
 
 from .CuraStackBuilder import CuraStackBuilder
 
@@ -48,6 +51,8 @@ from UM.i18n import i18nCatalog
 catalog = i18nCatalog("cura")
 from cura.Settings.GlobalStack import GlobalStack
 if TYPE_CHECKING:
+    from PyQt6.QtCore import QVariantList
+
     from cura.CuraApplication import CuraApplication
     from cura.Machines.MaterialNode import MaterialNode
     from cura.Machines.QualityChangesGroup import QualityChangesGroup
@@ -100,7 +105,7 @@ class MachineManager(QObject):
 
         self._application.getPreferences().addPreference("cura/active_machine", "")
 
-        self._printer_output_devices = []  # type: List[PrinterOutputDevice]
+        self._printer_output_devices: List[PrinterOutputDevice] = []
         self._application.getOutputDeviceManager().outputDevicesChanged.connect(self._onOutputDevicesChanged)
         # There might already be some output devices by the time the signal is connected
         self._onOutputDevicesChanged()
@@ -113,7 +118,7 @@ class MachineManager(QObject):
 
         self._application.callLater(self.setInitialActiveMachine)
 
-        containers = CuraContainerRegistry.getInstance().findInstanceContainers(id = self.activeMaterialId)  # type: List[InstanceContainer]
+        containers: List[InstanceContainer] = CuraContainerRegistry.getInstance().findInstanceContainers(id = self.activeMaterialId)
         if containers:
             containers[0].nameChanged.connect(self._onMaterialNameChanged)
 
@@ -194,6 +199,32 @@ class MachineManager(QObject):
                     self._printer_output_devices.append(printer_output_device)
 
         self.outputDevicesChanged.emit()
+
+    def getMachinesWithDefinition(self, definition_id: str, online_only=False) -> List[ContainerStack]:
+        """ Fetches all container stacks that match definition_id.
+
+        :param definition_id: The id of the machine definition.
+        :return: A list of Containers that match definition_id
+        """
+        from cura.CuraApplication import CuraApplication  # In function to avoid circular import
+        application = CuraApplication.getInstance()
+        registry = application.getContainerRegistry()
+
+        machines = registry.findContainerStacks(type="machine")
+        # Filter machines that match definition
+        machines = filter(lambda machine: machine.definition.id == definition_id, machines)
+        # Filter only LAN and Cloud printers
+        machines = filter(lambda machine: ConnectionType.CloudConnection in machine.configuredConnectionTypes or
+                                          ConnectionType.NetworkConnection in machine.configuredConnectionTypes,
+                          machines)
+        if online_only:
+            # LAN printers can have is_online = False but should still be included,
+            # their online status is only checked when they are the active printer.
+            machines = filter(lambda machine: parseBool(machine.getMetaDataEntry("is_online", False) or
+                                              ConnectionType.NetworkConnection in machine.configuredConnectionTypes),
+                              machines)
+
+        return list(machines)
 
     @pyqtProperty(QObject, notify = currentConfigurationChanged)
     def currentConfiguration(self) -> PrinterConfigurationModel:
@@ -348,6 +379,7 @@ class MachineManager(QObject):
         extruder_manager = ExtruderManager.getInstance()
         extruder_manager.fixSingleExtrusionMachineExtruderDefinition(global_stack)
         if not global_stack.isValid():
+            Logger.warning("Global stack isn't valid, adding it to faulty container list")
             # Mark global stack as invalid
             ConfigurationErrorMessage.getInstance().addFaultyContainers(global_stack.getId())
             return  # We're done here
@@ -407,7 +439,7 @@ class MachineManager(QObject):
                 return cast(GlobalStack, machine)
         return None
 
-    @pyqtSlot(str, bool, bool, result=bool)
+    @pyqtSlot(str, str, result = bool)
     @pyqtSlot(str, str, bool, bool, result = bool)
     def addMachine(self, definition_id: str, name: Optional[str] = None, lcd: bool = True, bltouch: bool = False) -> bool:
         Logger.log("i", "Trying to add a machine with the definition id [%s]", definition_id)
@@ -583,6 +615,10 @@ class MachineManager(QObject):
     def printerConnected(self) -> bool:
         return bool(self._printer_output_devices)
 
+    @pyqtProperty(bool, notify = globalContainerChanged)
+    def activeMachineIsAbstractCloudPrinter(self) -> bool:
+        return len(self._printer_output_devices) == 1 and self._printer_output_devices[0].__class__.__name__ == "AbstractCloudOutputDevice"
+
     @pyqtProperty(bool, notify = printerConnectedStatusChanged)
     def activeMachineIsGroup(self) -> bool:
         if self.activeMachine is None:
@@ -596,6 +632,19 @@ class MachineManager(QObject):
         # A network connection is only available if any output device is actually a network connected device.
         # return any(d.connectionType == ConnectionType.NetworkConnection for d in self._printer_output_devices)
         return False
+
+    @pyqtProperty(bool, notify = printerConnectedStatusChanged)
+    def activeMachineHasCloudConnection(self) -> bool:
+        # A cloud connection is only available if any output device actually is a cloud connected device.
+        return any(d.connectionType == ConnectionType.CloudConnection for d in self._printer_output_devices)
+
+    @pyqtProperty(bool, notify = printerConnectedStatusChanged)
+    def activeMachineHasCloudRegistration(self) -> bool:
+        return self.activeMachine is not None and ConnectionType.CloudConnection in self.activeMachine.configuredConnectionTypes
+
+    @pyqtProperty(bool, notify = printerConnectedStatusChanged)
+    def activeMachineIsUsingCloudConnection(self) -> bool:
+        return self.activeMachineHasCloudConnection and not self.activeMachineHasNetworkConnection
 
     def activeMachineNetworkKey(self) -> str:
         if self._global_container_stack:
@@ -611,6 +660,10 @@ class MachineManager(QObject):
     @pyqtProperty(QObject, notify = globalContainerChanged)
     def activeMachine(self) -> Optional["GlobalStack"]:
         return self._global_container_stack
+
+    @pyqtProperty("QVariantList", notify=activeVariantChanged)
+    def activeMachineExtruders(self) -> Optional["QVariantList"]:
+        return self._global_container_stack.extruderList if self._global_container_stack else None
 
     @pyqtProperty(str, notify = activeStackChanged)
     def activeStackId(self) -> str:
@@ -870,6 +923,24 @@ class MachineManager(QObject):
 
         return result
 
+    @pyqtProperty(bool, notify = currentConfigurationChanged)
+    def variantCoreUsableForFactor4(self) -> bool:
+        """The selected core is usable if it is in second extruder of Factor4
+        """
+        result = True
+        if not self._global_container_stack:
+            return result
+        if self.activeMachine.definition.id != "ultimaker_factor4":
+            return result
+
+        for extruder_container in self._global_container_stack.extruderList:
+            if extruder_container.definition.id.startswith("ultimaker_factor4_extruder_right"):
+                if extruder_container.material == empty_material_container:
+                    return True
+                if extruder_container.variant.id.startswith("ultimaker_factor4_bb"):
+                    return False
+        return True
+
     @pyqtSlot(str, result = str)
     def getDefinitionByMachineId(self, machine_id: str) -> Optional[str]:
         """Get the Definition ID of a machine (specified by ID)
@@ -934,7 +1005,8 @@ class MachineManager(QObject):
 
         if self._global_container_stack is None \
                 or self._global_container_stack.getProperty(setting_key, "value") == new_value \
-                or self.numberExtrudersEnabled < 2:
+                or self._global_container_stack.definitionChanges.getProperty("extruders_enabled_count", "value") is None \
+                or self._global_container_stack.definitionChanges.getProperty("extruders_enabled_count", "value") < 2:
             return
 
         user_changes_container = self._global_container_stack.userChanges
@@ -1039,7 +1111,7 @@ class MachineManager(QObject):
         for position, extruder in enumerate(self._global_container_stack.extruderList):
             if extruder.isEnabled and int(position) < machine_extruder_count:
                 extruder_count += 1
-        if self.numberExtrudersEnabled != extruder_count:
+        if self._global_container_stack.definitionChanges.getProperty("extruders_enabled_count", "value") != extruder_count:
             definition_changes_container.setProperty("extruders_enabled_count", "value", extruder_count)
             self.numberExtrudersEnabledChanged.emit()
 
@@ -1683,33 +1755,31 @@ class MachineManager(QObject):
     #        Examples:
     #          - "my_profile - Fine" (only based on a default quality, no intent involved)
     #          - "my_profile - Engineering - Fine" (based on an intent)
-    @pyqtProperty("QVariantMap", notify = activeQualityDisplayNameChanged)
-    def activeQualityDisplayNameMap(self) -> Dict[str, str]:
+    @pyqtProperty("QList<QString>", notify = activeQualityDisplayNameChanged)
+    def activeQualityDisplayNameStringParts(self) -> List[str]:
+        return self.activeQualityDisplayNameMap().getStringParts()
+
+    @pyqtProperty("QList<QString>", notify = activeQualityDisplayNameChanged)
+    def activeQualityDisplayNameMainStringParts(self) -> List[str]:
+        return self.activeQualityDisplayNameMap().getMainStringParts()
+
+    @pyqtProperty("QList<QString>", notify = activeQualityDisplayNameChanged)
+    def activeQualityDisplayNameTailStringParts(self) -> List[str]:
+        return self.activeQualityDisplayNameMap().getTailStringParts()
+
+    def activeQualityDisplayNameMap(self) -> ActiveQuality:
         global_stack = self._application.getGlobalContainerStack()
         if global_stack is None:
-            return {"main": "",
-                    "suffix": ""}
+            return ActiveQuality()
 
-        display_name = global_stack.quality.getName()
-
-        intent_category = self.activeIntentCategory
-        if intent_category != "default":
-            intent_display_name = IntentCategoryModel.translation(intent_category,
-                                                                  "name",
-                                                                  catalog.i18nc("@label", "Unknown"))
-            display_name = "{intent_name} - {the_rest}".format(intent_name = intent_display_name,
-                                                               the_rest = display_name)
-
-        main_part = display_name
-        suffix_part = ""
-
-        # Not a custom quality
-        if global_stack.qualityChanges != empty_quality_changes_container:
-            main_part = self.activeQualityOrQualityChangesName
-            suffix_part = display_name
-
-        return {"main": main_part,
-                "suffix": suffix_part}
+        return ActiveQuality(
+            profile = global_stack.quality.getName(),
+            intent_category = self.activeIntentCategory,
+            intent_name = IntentCategoryModel.translation(self.activeIntentCategory, "name", self.activeIntentCategory.title()),
+            custom_profile = self.activeQualityOrQualityChangesName if global_stack.qualityChanges is not empty_quality_changes_container else None,
+            layer_height = self.activeQualityLayerHeight if self.isActiveQualitySupported else None,
+            is_experimental = self.isActiveQualityExperimental and self.isActiveQualitySupported
+        )
 
     @pyqtSlot(str)
     def setIntentByCategory(self, intent_category: str) -> None:
@@ -1752,6 +1822,16 @@ class MachineManager(QObject):
                     break
             else:  # No intent had the correct category.
                 extruder.intent = empty_intent_container
+
+    @pyqtSlot()
+    def resetIntents(self) -> None:
+        """Reset the intent category of the current printer.
+        """
+        global_stack = self._application.getGlobalContainerStack()
+        if global_stack is None:
+            return
+        for extruder in global_stack.extruderList:
+            extruder.intent = empty_intent_container
 
     def activeQualityGroup(self) -> Optional["QualityGroup"]:
         """Get the currently activated quality group.
@@ -1829,7 +1909,9 @@ class MachineManager(QObject):
     @pyqtProperty(bool, notify = activeQualityGroupChanged)
     def hasNotSupportedQuality(self) -> bool:
         global_container_stack = self._application.getGlobalContainerStack()
-        return (not global_container_stack is None) and global_container_stack.quality == empty_quality_container and global_container_stack.qualityChanges == empty_quality_changes_container
+        return global_container_stack is not None\
+               and global_container_stack.quality == empty_quality_container \
+               and global_container_stack.qualityChanges == empty_quality_changes_container
 
     @pyqtProperty(bool, notify = activeQualityGroupChanged)
     def isActiveQualityCustom(self) -> bool:
@@ -1931,3 +2013,31 @@ class MachineManager(QObject):
                     abbr_machine += stripped_word
 
         return abbr_machine
+
+    @pyqtSlot(str, str, result = bool)
+    def intentCategoryHasQuality(self, intent_category: str, quality_type: str) -> bool:
+        """ Checks if there are any quality groups for active extruders that have an intent category """
+        quality_groups = ContainerTree.getInstance().getCurrentQualityGroups()
+
+        if quality_type in quality_groups:
+            quality_group = quality_groups[quality_type]
+            for node in quality_group.nodes_for_extruders.values():
+                if any(intent.intent_category == intent_category for intent in node.intents.values()):
+                    return True
+
+        return False
+
+    @pyqtSlot(str, result = str)
+    def getDefaultQualityTypeForIntent(self, intent_category) -> str:
+        """ If there is an intent category for the default machine quality return it, otherwise return the first quality for this intent category """
+        machine = ContainerTree.getInstance().machines.get(self._global_container_stack.definition.getId())
+
+        if self.intentCategoryHasQuality(intent_category, machine.preferred_quality_type):
+            return machine.preferred_quality_type
+
+        for quality_type, quality_group in ContainerTree.getInstance().getCurrentQualityGroups().items():
+            for node in quality_group.nodes_for_extruders.values():
+                if any(intent.intent_category == intent_category for intent in node.intents.values()):
+                    return quality_type
+
+        return ""

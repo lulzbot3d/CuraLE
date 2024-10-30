@@ -4,7 +4,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.3
 
-import UM 1.2 as UM
+import UM 1.5 as UM
 import Cura 1.0 as Cura
 
 Cura.ExpandablePopup {
@@ -45,22 +45,19 @@ Cura.ExpandablePopup {
 
     headerItem: Item
     {
-        Label
+        UM.Label
         {
             id: title
             text: catalog.i18nc("@label", "View type")
-            verticalAlignment: Text.AlignVCenter
             height: parent.height
             elide: Text.ElideRight
             font: UM.Theme.getFont("medium")
             color: UM.Theme.getColor("text_medium")
-            renderType: Text.NativeRendering
         }
 
-        Label
+        UM.Label
         {
             text: viewSelector.activeView ? viewSelector.activeView.name : ""
-            verticalAlignment: Text.AlignVCenter
             anchors
             {
                 left: title.right
@@ -70,30 +67,13 @@ Cura.ExpandablePopup {
             height: parent.height
             elide: Text.ElideRight
             font: UM.Theme.getFont("medium")
-            color: UM.Theme.getColor("text")
-            renderType: Text.NativeRendering
         }
     }
 
-    contentItem: Column {
+    contentWidth: viewSelector.width - 2 * viewSelector.contentPadding
+    contentItem: Column
+    {
         id: viewSelectorPopup
-
-        property double goodWidth: {
-            let good = viewSelector.width
-            if (viewSelector.popupWidth >= 0) {
-                good = viewSelector.popupWidth
-            }
-            return good - (2 * viewSelector.contentPadding)
-        }
-
-        width: goodWidth
-
-        // For some reason the height/width of the column gets set to 0 if this is not set...
-        Component.onCompleted:
-        {
-            height = implicitHeight
-            width = goodWidth
-        }
 
         Repeater
         {
@@ -111,14 +91,11 @@ Cura.ExpandablePopup {
                 checkable: true
                 checked: viewSelector.activeView != null ? viewSelector.activeView.id == id : false
 
-                contentItem: Label
+                contentItem: UM.Label
                 {
                     id: buttonText
                     text: viewsSelectorButton.text
-                    color: UM.Theme.getColor("text")
                     font: UM.Theme.getFont("medium")
-                    renderType: Text.NativeRendering
-                    verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
                 }
 

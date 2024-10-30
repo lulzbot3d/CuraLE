@@ -4,7 +4,7 @@
 import QtQuick 2.10
 import QtQuick.Controls 2.3
 
-import UM 1.3 as UM
+import UM 1.5 as UM
 import Cura 1.1 as Cura
 
 
@@ -51,10 +51,10 @@ Item {
 
             spacing: base.columnSpacing
 
-            Label { // Title Label
+            UM.Label   // Title Label
+            {
                 text: catalog.i18nc("@title:label", "Nozzle Settings")
                 font: UM.Theme.getFont("medium_bold")
-                renderType: Text.NativeRendering
             }
 
             Cura.NumericTextFieldWithUnit { // "Nozzle size"
@@ -125,6 +125,34 @@ Item {
                 controlWidth: base.controlWidth
                 unitText: ""
                 decimals: 0
+                forceUpdateOnChangeFunction: forceUpdateFunction
+            }
+
+            Cura.NumericTextFieldWithUnit
+            {
+                id: extruderStartCodeDurationFieldId
+                containerStackId: base.extruderStackId
+                settingKey: "machine_extruder_start_code_duration"
+                settingStoreIndex: propertyStoreIndex
+                labelText: catalog.i18nc("@label", "Extruder Start G-code duration")
+                labelFont: base.labelFont
+                labelWidth: base.labelWidth
+                controlWidth: base.controlWidth
+                unitText: catalog.i18nc("@label", "s")
+                forceUpdateOnChangeFunction: forceUpdateFunction
+            }
+
+            Cura.NumericTextFieldWithUnit
+            {
+                id: extruderEndCodeDurationFieldId
+                containerStackId: base.extruderStackId
+                settingKey: "machine_extruder_end_code_duration"
+                settingStoreIndex: propertyStoreIndex
+                labelText: catalog.i18nc("@label", "Extruder End G-code duration")
+                labelFont: base.labelFont
+                labelWidth: base.labelWidth
+                controlWidth: base.controlWidth
+                unitText: catalog.i18nc("@label", "s")
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
         }
