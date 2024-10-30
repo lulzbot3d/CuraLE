@@ -262,7 +262,7 @@ class WelcomePagesModel(ListModel):
             },
             {
                 "id": "add_network_or_local_printer",
-                "page_url": self._getBuiltinWelcomePagePath("AddUltimakerOrThirdPartyPrinterStack.qml"),
+                "page_url": self._getBuiltinWelcomePagePath("AddLulzBotOrCustomPrinterStack.qml"),
                 "next_page_id": "machine_actions",
             },
             # {

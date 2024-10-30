@@ -439,7 +439,7 @@ class MachineManager(QObject):
                 return cast(GlobalStack, machine)
         return None
 
-    @pyqtSlot(str, bool, bool, result=bool)
+    @pyqtSlot(str, str, result = bool)
     @pyqtSlot(str, str, bool, bool, result = bool)
     def addMachine(self, definition_id: str, name: Optional[str] = None, lcd: bool = True, bltouch: bool = False) -> bool:
         Logger.log("i", "Trying to add a machine with the definition id [%s]", definition_id)

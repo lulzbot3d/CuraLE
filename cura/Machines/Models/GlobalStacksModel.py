@@ -137,9 +137,9 @@ class GlobalStacksModel(ListModel):
 
             has_remote_connection = False
 
-            # for connection_type in container_stack.configuredConnectionTypes:
-            #     has_remote_connection |= connection_type in [ConnectionType.NetworkConnection.value,
-            #                                                  ConnectionType.CloudConnection.value]
+            for connection_type in container_stack.configuredConnectionTypes:
+                has_remote_connection |= connection_type in [ConnectionType.NetworkConnection.value,
+                                                             ConnectionType.CloudConnection.value]
 
             if parseBool(container_stack.getMetaDataEntry("hidden", False)):
                 continue
@@ -152,9 +152,9 @@ class GlobalStacksModel(ListModel):
             if self._filter_abstract_machines is not None and self._filter_abstract_machines is not is_abstract_machine:
                 continue
 
-            capabilities = set(container_stack.getMetaDataEntry(META_CAPABILITIES, "").split(","))
-            if set(self._filter_capabilities) - capabilities:  # Not all required capabilities are met.
-                continue
+            # capabilities = set(container_stack.getMetaDataEntry(META_CAPABILITIES, "").split(","))
+            # if set(self._filter_capabilities) - capabilities:  # Not all required capabilities are met.
+            #     continue
 
             device_name = container_stack.getMetaDataEntry("group_name", container_stack.getName())
             section_name = self._catalog.i18nc("@label", "Connected printers") if has_remote_connection else self._catalog.i18nc("@label", "Preset printers")
