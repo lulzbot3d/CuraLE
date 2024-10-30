@@ -12,7 +12,8 @@ import Cura 1.1 as Cura
 //
 // This is an Item that tries to mimic a dialog for showing the welcome process.
 //
-Item {
+Item
+{
     UM.I18nCatalog { id: catalog; name: "cura" }
 
     id: dialog
@@ -27,13 +28,16 @@ Item {
     property alias progressBarVisible: wizardPanel.progressBarVisible
     property var model: CuraApplication.getWelcomePagesModel()
 
-    onVisibleChanged: {
-        if (visible) {
+    onVisibleChanged:
+    {
+        if (visible)
+        {
             model.resetState()
         }
     }
 
-    WizardPanel {
+    WizardPanel
+    {
         id: wizardPanel
         anchors.fill: parent
         model: dialog.model
@@ -54,7 +58,8 @@ Item {
     }*/
 
     // Close this dialog when there's no more page to show
-    Connections {
+    Connections
+    {
         target: model
         function onAllFinished() { dialog.visible = false }
     }

@@ -32,8 +32,6 @@ UM.TooltipArea
     property alias labelFont: fieldLabel.font
     property alias labelWidth: fieldLabel.width
 
-    property alias checkBoxEnabled: checkBox.enabled
-
     property string tooltip: propertyProvider.properties.description ? propertyProvider.properties.description : ""
 
     // callback functions

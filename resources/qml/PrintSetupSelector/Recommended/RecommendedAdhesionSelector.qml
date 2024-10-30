@@ -60,7 +60,7 @@ RecommendedSettingSection {
             containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
             settingKey: "adhesion_type"
             controlWidth: parent.width
-            useInBuiltTooltip: false
+            //useInBuiltTooltip: false
         }
     }
 }

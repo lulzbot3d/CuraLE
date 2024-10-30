@@ -12,10 +12,6 @@ import Cura 1.0 as Cura
 UM.ManagementPage
 {
     id: base
-    property int outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
-    property bool printerConnected: outputDeviceCount > 1
-    property var printerOutputDevice: Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1]
-    property bool printerAcceptsCommands: printerConnected && printerOutputDevice.acceptsCommands
     Item { enabled: false; UM.I18nCatalog { id: catalog; name: "cura"} }
 
     title: catalog.i18nc("@title:tab", "Printers")
@@ -25,14 +21,14 @@ UM.ManagementPage
 
     sectionRole: "discoverySource"
 
-    activeId: Cura.MachineManager.activeMachine !== null ? Cura.MachineManager.activeMachine.id : ""
+    activeId: Cura.MachineManager.activeMachine !== null ? Cura.MachineManager.activeMachine.id: ""
     activeIndex: activeMachineIndex()
     onHamburgerButtonClicked: {
-        const hamburerButtonHeight = hamburger_button.height;
+        const hamburgerButtonHeight = hamburger_button.height;
         menu.popup(hamburger_button, -menu.width + hamburger_button.width / 2, hamburger_button.height);
         // for some reason the height of the hamburger changes when opening the popup
-        // reset height to initial heigt
-        hamburger_button.height = hamburerButtonHeight;
+        // reset height to initial height
+        hamburger_button.height = hamburgerButtonHeight;
     }
     hamburgerButtonVisible: Cura.MachineManager.activeMachine !== null
 

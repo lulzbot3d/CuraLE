@@ -8,7 +8,8 @@ import QtQuick.Layouts 1.1
 import UM 1.5 as UM
 import Cura 1.1 as Cura
 
-UM.PreferencesPage {
+UM.PreferencesPage
+{
     //: General configuration page title
     title: catalog.i18nc("@title:tab", "General")
     id: generalPreferencesPage
@@ -27,7 +28,8 @@ UM.PreferencesPage {
         }
     }
 
-    function setDefaultTheme(defaultThemeCode) {
+    function setDefaultTheme(defaultThemeCode)
+    {
         for(var i = 0; i < themeList.count; i++)
         {
             if (themeComboBox.model.get(i).code == defaultThemeCode)
@@ -37,7 +39,8 @@ UM.PreferencesPage {
         }
     }
 
-    function setDefaultDiscardOrKeepProfile(code) {
+    function setDefaultDiscardOrKeepProfile(code)
+    {
         for (var i = 0; i < choiceOnProfileOverrideDropDownButton.model.count; i++)
         {
             if (choiceOnProfileOverrideDropDownButton.model.get(i).code == code)
@@ -48,7 +51,8 @@ UM.PreferencesPage {
         }
     }
 
-    function setDefaultOpenProjectOption(code) {
+    function setDefaultOpenProjectOption(code)
+    {
         for (var i = 0; i < choiceOnOpenProjectDropDownButton.model.count; ++i)
         {
             if (choiceOnOpenProjectDropDownButton.model.get(i).code == code)
@@ -59,16 +63,8 @@ UM.PreferencesPage {
         }
     }
 
-    function setDefaultJobNameLulzBotOption(code) {
-        for (var i = 0; i < choiceJobNameLulzBotDropDownButton.model.count; i++) {
-            if (choiceJobNameLulzBotDropDownButton.model.get(i).code == code) {
-                choiceJobNameLulzBotDropDownButton.currentIndex = i
-                break;
-            }
-        }
-    }
-
-    function reset() {
+    function reset()
+    {
         UM.Preferences.resetPreference("general/language")
         var defaultLanguage = UM.Preferences.getValue("general/language")
         setDefaultLanguage(defaultLanguage)
@@ -95,6 +91,8 @@ UM.PreferencesPage {
         scaleTinyCheckbox.checked = boolCheck(UM.Preferences.getValue("mesh/scale_tiny_meshes"))
         UM.Preferences.resetPreference("cura/select_models_on_load")
         selectModelsOnLoadCheckbox.checked = boolCheck(UM.Preferences.getValue("cura/select_models_on_load"))
+        UM.Preferences.resetPreference("cura/jobname_prefix")
+        prefixJobNameCheckbox.checked = boolCheck(UM.Preferences.getValue("cura/jobname_prefix"))
         UM.Preferences.resetPreference("view/show_overhang");
         showOverhangCheckbox.checked = boolCheck(UM.Preferences.getValue("view/show_overhang"))
         UM.Preferences.resetPreference("view/show_xray_warning");
@@ -130,6 +128,9 @@ UM.PreferencesPage {
         UM.Preferences.resetPreference("cura/jobname_lulzbot")
         setDefaultJobNameLulzBotOption(UM.Preferences.getValue("cura/jobname_lulzbot"))
 
+        UM.Preferences.resetPreference("cura/allow_connection_to_wrong_machine")
+        wrongPrinterConnectionCheckbox.checked = boolCheck(UM.Preferences.getValue("cura/allow_connection_to_wrong_machine"))
+
         UM.Preferences.resetPreference("info/send_slice_info")
         sendDataCheckbox.checked = boolCheck(UM.Preferences.getValue("info/send_slice_info"))
 
@@ -141,10 +142,10 @@ UM.PreferencesPage {
 
         UM.Preferences.resetPreference("info/automatic_update_check")
         checkUpdatesCheckbox.checked = boolCheck(UM.Preferences.getValue("info/automatic_update_check"))
-        UM.Preferences.resetPreference("info/latest_update_source")
 
-        UM.Preferences.resetPreference("cura/allow_connection_to_wrong_machine")
-        wrongPrinterConnectionCheckbox.checked = boolCheck(UM.Preferences.getValue("cura/allow_connection_to_wrong_machine"))
+        UM.Preferences.resetPreference("info/latest_update_source")
+        UM.Preferences.resetPreference("info/automatic_plugin_update_check")
+        pluginNotificationsUpdateCheckbox.checked = boolCheck(UM.Preferences.getValue("info/automatic_plugin_update_check"))
     }
 
     buttons: [
@@ -224,7 +225,6 @@ UM.PreferencesPage {
                         append({ text: "Türkçe", code: "tr_TR" })
                         append({ text: "简体中文", code: "zh_CN" })
 
-                        // yar date_object be new Date();
                         var date_object = new Date();
                         if (date_object.getUTCMonth() == 8 && date_object.getUTCDate() == 19) //Only add Pirate on the 19th of September.
                         {
@@ -297,7 +297,8 @@ UM.PreferencesPage {
                     text: catalog.i18nc("@label: Please keep the asterix, it's to indicate that a restart is needed.", "Theme*:")
                 }
 
-                ListModel {
+                ListModel
+                {
                     id: themeList
 
                     Component.onCompleted: {
@@ -339,7 +340,7 @@ UM.PreferencesPage {
                 width: childrenRect.width;
                 height: childrenRect.height;
 
-                text: catalog.i18nc("@info:tooltip","Slice automatically when changing settings.")
+                text: catalog.i18nc("@info:tooltip", "Slice automatically when changing settings.")
 
                 UM.CheckBox
                 {
@@ -347,7 +348,7 @@ UM.PreferencesPage {
                     checked: boolCheck(UM.Preferences.getValue("general/auto_slice"))
                     onClicked: UM.Preferences.setValue("general/auto_slice", checked)
 
-                    text: catalog.i18nc("@option:check","Slice automatically");
+                    text: catalog.i18nc("@option:check", "Slice automatically");
                 }
             }
 
@@ -392,7 +393,8 @@ UM.PreferencesPage {
                 text: catalog.i18nc("@label", "Viewport behavior")
             }
 
-            UM.TooltipArea {
+            UM.TooltipArea
+            {
                 width: childrenRect.width;
                 height: childrenRect.height;
 
@@ -410,7 +412,8 @@ UM.PreferencesPage {
             }
 
 
-            UM.TooltipArea {
+            UM.TooltipArea
+            {
                 width: childrenRect.width;
                 height: childrenRect.height;
 
@@ -427,7 +430,8 @@ UM.PreferencesPage {
                 }
             }
 
-            UM.TooltipArea {
+            UM.TooltipArea
+            {
                 width: childrenRect.width;
                 height: childrenRect.height;
                 text: catalog.i18nc("@info:tooltip", "Moves the camera so the model is in the center of the view when a model is selected")
@@ -441,7 +445,8 @@ UM.PreferencesPage {
                 }
             }
 
-            UM.TooltipArea {
+            UM.TooltipArea
+            {
                 width: childrenRect.width;
                 height: childrenRect.height;
                 text: catalog.i18nc("@info:tooltip", "Should the default zoom behavior of cura be inverted?")
@@ -461,7 +466,8 @@ UM.PreferencesPage {
                 }
             }
 
-            UM.TooltipArea {
+            UM.TooltipArea
+            {
                 width: childrenRect.width;
                 height: childrenRect.height;
                 text: zoomToMouseCheckbox.enabled ? catalog.i18nc("@info:tooltip", "Should zooming move in the direction of the mouse?") : catalog.i18nc("@info:tooltip", "Zooming towards the mouse is not supported in the orthographic perspective.")
@@ -476,7 +482,8 @@ UM.PreferencesPage {
                 }
 
                 //Because there is no signal for individual preferences, we need to manually link to the onPreferenceChanged signal.
-                Connections {
+                Connections
+                {
                     target: UM.Preferences
                     function onPreferenceChanged(preference)
                     {
@@ -490,7 +497,8 @@ UM.PreferencesPage {
                 }
             }
 
-            UM.TooltipArea {
+            UM.TooltipArea
+            {
                 width: childrenRect.width
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip", "Should models on the platform be moved so that they no longer intersect?")
@@ -503,7 +511,8 @@ UM.PreferencesPage {
                     onCheckedChanged: UM.Preferences.setValue("physics/automatic_push_free", checked)
                 }
             }
-            UM.TooltipArea {
+            UM.TooltipArea
+            {
                 width: childrenRect.width
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip", "Should models on the platform be moved down to touch the build plate?")
@@ -538,7 +547,8 @@ UM.PreferencesPage {
                 }
             }
 
-            UM.TooltipArea {
+            UM.TooltipArea
+            {
                 width: childrenRect.width
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip", "Should layer be forced into compatibility mode?")
@@ -552,7 +562,8 @@ UM.PreferencesPage {
                 }
             }
 
-            UM.TooltipArea {
+            UM.TooltipArea
+            {
                 width: childrenRect.width
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip", "Should Cura open at the location it was closed?")
@@ -566,7 +577,8 @@ UM.PreferencesPage {
                 }
             }
 
-            UM.TooltipArea {
+            UM.TooltipArea
+            {
                 width: childrenRect.width
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip", "What type of camera rendering should be used?")
@@ -578,7 +590,8 @@ UM.PreferencesPage {
                     {
                         text: catalog.i18nc("@window:text", "Camera rendering:")
                     }
-                    ListModel {
+                    ListModel
+                    {
                         id: comboBoxList
                         Component.onCompleted:
                         {
@@ -675,7 +688,8 @@ UM.PreferencesPage {
                 text: catalog.i18nc("@label","Opening and saving files")
             }
 
-            UM.TooltipArea {
+            UM.TooltipArea
+            {
                 width: childrenRect.width
                 // Mac only allows applications to run as a single instance, so providing the option for this os doesn't make much sense
                 visible: Qt.platform.os !== "osx"
@@ -692,7 +706,8 @@ UM.PreferencesPage {
                 }
             }
 
-            UM.TooltipArea {
+            UM.TooltipArea
+            {
                 width: childrenRect.width
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip","Should the build plate be cleared before loading a new model in the single instance of Cura?")
@@ -707,7 +722,8 @@ UM.PreferencesPage {
                 }
             }
 
-            UM.TooltipArea {
+            UM.TooltipArea
+            {
                 width: childrenRect.width
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip","Should models be scaled to the build volume if they are too large?")
@@ -721,7 +737,8 @@ UM.PreferencesPage {
                 }
             }
 
-            UM.TooltipArea {
+            UM.TooltipArea
+            {
                 width: childrenRect.width
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip","An model may appear extremely small if its unit is for example in meters rather than millimeters. Should these models be scaled up?")
@@ -735,7 +752,8 @@ UM.PreferencesPage {
                 }
             }
 
-            UM.TooltipArea {
+            UM.TooltipArea
+            {
                 width: childrenRect.width
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip","Should models be selected after they are loaded?")
@@ -792,27 +810,28 @@ UM.PreferencesPage {
                 Column {
                     spacing: 4 * screenScaleFactor
 
-                    Label {
+                    UM.Label {
                         text: catalog.i18nc("@window:text", "Printer Name Location In Job Name:")
                     }
-
-                    NewControls.ComboBox {
-                        id: choiceJobNameLulzBotDropDownButton
-                        width: Math.round(250 * screenScaleFactor)
-
-                        model: ListModel
+                    ListModel
+                    {
+                        id: jobNameLulzBotList
+                        Component.onCompleted:
                         {
-                            id: lulzbotJobNameModel
-
-                            Component.onCompleted:
-                            {
-                                append({ text: catalog.i18nc("@option:jobNameLulzBot", "Printer Name First"), code: "at_start" })
-                                append({ text: catalog.i18nc("@option:jobNameLulzBot", "Printer Name Last"), code: "at_end" })
-                                append({ text: catalog.i18nc("@option:jobNameLulzBot", "LulzBot Print Farm Stylization"), code: "printfarm_style" })
-                                append({ text: catalog.i18nc("@option:jobNameLulzBot", "Don't Include Printer Name"), code: "none"})
-                            }
+                            append({ text: catalog.i18nc("@option:jobNameLulzBot", "Printer Name First"), code: "at_start" })
+                            append({ text: catalog.i18nc("@option:jobNameLulzBot", "Printer Name Last"), code: "at_end" })
+                            append({ text: catalog.i18nc("@option:jobNameLulzBot", "LulzBot Print Farm Stylization"), code: "printfarm_style" })
+                            append({ text: catalog.i18nc("@option:jobNameLulzBot", "Don't Include Printer Name"), code: "none"})
                         }
+                    }
+
+                    Cura.ComboBox {
+                        id: jobNameLulzBotComboBox
+
+                        model: jobNameLulzBotList
                         textRole: "text"
+                        width: UM.Theme.getSize("combobox").width
+                        height: UM.Theme.getSize("combobox").height
 
                         currentIndex:
                         {
@@ -839,7 +858,7 @@ UM.PreferencesPage {
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip", "Should part quantity be added to the end of the job name?")
 
-                CheckBox {
+                UM.CheckBox {
                     id: jobnamePartCountCheckbox
                     text: catalog.i18nc("@option:check", "Add part count to job name")
                     checked: boolCheck(UM.Preferences.getValue("cura/jobname_part_count"))
@@ -852,7 +871,7 @@ UM.PreferencesPage {
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip", "Should print time be added to the end of the job name?")
 
-                CheckBox {
+                UM.CheckBox {
                     id: jobnamePrintTimeCheckbox
                     text: catalog.i18nc("@option:check", "Add print time to job name")
                     checked: boolCheck(UM.Preferences.getValue("cura/jobname_print_time"))
@@ -865,7 +884,7 @@ UM.PreferencesPage {
                 height: childrenRect.height
                 text: catalog.i18nc("@info:tooltip", "Should print weight be added to the end of the job name?")
 
-                CheckBox {
+                UM.CheckBox {
                     id: jobnameWeightCheckbox
                     text: catalog.i18nc("@option:check", "Add weight to job name")
                     checked: boolCheck(UM.Preferences.getValue("cura/jobname_weight"))
@@ -932,7 +951,8 @@ UM.PreferencesPage {
                 }
             }
 
-            Item {
+            Item
+            {
                 //: Spacer
                 height: UM.Theme.getSize("default_margin").height
                 width: UM.Theme.getSize("default_margin").width
@@ -997,7 +1017,8 @@ UM.PreferencesPage {
                 }
             }
 
-            Item {
+            Item
+            {
                 //: Spacer
                 height: UM.Theme.getSize("default_margin").height
                 width: UM.Theme.getSize("default_margin").height
@@ -1021,29 +1042,6 @@ UM.PreferencesPage {
                     text: catalog.i18nc("@option:check","Send engine crash reports")
                     checked: boolCheck(UM.Preferences.getValue("info/send_engine_crash"))
                     onCheckedChanged: UM.Preferences.setValue("info/send_engine_crash", checked)
-                }
-            }
-
-            ButtonGroup
-            {
-                id: curaCrashGroup
-                buttons: [sendEngineCrashCheckboxAnonymous, sendEngineCrashCheckboxUser]
-            }
-
-            UM.TooltipArea
-            {
-                width: childrenRect.width
-                height: visible ? childrenRect.height : 0
-                text: catalog.i18nc("@info:tooltip", "Send crash reports without any personally identifiable information or models data to LulzBot.")
-                anchors.left: parent.left
-                anchors.leftMargin: UM.Theme.getSize("default_margin").width
-                Cura.RadioButton
-                {
-                    id: sendEngineCrashCheckboxAnonymous
-                    text: catalog.i18nc("@option:radio", "Anonymous crash reports")
-                    enabled: sendEngineCrashCheckbox.checked && Cura.API.account.isLoggedIn
-                    checked: boolCheck(UM.Preferences.getValue("info/anonymous_engine_crash_report"))
-                    onClicked: UM.Preferences.setValue("info/anonymous_engine_crash_report", true)
                 }
             }
 
@@ -1076,9 +1074,12 @@ UM.PreferencesPage {
                 }
             }
 
-            //                                                                              //
-            // vvv Uncomment this all later once you get update checking to actual work vvv //
-            //                                                                              //
+            Item
+            {
+                //: Spacer
+                height: UM.Theme.getSize("default_margin").height
+                width: UM.Theme.getSize("default_margin").height
+            }
 
             UM.Label
             {
@@ -1086,11 +1087,11 @@ UM.PreferencesPage {
                 text: catalog.i18nc("@label", "Updates")
             }
 
-            // Item {
-            //     //: Spacer
-            //     height: UM.Theme.getSize("default_margin").height
-            //     width: UM.Theme.getSize("default_margin").height
-            // }
+            UM.TooltipArea
+            {
+                width: childrenRect.width
+                height: visible ? childrenRect.height : 0
+                text: catalog.i18nc("@info:tooltip", "Should Cura check for updates when the program is started?")
 
                 UM.CheckBox
                 {
@@ -1154,41 +1155,38 @@ UM.PreferencesPage {
                 }
             }
 
-            // ExclusiveGroup { id: curaUpdatesGroup }
 
-            // UM.TooltipArea {
-            //     width: childrenRect.width
-            //     height: visible ? childrenRect.height : 0
-            //     text: catalog.i18nc("@info:tooltip", "When checking for updates, only check for stable releases.")
-            //     anchors.left: parent.left
-            //     anchors.leftMargin: UM.Theme.getSize("default_margin").width
+            /* Multi-buildplate functionality is disabled because it's broken. See CURA-4975 for the ticket to remove it.
+            Item
+            {
+                //: Spacer
+                height: UM.Theme.getSize("default_margin").height
+                width: UM.Theme.getSize("default_margin").height
+            }
 
-            //     RadioButton {
-            //         text: catalog.i18nc("@option:radio", "Stable releases only")
-            //         exclusiveGroup: curaUpdatesGroup
-            //         enabled: checkUpdatesCheckbox.checked
-            //         checked: UM.Preferences.getValue("info/latest_update_source") == "stable"
-            //         onClicked: UM.Preferences.setValue("info/latest_update_source", "stable")
-            //     }
-            // }
+            Label
+            {
+                font.bold: true
+                text: catalog.i18nc("@label","Experimental")
+            }
 
-            // UM.TooltipArea {
-            //     width: childrenRect.width
-            //     height: visible ? childrenRect.height : 0
-            //     text: catalog.i18nc("@info:tooltip", "When checking for updates, check for both stable and for beta releases.")
-            //     anchors.left: parent.left
-            //     anchors.leftMargin: UM.Theme.getSize("default_margin").width
+            UM.TooltipArea
+            {
+                width: childrenRect.width
+                height: childrenRect.height
+                text: catalog.i18nc("@info:tooltip","Use multi build plate functionality")
 
-            //     RadioButton {
-            //         text: catalog.i18nc("@option:radio", "Stable and Beta releases")
-            //         exclusiveGroup: curaUpdatesGroup
-            //         enabled: checkUpdatesCheckbox.checked
-            //         checked: UM.Preferences.getValue("info/latest_update_source") == "beta"
-            //         onClicked: UM.Preferences.setValue("info/latest_update_source", "beta")
-            //     }
-            // }
+                CheckBox
+                {
+                    id: useMultiBuildPlateCheckbox
+                    text: catalog.i18nc("@option:check","Use multi build plate functionality (restart required)")
+                    checked: boolCheck(UM.Preferences.getValue("cura/use_multi_build_plate"))
+                    onCheckedChanged: UM.Preferences.setValue("cura/use_multi_build_plate", checked)
+                }
+            }*/
 
-            Connections {
+            Connections
+            {
                 target: UM.Preferences
                 function onPreferenceChanged(preference)
                 {

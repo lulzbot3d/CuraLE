@@ -14,7 +14,8 @@ import Cura 1.1 as Cura
 Item
 {
     // Arrange the items vertically and put everything in the center
-    Column {
+    Column
+    {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         spacing: UM.Theme.getSize("thick_margin").height
@@ -22,12 +23,14 @@ Item
 
 
         // Filler item
-        Item {
+        Item
+        {
             height: UM.Theme.getSize("thick_margin").width
             width: parent.width
         }
 
-        Image {
+        Image
+        {
             id: curaImage
             anchors.horizontalCenter: parent.horizontalCenter
             source: UM.Theme.getImage("welcome_curale")
@@ -38,7 +41,8 @@ Item
         }
 
         // Filler item
-        Item {
+        Item
+        {
             height: UM.Theme.getSize("thick_margin").width
             width: parent.width
         }
@@ -64,12 +68,14 @@ Item
         }
 
         // Filler item
-        Item {
+        Item
+        {
             height: UM.Theme.getSize("thick_margin").height
             width: parent.width
         }
 
-        Cura.PrimaryButton {
+        Cura.PrimaryButton
+        {
             id: getStartedButton
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Get started"
@@ -77,7 +83,8 @@ Item
         }
 
         // Filler item
-        Item {
+        Item
+        {
             height: UM.Theme.getSize("thick_margin").height
             width: parent.width
         }

@@ -176,7 +176,7 @@ Item {
                 labelText: catalog.i18nc("@label", "Has LCD Screen")
                 labelFont: base.labelFont
                 labelWidth: base.labelWidth
-                checkBoxEnabled: Cura.MachineManager.activeMachineOptionalLCD
+                //checkBoxEnabled: Cura.MachineManager.activeMachineOptionalLCD
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 
@@ -188,7 +188,7 @@ Item {
                 labelText: catalog.i18nc("@label", "Has BLTouch")
                 labelFont: base.labelFont
                 labelWidth: base.labelWidth
-                checkBoxEnabled: Cura.MachineManager.activeMachineOptionalBLTouch
+                //checkBoxEnabled: Cura.MachineManager.activeMachineOptionalBLTouch
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 

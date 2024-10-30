@@ -20,7 +20,7 @@ Item
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         horizontalAlignment: Text.AlignHCenter
-        text: "Help us to improve UltiMaker Cura"
+        text: "Help us to improve Cura LulzBot Edition"
         color: UM.Theme.getColor("primary_button")
         font: UM.Theme.getFont("huge")
     }
@@ -52,7 +52,7 @@ Item
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
                 horizontalAlignment: Text.AlignHCenter
-                text: "UltiMaker Cura collects anonymous data to improve print quality and user experience, including:"
+                text: "Cura LulzBot Edition collects anonymous data to improve print quality and user experience, including:"
                 wrapMode: Text.WordWrap
                 font: UM.Theme.getFont("medium")
             }
@@ -95,7 +95,7 @@ Item
                 horizontalAlignment: Text.AlignHCenter
                 text:
                 {
-                    var t = "Data collected by UltiMaker Cura will not contain any personal information."
+                    var t = "Data collected by Cura LulzBot Edition will not contain any personal information."
                     var t2 = "More information"
                     t += " <a href='https://notusedref'>" + t2 + "</a>"
                     return t

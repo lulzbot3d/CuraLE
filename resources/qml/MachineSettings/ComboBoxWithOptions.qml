@@ -14,14 +14,15 @@ import "../Widgets"
 //
 // ComboBox with dropdown options in the Machine Settings dialog.
 //
-UM.TooltipArea {
+UM.TooltipArea
+{
     id: comboBoxWithOptions
 
     UM.I18nCatalog { id: catalog; name: "cura"; }
 
     height: childrenRect.height
     width: childrenRect.width
-    text: useInBuiltTooltip ? tooltipText : ""
+    text: tooltipText
 
     property int controlWidth: UM.Theme.getSize("setting_control").width
     property int controlHeight: UM.Theme.getSize("setting_control").height
@@ -35,7 +36,6 @@ UM.TooltipArea {
     property alias labelWidth: fieldLabel.width
     property alias optionModel: comboBox.model
 
-    property bool useInBuiltTooltip: true
     property string tooltipText: propertyProvider.properties.description ? propertyProvider.properties.description : ""
 
     // callback functions
@@ -99,6 +99,7 @@ UM.TooltipArea {
     {
         id: comboBox
         anchors.left: fieldLabel.right
+        anchors.leftMargin: UM.Theme.getSize("default_margin").width
         width: comboBoxWithOptions.controlWidth
         height: comboBoxWithOptions.controlHeight
         model: defaultOptionsModel
