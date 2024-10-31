@@ -9,7 +9,7 @@ from UM.Logger import Logger
 from cura.Snapshot import Snapshot
 import cura.CuraApplication
 
-from PyQt5.QtCore import QBuffer
+from PyQt6.QtCore import QBuffer
 
 class ThumbnailGenerator:
     """Generates thumbnails that mainsail uses"""

@@ -1,1 +1,0 @@
-JOB_COMPLETE REMOVAL_TEMP={material_part_removal_temperature}
