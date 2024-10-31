@@ -7,14 +7,16 @@ import QtQuick.Controls 2.3
 import UM 1.5 as UM
 import Cura 1.7 as Cura
 
-Item {
+Item
+{
     id: base
 
     width: buttons.width
     height: buttons.height
     property int activeY
 
-    Item {
+    Item
+    {
         id: buttons
         width: parent.visible ? toolButtons.width : 0
         height: childrenRect.height
@@ -22,8 +24,10 @@ Item {
         Behavior on width { NumberAnimation { duration: 100 } }
 
         // Used to create a rounded rectangle behind the toolButtons
-        Rectangle {
-            anchors {
+        Rectangle
+        {
+            anchors
+            {
                 fill: toolButtons
                 leftMargin: -radius - border.width // Removes border on left side
             }
@@ -34,13 +38,15 @@ Item {
 
         }
 
-        Column {
+        Column
+        {
             id: toolButtons
 
             anchors.top: parent.top
             anchors.right: parent.right
 
-            Repeater {
+            Repeater
+            {
                 id: repeat
 
                 model: UM.ToolModel { id: toolsModel }
@@ -63,8 +69,10 @@ Item {
                         color: UM.Theme.getColor("icon")
                     }
 
-                    onCheckedChanged: {
-                        if (checked) {
+                    onCheckedChanged:
+                    {
+                        if (checked)
+                        {
                             base.activeY = y;
                         }
                         //Clear focus when tools change. This prevents the tool grabbing focus when activated.
@@ -75,15 +83,18 @@ Item {
 
                     //Workaround since using ToolButton's onClicked would break the binding of the checked property, instead
                     //just catch the click so we do not trigger that behaviour.
-                    MouseArea {
+                    MouseArea
+                    {
                         anchors.fill: parent;
-                        onClicked: {
+                        onClicked:
+                        {
                             forceActiveFocus() //First grab focus, so all the text fields are updated
-                            filamentChangeToolButton.checked = false
-                            if(parent.checked) {
+                            if(parent.checked)
+                            {
                                 UM.Controller.setActiveTool(null);
                             }
-                            else {
+                            else
+                            {
                                 UM.Controller.setActiveTool(model.id);
                             }
 
@@ -95,8 +106,10 @@ Item {
         }
 
         // Used to create a rounded rectangle behind the extruderButtons
-        Rectangle {
-            anchors {
+        Rectangle
+        {
+            anchors
+            {
                 fill: extruderButtons
                 leftMargin: -radius - border.width // Removes border on left side
             }
@@ -107,14 +120,16 @@ Item {
             visible: extrudersModel.items.length > 1
         }
 
-        Column {
+        Column
+        {
             id: extruderButtons
 
             anchors.topMargin: UM.Theme.getSize("default_margin").height
             anchors.top: toolButtons.bottom
             anchors.right: parent.right
 
-            Repeater {
+            Repeater
+            {
                 width: childrenRect.width
                 height: childrenRect.height
                 model: extrudersModel.items.length > 1 ? extrudersModel : 0
@@ -129,104 +144,20 @@ Item {
                     enabled: UM.Selection.hasSelection && extruder.stack.isEnabled
                     font: UM.Theme.getFont("small_emphasis")
 
-        FocusScope {
-            id: filamentChangeFocusScope
-
-            anchors {
-                topMargin: UM.Theme.getSize("default_margin").height
-                top: extruderButtons.visible ? extruderButtons.bottom : toolButtons.bottom
-                right: parent.right
-            }
-
-            onActiveFocusChanged: {
-                if (activeFocus) {
-                    UM.Controller.setActiveTool("CameraTool");
-                } else {
-                    filamentChangeToolButton.checked = false
-                }
-            }
-
-            // Used to create a rounded rectangle behind the filamentChangeButton
-            Rectangle {
-                anchors {
-                    fill: filamentChangeToolButton
-                    leftMargin: -radius - border.width
-                    rightMargin: -border.width
-                    topMargin: -border.width
-                    bottomMargin: -border.width
-                }
-                radius: UM.Theme.getSize("default_radius").width
-                color: UM.Theme.getColor("lining")
-                visible: true
-            }
-
-            Cura.FilamentChangeButton {
-                id: filamentChangeToolButton
-                anchors {
-                    top: parent.top
-                    right: parent.right
-                }
-
-                onEnabledChanged: {
-                    if (!enabled) {
-                        checked = false
+                    onClicked:
+                    {
+                        forceActiveFocus() //First grab focus, so all the text fields are updated
+                        CuraActions.setExtruderForSelection(extruder.id)
                     }
                 }
-
-                checkable: true
-                enabled: UM.Selection.hasSelection && UM.Controller.toolsEnabled
-                isTopElement: true
-                isBottomElement: true
-            }
-
-            Cura.NotificationIcon {
-                    id: activeFilamentChangeIcon
-                    visible: changeLayerCount > 0
-                    height: UM.Theme.getSize("notification_icon").width * 1.25
-                    width: height
-                    anchors {
-                        horizontalCenter: filamentChangeToolButton.right
-                        verticalCenter: filamentChangeToolButton.top
-                    }
-
-                    labelText: changeLayerCount
-
-                property int changeLayerCount: {
-                    let layers = layer_provider.properties.value;
-                    let layer_count = 0;
-                    if (layers) {
-                        layer_count = layers.split(",").length;
-                    };
-                    return layer_count;
-                }
-
-                UM.SettingPropertyProvider {
-                    id: layer_provider
-                    containerStackId: Cura.FilamentChangeManager.scriptStackId
-                    key: "layer_number"
-                    watchedProperties: [ "value" ]
-                }
-            }
-
-            Cura.FilamentChangePanel {
-                id: filamentChangeToolPanel
-                anchors {
-                    left: filamentChangeToolButton.right
-                    leftMargin: UM.Theme.getSize("default_margin").width
-                    bottom: filamentChangeToolButton.bottom
-                }
-                z: buttons.z - 1
-
-                target: Qt.point(parent.right, filamentChangeToolButton.y +  Math.round(UM.Theme.getSize("button").height/2))
-
-                panelVisible: filamentChangeToolButton.checked
             }
         }
     }
 
     property var extrudersModel: CuraApplication.getExtrudersModel()
 
-    UM.PointingRectangle {
+    UM.PointingRectangle
+    {
         id: panelBorder
 
         anchors.left: parent.right
@@ -238,11 +169,14 @@ Item {
         target: Qt.point(-1, base.activeY +  Math.round(UM.Theme.getSize("button").height / 2))
         arrowSize: UM.Theme.getSize("default_arrow").width
 
-        width: {
-            if (panel.item && panel.width > 0) {
+        width:
+        {
+            if (panel.item && panel.width > 0)
+            {
                  return Math.max(panel.width + 2 * UM.Theme.getSize("default_margin").width)
             }
-            else {
+            else
+            {
                 return 0;
             }
         }
@@ -255,13 +189,15 @@ Item {
         borderColor: UM.Theme.getColor("lining")
         borderWidth: UM.Theme.getSize("default_lining").width
 
-        MouseArea { //Catch all mouse events (so scene doesn't handle them)
+        MouseArea //Catch all mouse events (so scene doesn't handle them)
+        {
             anchors.fill: parent
             acceptedButtons: Qt.AllButtons
             onWheel: wheel.accepted = true
         }
 
-        Loader {
+        Loader
+        {
             id: panel
 
             x: UM.Theme.getSize("default_margin").width
@@ -274,7 +210,8 @@ Item {
 
     // This rectangle displays the information about the current angle etc. when
     // dragging a tool handle.
-    Rectangle {
+    Rectangle
+    {
         id: toolInfo
         x: visible ? -base.x + base.mouseX + UM.Theme.getSize("default_margin").width: 0
         y: visible ? -base.y + base.mouseY + UM.Theme.getSize("default_margin").height: 0

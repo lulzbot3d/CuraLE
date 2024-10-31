@@ -9,7 +9,7 @@ from os import environ
 from re import search
 from threading import Thread
 
-from PyQt6.QtCore import QObject, pyqtSignal
+from PyQt6.QtCore import QObject, pyqtSignal, pyqtProperty
 
 from UM.Platform import Platform
 from UM.Signal import Signal, signalemitter

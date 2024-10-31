@@ -7,7 +7,8 @@ import QtQuick.Controls 2.3
 import UM 1.5 as UM
 import Cura 1.1 as Cura
 
-Cura.ExpandablePopup {
+Cura.ExpandablePopup
+{
     id: machineSelector
 
     property var machineManager: Cura.MachineManager
@@ -30,13 +31,64 @@ Cura.ExpandablePopup {
     property alias machineListModel: machineSelectorList.model
     property alias onSelectPrinter: machineSelectorList.onSelectPrinter
 
-    enabled: !printerAcceptsCommands
-    disabledText: "Connected to Printer"
+    property list<Item> buttons
+
+    property string connectionStatus: {
+        if (isNetworkPrinter)
+        {
+            return "printer_connected"
+        }
+        else if (isConnectedCloudPrinter && Cura.API.connectionStatus.isInternetReachable)
+        {
+            return "printer_cloud_connected"
+        }
+        else if (isCloudRegistered)
+        {
+            return "printer_cloud_not_available"
+        }
+        else
+        {
+            return ""
+        }
+    }
+
+    function getConnectionStatusMessage() {
+        if (connectionStatus == "printer_cloud_not_available")
+        {
+            if(Cura.API.connectionStatus.isInternetReachable)
+            {
+                if (Cura.API.account.isLoggedIn)
+                {
+                    if (machineManager.activeMachineIsLinkedToCurrentAccount)
+                    {
+                        return catalog.i18nc("@status", "The cloud printer is offline. Please check if the printer is turned on and connected to the internet.")
+                    }
+                    else
+                    {
+                        return catalog.i18nc("@status", "This printer is not linked to your account. Please visit the Ultimaker Digital Factory to establish a connection.")
+                    }
+                }
+                else
+                {
+                    return catalog.i18nc("@status", "The cloud connection is currently unavailable. Please sign in to connect to the cloud printer.")
+                }
+            }
+            else
+            {
+                return catalog.i18nc("@status", "The cloud connection is currently unavailable. Please check your internet connection.")
+            }
+        }
+        else
+        {
+            return ""
+        }
+    }
 
     contentPadding: UM.Theme.getSize("default_lining").width
     contentAlignment: Cura.ExpandablePopup.ContentAlignment.AlignLeft
 
-    UM.I18nCatalog {
+    UM.I18nCatalog
+    {
         id: catalog
         name: "cura"
     }
@@ -75,6 +127,7 @@ Cura.ExpandablePopup {
                 left: parent.left
                 leftMargin: iconSize - Math.round(width * 5 / 6)
             }
+
             source:
             {
                 if (connectionStatus == "printer_connected")
@@ -169,7 +222,8 @@ Cura.ExpandablePopup {
             clip: true
         }
 
-        Rectangle {
+        Rectangle
+        {
             id: separator
             anchors.bottom: buttonRow.top
             width: parent.width
@@ -177,7 +231,8 @@ Cura.ExpandablePopup {
             color: UM.Theme.getColor("lining")
         }
 
-        Row {
+        Row
+        {
             id: buttonRow
 
             anchors.bottom: parent.bottom

@@ -9,7 +9,7 @@ import Cura 1.1 as Cura
 
 
 //
-// This component contains the content for the "What's new in Cura LulzBot Edition" page of the welcome on-boarding process.
+// This component contains the content for the "What's new in Ultimaker Cura" page of the welcome on-boarding process.
 //
 Item
 {
@@ -85,8 +85,6 @@ Item
                 return false
             }
         }
-
-        style: UM.Theme.styles.checkbox
     }
 
     Cura.PrimaryButton
