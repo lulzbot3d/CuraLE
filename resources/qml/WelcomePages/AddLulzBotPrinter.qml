@@ -12,7 +12,8 @@ Control
 {
     UM.I18nCatalog { id: catalog; name: "cura" }
 
-    property var goToCustomPrinter
+    property var goToAddPrinter
+    property string printerCategory
 
     contentItem: ColumnLayout
     {
@@ -57,20 +58,7 @@ Control
                     Layout.alignment: Qt.AlignTop
                     wrapMode: Text.WordWrap
                     font: UM.Theme.getFont("default_bold")
-                    text: catalog.i18nc("@label", "If you are trying to add a new LulzBot printer to Cura LulzBot Edition")
-                }
-
-                Cura.TertiaryButton
-                {
-                    id: learnMoreButton
-                    Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignTop
-                    leftPadding: 0
-                    text: catalog.i18nc("@button", "Learn more")
-                    iconSource: UM.Theme.getIcon("LinkExternal")
-                    isIconOnRightSide: true
-                    textFont: UM.Theme.getFont("small")
-                    onClicked: Qt.openUrlExternally("https://lulzbot.com/")
+                    text: printerCategory
                 }
             }
         }
@@ -85,24 +73,10 @@ Control
 
                 Cura.SecondaryButton
                 {
-                    id: addLocalPrinterButton
+                    id: addPrinterButton
                     Layout.alignment: Qt.AlignLeft
-                    text: catalog.i18nc("@button", "Add Custom printer")
-                    onClicked: goToCustomPrinter()
-                }
-
-                Cura.PrimaryButton
-                {
-                    id: signInButton
-                    Layout.alignment: Qt.AlignRight
-                    text: catalog.i18nc("@button", "Sign in to Digital Factory")
-                    onClicked: function()
-                    {
-                        Qt.openUrlExternally("https://lulzbot.com/")
-                        text = catalog.i18nc("@button", "LulzBot Website :)")
-                        busy = true;
-                        enabled = false;
-                    }
+                    text: catalog.i18nc("@button", "Back")
+                    onClicked: goToAddPrinter()
                 }
             }
         }

@@ -17,7 +17,10 @@ ColumnLayout
     Layout.fillWidth: true
     Layout.fillHeight: true
 
+    // Stack navigation
+    property var goToAddPrinter: () => layout.currentIndex = 0
     property var goToLulzBotPrinter: () => layout.currentIndex = 1
+    property var goToOtherPrinter: () => layout.currentIndex = 1
     property var goToCustomPrinter: () => layout.currentIndex = 2
 
     UM.Label
@@ -26,7 +29,7 @@ ColumnLayout
         Layout.fillWidth: true
         Layout.bottomMargin: UM.Theme.getSize("thick_margin").height
         horizontalAlignment: Text.AlignHCenter
-        text: catalog.i18nc("@label", "Add printer")
+        text: catalog.i18nc("@label", "Add Printer")
         color: UM.Theme.getColor("primary_button")
         font: UM.Theme.getFont("huge")
     }
@@ -37,19 +40,19 @@ ColumnLayout
         Layout.fillWidth: true
         Layout.fillHeight: true
         currentIndex: 0
-        AddLulzBotOrCustomPrinter
+        AddPrinter
         {
             goToLulzBotPrinter: root.goToLulzBotPrinter
+            goToOtherPrinter: root.goToOtherPrinter
             goToCustomPrinter: root.goToCustomPrinter
         }
         AddLulzBotPrinter
         {
-            goToCustomPrinter: root.goToCustomPrinter
+            goToAddPrinter: root.goToAddPrinter
         }
         AddCustomPrinter
         {
-            goToLulzBotPrinter: root.goToLulzBotPrinter
-
+            goToAddPrinter: root.goToAddPrinter
         }
     }
 }

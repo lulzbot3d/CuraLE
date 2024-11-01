@@ -210,7 +210,7 @@ class PauseAtHeightorLayer(Script):
 
                 if ";LAYER:" in line:
                     subPart = line[line.find(";LAYER:") + len(";LAYER:"):]
-                    m = re.search("^[+-]?[0-9]+\.?[0-9]*", subPart)
+                    m = re.search(r"^[+-]?[0-9]+\.?[0-9]*", subPart)
                     current_layer = float(m.group(0))
 
                 if self.getValue(line, 'G') == 1 or self.getValue(line, 'G') == 0:

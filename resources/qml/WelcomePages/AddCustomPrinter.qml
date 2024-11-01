@@ -16,7 +16,7 @@ Item
 {
     UM.I18nCatalog { id: catalog; name: "cura" }
 
-    property var goToLulzBotPrinter
+    property var goToAddPrinter
 
     ColumnLayout
     {
@@ -57,8 +57,8 @@ Item
         id: backButton
         anchors.left: parent.left
         anchors.bottom: parent.bottom
-        text: catalog.i18nc("@button", "Add LulzBot printer")
-        onClicked: goToLulzBotPrinter()
+        text: catalog.i18nc("@button", "Back")
+        onClicked: goToAddPrinter()
     }
 
     Cura.PrimaryButton
