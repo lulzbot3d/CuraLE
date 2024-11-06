@@ -1,7 +1,6 @@
 # Copyright (c) 2021 Ultimaker B.V.
 # Cura is released under the terms of the LGPLv3 or higher.
 
-from dis import dis
 import numpy
 import math
 
@@ -194,6 +193,7 @@ class BuildVolume(SceneNode):
 
     def _updateNodeListeners(self, node: SceneNode):
         """Updates the listeners that listen for changes in per-mesh stacks.
+
         :param node: The node for which the decorators changed.
         """
 
@@ -231,7 +231,9 @@ class BuildVolume(SceneNode):
 
     def getDiagonalSize(self) -> float:
         """Get the length of the 3D diagonal through the build volume.
+
         This gives a sense of the scale of the build volume in general.
+
         :return: length of the 3D diagonal through the build volume
         """
 
@@ -341,6 +343,7 @@ class BuildVolume(SceneNode):
 
     def checkBoundsAndUpdate(self, node: CuraSceneNode, bounds: Optional[AxisAlignedBox] = None) -> None:
         """Update the outsideBuildArea of a single node, given bounds or current build volume
+
         :param node: single node
         :param bounds: bounds or current build volume
         """
@@ -790,6 +793,7 @@ class BuildVolume(SceneNode):
 
     def _updateDisallowedAreasAndRebuild(self):
         """Calls :py:meth:`cura.BuildVolume._updateDisallowedAreas` and makes sure the changes appear in the scene.
+
         This is required for a signal to trigger the update in one go. The
         :py:meth:`cura.BuildVolume._updateDisallowedAreas` method itself shouldn't call
         :py:meth:`cura.BuildVolume.rebuild`, since there may be other changes before it needs to be rebuilt,
@@ -858,7 +862,9 @@ class BuildVolume(SceneNode):
 
     def _computeDisallowedAreasPrinted(self, used_extruders):
         """Computes the disallowed areas for objects that are printed with print features.
+
         This means that the brim, travel avoidance and such will be applied to these features.
+
         :return: A dictionary with for each used extruder ID the disallowed areas where that extruder may not print.
         """
 
@@ -907,8 +913,10 @@ class BuildVolume(SceneNode):
 
     def _computeDisallowedAreasPrimeBlob(self, border_size: float, used_extruders: List["ExtruderStack"]) -> Dict[str, List[Polygon]]:
         """Computes the disallowed areas for the prime blobs.
+
         These are special because they are not subject to things like brim or travel avoidance. They do get a dilute
         with the border size though because they may not intersect with brims and such of other objects.
+
         :param border_size: The size with which to offset the disallowed areas due to skirt, brim, travel avoid distance
          , etc.
         :param used_extruders: The extruder stacks to generate disallowed areas for.
@@ -944,8 +952,10 @@ class BuildVolume(SceneNode):
 
     def _computeDisallowedAreasStatic(self, border_size:float, used_extruders: List["ExtruderStack"]) -> Dict[str, List[Polygon]]:
         """Computes the disallowed areas that are statically placed in the machine.
+
         It computes different disallowed areas depending on the offset of the extruder. The resulting dictionary will
          therefore have an entry for each extruder that is used.
+
         :param border_size: The size with which to offset the disallowed areas due to skirt, brim, travel avoid distance
          , etc.
         :param used_extruders: The extruder stacks to generate disallowed areas for.
@@ -960,8 +970,14 @@ class BuildVolume(SceneNode):
         disallowed_areas = []
         disallowed_areas += self._global_container_stack.getProperty("machine_disallowed_areas", "value")
 
+        for area in self._global_container_stack.getProperty("machine_disallowed_areas", "value"):
+            if  len(area) > 0:
+                disallowed_areas.append(area)
+
         for extruder in used_extruders:
-            disallowed_areas += extruder.getProperty("extruder_disallowed_areas", "value")
+            for area in extruder.getProperty("extruder_disallowed_areas", "value"):
+                if len(area) > 0:
+                    disallowed_areas.append(area)
 
         for area in disallowed_areas:
             if len(area) == 0:
@@ -1095,7 +1111,9 @@ class BuildVolume(SceneNode):
 
     def _getSettingFromAllExtruders(self, setting_key: str) -> List[Any]:
         """Private convenience function to get a setting from every extruder.
+
         For single extrusion machines, this gets the setting from the global stack.
+
         :return: A sequence of setting values, one for each extruder.
         """
 
@@ -1108,6 +1126,7 @@ class BuildVolume(SceneNode):
 
     def _calculateBedAdhesionSize(self, used_extruders):
         """Get the bed adhesion size for the global container stack and used extruders
+
         :param adhesion_override: override adhesion type.
           Use None to use the global stack default, "none" for no adhesion, "brim" for brim etc.
         """
@@ -1164,6 +1183,7 @@ class BuildVolume(SceneNode):
 
     def getEdgeDisallowedSize(self):
         """Calculate the disallowed radius around the edge.
+
         This disallowed radius is to allow for space around the models that is not part of the collision radius,
         such as bed adhesion (skirt/brim/raft) and travel avoid distance.
         """
