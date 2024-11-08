@@ -208,6 +208,9 @@ Item
     AccountWidget
     {
         id: accountWidget
+
+        visible: false // We won't be using this one either.
+
         anchors
         {
             verticalCenter: parent.verticalCenter

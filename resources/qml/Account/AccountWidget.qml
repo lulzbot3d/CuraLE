@@ -21,7 +21,7 @@ Item
 
         anchors.verticalCenter: parent.verticalCenter
 
-        text: catalog.i18nc("@action:button", ":O")
+        text: catalog.i18nc("@action:button", "Sign In")
 
         height: Math.round(0.5 * UM.Theme.getSize("main_window_header").height)
         visible: true

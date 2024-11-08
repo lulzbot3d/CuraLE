@@ -20,20 +20,37 @@ Popup
 
     contentItem: Grid
     {
-        id: platformLinksGrid
-        columns: 2
+        id: ultimakerPlatformLinksGrid
+        columns: 3
         spacing: UM.Theme.getSize("default_margin").width
 
         Repeater
         {
             model:
             [
-                {
-                    displayName: catalog.i18nc("@label:button", "LulzBot\nSupport"),
-                    thumbnail: UM.Theme.getIcon("Help", "high"),
-                    description: catalog.i18nc("@tooltip:button", "Contact LulzBot support."),
-                    link: "https://lulzbot.com/support/contact-us",
-                },
+                //// These first three aren't needed here since obviously we aren't using UltiMaker printers.
+                // *thanks though UltiMaker for keeping Cura open source wij houden van je muahmuah*
+                // {
+                //     displayName: catalog.i18nc("@label:button", "My printers"),
+                //     thumbnail: UM.Theme.getIcon("PrinterTriple", "high"),
+                //     description: catalog.i18nc("@tooltip:button", "Monitor printers in Ultimaker Digital Factory."),
+                //     link: "https://digitalfactory.ultimaker.com/app/printers",
+                //     permissionsRequired: ["digital-factory.printer.read"]
+                // },
+                // {
+                //     displayName: "Digital Library", //Not translated, since it's a brand name.
+                //     thumbnail: UM.Theme.getIcon("Library", "high"),
+                //     description: catalog.i18nc("@tooltip:button", "Create print projects in Digital Library."),
+                //     link: "https://digitalfactory.ultimaker.com/app/library",
+                //     permissionsRequired: ["digital-factory.project.read.shared"]
+                // },
+                // {
+                //     displayName: catalog.i18nc("@label:button", "Print jobs"),
+                //     thumbnail: UM.Theme.getIcon("Nozzle"),
+                //     description: catalog.i18nc("@tooltip:button", "Monitor print jobs and reprint from your print history."),
+                //     link: "https://digitalfactory.ultimaker.com/app/print-jobs",
+                //     permissionsRequired: ["digital-factory.print-job.read"]
+                // },
                 {
                     displayName: "UltiMaker Marketplace", //Not translated, since it's a brand name.
                     thumbnail: UM.Theme.getIcon("Shop", "high"),
@@ -41,26 +58,40 @@ Popup
                     link: "https://marketplace.ultimaker.com/",
                     permissionsRequired: []
                 },
+                // {
+                //     displayName: catalog.i18nc("@label:button", "Sponsor Cura"),
+                //     thumbnail: UM.Theme.getIcon("Heart"),
+                //     description: catalog.i18nc("@tooltip:button", "Show your support for Cura with a donation."),
+                //     link: "https://lulzbot.com/", // Just buy a LulzBot printer, dude, they cost enough as it is. :P
+                //     permissionsRequired: []
+                // },
                 {
-                    displayName: catalog.i18nc("@label:button", "Ask the Community"),
-                    thumbnail: UM.Theme.getIcon("Speak", "high"),
-                    description: catalog.i18nc("@tooltip:button", "Discuss with the LulzBot Community."),
-                    link: "https://forum.lulzbot.com/",
-                    DFAccessRequired: false
+                    displayName: catalog.i18nc("@label:button", "LulzBot support"),
+                    thumbnail: UM.Theme.getIcon("Help", "high"),
+                    description: catalog.i18nc("@tooltip:button", "View LulzBot's support pages."),
+                    link: "https://lulzbot.com/support/",
+                    permissionsRequired: []
                 },
                 {
-                    displayName: catalog.i18nc("@label:button", "Report a Bug"),
+                    displayName: catalog.i18nc("@label:button", "Ask a question"),
+                    thumbnail: UM.Theme.getIcon("Speak", "high"),
+                    description: catalog.i18nc("@tooltip:button", "Consult the LulzBot Community."),
+                    link: "https://forum.lulzbot.com/",
+                    permissionsRequired: []
+                },
+                {
+                    displayName: catalog.i18nc("@label:button", "Report a bug"),
                     thumbnail: UM.Theme.getIcon("Bug", "high"),
                     description: catalog.i18nc("@tooltip:button", "Let developers know that something is going wrong."),
                     link: "https://github.com/lulzbot3d/CuraLE/issues/new/choose",
-                    DFAccessRequired: false
+                    permissionsRequired: []
                 },
                 {
-                    displayName: "LulzBot Homepage", //Not translated, since it's a URL.
+                    displayName: "LulzBot.com", //Not translated, since it's a URL.
                     thumbnail: UM.Theme.getIcon("Browser"),
                     description: catalog.i18nc("@tooltip:button", "Visit the LulzBot website."),
                     link: "https://lulzbot.com/",
-                    DFAccessRequired: false
+                    permissionsRequired: []
                 }
             ]
 
