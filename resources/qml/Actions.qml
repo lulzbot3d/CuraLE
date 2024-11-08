@@ -62,7 +62,6 @@ Item
 
     property alias showProfileFolder: showProfileFolderAction
     property alias documentation: documentationAction
-    property alias showTroubleshooting: showTroubleShootingAction
     property alias openSponsershipPage: openSponsershipPageAction
     property alias reportBug: reportBugAction
     property alias whatsNew: whatsNewAction
@@ -73,12 +72,12 @@ Item
 
     property alias configureSettingVisibility: configureSettingVisibilityAction
 
-    // property alias browsePackages: browsePackagesAction
-    // property alias openMarketplace: openMarketplaceAction
+    property alias browsePackages: browsePackagesAction
 
     property alias paste: pasteAction
     property alias copy: copyAction
     property alias cut: cutAction
+    property alias exportProjectForSupport: exportProjectForSupportAction
 
     readonly property bool copy_paste_enabled: {
         const all_enabled_packages = CuraApplication.getPackageManager().allEnabledPackages;
@@ -87,28 +86,23 @@ Item
 
     UM.I18nCatalog{id: catalog; name: "cura"}
 
-
-    Action {
-        id: showTroubleShootingAction
-        onTriggered: Qt.openUrlExternally("https://ultimaker.com/en/troubleshooting?utm_source=cura&utm_medium=software&utm_campaign=dropdown-troubleshooting")
-        text: catalog.i18nc("@action:inmenu", "Show Online Troubleshooting")
+    Action
+    {
+        id: openSponsershipPageAction
+        onTriggered: Qt.openUrlExternally("https://ultimaker.com/software/ultimaker-cura/sponsor/")
+        text: catalog.i18nc("@action:inmenu", "Sponsor Cura")
     }
 
     Action
     {
-        id: openSponsershipPageAction
-        onTriggered: Qt.openUrlExternally("")
-        text: catalog.i18nc("@action:inmenu", "Sponsor Cura")
-    }
-
-    Action {
         id: toggleFullScreenAction
         shortcut: StandardKey.FullScreen
         text: catalog.i18nc("@action:inmenu", "Toggle Full Screen")
         icon.name: "view-fullscreen"
     }
 
-    Action {
+    Action
+    {
         id: exitFullScreenAction
         text: catalog.i18nc("@action:inmenu", "Exit Full Screen")
         icon.name: "view-fullscreen"
@@ -134,7 +128,8 @@ Item
         enabled: CuraActions.canRedo
     }
 
-    Action {
+    Action
+    {
         id: quitAction
 
         //On MacOS, don't translate the "Quit" word.
@@ -149,43 +144,50 @@ Item
         shortcut: StandardKey.Quit
     }
 
-    Action {
+    Action
+    {
         id: view3DCameraAction
         text: catalog.i18nc("@action:inmenu menubar:view", "3D View")
         onTriggered: UM.Controller.setCameraRotation("3d", 0)
     }
 
-    Action {
+    Action
+    {
         id: viewFrontCameraAction
         text: catalog.i18nc("@action:inmenu menubar:view", "Front View")
         onTriggered: UM.Controller.setCameraRotation("home", 0)
     }
 
-    Action {
+    Action
+    {
         id: viewTopCameraAction
         text: catalog.i18nc("@action:inmenu menubar:view", "Top View")
         onTriggered: UM.Controller.setCameraRotation("y", 90)
     }
 
-    Action {
+    Action
+    {
         id: viewBottomCameraAction
         text: catalog.i18nc("@action:inmenu menubar:view", "Bottom View")
         onTriggered: UM.Controller.setCameraRotation("y", -90)
     }
 
-    Action {
+    Action
+    {
         id: viewLeftSideCameraAction
         text: catalog.i18nc("@action:inmenu menubar:view", "Left Side View")
         onTriggered: UM.Controller.setCameraRotation("x", 90)
     }
 
-    Action {
+    Action
+    {
         id: viewRightSideCameraAction
         text: catalog.i18nc("@action:inmenu menubar:view", "Right Side View")
         onTriggered: UM.Controller.setCameraRotation("x", -90)
     }
 
-    Action {
+    Action
+    {
         id: preferencesAction
         //On MacOS, don't translate the "Configure" word.
         //Qt moves the "configure" entry to a different place, and if it got renamed can't find it again when it
@@ -200,18 +202,21 @@ Item
         shortcut: (Qt.platform.os == "osx") ? "Ctrl+," : ""
     }
 
-    Action {
+    Action
+    {
         id: addMachineAction
         text: catalog.i18nc("@action:inmenu menubar:printer", "&Add Printer...")
     }
 
-    Action {
+    Action
+    {
         id: settingsAction
         text: catalog.i18nc("@action:inmenu menubar:printer", "Manage Pr&inters...")
         icon.name: "configure"
     }
 
-    Action {
+    Action
+    {
         id: manageMaterialsAction
         text: catalog.i18nc("@action:inmenu", "Manage Materials...")
         icon.name: "configure"
@@ -251,7 +256,8 @@ Item
         text: catalog.i18nc("@action:inmenu menubar:profile", "&Create profile from current settings/overrides...")
     }
 
-    Action {
+    Action
+    {
         id: manageProfilesAction
         text: catalog.i18nc("@action:inmenu menubar:profile", "Manage Profiles...")
         icon.name: "configure"
@@ -364,7 +370,8 @@ Item
         text: catalog.i18nc("@action:inmenu","Ce&nter Model on Platform")
     }
 
-    Action {
+    Action
+    {
         id: groupObjectsAction
         text: catalog.i18nc("@action:inmenu menubar:edit","&Group Models")
         enabled: UM.Selection.selectionCount > 1 ? true: false
@@ -373,7 +380,8 @@ Item
         onTriggered: CuraApplication.groupSelected()
     }
 
-    Action {
+    Action
+    {
         id: reloadQmlAction
         onTriggered:
         {
@@ -382,7 +390,8 @@ Item
         shortcut: "Shift+F5"
     }
 
-    Action {
+    Action
+    {
         id: unGroupObjectsAction
         text: catalog.i18nc("@action:inmenu menubar:edit","Ungroup Models")
         enabled: UM.Selection.isGroupSelected
@@ -411,7 +420,8 @@ Item
         onTriggered: PrintOrderManager.swapSelectedAndNextNodes()
     }
 
-    Action {
+    Action
+    {
         id: mergeObjectsAction
         text: catalog.i18nc("@action:inmenu menubar:edit","&Merge Models")
         enabled: UM.Selection.selectionCount > 1 ? true: false
@@ -503,8 +513,10 @@ Item
         icon.name: "document-open"
         // Unassign the shortcut when there are more than one file providers, since then the file provider's shortcut is
         // enabled instead, and Ctrl+O is assigned to the local file provider
-        shortcut: fileProviderModel.count == 1 ? StandardKey.Open : "";
-        onTriggered: UM.Controller.setActiveStage("PrepareStage")
+        shortcut: fileProviderModel.count == 1 ? StandardKey.Open : ""
+        // Set to Prepare Stage when loading in a file
+        onTriggered: UM.Controller.setActiveStage("PrepareStage");
+
     }
 
     Action
@@ -514,7 +526,8 @@ Item
         onTriggered: Printer.arrangeSelection()
     }
 
-    Action {
+    Action
+    {
         id: newProjectAction
         text: catalog.i18nc("@action:inmenu menubar:file","&New Project...")
         shortcut: StandardKey.New
@@ -527,31 +540,62 @@ Item
     }
 
 
-    Action {
+    Action
+    {
         id: configureSettingVisibilityAction
         text: catalog.i18nc("@action:menu", "Configure setting visibility...")
         icon.name: "configure"
     }
 
-    Action {
+    Action
+    {
+        id: browsePackagesAction
+        text: "&Marketplace"
+        icon.name: "plugins_browse"
+    }
+
+    Action
+    {
+        id: exportProjectForSupportAction
+        text: catalog.i18nc("@action:inmenu menubar:help", "Export Package For Technical Support")
+        onTriggered:
+        {
+            var exportName = Qt.formatDateTime(new Date(), "'export-'yyyyMMdd-HHmmss")
+            var args = {
+                "filter_by_machine": false,
+                "file_type": "workspace",
+                "preferred_mimetypes": "application/vnd.ms-package.3dmanufacturing-3dmodel+xml",
+                "limit_mimetypes": ["application/vnd.ms-package.3dmanufacturing-3dmodel+xml"],
+                "silent_save": true,
+                "writer_args": {
+                    "include_log": true
+                }
+            };
+            UM.OutputDeviceManager.requestWriteToDevice("local_file", exportName, args)
+        }
+    }
+
+    // LulzBot Actions
+
+    Action
+    {
         id: toggleStageAction
         shortcut: "`"
-        onTriggered: {
-            if (UM.Controller.activeStage.stageId == "PrepareStage") {
-                UM.Controller.setActiveStage("PreviewStage")
-            } else {
-                UM.Controller.setActiveStage("PrepareStage")
+        onTriggered:
+        {
+            if (UM.Controller.activeStage.stageId == "PrepareStage")
+            {
+                UM.Controller.setActiveStage("PreviewStage");
+            }
+            else
+            {
+                UM.Controller.setActiveStage("PrepareStage");
             }
         }
     }
 
-    Action {
-        id: numbarOpenAction
-        shortcut: "1"
-        onTriggered: openAction.trigger()
-    }
-
-    Action {
+    Action
+    {
         id: numbarSliceAction
         shortcut: "2"
 
@@ -559,26 +603,33 @@ Item
         property var backState: UM.Backend.state
         onBackStateChanged: waitingForSliceToStart = false
 
-        onTriggered: {
-            if (backState != UM.Backend.Error && !waitingForSliceToStart) {
-                if (backState == UM.Backend.NotStarted) {
-                    waitingForSliceToStart = true
-                    CuraApplication.backend.forceSlice()
-                } else {
-                    waitingForSliceToStart = false
-                    CuraApplication.backend.stopSlicing()
+        onTriggered:
+        {
+            if (backState != UM.Backend.Error && !waitingForSliceToStart)
+            {
+                if (backState == UM.Backend.NotStarted)
+                {
+                    waitingForSliceToStart = true;
+                    CuraApplication.backend.forceSlice();
+                }
+                else
+                {
+                    waitingForSliceToStart = false;
+                    CuraApplication.backend.stopSlicing();
                 }
             }
         }
     }
 
-    Action {
+    Action
+    {
         id: numbarSaveAction
         shortcut: "3"
-        onTriggered: {
-            if (UM.Backend.state == UM.Backend.Done) {
-                UM.OutputDeviceManager.requestWriteToDevice(UM.OutputDeviceManager.activeDevice, PrintInformation.jobName,
-                { "filter_by_machine": true, "preferred_mimetypes": Cura.MachineManager.activeMachine.preferred_output_file_formats });
+        onTriggered:
+        {
+            if (UM.Backend.state == UM.Backend.Done)
+            {
+                UM.OutputDeviceManager.requestWriteToDevice(UM.OutputDeviceManager.activeDevice, PrintInformation.jobName, {"filter_by_machine": true, "preferred_mimetypes": Cura.MachineManager.activeMachine.preferred_output_file_formats});
             }
         }
     }
@@ -586,34 +637,10 @@ Item
     Action {
         id: numbarNextPartAction
         shortcut: "4"
-        onTriggered: {
-            CuraApplication.deleteAll()
-            openAction.trigger()
+        onTriggered:
+        {
+            CuraApplication.deleteAll();
+            openAction.trigger();
         }
     }
-
-    // Action {
-    //     id: browsePluginsAction
-    //     text: catalog.i18nc("@action:menu", "Browse plugins...")
-    //     iconName: "plugins_browse"
-    // }
-
-    // Action
-    // {
-    //    id: browsePackagesAction
-    //    text: "&Marketplace"
-    //    icon.name: "plugins_browse"
-    //}
-
-    // Action {
-    //     id: configurePluginsAction
-    //     text: catalog.i18nc("@action:menu", "Installed plugins...");
-    //     iconName: "plugins_configure"
-    // }
-
-    // Action {
-    //     id: expandSidebarAction;
-    //     text: catalog.i18nc("@action:inmenu menubar:view","Expand/Collapse Sidebar");
-    //     shortcut: "Ctrl+E";
-    // }
 }

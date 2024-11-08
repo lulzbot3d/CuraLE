@@ -58,24 +58,13 @@ Column
         }
     }
 
-    Component {
-        id: materialsBrandSection
-        MaterialsBrandSection {
-            materialBrand: element
-        }
-    }
-
-    Component {
-        id: materialSlot
-        MaterialsSlot {
-            material: element
-        }
-    }
-
-    Connections {
+    Connections
+    {
         target: UM.Preferences
-        function onPreferenceChanged(preference) {
-            if (preference !== "cura/expanded_types" && preference !== "cura/expanded_brands") {
+        function onPreferenceChanged(preference)
+        {
+            if (preference !== "cura/expanded_types" && preference !== "cura/expanded_brands")
+            {
                 return;
             }
 

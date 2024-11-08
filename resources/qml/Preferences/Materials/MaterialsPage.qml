@@ -19,8 +19,10 @@ UM.ManagementPage
     property var materialManagementModel: CuraApplication.getMaterialManagementModel()
 
     property var hasCurrentItem: base.currentItem != null
-    property var isCurrentItemActivated: {
-        if (!hasCurrentItem) {
+    property var isCurrentItemActivated:
+    {
+        if (!hasCurrentItem)
+        {
             return false
         }
         const extruder_position = Cura.ExtruderManager.activeExtruderIndex
@@ -38,23 +40,28 @@ UM.ManagementPage
         materialListView.expandActiveMaterial(active_root_material_id)
     }
 
-    function setExpandedActiveMaterial(root_material_id) {
+    function setExpandedActiveMaterial(root_material_id)
+    {
         materialListView.expandActiveMaterial(root_material_id)
     }
 
     // When loaded, try to select the active material in the tree
-    Component.onCompleted: {
+    Component.onCompleted:
+    {
         resetExpandedActiveMaterial()
         base.newRootMaterialIdToSwitchTo = active_root_material_id
     }
 
     // Every time the selected item has changed, notify to the details panel
-    onCurrentItemChanged: {
+    onCurrentItemChanged:
+    {
         forceActiveFocus()
-        if(materialDetailsPanel.currentItem != currentItem) {
+        if(materialDetailsPanel.currentItem != currentItem)
+        {
             materialDetailsPanel.currentItem = currentItem
             // CURA-6679 If the current item is gone after the model update, reset the current item to the active material.
-            if (currentItem == null) {
+            if (currentItem == null)
+            {
                 resetExpandedActiveMaterial()
             }
         }
@@ -101,7 +108,8 @@ UM.ManagementPage
         }
     ]
 
-    onHamburgerButtonClicked: {
+    onHamburgerButtonClicked:
+    {
         const hamburerButtonHeight = hamburger_button.height;
         menu.popup(hamburger_button, -menu.width + hamburger_button.width / 2, hamburger_button.height);
         // for some reason the height of the hamburger changes when opening the popup
@@ -129,7 +137,7 @@ UM.ManagementPage
         }
         contentHeight: materialListView.height //For some reason, this is not determined automatically with this ScrollView. Very weird!
 
-        MaterialsList
+        LulzMaterialsList
         {
             id: materialListView
             width: materialScrollView.width - materialScrollBar.width

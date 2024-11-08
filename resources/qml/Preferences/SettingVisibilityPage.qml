@@ -110,7 +110,7 @@ UM.PreferencesPage
             width: UM.Theme.getSize("action_button").width
             anchors
             {
-                //top: parent.top
+                top: parent.top
                 right: parent.right
                 verticalCenter: filter.verticalCenter
             }
@@ -118,7 +118,8 @@ UM.PreferencesPage
             model: settingVisibilityPresetsModel.items
             textRole: "name"
 
-            currentIndex: {
+            currentIndex:
+            {
                 var idx = -1;
                 for(var i = 0; i < settingVisibilityPresetsModel.items.length; ++i)
                 {
@@ -131,7 +132,8 @@ UM.PreferencesPage
                 return idx;
             }
 
-            onActivated: {
+            onActivated:
+            {
                 var preset_id = settingVisibilityPresetsModel.items[index].presetId
                 settingVisibilityPresetsModel.setActivePreset(preset_id)
             }

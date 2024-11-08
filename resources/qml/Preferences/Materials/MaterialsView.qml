@@ -28,21 +28,26 @@ Item
     signal resetSelectedMaterial()
 
     property bool reevaluateLinkedMaterials: false
-    property string linkedMaterialNames: {
-        if (reevaluateLinkedMaterials) {
+    property string linkedMaterialNames:
+    {
+        if (reevaluateLinkedMaterials)
+        {
             reevaluateLinkedMaterials = false;
         }
-        if (!base.containerId || !base.editingEnabled || !base.currentMaterialNode) {
+        if (!base.containerId || !base.editingEnabled || !base.currentMaterialNode)
+        {
             return "";
         }
         var linkedMaterials = Cura.ContainerManager.getLinkedMaterials(base.currentMaterialNode, true);
-        if (linkedMaterials.length == 0) {
+        if (linkedMaterials.length == 0)
+        {
             return "";
         }
         return linkedMaterials.join(", ");
     }
 
-    function getApproximateDiameter(diameter) {
+    function getApproximateDiameter(diameter)
+    {
         return Math.round(diameter);
     }
 
@@ -51,8 +56,10 @@ Item
     // dialog directly.
     //
     // Please note that somehow this callback is ONLY triggered when visible is false.
-    onVisibleChanged: {
-        if (!visible) {
+    onVisibleChanged:
+    {
+        if (!visible)
+        {
             base.focus = false;
         }
     }
@@ -464,7 +471,8 @@ Item
                     id: unlinkMaterialButton
                     text: catalog.i18nc("@label", "Unlink Material")
                     visible: base.linkedMaterialNames != ""
-                    onClicked: {
+                    onClicked:
+                    {
                         Cura.ContainerManager.unlinkMaterial(base.currentMaterialNode)
                         base.reevaluateLinkedMaterials = true
                     }
@@ -657,14 +665,17 @@ Item
         {
             diameter = properties.diameter;
         }
-        if(!density) {
+        if(!density)
+        {
             density = properties.density;
         }
-        if(!spoolWeight) {
+        if(!spoolWeight)
+        {
             spoolWeight = base.getMaterialPreferenceValue(properties.guid, "spool_weight", Cura.ContainerManager.getContainerMetaDataEntry(properties.container_id, "properties/weight"));
         }
 
-        if (diameter == 0 || density == 0 || spoolWeight == 0) {
+        if (diameter == 0 || density == 0 || spoolWeight == 0)
+        {
             return 0;
         }
         var area = Math.PI * Math.pow(diameter / 2, 2); // in mm2
@@ -672,20 +683,25 @@ Item
         return volume / area; // in m
     }
 
-    function calculateCostPerMeter(spoolCost) {
-        if(!spoolCost) {
+    function calculateCostPerMeter(spoolCost)
+    {
+        if(!spoolCost)
+        {
             spoolCost = base.getMaterialPreferenceValue(properties.guid, "spool_cost");
         }
 
-        if (spoolLength == 0) {
+        if (spoolLength == 0)
+        {
             return 0;
         }
         return spoolCost / spoolLength;
     }
 
     // Tiny convenience function to check if a value really changed before trying to set it.
-    function setMetaDataEntry(entry_name, old_value, new_value) {
-        if (old_value != new_value) {
+    function setMetaDataEntry(entry_name, old_value, new_value)
+    {
+        if (old_value != new_value)
+        {
             Cura.ContainerManager.setContainerMetaDataEntry(base.currentMaterialNode, entry_name, new_value)
             // make sure the UI properties are updated as well since we don't re-fetch the entire model here
             // When the entry_name is something like properties/diameter, we take the last part of the entry_name
@@ -695,23 +711,29 @@ Item
         }
     }
 
-    function setMaterialPreferenceValue(material_guid, entry_name, new_value) {
-        if(!(material_guid in materialPreferenceValues)) {
+    function setMaterialPreferenceValue(material_guid, entry_name, new_value)
+    {
+        if(!(material_guid in materialPreferenceValues))
+        {
             materialPreferenceValues[material_guid] = {};
         }
-        if(entry_name in materialPreferenceValues[material_guid] && materialPreferenceValues[material_guid][entry_name] == new_value) {
+        if(entry_name in materialPreferenceValues[material_guid] && materialPreferenceValues[material_guid][entry_name] == new_value)
+        {
             // value has not changed
             return;
         }
-        if (entry_name in materialPreferenceValues[material_guid] && new_value.toString() == 0) {
+        if (entry_name in materialPreferenceValues[material_guid] && new_value.toString() == 0)
+        {
             // no need to store a 0, that's the default, so remove it
             materialPreferenceValues[material_guid].delete(entry_name);
-            if (!(materialPreferenceValues[material_guid])) {
+            if (!(materialPreferenceValues[material_guid]))
+            {
                 // remove empty map
                 materialPreferenceValues.delete(material_guid);
             }
         }
-        if (new_value.toString() != 0) {
+        if (new_value.toString() != 0)
+        {
             // store new value
             materialPreferenceValues[material_guid][entry_name] = new_value;
         }
@@ -720,8 +742,10 @@ Item
         UM.Preferences.setValue("cura/material_settings", JSON.stringify(materialPreferenceValues));
     }
 
-    function getMaterialPreferenceValue(material_guid, entry_name, default_value) {
-        if(material_guid in materialPreferenceValues && entry_name in materialPreferenceValues[material_guid]) {
+    function getMaterialPreferenceValue(material_guid, entry_name, default_value)
+    {
+        if(material_guid in materialPreferenceValues && entry_name in materialPreferenceValues[material_guid])
+        {
             return materialPreferenceValues[material_guid][entry_name];
         }
         default_value = default_value | 0;
@@ -729,9 +753,11 @@ Item
     }
 
     // update the display name of the material
-    function updateMaterialDisplayName(old_name, new_name) {
+    function updateMaterialDisplayName(old_name, new_name)
+    {
         // don't change when new name is the same
-        if (old_name == new_name) {
+        if (old_name == new_name)
+        {
             return
         }
 
@@ -741,13 +767,15 @@ Item
     }
 
     // update the type of the material
-    function updateMaterialType(old_type, new_type) {
+    function updateMaterialType(old_type, new_type)
+    {
         base.setMetaDataEntry("material", old_type, new_type)
         properties.material = new_type
     }
 
     // update the brand of the material
-    function updateMaterialBrand(old_brand, new_brand) {
+    function updateMaterialBrand(old_brand, new_brand)
+    {
         base.setMetaDataEntry("brand", old_brand, new_brand)
         properties.brand = new_brand
     }

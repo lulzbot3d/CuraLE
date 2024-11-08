@@ -1,4 +1,5 @@
 // Copyright (c) 2022 Ultimaker B.V.
+// Copyright (c) 2024 FAME3D LLC
 // Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.7
@@ -8,7 +9,7 @@ import QtQuick.Layouts 1.3
 import UM 1.5 as UM
 import Cura 1.5 as Cura
 
-// A single material row, typically used in a MaterialsBrandSection
+// A single material row, typically used in a MaterialsTypeSection
 
 Rectangle
 {
@@ -49,6 +50,7 @@ Rectangle
         anchors.left: materialSlot.left
         anchors.leftMargin: UM.Theme.getSize("default_margin").width
     }
+
     UM.Label
     {
         id: materialLabel

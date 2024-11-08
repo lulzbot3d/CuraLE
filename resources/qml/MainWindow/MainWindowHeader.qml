@@ -136,6 +136,8 @@ Item
         height: Math.round(0.5 * UM.Theme.getSize("main_window_header").height)
         onClicked: Cura.Actions.browsePackages.trigger()
 
+        visible: false // We won't be using this
+
         hoverEnabled: true
 
         background: Rectangle
@@ -195,6 +197,17 @@ Item
     ApplicationSwitcher
     {
         id: applicationSwitcher
+        anchors
+        {
+            verticalCenter: parent.verticalCenter
+            right: accountWidget.left
+            rightMargin: UM.Theme.getSize("default_margin").width
+        }
+    }
+
+    AccountWidget
+    {
+        id: accountWidget
         anchors
         {
             verticalCenter: parent.verticalCenter

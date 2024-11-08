@@ -263,7 +263,7 @@
         "border_field": [180, 180, 180, 255],
         "secondary": [240, 240, 240, 255],
 
-        "border_accent_1": [193, 216, 47, 255],
+        "border_accent_1": "lulz_dark_green",
         "border_accent_2": [16, 70, 156, 255],
 
         "expandable_active": [240, 240, 240, 255],
@@ -277,8 +277,8 @@
 
         "secondary_button": "background_1",
         "secondary_button_shadow": [216, 216, 216, 255],
-        "secondary_button_hover": [232, 240, 253, 255],
-        "secondary_button_text": "lulz_green",
+        "secondary_button_hover": "lulz_green",
+        "secondary_button_text": "lulz_dark_green",
 
         "main_window_header_background": "lulz_dark_green",
         "main_window_header_background_gradient": [25, 23, 91, 255],
@@ -352,7 +352,7 @@
         "setting_category_active_text": "text_default",
 
         "setting_control": "background_2",
-        "setting_control_highlight": "background_3",
+        "setting_control_highlight": "lulz_lite_green",
         "setting_control_border": [199, 199, 199, 255],
         "setting_control_border_highlight": [50, 130, 255, 255],
         "setting_control_text": [35, 35, 35, 255],

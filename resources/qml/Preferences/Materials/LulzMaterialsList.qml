@@ -1,4 +1,5 @@
 // Copyright (c) 2022 Ultimaker B.V.
+// Copyright (c) 2024 FAME3D LLC.
 // Uranium is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.7
@@ -14,7 +15,8 @@ Item
     height: childrenRect.height
 
     // Children
-    Cura.MaterialBrandsModel
+    UM.I18nCatalog { id: catalog; name: "cura"; }
+    Cura.MaterialTypesModel
     {
         id: materialsModel
         extruderPosition: Cura.ExtruderManager.activeExtruderIndex
@@ -26,22 +28,16 @@ Item
         extruderPosition: Cura.ExtruderManager.activeExtruderIndex
     }
 
-    Cura.GenericMaterialsModel
-    {
-        id: genericMaterialsModel
-        extruderPosition: Cura.ExtruderManager.activeExtruderIndex
-    }
-
     property var currentType: null
     property var currentBrand: null
-    property var expandedBrands: UM.Preferences.getValue("cura/expanded_brands").split(";")
     property var expandedTypes: UM.Preferences.getValue("cura/expanded_types").split(";")
+    property var expandedBrands: UM.Preferences.getValue("cura/expanded_brands").split(";")
 
     // Store information about which parts of the tree are expanded
     function persistExpandedCategories()
     {
-        UM.Preferences.setValue("cura/expanded_brands", materialList.expandedBrands.join(";"))
         UM.Preferences.setValue("cura/expanded_types", materialList.expandedTypes.join(";"))
+        UM.Preferences.setValue("cura/expanded_brands", materialList.expandedBrands.join(";"))
     }
 
     // Expand the list of materials in order to select the current material
@@ -54,42 +50,26 @@ Item
             var currentItemId = base.currentItem == null ? "" : base.currentItem.root_material_id
             search_root_id = currentItemId
         }
-        for (var material_idx = 0; material_idx < genericMaterialsModel.count; material_idx++)
+        for (var type_idx = 0; type_idx < materialsModel.count; type_idx++)
         {
-            var material = genericMaterialsModel.getItem(material_idx)
-            if (material.root_material_id == search_root_id)
+            var type = materialsModel.getItem(type_idx)
+            var brands_model = type.brands
+            for (var brand_idx = 0; brand_idx < brands_model.count; brand_idx++)
             {
-                if (materialList.expandedBrands.indexOf("Generic") == -1)
-                {
-                    materialList.expandedBrands.push("Generic")
-                }
-                materialList.currentBrand = "Generic"
-                base.currentItem = material
-                persistExpandedCategories()
-                return true
-            }
-        }
-        for (var brand_idx = 0; brand_idx < materialsModel.count; brand_idx++)
-        {
-            var brand = materialsModel.getItem(brand_idx)
-            var types_model = brand.material_types
-            for (var type_idx = 0; type_idx < types_model.count; type_idx++)
-            {
-                var type = types_model.getItem(type_idx)
-                var colors_model = type.colors
+                var brand = brands_model.getItem(brand_idx)
+                var colors_model = brand.colors
                 for (var material_idx = 0; material_idx < colors_model.count; material_idx++)
                 {
                     var material = colors_model.getItem(material_idx)
-                    if (material.root_material_id == search_root_id)
-                    {
-                        if (materialList.expandedBrands.indexOf(brand.name) == -1)
+                    if (material.root_material_id == search_root_id) {
+                        if (materialList.expandedTypes.indexOf(type.name) == -1)
                         {
-                            materialList.expandedBrands.push(brand.name)
+                            materialList.expandedTypes.push(type.name)
                         }
-                        materialList.currentBrand = brand.name
-                        if (materialList.expandedTypes.indexOf(brand.name + "_" + type.name) == -1)
+                        materialList.currentType = type.name
+                        if (materialList.expandedBrands.indexOf(brand.name + "_" + type.name) == -1)
                         {
-                            materialList.expandedTypes.push(brand.name + "_" + type.name)
+                            materialList.expandedBrands.push(brand.name + "_" + type.name)
                         }
                         materialList.currentType = brand.name + "_" + type.name
                         base.currentItem = material
@@ -106,8 +86,7 @@ Item
     function updateAfterModelChanges()
     {
         var correctlyExpanded = materialList.expandActiveMaterial(base.newRootMaterialIdToSwitchTo)
-        if (correctlyExpanded)
-        {
+        if (correctlyExpanded) {
             if (base.toActivateNewMaterial)
             {
                 var position = Cura.ExtruderManager.activeExtruderIndex
@@ -124,42 +103,28 @@ Item
         function onItemsChanged() { updateAfterModelChanges() }
     }
 
-    Connections
-    {
-        target: genericMaterialsModel
-        function onItemsChanged() { updateAfterModelChanges() }
-    }
-
     Column
     {
         width: materialList.width
         height: childrenRect.height
 
-        MaterialsBrandSection
+        LulzMaterialsTypeSection
         {
             id: favoriteSection
             sectionName: "Favorites"
             elementsModel: favoriteMaterialsModel
-            hasMaterialTypes: false
-        }
-
-        MaterialsBrandSection
-        {
-            id: genericSection
-            sectionName: "Generic"
-            elementsModel: genericMaterialsModel
-            hasMaterialTypes: false
+            hasMaterialBrands: false
         }
 
         Repeater
         {
             model: materialsModel
-            delegate: MaterialsBrandSection
+            delegate: LulzMaterialsTypeSection
             {
-                id: brandSection
+                id: typeSection
                 sectionName: model.name
-                elementsModel: model.material_types
-                hasMaterialTypes: true
+                elementsModel: model.brands
+                hasMaterialBrands: true
             }
         }
     }

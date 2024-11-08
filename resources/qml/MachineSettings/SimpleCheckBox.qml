@@ -21,8 +21,7 @@ UM.TooltipArea
     property int controlHeight: UM.Theme.getSize("setting_control").height
 
     height: controlHeight
-    // width: childrenRect.width
-    width: parent.width
+    width: childrenRect.width
     text: tooltip
 
     property alias containerStackId: propertyProvider.containerStackId

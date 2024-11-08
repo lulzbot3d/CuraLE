@@ -18,8 +18,7 @@ UM.TooltipArea
     UM.I18nCatalog { id: catalog; name: "cura"; }
 
     height: childrenRect.height
-    // width: childrenRect.width
-    width: parent.width
+    width: childrenRect.width
 
     property int controlWidth: UM.Theme.getSize("setting_control").width
     property int controlHeight: UM.Theme.getSize("setting_control").height
