@@ -12,7 +12,8 @@ import Cura 1.1 as Cura
 //
 // This the content in the "Printer" tab in the Machine Settings dialog.
 //
-Item {
+Item
+{
     id: base
     UM.I18nCatalog { id: catalog; name: "cura" }
 
@@ -29,7 +30,8 @@ Item {
 
     property var forceUpdateFunction: manager.forceUpdate
 
-    RowLayout {
+    Row
+    {
         id: upperBlock
         anchors
         {
@@ -38,15 +40,17 @@ Item {
             right: parent.right
             margins: UM.Theme.getSize("default_margin").width
         }
+        height: childrenRect.height
         spacing: UM.Theme.getSize("default_margin").width
 
         // =======================================
         // Left-side column for "Printer Settings"
         // =======================================
-        Column {
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
-            Layout.preferredWidth: parent.width / 2
+        Column
+        {
+            anchors.top: parent.top
+
+            width: (parent.width / 2) - spacing
 
             spacing: base.columnSpacing
 
@@ -115,23 +119,6 @@ Item {
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 
-            Cura.ComboBoxWithOptions  // "G-code flavor"
-            {
-                id: gcodeFlavorComboBox
-                containerStackId: machineStackId
-                settingKey: "machine_gcode_flavor"
-                settingStoreIndex: propertyStoreIndex
-                labelText: catalog.i18nc("@label", "G-code flavor")
-                labelFont: base.labelFont
-                labelWidth: base.labelWidth
-                controlWidth: base.controlWidth
-                forceUpdateOnChangeFunction: forceUpdateFunction
-                // FIXME(Lipu): better document this.
-                // This has something to do with UM2 and UM2+ regarding "has_material" and the gcode flavor settings.
-                // I don't remember exactly what.
-                afterOnEditingFinishedFunction: manager.updateHasMaterialsMetadata
-            }
-
             Cura.SimpleCheckBox  // "Origin at center"
             {
                 id: originAtCenterCheckBox
@@ -168,7 +155,25 @@ Item {
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 
-            Cura.SimpleCheckBox { // "LCD"
+            Cura.ComboBoxWithOptions  // "G-code flavor"
+            {
+                id: gcodeFlavorComboBox
+                containerStackId: machineStackId
+                settingKey: "machine_gcode_flavor"
+                settingStoreIndex: propertyStoreIndex
+                labelText: catalog.i18nc("@label", "G-code flavor")
+                labelFont: base.labelFont
+                labelWidth: base.labelWidth
+                controlWidth: base.controlWidth
+                forceUpdateOnChangeFunction: forceUpdateFunction
+                // FIXME(Lipu): better document this.
+                // This has something to do with UM2 and UM2+ regarding "has_material" and the gcode flavor settings.
+                // I don't remember exactly what.
+                afterOnEditingFinishedFunction: manager.updateHasMaterialsMetadata
+            }
+
+            Cura.SimpleCheckBox // "LCD"
+            {
                 id: lcdCheckBox
                 containerStackId: machineStackId
                 settingKey: "machine_has_lcd"
@@ -176,11 +181,12 @@ Item {
                 labelText: catalog.i18nc("@label", "Has LCD Screen")
                 labelFont: base.labelFont
                 labelWidth: base.labelWidth
-                //checkBoxEnabled: Cura.MachineManager.activeMachineOptionalLCD
+                checkBoxEnabled: Cura.MachineManager.activeMachineOptionalLCD
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 
-            Cura.SimpleCheckBox { // "BLTouch"
+            Cura.SimpleCheckBox // "BLTouch"
+            {
                 id: bltouchCheckBox
                 containerStackId: machineStackId
                 settingKey: "machine_has_bltouch"
@@ -188,7 +194,7 @@ Item {
                 labelText: catalog.i18nc("@label", "Has BLTouch")
                 labelFont: base.labelFont
                 labelWidth: base.labelWidth
-                //checkBoxEnabled: Cura.MachineManager.activeMachineOptionalBLTouch
+                checkBoxEnabled: Cura.MachineManager.activeMachineOptionalBLTouch
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 
@@ -197,10 +203,11 @@ Item {
         // =======================================
         // Right-side column for "Printhead Settings"
         // =======================================
-        Column {
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
-            Layout.preferredWidth: parent.width / 2
+        Column
+        {
+            anchors.top: parent.top
+
+            width: (parent.width / 2) - spacing
 
             spacing: base.columnSpacing
 
@@ -369,9 +376,42 @@ Item {
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 
-            // =======================================
-            // Subsection below Printhead for USB
-            // =======================================
+            /*
+               - Allows user to toggle if Start Gcode is the absolute first gcode.
+            */
+            Cura.SimpleCheckBox  // "Make sure Start Code is before all gcodes"
+            {
+                id: applyStartGcodeFirstCheckbox
+                containerStackId: machineStackId
+                settingKey: "machine_start_gcode_first"
+                settingStoreIndex: propertyStoreIndex
+                labelText: catalog.i18nc("@label", "Start GCode must be first")
+                labelFont: base.labelFont
+                labelWidth: base.labelWidth
+                forceUpdateOnChangeFunction: forceUpdateFunction
+            }
+
+
+            /* The "Shared Heater" feature is temporarily disabled because its
+            implementation is incomplete. Printers with multiple filaments going
+            into one nozzle will keep the inactive filaments retracted at the
+            start of a print. However CuraEngine assumes that all filaments
+            start at the nozzle tip. So it'll start printing the second filament
+            without unretracting it.
+            See: https://github.com/Ultimaker/Cura/issues/8148
+
+            Cura.SimpleCheckBox  // "Shared Heater"
+            {
+                id: sharedHeaterCheckBox
+                containerStackId: machineStackId
+                settingKey: "machine_extruders_share_heater"
+                settingStoreIndex: propertyStoreIndex
+                labelText: catalog.i18nc("@label", "Shared Heater")
+                labelFont: base.labelFont
+                labelWidth: base.labelWidth
+                forceUpdateOnChangeFunction: forceUpdateFunction
+            }
+            */
 
             Label { // USB Title Label
                 text: catalog.i18nc("@title:label", "USB Settings")
@@ -382,7 +422,8 @@ Item {
                 elide: Text.ElideRight
             }
 
-            Cura.ComboBoxWithOptions { // "Port"
+            Cura.ComboBoxWithOptions // "Port"
+            {
                 id: portComboBox
                 containerStackId: machineStackId
                 settingKey: "machine_port"
@@ -420,7 +461,8 @@ Item {
                 }
             }
 
-            Cura.ComboBoxWithOptions { // "Baudrate"
+            Cura.ComboBoxWithOptions // "Baudrate"
+            {
                 id: baudComboBox
                 containerStackId: machineStackId
                 settingKey: "machine_baudrate"
@@ -459,21 +501,21 @@ Item {
         }
     }
 
-    // =======================================
-    // Bottom section for "Printhead Settings"
-    // =======================================
-    RowLayout {  // Start and End G-code
+    RowLayout  // Start and End G-code
+    {
         id: lowerBlock
         spacing: UM.Theme.getSize("default_margin").width
-        anchors {
+        anchors
+        {
             top: upperBlock.bottom
-            bottom: parent.bottom
+            bottom: buttonLearnMore.top
             left: parent.left
             right: parent.right
             margins: UM.Theme.getSize("default_margin").width
         }
 
-        Cura.GcodeTextArea { // "Start G-code"
+        Cura.GcodeTextArea   // "Start G-code"
+        {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
@@ -483,7 +525,8 @@ Item {
             settingStoreIndex: propertyStoreIndex
         }
 
-        Cura.GcodeTextArea { // "End G-code"
+        Cura.GcodeTextArea   // "End G-code"
+        {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
@@ -492,5 +535,19 @@ Item {
             settingKey: "machine_end_gcode"
             settingStoreIndex: propertyStoreIndex
         }
+
+    }
+
+    Cura.TertiaryButton
+    { // TODO: Change this link eventually
+        id: buttonLearnMore
+
+        text: catalog.i18nc("@button", "Learn more")
+        iconSource: UM.Theme.getIcon("LinkExternal")
+        isIconOnRightSide: true
+        onClicked: Qt.openUrlExternally("https://github.com/Ultimaker/Cura/wiki/Start-End-G%E2%80%90Code")
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        anchors.margins: UM.Theme.getSize("default_margin").width
     }
 }

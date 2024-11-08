@@ -21,7 +21,8 @@ UM.TooltipArea
     property int controlHeight: UM.Theme.getSize("setting_control").height
 
     height: controlHeight
-    width: childrenRect.width
+    // width: childrenRect.width
+    width: parent.width
     text: tooltip
 
     property alias containerStackId: propertyProvider.containerStackId
@@ -31,6 +32,8 @@ UM.TooltipArea
     property alias labelText: fieldLabel.text
     property alias labelFont: fieldLabel.font
     property alias labelWidth: fieldLabel.width
+
+    property alias checkBoxEnabled: checkBox.enabled
 
     property string tooltip: propertyProvider.properties.description ? propertyProvider.properties.description : ""
 
@@ -63,8 +66,10 @@ UM.TooltipArea
             leftMargin: UM.Theme.getSize("default_margin").width
             verticalCenter: parent.verticalCenter
         }
+        enabled: true
         checked: String(propertyProvider.properties.value).toLowerCase() != 'false'
         height: UM.Theme.getSize("checkbox").height
+        width: UM.Theme.getSize("checkbox").width
         text: ""
         onClicked:
         {
