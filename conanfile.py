@@ -344,7 +344,7 @@ class CuraLEConan(ConanFile):
         for req in self.conan_data["requirements"]:
             if self._internal and "fdm_materialsle" in req:
                 continue
-            if "native_cad_plugin" in req:
+            if not self._enterprise and "native_cad_plugin" in req:
                 continue
             self.requires(req)
         if self._internal:
@@ -395,6 +395,12 @@ class CuraLEConan(ConanFile):
             copy(self, "*", curaenginele_plugin_gradual_flow.resdirs[0], str(self.source_path.joinpath("plugins", "CuraEngineLEGradualFlow")), keep_path = True)
             copy(self, "*", curaenginele_plugin_gradual_flow.bindirs[0], self.source_folder, keep_path = False)
             copy(self, "bundled_*.json", curaenginele_plugin_gradual_flow.resdirs[1], str(self.source_path.joinpath("resources", "bundled_packages")), keep_path = False)
+
+            if self._enterprise:
+                rmdir(self, str(self.source_path.joinpath("plugins", "NativeCADplugin")))
+                curaengine_plugin_gradual_flow = self.dependencies["native_cad_plugin"].cpp_info
+                copy(self, "*", curaengine_plugin_gradual_flow.resdirs[0], str(self.source_path.joinpath("plugins", "NativeCADplugin")), keep_path = True)
+                copy(self, "bundled_*.json", curaengine_plugin_gradual_flow.resdirs[1], str(self.source_path.joinpath("resources", "bundled_packages")), keep_path = False)
 
         # Copy resources of cura_binary_data
         cura_binary_data = self.dependencies["curale_binary_data"].cpp_info
@@ -467,6 +473,7 @@ class CuraLEConan(ConanFile):
         copy(self, "*", os.path.join(self.package_folder, self.cpp_info.resdirs[1]), str(self._share_dir.joinpath("cura", "plugins")), keep_path = True)
 
         # Copy the curale_resources resources from the package
+        rm(self, "conanfile.py", os.path.join(self.package_folder, self.cpp.package.resdirs[0]))
         curale_resources = self.dependencies["curale_resources"].cpp_info
         for res_dir in curale_resources.resdirs:
             copy(self, "*", res_dir, str(self._share_dir.joinpath("cura", "resources", Path(res_dir).name)), keep_path = True)
@@ -523,6 +530,7 @@ echo "CURA_APP_NAME={{ curale_app_name }}" >> ${{ env_prefix }}GITHUB_ENV
         rmdir(self, os.path.join(self.package_folder, self.cpp.package.resdirs[0], "materials"))
 
         # Remove the cura_resources resources from the package
+        rm(self, "conanfile.py", os.path.join(self.package_folder, self.cpp.package.resdirs[0]))
         curale_resources = self.dependencies["curale_resources"].cpp_info
         for res_dir in curale_resources.resdirs:
             rmdir(self, os.path.join(self.package_folder, self.cpp.package.resdirs[0], Path(res_dir).name))

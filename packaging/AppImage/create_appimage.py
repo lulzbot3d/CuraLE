@@ -1,4 +1,5 @@
 # Copyright (c) 2022 UltiMaker
+# Copyright (c) 2024 FAME3D LLC
 # Cura is released under the terms of the LGPLv3 or higher.
 
 
@@ -30,12 +31,12 @@ def copy_metadata_files(dist_path, version):
     Copy metadata files for the metadata of the AppImage.
     """
     copied_files = {
-        os.path.join("..", "icons", "cura-icon.svg"):         os.path.join("usr", "share", "icons", "hicolor", "scalable", "apps", "cura-icon.svg"),
-        os.path.join("..", "icons", "cura-icon_64x64.png"):   os.path.join("usr", "share", "icons", "hicolor", "64x64", "apps", "curale-icon.png"),
-        os.path.join("..", "icons", "cura-icon_128x128.png"): os.path.join("usr", "share", "icons", "hicolor", "128x128", "apps", "curale-icon.png"),
-        os.path.join("..", "icons", "cura-icon_256x256.png"): os.path.join("usr", "share", "icons", "hicolor", "256x256", "apps", "curale-icon.png"),
-        os.path.join("..", "icons", "cura-icon_256x256.png"): "curale-icon.png",
-        "cura.appdata.xml": "cura.appdata.xml",
+        os.path.join("..", "icons", "curale-icon.svg"):         os.path.join("usr", "share", "icons", "hicolor", "scalable", "apps", "curale-icon.svg"),
+        os.path.join("..", "icons", "curale-icon_64x64.png"):   os.path.join("usr", "share", "icons", "hicolor", "64x64", "apps", "curale-icon.png"),
+        os.path.join("..", "icons", "curale-icon_128x128.png"): os.path.join("usr", "share", "icons", "hicolor", "128x128", "apps", "curale-icon.png"),
+        os.path.join("..", "icons", "curale-icon_256x256.png"): os.path.join("usr", "share", "icons", "hicolor", "256x256", "apps", "curale-icon.png"),
+        os.path.join("..", "icons", "curale-icon_256x256.png"): "curale-icon.png",
+        "curale.appdata.xml": "curale.appdata.xml",
         "AppRun": "AppRun"
     }
 
@@ -50,8 +51,8 @@ def copy_metadata_files(dist_path, version):
     os.chmod(os.path.join(dist_path, "AppRun"), stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR | stat.S_IRGRP | stat.S_IXGRP | stat.S_IROTH | stat.S_IXOTH)
 
     # Provision the Desktop file with the correct version number.
-    template_path = os.path.join(packaging_dir, "cura.desktop.jinja")
-    desktop_path = os.path.join(dist_path, "cura.desktop")
+    template_path = os.path.join(packaging_dir, "curale.desktop.jinja")
+    desktop_path = os.path.join(dist_path, "curale.desktop")
     print("Provisioning desktop file from", template_path, "to", desktop_path)
     with open(template_path, "r") as f:
         desktop_file = Template(f.read())
@@ -74,9 +75,9 @@ def sign_appimage(dist_path, appimage_filename):
         raise RuntimeError(f"The GPG command returned non-zero: {result}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description = "Create AppImages of Cura.")
-    parser.add_argument("dist_path", type=str, help="Path to where PyInstaller installed the distribution of Cura.")
-    parser.add_argument("version", type=str, help="Full version number of Cura (e.g. '5.1.0-beta')")
-    parser.add_argument("filename", type = str, help = "Filename of the AppImage (e.g. 'UltiMaker-Cura-5.1.0-beta-Linux-X64.AppImage')")
+    parser = argparse.ArgumentParser(description = "Create AppImages of CuraLE.")
+    parser.add_argument("dist_path", type=str, help="Path to where PyInstaller installed the distribution of CuraLE.")
+    parser.add_argument("version", type=str, help="Full version number of CuraLE (e.g. '5.1.0-beta')")
+    parser.add_argument("filename", type = str, help = "Filename of the AppImage (e.g. 'Cura_LulzBot_Edition-5.1.0-beta-Linux-X64.AppImage')")
     args = parser.parse_args()
     build_appimage(args.dist_path, args.version, args.filename)

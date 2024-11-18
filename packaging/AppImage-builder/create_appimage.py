@@ -14,7 +14,7 @@ from jinja2 import Template
 def prepare_workspace(dist_path, appimage_filename):
     """
     Prepare the workspace for building the AppImage.
-    :param dist_path: Path to the distribution of Cura created with pyinstaller.
+    :param dist_path: Path to the distribution of CuraLE created with pyinstaller.
     :param appimage_filename: name of the AppImage file.
     :return:
     """
@@ -61,11 +61,11 @@ def copy_files(dist_path):
     Copy metadata files for the metadata of the AppImage.
     """
     copied_files = {
-        os.path.join("..", "icons", "cura-icon.svg"): os.path.join("usr", "share", "icons", "hicolor", "scalable", "apps", "cura-icon.svg"),
-        os.path.join("..", "icons", "cura-icon_64x64.png"): os.path.join("usr", "share", "icons", "hicolor", "64x64", "apps", "curale-icon.png"),
-        os.path.join("..", "icons", "cura-icon_128x128.png"): os.path.join("usr", "share", "icons", "hicolor", "128x128", "apps", "curale-icon.png"),
-        os.path.join("..", "icons", "cura-icon_256x256.png"): os.path.join("usr", "share", "icons", "hicolor", "256x256", "apps", "curale-icon.png"),
-        os.path.join("..", "icons", "cura-icon_256x256.png"): "curale-icon.png",
+        os.path.join("..", "icons", "curale-icon.svg"): os.path.join("usr", "share", "icons", "hicolor", "scalable", "apps", "curale-icon.svg"),
+        os.path.join("..", "icons", "curale-icon_64x64.png"): os.path.join("usr", "share", "icons", "hicolor", "64x64", "apps", "curale-icon.png"),
+        os.path.join("..", "icons", "curale-icon_128x128.png"): os.path.join("usr", "share", "icons", "hicolor", "128x128", "apps", "curale-icon.png"),
+        os.path.join("..", "icons", "curale-icon_256x256.png"): os.path.join("usr", "share", "icons", "hicolor", "256x256", "apps", "curale-icon.png"),
+        os.path.join("..", "icons", "curale-icon_256x256.png"): "curale-icon.png",
     }
 
     # TODO: openssl.cnf ???
@@ -93,10 +93,10 @@ def sign_appimage(appimage_filename):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description = "Create AppImages of Cura.")
-    parser.add_argument("dist_path", type = str, help = "Path to where PyInstaller installed the distribution of Cura.")
-    parser.add_argument("version", type = str, help = "Full version number of Cura (e.g. '5.1.0-beta')")
-    parser.add_argument("filename", type = str, help = "Filename of the AppImage (e.g. 'UltiMaker-Cura-5.1.0-beta-Linux-X64.AppImage')")
+    parser = argparse.ArgumentParser(description = "Create AppImages of CuraLE.")
+    parser.add_argument("dist_path", type = str, help = "Path to where PyInstaller installed the distribution of CuraLE.")
+    parser.add_argument("version", type = str, help = "Full version number of CuraLE (e.g. '5.1.0-beta')")
+    parser.add_argument("filename", type = str, help = "Filename of the AppImage (e.g. 'Cura_LulzBot_Edition-5.1.0-beta-Linux-X64.AppImage')")
     args = parser.parse_args()
     prepare_workspace(args.dist_path, args.filename)
     build_appimage(args.dist_path, args.version, args.filename)
