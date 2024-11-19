@@ -26,28 +26,28 @@ def generate_wxs(source_path: Path, dist_path: Path, filename: Path, app_name: s
     work_loc = work_path(filename)
     work_loc.mkdir(parents=True, exist_ok=True)
 
-    jinja_template_path = Path(source_loc.joinpath("packaging", "msi", "UltiMaker-Cura.wxs.jinja"))
+    jinja_template_path = Path(source_loc.joinpath("packaging", "msi", "CuraLE.wxs.jinja"))
     with open(jinja_template_path, "r") as f:
         template = Template(f.read())
 
     wxs_content = template.render(
         app_name=f"{app_name}",
-        main_app="UltiMaker-Cura.exe",
+        main_app="Cura_LulzBot_Edition.exe",
         version=os.getenv('CURA_VERSION_FULL'),
         version_major=os.environ.get("CURA_VERSION_MAJOR"),
         version_minor=os.environ.get("CURA_VERSION_MINOR"),
         version_patch=os.environ.get("CURA_VERSION_PATCH"),
-        company="UltiMaker",
-        web_site="https://ultimaker.com",
+        company="FAME3D LLC",
+        web_site="https://lulzbot.com",
         year=datetime.now().year,
         upgrade_code=str(uuid.uuid5(uuid.NAMESPACE_DNS, app_name)),
         cura_license_file=str(source_loc.joinpath("packaging", "msi", "cura_license.rtf")),
-        cura_banner_top=str(source_loc.joinpath("packaging", "msi", "banner_top.bmp")),
-        cura_banner_side=str(source_loc.joinpath("packaging", "msi", "banner_side.bmp")),
-        cura_icon=str(source_loc.joinpath("packaging", "icons", "Cura.ico")),
+        cura_banner_top=str(source_loc.joinpath("packaging", "msi", "le_banner_top.bmp")),
+        cura_banner_side=str(source_loc.joinpath("packaging", "msi", "le_banner_side.bmp")),
+        cura_icon=str(source_loc.joinpath("packaging", "icons", "curale.ico")),
     )
 
-    with open(work_loc.joinpath("UltiMaker-Cura.wxs"), "w") as f:
+    with open(work_loc.joinpath("CuraLE.wxs"), "w") as f:
         f.write(wxs_content)
 
     try:
@@ -69,7 +69,7 @@ def cleanup_artifacts(dist_path: Path):
 def build(dist_path: Path, filename: Path):
     dist_loc = Path(os.getcwd(), dist_path)
     work_loc = work_path(filename)
-    wxs_loc = work_loc.joinpath("UltiMaker-Cura.wxs")
+    wxs_loc = work_loc.joinpath("CuraLE.wxs")
     heat_loc = work_loc.joinpath("HeatFile.wxs")
     exclude_components_loc = work_loc.joinpath("ExcludeComponents.xslt")
     build_loc = work_loc.joinpath("build_msi")
@@ -110,12 +110,12 @@ def build(dist_path: Path, filename: Path):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Create Windows msi installer of Cura.")
-    parser.add_argument("source_path", type=Path, help="Path to Conan install Cura folder.")
+    parser = argparse.ArgumentParser(description="Create Windows msi installer of CuraLE.")
+    parser.add_argument("source_path", type=Path, help="Path to Conan install CuraLE folder.")
     parser.add_argument("dist_path", type=Path, help="Path to Pyinstaller dist folder")
     parser.add_argument("filename", type=Path,
-                        help="Filename of the exe (e.g. 'UltiMaker-Cura-5.1.0-beta-Windows-X64.msi')")
-    parser.add_argument("name", type=str, help="App name (e.g. 'UltiMaker Cura')")
+                        help="Filename of the exe (e.g. 'Cura_LulzBot_Edition-5.1.0-beta-Windows-X64.msi')")
+    parser.add_argument("name", type=str, help="App name (e.g. 'Cura LulzBot Edition')")
     args = parser.parse_args()
     generate_wxs(args.source_path.resolve(), args.dist_path.resolve(), args.filename.resolve(), args.name)
     cleanup_artifacts(args.dist_path.resolve())

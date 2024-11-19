@@ -7,7 +7,7 @@ import argparse  # Command line arguments parsing and help.
 import subprocess
 from pathlib import Path
 
-ULTIMAKER_CURA_DOMAIN = os.environ.get("ULTIMAKER_CURA_DOMAIN", "nl.ultimaker.cura")
+CURALE_DOMAIN = os.environ.get("CURALE_DOMAIN", "com.lulzbot.curale")
 
 def build_dmg(source_path: str, dist_path: str, filename: str, app_name: str) -> None:
     create_dmg_executable = os.environ.get("CREATE_DMG_EXECUTABLE", "create-dmg")
@@ -20,7 +20,7 @@ def build_dmg(source_path: str, dist_path: str, filename: str, app_name: str) ->
                  "--icon-size", "90",
                  "--icon", app_name, "169", "272",
                  "--eula", f"{source_path}/packaging/cura_license.txt",
-                 "--background", f"{source_path}/packaging/MacOs/cura_background_dmg.png",
+                 "--background", f"{source_path}/packaging/MacOs/curale_background_dmg.png",
                  "--hdiutil-quiet",
                  f"{dist_path}/{filename}",
                  f"{dist_path}/{app_name}"]
@@ -44,7 +44,7 @@ def build_pkg(dist_path: str, app_filename: str, component_filename: str, cura_v
     # This builds the component package that contains UltiMaker-Cura.app. This component package will be bundled in a distribution package.
     pkg_build_arguments = [
         pkg_build_executable,
-        "--identifier", f"{ULTIMAKER_CURA_DOMAIN}_{cura_version}", # If we want to replace previous version automatically remove {cure_version}
+        "--identifier", f"{CURALE_DOMAIN}_{cura_version}", # If we want to replace previous version automatically remove {cure_version}
         "--component",
         Path(dist_path, app_filename),
         Path(dist_path, component_filename),
@@ -105,7 +105,7 @@ def notarize_file(dist_path: str, filename: str) -> None:
 def create_pkg_installer(filename: str,  dist_path: str, cura_version: str, app_name: str) -> None:
     """ Creates a pkg installer from {filename}.app called {filename}-Installer.pkg
 
-    The final package structure is UltiMaker-Cura-XXX-Installer.pkg[UltiMaker-Cura.pkg[UltiMaker-Cura.app]]. The outer
+    The final package structure is Cura_LulzBot_Edition-XXX-Installer.pkg[Cura_LulzBot_Edition.pkg[Cura_LulzBot_Edition.app]]. The outer
     pkg file is a distributable pkg (Installer). Inside the distributable pkg there is a component pkg. The component
     pkg contains the .app file that will be installed in the users Applications folder.
 
@@ -124,7 +124,7 @@ def create_pkg_installer(filename: str,  dist_path: str, cura_version: str, app_
 
 
 def create_dmg(filename: str, dist_path: str, source_path: str, app_name: str) -> None:
-    """ Creates a dmg executable from UltiMaker-Cura.app named {filename}.dmg
+    """ Creates a dmg executable from Cura_LulzBot_Edition.app named {filename}.dmg
 
     @param filename: The name of the app file and the output dmg file without the extension
     @param dist_path: The location to read the app from and save the dmg to
@@ -139,11 +139,11 @@ def create_dmg(filename: str, dist_path: str, source_path: str, app_name: str) -
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description = "Create installer for Cura.")
+    parser = argparse.ArgumentParser(description = "Create installer for Cura LulzBot Edition.")
     parser.add_argument("--source_path", required = True, type = str, help = "Path to Pyinstaller source folder")
     parser.add_argument("--dist_path", required = True, type = str, help = "Path to Pyinstaller dist folder")
     parser.add_argument("--cura_conan_version", required = True, type = str, help = "The version of cura")
-    parser.add_argument("--filename", required = True, type = str, help = "Filename of the pkg/dmg (e.g. 'UltiMaker-Cura-5.5.0-Macos-X64' or 'UltiMaker-Cura-5.5.0-beta.1-Macos-ARM64')")
+    parser.add_argument("--filename", required = True, type = str, help = "Filename of the pkg/dmg (e.g. 'Cura_LulzBot_Edition-5.5.0-Macos-X64' or 'Cura_LulzBot_Edition-5.5.0-beta.1-Macos-ARM64')")
     parser.add_argument("--build_pkg", action="store_true", default = False, help = "build the pkg")
     parser.add_argument("--build_dmg", action="store_true", default = True, help = "build the dmg")
     parser.add_argument("--app_name", required = True, type = str, help = "Filename of the .app that will be contained within the dmg/pkg")

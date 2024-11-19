@@ -62,10 +62,10 @@ def copy_files(dist_path):
     """
     copied_files = {
         os.path.join("..", "icons", "curale-icon.svg"): os.path.join("usr", "share", "icons", "hicolor", "scalable", "apps", "curale-icon.svg"),
-        os.path.join("..", "icons", "curale-icon_64x64.png"): os.path.join("usr", "share", "icons", "hicolor", "64x64", "apps", "curale-icon.png"),
-        os.path.join("..", "icons", "curale-icon_128x128.png"): os.path.join("usr", "share", "icons", "hicolor", "128x128", "apps", "curale-icon.png"),
-        os.path.join("..", "icons", "curale-icon_256x256.png"): os.path.join("usr", "share", "icons", "hicolor", "256x256", "apps", "curale-icon.png"),
-        os.path.join("..", "icons", "curale-icon_256x256.png"): "curale-icon.png",
+        os.path.join("..", "icons", "curale-64.png"): os.path.join("usr", "share", "icons", "hicolor", "64x64", "apps", "curale-icon.png"),
+        os.path.join("..", "icons", "curale-128.png"): os.path.join("usr", "share", "icons", "hicolor", "128x128", "apps", "curale-icon.png"),
+        os.path.join("..", "icons", "curale-256.png"): os.path.join("usr", "share", "icons", "hicolor", "256x256", "apps", "curale-icon.png"),
+        os.path.join("..", "icons", "curale-256.png"): "curale-icon.png",
     }
 
     # TODO: openssl.cnf ???
