@@ -127,7 +127,7 @@ class TestComputeDisallowedAreasStatic:
         build_volume._global_container_stack = mocked_stack
         assert build_volume._computeDisallowedAreasStatic(0, []) == {}
 
-    def test_computeDisalowedAreasStaticSingleExtruder(self, build_volume: BuildVolume):
+    def test_computeDisallowedAreasStaticSingleExtruder(self, build_volume: BuildVolume):
         mocked_stack = MagicMock()
         mocked_stack.getProperty = MagicMock(side_effect=self.getPropertySideEffect)
 
@@ -140,7 +140,7 @@ class TestComputeDisallowedAreasStatic:
             result = build_volume._computeDisallowedAreasStatic(0, [mocked_extruder])
             assert result == {"zomg": [Polygon([[-84.0,102.5], [-115.0,102.5], [-200.0,112.5], [-82.0,112.5]]), Polygon([[-100.0,-100.0], [-100.0,100.0], [-99.9,99.9], [-99.9,-99.9]]), Polygon([[100.0,100.0], [100.0,-100.0], [99.9,-99.9], [99.9,99.9]]),  Polygon([[-100.0,100.0], [100.0,100.0], [99.9,99.9], [-99.9,99.9]]), Polygon([[100.0,-100.0], [-100.0,-100.0], [-99.9,-99.9], [99.9,-99.9]])]}
 
-    def test_computeDisalowedAreasMutliExtruder(self, build_volume):
+    def test_computeDisallowedAreasMultiExtruder(self, build_volume):
         mocked_stack = MagicMock()
         mocked_stack.getProperty = MagicMock(side_effect=self.getPropertySideEffect)
 

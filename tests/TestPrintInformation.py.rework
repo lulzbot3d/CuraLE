@@ -65,7 +65,7 @@ def setup_module():
 
 
 def test_duration():
-    print_information = getPrintInformation("ultimaker")
+    print_information = getPrintInformation("lulzbot")
 
     feature_print_times = print_information.getFeaturePrintTimes()
     assert int(feature_print_times["Travel"]) == int(Duration(None))
@@ -89,7 +89,7 @@ def test_duration():
 
 def test_setProjectName():
 
-    print_information = getPrintInformation("ultimaker")
+    print_information = getPrintInformation("lulzbot")
 
     # Test simple name
     project_name = ["HelloWorld", ".3mf"]

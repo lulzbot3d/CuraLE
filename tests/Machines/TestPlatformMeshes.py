@@ -7,7 +7,7 @@ import os.path
 __exclude_filenames = ["UltimakerRobot_support.stl"]
 
 
-def collecAllPlatformMeshes():
+def collectAllPlatformMeshes():
     result = []
     for root, directories, filenames in os.walk(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "resources", "meshes"))):
         for filename in filenames:
@@ -16,7 +16,7 @@ def collecAllPlatformMeshes():
     return result
 
 
-platform_mesh_filepaths = collecAllPlatformMeshes()
+platform_mesh_filepaths = collectAllPlatformMeshes()
 MAX_MESH_FILE_SIZE = 1 * 1024 * 1024  # 1MB
 
 

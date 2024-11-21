@@ -975,9 +975,10 @@ class BuildVolume(SceneNode):
                 disallowed_areas.append(area)
 
         for extruder in used_extruders:
-            for area in extruder.getProperty("extruder_disallowed_areas", "value"):
-                if len(area) > 0:
-                    disallowed_areas.append(area)
+            if extruder.getProperty("extruder_disallowed_areas", "value") is not None:
+                for area in extruder.getProperty("extruder_disallowed_areas", "value"):
+                    if len(area) > 0:
+                        disallowed_areas.append(area)
 
         for area in disallowed_areas:
             if len(area) == 0:

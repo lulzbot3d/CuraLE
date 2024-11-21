@@ -18,15 +18,17 @@ def collectAllQualities():
     result = []
     for root, directories, filenames in os.walk(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "resources", "quality"))):
         for filename in filenames:
-            result.append(os.path.join(root, filename))
+            if ".md" not in filename:
+                result.append(os.path.join(root, filename))
     return result
 
 
-def collecAllDefinitionIds():
+def collectAllDefinitionIds():
     result = []
     for root, directories, filenames in os.walk(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "resources", "definitions"))):
         for filename in filenames:
-            result.append(os.path.basename(filename).split(".")[0])
+            if ".md" not in filename:
+                result.append(os.path.basename(filename).split(".")[0])
     return result
 
 
@@ -45,7 +47,8 @@ def collectAllVariants():
     result = []
     for root, directories, filenames in os.walk(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "resources", "variants"))):
         for filename in filenames:
-            result.append(os.path.join(root, filename))
+            if ".md" not in filename:
+                result.append(os.path.join(root, filename))
     return result
 
 
@@ -53,10 +56,11 @@ def collectAllIntents():
     result = []
     for root, directories, filenames in os.walk(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "resources", "intent"))):
         for filename in filenames:
-            result.append(os.path.join(root, filename))
+            if ".md" not in filename:
+                result.append(os.path.join(root, filename))
     return result
 
-all_definition_ids = collecAllDefinitionIds()
+all_definition_ids = collectAllDefinitionIds()
 quality_filepaths = collectAllQualities()
 all_setting_ids = collectAllSettingIds()
 variant_filepaths = collectAllVariants()

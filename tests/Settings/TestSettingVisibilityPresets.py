@@ -49,8 +49,8 @@ def test_setActivePreset():
     with patch("cura.CuraApplication.CuraApplication.getInstance"):
         visibility_model = SettingVisibilityPresetsModel(preferences)
     visibility_model.activePresetChanged = MagicMock()
-    # Ensure that we start off with basic (since we didn't change anything just yet!)
-    assert visibility_model.activePreset == "basic"
+    # Ensure that we start off with advanced (since we didn't change anything just yet!)
+    assert visibility_model.activePreset == "advanced"
 
     # Everything should be the same.
     visibility_model.setActivePreset("basic")

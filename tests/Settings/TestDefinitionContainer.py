@@ -22,6 +22,9 @@ machine_filepaths = [os.path.join(os.path.dirname(__file__), "..", "..", "resour
 extruder_filepaths = sorted(os.listdir(os.path.join(os.path.dirname(__file__), "..", "..", "resources", "extruders")))
 extruder_filepaths = [os.path.join(os.path.dirname(__file__), "..", "..", "resources", "extruders", filename) for filename in extruder_filepaths]
 definition_filepaths = machine_filepaths + extruder_filepaths
+for i in range(definition_filepaths.length):
+    if ".md" in definition_filepaths[i]:
+        definition_filepaths.pop(i)
 all_meshes = os.listdir(os.path.join(os.path.dirname(__file__), "..", "..", "resources", "meshes"))
 all_images = os.listdir(os.path.join(os.path.dirname(__file__), "..", "..", "resources", "images"))
 
