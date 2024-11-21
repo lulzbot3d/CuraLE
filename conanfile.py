@@ -494,12 +494,12 @@ echo "CURA_VERSION_PATCH={{ curale_version_patch }}" >> ${{ env_prefix }}GITHUB_
 echo "CURA_VERSION_BUILD={{ curale_version_build }}" >> ${{ env_prefix }}GITHUB_ENV
 echo "CURA_VERSION_FULL={{ curale_version_full }}" >> ${{ env_prefix }}GITHUB_ENV
 echo "CURA_APP_NAME={{ curale_app_name }}" >> ${{ env_prefix }}GITHUB_ENV
-        """).render(cura_version_major = curale_version.major,
-                    cura_version_minor = curale_version.minor,
-                    cura_version_patch = curale_version.patch,
-                    cura_version_build = curale_version.build if curale_version.build != "" else "0",
-                    cura_version_full = self.version,
-                    cura_app_name = self._app_name,
+        """).render(curale_version_major = curale_version.major,
+                    curale_version_minor = curale_version.minor,
+                    curale_version_patch = curale_version.patch,
+                    curale_version_build = curale_version.build if curale_version.build != "" else "0",
+                    curale_version_full = self.version,
+                    curale_app_name = self._app_name,
                     env_prefix = env_prefix)
 
         ext = ".sh" if self.settings.os != "Windows" else ".ps1"
