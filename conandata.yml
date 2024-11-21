@@ -101,9 +101,9 @@ pyinstaller:
             dst: "."
             binary: "curaenginele_plugin_gradual_flow"
     hiddenimports:
-        - "pySavitarLE"
-        - "pyArcusLE"
-        - "pynest2dLE"
+        - "pySavitar"
+        - "pyArcus"
+        - "pynest2d"
         - "PyQt6"
         - "PyQt6.QtNetwork"
         - "PyQt6.sip"
@@ -124,7 +124,7 @@ pyinstaller:
         - "PyQt6.sip"
         - "stl"
     icon:
-        Windows: "./icons/CuraLE.ico"
+        Windows: "./icons/curale.ico"
         Macos: "./icons/curale.icns"
         Linux: "./icons/curale-128.png"
 pycharm_targets:

@@ -283,7 +283,7 @@ class CuraLEConan(ConanFile):
 
         with open(os.path.join(location, "CuraLE.spec"), "w") as f:
             f.write(pyinstaller.render(
-                name = str(self.options.display_name).replace(" ", "-"),
+                name = str(self.options.display_name).replace(" ", "_"),
                 display_name = self._app_name,
                 entrypoint = entrypoint_location,
                 datas = datas,
