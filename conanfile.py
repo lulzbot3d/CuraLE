@@ -325,7 +325,6 @@ class CuraLEConan(ConanFile):
         self.options["pyarcusle"].shared = True
         self.options["pysavitarle"].shared = True
         self.options["pynest2dle"].shared = True
-        # self.options["dulcificumle"].shared = self.settings.os != "Windows"
         self.options["cpython"].shared = True
         self.options["boost"].header_only = True
         if self.settings.os == "Linux":

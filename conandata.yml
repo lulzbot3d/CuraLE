@@ -31,44 +31,44 @@ pyinstaller:
         curale_plugins:
             package: "curale"
             src: "plugins"
-            dst: "share/curale/plugins"
+            dst: "share/cura/plugins"
         curaenginele_gradual_flow_plugin:
             package: "curaenginele_plugin_gradual_flow"
             src: "res/plugins/CuraEngineLEGradualFlow"
-            dst: "share/curale/plugins/CuraEngineLEGradualFlow"
+            dst: "share/cura/plugins/CuraEngineLEGradualFlow"
         curaenginele_gradual_flow_plugin_bundled:
             package: "curaenginele_plugin_gradual_flow"
             src: "res/bundled_packages"
-            dst: "share/curale/resources/bundled_packages"
+            dst: "share/cura/resources/bundled_packages"
         curale_resources:
             package: "curale_resources"
             src: "resources"
-            dst: "share/curale/resources"
+            dst: "share/cura/resources"
         curale_shared_resources:
             package: "curale_resources"
             src: "res"
-            dst: "share/curale/resources"
+            dst: "share/cura/resources"
         curale_private_data:
             package: "curale_private_data"
             src: "res"
-            dst: "share/curale"
+            dst: "share/cura"
             internal: true
         uraniumle_plugins:
             package: "uraniumle"
             src: "plugins"
-            dst: "share/uraniumle/plugins"
+            dst: "share/uranium/plugins"
         uraniumle_resources:
             package: "uraniumle"
             src: "resources"
-            dst: "share/uraniumle/resources"
+            dst: "share/uranium/resources"
         uraniumle_um_qt_qml_um:
             package: "uraniumle"
             src: "site-packages/UM/Qt/qml/UM"
             dst: "PyQt6/Qt6/qml/UM"
         curale_binary_data:
             package: "curale_binary_data"
-            src: "resources/curale/resources"
-            dst: "share/curale/resources"
+            src: "resources/cura/resources"
+            dst: "share/cura/resources"
         uraniumle_binary_data:
             package: "curale_binary_data"
             src: "resources/uranium/resources"
@@ -80,7 +80,7 @@ pyinstaller:
         fdm_materialsle:
             package: "fdm_materialsle"
             src: "res/resources/materials"
-            dst: "share/curale/resources/materials"
+            dst: "share/cura/resources/materials"
         tcl:
             package: "tcl"
             src: "lib/tcl8.6"
