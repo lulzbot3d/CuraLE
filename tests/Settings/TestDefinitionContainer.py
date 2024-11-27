@@ -19,12 +19,15 @@ Resources.addSearchPath(os.path.abspath(os.path.join(os.path.dirname(__file__), 
 
 machine_filepaths = sorted(os.listdir(os.path.join(os.path.dirname(__file__), "..", "..", "resources", "definitions")))
 machine_filepaths = [os.path.join(os.path.dirname(__file__), "..", "..", "resources", "definitions", filename) for filename in machine_filepaths]
+for filepath in machine_filepaths:
+    if ".md" in filepath:
+        machine_filepaths.remove(filepath)
 extruder_filepaths = sorted(os.listdir(os.path.join(os.path.dirname(__file__), "..", "..", "resources", "extruders")))
 extruder_filepaths = [os.path.join(os.path.dirname(__file__), "..", "..", "resources", "extruders", filename) for filename in extruder_filepaths]
-definition_filepaths = machine_filepaths + extruder_filepaths
-for filepath in definition_filepaths:
+for filepath in extruder_filepaths:
     if ".md" in filepath:
-        definition_filepaths.remove(filepath)
+        extruder_filepaths.remove(filepath)
+definition_filepaths = machine_filepaths + extruder_filepaths
 all_meshes = os.listdir(os.path.join(os.path.dirname(__file__), "..", "..", "resources", "meshes"))
 all_images = os.listdir(os.path.join(os.path.dirname(__file__), "..", "..", "resources", "images"))
 

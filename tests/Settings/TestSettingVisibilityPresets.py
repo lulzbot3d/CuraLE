@@ -53,18 +53,18 @@ def test_setActivePreset():
     assert visibility_model.activePreset == "advanced"
 
     # Everything should be the same.
-    visibility_model.setActivePreset("basic")
-    assert visibility_model.activePreset == "basic"
+    visibility_model.setActivePreset("advanced")
+    assert visibility_model.activePreset == "advanced"
     assert visibility_model.activePresetChanged.emit.call_count == 0  # No events should be sent.
 
     # Change it to existing type (should work...)
-    visibility_model.setActivePreset("advanced")
-    assert visibility_model.activePreset == "advanced"
+    visibility_model.setActivePreset("basic")
+    assert visibility_model.activePreset == "basic"
     assert visibility_model.activePresetChanged.emit.call_count == 1
 
     # Change to unknown preset. Shouldn't do anything.
     visibility_model.setActivePreset("OMGZOMGNOPE")
-    assert visibility_model.activePreset == "advanced"
+    assert visibility_model.activePreset == "basic"
     assert visibility_model.activePresetChanged.emit.call_count == 1
 
 
