@@ -13,6 +13,7 @@ resources/materials/*.fdm_material
 resources/images/whats_new
 resources/texts/whats_new
 CuraEngine.exe
+CuraEngineLE.exe
 LC_MESSAGES
 .cache
 *.qmlc
@@ -98,10 +99,14 @@ plugins/__init__.py
 venv/
 build/
 dist/
+curale_inst/
 conaninfo.txt
 conan.lock
 conan_imports_manifest.txt
 conanbuildinfo.txt
+conan*.bat
+deactivate_conan*.bat
+conan*.bat
 graph_info.json
 CuraLE.spec
 .run/
