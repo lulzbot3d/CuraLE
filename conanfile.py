@@ -331,7 +331,7 @@ class CuraLEConan(ConanFile):
             self.options["openssl"].shared = True
         if self.conf.get("user.curaenginele:sentry_url", "", check_type=str) != "":
             self.options["curaenginele"].enable_sentry = True
-            self.options["arcusle"].enable_sentry = True
+            self.options["arcus"].enable_sentry = True
             self.options["clipper"].enable_sentry = True
 
     def validate(self):
