@@ -1,4 +1,4 @@
-name: MacOS Installer
+name: macOS Installer
 run-name: ${{ inputs.cura_conan_version }} by @${{ github.actor }}
 
 on:
@@ -44,7 +44,7 @@ on:
 
 jobs:
   macos-installer:
-    uses: lulzbot3d/cura-le-workflows/.github/workflows/cura-installer-macos.yml@main
+    uses: lulzbot3d/CuraLE_Workflows/.github/workflows/cura-installer-macos.yml@main
     with:
       cura_conan_version: ${{ inputs.cura_conan_version }}
       conan_args: ${{ inputs.conan_args }}

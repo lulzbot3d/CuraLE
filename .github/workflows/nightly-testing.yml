@@ -1,0 +1,16 @@
+name: Weekly Build - Dev Release
+run-name: Weekly Build - Dev Release
+
+on:
+  schedule:
+    # Runs at 18:00 CST on Thursdays
+    - cron: '0 0 * * 5'
+
+jobs:
+  build-nightly:
+    uses: ./.github/workflows/nightly.yml
+    with:
+      cura_conan_version: "curale/[*]@lulzbot/testing"
+      release_tag: "nightly-stable" # Fixed version, we reuse the same tag forever
+      caller_workflow: "nightly-testing.yml"
+    secrets: inherit

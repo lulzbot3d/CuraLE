@@ -1,0 +1,13 @@
+name: conan-package-resources
+
+on: workflow_dispatch
+
+jobs:
+  conan-package:
+    uses: lulzbot3d/CuraLE_Workflows/.github/workflows/conan-package.yml@main
+    with:
+      conan_recipe_root: "./resources/"
+      platform_windows: false
+      platform_mac: false
+      install_system_dependencies: false
+    secrets: inherit

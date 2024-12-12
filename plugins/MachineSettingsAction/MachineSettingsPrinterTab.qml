@@ -376,7 +376,7 @@ Item
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
 
-            /*
+            /* 
                - Allows user to toggle if Start Gcode is the absolute first gcode.
             */
             Cura.SimpleCheckBox  // "Make sure Start Code is before all gcodes"
@@ -390,8 +390,8 @@ Item
                 labelWidth: base.labelWidth
                 forceUpdateOnChangeFunction: forceUpdateFunction
             }
-
-
+			
+			
             /* The "Shared Heater" feature is temporarily disabled because its
             implementation is incomplete. Printers with multiple filaments going
             into one nozzle will keep the inactive filaments retracted at the
@@ -539,7 +539,7 @@ Item
     }
 
     Cura.TertiaryButton
-    { // TODO: Change this link eventually
+    {
         id: buttonLearnMore
 
         text: catalog.i18nc("@button", "Learn more")

@@ -6,8 +6,8 @@ on:
   issue_comment:
     types: [created]
   schedule:
-    # Schedule for ten minutes after the hour, every hour
-    - cron: '* */12 * * *'
+    # Schedule for once a week on Sundays
+    - cron: '0 12 * * 0'
 
 # By specifying the access of one of the scopes, all of those that are not
 # specified are set to 'none'.

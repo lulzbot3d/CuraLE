@@ -20,6 +20,8 @@ Cura.Menu
     Cura.MenuSeparator { }
     Cura.MenuItem { action: Cura.Actions.exportProjectForSupport }
     Cura.MenuSeparator { }
+    Cura.MenuItem { action: Cura.Actions.exportProjectForSupport }
+    Cura.MenuSeparator { }
     Cura.MenuItem { action: Cura.Actions.whatsNew }
     Cura.MenuItem { action: Cura.Actions.about }
 }

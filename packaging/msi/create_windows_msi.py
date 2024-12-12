@@ -7,6 +7,7 @@ import os
 import shutil
 import subprocess
 import uuid
+import semver
 from datetime import datetime
 from pathlib import Path
 
@@ -20,11 +21,12 @@ def work_path(filename: Path) -> Path:
         return filename.parent
 
 
-def generate_wxs(source_path: Path, dist_path: Path, filename: Path, app_name: str):
+def generate_wxs(source_path: Path, dist_path: Path, filename: Path, app_name: str, version: str):
     source_loc = Path(os.getcwd(), source_path)
     dist_loc = Path(os.getcwd(), dist_path)
     work_loc = work_path(filename)
     work_loc.mkdir(parents=True, exist_ok=True)
+    parsed_version = semver.Version.parse(version)
 
     jinja_template_path = Path(source_loc.joinpath("packaging", "msi", "CuraLE.wxs.jinja"))
     with open(jinja_template_path, "r") as f:
@@ -33,11 +35,11 @@ def generate_wxs(source_path: Path, dist_path: Path, filename: Path, app_name: s
     wxs_content = template.render(
         app_name=f"{app_name}",
         main_app="Cura_LulzBot_Edition.exe",
-        version=os.getenv('CURA_VERSION_FULL'),
-        version_major=os.environ.get("CURA_VERSION_MAJOR"),
-        version_minor=os.environ.get("CURA_VERSION_MINOR"),
-        version_patch=os.environ.get("CURA_VERSION_PATCH"),
-        company="FAME3D LLC",
+        version=version,
+        version_major=str(parsed_version.major),
+        version_minor=str(parsed_version.minor),
+        version_patch=str(parsed_version.patch),
+        company="FAME3D, LLC.",
         web_site="https://lulzbot.com",
         year=datetime.now().year,
         upgrade_code=str(uuid.uuid5(uuid.NAMESPACE_DNS, app_name)),
@@ -111,12 +113,13 @@ def build(dist_path: Path, filename: Path):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Create Windows msi installer of CuraLE.")
-    parser.add_argument("source_path", type=Path, help="Path to Conan install CuraLE folder.")
-    parser.add_argument("dist_path", type=Path, help="Path to Pyinstaller dist folder")
-    parser.add_argument("filename", type=Path,
+    parser.add_argument("--source_path", type=Path, help="Path to Conan install CuraLE folder.")
+    parser.add_argument("--dist_path", type=Path, help="Path to Pyinstaller dist folder")
+    parser.add_argument("--filename", type=Path,
                         help="Filename of the exe (e.g. 'Cura_LulzBot_Edition-5.1.0-beta-Windows-X64.msi')")
-    parser.add_argument("name", type=str, help="App name (e.g. 'Cura LulzBot Edition')")
+    parser.add_argument("--name", type=str, help="App name (e.g. 'Cura LulzBot Edition')")
+    parser.add_argument("--version", type=str, help="The full curale version, e.g. 5.9.0-beta.1+24132")
     args = parser.parse_args()
-    generate_wxs(args.source_path.resolve(), args.dist_path.resolve(), args.filename.resolve(), args.name)
+    generate_wxs(args.source_path.resolve(), args.dist_path.resolve(), args.filename.resolve(), args.name, args.version)
     cleanup_artifacts(args.dist_path.resolve())
     build(args.dist_path.resolve(), args.filename)
