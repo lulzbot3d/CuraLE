@@ -5508,10 +5508,6 @@ msgstr "U hebt enkele profielinstellingen aangepast."
 "Wilt u deze gewijzigde instellingen behouden na het verwisselen van profielen?"
 "U kunt de wijzigingen ook verwijderen om de standaardinstellingen van '%1' te laden."
 
-msgctxt "@label"
-msgid "You need to accept the license to install the package"
-msgstr "U moet de licentie accepteren om de package te installeren"
-
 msgctxt "@info:generic"
 msgid "You need to quit and restart {} before changes have effect."
 msgstr "U moet {} afsluiten en herstarten voordat de wijzigingen van kracht worden."

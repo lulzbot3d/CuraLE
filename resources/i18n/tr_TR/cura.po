@@ -5511,10 +5511,6 @@ msgstr "Bazı profil ayarlarını özelleştirdiniz."
 "Profiller arasında geçiş yapıldıktan sonra bu değişiklikleri tutmak ister misiniz?"
 "Alternatif olarak, '%1' üzerinden varsayılanları yüklemek için değişiklikleri silebilirsiniz."
 
-msgctxt "@label"
-msgid "You need to accept the license to install the package"
-msgstr "Paketi yüklemek için lisansı kabul etmeniz gerekir"
-
 msgctxt "@info:generic"
 msgid "You need to quit and restart {} before changes have effect."
 msgstr "Değişikliklerin etkili olması için {} uygulamasını kapatarak yeniden başlatmalısınız."

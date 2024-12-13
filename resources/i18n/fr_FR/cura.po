@@ -3104,14 +3104,6 @@ msgctxt "@title:window"
 msgid "Post Processing Plugin"
 msgstr "Plugin de post-traitement"
 
-msgctxt "@label"
-msgid "Post Processing Scripts"
-msgstr "Scripts de post-traitement"
-
-msgctxt "@button"
-msgid "Pre-heat"
-msgstr "Préchauffer"
-
 msgctxt "@item:inmenu"
 msgid "Prepare"
 msgstr "Préparer"

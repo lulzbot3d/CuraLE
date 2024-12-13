@@ -5536,10 +5536,6 @@ msgstr "Вы изменили некоторые настройки профил
 "Сохранить измененные настройки после переключения профилей?"
 "Изменения можно отменить и загрузить настройки по умолчанию из \"%1\"."
 
-msgctxt "@label"
-msgid "You need to accept the license to install the package"
-msgstr "Для установки пакета необходимо принять лицензию"
-
 msgctxt "@info:generic"
 msgid "You need to quit and restart {} before changes have effect."
 msgstr "Для активации изменений вам потребуется завершить работу программного обеспечения {} и перезапустить его."

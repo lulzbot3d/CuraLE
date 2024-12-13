@@ -86,7 +86,9 @@ cmake_install.cmake
 *.gcode
 run.sh
 run_debug.sh
+CuraEngine
 CuraEngineLE
+curaengine_plugin_gradual_flow
 curaenginele_plugin_gradual_flow
 debug.html
 .scannerwork/

@@ -3100,14 +3100,6 @@ msgctxt "@title:window"
 msgid "Post Processing Plugin"
 msgstr "后期处理插件"
 
-msgctxt "@label"
-msgid "Post Processing Scripts"
-msgstr "后期处理脚本"
-
-msgctxt "@button"
-msgid "Pre-heat"
-msgstr "预热"
-
 msgctxt "@item:inmenu"
 msgid "Prepare"
 msgstr "准备"
