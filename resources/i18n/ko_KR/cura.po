@@ -306,10 +306,6 @@ msgctxt "@action:button"
 msgid "Activate"
 msgstr "활성화"
 
-msgctxt "@label"
-msgid "Post Processing Scripts"
-msgstr "후처리 스크립트"
-
 msgctxt "@action:button"
 msgid "Add"
 msgstr "추가"
@@ -3101,10 +3097,6 @@ msgstr "후처리 플러그인"
 msgctxt "@label"
 msgid "Post Processing Scripts"
 msgstr "후처리 스크립트"
-
-msgctxt "@button"
-msgid "Pre-heat"
-msgstr "예열"
 
 msgctxt "@item:inmenu"
 msgid "Prepare"
