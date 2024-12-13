@@ -41,7 +41,7 @@ jobs:
       - name: Rename the installers
         id: rename-installers
         working-directory: installers
-        run: python ./CuraLE_Workflows/runner_scripts/rename_installers.py --tag "weekly" >> $GITHUB_OUTPUT
+        run: python ../CuraLE_Workflows/runner_scripts/rename_installers.py --tag "weekly" >> $GITHUB_OUTPUT
 
       - name: create the release notes
         shell: python
