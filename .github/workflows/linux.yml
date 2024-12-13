@@ -27,9 +27,10 @@ on:
       operating_system:
         description: 'OS'
         required: true
-        default: 'self-hosted-Ubuntu22-X64'
+        default: 'ubuntu-22.04'
         type: choice
         options:
+          - ubuntu-latest
           - ubuntu-22.04
           - self-hosted-Ubuntu22-X64
 

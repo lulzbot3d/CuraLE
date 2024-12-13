@@ -35,12 +35,13 @@ on:
       operating_system:
         description: 'OS'
         required: true
-        default: 'self-hosted-ARM64'
+        default: 'macos-12'
         type: choice
         options:
           - self-hosted-X64
           - self-hosted-ARM64
           - macos-12
+          - macos-latest
 
 jobs:
   macos-installer:
