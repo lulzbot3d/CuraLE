@@ -6,11 +6,14 @@ on:
     inputs:
       cura_conan_version:
         description: 'CuraLE Conan Version'
-        default: 'curale/latest@lulzbot/testing'
-        required: true
+        default: ''
+        type: string
+      package_overrides:
+        description: 'List of specific packages to be used (space-separated)'
+        default: ''
         type: string
       conan_args:
-        description: 'Conan args: eq.: --require-override'
+        description: 'Conan args'
         default: ''
         required: false
         type: string
@@ -35,18 +38,20 @@ on:
       operating_system:
         description: 'OS'
         required: true
-        default: 'self-hosted-ARM64'
+        default: 'macos-12'
         type: choice
         options:
           - self-hosted-X64
           - self-hosted-ARM64
           - macos-12
+          - macos-latest
 
 jobs:
   macos-installer:
     uses: lulzbot3d/CuraLE_Workflows/.github/workflows/cura-installer-macos.yml@main
     with:
       cura_conan_version: ${{ inputs.cura_conan_version }}
+      package_overrides: ${{ inputs.package_overrides }}
       conan_args: ${{ inputs.conan_args }}
       enterprise: ${{ inputs.enterprise }}
       staging: ${{ inputs.staging }}
