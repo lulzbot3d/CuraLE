@@ -45,7 +45,7 @@ pyinstaller:
         #     dst: "share/cura/resources/bundled_packages"
         #     enterprise_only: true
         curale_resources:
-            package: "curale_resources"
+            package: "curale"
             src: "resources"
             dst: "share/cura/resources"
         curale_shared_resources:
