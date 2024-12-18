@@ -83,8 +83,8 @@ pyinstaller:
             dst: "share/windows"
             oses:
               - "Windows"
-        fdm_materials:
-            package: "fdm_materials"
+        fdm_materialsle:
+            package: "fdm_materialsle"
             src: "res/resources/materials"
             dst: "share/cura/resources/materials"
     binaries:
