@@ -85,14 +85,14 @@ def build(dist_path: Path, filename: Path):
                     "-g1",
                     "-sf",
                     "-srd",
-                    "-var", "var.CuraDir",
+                    "-var", "var.CuraLEDir",
                     "-t", f"{exclude_components_loc.as_posix()}",
                     "-out", f"{heat_loc.as_posix()}"]
     subprocess.call(heat_command)
 
     build_command = ["candle",
                      "-arch", "x64",
-                     f"-dCuraDir={dist_loc}\\",
+                     f"-dCuraLEDir={dist_loc}\\",
                      "-ext", "WixFirewallExtension",
                      "-out", f"{build_loc.as_posix()}\\",
                      f"{wxs_loc.as_posix()}",

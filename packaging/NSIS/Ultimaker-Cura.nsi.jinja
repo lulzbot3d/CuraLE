@@ -64,7 +64,7 @@ InstallDir "$PROGRAMFILES64\${APP_NAME}"
 
 !ifdef REG_START_MENU
 !define MUI_STARTMENUPAGE_NODISABLE
-!define MUI_STARTMENUPAGE_DEFAULTFOLDER "Cura LulzBot Edition"
+!define MUI_STARTMENUPAGE_DEFAULTFOLDER "UltiMaker Cura"
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT "${REG_ROOT}"
 !define MUI_STARTMENUPAGE_REGISTRY_KEY "${UNINSTALL_PATH}"
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "${REG_START_MENU}"
@@ -73,7 +73,7 @@ InstallDir "$PROGRAMFILES64\${APP_NAME}"
 
 !insertmacro MUI_PAGE_INSTFILES
 
-# Set up explorer to run CuraLE instead of directly, so it's not executed elevated (with all negative consequences that brings for an unelevated user).
+# Set up explorer to run Cura instead of directly, so it's not executed elevated (with all negative consequences that brings for an unelevated user).
 !define MUI_FINISHPAGE_RUN "$WINDIR\explorer.exe"
 !define MUI_FINISHPAGE_RUN_PARAMETERS "$INSTDIR\${MAIN_APP_EXE}"
 !insertmacro MUI_PAGE_FINISH
@@ -98,8 +98,8 @@ File "{{ file[0] }}"{% endfor %}
 ######################################################################
 
 Section -Extension_Reg
-!insertmacro APP_ASSOCIATE "stl" "CuraLE.model" "Standard Tessellation Language (STL) files" "$INSTDIR\${MAIN_APP_EXE},0" "Open with {{ app_name }}" "$INSTDIR\${MAIN_APP_EXE} $\"%1$\""
-!insertmacro APP_ASSOCIATE "3mf" "CuraLE.project" "3D Manufacturing Format (3MF) files" "$INSTDIR\${MAIN_APP_EXE},0" "Open with {{ app_name }}" "$INSTDIR\${MAIN_APP_EXE} $\"%1$\""
+!insertmacro APP_ASSOCIATE "stl" "Cura.model" "Standard Tessellation Language (STL) files" "$INSTDIR\${MAIN_APP_EXE},0" "Open with {{ app_name }}" "$INSTDIR\${MAIN_APP_EXE} $\"%1$\""
+!insertmacro APP_ASSOCIATE "3mf" "Cura.project" "3D Manufacturing Format (3MF) files" "$INSTDIR\${MAIN_APP_EXE},0" "Open with {{ app_name }}" "$INSTDIR\${MAIN_APP_EXE} $\"%1$\""
 SectionEnd
 
 Section -Icons_Reg
@@ -113,8 +113,8 @@ CreateShortCut "$SMPROGRAMS\$SM_Folder\${APP_NAME}.lnk" "$INSTDIR\${MAIN_APP_EXE
 CreateShortCut "$SMPROGRAMS\$SM_Folder\Uninstall ${APP_NAME}.lnk" "$INSTDIR\uninstall.exe"
 
 !ifdef WEB_SITE
-WriteIniStr "$INSTDIR\Cura LulzBot Edition website.url" "InternetShortcut" "URL" "${WEB_SITE}"
-CreateShortCut "$SMPROGRAMS\$SM_Folder\Cura LulzBot Edition website.lnk" "$INSTDIR\Cura LulzBot Edition website.url"
+WriteIniStr "$INSTDIR\UltiMaker Cura website.url" "InternetShortcut" "URL" "${WEB_SITE}"
+CreateShortCut "$SMPROGRAMS\$SM_Folder\UltiMaker Cura website.lnk" "$INSTDIR\UltiMaker Cura website.url"
 !endif
 !insertmacro MUI_STARTMENU_WRITE_END
 !endif
@@ -125,8 +125,8 @@ CreateShortCut "$SMPROGRAMS\{{ app_name }}\${APP_NAME}.lnk" "$INSTDIR\${MAIN_APP
 CreateShortCut "$SMPROGRAMS\{{ app_name }}\Uninstall ${APP_NAME}.lnk" "$INSTDIR\uninstall.exe"
 
 !ifdef WEB_SITE
-WriteIniStr "$INSTDIR\Cura LulzBot Edition website.url" "InternetShortcut" "URL" "${WEB_SITE}"
-CreateShortCut "$SMPROGRAMS\{{ app_name }}\Cura LulzBot Edition website.lnk" "$INSTDIR\Cura LulzBot Edition website.url"
+WriteIniStr "$INSTDIR\UltiMaker Cura website.url" "InternetShortcut" "URL" "${WEB_SITE}"
+CreateShortCut "$SMPROGRAMS\{{ app_name }}\UltiMaker Cura website.lnk" "$INSTDIR\UltiMaker Cura website.url"
 !endif
 !endif
 
@@ -147,11 +147,11 @@ SectionEnd
 
 Section UrlProtocol
 
-WriteRegStr HKCR "curale" "" "URL:curale"
-WriteRegStr HKCR "curale" "URL Protocol" ""
-WriteRegStr HKCR "curale\DefaultIcon" "" "$INSTDIR\${MAIN_APP_EXE},1"
-WriteRegStr HKCR "curale\shell" "" "open"
-WriteRegStr HKCR "curale\shell\open\command" "" '"$INSTDIR\${MAIN_APP_EXE}" "%1"'
+WriteRegStr HKCR "cura" "" "URL:cura"
+WriteRegStr HKCR "cura" "URL Protocol" ""
+WriteRegStr HKCR "cura\DefaultIcon" "" "$INSTDIR\${MAIN_APP_EXE},1"
+WriteRegStr HKCR "cura\shell" "" "open"
+WriteRegStr HKCR "cura\shell\open\command" "" '"$INSTDIR\${MAIN_APP_EXE}" "%1"'
 
 WriteRegStr HKCR "slicer" "" "URL:slicer"
 WriteRegStr HKCR "slicer" "URL Protocol" ""
@@ -188,7 +188,7 @@ RmDir /r /REBOOTOK "$INSTDIR"
 Delete "$SMPROGRAMS\$SM_Folder\${APP_NAME}.lnk"
 Delete "$SMPROGRAMS\$SM_Folder\Uninstall ${APP_NAME}.lnk"
 !ifdef WEB_SITE
-Delete "$SMPROGRAMS\$SM_Folder\Cura LulzBot Edition website.lnk"
+Delete "$SMPROGRAMS\$SM_Folder\UltiMaker Cura website.lnk"
 !endif
 RmDir "$SMPROGRAMS\$SM_Folder"
 !endif
@@ -197,13 +197,13 @@ RmDir "$SMPROGRAMS\$SM_Folder"
 Delete "$SMPROGRAMS\{{ app_name }}\${APP_NAME}.lnk"
 Delete "$SMPROGRAMS\{{ app_name }}\Uninstall ${APP_NAME}.lnk"
 !ifdef WEB_SITE
-Delete "$SMPROGRAMS\{{ app_name }}\Cura LulzBot Edition website.lnk"
+Delete "$SMPROGRAMS\{{ app_name }}\UltiMaker Cura website.lnk"
 !endif
 RmDir "$SMPROGRAMS\{{ app_name }}"
 !endif
 
-!insertmacro APP_UNASSOCIATE "stl" "CuraLE.model"
-!insertmacro APP_UNASSOCIATE "3mf" "CuraLE.project"
+!insertmacro APP_UNASSOCIATE "stl" "Cura.model"
+!insertmacro APP_UNASSOCIATE "3mf" "Cura.project"
 
 ; Unassociate file associations for 'cura' protocol
 DeleteRegKey HKCR "cura"
@@ -214,4 +214,3 @@ DeleteRegKey HKCR "slicer"
 DeleteRegKey ${REG_ROOT} "${REG_APP_PATH}"
 DeleteRegKey ${REG_ROOT} "${UNINSTALL_PATH}"
 SectionEnd
-
