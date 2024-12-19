@@ -14,8 +14,6 @@
 *for preparing your 3D models*  
 *for your LulzBot 3D Printer.*
 
-This Repository is still a work-in-progress.
-
 <!----------------------------------------------------------------------------->
 
 [Conan]: https://github.com/lulzbot3d/CuraLE/actions/workflows/conan-package.yml

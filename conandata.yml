@@ -9,8 +9,8 @@ requirements:
   - "pysavitar/5.4.0@lulzbot/stable"
   - "pynest2d/5.4.0@lulzbot/stable"
 requirements_internal:
-  - "fdm_materialsle_private/5.10.0-alpha.0@lulzbot/testing"
-  - "cura_private_data/5.10.0-alpha.0@lulzbot/testing"
+  - "fdm_materialsle/5.10.0-alpha.0@internal/testing"
+  - "curale_private_data/5.10.0-alpha.0@internal/testing"
 requirements_enterprise:
   - "native_cad_plugin/2.0.0"
 urls:
