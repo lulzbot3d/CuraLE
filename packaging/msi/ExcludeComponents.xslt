@@ -25,8 +25,8 @@
             use="@Id"
     />
     <xsl:key
-            name="CuraEngineLE_exe_ToRemove"
-            match="wix:Component[ substring( wix:File/@Source, string-length( wix:File/@Source ) - 17 ) = 'CuraEngineLE.exe' ]"
+            name="CuraEngine_exe_ToRemove"
+            match="wix:Component[ substring( wix:File/@Source, string-length( wix:File/@Source ) - 17 ) = 'CuraEngine.exe' ]"
             use="@Id"
     />
 
@@ -37,7 +37,7 @@
         </xsl:copy>
     </xsl:template>
 
-    <!-- ...but if the element has the "CuraLE_exe_ToRemove" or "CuraEngineLE_exe_ToRemove" key then don't render anything (i.e. removing it from the output) -->
+    <!-- ...but if the element has the "CuraLE_exe_ToRemove" or "CuraEngine_exe_ToRemove" key then don't render anything (i.e. removing it from the output) -->
     <xsl:template match="*[ self::wix:Component or self::wix:ComponentRef ][ key( 'CuraLE_exe_ToRemove', @Id ) ]"/>
-    <xsl:template match="*[ self::wix:Component or self::wix:ComponentRef ][ key( 'CuraEngineLE_exe_ToRemove', @Id ) ]"/>
+    <xsl:template match="*[ self::wix:Component or self::wix:ComponentRef ][ key( 'CuraEngine_exe_ToRemove', @Id ) ]"/>
 </xsl:stylesheet>
