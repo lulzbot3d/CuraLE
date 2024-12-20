@@ -182,7 +182,7 @@ class CuraApplication(QtApplication):
                          api_version = ApplicationMetadata.CuraSDKVersion,
                          build_type = ApplicationMetadata.CuraBuildType,
                          is_debug_mode = ApplicationMetadata.CuraDebugMode,
-                         tray_icon_name = "curale-icon-32.png" if not ApplicationMetadata.IsAlternateVersion else "cura-icon-32_wip.png",
+                         tray_icon_name = "curale-32.png" if not ApplicationMetadata.IsAlternateVersion else "curale-32.png",
                          **kwargs)
 
         self.default_theme = "cura-le-light"

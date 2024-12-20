@@ -548,8 +548,7 @@ Item
                 {
                     name = noCategoryToolheadsModel.getItem(toolheadSelection.selectedIndex).name;
                 }
-                //return name;
-                return "Bagingo";
+                return name;
             }
 
             function addMachine()

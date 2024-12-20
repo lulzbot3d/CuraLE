@@ -152,7 +152,8 @@ class CuraLEConan(ConanFile):
 
         with open(os.path.join(location, "CuraVersion.py"), "w") as f:
             f.write(cura_version_py.render(
-                cura_app_name = self.name,
+                # cura_app_name = self.name,
+                cura_app_name = "CuraLE",
                 cura_app_display_name = self._app_name,
                 cura_version = cura_version,
                 cura_version_full = self.version,
