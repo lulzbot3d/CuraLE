@@ -205,8 +205,8 @@ RmDir "$SMPROGRAMS\{{ app_name }}"
 !insertmacro APP_UNASSOCIATE "stl" "CuraLE.model"
 !insertmacro APP_UNASSOCIATE "3mf" "CuraLE.project"
 
-; Unassociate file associations for 'cura' protocol
-DeleteRegKey HKCR "cura"
+; Unassociate file associations for 'curale' protocol
+DeleteRegKey HKCR "curale"
 
 ; Unassociate file associations for 'slicer' protocol
 DeleteRegKey HKCR "slicer"
