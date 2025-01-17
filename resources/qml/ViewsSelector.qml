@@ -7,7 +7,8 @@ import QtQuick.Controls 2.3
 import UM 1.5 as UM
 import Cura 1.0 as Cura
 
-Cura.ExpandablePopup {
+Cura.ExpandablePopup
+{
     id: viewSelector
 
     property double popupWidth: -1.0

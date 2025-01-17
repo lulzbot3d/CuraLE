@@ -12,7 +12,8 @@ import Cura 1.1 as Cura
 // This element hold all the elements needed for the user to trigger the slicing process, and later
 // to get information about the printing times, material consumption and the output process (such as
 // saving to a file, printing over network, ...
-Item {
+Item
+{
     id: base
     width: actionPanelWidget.width + additionalComponents.width
     height: childrenRect.height
@@ -20,10 +21,12 @@ Item {
 
     property bool hasPreviewButton: true
 
-    Rectangle {
+    Rectangle
+    {
         id: actionPanelWidget
 
         width: UM.Theme.getSize("action_panel_widget").width
+        // height: childrenRect.height + 2 * UM.Theme.getSize("thick_margin").height
         height: childrenRect.height + 2 * UM.Theme.getSize("default_margin").height
         anchors.right: parent.right
         color: UM.Theme.getColor("main_background")
@@ -34,55 +37,69 @@ Item {
 
         property bool outputAvailable: UM.Backend.state == UM.Backend.Done || UM.Backend.state == UM.Backend.Disabled
 
-        Loader {
+        Loader
+        {
             id: loader
-            anchors {
+            anchors
+            {
                 top: parent.top
+                // topMargin: UM.Theme.getSize("thick_margin").height
                 topMargin: UM.Theme.getSize("default_margin").height
                 left: parent.left
+                // leftMargin: UM.Theme.getSize("thick_margin").width
                 leftMargin: UM.Theme.getSize("default_margin").width
                 right: parent.right
+                // rightMargin: UM.Theme.getSize("thick_margin").width
                 rightMargin: UM.Theme.getSize("default_margin").width
             }
             sourceComponent: actionPanelWidget.outputAvailable ? outputProcessWidget : sliceProcessWidget
-            onLoaded: {
-                if(actionPanelWidget.outputAvailable) {
+            onLoaded:
+            {
+                if(actionPanelWidget.outputAvailable)
+                {
                     loader.item.hasPreviewButton = base.hasPreviewButton;
                 }
             }
         }
 
-        Component {
+        Component
+        {
             id: sliceProcessWidget
             SliceProcessWidget { }
         }
 
-        Component {
+        Component
+        {
             id: outputProcessWidget
             OutputProcessWidget { }
         }
     }
 
-    Item {
+    Item
+    {
         id: additionalComponents
         width: childrenRect.width
         anchors.right: actionPanelWidget.left
         anchors.rightMargin: UM.Theme.getSize("default_margin").width
         anchors.bottom: actionPanelWidget.bottom
+        // anchors.bottomMargin: UM.Theme.getSize("thick_margin").height * 2
         visible: actionPanelWidget.visible
 
-        Column {
+        Column
+        {
             id: additionalComponentsColumn
             anchors.bottom: parent.bottom
             spacing: UM.Theme.getSize("thin_margin").height
 
-            Row {
+            Row
+            {
                 id: additionalComponentsRow
                 anchors.right: parent.right
                 spacing: UM.Theme.getSize("default_margin").width
             }
 
-            Rectangle {
+            Rectangle
+            {
                 id: clearPlateButtonBox
                 height: clearPlateButton.height + (UM.Theme.getSize("default_margin").height * 2)
                 width: clearPlateButton.width + (UM.Theme.getSize("default_margin").width * 2)
@@ -92,18 +109,18 @@ Item {
                 radius: UM.Theme.getSize("default_radius").width
                 visible: actionPanelWidget.outputAvailable
 
-                Cura.PrimaryButton {
+                Cura.PrimaryButton
+                {
                     id: clearPlateButton
-                    anchors {
-                        centerIn: parent
-                    }
+                    anchors.centerIn: parent
 
                     height: UM.Theme.getSize("action_button").height
                     text: catalog.i18nc("@button", "  Next Part  ")
                     tooltip: "Clears build plate and opens folder to slice next part(s) with current settings."
                     toolTipContentAlignment: Cura.ToolTip.ContentAlignment.AlignLeft
 
-                    onClicked: {
+                    onClicked:
+                    {
                         CuraApplication.deleteAll()
                         Cura.Actions.open.trigger()
                     }
@@ -114,13 +131,16 @@ Item {
 
     Component.onCompleted: base.addAdditionalComponents()
 
-    Connections {
+    Connections
+    {
         target: CuraApplication
         function onAdditionalComponentsChanged(areaId) { base.addAdditionalComponents() }
     }
 
-    function addAdditionalComponents() {
-        for (var component in CuraApplication.additionalComponents["saveButton"]) {
+    function addAdditionalComponents()
+    {
+        for (var component in CuraApplication.additionalComponents["saveButton"])
+        {
             CuraApplication.additionalComponents["saveButton"][component].parent = additionalComponentsRow
         }
     }

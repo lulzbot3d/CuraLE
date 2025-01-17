@@ -311,8 +311,8 @@ msgid "Activate"
 msgstr "アクティベート"
 
 msgctxt "@label"
-msgid "Post Processing Scripts"
-msgstr "スクリプトの処理後"
+msgid "Active print"
+msgstr "プリントをアクティベートする"
 
 msgctxt "@action:button"
 msgid "Add"
@@ -3114,6 +3114,10 @@ msgstr "ポストプロセッシング"
 msgctxt "@title:window"
 msgid "Post Processing Plugin"
 msgstr "ポストプロセッシングプラグイン"
+
+msgctxt "@label"
+msgid "Post Processing Scripts"
+msgstr "ポストプロセッシングスクリプト"
 
 msgctxt "@button"
 msgid "Pre-heat"

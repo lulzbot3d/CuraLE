@@ -9,7 +9,6 @@ from PyQt6.QtWidgets import QApplication
 from UM.Application import Application
 from UM.Event import CallFunctionEvent
 from UM.FlameProfiler import pyqtSlot
-from UM.Application import Application
 from UM.Math.Vector import Vector
 from UM.Scene.Selection import Selection
 from UM.Scene.Iterator.BreadthFirstIterator import BreadthFirstIterator
@@ -88,6 +87,7 @@ class CuraActions(QObject):
     @pyqtSlot()
     def centerSelection(self) -> None:
         """Center all objects in the selection"""
+
         operation = GroupedOperation()
         for node in Selection.getAllSelectedObjects():
             current_node = node
@@ -159,13 +159,14 @@ class CuraActions(QObject):
 
         :param extruder_id: The ID of the extruder stack to use for the selected objects.
         """
+
         operation = GroupedOperation()
 
         nodes_to_change = []
         for node in Selection.getAllSelectedObjects():
             # If the node is a group, apply the active extruder to all children of the group.
             if node.callDecoration("isGroup"):
-                for grouped_node in BreadthFirstIterator(node): #type: ignore
+                for grouped_node in BreadthFirstIterator(node): #type: ignore #Ignore type error because iter() should get called automatically by Python syntax.
                     if grouped_node.callDecoration("getActiveExtruder") == extruder_id:
                         continue
 

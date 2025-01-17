@@ -34,6 +34,7 @@ if TYPE_CHECKING:
 
 catalog = i18nCatalog("cura")
 
+
 class ContainerManager(QObject):
     """Manager class that contains common actions to deal with containers in Cura.
 
@@ -41,6 +42,7 @@ class ContainerManager(QObject):
     from within QML. We want to be able to trigger things like removing a container
     when a certain action happens. This can be done through this class.
     """
+
 
     def __init__(self, application: "CuraApplication") -> None:
         if ContainerManager.__instance is not None:
@@ -457,6 +459,7 @@ class ContainerManager(QObject):
     @pyqtSlot(QUrl, result = "QVariantMap")
     def importProfile(self, file_url: QUrl) -> Dict[str, str]:
         """Import single profile, file_url does not have to end with curaprofile"""
+
         if not file_url.isValid():
             return {"status": "error", "message": catalog.i18nc("@info:status", "Invalid file URL:") + " " + str(file_url)}
         path = file_url.toLocalFile()

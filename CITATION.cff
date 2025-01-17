@@ -1,14 +1,14 @@
 # YAML 1.2
 ---
 cff-version: 1.2.0
+type: software
 message: >-
   If you use this software, please cite it using the
   metadata from this file.
-type: software
 title: Cura LulzBot Edition
 abstract: >-
-  Fork of UltiMaker Cura, 3D slicer software for LulzBot
-  brand 3D Printers.
+  A state-of-the-art slicer application built on top
+  of the Uranium framework.
 authors:
   - name: Fargo Additive Manufacturing Equipment 3D, LLC
 contact:
@@ -18,14 +18,14 @@ url: 'https://lulzbot.com/support/cura'
 repository-code: 'https://github.com/lulzbot3d/CuraLE'
 license: LGPL-3.0
 license-url: "https://github.com/lulzbot3d/CuraLE/blob/main/LICENSE"
-version: 5.8.0
-date-released: "2024-09"
+version: 5.10.0
+date-released: "2025-01"
 references:
   - authors:
       - name: UltiMaker
     type: software
     title: UltiMaker Cura
-    version: 5.4.0
+    version: 5.10.0
     repository-code: https://github.com/Ultimaker/Cura/
     license: LGPL-3.0
 keywords:

@@ -1,7 +1,7 @@
 # Compiled and generated things.
 build
 *.pyc
-__pycache__/
+__pycache__
 *.mo
 docs/html
 *.log
@@ -13,7 +13,6 @@ resources/materials/*.fdm_material
 resources/images/whats_new
 resources/texts/whats_new
 CuraEngine.exe
-CuraEngineLE.exe
 LC_MESSAGES
 .cache
 *.qmlc
@@ -85,11 +84,9 @@ cmake_install.cmake
 #Debug
 *.gcode
 run.sh
-run_debug.sh
+.scannerwork/
 CuraEngine
-CuraEngineLE
 curaengine_plugin_gradual_flow
-curaenginele_plugin_gradual_flow
 debug.html
 .scannerwork/
 
@@ -111,9 +108,9 @@ deactivate_conan*.bat
 conan*.bat
 graph_info.json
 CuraLE.spec
+Ultimaker-Cura.spec
 .run/
 /printer-linter/src/printerlinter.egg-info/
-/plugins/CuraEngineLEGradualFlow
 /plugins/CuraEngineGradualFlow
 /resources/bundled_packages/bundled_*.json
 curaengine_plugin_gradual_flow

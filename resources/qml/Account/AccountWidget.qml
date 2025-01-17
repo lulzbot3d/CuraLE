@@ -21,10 +21,11 @@ Item
 
         anchors.verticalCenter: parent.verticalCenter
 
-        text: catalog.i18nc("@action:button", "Sign In")
+        text: catalog.i18nc("@action:button", "Sign in")
 
         height: Math.round(0.5 * UM.Theme.getSize("main_window_header").height)
-        visible: true
+        onClicked: popup.opened ? popup.close() : popup.open()
+        visible: !loggedIn
 
         hoverEnabled: true
 

@@ -11,7 +11,6 @@ from PyQt6.QtCore import QObject, pyqtProperty, pyqtSignal, QTimer
 
 from UM.ConfigurationErrorMessage import ConfigurationErrorMessage
 from UM.Scene.Iterator.DepthFirstIterator import DepthFirstIterator
-from UM.Scene.SceneNode import SceneNode
 from UM.Settings.InstanceContainer import InstanceContainer
 from UM.Settings.Interfaces import ContainerInterface
 from UM.Signal import Signal
@@ -19,7 +18,6 @@ from UM.FlameProfiler import pyqtSlot
 from UM import Util
 from UM.Logger import Logger
 from UM.Message import Message
-from UM.Application import Application
 from UM.Resources import Resources
 from UM.Settings.SettingFunction import SettingFunction
 from UM.Settings.ContainerStack import ContainerStack
@@ -439,6 +437,7 @@ class MachineManager(QObject):
                 return cast(GlobalStack, machine)
         return None
 
+    @pyqtSlot(str, result=bool)
     @pyqtSlot(str, str, result = bool)
     @pyqtSlot(str, str, bool, bool, result = bool)
     def addMachine(self, definition_id: str, name: Optional[str] = None, lcd: bool = True, bltouch: bool = False) -> bool:
@@ -628,10 +627,13 @@ class MachineManager(QObject):
         return group_size > 1
 
     @pyqtProperty(bool, notify = printerConnectedStatusChanged)
+    def activeMachineIsLinkedToCurrentAccount(self) -> bool:
+        return parseBool(self.activeMachine.getMetaDataEntry(META_UM_LINKED_TO_ACCOUNT, "True"))
+
+    @pyqtProperty(bool, notify = printerConnectedStatusChanged)
     def activeMachineHasNetworkConnection(self) -> bool:
         # A network connection is only available if any output device is actually a network connected device.
-        # return any(d.connectionType == ConnectionType.NetworkConnection for d in self._printer_output_devices)
-        return False
+        return any(d.connectionType == ConnectionType.NetworkConnection for d in self._printer_output_devices)
 
     @pyqtProperty(bool, notify = printerConnectedStatusChanged)
     def activeMachineHasCloudConnection(self) -> bool:
@@ -725,6 +727,7 @@ class MachineManager(QObject):
             return False
         return active_quality_group.is_available
 
+
     @pyqtProperty(bool, notify = activeQualityGroupChanged)
     def isActiveQualityExperimental(self) -> bool:
         global_container_stack = self._application.getGlobalContainerStack()
@@ -759,6 +762,7 @@ class MachineManager(QObject):
             category = extruder.intent.getMetaDataEntry("intent_category", "default")
             if category != active_intent_category:
                 result.append(str(int(extruder.getMetaDataEntry("position")) + 1))
+
         return result
 
     @pyqtProperty(bool, notify = activeQualityChanged)

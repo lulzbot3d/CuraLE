@@ -307,8 +307,8 @@ msgid "Activate"
 msgstr "激活"
 
 msgctxt "@label"
-msgid "Post Processing Scripts"
-msgstr "后期处理脚本"
+msgid "Active print"
+msgstr "正在打印"
 
 msgctxt "@action:button"
 msgid "Add"
@@ -367,8 +367,8 @@ msgid "Add more materials from Marketplace"
 msgstr "从市场添加更多材料"
 
 msgctxt "@button"
-msgid "Pre-heat"
-msgstr "预热"
+msgid "Add printer"
+msgstr "添加打印机"
 
 msgctxt "@label"
 msgid "Add printer"
@@ -3099,6 +3099,14 @@ msgstr "后期处理"
 msgctxt "@title:window"
 msgid "Post Processing Plugin"
 msgstr "后期处理插件"
+
+msgctxt "@label"
+msgid "Post Processing Scripts"
+msgstr "后期处理脚本"
+
+msgctxt "@button"
+msgid "Pre-heat"
+msgstr "预热"
 
 msgctxt "@item:inmenu"
 msgid "Prepare"

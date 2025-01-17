@@ -22,7 +22,6 @@ if TYPE_CHECKING:
 
 # Class for loading and parsing G-code files
 class GCodeReader(MeshReader):
-
     _flavor_default = "Marlin"
     _flavor_keyword = ";FLAVOR:"
     _flavor_readers_dict = {"RepRap" : RepRapFlavorParser.RepRapFlavorParser(),
@@ -38,7 +37,6 @@ class GCodeReader(MeshReader):
             )
         )
         self._supported_extensions = [".gcode", ".g"]
-        self._flavor_reader = None
 
         self._flavor_reader = None  # type: Optional[FlavorParser]
 

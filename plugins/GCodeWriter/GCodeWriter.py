@@ -14,20 +14,7 @@ from UM.i18n import i18nCatalog
 
 catalog = i18nCatalog("cura")
 
-import re #For escaping characters in the settings.
-import json
-import copy
 
-##  Writes g-code to a file.
-#
-#   While this poses as a mesh writer, what this really does is take the g-code
-#   in the entire scene and write it to an output device. Since the g-code of a
-#   single mesh isn't separable from the rest what with rafts and travel moves
-#   and all, it doesn't make sense to write just a single mesh.
-#
-#   So this plug-in takes the g-code that is stored in the root of the scene
-#   node tree, adds a bit of extra information about the profiles and writes
-#   that to the output device.
 class GCodeWriter(MeshWriter):
     """Writes g-code to a file.
 
@@ -93,8 +80,6 @@ class GCodeWriter(MeshWriter):
             self.setInformation(catalog.i18nc("@warning:status", "Please prepare G-code before exporting."))
             return False
         gcode_dict = getattr(scene, "gcode_dict")
-        if not gcode_dict:
-            return False
         gcode_list = gcode_dict.get(active_build_plate, None)
         if gcode_list is not None:
             has_settings = False

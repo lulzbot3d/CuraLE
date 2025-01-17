@@ -21,15 +21,15 @@ from PyQt6.QtQml import qmlRegisterUncreatableMetaObject, qmlRegisterSingletonTy
 from PyQt6.QtWidgets import QMessageBox
 
 import UM.Util
+import cura.Settings.cura_empty_instance_containers
 from UM.Application import Application
 from UM.Decorators import override, deprecated
 from UM.FlameProfiler import pyqtSlot
-from UM.i18n import i18nCatalog
 from UM.Logger import Logger
-from UM.Math.Vector import Vector
-from UM.Math.Quaternion import Quaternion
 from UM.Math.AxisAlignedBox import AxisAlignedBox
 from UM.Math.Matrix import Matrix
+from UM.Math.Quaternion import Quaternion
+from UM.Math.Vector import Vector
 from UM.Mesh.ReadMeshJob import ReadMeshJob
 from UM.Message import Message
 from UM.Operations.AddSceneNodeOperation import AddSceneNodeOperation
@@ -40,7 +40,7 @@ from UM.Platform import Platform
 from UM.PluginError import PluginNotFoundError
 from UM.Preferences import Preferences
 from UM.Qt.Bindings.FileProviderModel import FileProviderModel
-from UM.Qt.QtApplication import QtApplication
+from UM.Qt.QtApplication import QtApplication  # The class we're inheriting from.
 from UM.Resources import Resources
 from UM.Scene.Camera import Camera
 from UM.Scene.GroupDecorator import GroupDecorator
@@ -54,12 +54,10 @@ from UM.Settings.InstanceContainer import InstanceContainer
 from UM.Settings.SettingDefinition import SettingDefinition, DefinitionPropertyType, toIntConversion
 from UM.Settings.SettingFunction import SettingFunction
 from UM.Settings.Validator import Validator
-from UM.Version import Version
-from UM.View.SelectionPass import SelectionPass
+from UM.View.SelectionPass import SelectionPass  # For typing.
 from UM.Workspace.WorkspaceReader import WorkspaceReader
 from UM.i18n import i18nCatalog
 from UM.Version import Version
-import cura.Settings.cura_empty_instance_containers
 from cura import ApplicationMetadata
 from cura.API import CuraAPI
 from cura.API.Account import Account
@@ -68,8 +66,8 @@ from cura.FilamentChangeManager import FilamentChangeManager
 from cura.Machines.MachineErrorChecker import MachineErrorChecker
 from cura.Machines.Models.BuildPlateModel import BuildPlateModel
 from cura.Machines.Models.CustomQualityProfilesDropDownMenuModel import CustomQualityProfilesDropDownMenuModel
-from cura.Machines.Models.DiscoveredCloudPrintersModel import DiscoveredCloudPrintersModel
 from cura.Machines.Models.DiscoveredPrintersModel import DiscoveredPrintersModel
+from cura.Machines.Models.DiscoveredCloudPrintersModel import DiscoveredCloudPrintersModel
 from cura.Machines.Models.ExtrudersModel import ExtrudersModel
 from cura.Machines.Models.FavoriteMaterialsModel import FavoriteMaterialsModel
 from cura.Machines.Models.FirstStartMachineActionsModel import FirstStartMachineActionsModel
@@ -86,7 +84,6 @@ from cura.Machines.Models.QualityProfilesDropDownMenuModel import QualityProfile
 from cura.Machines.Models.QualitySettingsModel import QualitySettingsModel
 from cura.Machines.Models.SettingVisibilityPresetsModel import SettingVisibilityPresetsModel
 from cura.Machines.Models.UserChangesModel import UserChangesModel
-from cura.Machines.MachineErrorChecker import MachineErrorChecker
 from cura.Operations.SetParentOperation import SetParentOperation
 from cura.PrinterOutput.NetworkMJPGImage import NetworkMJPGImage
 from cura.PrinterOutput.PrinterOutputDevice import PrinterOutputDevice
@@ -110,7 +107,6 @@ from cura.Settings.MaterialSettingsVisibilityHandler import MaterialSettingsVisi
 from cura.Settings.SettingInheritanceManager import SettingInheritanceManager
 from cura.Settings.SidebarCustomMenuItemsModel import SidebarCustomMenuItemsModel
 from cura.Settings.SimpleModeSettingsManager import SimpleModeSettingsManager
-from cura.SingleInstance import SingleInstance
 from cura.TaskManagement.OnExitCallbackManager import OnExitCallbackManager
 from cura.ThumbnailGenerator import ThumbnailGenerator
 from cura.UI import CuraSplashScreen, PrintInformation
@@ -129,7 +125,6 @@ from cura.Machines.Models.LulzBotPrintersModel import LulzBotPrintersModel
 from cura.Machines.Models.LulzBotToolheadsModel import LulzBotToolheadsModel
 
 
-from .AutoSave import AutoSave
 from . import BuildVolume
 from . import CameraAnimation
 from . import CuraActions
@@ -187,7 +182,7 @@ class CuraApplication(QtApplication):
 
         self.default_theme = "cura-le-light"
 
-        self.change_log_url = "https://gitlab.com/lulzbot3d/cura-le/cura-lulzbot/-/blob/main/cura_patchnotes.txt"
+        self.change_log_url = "https://github.com/lulzbot3d/CuraLE/blob/main/cura_patchnotes.txt"
         self.beta_change_log_url = ""
 
         self._boot_loading_time = time.time()
@@ -279,7 +274,7 @@ class CuraApplication(QtApplication):
         self._open_url_queue = []  # A list of urls to open (after the application has started)
         self._update_platform_activity_timer = None
 
-        self._sidebar_custom_menu_items = []  # type: list # Keeps list of custom menu items for the sidebar
+        self._sidebar_custom_menu_items = []  # type: list # Keeps list of custom menu items for the side bar
 
         self._plugins_loaded = False
 
@@ -609,7 +604,7 @@ class CuraApplication(QtApplication):
         # Set the setting version for Preferences
         preferences = self.getPreferences()
         preferences.addPreference("metadata/setting_version", 0)
-        preferences.setValue("metadata/setting_version", self.SettingVersion) # Don't make it equal to the default so that the setting version always gets written to the file.
+        preferences.setValue("metadata/setting_version", self.SettingVersion)  # Don't make it equal to the default so that the setting version always gets written to the file.
 
         preferences.addPreference("cura/active_mode", "simple")
 
@@ -638,7 +633,7 @@ class CuraApplication(QtApplication):
         preferences.addPreference("view/settings_ypos", 45)
         preferences.addPreference("view/colorscheme_xpos", 0)
         preferences.addPreference("view/colorscheme_ypos", 56)
-        # preferences.addPreference("cura/currency", "€") # My keyboard doesn't have a Euro key :( -> Unicode 20ac
+        # preferences.addPreference("cura/currency", "€")
         preferences.addPreference("cura/currency", "$")
         preferences.addPreference("cura/material_settings", "{}")
 
@@ -701,17 +696,16 @@ class CuraApplication(QtApplication):
     def writeToLog(self, severity: str, message: str) -> None:
         Logger.log(severity, message)
 
-    ## The "Quit" button click event handler.
-    # While it appears to have originally been used to close the application, checkAndExitApplication
-    # is now the safer way to close out the application, as it preforms some checks to ensure everything
-    # shuts down elegantly. This function is only used when a hard-stop is required.
+    # DO NOT call this function to close the application, use checkAndExitApplication() instead which will perform
+    # pre-exit checks such as checking for in-progress USB printing, etc.
+    # Except for the 'Decline and close' in the 'User Agreement'-step in the Welcome-pages, that should be a hard exit.
     @pyqtSlot()
     def closeApplication(self) -> None:
         Logger.log("i", "Close application")
 
         # Workaround: Before closing the window, remove the global stack.
         # This is necessary because as the main window gets closed, hundreds of QML elements get updated which often
-        # request the global stack. However, as the Qt-side of the Machine Manager is being dismantled, the conversion of
+        # request the global stack. However as the Qt-side of the Machine Manager is being dismantled, the conversion of
         # the Global Stack to a QObject fails.
         # If instead we first take down the global stack, PyQt will just convert `None` to `null` which succeeds, and
         # the QML code then gets `null` as the global stack and can deal with that as it deems fit.
@@ -853,7 +847,6 @@ class CuraApplication(QtApplication):
         if not self.started or not self._enable_save:
             # Do not do saving during application start or when data should not be saved on quit.
             return
-
         ContainerRegistry.getInstance().saveDirtyContainers()
         self.savePreferences()
 
@@ -879,6 +872,8 @@ class CuraApplication(QtApplication):
         :py:class:`Uranium.UM.PluginRegistry`
         """
 
+        self._plugin_registry.setCheckIfTrusted(ApplicationMetadata.IsEnterpriseVersion)
+
         self._plugin_registry.addType("profile_reader", self._addProfileReader)
         self._plugin_registry.addType("profile_writer", self._addProfileWriter)
         self._plugin_registry.addType("backend_plugin", self._addBackendPlugin)
@@ -894,8 +889,8 @@ class CuraApplication(QtApplication):
             self._plugin_registry.addPluginLocation(os.path.join(os.path.abspath(os.path.dirname(__file__)), "..", "plugins"))
             self._plugin_registry.preloaded_plugins.append("ConsoleLogger")
 
-        # SentryLogger gives us the ability to crash a bit more gracefully and in a way that can be analyzed
-        # so it's meant to be loaded in as soon as possible.
+        # Since it's possible to get crashes in code before the sentrylogger is loaded, we want to start this plugin
+        # as quickly as possible, as we might get unsolvable crash reports without it.
         self._plugin_registry.preloaded_plugins.append("SentryLogger")
         self._plugin_registry.loadPlugins()
 
@@ -920,8 +915,8 @@ class CuraApplication(QtApplication):
 
         self._log_hardware_info()
 
-        #Logger.debug("Using conan dependencies: {}", str(self.conanInstalls))
-        #Logger.debug("Using python dependencies: {}", str(self.pythonInstalls))
+        Logger.debug("Using conan dependencies: {}", str(self.conanInstalls))
+        Logger.debug("Using python dependencies: {}", str(self.pythonInstalls))
 
         Logger.log("i", "Initializing machine error checker")
         self._machine_error_checker = MachineErrorChecker(self)
@@ -937,7 +932,6 @@ class CuraApplication(QtApplication):
         self._container_manager = ContainerManager(self)
         self.processEvents()
 
-        # Try it here!
         self._thumbnail_generator = ThumbnailGenerator()
 
         # Check if we should run as single instance or not. If so, set up a local socket server which listener which
@@ -1264,12 +1258,6 @@ class CuraApplication(QtApplication):
             # for it to work!
             os._exit(0)
 
-        if int(event.type()) == 20:  # 'QEvent.Type.Quit' enum isn't there, even though it should be according to docs.
-            # Once we're at this point, everything should have been flushed already (past OnExitCallbackManager).
-            # It's more difficult to call sys.exit(0): That requires that it happens as the result of a pyqtSignal-emit.
-            # (See https://doc.qt.io/qt-6/qcoreapplication.html#quit)
-            os._exit(0)
-
         return super().event(event)
 
     def getAutoSave(self) -> Optional[AutoSave]:
@@ -1546,7 +1534,7 @@ class CuraApplication(QtApplication):
             if not node.getMeshData() and not node.callDecoration("isGroup"):
                 continue  # Node that doesn't have a mesh and is not a group.
             if node.getParent() and node.getParent().callDecoration("isGroup") or node.getParent().callDecoration("isSliceable"):
-                continue  # Grouped nodes don't need resetting as their parent (the group) is reset
+                continue  # Grouped nodes don't need resetting as their parent (the group) is reset)
             if not node.isSelectable():
                 continue  # i.e. node with layer data
             if not node.callDecoration("isSliceable") and not node.callDecoration("isGroup"):
@@ -1573,7 +1561,7 @@ class CuraApplication(QtApplication):
             if not node.getMeshData() and not node.callDecoration("isGroup"):
                 continue  # Node that doesn't have a mesh and is not a group.
             if node.getParent() and node.getParent().callDecoration("isGroup"):
-                continue  # Grouped nodes don't need resetting as their parent (the group) is reset
+                continue  # Grouped nodes don't need resetting as their parent (the group) is reset)
             if not node.isSelectable():
                 continue  # i.e. node with layer data
             nodes.append(node)
@@ -1602,7 +1590,7 @@ class CuraApplication(QtApplication):
             if not node.getMeshData() and not node.callDecoration("isGroup"):
                 continue  # Node that doesn't have a mesh and is not a group.
             if node.getParent() and node.getParent().callDecoration("isGroup"):
-                continue  # Grouped nodes don't need resetting as their parent (the group) is reset
+                continue  # Grouped nodes don't need resetting as their parent (the group) is reset)
             if not node.callDecoration("isSliceable") and not node.callDecoration("isGroup"):
                 continue  # i.e. node with layer data
             nodes.append(node)
@@ -1641,7 +1629,7 @@ class CuraApplication(QtApplication):
 
             parent_node = node.getParent()
             if parent_node and parent_node.callDecoration("isGroup"):
-                continue  # Grouped nodes don't need resetting as their parent (the group) is reset
+                continue  # Grouped nodes don't need resetting as their parent (the group) is reset)
 
             if not node.isSelectable():
                 continue  # i.e. node with layer data
@@ -1751,7 +1739,6 @@ class CuraApplication(QtApplication):
 
         # Compute the center of the objects
         object_centers = []
-
         for mesh, node in zip(meshes, group_node.getChildren()):
             transformed_mesh = mesh.getTransformed(Matrix())  # Forget about the transformations that the original object had.
             center = transformed_mesh.getCenterPosition()
@@ -1785,7 +1772,7 @@ class CuraApplication(QtApplication):
         for node in DepthFirstIterator(self.getController().getScene().getRoot()):
             if isinstance(node, CuraSceneNode) and node.getName() == "MergedMesh":
 
-                # Checking by name might be not enough, the merged mesh should have "GroupDecorator" decorator
+                # Checking by name might be not enough, the merged mesh should has "GroupDecorator" decorator
                 for decorator in node.getDecorators():
                     if isinstance(decorator, GroupDecorator):
                         group_nodes.append(node)
@@ -2073,7 +2060,7 @@ class CuraApplication(QtApplication):
 
         :param project_mode: How to handle project files. Either None(default): Follow user preference, "open_as_model"
          or "open_as_project". This parameter is only considered if the file is a project file.
-        :param add_to_recent_files: Whether to add the file as an option to the Recent Files list.
+        :param add_to_recent_files: Whether or not to add the file as an option to the Recent Files list.
         """
         Logger.log("i", "Attempting to read file %s", file.toString())
         if not file.isValid():
@@ -2184,7 +2171,6 @@ class CuraApplication(QtApplication):
                 fixed_nodes.append(node_)
 
         for original_node in nodes:
-
             # Create a CuraSceneNode just if the original node is not that type
             if isinstance(original_node, CuraSceneNode):
                 node = original_node
@@ -2239,7 +2225,7 @@ class CuraApplication(QtApplication):
             elif self._open_project_mode == "open_as_model":
                 nodes_to_arrange.append(node)
 
-            # This node is deep-copied from some other node which already has a BuildPlateDecorator, but the deepcopy
+            # This node is deep copied from some other node which already has a BuildPlateDecorator, but the deepcopy
             # of BuildPlateDecorator produces one that's associated with build plate -1. So, here we need to check if
             # the BuildPlateDecorator exists or not and always set the correct build plate number.
             build_plate_decorator = node.getDecorator(BuildPlateDecorator)
@@ -2279,9 +2265,8 @@ class CuraApplication(QtApplication):
 
     @pyqtSlot(str, result=bool)
     def checkIsValidProjectFile(self, file_url):
-        """
-        Checks if the given file URL is a valid project file.
-        """
+        """Checks if the given file URL is a valid project file. """
+
         file_path = QUrl(file_url).toLocalFile()
         workspace_reader = self.getWorkspaceFileHandler().getReaderForFile(file_path)
         if workspace_reader is None:
@@ -2311,6 +2296,14 @@ class CuraApplication(QtApplication):
             parent = node.getParent()
 
         Selection.add(node)
+
+    @pyqtSlot()
+    def showMoreInformationDialogForAnonymousDataCollection(self):
+        try:
+            slice_info = self._plugin_registry.getPluginObject("SliceInfoPlugin")
+            slice_info.showMoreInfoDialog()
+        except PluginNotFoundError:
+            Logger.log("w", "Plugin SliceInfo was not found, so not able to show the info dialog.")
 
     def addSidebarCustomMenuItem(self, menu_item: dict) -> None:
         self._sidebar_custom_menu_items.append(menu_item)
@@ -2366,7 +2359,7 @@ class CuraApplication(QtApplication):
             if only_selectable and not node.isSelectable():
                 continue  # Only remove nodes that are selectable.
             if not node.callDecoration("isSliceable") and not node.callDecoration("getLayerData") and not node.callDecoration("isGroup"):
-                continue  # Grouped nodes don't need resetting as their parent (the group) is reset
+                continue  # Grouped nodes don't need resetting as their parent (the group) is reset)
             nodes.append(node)
         if nodes:
             from UM.Operations.GroupedOperation import GroupedOperation

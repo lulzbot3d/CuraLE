@@ -49,8 +49,6 @@ if TYPE_CHECKING:
 
 catalog = i18nCatalog("cura")
 
-import numpy
-import os.path
 
 class SimulationView(CuraView):
     """The preview layer view. It is used to display g-code paths."""
@@ -320,10 +318,6 @@ class SimulationView(CuraView):
     def resetLayerData(self) -> None:
         self._current_layer_mesh = None
         self._current_layer_jumps = None
-        self._max_feedrate = sys.float_info.min
-        self._min_feedrate = sys.float_info.max
-        self._max_thickness = sys.float_info.min
-        self._min_thickness = sys.float_info.max
 
     def beginRendering(self) -> None:
         scene = self.getController().getScene()
@@ -359,7 +353,6 @@ class SimulationView(CuraView):
             self._minimum_layer_num = min(self._current_layer_num, self._minimum_layer_num)
 
             self._startUpdateTopLayers()
-
             self.currentLayerNumChanged.emit()
 
     def setMinimumLayer(self, value: int) -> None:
@@ -374,7 +367,6 @@ class SimulationView(CuraView):
             self._current_layer_num = max(self._current_layer_num, self._minimum_layer_num)
 
             self._startUpdateTopLayers()
-
             self.currentLayerNumChanged.emit()
 
     def setPath(self, value: float) -> None:
@@ -395,7 +387,6 @@ class SimulationView(CuraView):
                     self._current_time = cumulative_line_duration[actual_path_num]
 
             self._startUpdateTopLayers()
-
             self.currentPathNumChanged.emit()
 
     def setMinimumPath(self, value: int) -> None:
@@ -410,7 +401,6 @@ class SimulationView(CuraView):
             self._current_path_num = max(self._current_path_num, self._minimum_path_num)
 
             self._startUpdateTopLayers()
-
             self.currentPathNumChanged.emit()
 
     def setSimulationViewType(self, layer_view_type: int) -> None:
@@ -689,8 +679,6 @@ class SimulationView(CuraView):
     visibleStructuresChanged = Signal()
     colorSchemeLimitsChanged = Signal()
 
-    ##  Hackish way to ensure the proxy is already created, which ensures that the layerview.qml is already created
-    #   as this caused some issues.
     def getProxy(self, engine, script_engine):
         """Hackish way to ensure the proxy is already created
 
@@ -815,7 +803,6 @@ class SimulationView(CuraView):
     def _startUpdateTopLayers(self) -> None:
         if not self._compatibility_mode:
             return
-
         if self._top_layers_job:
             self._top_layers_job.finished.disconnect(self._updateCurrentLayerMesh)
             self._top_layers_job.cancel()
@@ -951,4 +938,3 @@ class _CreateTopLayersJob(Job):
     def cancel(self) -> None:
         self._cancel = True
         super().cancel()
-

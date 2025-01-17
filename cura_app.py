@@ -22,7 +22,7 @@ os.environ["QT_QUICK_FLICKABLE_WHEEL_DECELERATION"] = str(int(os.environ.get("QT
 if sys.platform != "linux":  # Turns out the Linux build _does_ use this, but we're not making an Enterprise release for that system anyway.
     os.environ["QT_PLUGIN_PATH"] = ""  # Security workaround: Don't need it, and introduces an attack vector, so set to nul.
     os.environ["QML2_IMPORT_PATH"] = ""  # Security workaround: Don't need it, and introduces an attack vector, so set to nul.
-    os.environ["QT_OPENGL_DLL"] = ""
+    os.environ["QT_OPENGL_DLL"] = ""  # Security workaround: Don't need it, and introduces an attack vector, so set to nul.
 
 from PyQt6.QtNetwork import QSslConfiguration, QSslSocket
 
@@ -98,6 +98,7 @@ if not known_args["debug"]:
         os.makedirs(dirpath, exist_ok = True)
         sys.stdout = open(os.path.join(dirpath, "stdout.log"), "w", encoding = "utf-8")
         sys.stderr = open(os.path.join(dirpath, "stderr.log"), "w", encoding = "utf-8")
+
 
 # WORKAROUND: GITHUB-88 GITHUB-385 GITHUB-612
 if Platform.isLinux(): # Needed for platform.linux_distribution, which is not available on Windows and OSX
@@ -186,13 +187,6 @@ def exceptHook(hook_type, value, traceback):
         _crash_handler.early_crash_dialog.show()
         sys.exit(application.exec())
 
-# Workaround for a race condition on certain systems where there
-# is a race condition between Arcus and PyQt. Importing Arcus
-# first seems to prevent Sip from going into a state where it
-# tries to create PyQt objects on a non-main thread.
-#import Arcus #@UnusedImport
-# import cura.CuraApplication
-# import cura.Settings.CuraContainerRegistry
 
 # Set exception hook to use the crash dialog handler
 sys.excepthook = exceptHook
@@ -203,6 +197,7 @@ elif sys.stdout and not sys.stdout.closed:
     faulthandler.enable(file = sys.stdout, all_threads = True)
 
 from cura.CuraApplication import CuraApplication
+
 
 # WORKAROUND: CURA-6739
 # The CTM file loading module in Trimesh requires the OpenCTM library to be dynamically loaded. It uses

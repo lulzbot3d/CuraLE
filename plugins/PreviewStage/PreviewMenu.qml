@@ -8,24 +8,30 @@ import QtQuick.Controls 2.3
 import UM 1.3 as UM
 import Cura 1.1 as Cura
 
-Item {
+Item
+{
     id: previewMenu
 
     property real itemHeight: height - 2 * UM.Theme.getSize("default_lining").width
     property var fileProviderModel: CuraApplication.getFileProviderModel()
 
-    UM.I18nCatalog {
+    UM.I18nCatalog
+    {
         id: catalog
         name: "cura"
     }
 
-    anchors {
+    anchors
+    {
         left: parent.left
         right: parent.right
         leftMargin: UM.Theme.getSize("wide_margin").width * 2
         rightMargin: UM.Theme.getSize("wide_margin").width * 2
     }
 
+    // Row
+    // {
+    //    id: stageMenuRow
     Item {
 
         anchors.fill: parent
@@ -36,14 +42,15 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.leftMargin: UM.Theme.getSize("default_margin").width + openFileButton.width + openFileMenu.width
+            anchors.fill: parent
             property int viewsSelectorWidth: Math.max(Math.round((parent.width - printSetupSelectorItem.width) / 3), UM.Theme.getSize("views_selector").width)
 
-            anchors.fill: parent
             // This is a trick to make sure that the borders of the two adjacent buttons' borders overlap. Otherwise
             // there will be double border (one from each button)
             spacing: -UM.Theme.getSize("default_lining").width
 
-            Cura.ViewsSelector {
+            Cura.ViewsSelector
+            {
                 id: viewsSelector
                 headerCornerSide: Cura.RoundedRectangle.Direction.Left
                 popupWidth: parent.viewsSelectorWidth

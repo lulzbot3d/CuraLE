@@ -390,7 +390,6 @@ class CuraEngineBackend(QObject, Backend):
             if self._build_plates_to_be_sliced:
                 self.slice()
             return
-
         self._stored_optimized_layer_data[build_plate_to_be_sliced] = []
         if application.getPrintInformation() and build_plate_to_be_sliced == active_build_plate:
             application.getPrintInformation().setToZeroPrintInformation(build_plate_to_be_sliced)
@@ -855,7 +854,8 @@ class CuraEngineBackend(QObject, Backend):
         except KeyError:
             # Can occur if the g-code has been cleared while a slice message is still arriving from the other end.
             gcode_list = []
-        print_info = CuraApplication.getInstance().getPrintInformation()
+        application = CuraApplication.getInstance()
+        print_info = application.getPrintInformation()
         currency = CuraApplication.getInstance().getPreferences().getValue("cura/currency")
         # Store these arrays nicely up here so we can display them nicer
         mat_lengths = print_info.materialLengths
@@ -883,7 +883,7 @@ class CuraEngineBackend(QObject, Backend):
         Logger.log("d", "Number of models per buildplate: %s", dict(self._numObjectsPerBuildPlate()))
 
         # See if we need to process the sliced layers job.
-        active_build_plate = CuraApplication.getInstance().getMultiBuildPlateModel().activeBuildPlate
+        active_build_plate = application.getMultiBuildPlateModel().activeBuildPlate
         if (
             self._layer_view_active and
             (self._process_layers_job is None or not self._process_layers_job.isRunning()) and

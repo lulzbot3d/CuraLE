@@ -15,6 +15,7 @@ from UM.Scene.SceneNodeSettings import SceneNodeSettings
 from cura.Settings.ExtruderStack import ExtruderStack  # For typing.
 from cura.Settings.SettingOverrideDecorator import SettingOverrideDecorator  # For per-object settings.
 
+
 class CuraSceneNode(SceneNode):
     """Scene nodes that are models are only seen when selecting the corresponding build plate
 

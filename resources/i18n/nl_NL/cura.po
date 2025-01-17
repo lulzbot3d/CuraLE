@@ -310,8 +310,8 @@ msgid "Activate"
 msgstr "Activeren"
 
 msgctxt "@label"
-msgid "You need to accept the license to install the package"
-msgstr "U moet de licentie accepteren om de package te installeren"
+msgid "Active print"
+msgstr "Actieve print"
 
 msgctxt "@action:button"
 msgid "Add"
@@ -5507,6 +5507,10 @@ msgid "You have customized some profile settings. Would you like to Keep these c
 msgstr "U hebt enkele profielinstellingen aangepast."
 "Wilt u deze gewijzigde instellingen behouden na het verwisselen van profielen?"
 "U kunt de wijzigingen ook verwijderen om de standaardinstellingen van '%1' te laden."
+
+msgctxt "@label"
+msgid "You need to accept the license to install the package"
+msgstr "U moet de licentie accepteren om de package te installeren"
 
 msgctxt "@info:generic"
 msgid "You need to quit and restart {} before changes have effect."

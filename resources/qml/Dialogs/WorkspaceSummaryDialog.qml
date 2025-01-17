@@ -8,7 +8,8 @@ import QtQuick.Layouts 1.3
 import UM 1.5 as UM
 import Cura 1.0 as Cura
 
-UM.Dialog {
+UM.Dialog
+{
     id: base
     title: catalog.i18nc("@title:window", "Save Project")
 
@@ -38,10 +39,12 @@ UM.Dialog {
         }
     }
 
-    Item {
+    Item
+    {
         anchors.fill: parent
 
-        UM.SettingDefinitionsModel {
+        UM.SettingDefinitionsModel
+        {
             id: definitionsModel
             containerId: base.visible ? Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.definition.id: "" : ""
             showAll: true
@@ -59,11 +62,12 @@ UM.Dialog {
             font.pointSize: 18
             anchors.top: parent.top
         }
-
-        ScrollView {
+        ScrollView
+        {
             id: scroll
             width: parent.width
-            anchors {
+            anchors
+            {
                 top: mainHeading.bottom
                 topMargin: UM.Theme.getSize("default_margin").height
                 bottom: parent.bottom
@@ -93,8 +97,8 @@ UM.Dialog {
                         text: catalog.i18nc("@action:label", "Printer settings")
                         font.bold: true
                     }
-
-                    Row {
+                    Row
+                    {
                         width: parent.width
                         height: childrenRect.height
                         UM.Label
@@ -108,8 +112,8 @@ UM.Dialog {
                             width: Math.floor(scroll.width / 3) | 0
                         }
                     }
-
-                    Row {
+                    Row
+                    {
                         width: parent.width
                         height: childrenRect.height
                         UM.Label
@@ -135,19 +139,23 @@ UM.Dialog {
                         }
                     }
                 }
-                Repeater {
+                Repeater
+                {
                     width: parent.width
                     height: childrenRect.height
                     model: Cura.MachineManager.activeMachine ? Cura.MachineManager.activeMachine.extruderList : null
-                    delegate: Column {
+                    delegate: Column
+                    {
                         height: childrenRect.height
                         width: parent.width
-                        property string variantName: {
+                        property string variantName:
+                        {
                             var extruder = modelData
                             var variant_name = extruder.variant.name
                             return (variant_name !== undefined) ? variant_name : ""
                         }
-                        property string materialName: {
+                        property string materialName:
+                        {
                             var extruder = modelData
                             var material_name = extruder.material.name
                             return (material_name !== undefined) ? material_name : ""
@@ -157,10 +165,12 @@ UM.Dialog {
                             text: {
                                 var extruder = Number(modelData.position)
                                 var extruder_id = ""
-                                if(!isNaN(extruder)) {
+                                if(!isNaN(extruder))
+                                {
                                     extruder_id = extruder + 1 // The extruder counter start from One and not Zero
                                 }
-                                else {
+                                else
+                                {
                                     extruder_id = modelData.position
                                 }
 
@@ -169,8 +179,8 @@ UM.Dialog {
                             font.bold: true
                             enabled: modelData.isEnabled
                         }
-
-                        Row {
+                        Row
+                        {
                             width: parent.width
                             height: childrenRect.height
 
@@ -191,7 +201,8 @@ UM.Dialog {
                             {
                                 text:
                                 {
-                                    if(variantName !== "" && variantName !== "empty" && materialName !== "") {
+                                    if(variantName !== "" && variantName !== "empty" && materialName !== "")
+                                    {
                                         return variantName + ", " + materialName
                                     }
                                     return materialName
@@ -202,7 +213,8 @@ UM.Dialog {
                         }
                     }
                 }
-                Column {
+                Column
+                {
                     width: parent.width
                     height: childrenRect.height
                     UM.Label
@@ -210,7 +222,8 @@ UM.Dialog {
                         text: catalog.i18nc("@action:label", "Profile settings")
                         font.bold: true
                     }
-                    Row {
+                    Row
+                    {
                         width: parent.width
                         UM.Label
                         {
@@ -224,7 +237,8 @@ UM.Dialog {
                         }
                         visible: Cura.MachineManager.numUserSettings
                     }
-                    Row {
+                    Row
+                    {
                         width: parent.width
                         height: childrenRect.height
                         UM.Label
@@ -240,7 +254,8 @@ UM.Dialog {
                     }
 
                     // Intent
-                    Row {
+                    Row
+                    {
                         width: parent.width
                         height: childrenRect.height
                         UM.Label

@@ -7,10 +7,11 @@ import UM 1.5 as UM
 import Cura 1.0 as Cura
 
 // We show a nice overlay on the 3D viewer when the current output device has no monitor view
-Rectangle {
+Rectangle
+{
     id: viewportOverlay
 
-    property bool isConnected: Cura.MachineManager.activeMachineHasNetworkConnection
+    property bool isConnected: Cura.MachineManager.activeMachineHasNetworkConnection || Cura.MachineManager.activeMachineHasCloudConnection
     property bool isNetworkConfigurable:
     {
         if(Cura.MachineManager.activeMachine === null)
@@ -20,30 +21,49 @@ Rectangle {
         return Cura.MachineManager.activeMachine.supportsNetworkConnection
     }
 
-    property bool isNetworkConfigured: false
+    property bool isNetworkConfigured:
+    {
+        // Readability:
+        var connectedTypes = [2, 3];
+        var types = Cura.MachineManager.activeMachine.configuredConnectionTypes
+
+        // Check if configured connection types includes either 2 or 3 (LAN or cloud)
+        for (var i = 0; i < types.length; i++)
+        {
+            if (connectedTypes.indexOf(types[i]) >= 0)
+            {
+                return true
+            }
+        }
+        return false
+    }
 
     color: UM.Theme.getColor("viewport_overlay")
     anchors.fill: parent
 
-    UM.I18nCatalog {
+    UM.I18nCatalog
+    {
         id: catalog
         name: "cura"
     }
 
     // This mouse area is to prevent mouse clicks to be passed onto the scene.
-    MouseArea {
+    MouseArea
+    {
         anchors.fill: parent
         acceptedButtons: Qt.AllButtons
         onWheel: wheel.accepted = true
     }
 
     // Disable dropping files into Cura when the monitor page is active
-    DropArea {
+    DropArea
+    {
         anchors.fill: parent
     }
 
     // CASE 1: CAN MONITOR & CONNECTED
-    Loader {
+    Loader
+    {
         id: monitorViewComponent
 
         anchors.fill: parent
@@ -56,8 +76,9 @@ Rectangle {
         sourceComponent: Cura.MachineManager.printerOutputDevices.length > 0 ? Cura.MachineManager.printerOutputDevices[0].monitorItem : null
     }
 
-    // CASE 2 & 3: Empty states -> Ideally these are never needed whatsoever with the changes that have been made.
-    Column {
+    // CASE 2 & 3: Empty states
+    Column
+    {
         anchors
         {
             top: parent.top

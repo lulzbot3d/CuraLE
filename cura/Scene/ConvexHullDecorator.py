@@ -117,6 +117,7 @@ class ConvexHullDecorator(SceneNodeDecorator):
 
     def getConvexHullHeadFull(self) -> Optional[Polygon]:
         """For one at the time this is the convex hull of the node with the full head size
+
         In case of printing all at once this is None.
         """
         if self._node is None:

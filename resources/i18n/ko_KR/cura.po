@@ -306,6 +306,10 @@ msgctxt "@action:button"
 msgid "Activate"
 msgstr "활성화"
 
+msgctxt "@label"
+msgid "Active print"
+msgstr "활성화된 프린트"
+
 msgctxt "@action:button"
 msgid "Add"
 msgstr "추가"
@@ -363,8 +367,8 @@ msgid "Add more materials from Marketplace"
 msgstr "마켓플레이스에서 더 많은 재료 추가"
 
 msgctxt "@button"
-msgid "Pre-heat"
-msgstr "예열"
+msgid "Add printer"
+msgstr "프린터 추가"
 
 msgctxt "@label"
 msgid "Add printer"
@@ -3097,6 +3101,10 @@ msgstr "후처리 플러그인"
 msgctxt "@label"
 msgid "Post Processing Scripts"
 msgstr "후처리 스크립트"
+
+msgctxt "@button"
+msgid "Pre-heat"
+msgstr "예열"
 
 msgctxt "@item:inmenu"
 msgid "Prepare"

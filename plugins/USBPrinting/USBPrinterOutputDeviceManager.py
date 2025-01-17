@@ -1,13 +1,11 @@
 # Copyright (c) 2020 Ultimaker B.V.
 # Cura is released under the terms of the LGPLv3 or higher.
 
-from multiprocessing.connection import Connection
+import threading
 import time
 import serial.tools.list_ports
-import platform
 from os import environ
 from re import search
-from threading import Thread
 
 from PyQt6.QtCore import QObject, pyqtSignal, pyqtProperty
 
@@ -18,18 +16,19 @@ from UM.OutputDevice.OutputDevicePlugin import OutputDevicePlugin
 from UM.i18n import i18nCatalog
 from UM.Logger import Logger
 
-from cura.CuraApplication import CuraApplication
 from cura.PrinterOutput.PrinterOutputDevice import ConnectionState
 
 from .USBPrinterOutputDevice import USBPrinterOutputDevice
 
 i18n_catalog = i18nCatalog("cura")
 
+
 @signalemitter
 class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
     """Manager class that ensures that an USBPrinterOutput device is created for every connected USB printer."""
 
     addUSBOutputDeviceSignal = Signal()
+    progressChanged = pyqtSignal()
     removeUSBOutputDeviceSignal = Signal()
     serialListChanged = pyqtSignal()
 
@@ -45,15 +44,14 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         self._serial_port_list = []
         self._usb_output_devices = {}
         self._usb_output_devices_model = None
-
         # self._update_thread = Thread()
         # self.createUpdateThread() # Sets up the thread properly
+
         self._check_updates = True
         self._port_check_frequency = 3
         # self._update_thread.start()
 
         self._application.applicationShuttingDown.connect(self.stop)
-
         # Because the model needs to be created in the same thread as the QMLEngine, we use a signal.
         self.addUSBOutputDeviceSignal.connect(self.addOutputDevice)
         self.removeUSBOutputDeviceSignal.connect(self.removeOutputDevice)

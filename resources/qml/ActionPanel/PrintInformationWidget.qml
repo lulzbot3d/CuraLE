@@ -11,6 +11,12 @@ UM.ColorImage
 {
     id: widget
 
+    source: UM.Theme.getIcon("Information")
+    width: visible ? UM.Theme.getSize("section_icon").width : 0
+    height: UM.Theme.getSize("section_icon").height
+
+    color: UM.Theme.getColor("icon")
+
     property var printMaterialCosts: PrintInformation.materialCosts
 
     MouseArea

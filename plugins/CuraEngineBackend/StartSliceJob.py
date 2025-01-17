@@ -552,7 +552,7 @@ class StartSliceJob(Job):
         result["print_temperature"] = result["material_print_temperature"]
         result["travel_speed"] = result["speed_travel"]
 
-        # Some extra settings
+        #Some extra settings.
         result["time"] = time.strftime("%H:%M:%S")
         result["date"] = time.strftime("%d-%m-%Y")
         result["day"] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][int(time.strftime("%w"))]
@@ -777,4 +777,3 @@ class StartSliceJob(Job):
 
             relations_set.add(relation.target.key)
             self._addRelations(relations_set, relation.target.relations)
-

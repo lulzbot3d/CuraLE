@@ -102,5 +102,4 @@ UM.PointingRectangle
         visible: sliderLabelRoot.busy
         running: sliderLabelRoot.busy
     }
-*/
 }

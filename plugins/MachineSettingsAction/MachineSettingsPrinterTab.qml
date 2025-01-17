@@ -30,6 +30,7 @@ Item
 
     property var forceUpdateFunction: manager.forceUpdate
 
+    // RowLayout
     Row
     {
         id: upperBlock
@@ -48,6 +49,8 @@ Item
         // =======================================
         Column
         {
+            // Layout.fillWidth: true
+            // Layout.alignment: Qt.AlignTop
             anchors.top: parent.top
 
             width: (parent.width / 2) - spacing
@@ -205,6 +208,8 @@ Item
         // =======================================
         Column
         {
+            // Layout.fillWidth: true
+            // Layout.alignment: Qt.AlignTop
             anchors.top: parent.top
 
             width: (parent.width / 2) - spacing
@@ -358,9 +363,9 @@ Item
                 }
             }
 
-            /*
-               - Fix for this issue: https://github.com/Ultimaker/Cura/issues/9167
-               - Allows user to toggle if GCODE coordinates are affected by the extruder offset.
+            /* 
+               - Fix for this issue: https://github.com/Ultimaker/Cura/issues/9167 
+               - Allows user to toggle if GCODE coordinates are affected by the extruder offset. 
                - Machine wide setting. CuraEngine/src/gcodeExport.cpp is not set up to evaluate per extruder currently.
                - If it is moved to per-extruder (unlikely), then this should be moved to the extruder tab.
             */

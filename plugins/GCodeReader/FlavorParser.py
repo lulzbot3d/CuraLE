@@ -12,7 +12,6 @@ from UM.Job import Job
 from UM.Logger import Logger
 from UM.Math.Vector import Vector
 from UM.Message import Message
-from cura.Scene.CuraSceneNode import CuraSceneNode
 from UM.i18n import i18nCatalog
 
 from cura.CuraApplication import CuraApplication

@@ -310,8 +310,8 @@ msgid "Activate"
 msgstr "Aktivieren"
 
 msgctxt "@label"
-msgid "Post Processing Scripts"
-msgstr "Skripts Nachbearbeitung"
+msgid "Active print"
+msgstr "Aktiver Druck"
 
 msgctxt "@action:button"
 msgid "Add"
@@ -370,8 +370,8 @@ msgid "Add more materials from Marketplace"
 msgstr "Weiteres Material aus Marketplace hinzufügen"
 
 msgctxt "@button"
-msgid "Pre-heat"
-msgstr "Vorheizen"
+msgid "Add printer"
+msgstr "Drucker hinzufügen"
 
 msgctxt "@label"
 msgid "Add printer"
@@ -3104,6 +3104,14 @@ msgstr "Nachbearbeitung"
 msgctxt "@title:window"
 msgid "Post Processing Plugin"
 msgstr "Plugin Nachbearbeitung"
+
+msgctxt "@label"
+msgid "Post Processing Scripts"
+msgstr "Skripts Nachbearbeitung"
+
+msgctxt "@button"
+msgid "Pre-heat"
+msgstr "Vorheizen"
 
 msgctxt "@item:inmenu"
 msgid "Prepare"

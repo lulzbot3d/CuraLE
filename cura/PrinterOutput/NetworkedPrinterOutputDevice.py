@@ -4,6 +4,7 @@
 from UM.FileHandler.FileHandler import FileHandler #For typing.
 from UM.Logger import Logger
 from UM.Scene.SceneNode import SceneNode #For typing.
+from cura.API import Account
 from cura.CuraApplication import CuraApplication
 from cura.PrinterOutput.FormatMaps import FormatMaps
 
@@ -172,6 +173,11 @@ class NetworkedPrinterOutputDevice(PrinterOutputDevice):
 
     def _getUserName(self) -> str:
         """Convenience function to get the username, either from the cloud or from the OS."""
+
+        # check first if we are logged in with the Ultimaker Account
+        account = CuraApplication.getInstance().getCuraAPI().account  # type: Account
+        if account and account.isLoggedIn:
+            return account.userName
 
         # Otherwise get the username from the US
         # The code below was copied from the getpass module, as we try to use as little dependencies as possible.

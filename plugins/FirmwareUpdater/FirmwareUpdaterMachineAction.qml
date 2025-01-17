@@ -11,9 +11,9 @@ import UM 1.5 as UM
 import Cura 1.0 as Cura
 
 
-Cura.MachineAction {
-    UM.I18nCatalog { id: catalog; name: "cura"}
-    anchors.fill: parent;
+Cura.MachineAction
+{
+    anchors.fill: parent
     property int outputDevicesCount: Cura.MachineManager.printerOutputDevices.length
     property bool printerConnected: outputDevicesCount > 1
     property bool klipperPrinter: Cura.MachineManager.activeMachineFirmwareType == "Klipper"
@@ -21,51 +21,56 @@ Cura.MachineAction {
     property bool canUpdateFirmware: activeOutputDevice ? activeOutputDevice.activePrinter.canUpdateFirmware : false
     property string firmwareName: Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.getDefaultFirmwareName() : ""
 
-    Column {
+    Column
+    {
         id: firmwareUpdaterMachineAction
         anchors.fill: parent;
         anchors.leftMargin: UM.Theme.getSize("default_margin").width * 2
         anchors.rightMargin: UM.Theme.getSize("default_margin").width * 2
+        UM.I18nCatalog { id: catalog; name: "cura"}
         spacing: UM.Theme.getSize("default_margin").height
 
         visible: !klipperPrinter
 
-        Label {
+        UM.Label
+        {
             width: parent.width
             text: catalog.i18nc("@title", "<b>Updating Your LulzBot's Firmware</b>")
             horizontalAlignment: Text.AlignHCenter
             wrapMode: Text.WordWrap
             font.pointSize: 18
         }
-
-        Label {
+        Label
+        {
             text: " " //Spacer
         }
-
-        Label {
+        Label
+        {
             width: parent.width
             wrapMode: Text.WordWrap
             font.pointSize: 10
             text: catalog.i18nc("@label", "<b>What It Does:</b> Firmware controls your 3D printer's mechanical functions.")
         }
 
-        Label {
+        UM.Label
+        {
             width: parent.width
             wrapMode: Text.WordWrap
             font.pointSize: 10
             text: catalog.i18nc("@label", "<b>Why Update:</b> Gain new features and boost performance.")
         }
 
-        Label {
+        Label 
+        {
             width: parent.width
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
             color: "red"
             text: catalog.i18nc("@label", "<b>WARNING:</b> Updating will reset certain machine settings. It's a good idea to note down any settings you might want later.</font><br>")
-
         }
 
-        Label {
+        Label
+        {
             width: parent.width
             wrapMode: Text.WordWrap
             font.pointSize: 10
@@ -90,7 +95,8 @@ Cura.MachineAction {
             }
         }
 
-        Label {
+        Label
+        {
             width: parent.width
             wrapMode: Text.WordWrap
             font.pointSize: 10
@@ -110,7 +116,8 @@ Cura.MachineAction {
             }
         }
 
-        Label {
+        Label
+        {
             width: parent.width
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
@@ -118,7 +125,8 @@ Cura.MachineAction {
             text: catalog.i18nc("@label", "Enjoy enhanced reliability, repeatability, and performance from your LulzBot!")
         }
 
-        Label {
+        Label
+        {
             width: parent.width
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
@@ -127,7 +135,8 @@ Cura.MachineAction {
             text: catalog.i18nc("@label", "Firmware Version to be Flashed: <b>") + Cura.MachineManager.activeMachineLatestFirmwareVersion + "</b>";
         }
 
-        Label {
+        Label
+        {
             width: parent.width
             visible: printerConnected && !canUpdateFirmware
             horizontalAlignment: Text.AlignHCenter
@@ -135,7 +144,8 @@ Cura.MachineAction {
             text: catalog.i18nc("@label", "Firmware can not be updated because the connection with the printer does not support updating firmware.");
         }
 
-        Label {
+        Label
+        {
             width: parent.width
             wrapMode: Text.WordWrap
             visible: !printerConnected
@@ -144,7 +154,8 @@ Cura.MachineAction {
             text: catalog.i18nc("@label", "Firmware can not be updated because there is no 3D printer detected!");
         }
 
-        Cura.PrimaryButton {
+        Cura.PrimaryButton
+        {
             id: autoUpgradeButton
             anchors.horizontalCenter: parent.horizontalCenter
             width: UM.Theme.getSize("setting_control").width * 2
@@ -160,7 +171,8 @@ Cura.MachineAction {
             }
         }
 
-        Text {
+        Text
+        {
             id: manualUpgradeTextButton
             anchors.horizontalCenter: parent.horizontalCenter
             text: catalog.i18nc("@action:button", "Upload Custom Firmware")

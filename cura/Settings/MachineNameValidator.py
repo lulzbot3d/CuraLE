@@ -6,7 +6,6 @@ from PyQt6.QtGui import QValidator
 import os #For statvfs.
 import urllib #To escape machine names for how they're saved to file.
 
-
 from UM.Resources import Resources
 from UM.Settings.ContainerRegistry import ContainerRegistry
 from UM.Settings.InstanceContainer import InstanceContainer

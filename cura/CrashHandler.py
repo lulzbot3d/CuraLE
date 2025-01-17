@@ -52,6 +52,7 @@ skip_exception_types = [
     GeneratorExit
 ]
 
+
 class CrashHandler:
     def __init__(self, exception_type, value, tb, has_started = True):
         self.exception_type = exception_type

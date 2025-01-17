@@ -71,7 +71,7 @@ class CuraSplashScreen(QSplashScreen):
         version = Application.getInstance().getVersion().split("-")
 
         # Draw version text
-        font = QFont()  # Using system-default font here
+        font = QFont()
         font.setPixelSize(24)
         painter.setFont(font)
 

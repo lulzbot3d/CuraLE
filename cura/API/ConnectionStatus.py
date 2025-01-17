@@ -38,3 +38,4 @@ class ConnectionStatus(QObject):
         if reachable != self._is_internet_reachable:
             self._is_internet_reachable = reachable
             self.internetReachableChanged.emit()
+

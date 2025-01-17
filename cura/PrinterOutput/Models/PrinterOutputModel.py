@@ -31,8 +31,8 @@ class PrinterOutputModel(QObject):
 
     def __init__(self, output_controller: "PrinterOutputController", number_of_extruders: int = 1, parent=None, firmware_version = "") -> None:
         super().__init__(parent)
-        self._bed_temperature = -1.0  # type: float  # Use -1 for no heated bed.
-        self._target_bed_temperature = 0.0 # type: float
+        self._bed_temperature = -1  # type: float  # Use -1 for no heated bed.
+        self._target_bed_temperature = 0 # type: float
         self._name = ""
         self._key = ""  # Unique identifier
         self._unique_name = ""  # Unique name (used in Connect)
@@ -204,6 +204,7 @@ class PrinterOutputModel(QObject):
 
     def updateBedTemperature(self, temperature: float) -> None:
         """Update the bed temperature. This only changes it locally."""
+
         if self._bed_temperature != temperature:
             self._bed_temperature = temperature
             self.bedTemperatureChanged.emit()

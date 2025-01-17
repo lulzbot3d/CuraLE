@@ -13,42 +13,50 @@ import Cura 1.0 as Cura
 // that is gather after the slicing process, such as printint time, material usage, ...
 // There are also two buttons: one to previsualize the output layers, and the other to
 // select what to do with it (such as print over network, save to file, ...)
-Column {
+Column
+{
     id: widget
 
     spacing: UM.Theme.getSize("thin_margin").height / 2
     property bool preSlicedData: PrintInformation.preSliced
     property alias hasPreviewButton: previewStageShortcut.visible
 
-    UM.I18nCatalog {
+    UM.I18nCatalog
+    {
         id: catalog
         name: "cura"
     }
 
-    Item {
+    Item
+    {
         id: information
         width: parent.width
         height: childrenRect.height
 
-        PrintInformationWidget {
+        PrintInformationWidget
+        {
             id: printInformationPanel
             visible: !preSlicedData
-            anchors {
+            anchors
+            {
                 top: parent.top
                 right: parent.right
             }
         }
 
-        ColumnLayout {
+        ColumnLayout
+        {
             id: glanceInformation
             spacing: UM.Theme.getSize("thin_margin").height / 3
 
-            anchors {
+            anchors
+            {
                 left: parent.left
                 right: printInformationPanel.left
             }
 
-            Cura.IconWithText {
+            Cura.IconWithText
+            {
                 id: printerName
 
                 Layout.fillWidth: true
@@ -58,18 +66,22 @@ Column {
                 font: UM.Theme.getFont("small")
             }
 
-            RowLayout {
+            RowLayout
+            {
                 id: timeAndCostsRow
 
-                Cura.IconWithText {
+                Cura.IconWithText
+                {
                     id: estimatedTime
 
                     Layout.fillWidth: true
 
                     source: UM.Theme.getIcon("Clock")
                     font: UM.Theme.getFont("small")
-                    text: {
-                        if (preSlicedData) {
+                    text:
+                    {
+                        if (preSlicedData)
+                        {
                             return catalog.i18nc("@label", "No time estimation available")
                         }
                         let printDuration = PrintInformation.currentPrintTime
@@ -78,7 +90,8 @@ Column {
                     }
                 }
 
-                Cura.IconWithText {
+                Cura.IconWithText
+                {
                     id: estimatedCosts
 
                     Layout.fillWidth: true
@@ -93,9 +106,11 @@ Column {
                     property var printMaterialWeights: PrintInformation.materialWeights
                     property var printMaterialCosts: PrintInformation.materialCosts
 
-                    text: {
+                    text:
+                    {
                         let outputString = "No cost estimation available"
-                        if (preSlicedData) {
+                        if (preSlicedData)
+                        {
                             return outputString
                         }
 
@@ -104,9 +119,12 @@ Column {
                         let totalWeights = 0
                         let totalLengths = 0.0
                         let totalCosts = 0.0
-                        if (printMaterialLengths) {
-                            for(let i = 0; i < printMaterialLengths.length; i++) {
-                                if(printMaterialLengths[i] > 0) {
+                        if (printMaterialLengths)
+                        {
+                            for(let i = 0; i < printMaterialLengths.length; i++)
+                            {
+                                if(printMaterialLengths[i] > 0)
+                                {
                                     totalLengths += printMaterialLengths[i]
                                     totalWeights += Math.round(printMaterialWeights[i])
                                     totalCosts += printMaterialCosts[i] == undefined ? 0.0 : printMaterialCosts[i]
@@ -115,7 +133,8 @@ Column {
                         }
 
                         outputString = printMaterialName + " · " + totalWeights + "g · " + totalLengths.toFixed(2) + "m"
-                        if(totalCosts > 0) { // Add cost only if they've actually told us how much the filament costs
+                        if(totalCosts > 0) // Add cost only if they've actually told us how much the filament costs
+                        {
                             outputString += " · %1%2".arg(UM.Preferences.getValue("cura/currency")).arg(totalCosts.toFixed(2))
                         }
                         return outputString
@@ -125,7 +144,8 @@ Column {
         }
     }
 
-    Item {
+    Item
+    {
         id: buttonRow
         anchors.right: parent.right
         anchors.left: parent.left
@@ -133,10 +153,12 @@ Column {
         property bool currentlyPreview: UM.Controller.activeStage.stageId == "PreviewStage"
         property string nextStage: currentlyPreview ? "PrepareStage" : "PreviewStage"
 
-        Cura.SecondaryButton {
+        Cura.SecondaryButton
+        {
             id: previewStageShortcut
 
-            anchors {
+            anchors
+            {
                 left: parent.left
                 right: outputDevicesButton.left
                 rightMargin: UM.Theme.getSize("default_margin").width
@@ -152,7 +174,8 @@ Column {
             onClicked: UM.Controller.setActiveStage(buttonRow.nextStage)
         }
 
-        Cura.OutputDevicesActionButton {
+        Cura.OutputDevicesActionButton
+        {
             id: outputDevicesButton
 
             anchors.right: parent.right

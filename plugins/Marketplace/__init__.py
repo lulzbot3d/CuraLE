@@ -14,5 +14,4 @@ def register(app):
     """
     Register the plug-in object with Uranium.
     """
-    if True: return # disable
     return { "extension": [SyncOrchestrator(app), Marketplace()] }

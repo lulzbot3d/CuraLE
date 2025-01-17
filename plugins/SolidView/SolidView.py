@@ -19,8 +19,6 @@ from UM.Math.Color import Color
 from UM.Event import Event
 
 from UM.View.RenderBatch import RenderBatch
-from UM.Settings.Validator import ValidatorState
-from UM.Math.Color import Color
 from UM.View.GL.OpenGL import OpenGL
 
 from UM.i18n import i18nCatalog

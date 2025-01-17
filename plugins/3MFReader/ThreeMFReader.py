@@ -235,8 +235,8 @@ class ThreeMFReader(MeshReader):
                 um_node = ThreeMFReader._convertSavitarNodeToUMNode(node, file_name)
                 if um_node is None:
                     continue
-                # compensate for original center position, if object(s) is/are not around its zero position
 
+                # compensate for original center position, if object(s) is/are not around its zero position
                 transform_matrix = Matrix()
                 mesh_data = um_node.getMeshData()
                 if mesh_data is not None:

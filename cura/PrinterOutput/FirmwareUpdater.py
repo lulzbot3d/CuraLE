@@ -85,3 +85,4 @@ class FirmwareUpdateState(IntEnum):
     communication_error = 4
     io_error = 5
     firmware_not_found_error = 6
+

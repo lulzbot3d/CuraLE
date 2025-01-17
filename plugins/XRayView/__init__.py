@@ -9,7 +9,7 @@ catalog = i18nCatalog("cura")
 def getMetaData():
     return {
         "view": {
-            "name": catalog.i18nc("@item:inlistbox", "X-Ray View"),
+            "name": catalog.i18nc("@item:inlistbox", "X-Ray view"),
             "weight": 1
         }
     }

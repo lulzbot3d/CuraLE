@@ -26,13 +26,6 @@ class DisplayFilenameAndLayerOnLCD(Script):
                     "description": "This script is now included in 'Display Info on LCD'.",
                     "type": "bool",
                     "default_value": true
-                },
-                "addPrefixPrinting":
-                {
-                    "label": "Add prefix 'Printing'?",
-                    "description": "This will add the prefix 'Printing'",
-                    "type": "bool",
-                    "default_value": true
                 }
             }
         }"""

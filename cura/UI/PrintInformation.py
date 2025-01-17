@@ -8,8 +8,6 @@ from typing import Dict, List, Optional, TYPE_CHECKING
 
 from PyQt6.QtCore import QObject, pyqtSignal, pyqtProperty, pyqtSlot, QTimer
 
-from UM.Application import Application
-from UM.Qt.Duration import DurationFormat
 from UM.Logger import Logger
 from UM.Qt.Duration import Duration
 from UM.Scene.SceneNode import SceneNode
@@ -315,7 +313,7 @@ class PrintInformation(QObject):
 
         base_name = self._base_name
         self._defineAbbreviatedMachineName()
-        objects_model = Application.getInstance().getObjectsModel()
+        objects_model = self._application.getInstance().getObjectsModel()
 
         # Only update the job name when it's not user-specified.
         if not self._is_user_specified_job_name:

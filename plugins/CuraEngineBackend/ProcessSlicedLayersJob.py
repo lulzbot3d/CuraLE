@@ -7,7 +7,6 @@ import sys
 from UM.Job import Job
 from UM.Application import Application
 from UM.Mesh.MeshData import MeshData
-from UM.Preferences import Preferences
 from UM.View.GL.OpenGLContext import OpenGLContext
 
 from UM.Message import Message
@@ -29,9 +28,6 @@ from cura.Machines.Models.ExtrudersModel import ExtrudersModel
 catalog = i18nCatalog("cura")
 
 
-##  Return a 4-tuple with floats 0-1 representing the html color code
-#
-#   \param color_code html color code, i.e. "#FF0000" -> red
 def colorCodeToRGBA(color_code):
     """Return a 4-tuple with floats 0-1 representing the html color code
 
@@ -57,12 +53,6 @@ class ProcessSlicedLayersJob(Job):
         self._abort_requested = False
         self._build_plate_number = None
 
-    ##  Aborts the processing of layers.
-    #
-    #   This abort is made on a best-effort basis, meaning that the actual
-    #   job thread will check once in a while to see whether an abort is
-    #   requested and then stop processing by itself. There is no guarantee
-    #   that the abort will stop the job any time soon or even at all.
     def abort(self):
         """Aborts the processing of layers.
 
@@ -274,4 +264,3 @@ class ProcessSlicedLayersJob(Job):
             else:
                 if self._progress_message:
                     self._progress_message.hide()
-

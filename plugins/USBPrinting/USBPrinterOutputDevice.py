@@ -1,10 +1,8 @@
 # Copyright (c) 2020 Ultimaker B.V.
-# Copyright (c) 2023 Fargo Additive Manufacturing Equipment 3D, LLC
+# Copyright (c) 2025 Fargo Additive Manufacturing Equipment 3D, LLC
 # Cura LE is released under the terms of the LGPLv3 or higher.
 
-from multiprocessing.sharedctypes import Value
 import os
-from time import sleep, time
 from enum import IntEnum
 
 from UM.i18n import i18nCatalog

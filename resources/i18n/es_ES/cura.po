@@ -310,8 +310,8 @@ msgid "Activate"
 msgstr "Activar"
 
 msgctxt "@label"
-msgid "You need to accept the license to install the package"
-msgstr "Tiene que aceptar la licencia para instalar el paquete"
+msgid "Active print"
+msgstr "Activar impresión"
 
 msgctxt "@action:button"
 msgid "Add"
@@ -5509,6 +5509,10 @@ msgid "You have customized some profile settings. Would you like to Keep these c
 msgstr "Ha personalizado algunos ajustes del perfil."
 "¿Le gustaría mantener estos ajustes cambiados después de cambiar de perfil?"
 "También puede descartar los cambios para cargar los valores predeterminados de'%1'."
+
+msgctxt "@label"
+msgid "You need to accept the license to install the package"
+msgstr "Tiene que aceptar la licencia para instalar el paquete"
 
 msgctxt "@info:generic"
 msgid "You need to quit and restart {} before changes have effect."

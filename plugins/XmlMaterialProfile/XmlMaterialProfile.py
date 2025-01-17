@@ -1142,7 +1142,6 @@ class XmlMaterialProfile(InstanceContainer):
 
         return value in {"yes", "unknown"}
 
-    ##  Small string representation for debugging.
     def __str__(self):
         """Small string representation for debugging."""
 

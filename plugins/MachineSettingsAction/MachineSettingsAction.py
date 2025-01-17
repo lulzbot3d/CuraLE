@@ -23,8 +23,6 @@ if TYPE_CHECKING:
 catalog = UM.i18n.i18nCatalog("cura")
 
 
-##  This action allows for certain settings that are "machine only") to be modified.
-#   It automatically detects machine definitions that it knows how to change and attaches itself to those.
 class MachineSettingsAction(MachineAction):
     """This action allows for certain settings that are "machine only") to be modified.
 
@@ -42,8 +40,6 @@ class MachineSettingsAction(MachineAction):
 
         self._container_registry = ContainerRegistry.getInstance()
         self._container_registry.containerAdded.connect(self._onContainerAdded)
-        # self._container_registry.containerRemoved.connect(self._onContainerRemoved)
-        # Application.getInstance().globalContainerStackChanged.connect(self._onGlobalContainerChanged)
 
         # The machine settings dialog blocks auto-slicing when it's shown, and re-enables it when it's finished.
         self._backend = self._application.getBackend()
