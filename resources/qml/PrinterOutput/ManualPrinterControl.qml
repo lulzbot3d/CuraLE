@@ -11,53 +11,64 @@ import Cura 1.0 as Cura
 import "."
 
 
-Item {
+Item
+{
     property var printerModel: null
     property var activePrintJob: printerModel != null ? printerModel.activePrintJob : null
     property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
     property var availablePrinter: outputDeviceCount >= 1 ? Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1] : null
-    property var connectedDevice: {
-        if (availablePrinter != null) {
+    property var connectedDevice:
+    {
+        if (availablePrinter != null)
+        {
             return availablePrinter.acceptsCommands ? availablePrinter : null
         }
-        else {
+        else 
+        {
             return null
         }
     }
     property var _buttonSize: UM.Theme.getSize("setting_control").height + UM.Theme.getSize("thin_margin").height
-
     implicitWidth: parent.width
     implicitHeight: childrenRect.height
 
-    function checkEnabled() {
-        if (printerModel == null) {
+    function checkEnabled() 
+    {
+        if (printerModel == null)
+        {
             return false; //Can't control the printer if not connected
         }
 
-        if (connectedDevice == null) {
+        if (connectedDevice == null)
+        {
             return false; //Not allowed to do anything.
         }
 
-        if(activePrintJob == null) {
+        if(activePrintJob == null)
+        {
             return true;
         }
 
-        if (activePrintJob.state == "printing" || activePrintJob.state == "resuming" || activePrintJob.state == "pausing" || activePrintJob.state == "error" || activePrintJob.state == "offline") {
+        if (activePrintJob.state == "printing" || activePrintJob.state == "resuming" || activePrintJob.state == "pausing" || activePrintJob.state == "error" || activePrintJob.state == "offline")
+        {
             return false; //Printer is in a state where it can't react to manual control
         }
         return true;
     }
 
-    Column {
+    Column
+    {
 
         spacing: UM.Theme.getSize("default_margin").height
 
-        MonitorSection {
+        MonitorSection
+        {
             label: catalog.i18nc("@label", "Manual Printer Control")
             width: base.width
         }
 
-        Row {
+        Row
+        {
             id: baseControls
 
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
@@ -67,12 +78,15 @@ Item {
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
             spacing: UM.Theme.getSize("default_margin").width
 
-            Button {
+            Button
+            {
                 height: UM.Theme.getSize("setting_control").height
                 width: base.width / 2 - (UM.Theme.getSize("default_margin").width * 1.5)
                 text: "Connect"
-                enabled: {
-                    if(availablePrinter != null && availablePrinter.address != "None") {
+                enabled:
+                {
+                    if(availablePrinter != null && availablePrinter.address != "None")
+                    {
                         if(availablePrinter.connectionState == 0 || availablePrinter.connectionState > 5) {
                             return true
                         }
@@ -83,12 +97,14 @@ Item {
                 style: UM.Theme.styles.monitor_checkable_button_style
             }
 
-            Button {
+            Button
+            {
                 height: UM.Theme.getSize("setting_control").height
                 width: base.width / 2 - (UM.Theme.getSize("default_margin").width * 1.5)
                 text: "Disconnect"
                 enabled: checkEnabled()
-                onClicked: {
+                onClicked:
+                {
                     OutputDeviceHeader.pressedConnect = false
                     availablePrinter.close() // May need to be changed to a different function
                 }
@@ -96,7 +112,8 @@ Item {
             }
         }
 
-        Row {
+        Row
+        {
 
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
             height: childrenRect.height
@@ -105,12 +122,14 @@ Item {
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
             spacing: UM.Theme.getSize("default_margin").width
 
-            Button {
+            Button
+            {
                 height: UM.Theme.getSize("setting_control").height
                 width: base.width - UM.Theme.getSize("default_margin").width - UM.Theme.getSize("default_margin").width
                 text: catalog.i18nc("@label", "Console")
                 enabled: availablePrinter.acceptsCommands ? availablePrinter.connectionState == 2 : false
-                onClicked: {
+                onClicked:
+                {
                     availablePrinter.messageFromPrinter.disconnect(printer_control.receive)
                     availablePrinter.messageFromPrinter.connect(printer_control.receive)
                     printer_control.visible = true;
@@ -119,7 +138,8 @@ Item {
             }
         }
 
-        Row {
+        Row
+        {
 
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
             height: childrenRect.height
@@ -128,13 +148,16 @@ Item {
             anchors.leftMargin: UM.Theme.getSize("default_margin").width
             spacing: UM.Theme.getSize("default_margin").width
 
-            Button {
+            Button
+            {
                 property var activeMachineId: Cura.MachineManager.activeMachine ? Cura.MachineManager.activeMachine.id : null
                 property var machineActions: Cura.MachineActionManager.getSupportedActions(Cura.MachineManager.getDefinitionByMachineId(activeMachineId))
                 property var updateAction
                 property bool canUpdate: {
-                    for (var i = 0; i < machineActions.length; i++) {
-                        if (machineActions[i].label.toLowerCase() == "firmware update") {
+                    for (var i = 0; i < machineActions.length; i++)
+                    {
+                        if (machineActions[i].label.toLowerCase() == "firmware update")
+                        {
                             updateAction = machineActions[i]
                             return true;
                         }
@@ -145,7 +168,8 @@ Item {
                 width: base.width - UM.Theme.getSize("default_margin").width - UM.Theme.getSize("default_margin").width
                 text: catalog.i18nc("@label", "Firmware Update")
                 enabled: canUpdate
-                onClicked: {
+                onClicked:
+                {
                         var currentItem = updateAction
                         actionDialog.loader.manager = currentItem
                         actionDialog.loader.source = currentItem.qmlPath
@@ -156,7 +180,8 @@ Item {
             }
         }
 
-        Row {
+        Row
+        {
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
             height: childrenRect.height
             anchors.left: parent.left
@@ -175,7 +200,8 @@ Item {
                 height: UM.Theme.getSize("setting_control").height
             }
 
-            GridLayout {
+            GridLayout
+            {
                 columns: 3
                 rows: 4
                 rowSpacing: UM.Theme.getSize("default_lining").width
@@ -257,7 +283,8 @@ Item {
             }
 
 
-            Column {
+            Column
+            {
                 spacing: UM.Theme.getSize("default_lining").height
 
                 UM.Label
@@ -302,7 +329,8 @@ Item {
             }
         }
 
-        Row {
+        Row
+        {
             id: distancesRow
 
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
@@ -325,8 +353,10 @@ Item {
                 height: UM.Theme.getSize("setting_control").height
             }
 
-            Row {
-                Repeater {
+            Row
+            {
+                Repeater
+                {
                     model: distancesModel
                     delegate: Cura.SecondaryButton
                     {
@@ -343,13 +373,15 @@ Item {
             }
         }
 
-        Rectangle {
+        Rectangle
+        {
             color: UM.Theme.getColor("wide_lining")
             width: parent.width
             height: UM.Theme.getSize("thick_lining").width
         }
 
-        Row {
+        Row
+        {
             id: extruderChoiceRow
 
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
@@ -365,7 +397,8 @@ Item {
 
             property int selectedExtruder: 0
 
-            Label {
+            Label
+            {
                 text: catalog.i18nc("@label", "Extruder Selected")
                 color: UM.Theme.getColor("setting_control_text")
                 font: UM.Theme.getFont("default")
@@ -375,12 +408,15 @@ Item {
                 verticalAlignment: Text.AlignVCenter
             }
 
-            Row {
+            Row
+            {
 
-                Repeater {
+                Repeater
+                {
                     id: extruderRepeater
                     model: machineExtruderCount.properties.value
-                    delegate: Button {
+                    delegate: Button
+                    {
                         height: UM.Theme.getSize("setting_control").height
                         width: extrudeButton.width + Math.round(UM.Theme.getSize("default_margin").width * 0.5)
 
@@ -388,7 +424,8 @@ Item {
                         exclusiveGroup: extruderGroup
                         checkable: true
                         checked: index == extruderChoiceRow.selectedExtruder
-                        onClicked: {
+                        onClicked:
+                        {
                             printerModel.sendRawCommand("T" + index.toString())
                             extruderChoiceRow.selectedExtruder = index
                         }
@@ -399,7 +436,8 @@ Item {
             }
         }
 
-        Row {
+        Row
+        {
             id: extrudeRow
 
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
@@ -411,7 +449,8 @@ Item {
 
             enabled: checkEnabled() && printerModel.extruders[extruderChoiceRow.selectedExtruder].hotendTemperature > 160
 
-            Label {
+            Label
+            {
                 text: catalog.i18nc("@label", "Extrude")
                 color: UM.Theme.getColor("setting_control_text")
                 font: UM.Theme.getFont("default")
@@ -421,28 +460,32 @@ Item {
                 verticalAlignment: Text.AlignVCenter
             }
 
-            Button {
+            Button
+            {
                 id: extrudeButton
                 text: "Extrude"
                 style: UM.Theme.styles.monitor_checkable_button_style
                 width: (2 * height) + Math.round(1.5 * UM.Theme.getSize("default_margin").width)
                 height: UM.Theme.getSize("setting_control").height
 
-                onClicked: {
+                onClicked:
+                {
                     printerModel.sendRawCommand("M83")
                     printerModel.sendRawCommand("G1 E" + extrudeAmountRow.extrudeAmount.toString() + " F120")
                     printerModel.sendRawCommand("M82")
                 }
             }
 
-            Button {
+            Button
+            {
                 id: retractButton
                 text: "Retract"
                 style: UM.Theme.styles.monitor_checkable_button_style
                 width: (2 * height) + Math.round(1.5* UM.Theme.getSize("default_margin").width)
                 height: UM.Theme.getSize("setting_control").height
 
-                onClicked: {
+                onClicked:
+                {
                     printerModel.sendRawCommand("M83")
                     printerModel.sendRawCommand("G1 E-" + extrudeAmountRow.extrudeAmount.toString() + " F120")
                     printerModel.sendRawCommand("M82")
@@ -450,7 +493,8 @@ Item {
             }
         }
 
-        Row {
+        Row
+        {
             id: extrudeAmountRow
 
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
@@ -464,7 +508,8 @@ Item {
 
             property int extrudeAmount: 10
 
-            Label {
+            Label
+            {
                 text: catalog.i18nc("@label", "Extrude Amount")
                 color: UM.Theme.getColor("setting_control_text")
                 font: UM.Theme.getFont("default")
@@ -474,13 +519,17 @@ Item {
                 verticalAlignment: Text.AlignVCenter
             }
 
-            Rectangle { //Input field for extrude amount.
+            Rectangle //Input field for extrude amount.
+            {
                 id: extrudeAmountControl
                 color: !enabled ? UM.Theme.getColor("setting_control_disabled") : showError ? UM.Theme.getColor("setting_validation_error_background") : UM.Theme.getColor("setting_validation_ok")
-                property var showError: {
-                    if (false) {
+                property var showError:
+                {
+                    if (false)
+                    {
                         return true
-                    } else {
+                    } else
+                    {
                         return false
                     }
                 }
@@ -490,13 +539,15 @@ Item {
                 width: (extrudeButton.width * 2) + UM.Theme.getSize("default_margin").width
                 height: UM.Theme.getSize("monitor_preheat_temperature_control").height
                 visible: true
-                Rectangle { //Highlight of input field.
+                Rectangle //Highlight of input field.
+                {
                     anchors.fill: parent
                     anchors.margins: UM.Theme.getSize("default_lining").width
                     color: UM.Theme.getColor("setting_control_highlight")
                     opacity: extrudeAmountControl.hovered ? 1.0 : 0
                 }
-                MouseArea { //Change cursor on hovering.
+                MouseArea //Change cursor on hovering.
+                {
                     id: extruderAmountInputMouseArea
                     hoverEnabled: true
                     anchors.fill: parent
@@ -530,7 +581,8 @@ Item {
 
                     text: extrudeAmountRow.extrudeAmount
 
-                    onTextEdited: {
+                    onTextEdited:
+                    {
                         if (extruderAmountInput.text == "")
                         {
                             extrudeAmountRow.extrudeAmount = 0
@@ -540,8 +592,10 @@ Item {
                         }
                     }
 
-                    onEditingFinished: {
-                        if (extruderAmountInput.text == "") {
+                    onEditingFinished:
+                    {
+                        if (extruderAmountInput.text == "")
+                        {
                             extruderAmountInput.text = 0
                         }
                     }
@@ -551,15 +605,15 @@ Item {
 
         PrinterControlWindow
         {
-	        id: printer_control
+	    id: printer_control
             activePrinter: printerModel
-	        onCommand:
+	    onCommand:
             {
-	            if (!Cura.USBPrinterManager.sendCommandToCurrentPrinter(command))
+	        if (!Cura.USBPrinterManager.sendCommandToCurrentPrinter(command))
                 {
-	                receive("i", "Error: Printer not connected")
-	            }
+	            receive("i", "Error: Printer not connected")
 	        }
+	    }
 
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
             height: childrenRect.height + UM.Theme.getSize("default_margin").width
@@ -672,14 +726,16 @@ Item {
             }
         }
 
-        UM.SettingPropertyProvider {
+        UM.SettingPropertyProvider
+        {
             id: machineExtruderCount
             containerStack: Cura.MachineManager.activeMachine
             key: "machine_extruder_count"
             watchedProperties: ["value"]
         }
 
-        ListModel {
+        ListModel
+        {
             id: distancesModel
             ListElement { label: "0.1"; value: 0.1 }
             ListElement { label: "1";   value: 1   }

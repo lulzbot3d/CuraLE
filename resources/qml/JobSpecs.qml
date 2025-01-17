@@ -34,22 +34,6 @@ Item
         }
     }
 
-    // onActivityChanged: {
-    //     if (activity == true && base.fileBaseName == ''){
-    //         //this only runs when you open a file from the terminal (or something that works the same way; for example when you drag a file on the icon in MacOS or use 'open with' on Windows)
-    //         base.fileBaseName = PrintInformation.baseName; //get the fileBaseName from PrintInformation.py because this saves the filebase when the file is opened using the terminal (or something alike)
-    //         PrintInformation.setBaseName(base.fileBaseName);
-    //     }
-    //     if (activity == true && base.fileBaseName != ''){
-    //         //this runs in all other cases where there is a mesh on the buildplate (activity == true). It uses the fileBaseName from the hasMesh signal
-    //         PrintInformation.setBaseName(base.fileBaseName);
-    //     }
-    //     if (activity == false){
-    //         //When there is no mesh in the buildplate; the printJobTextField is set to an empty string so it doesn't set an empty string as a jobName (which is later used for saving the file)
-    //         PrintInformation.baseName = ""
-    //     }
-    // }
-
     Item
     {
         id: jobNameRow

@@ -52,7 +52,8 @@ ScrollView
         tooltip.show(position);
     }
 
-    function hideTooltip() {
+    function hideTooltip()
+    {
         tooltip.hide();
     }
 
@@ -60,7 +61,8 @@ ScrollView
         return (new Array(length + 1).join(pad) + string).slice(-length);
     }
 
-    function getPrettyTime(time) {
+    function getPrettyTime(time)
+    {
         var hours = Math.floor(time / 3600)
         time -= hours * 3600
         var minutes = Math.floor(time / 60);
@@ -77,13 +79,15 @@ ScrollView
     property var activePrinter: connectedDevice != null && connectedDevice.address != "None" ? connectedDevice.activePrinter : null
     property var activePrintJob: activePrinter != null ? activePrinter.activePrintJob: null
 
-    ScrollView {
+    ScrollView
+    {
 
         UM.I18nCatalog { id: catalog; name: "cura" }
 
         width: parent.width - scrollbar.width
 
-        Column {
+        Column
+        {
             id: printMonitor
             anchors.top: parent.top
             anchors.left: parent.left
@@ -93,32 +97,38 @@ ScrollView
 
             spacing: UM.Theme.getSize("default_margin").height
 
-            OutputDeviceHeader {
+            OutputDeviceHeader
+            {
                 outputDevice: connectedDevice
                 activeDevice: activePrinter
             }
 
-            MonitorSection {
+            MonitorSection
+            {
                 label: catalog.i18nc("@label", "Temperatures")
                 width: base.width
                 visible: true
             }
 
-            Rectangle {
+            Rectangle
+            {
                 color: UM.Theme.getColor("wide_lining")
                 width: base.width
                 height: childrenRect.height
 
-                Flow {
+                Flow
+                {
                     id: extrudersGrid
                     spacing: UM.Theme.getSize("thick_lining").width
                     width: parent.width
 
-                    Repeater {
+                    Repeater
+                    {
                         id: extrudersRepeater
                         model: connectedDevice != null ? connectedDevice.activePrinter.extruders : null
 
-                        ExtruderBox {
+                        ExtruderBox
+                        {
                             color: UM.Theme.getColor("main_background")
                             width: index == machineExtruderCount.properties.value - 1 && index % 2 == 0 ? extrudersGrid.width : Math.round(extrudersGrid.width / 2 - UM.Theme.getSize("thick_lining").width / 2)
                             extruderModel: modelData
@@ -132,6 +142,7 @@ ScrollView
                 width: base.width
                 height: UM.Theme.getSize("thick_lining").width
             }
+        }
 
         UM.SettingPropertyProvider
         {
@@ -199,10 +210,12 @@ ScrollView
             }
         }
 
-        Column {
+        Column
+        {
             id: klipperMonitor
 
-            anchors {
+            anchors
+            {
                 top: parent.top
                 left: parent.left
                 right: parent.right
@@ -213,13 +226,15 @@ ScrollView
 
             spacing: UM.Theme.getSize("default_margin").height
 
-            Label {
+            Label
+            {
                 // text: machineAssociatedUrls.properties.value
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "Printers running Klipper firmware cannot be printed tethered to Cura LE.\n Please see the Mini 3 Quick Start Guide for more information."
             }
 
-            Button {
+            Button
+            {
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: UM.Theme.getSize("setting_control").height * 2
                 width: base.width / 2 - (UM.Theme.getSize("default_margin").width * 1.5)
@@ -229,7 +244,8 @@ ScrollView
         }
     }
 
-    PrintSetupTooltip {
+    PrintSetupTooltip
+    {
         id: tooltip
     }
 }

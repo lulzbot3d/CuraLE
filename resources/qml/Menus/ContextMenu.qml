@@ -92,17 +92,20 @@ Cura.Menu
         visible: PrintOrderManager.shouldShowEditPrintOrderActions
     }
 
-    Connections {
+    Connections
+    {
         target: UM.Controller
         function onContextMenuRequested() { base.popup() }
     }
 
-    Connections {
+    Connections
+    {
         target: Cura.Actions.multiplySelection
         function onTriggered() { multiplyDialog.open() }
     }
 
-    UM.SettingPropertyProvider {
+    UM.SettingPropertyProvider
+    {
         id: machineExtruderCount
 
         containerStack: Cura.MachineManager.activeMachine

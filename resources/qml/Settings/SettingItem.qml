@@ -198,7 +198,7 @@ Item
                     if ((resolve !== "None") && (stackLevel !== 0))
                     {
                         // We come here if a setting has a resolve and the setting is not manually edited.
-                        tooltipText += " " + catalog.i18nc("@label", "The value is resolved from conflicting extruder-specific values ") + " [" + Cura.ExtruderManager.getInstanceExtruderValues(definition.key) + "]."
+                        tooltipText += " " + catalog.i18nc("@label", "This setting is resolved from conflicting extruder-specific values:") + " [" + Cura.ExtruderManager.getInstanceExtruderValues(definition.key) + "]."
                     }
                     base.showTooltip(tooltipText)
                 }
@@ -238,7 +238,7 @@ Item
                 onEntered:
                 {
                     hoverTimer.stop()
-                    base.showTooltip(catalog.i18nc("@label", "This setting has a value that is different from the profile.\n\nClick to restore the value of the profile.")) 
+                    base.showTooltip(catalog.i18nc("@label", "This setting has a value that is different from the profile.\n\nClick to restore the value of the profile."))
                 }
                 onExited: base.showTooltip(base.createTooltipText())
             }
@@ -272,7 +272,7 @@ Item
                     }
 
                     // This setting has a resolve value, so an inheritance warning doesn't do anything.
-                    if(resolve !== "None")
+                    if (resolve !== "None")
                     {
                         return false
                     }
@@ -288,7 +288,7 @@ Item
                         // Observed when loading workspace, probably when SettingItems are removed.
                         return false
                     }
-                    if (globalPropertyProvider.properties.limit_to_extruder === undefined)
+                    if(globalPropertyProvider.properties.limit_to_extruder === undefined)
                     {
                         return false
                     }

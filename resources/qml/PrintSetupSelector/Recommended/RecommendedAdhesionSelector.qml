@@ -8,10 +8,8 @@ import UM 1.5 as UM
 import Cura 1.7 as Cura
 
 
-//
-//  Adhesion
-//
-RecommendedSettingSection {
+RecommendedSettingSection
+{
     id: enableAdhesionRow
 
     property real labelColumnWidth: Math.round(width / 3)

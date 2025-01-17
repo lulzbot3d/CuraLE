@@ -27,7 +27,8 @@ Cura.Menu
 
     property string activeMaterialId: (activeExtruder === null || activeExtruder === undefined) ? "" : activeExtruder.material.id
     property bool updateModels: true
-    Cura.FavoriteMaterialsModel {
+    Cura.FavoriteMaterialsModel
+    {
         id: favoriteMaterialsModel
         extruderPosition: materialMenu.extruderIndex
         enabled: updateModels

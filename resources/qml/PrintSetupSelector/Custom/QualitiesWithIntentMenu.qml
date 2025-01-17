@@ -8,7 +8,8 @@ import QtQml 2.15
 import UM 1.5 as UM
 import Cura 1.6 as Cura
 
-Popup {
+Popup
+{
     id: popup
     implicitWidth: 400
     property var dataModel: Cura.IntentCategoryModel {}
@@ -23,20 +24,23 @@ Popup {
 
     padding: 0
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
-    background: Cura.RoundedRectangle {
+    background: Cura.RoundedRectangle
+    {
         color: backgroundColor
         border.width: UM.Theme.getSize("default_lining").width
         border.color: borderColor
         cornerSide: Cura.RoundedRectangle.Direction.Down
     }
 
-    ButtonGroup {
+    ButtonGroup
+    {
         id: buttonGroup
         exclusive: true
         onClicked: popup.visible = false
     }
 
-    contentItem: Column {
+    contentItem: Column
+    {
         // This repeater adds the intent labels
         ScrollView
         {
@@ -59,13 +63,15 @@ Popup {
                 }
             }
 
-            Column {
+            Column
+            {
                 id: dataColumn
                 width: qualityListScrollView.width - qualityListScrollBar.width
                 Repeater
                 {
                     model: dataModel
-                    delegate: Item {
+                    delegate: Item
+                    {
                         // We need to set it like that, otherwise we'd have to set the sub model with model: model.qualities
                         // Which obviously won't work due to naming conflicts.
                         property variant subItemModel: model.qualities
@@ -84,13 +90,15 @@ Popup {
                             anchors.left: parent.left
                             anchors.leftMargin: UM.Theme.getSize("default_margin").width
 
-                            MouseArea { // tooltip hover area
+                            MouseArea // tooltip hover area
+                            {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 enabled: model.description !== undefined
                                 acceptedButtons: Qt.NoButton // react to hover only, don't steal clicks
 
-                                onEntered: {
+                                onEntered:
+                                {
                                     base.showTooltip(
                                         headerLabel,
                                         Qt.point(- UM.Theme.getSize("default_margin").width, 0),
@@ -101,17 +109,20 @@ Popup {
                             }
                         }
 
-                        Column {
+                        Column
+                        {
                             id: qualitiesList
                             anchors.top: headerLabel.bottom
                             anchors.left: parent.left
                             anchors.right: parent.right
 
                             // Add the qualities that belong to the intent
-                            Repeater {
+                            Repeater
+                            {
                                 visible: false
                                 model: subItemModel
-                                MenuButton {
+                                MenuButton
+                                {
                                     id: button
 
                                     onClicked: Cura.IntentManager.selectIntent(model.intent_category, model.quality_type)
@@ -137,7 +148,8 @@ Popup {
                     }
                 }
                 //Another "intent category" for custom profiles.
-                Item {
+                Item
+                {
                     height: childrenRect.height
                     width: dataColumn.width
 
@@ -153,9 +165,11 @@ Popup {
                         color: UM.Theme.getColor("text_inactive")
                     }
 
-                    Column {
+                    Column
+                    {
                         id: profilesList
-                        anchors {
+                        anchors
+                        {
                             top: customProfileHeader.bottom
                             left: parent.left
                             right: parent.right
@@ -163,7 +177,8 @@ Popup {
 
                         //We set it by means of a binding, since then we can use the
                         //"when" condition, which we need to prevent a binding loop.
-                        Binding {
+                        Binding
+                        {
                             target: parent
                             property: "height"
                             restoreMode: Binding.RestoreBinding
@@ -188,7 +203,8 @@ Popup {
                                 {
                                     var active_quality_group = Cura.MachineManager.activeQualityChangesGroup
 
-                                    if (active_quality_group != null) {
+                                    if (active_quality_group != null)
+                                    {
                                         return active_quality_group.name == model.quality_changes_group.name
                                     }
                                     return false
@@ -201,7 +217,8 @@ Popup {
             }
         }
 
-        Rectangle {
+        Rectangle
+        {
             height: UM.Theme.getSize("default_lining").height
             anchors.left: parent.left
             anchors.right: parent.right
@@ -212,14 +229,16 @@ Popup {
         {
             id: manageProfilesButton
             text: Cura.Actions.manageProfiles.text
-            anchors {
+            anchors
+            {
                 left: parent.left
                 right: parent.right
             }
 
             height: textLabel.contentHeight + UM.Theme.getSize("default_margin").height
 
-            contentItem: Item {
+            contentItem: Item
+            {
                 width: parent.width
                 height: parent.height
 
@@ -241,13 +260,15 @@ Popup {
                     anchors.rightMargin: UM.Theme.getSize("default_margin").width
                 }
             }
-            onClicked: {
+            onClicked:
+            {
                 popup.visible = false
                 Cura.Actions.manageProfiles.trigger()
             }
         }
         // spacer
-        Item {
+        Item
+        {
             width: 2
             height: UM.Theme.getSize("default_radius").width
         }

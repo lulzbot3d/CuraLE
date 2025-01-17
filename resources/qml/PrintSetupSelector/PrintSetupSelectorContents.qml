@@ -171,17 +171,16 @@ Item
         Cura.SecondaryButton
         {
             id: recommendedButton
-            anchors {
-                top: parent.top
-                right: parent.right
-                margins: UM.Theme.getSize("default_margin").width
-            }
+            anchors.top: parent.top
+            anchors.right: parent.right
+            anchors.margins: UM.Theme.getSize("default_margin").width
             leftPadding: UM.Theme.getSize("default_margin").width
             rightPadding: UM.Theme.getSize("default_margin").width
             text: catalog.i18nc("@button", "Recommended")
             iconSource: UM.Theme.getIcon("ChevronSingleLeft")
             visible: currentModeIndex == PrintSetupSelectorContents.Mode.Custom
-            onClicked: {
+            onClicked:
+            {
                 currentModeIndex = PrintSetupSelectorContents.Mode.Recommended
                 updateDragPosition();
             }

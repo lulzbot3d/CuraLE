@@ -132,7 +132,8 @@ Flickable
         }
     }
 
-    UM.SettingPropertyProvider {
+    UM.SettingPropertyProvider
+    {
         id: extrudersEnabledCount
         containerStack: Cura.MachineManager.activeMachine
         key: "extruders_enabled_count"

@@ -111,6 +111,16 @@ Item
         }
     }
 
+    // show the Toolbox
+    Connections
+    {
+        target: Cura.Actions.browsePackages
+        function onTriggered()
+        {
+            extensionMenu.extensionModel.callExtensionMethod("Marketplace", "show")
+        }
+    }
+
     // Show the Marketplace dialog at the materials tab
     Connections
     {

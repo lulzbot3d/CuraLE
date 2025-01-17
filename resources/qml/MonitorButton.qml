@@ -71,8 +71,9 @@ Item
     property variant statusColor:
     {
         if(!printerConnected || !printerAcceptsCommands)
+        {
             return UM.Theme.getColor("text");
-
+        }
 
         switch(activePrinter.state)
         {
@@ -112,11 +113,15 @@ Item
     property string statusText:
     {
         if(!printerConnected)
+        {
             return catalog.i18nc("@label:MonitorStatus", "Not connected to a printer");
+        }
         if(!printerAcceptsCommands)
+        {
             return catalog.i18nc("@label:MonitorStatus", "Printer does not accept commands");
+        }
 
-        if(printerOutputDevice.printerState == "maintenance")
+        if(activePrinter.state == "maintenance")
         {
             return catalog.i18nc("@label:MonitorStatus", "In maintenance. Please check the printer");
         }
@@ -218,7 +223,8 @@ Item
         anchors.leftMargin: UM.Theme.getSize("thick_margin").width
     }
 
-    Row {
+    Row
+    {
         id: buttonsRow
         height: startAbortButton.height
         anchors.top: progressBar.bottom
@@ -227,7 +233,8 @@ Item
         anchors.rightMargin: UM.Theme.getSize("thick_margin").width
         spacing: UM.Theme.getSize("default_margin").width
 
-        Row {
+        Row
+        {
             id: additionalComponentsRow
             spacing: UM.Theme.getSize("default_margin").width
         }
@@ -236,7 +243,8 @@ Item
             buttonsRow.updateAdditionalComponents("monitorButtons")
         }
 
-        Connections {
+        Connections
+        {
             target: CuraApplication
             function onAdditionalComponentsChanged() { buttonsRow.updateAdditionalComponents("monitorButtons") }
         }
@@ -295,40 +303,58 @@ Item
             }
         }
 
-        Cura.SecondaryButton {
+        Cura.SecondaryButton
+        {
             id: startAbortButton
-            property var startOrAbort: {
-                if (printerConnected && printerAcceptsCommands) {
-                    if (activePrintJob != null && (["paused", "printing", "pre_print"].indexOf(activePrintJob.state) >= 0)) {
+            property var startOrAbort:
+            {
+                if (printerConnected && printerAcceptsCommands)
+                {
+                    if (activePrintJob != null && (["paused", "printing", "pre_print"].indexOf(activePrintJob.state) >= 0))
+                    {
                         return "abort"
-                    } else if (UM.Backend.state == UM.Backend.Done || UM.Backend.state == UM.Backend.Disabled) {
+                    }
+                    else if (UM.Backend.state == UM.Backend.Done || UM.Backend.state == UM.Backend.Disabled)
+                    {
                         return "start"
                     }
-                } else {
+                } 
+                else
+                {
                     return ""
                 }
             }
             height: UM.Theme.getSize("save_button_save_to_button").height
             visible: printerConnected && activePrinter != null && activePrinter.canAbort
             enabled: startOrAbort == "abort" || startOrAbort == "start"
-            text: {
-                if (startOrAbort == "abort") {
+            text:
+            {
+                if (startOrAbort == "abort")
+                {
                     return catalog.i18nc("@label", "Abort Print")
-                } else {
+                }
+                else
+                {
                     return catalog.i18nc("@label", "Start Print")
                 }
             }
-            onClicked: {
-                if (startOrAbort == "abort") {
+
+            onClicked:
+            {
+                if (startOrAbort == "abort")
+                {
                     confirmationDialog.visible = true
-                } else if (startOrAbort == "start") {
+                }
+                else if (startOrAbort == "start")
+                {
                     UM.OutputDeviceManager.requestWriteToDevice(printerOutputDevice.address, PrintInformation.jobName,
                     { "filter_by_machine": true, "preferred_mimetypes": Cura.MachineManager.activeMachine.preferred_output_file_formats });
                 }
             }
         }
 
-        MessageDialog {
+        Cura.MessageDialog
+        {
             id: confirmationDialog
 
             title: catalog.i18nc("@window:title", "Abort print")

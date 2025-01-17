@@ -46,15 +46,18 @@ Item
                 id: bedTargetTemperatureTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
-                onHoveredChanged: {
-                    if (containsMouse) {
+                onHoveredChanged:
+                {
+                    if (containsMouse)
+                    {
                         base.showTooltip(
                             base,
                             {x: 0, y: bedTargetTemperature.mapToItem(base, 0, -parent.height / 4).y},
                             catalog.i18nc("@tooltip", "The target temperature of the heated bed. The bed will heat up or cool down towards this temperature. If this is 0, the bed heating is turned off.")
-                        )
+                        );
                     }
-                    else {
+                    else
+                    {
                         base.hideTooltip();
                     }
                 }
@@ -80,16 +83,15 @@ Item
                 {
                     if (containsMouse)
                     {
-                        base.showTooltip
-                        (
+                        base.showTooltip(
                             base,
                             {x: 0, y: bedCurrentTemperature.mapToItem(base, 0, -parent.height / 4).y},
                             catalog.i18nc("@tooltip", "The current temperature of the heated bed.")
-                        )
+                        );
                     }
                     else
                     {
-                        base.hideTooltip()
+                        base.hideTooltip();
                     }
                 }
             }
@@ -99,12 +101,12 @@ Item
         {
             id: preheatTemperatureControl
             color: !enabled ? UM.Theme.getColor("setting_control_disabled") : showError ? UM.Theme.getColor("setting_validation_error_background") : UM.Theme.getColor("setting_validation_ok")
-            property var showError: {
+            property var showError:
+            {
                 if(bedTemperature.properties.maximum_value != "None" && bedTemperature.properties.maximum_value <  Math.floor(preheatTemperatureInput.text))
                 {
                     return true;
-                }
-                else
+                } else
                 {
                     return false;
                 }
@@ -133,8 +135,10 @@ Item
             anchors.right: preheatButton.left
             anchors.rightMargin: UM.Theme.getSize("default_margin").width
             anchors.bottom: parent.bottom
+            anchors.bottomMargin: UM.Theme.getSize("default_margin").height
             width: UM.Theme.getSize("monitor_preheat_temperature_control").width
             height: UM.Theme.getSize("monitor_preheat_temperature_control").height
+            // visible: printerModel != null ? enabled && printerModel.canPreHeatBed && !printerModel.isPreheating : true
             visible: true
             Rectangle //Highlight of input field.
             {
@@ -154,12 +158,11 @@ Item
                 {
                     if (containsMouse)
                     {
-                        base.showTooltip
-                        (
+                        base.showTooltip(
                             base,
                             {x: 0, y: preheatTemperatureInputMouseArea.mapToItem(base, 0, 0).y},
                             catalog.i18nc("@tooltip of temperature input", "The temperature to pre-heat the bed to.")
-                        )
+                        );
                     }
                     else
                     {
@@ -318,13 +321,13 @@ Item
 
             onHoveredChanged:
             {
-                if (hovered) {
-                    base.showTooltip
-                    (
+                if (hovered)
+                {
+                    base.showTooltip(
                         base,
                         { x: 0, y: preheatButton.mapToItem(base, 0, 0).y },
                         catalog.i18nc("@tooltip of pre-heat", "Heat the bed in advance before printing. You can continue adjusting your print while it is heating, and you won't have to wait for the bed to heat up when you're ready to print.")
-                    )
+                    );
                 }
                 else
                 {

@@ -151,6 +151,7 @@ Item
             anchors.right: preheatButton.left
             anchors.rightMargin: UM.Theme.getSize("default_margin").width
             anchors.bottom: parent.bottom
+            anchors.bottomMargin: UM.Theme.getSize("default_margin").height
             width: UM.Theme.getSize("monitor_preheat_temperature_control").width
             height: UM.Theme.getSize("monitor_preheat_temperature_control").height
             visible: extruderModel != null ? enabled && extruderModel.canPreHeatHotends && !extruderModel.isPreheating : true
@@ -196,7 +197,8 @@ Item
                 text: "°C";
                 color: UM.Theme.getColor("setting_unit")
             }
-            TextInput {
+            TextInput
+            {
                 id: preheatTemperatureInput
                 font: UM.Theme.getFont("default")
                 color: !enabled ? UM.Theme.getColor("setting_control_disabled_text") : UM.Theme.getColor("setting_control_text")
@@ -373,15 +375,18 @@ Item
                 id: materialColorTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
-                onHoveredChanged: {
-                    if (containsMouse) {
+                onHoveredChanged:
+                {
+                    if (containsMouse)
+                    {
                         base.showTooltip(
                             base,
                             {x: 0, y: parent.mapToItem(base, 0, -parent.height / 2).y},
                             catalog.i18nc("@tooltip", "The colour of the material in this extruder.")
                         );
                     }
-                    else {
+                    else
+                    {
                         base.hideTooltip();
                     }
                 }
@@ -402,15 +407,18 @@ Item
                 id: materialNameTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
-                onHoveredChanged: {
-                    if (containsMouse) {
+                onHoveredChanged:
+                {
+                    if (containsMouse)
+                    {
                         base.showTooltip(
                             base,
                             {x: 0, y: parent.mapToItem(base, 0, 0).y},
                             catalog.i18nc("@tooltip", "The material in this extruder.")
-                        )
+                        );
                     }
-                    else {
+                    else
+                    {
                         base.hideTooltip();
                     }
                 }
@@ -432,15 +440,18 @@ Item
                 id: variantNameTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
-                onHoveredChanged: {
-                    if (containsMouse) {
+                onHoveredChanged:
+                {
+                    if (containsMouse)
+                    {
                         base.showTooltip(
                             base,
                             { x: 0, y: parent.mapToItem(base, 0, -parent.height / 4).y },
                             catalog.i18nc("@tooltip", "The nozzle inserted in this extruder.")
                         );
                     }
-                    else {
+                    else
+                    {
                         base.hideTooltip();
                     }
                 }

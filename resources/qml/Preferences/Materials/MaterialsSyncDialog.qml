@@ -174,7 +174,8 @@ UM.Window
                         text: catalog.i18nc("@button", "Sync materials with USB")
                         onClicked: swipeView.currentIndex = removableDriveSyncPage.SwipeView.index
                     }
-                    Cura.PrimaryButton {
+                    Cura.PrimaryButton
+                    {
                         anchors.right: parent.right
                         text: catalog.i18nc("@button", "Sign in")
                         onClicked: Cura.API.account.login()
@@ -187,7 +188,8 @@ UM.Window
         {
             id: printerListPage
 
-            ColumnLayout {
+            ColumnLayout
+            {
                 spacing: UM.Theme.getSize("default_margin").height
                 anchors.fill: parent
                 anchors.margins: UM.Theme.getSize("default_margin").width
@@ -198,19 +200,22 @@ UM.Window
                     spacing: UM.Theme.getSize("default_margin").width
 
                     states: [
-                        State {
+                        State
+                        {
                             name: "idle"
                             when: typeof syncModel === "undefined" || syncModel.exportUploadStatus == "idle" || syncModel.exportUploadStatus == "uploading"
                             PropertyChanges { target: printerListHeader; text: catalog.i18nc("@title:header", "The following printers will receive the new material profiles:") }
                             PropertyChanges { target: printerListHeaderIcon; status: UM.StatusIcon.Status.NEUTRAL; width: 0 }
                         },
-                        State {
+                        State
+                        {
                             name: "error"
                             when: typeof syncModel !== "undefined" && syncModel.exportUploadStatus == "error"
                             PropertyChanges { target: printerListHeader; text: catalog.i18nc("@title:header", "Something went wrong when sending the materials to the printers.") }
                             PropertyChanges { target: printerListHeaderIcon; status: UM.StatusIcon.Status.ERROR }
                         },
-                        State {
+                        State
+                        {
                             name: "success"
                             when: typeof syncModel !== "undefined" && syncModel.exportUploadStatus == "success"
                             PropertyChanges { target: printerListHeader; text: catalog.i18nc("@title:header", "Material profiles successfully synced with the following printers:") }
@@ -218,7 +223,8 @@ UM.Window
                         }
                     ]
 
-                    UM.StatusIcon {
+                    UM.StatusIcon
+                    {
                         id: printerListHeaderIcon
                         width: UM.Theme.getSize("section_icon").width
                         height: UM.Theme.getSize("section_icon").height
@@ -490,39 +496,50 @@ UM.Window
                     Layout.preferredHeight: childrenRect.height
                     Layout.alignment: Qt.AlignBottom
 
-                    Cura.SecondaryButton {
+                    Cura.SecondaryButton
+                    {
                         anchors.left: parent.left
                         text: catalog.i18nc("@button", "Sync materials with USB")
                         onClicked: swipeView.currentIndex = removableDriveSyncPage.SwipeView.index
                     }
-                    Cura.PrimaryButton {
+                    Cura.PrimaryButton
+                    {
                         id: syncButton
                         anchors.right: parent.right
-                        text: {
-                            if(typeof syncModel !== "undefined" && syncModel.exportUploadStatus == "error") {
+                        text:
+                        {
+                            if(typeof syncModel !== "undefined" && syncModel.exportUploadStatus == "error")
+                            {
                                 return catalog.i18nc("@button", "Try again");
                             }
-                            if(typeof syncModel !== "undefined" && syncModel.exportUploadStatus == "success") {
+                            if(typeof syncModel !== "undefined" && syncModel.exportUploadStatus == "success")
+                            {
                                 return catalog.i18nc("@button", "Done");
                             }
                             return catalog.i18nc("@button", "Sync");
                         }
-                        onClicked: {
-                            if(typeof syncModel !== "undefined" && syncModel.exportUploadStatus == "success") {
+                        onClicked:
+                        {
+                            if(typeof syncModel !== "undefined" && syncModel.exportUploadStatus == "success")
+                            {
                                 materialsSyncDialog.close();
                             }
-                            else {
+                            else
+                            {
                                 syncModel.exportUpload();
                             }
                         }
-                        visible: {
-                            if(!syncModel) { //When the dialog is created, this is not set yet.
+                        visible:
+                        {
+                            if(!syncModel) //When the dialog is created, this is not set yet.
+                            {
                                 return true;
                             }
                             return syncModel.exportUploadStatus != "uploading";
                         }
                     }
-                    Item {
+                    Item
+                    {
                         anchors.right: parent.right
                         width: childrenRect.width
                         height: syncButton.height
@@ -539,7 +556,8 @@ UM.Window
                             source: UM.Theme.getIcon("ArrowDoubleCircleRight")
                             color: UM.Theme.getColor("primary")
 
-                            RotationAnimator {
+                            RotationAnimator
+                            {
                                 target: syncingIcon
                                 from: 0
                                 to: 360
@@ -618,7 +636,8 @@ UM.Window
                     Layout.alignment: Qt.AlignBottom
                     Layout.fillWidth: true
 
-                    Cura.SecondaryButton {
+                    Cura.SecondaryButton
+                    {
                         anchors.left: parent.left
                         text: catalog.i18nc("@button", "Sync materials with USB")
                         onClicked: swipeView.currentIndex = removableDriveSyncPage.SwipeView.index
@@ -652,7 +671,8 @@ UM.Window
         {
             id: removableDriveSyncPage
 
-            ColumnLayout {
+            ColumnLayout
+            {
                 spacing: UM.Theme.getSize("default_margin").height
                 anchors.fill: parent
                 anchors.margins: UM.Theme.getSize("default_margin").width
@@ -717,12 +737,14 @@ UM.Window
                     Layout.alignment: Qt.AlignBottom
                     Layout.fillWidth: true
 
-                    Cura.SecondaryButton {
+                    Cura.SecondaryButton
+                    {
                         anchors.left: parent.left
                         text: catalog.i18nc("@button", "Back")
                         onClicked: swipeView.currentIndex = 0 //Reset to first page.
                     }
-                    Cura.PrimaryButton {
+                    Cura.PrimaryButton
+                    {
                         id: exportUsbButton
                         anchors.right: parent.right
 
@@ -735,7 +757,8 @@ UM.Window
                                 exportUsbDialog.currentFolder = `${syncModel.getPreferredExportAllPath()}/materials.umm`;
                                 exportUsbDialog.open();
                             }
-                            else {
+                            else
+                            {
                                 materialsSyncDialog.close();
                             }
                         }

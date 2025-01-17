@@ -8,11 +8,13 @@ import QtQuick.Layouts 1.3
 import UM 1.3 as UM
 import Cura 1.0 as Cura
 
-RowLayout {
+RowLayout
+{
     property string enabledText: catalog.i18nc("@label:Should be short", "On")
     property string disabledText: catalog.i18nc("@label:Should be short", "Off")
 
-    Cura.IconWithText {
+    Cura.IconWithText
+    {
         source: UM.Theme.getIcon("Sliders", "medium")
         iconSize: UM.Theme.getSize("button_icon").width
 
@@ -29,13 +31,15 @@ RowLayout {
         }
     }
 
-    Cura.IconWithText {
+    Cura.IconWithText
+    {
         source: UM.Theme.getIcon("Infill1")
         text: Cura.MachineManager.activeStack ? parseInt(infillDensity.properties.value) + "%" : "0%"
         font: UM.Theme.getFont("medium")
         iconSize: UM.Theme.getSize("medium_button_icon").width
 
-        UM.SettingPropertyProvider {
+        UM.SettingPropertyProvider
+        {
             id: infillDensity
             containerStack: Cura.MachineManager.activeStack
             key: "infill_sparse_density"
@@ -43,13 +47,15 @@ RowLayout {
         }
     }
 
-    Cura.IconWithText {
+    Cura.IconWithText
+    {
         source: UM.Theme.getIcon("Support")
         text: supportEnabled.properties.value == "True" ? enabledText : disabledText
         font: UM.Theme.getFont("medium")
         iconSize: UM.Theme.getSize("medium_button_icon").width
 
-        UM.SettingPropertyProvider {
+        UM.SettingPropertyProvider
+        {
             id: supportEnabled
             containerStack: Cura.MachineManager.activeMachine
             key: "support_enable"
@@ -57,13 +63,15 @@ RowLayout {
         }
     }
 
-    Cura.IconWithText {
+    Cura.IconWithText
+    {
         source: UM.Theme.getIcon("Adhesion")
         text: platformAdhesionType.properties.value != "none" ? enabledText : disabledText
         font: UM.Theme.getFont("medium")
         iconSize: UM.Theme.getSize("medium_button_icon").width
 
-        UM.SettingPropertyProvider {
+        UM.SettingPropertyProvider
+        {
             id: platformAdhesionType
             containerStack: Cura.MachineManager.activeMachine
             key: "adhesion_type"

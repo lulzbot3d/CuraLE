@@ -7,7 +7,8 @@ import QtQuick.Controls 2.4
 import UM 1.5 as UM
 import Cura 1.5 as Cura
 
-Item {
+Item
+{
     id: detailsPanel
 
     property var currentItem: null

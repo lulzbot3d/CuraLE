@@ -126,13 +126,13 @@ SettingItem
             {
                 if (!enabled)
                 {
-                    return UM.Theme.getColor("setting_control_disabled");
+                    return UM.Theme.getColor("setting_control_disabled")
                 }
                 if (control.hovered || base.activeFocus)
                 {
-                    return UM.Theme.getColor("setting_control_highlight");
+                    return UM.Theme.getColor("setting_control_highlight")
                 }
-                return UM.Theme.getColor("setting_control");
+                return UM.Theme.getColor("setting_control")
             }
             borderColor: control.activeFocus ? UM.Theme.getSize("text_field_border_active") : "transparent"
             liningColor:

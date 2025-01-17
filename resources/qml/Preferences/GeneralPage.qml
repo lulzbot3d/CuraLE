@@ -120,7 +120,7 @@ UM.PreferencesPage
 
         UM.Preferences.resetPreference("general/camera_perspective_mode")
         //var defaultCameraMode = UM.Preferences.getValue("general/camera_perspective_mode")
-        //setDefaultCameraMode(defaultCameraMode)
+//        /setDefaultCameraMode(defaultCameraMode)
 
         UM.Preferences.resetPreference("cura/choice_on_profile_override")
         setDefaultDiscardOrKeepProfile(UM.Preferences.getValue("cura/choice_on_profile_override"))
@@ -1094,7 +1094,6 @@ UM.PreferencesPage
             //         checked: boolCheck(UM.Preferences.getValue("info/send_slice_info"))
             //         onCheckedChanged: UM.Preferences.setValue("info/send_slice_info", checked)
             //     }
-
 
             //     UM.SimpleButton
             //     {

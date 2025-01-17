@@ -9,7 +9,8 @@ import UM 1.5 as UM
 import Cura 1.0 as Cura
 
 
-Item {
+Item
+{
     implicitWidth: parent.width
     implicitHeight: Math.floor(childrenRect.height + UM.Theme.getSize("default_margin").height * 2)
     property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
@@ -26,7 +27,8 @@ Item {
         }
     }
 
-    Rectangle {
+    Rectangle
+    {
         height: childrenRect.height
         color: UM.Theme.getColor("setting_category")
 
@@ -98,7 +100,10 @@ Item {
                         }
                     }
                 }
-                else { "No Output Device Address" }
+                else
+                {
+                    "No Output Device Address"
+                }
             }
             font: UM.Theme.getFont("default_bold")
             color: UM.Theme.getColor("text_medium")

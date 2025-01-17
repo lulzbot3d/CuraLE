@@ -9,7 +9,8 @@ import UM 1.5 as UM
 import Cura 1.6 as Cura
 import ".."
 
-Item {
+Item
+{
     id: customPrintSetup
 
     property real padding: UM.Theme.getSize("default_margin").width
@@ -17,11 +18,13 @@ Item {
 
     property var extrudersModel: CuraApplication.getExtrudersModel()
 
-    Item {
+    Item
+    {
         id: intent
         height: childrenRect.height
 
-        anchors {
+        anchors
+        {
             top: parent.top
             topMargin: UM.Theme.getSize("default_margin").height
             left: parent.left
@@ -33,7 +36,8 @@ Item {
         UM.Label
         {
             id: profileLabel
-            anchors {
+            anchors
+            {
                 top: parent.top
                 bottom: parent.bottom
                 left: parent.left
@@ -58,7 +62,8 @@ Item {
             height: textLabel.contentHeight + 2 * UM.Theme.getSize("narrow_margin").height
             hoverEnabled: true
 
-            contentItem: RowLayout {
+            contentItem: RowLayout
+            {
                 spacing: 0
                 anchors.left: parent.left
                 anchors.right: customisedSettings.left
@@ -106,7 +111,8 @@ Item {
                 liningColor: intentSelection.hovered ? UM.Theme.getColor("text_field_border_hovered") : UM.Theme.getColor("border_field_light")
             }
 
-            UM.SimpleButton {
+            UM.SimpleButton
+            {
                 id: customisedSettings
 
                 visible: Cura.MachineManager.hasUserSettings
@@ -120,11 +126,13 @@ Item {
                 color: hovered ? UM.Theme.getColor("setting_control_button_hover") : UM.Theme.getColor("setting_control_button");
                 iconSource: UM.Theme.getIcon("StarFilled")
 
-                onClicked: {
+                onClicked:
+                {
                     forceActiveFocus();
                     Cura.Actions.manageProfiles.trigger()
                 }
-                onEntered: {
+                onEntered:
+                {
                     var content = catalog.i18nc("@tooltip", "Some setting/override values are different from the values stored in the profile.\n\nClick to open the profile manager.")
                     base.showTooltip(intent, Qt.point(-UM.Theme.getSize("default_margin").width, 0), content)
                 }
@@ -138,7 +146,8 @@ Item {
                 width: UM.Theme.getSize("standard_arrow").width
                 height: UM.Theme.getSize("standard_arrow").height
 
-                anchors {
+                anchors
+                {
                     right: parent.right
                     verticalCenter: parent.verticalCenter
                     rightMargin: UM.Theme.getSize("default_margin").width
@@ -166,12 +175,14 @@ Item {
         }
     }
 
-    UM.TabRow {
+    UM.TabRow
+    {
         id: tabBar
 
         visible: multipleExtruders  // The tab row is only visible when there are more than 1 extruder
 
-        anchors {
+        anchors
+        {
             top: intent.bottom
             topMargin: UM.Theme.getSize("default_margin").height
             left: parent.left
@@ -180,7 +191,8 @@ Item {
             rightMargin: parent.padding
         }
 
-        Repeater {
+        Repeater
+        {
             id: repeater
             model: extrudersModel
             delegate: UM.TabRowButton
@@ -196,7 +208,8 @@ Item {
                         iconVariant: "default"
                     }
                 }
-                onClicked: {
+                onClicked:
+                {
                     Cura.ExtruderManager.setActiveExtruderIndex(tabBar.currentIndex)
                 }
             }
@@ -205,7 +218,8 @@ Item {
         //When active extruder changes for some other reason, switch tabs.
         //Don't directly link currentIndex to Cura.ExtruderManager.activeExtruderIndex!
         //This causes a segfault in Qt 5.11. Something with VisualItemModel removing index -1. We have to use setCurrentIndex instead.
-        Connections {
+        Connections
+        {
             target: Cura.ExtruderManager
             function onActiveExtruderChanged()
             {
@@ -216,7 +230,8 @@ Item {
         //When the model of the extruders is rebuilt, the list of extruders is briefly emptied and rebuilt.
         //This causes the currentIndex of the tab to be in an invalid position which resets it to 0.
         //Therefore we need to change it back to what it was: The active extruder index.
-        Connections {
+        Connections
+        {
             target: repeater.model
             function onModelChanged()
             {
@@ -225,8 +240,10 @@ Item {
         }
     }
 
-    Rectangle {
-        anchors {
+    Rectangle
+    {
+        anchors
+        {
             top: tabBar.visible ? tabBar.bottom : intent.bottom
             topMargin: -UM.Theme.getSize("default_lining").width
             left: parent.left
@@ -242,8 +259,10 @@ Item {
         border.width: UM.Theme.getSize("default_lining").width
 
         color: UM.Theme.getColor("main_background")
-        Cura.SettingView {
-            anchors {
+        Cura.SettingView
+        {
+            anchors
+            {
                 fill: parent
                 topMargin: UM.Theme.getSize("default_margin").height
                 leftMargin: UM.Theme.getSize("default_margin").width

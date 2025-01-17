@@ -129,7 +129,7 @@ Item
         target: genericMaterialsModel
         function onItemsChanged() { updateAfterModelChanges() }
     }
-
+    
     Column
     {
         width: materialList.width
