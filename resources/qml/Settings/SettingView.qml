@@ -9,23 +9,27 @@ import Cura 1.0 as Cura
 
 import "../Menus"
 
-Item {
+Item
+{
     id: settingsView
 
     property QtObject settingVisibilityPresetsModel: CuraApplication.getSettingVisibilityPresetsModel()
     property bool findingSettings
 
-    Item {
+    Item
+    {
         id: filterContainer
 
-        anchors {
+        anchors
+        {
             top: parent.top
             left: parent.left
             right: settingVisibilityMenu.left
         }
         height: UM.Theme.getSize("print_setup_big_item").height
 
-        Timer {
+        Timer
+        {
             id: settingsSearchTimer
             onTriggered: filter.editingFinished()
             interval: 500
@@ -33,7 +37,8 @@ Item {
             repeat: false
         }
 
-        Cura.TextField {
+        Cura.TextField
+        {
             id: filter
             implicitHeight: parent.height
             anchors.left: parent.left
@@ -50,7 +55,8 @@ Item {
             {
                 id: searchIcon
 
-                anchors {
+                anchors
+                {
                     verticalCenter: parent.verticalCenter
                     left: parent.left
                     leftMargin: UM.Theme.getSize("default_margin").width
@@ -63,10 +69,12 @@ Item {
 
             onTextChanged: settingsSearchTimer.restart()
 
-            onEditingFinished: {
+            onEditingFinished:
+            {
                 definitionsModel.filter = {"i18n_label|i18n_description" : "*" + text}
                 findingSettings = (text.length > 0)
-                if (findingSettings != lastFindingSettings) {
+                if (findingSettings != lastFindingSettings)
+                {
                     updateDefinitionModel()
                     lastFindingSettings = findingSettings
                 }
@@ -74,15 +82,20 @@ Item {
 
             Keys.onEscapePressed: filter.text = ""
 
-            function updateDefinitionModel() {
-                if (findingSettings) {
+            function updateDefinitionModel()
+            {
+                if (findingSettings)
+                {
                     expandedCategories = definitionsModel.expanded.slice()
                     definitionsModel.expanded = [""]  // keep categories closed while to prevent render while making settings visible one by one
                     definitionsModel.showAncestors = true
                     definitionsModel.showAll = true
                     definitionsModel.expanded = ["*"]
-                } else {
-                    if (expandedCategories) {
+                }
+                else
+                {
+                    if (expandedCategories)
+                    {
                         definitionsModel.expanded = expandedCategories
                     }
                     definitionsModel.showAncestors = false
@@ -91,7 +104,8 @@ Item {
             }
         }
 
-        UM.SimpleButton {
+        UM.SimpleButton
+        {
             id: clearFilterButton
             iconSource: UM.Theme.getIcon("Cancel")
             visible: findingSettings
@@ -106,14 +120,16 @@ Item {
             color: UM.Theme.getColor("setting_control_button")
             hoverColor: UM.Theme.getColor("setting_control_button_hover")
 
-            onClicked: {
+            onClicked:
+            {
                 filter.text = ""
                 filter.forceActiveFocus()
             }
         }
     }
 
-    SettingVisibilityPresetsMenu {
+    SettingVisibilityPresetsMenu
+    {
         id: settingVisibilityPresetsMenu
         onCollapseAllCategories:
         {
@@ -134,7 +150,8 @@ Item {
             right: parent.right
         }
 
-        onClicked: {
+        onClicked:
+        {
             settingVisibilityPresetsMenu.popup(
                 popupContainer,
                 -settingVisibilityPresetsMenu.width + UM.Theme.getSize("default_margin").width,
