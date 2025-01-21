@@ -44,7 +44,7 @@ def generate_nsi(source_path: str, dist_path: str, filename: str, version: str):
 
 
     nsis_content = template.render(
-        app_name = f"Cura LulzBot Edition {version}",
+        app_name = f"CuraLE {version}",
         main_app = "Cura_LulzBot_Edition.exe",
         version = version,
         version_major = str(parsed_version.major),

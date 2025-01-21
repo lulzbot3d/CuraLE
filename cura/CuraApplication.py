@@ -1,7 +1,6 @@
 # Copyright (c) 2023 UltiMaker
 # Copyright (c) 2024 Fargo Additive Manufacturing Equipment 3D
 # Cura is released under the terms of the LGPLv3 or higher.
-
 import enum
 import os
 import re
@@ -75,6 +74,8 @@ from cura.Machines.Models.GenericMaterialsModel import GenericMaterialsModel
 from cura.Machines.Models.GlobalStacksModel import GlobalStacksModel
 from cura.Machines.Models.IntentCategoryModel import IntentCategoryModel
 from cura.Machines.Models.IntentModel import IntentModel
+from cura.Machines.Models.LulzBotPrintersModel import LulzBotPrintersModel
+from cura.Machines.Models.LulzBotToolheadsModel import LulzBotToolheadsModel
 from cura.Machines.Models.MaterialManagementModel import MaterialManagementModel
 from cura.Machines.Models.MaterialTypesModel import MaterialTypesModel
 from cura.Machines.Models.MultiBuildPlateModel import MultiBuildPlateModel
@@ -120,11 +121,6 @@ from cura.UI.WelcomePagesModel import WelcomePagesModel
 from cura.UI.WhatsNewPagesModel import WhatsNewPagesModel
 from cura.UltimakerCloud import UltimakerCloudConstants
 from cura.Utils.NetworkingUtil import NetworkingUtil
-
-from cura.Machines.Models.LulzBotPrintersModel import LulzBotPrintersModel
-from cura.Machines.Models.LulzBotToolheadsModel import LulzBotToolheadsModel
-
-
 from . import BuildVolume
 from . import CameraAnimation
 from . import CuraActions
@@ -1371,6 +1367,7 @@ class CuraApplication(QtApplication):
         self.processEvents()
         qmlRegisterType(FavoriteMaterialsModel, "Cura", 1, 0, "FavoriteMaterialsModel")
         qmlRegisterType(GenericMaterialsModel, "Cura", 1, 0, "GenericMaterialsModel")
+        # qmlRegisterType(MaterialBrandsModel, "Cura", 1, 0, "MaterialBrandsModel")
         qmlRegisterType(MaterialTypesModel, "Cura", 1, 0, "MaterialTypesModel")
         qmlRegisterSingletonType(QualityManagementModel, "Cura", 1, 0, self.getQualityManagementModelWrapper,"QualityManagementModel")
         qmlRegisterSingletonType(MaterialManagementModel, "Cura", 1, 5, self.getMaterialManagementModelWrapper,"MaterialManagementModel")
