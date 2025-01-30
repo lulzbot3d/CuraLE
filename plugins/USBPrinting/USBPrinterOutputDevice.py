@@ -118,13 +118,109 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         CuraApplication.getInstance().globalContainerStackChanged.connect(self._onGlobalContainerStackChanged)
         CuraApplication.getInstance().getOnExitCallbackManager().addCallback(self._checkActivePrintingUponAppExit)
 
-    ############## PRINTER CONNECTION ##################
+        CuraApplication.getInstance().getPreferences().addPreference("usb_printing/enabled", False)
+
+    # This is a callback function that checks if there is any printing in progress via USB when the application tries
+    # to exit. If so, it will show a confirmation before
+    def _checkActivePrintingUponAppExit(self) -> None:
+        application = CuraApplication.getInstance()
+        if not self._is_printing:
+            # This USB printer is not printing, so we have nothing to do. Call the next callback if exists.
+            application.triggerNextExitCheck()
+            return
+
+        application.setConfirmExitDialogCallback(self._onConfirmExitDialogResult)
+        application.showConfirmExitDialog.emit(catalog.i18nc("@label", "A USB print is in progress, closing Cura LE will stop this print. Are you sure?"))
+
+
+    def _onConfirmExitDialogResult(self, result: bool) -> None:
+        if result:
+            application = CuraApplication.getInstance()
+            application.triggerNextExitCheck()
 
     def resetDeviceSettings(self) -> None:
         """Reset USB device settings"""
 
         self._firmware_name = None
 
+    def ensureSafeToWrite(self) -> bool:
+
+        if CuraApplication.getInstance().getController().getActiveStage() != "MonitorStage":
+            CuraApplication.getInstance().getController().setActiveStage("MonitorStage")
+
+        if self._accepts_commands == False:
+            message = Message(text = catalog.i18nc("@message",
+                                                   "Printer does not currently accept commands. Are you connected?"),
+                              title = catalog.i18nc("@message", "Printer Not Connected!"),
+                              message_type = Message.MessageType.WARNING)
+            message.show()
+            return False # Printer not connected
+        if self._is_printing:
+            message = Message(text = catalog.i18nc("@message",
+                                                   "A print is still in progress. Cura LE cannot start another action at this time."),
+                              title = catalog.i18nc("@message", "Print in Progress"),
+                              message_type = Message.MessageType.ERROR)
+            message.show()
+            return False # Already printing
+        self.writeStarted.emit(self)
+        # cancel any ongoing preheat timer before starting a print
+        controller = cast(GenericOutputController, self._printers[0].getController())
+        controller.stopPreheatTimers()
+
+        return True
+
+    def requestWrite(self, nodes: List["SceneNode"], file_name: Optional[str] = None, limit_mimetypes: bool = False,
+                     file_handler: Optional["FileHandler"] = None, filter_by_machine: bool = False, **kwargs) -> None:
+        """Request the current scene to be sent to a USB-connected printer.
+
+        :param nodes: A collection of scene nodes to send. This is ignored.
+        :param file_name: A suggestion for a file name to write.
+        :param filter_by_machine: Whether to filter MIME types by machine. This
+               is ignored.
+        :param kwargs: Keyword arguments.
+        """
+
+        safe = self.ensureSafeToWrite()
+        if not safe:
+            # We're not clear to print
+            return
+
+        CuraApplication.getInstance().getController().setActiveStage("MonitorStage")
+
+        CuraApplication.getInstance().getPreferences().setValue("usb_printing/enabled", True)
+
+        #Find the g-code to print.
+        gcode_textio = StringIO()
+        gcode_writer = cast(MeshWriter, PluginRegistry.getInstance().getPluginObject("GCodeWriter"))
+        success = gcode_writer.write(gcode_textio, None)
+        if not success:
+            return
+
+        self._printGCode(gcode_textio.getvalue())
+
+
+    def _printGCode(self, gcode: str):
+        """Start a print based on a g-code.
+
+        :param gcode: The g-code to print.
+        """
+        self._gcode.clear()
+        self._paused = False
+
+        self._gcode.extend(gcode.split("\n"))
+
+        # Reset line number. If this is not done, first line is sometimes ignored
+        self._gcode.insert(0, "M110")
+        self._gcode_position = 0
+        self._print_start_time = time()
+
+        self._print_estimated_time = int(CuraApplication.getInstance().getPrintInformation().currentPrintTime.getDisplayString(DurationFormat.Format.Seconds))
+
+        for i in range(0, 4):  # Push first 4 entries before accepting other inputs
+            self._sendNextGcodeLine()
+
+        self._is_printing = True
+        self.writeFinished.emit(self)
 
     def _autoDetectFinished(self, job: AutoDetectBaudJob):
         result = job.getResult()
@@ -444,31 +540,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             Logger.logException("w", "An unexpected exception occurred while writing to the serial.")
             self.setConnectionState(ConnectionState.Error)
 
-    def requestWrite(self, nodes: List["SceneNode"], file_name: Optional[str] = None, limit_mimetypes: bool = False,
-                     file_handler: Optional["FileHandler"] = None, filter_by_machine: bool = False, **kwargs) -> None:
-        """Request the current scene to be sent to a USB-connected printer.
-
-        :param nodes: A collection of scene nodes to send. This is ignored.
-        :param file_name: A suggestion for a file name to write.
-        :param filter_by_machine: Whether to filter MIME types by machine. This
-               is ignored.
-        :param kwargs: Keyword arguments.
-        """
-
-        safe = self.ensureSafeToWrite()
-        if not safe:
-            # We're not clear to print
-            return
-
-        #Find the g-code to print.
-        gcode_textio = StringIO()
-        gcode_writer = cast(MeshWriter, PluginRegistry.getInstance().getPluginObject("GCodeWriter"))
-        success = gcode_writer.write(gcode_textio, None)
-        if not success:
-            return
-
-        self._printGCode(gcode_textio.getvalue())
-
 ######### Firmware Checks and Handling #########
     class CheckFirmwareStatus(IntEnum):
         OK = 0
@@ -642,32 +713,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         # Seems like a safe bet to not run into whatever's on the build plate
         self._sendCommand("G27")
 
-    def ensureSafeToWrite(self) -> bool:
-
-        if CuraApplication.getInstance().getController().getActiveStage() != "MonitorStage":
-            CuraApplication.getInstance().getController().setActiveStage("MonitorStage")
-
-        if self._accepts_commands == False:
-            message = Message(text = catalog.i18nc("@message",
-                                                   "Printer does not currently accept commands. Are you connected?"),
-                              title = catalog.i18nc("@message", "Printer Not Connected!"),
-                              message_type = Message.MessageType.WARNING)
-            message.show()
-            return False # Printer not connected
-        if self._is_printing:
-            message = Message(text = catalog.i18nc("@message",
-                                                   "A print is still in progress. Cura LE cannot start another action at this time."),
-                              title = catalog.i18nc("@message", "Print in Progress"),
-                              message_type = Message.MessageType.ERROR)
-            message.show()
-            return False # Already printing
-        self.writeStarted.emit(self)
-        # cancel any ongoing preheat timer before starting a print
-        controller = cast(GenericOutputController, self._printers[0].getController())
-        controller.stopPreheatTimers()
-
-        return True
-
     def _printGCode(self, gcode: str):
         """Start a print based on a g-code.
 
@@ -825,20 +870,3 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         controller.setCanUpdateFirmware(True)
         self._printers = [PrinterOutputModel(output_controller = controller, number_of_extruders = num_extruders)]
         self._printers[0].updateName(container_stack.getName())
-
-    # This is a callback function that checks if there is any printing in progress via USB when the application tries
-    # to exit. If so, it will show a confirmation before
-    def _checkActivePrintingUponAppExit(self) -> None:
-        application = CuraApplication.getInstance()
-        if not self._is_printing:
-            # This USB printer is not printing, so we have nothing to do. Call the next callback if exists.
-            application.triggerNextExitCheck()
-            return
-
-        application.setConfirmExitDialogCallback(self._onConfirmExitDialogResult)
-        application.showConfirmExitDialog.emit(catalog.i18nc("@label", "A USB print is in progress, closing Cura LE will stop this print. Are you sure?"))
-
-    def _onConfirmExitDialogResult(self, result: bool) -> None:
-        if result:
-            application = CuraApplication.getInstance()
-            application.triggerNextExitCheck()
