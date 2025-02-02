@@ -4,10 +4,12 @@ requirements:
   - "uraniumle/5.10.0-alpha.0@lulzbot/testing"
   - "curaengine/5.10.0-alpha.0@lulzbot/testing"
   - "curale_binary_data/5.10.0-alpha.0@lulzbot/testing"
+  # - "fdm_materials/5.10.0-alpha.0@ultimaker/testing"
   - "dulcificum/0.3.0@lulzbot/stable"
   - "pysavitar/5.4.0@lulzbot/stable"
   - "pynest2d/5.4.0@lulzbot/stable"
 requirements_internal:
+  - "fdm_materialsle/5.10.0-alpha.0@internal/testing"
   - "curale_private_data/5.10.0-alpha.0@internal/testing"
 requirements_enterprise:
   - "native_cad_plugin/2.0.0"
@@ -32,6 +34,16 @@ pyinstaller:
             package: "curale"
             src: "plugins"
             dst: "share/cura/plugins"
+        # native_cad_plugin:
+        #     package: "native_cad_plugin"
+        #     src: "res/plugins/NativeCADplugin"
+        #     dst: "share/cura/plugins/NativeCADplugin"
+        #     enterprise_only: true
+        # native_cad_plugin_bundled:
+        #     package: "native_cad_plugin"
+        #     src: "res/bundled_packages"
+        #     dst: "share/cura/resources/bundled_packages"
+        #     enterprise_only: true
         curale_resources:
             package: "curale"
             src: "resources"
@@ -71,6 +83,10 @@ pyinstaller:
             dst: "share/windows"
             oses:
               - "Windows"
+        # fdm_materials:
+        #     package: "fdm_materials"
+        #     src: "res/resources/materials"
+        #     dst: "share/cura/resources/materials"
     binaries:
         curaengine:
             package: "curaengine"

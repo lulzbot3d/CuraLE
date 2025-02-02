@@ -152,8 +152,7 @@ class CuraLEConan(ConanFile):
 
         with open(os.path.join(location, "CuraVersion.py"), "w") as f:
             f.write(cura_version_py.render(
-                # cura_app_name = self.name,
-                cura_app_name = "CuraLE",
+                cura_app_name = self.name,
                 cura_app_display_name = self._app_name,
                 cura_version = cura_version,
                 cura_version_full = self.version,
@@ -357,6 +356,8 @@ class CuraLEConan(ConanFile):
 
     def requirements(self):
         for req in self.conan_data["requirements"]:
+            if self.options.internal and "fdm_materials" in req:
+                continue
             self.requires(req)
         if self.options.internal:
             for req in self.conan_data["requirements_internal"]:
@@ -385,14 +386,14 @@ class CuraLEConan(ConanFile):
         copy(self, "CuraEngine.exe", curaengine.bindirs[0], self.source_folder, keep_path = False)
         copy(self, "CuraEngine", curaengine.bindirs[0], self.source_folder, keep_path = False)
 
-        # Copy the external plugins that we want to bundle with CuraLE
+        # Copy the external plugins that we want to bundle with Cura
         if self.options.enterprise:
             rmdir(self, str(Path(self.source_folder, "plugins", "NativeCADplugin")))
             native_cad_plugin = self.dependencies["native_cad_plugin"].cpp_info
             copy(self, "*", native_cad_plugin.resdirs[0], str(Path(self.source_folder, "plugins", "NativeCADplugin")), keep_path = True)
             copy(self, "bundled_*.json", native_cad_plugin.resdirs[1], str(Path(self.source_folder, "resources", "bundled_packages")), keep_path = False)
 
-        # Copy resources of curale_binary_data
+        # Copy resources of cura_binary_data
         cura_binary_data = self.dependencies["curale_binary_data"].cpp_info
         copy(self, "*", cura_binary_data.resdirs[0], str(self._share_dir.joinpath("cura")), keep_path = True)
         copy(self, "*", cura_binary_data.resdirs[1], str(self._share_dir.joinpath("uranium")), keep_path = True)
@@ -409,10 +410,10 @@ class CuraLEConan(ConanFile):
                 copy(self, "*.pyi", libdir, str(self._site_packages), keep_path = False)
                 copy(self, "*.dylib", libdir, str(self._base_dir.joinpath("lib")), keep_path = False)
 
-        # Copy resources
-        curale_resources = self.dependencies["curale_resources"].cpp_info
-        for res_dir in curale_resources.resdirs:
-            copy(self, "*", res_dir, str(self._share_dir.joinpath("cura", "resources", Path(res_dir).name)), keep_path = True)
+        # Copy materials (flat)
+        # rmdir(self, str(Path(self.source_folder, "resources", "materials")))
+        # fdm_materials = self.dependencies["fdm_materialsle"].cpp_info
+        # copy(self, "*", fdm_materials.resdirs[0], self.source_folder)
 
         # Copy internal resources
         if self.options.internal:
@@ -443,23 +444,23 @@ class CuraLEConan(ConanFile):
 
         copy(self, "*", os.path.join(self.package_folder, self.cpp.package.resdirs[2]), os.path.join(self.deploy_folder, "packaging"), keep_path = True)
 
-        # Copy resources of CuraLE (keep folder structure) needed by pyinstaller to determine the module structure
+        # Copy resources of Cura (keep folder structure) needed by pyinstaller to determine the module structure
         copy(self, "*", os.path.join(self.package_folder, self.cpp_info.bindirs[0]), str(self._base_dir), keep_path = False)
         copy(self, "*", os.path.join(self.package_folder, self.cpp_info.libdirs[0]), str(self._site_packages.joinpath("cura")), keep_path = True)
         copy(self, "*", os.path.join(self.package_folder, self.cpp_info.resdirs[0]), str(self._share_dir.joinpath("cura", "resources")), keep_path = True)
         copy(self, "*", os.path.join(self.package_folder, self.cpp_info.resdirs[1]), str(self._share_dir.joinpath("cura", "plugins")), keep_path = True)
 
-        # Copy the curale_resources resources from the package
+        # Copy the cura_resources resources from the package
         rm(self, "conanfile.py", os.path.join(self.package_folder, self.cpp.package.resdirs[0]))
-        curale_resources = self.dependencies["curale_resources"].cpp_info
-        for res_dir in curale_resources.resdirs:
+        cura_resources = self.dependencies["curale_resources"].cpp_info
+        for res_dir in cura_resources.resdirs:
             copy(self, "*", res_dir, str(self._share_dir.joinpath("cura", "resources", Path(res_dir).name)), keep_path = True)
 
         # Copy resources of Uranium (keep folder structure)
-        uraniumle = self.dependencies["uraniumle"].cpp_info
-        copy(self, "*", uraniumle.resdirs[0], str(self._share_dir.joinpath("uranium", "resources")), keep_path = True)
-        copy(self, "*", uraniumle.resdirs[1], str(self._share_dir.joinpath("uranium", "plugins")), keep_path = True)
-        copy(self, "*", uraniumle.libdirs[0], str(self._site_packages.joinpath("UM")), keep_path = True)
+        uranium = self.dependencies["uraniumle"].cpp_info
+        copy(self, "*", uranium.resdirs[0], str(self._share_dir.joinpath("uranium", "resources")), keep_path = True)
+        copy(self, "*", uranium.resdirs[1], str(self._share_dir.joinpath("uranium", "plugins")), keep_path = True)
+        copy(self, "*", uranium.libdirs[0], str(self._site_packages.joinpath("UM")), keep_path = True)
 
         self._generate_cura_version(os.path.join(self._site_packages, "cura"))
 
@@ -484,10 +485,13 @@ class CuraLEConan(ConanFile):
         copy(self, "*", src = os.path.join(self.source_folder, "packaging"), dst = os.path.join(self.package_folder, self.cpp.package.resdirs[2]))
         copy(self, "pip_requirements_*.txt", src = self.generators_folder, dst = os.path.join(self.package_folder, self.cpp.package.resdirs[-1]))
 
-        # Remove the curale_resources resources from the package
+        # Remove the fdm_materials from the package
+        # rmdir(self, os.path.join(self.package_folder, self.cpp.package.resdirs[0], "materials"))
+
+        # Remove the cura_resources resources from the package
         rm(self, "conanfile.py", os.path.join(self.package_folder, self.cpp.package.resdirs[0]))
-        curale_resources = self.dependencies["curale_resources"].cpp_info
-        for res_dir in curale_resources.resdirs:
+        cura_resources = self.dependencies["curale_resources"].cpp_info
+        for res_dir in cura_resources.resdirs:
             rmdir(self, os.path.join(self.package_folder, self.cpp.package.resdirs[0], Path(res_dir).name))
 
     def package_info(self):
