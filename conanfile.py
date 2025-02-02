@@ -357,8 +357,6 @@ class CuraLEConan(ConanFile):
 
     def requirements(self):
         for req in self.conan_data["requirements"]:
-            if self.options.internal and "fdm_materialsle" in req:
-                continue
             self.requires(req)
         if self.options.internal:
             for req in self.conan_data["requirements_internal"]:
@@ -411,12 +409,7 @@ class CuraLEConan(ConanFile):
                 copy(self, "*.pyi", libdir, str(self._site_packages), keep_path = False)
                 copy(self, "*.dylib", libdir, str(self._base_dir.joinpath("lib")), keep_path = False)
 
-        # Copy materials (flat)
-        rmdir(self, str(Path(self.source_folder, "resources", "materials")))
-        fdm_materials = self.dependencies["fdm_materialsle"].cpp_info
-        copy(self, "*", fdm_materials.resdirs[0], self.source_folder)
-
-        # Copy other resources
+        # Copy resources
         curale_resources = self.dependencies["curale_resources"].cpp_info
         for res_dir in curale_resources.resdirs:
             copy(self, "*", res_dir, str(self._share_dir.joinpath("cura", "resources", Path(res_dir).name)), keep_path = True)
@@ -490,9 +483,6 @@ class CuraLEConan(ConanFile):
         copy(self, "*", src = os.path.join(self.source_folder, "plugins"), dst = os.path.join(self.package_folder, self.cpp.package.resdirs[1]))
         copy(self, "*", src = os.path.join(self.source_folder, "packaging"), dst = os.path.join(self.package_folder, self.cpp.package.resdirs[2]))
         copy(self, "pip_requirements_*.txt", src = self.generators_folder, dst = os.path.join(self.package_folder, self.cpp.package.resdirs[-1]))
-
-        # Remove the fdm_materialsle from the package
-        rmdir(self, os.path.join(self.package_folder, self.cpp.package.resdirs[0], "materials"))
 
         # Remove the curale_resources resources from the package
         rm(self, "conanfile.py", os.path.join(self.package_folder, self.cpp.package.resdirs[0]))
