@@ -3,8 +3,7 @@ name: printer-linter-pr-diagnose
 on:
   pull_request:
     paths:
-      #- "resources/**"
-      - '.github/workflows/printer-linter-pr-diagnose.yml'
+      - "resources/**"
 
 permissions:
   contents: read
