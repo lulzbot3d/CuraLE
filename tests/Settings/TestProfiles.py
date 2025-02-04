@@ -40,7 +40,17 @@ def collectAllSettingIds():
     definition_container = DefinitionContainer("whatever")
     with open(os.path.join(os.path.dirname(__file__), "..", "..", "resources", "definitions", "fdmprinter.def.json"), encoding = "utf-8") as data:
         definition_container.deserialize(data.read())
-    return definition_container.getAllKeys()
+
+    lulz_container = DefinitionContainer("lulz")
+    with open(os.path.join(os.path.dirname(__file__), "..", "..", "resources", "definitions", "lulzbot.def.json"), encoding = "utf-8") as lulzy_data:
+        lulz_container.deserialize(lulzy_data.read())
+
+    key_set = definition_container.getAllKeys()
+    lulz_set = lulz_container.getAllKeys()
+
+    key_set.update(lulz_set)
+
+    return key_set
 
 
 def collectAllVariants():
