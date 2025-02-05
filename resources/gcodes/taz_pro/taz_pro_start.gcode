@@ -27,24 +27,25 @@ M900 K{linear_advance}                     ; set linear advance
 G90                                        ; absolute positioning
 M82                                        ; set extruder to absolute mode
 G92 E0                                     ; set extruder position to 0
-G0 X145 Y187 Z156 F3000                    ; move away from endstops
 M117 Heating Nozzle...;                    ; progress indicator message on LCD
-M109 R{material_wipe_temperature}          ; wait for extruder to reach wiping temp
-M104 S{material_probe_temperature}         ; start cooling to probe temp during wipe
+M109 R{material_soften_temperature}        ; wait for extruder to reach wiping temp
+M104 S{material_wipe_temperature}          ; start cooling to probe temp during wipe
 M83                                        ; set extruder to relative mode
-G1 E-3 F500                                ; retract 3mm to help with drool on fresh filament load
-M106 S255                                  ; turn fan on to help drop temp
+G1 E-4 F500                                ; retract 4mm to help with drool on fresh filament load
+M82                                        ; set extruder to absolute mode
 ; Use M206 below to adjust nozzle wipe position (Replace "{machine_nozz1e_z_offset}" to adjust Z value)
 ; X ~ (+)left/(-)right, Y ~ (+)front/(-)back, Z ~ (+)down/(-)up
 M206 X0 Y0 Z{machine_nozzle_z_offset}      ; restoring offsets and adjusting offset if AST285 is enabled
 M117 Wiping Nozzle...;                     ; progress indicator message on LCD
+M109 S{material_wipe_temperature}          ; start cooling to probe temp during wipe
+M106 S255                                  ; turn fan on to help drop temp
+M104 S{material_probe_temperature}         ; set probe temp
 G12                                        ; wiping sequence
 M206 X0 Y0 Z0                              ; reseting stock nozzle position ### CAUTION: changing this line can affect print quality ###
 M107                                       ; turn off part cooling fan
 M104 S{material_probe_temperature}         ; set probe temp
 M117 Leveling Print Bed...;                ; Progress indicator message on LCD
 G29                                        ; start auto-leveling sequence
-M104 S{material_print_temperature_layer_0} ; start extruder to reach initial printing temp
 M420 S1                                    ; enable leveling matrix
 G0 X0 Y0 Z10 F6000                         ; move to start location
 G4 S1                                      ; pause
@@ -54,12 +55,16 @@ M190 S{material_bed_temperature_layer_0}   ; wait for bed heating up
 M109 R{material_print_temperature_layer_0} ; wait for extruder to reach initial printing temp
 M300 T                                     ; play sound at start of first layer
 G0 Z{layer_height_0} F1500                 ; move to initial layer height and bring extruder to 0
-G1 X10 E6 F400                             ; purge 6mm in a short move to the right
-G1 Y1 E6.5 F300                            ; purge 0.5mm in a short move forward
-G1 X0 E8.5 F250                            ; purge 2mm in a short move to the left
-M8100 M{purge_pattern} N{machine_nozzle_size} F{material_diameter} ; purge material line if selected
 M82                                        ; set extruder to absolute mode
-G92 E1                                     ; set extruder position to 1 for a retract
-G1 E0 F1800                                ; retract 1mm at 30mm/s back to E0
+G92 E0                                     ; set extruder position to 0
+G1 X10 E14 F400                            ; purge 14mm in a short move to the right
+G1 Y1 E14.5 F300                           ; purge 0.5mm in a short move forward
+G1 X0 E16.5 F250                           ; purge 2mm in a short move to the left
+M8100 M{purge_pattern} N{machine_nozzle_size} F{material_diameter} ; purge material line if selected
+G90                                        ; set movement position to absolute
+M83                                        ; set extruder to relative mode
+G0 E-1 F1800                               ; retract 1mm
+G92 E0                                     ; set extruder position to 0
+M82                                        ; set extruder to absolute mode
 M117 {print_job_name};                     ; progress indicator message on LCD
 ;Start G-Code End

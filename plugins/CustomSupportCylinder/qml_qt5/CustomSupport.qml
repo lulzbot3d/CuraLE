@@ -26,7 +26,7 @@ Item
     height: childrenRect.height
     UM.I18nCatalog { id: catalog; name: "customsupport"}
 
-    property var s_size: UM.ActiveTool.properties.getValue("SSize")
+    property var s_size: UM.Controller.properties.getValue("SSize")
 
     function setSType(type)
     {
@@ -37,7 +37,7 @@ Item
         abutmentButton.checked = type === 'abutment'
         customButton.checked = type === 'custom'
         freeformButton.checked = type === 'freeform'
-        UM.ActiveTool.setProperty("SType", type)
+        UM.Controller.setProperty("SType", type)
     }
 
     Column
@@ -61,7 +61,7 @@ Item
                 checkable:true
                 onClicked: setSType('cylinder')
                 style: UM.Theme.styles.tool_button
-                checked: UM.ActiveTool.properties.getValue("SType") === 'cylinder'
+                checked: UM.Controller.properties.getValue("SType") === 'cylinder'
                 z: 6; // Depth position
             }
 
@@ -74,7 +74,7 @@ Item
                 checkable:true;
                 onClicked: setSType('tube');
                 style: UM.Theme.styles.tool_button;
-                checked: UM.ActiveTool.properties.getValue("SType") === 'tube';
+                checked: UM.Controller.properties.getValue("SType") === 'tube';
                 z: 5; // Depth position
             }
 
@@ -87,7 +87,7 @@ Item
                 checkable: true
                 onClicked: setSType('cube')
                 style: UM.Theme.styles.tool_button
-                checked: UM.ActiveTool.properties.getValue("SType") === 'cube'
+                checked: UM.Controller.properties.getValue("SType") === 'cube'
                 z: 4; // Depth position
             }
 
@@ -100,7 +100,7 @@ Item
                 checkable: true
                 onClicked: setSType('abutment')
                 style: UM.Theme.styles.tool_button
-                checked: UM.ActiveTool.properties.getValue("SType") === 'abutment'
+                checked: UM.Controller.properties.getValue("SType") === 'abutment'
                 z: 3; // Depth position
             }
 
@@ -113,7 +113,7 @@ Item
                 checkable:true
                 onClicked: setSType('freeform')
                 style: UM.Theme.styles.tool_button
-                checked: UM.ActiveTool.properties.getValue("SType") === 'freeform'
+                checked: UM.Controller.properties.getValue("SType") === 'freeform'
                 z: 2; // Depth position
             }
 
@@ -126,7 +126,7 @@ Item
                 checkable:true
                 onClicked: setSType('custom')
                 style: UM.Theme.styles.tool_button
-                checked: UM.ActiveTool.properties.getValue("SType") === 'custom'
+                checked: UM.Controller.properties.getValue("SType") === 'custom'
                 z: 1; // Depth position
             }
         }
@@ -209,7 +209,7 @@ Item
             property string unit: "mm"
             style: UM.Theme.styles.text_field;
             text: {
-                let val = UM.ActiveTool.properties.getValue("SSize")
+                let val = UM.Controller.properties.getValue("SSize")
                 return val != null ? val : ""
             }
             validator: DoubleValidator
@@ -222,7 +222,7 @@ Item
             onEditingFinished:
             {
                 var modified_text = text.replace(",", ".") // User convenience. We use dots for decimal values
-                UM.ActiveTool.setProperty("SSize", modified_text)
+                UM.Controller.setProperty("SSize", modified_text)
             }
         }
 
@@ -235,7 +235,7 @@ Item
             style: UM.Theme.styles.text_field
             visible: !freeformButton.checked
             text: {
-                let val = UM.ActiveTool.properties.getValue("MSize")
+                let val = UM.Controller.properties.getValue("MSize")
                 return val != null ? val : ""
             }
             validator: DoubleValidator
@@ -248,7 +248,7 @@ Item
             onEditingFinished:
             {
                 var modified_text = text.replace(",", ".") // User convenience. We use dots for decimal values
-                UM.ActiveTool.setProperty("MSize", modified_text);
+                UM.Controller.setProperty("MSize", modified_text);
             }
         }
 
@@ -268,11 +268,11 @@ Item
             width: UM.Theme.getSize("setting_control").width
             height: UM.Theme.getSize("setting_control").height
             visible: freeformButton.checked
-            Component.onCompleted: currentIndex = find(UM.ActiveTool.properties.getValue("SubType"))
+            Component.onCompleted: currentIndex = find(UM.Controller.properties.getValue("SubType"))
 
             onCurrentIndexChanged:
             {
-                UM.ActiveTool.setProperty("SubType",cbItems.get(currentIndex).text);
+                UM.Controller.setProperty("SubType",cbItems.get(currentIndex).text);
             }
         }
 
@@ -284,7 +284,7 @@ Item
             style: UM.Theme.styles.text_field
             visible: tubeButton.checked
             text: {
-                let val = UM.ActiveTool.properties.getValue("ISize")
+                let val = UM.Controller.properties.getValue("ISize")
                 return val != null ? val : ""
             }
             validator: DoubleValidator
@@ -302,7 +302,7 @@ Item
                 {
                 }
                 var modified_text = text.replace(",", ".") // User convenience. We use dots for decimal values
-                UM.ActiveTool.setProperty("ISize", modified_text)
+                UM.Controller.setProperty("ISize", modified_text)
             }
         }
 
@@ -314,7 +314,7 @@ Item
             style: UM.Theme.styles.text_field
             visible: !freeformButton.checked
             text: {
-                let val = UM.ActiveTool.properties.getValue("AAngle")
+                let val = UM.Controller.properties.getValue("AAngle")
                 return val != null ? val : ""
             }
             validator: IntValidator
@@ -325,7 +325,7 @@ Item
             onEditingFinished:
             {
                 var modified_angle_text = text.replace(",", ".") // User convenience. We use dots for decimal values
-                UM.ActiveTool.setProperty("AAngle", modified_angle_text)
+                UM.Controller.setProperty("AAngle", modified_angle_text)
             }
         }
     }
@@ -348,10 +348,10 @@ Item
             visible: abutmentButton.checked || freeformButton.checked
 
             checked: {
-                let val = UM.ActiveTool.properties.getValue("YDirection")
+                let val = UM.Controller.properties.getValue("YDirection")
                 return val != null ? val : false
             }
-            onClicked: UM.ActiveTool.setProperty("YDirection", checked)
+            onClicked: UM.Controller.setProperty("YDirection", checked)
 
         }
 
@@ -365,10 +365,10 @@ Item
             visible: freeformButton.checked
 
             checked: {
-                let val = UM.ActiveTool.properties.getValue("SMirror")
+                let val = UM.Controller.properties.getValue("SMirror")
                 return val != null ? val : false
             }
-            onClicked: UM.ActiveTool.setProperty("SMirror", checked)
+            onClicked: UM.Controller.setProperty("SMirror", checked)
 
         }
 
@@ -382,10 +382,10 @@ Item
             visible: freeformButton.checked
 
             checked: {
-                let val = UM.ActiveTool.properties.getValue("SMain")
+                let val = UM.Controller.properties.getValue("SMain")
                 return val != null ? val : false
             }
-            onClicked: UM.ActiveTool.setProperty("SMain", checked)
+            onClicked: UM.Controller.setProperty("SMain", checked)
         }
 
         CheckBox {
@@ -398,10 +398,10 @@ Item
             visible: abutmentButton.checked
 
             checked: {
-                let val = UM.ActiveTool.properties.getValue("EHeights")
+                let val = UM.Controller.properties.getValue("EHeights")
                 return val != null ? val : false
             }
-            onClicked: UM.ActiveTool.setProperty("EHeights", checked)
+            onClicked: UM.Controller.setProperty("EHeights", checked)
         }
     }
 
@@ -421,9 +421,9 @@ Item
         anchors.centerIn: rightRect
         width: UM.Theme.getSize("setting_control").width
         height: UM.Theme.getSize("setting_control").height
-        text: catalog.i18nc("@label", UM.ActiveTool.properties.getValue("SMsg"))
+        text: catalog.i18nc("@label", UM.Controller.properties.getValue("SMsg"))
         style: UM.Theme.styles.toolbox_action_button
-        onClicked: UM.ActiveTool.triggerAction("removeAllSupportMesh")
+        onClicked: UM.Controller.triggerAction("removeAllSupportMesh")
     }
 
     CheckBox {

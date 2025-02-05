@@ -12,8 +12,7 @@
 ;More information can be found at https://marlinfw.org/meta/gcode/
 ;
 ;M92 E420                                   ;Set Axis Steps-per-unit
-;M301 P21.0 I1.78 D61.93                    ;Set Hotend PID
-;M906 E960                                  ;TMC Motor Current
+;M906 E160                                  ;Digipot Motor Current ((875mA-750)/5+135) = 160
 ;
 M73 P0                                      ; clear GLCD progress bar
 M75                                         ; start GLCD timer
@@ -26,7 +25,6 @@ M104 R{material_wipe_temperature}           ; start extruder heating up
 M140 S{material_bed_temperature_layer_0}    ; start bed heating up
 G28 O                                       ; home all axes
 M117 Heating...;                            ; progress indicator message on LCD
-G0 X0 Y187 Z156 F1000 			            ; move away from endstops
 M109 R{material_wipe_temperature}           ; wait for extruder to reach wiping temp
 M104 S{material_probe_temperature}          ; set extruder to probe temp
 M83                                         ; set extruder to relative mode
@@ -43,7 +41,6 @@ M109 R{material_probe_temperature}          ; wait for extruder to reach probe t
 M107                                        ; turn off part cooling fan
 M117 Probing...;                            ; progress indicator message on LCD
 G29                                         ; start auto-leveling sequence
-M104 R{material_print_temperature_layer_0}  ; start extruder to reach initial printing temp
 M420 S1                                     ; enable leveling matrix
 G1 X0 Y0 Z10 F5000                          ; move up off last probe point
 G4 S1                                       ; pause
@@ -51,7 +48,6 @@ M400                                        ; wait for moves to finish
 M117 Heating...;                            ; progress indicator message on LCD
 M190 R{material_bed_temperature_layer_0}    ; wait for bed to reach printing temp
 M109 R{material_print_temperature_layer_0}  ; wait for extruder to reach initial printing temp
-M117 Purging...;                            ; progress indicator message on LCD
 G0 Z{layer_height_0} F1500                  ; move to initial layer height and bring extruder to 0
 M82                                         ; set extruder to absolute mode
 G92 E0                                      ; set extruder position to 0

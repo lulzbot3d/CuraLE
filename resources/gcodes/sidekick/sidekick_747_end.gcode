@@ -12,5 +12,5 @@ G27                                              ; present finished print
 M140 S{material_keep_part_removal_temperature_t} ; keep temperature or cool down
 M77                                              ; End LCD Print Timer
 G90                                              ; absolute positioning
-M18 X E                                          ; turn off x and e axis
+M18 E                                            ; turn off x and e axis
 M117 Print Complete. ;                           ; print complete message

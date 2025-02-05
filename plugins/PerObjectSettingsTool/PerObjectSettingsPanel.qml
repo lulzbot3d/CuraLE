@@ -150,7 +150,7 @@ Item
             width: parent.width / 2 - UM.Theme.getSize("default_margin").width
             height: UM.Theme.getSize("setting_control").height
             textRole: "text"
-            forceHighlight: base.hovered
+            forceHighlight: base.hovered === undefined ? false : base.hovered
 
             model: ListModel
             {
@@ -224,7 +224,18 @@ Item
                     visibilityHandler: Cura.PerObjectSettingVisibilityHandler
                     {
                         id: visibility_handler
-                        selectedObjectId: UM.Controller.properties.getValue("SelectedObjectId")
+                        selectedObjectId:
+                        {
+                            let obj_id = UM.Controller.properties.getValue("SelectedObjectId")
+                            if (obj_id !== undefined)
+                            {
+                                return obj_id
+                            }
+                            else
+                            {
+                                return -1
+                            }
+                        }
                     }
 
                     // For some reason the model object is updated after removing him from the memory and

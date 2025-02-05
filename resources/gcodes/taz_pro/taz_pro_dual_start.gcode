@@ -26,9 +26,9 @@ M420 S0                                            ; disable previous leveling m
 M140 S{material_bed_temperature_layer_0}           ; begin bed temping up
 M104 S{material_wipe_temperature_0}                ; soften filament
 M104 S{material_wipe_temperature_0} T1             ; soften filament
-G28O                                               ; home
+G28 O                                              ; home
 G0 X50 Y25 Z10 F2000
-M117 Heating...
+M117 Heating...;
 M109 R{material_soften_temperature_0}              ; wait for temp
 M106 S255                                          ; turn on fans to speed cooling
 M109 R{material_wipe_temperature_0}                ; wait for T0 wipe temp
@@ -36,46 +36,55 @@ M104 S{material_probe_temperature_0}               ; cool to probe temp on E0
 M104 S{material_probe_temperature_0} T1            ; cool to probe temp on E1
 M83                                                ; set extruder to relative mode
 G1 E-4 F500                                        ; retract 4mm to help with drool on fresh filament load
-M117 Wiping...
+M82                                                ; set extruder to absolute mode
+M117 Wiping...;
 G12                                                ; wipe sequence
 M107                                               ; turn off fan
+M117 Leveling Print Bed...;
 G29                                                ; probe sequence (for auto-leveling)
 M420 S1                                            ; enable leveling matrix
 T{second_extruder_nr}                              ; ensure we're using the SECOND extruder
 M104 S{material_print_temperature_layer_0_0} T0    ; set extruder temps
 M104 S{material_print_temperature_layer_0_1} T1    ; set extruder temps
-G0 {purge_start_location_sec} Z5 F6000                ; move to initial extruder purge start location
+G0 {purge_start_location_sec} Z5 F6000             ; move to initial extruder purge start location
 M400                                               ; clear buffer
-M117 Heating...;                                   ; Note: We purge the second extruder first to avoid an unneeded swap after purging
+M117 Final Heating...;                             ; Note: We purge the second extruder first to avoid an unneeded swap after purging
 M109 R{material_print_temperature_layer_0_sec}     ; set extruder temp and wait
 M190 R{material_bed_temperature_layer_0}           ; get bed temping up during first layer
 M400                                               ; clear buffer
 M300 T                                             ; play sound at start of first layer
 G92 E0                                             ; set extruder to zero
+M117 Purging...;
 G0 Z{layer_height_0} F1500                         ; move to initial layer height
 G91                                                ; relative positioning
 M82                                                ; set extruder to absolute mode
-G1 X10 E8 F400                                     ; purge 5mm in a short move to the left
-G1 Y1 E8.5 F300                                    ; purge 0.5mm in a short move forward
-G1 X-10 E10.5 F250                                 ; purge 2mm in a short move to the right
+G1 X10 E14 F400                                    ; purge 14mm in a short move to the left
+G1 Y1 E14.5 F300                                   ; purge 0.5mm in a short move forward
+G1 X-10 E16.5 F250                                 ; purge 2mm in a short move to the right
 M8100 M{purge_pattern_sec} N{machine_nozzle_size_sec} F{material_diameter_sec} ; purge material line if selected
+G90                                                ; set movement position to absolute
 M83                                                ; set extruder to relative mode
-G1 E-1 F1800                                       ; retract 1mm at 30mm/s
+G0 E-1 F1800                                       ; retract 1mm
+G92 E0                                             ; set extruder position to 0
+M82                                                ; set extruder to absolute mode
 G0 Z10 F1500                                       ; raise extruder
 M104 S{material_standby_temperature_sec}           ; set second extruder to standby temperature
+M117 Final Heating...;
 T{initial_extruder_nr}                             ; swap to INITIAL extruder
-G0 {purge_start_location_init} Z5 F1500               ; move to initial extruder purge start location
+G0 {purge_start_location_init} Z5 F6000            ; move to initial extruder purge start location
 M109 R{material_print_temperature_layer_0_init}    ; set extruder temp and wait
-G92 E0                                             ; set extruder to zero
 G0 Z{layer_height_0} F6000                         ; move to initial layer height
 G91                                                ; relative positioning
 M82                                                ; set extruder to absolute mode
-G1 X10 E8 F400                                     ; purge 5mm in a short move to the left
-G1 Y1 E8.5 F300                                    ; purge 0.5mm in a short move forward
-G1 X-10 E10.5 F250                                 ; purge 2mm in a short move to the right
-M8100 M{purge_pattern_1} N{machine_nozzle_size_1} F{material_diameter_1} ; purge material line if selected
+G92 E0                                             ; set extruder position to 0
+G1 X10 E14 F400                                    ; purge 14mm in a short move to the left
+G1 Y1 E14.5 F300                                   ; purge 0.5mm in a short move forward
+G1 X-10 E16.5 F250                                 ; purge 2mm in a short move to the right
+M8100 M{purge_pattern_init} N{machine_nozzle_size_init} F{material_diameter_init} ; purge material line if selected
+G90                                                ; set movement position to absolute
 M83                                                ; set extruder to relative mode
-G1 E-1 F1800                                       ; retract 1mm at 30mm/s
+G0 E-1 F1800                                       ; retract 1mm
+G92 E0                                             ; set extruder position to 0
 M82                                                ; set extruder to absolute mode
 M117 Printing {print_job_name}...
 ;Start G-Code End
