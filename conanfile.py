@@ -27,7 +27,6 @@ class CuraLEConan(ConanFile):
     generators = "VirtualPythonEnv"
     tool_requires = "gettext/0.22.5"
 
-    # FIXME: Remove specific branch once merged to main
     python_requires = "translationextractor/[>=2.2.0]@lulzbot/stable"
 
     options = {

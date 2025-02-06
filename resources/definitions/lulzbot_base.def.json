@@ -47,7 +47,7 @@
         "bridge_skin_support_threshold": { "default_value": 85 },
         "bridge_sparse_infill_max_density": { "default_value": 30 },
         "bridge_wall_material_flow": { "default_value": 75 },
-        "bridge_wall_min_length": { "default_value": 4.5 },
+        "bridge_wall_min_length": { "value": 4.5 },
         "brim_line_count": { "value": 6 },
         "infill_before_walls": { "default_value": false },
         "infill_pattern": { "value": "'grid' if infill_sparse_density > 25 else 'grid'" },
@@ -55,13 +55,8 @@
         "infill_wipe_dist": { "maximum_value_warning": "machine_nozzle_size * 1.5" },
         "initial_bottom_layers": { "value": "1 if magic_spiralize else bottom_layers" },
         "jerk_enabled": { "description": "Enables adjusting the jerk of print head when the velocity in the X or Y axis changes. Increasing the jerk can reduce printing time at the cost of print quality. Populated values are the firmware defaults." },
-        "jerk_travel":
-        {
-            "default_value": 20,
-            "value": "jerk_print if magic_spiralize else 20"
-        },
+        "jerk_travel": { "value": "jerk_print if magic_spiralize else 20" },
         "layer_height_0": { "maximum_value_warning": "0.85 * min(extruderValues('machine_nozzle_size'))" },
-        "line_width": { "default_value": 0.5 },
         "machine_acceleration": { "default_value": 2000 },
         "machine_baudrate": { "default_value": "250000" },
         "machine_center_is_zero": { "default_value": false },
@@ -133,11 +128,7 @@
         "support_z_distance": { "value": "(math.ceil(0.25 / layer_height) * layer_height) if layer_height < 0.25 else layer_height" },
         "top_bottom_pattern": { "value": "'concentric' if magic_spiralize else 'lines'" },
         "travel_retract_before_outer_wall": { "default_value": true },
-        "wall_thickness":
-        {
-            "default_value": 1.0,
-            "value": "wall_line_width_0 if magic_spiralize else 1.0"
-        },
+        "wall_thickness": { "value": "wall_line_width_0 if magic_spiralize else 1.0" },
         "zig_zaggify_infill": { "value": true }
     },
     "settings":
