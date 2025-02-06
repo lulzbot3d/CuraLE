@@ -4,7 +4,7 @@ import os
 import os.path
 
 
-__exclude_filenames = ["UltimakerRobot_support.stl"]
+__exclude_filenames = ["octo_gear.stl", "pro_dual_cal1.stl", "pro_dual_cal2.stl", "right_coronary_artery_tree.stl", "rocktopus.stl", "README.md"]
 
 
 def collectAllPlatformMeshes():

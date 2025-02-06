@@ -28,12 +28,20 @@ for filepath in extruder_filepaths:
     if ".md" in filepath:
         extruder_filepaths.remove(filepath)
 definition_filepaths = machine_filepaths + extruder_filepaths
-all_meshes = os.listdir(os.path.join(os.path.dirname(__file__), "..", "..", "resources", "meshes"))
+
+meshes_path = os.path.join(os.path.dirname(__file__), "..", "..", "resources", "meshes")
+all_meshes = []
+for root, dirs, files in os.walk(meshes_path):
+    for f in files:
+        filepath = os.path.join(root, f)
+        all_meshes.append(os.path.relpath(filepath, meshes_path))
+
 all_images = os.listdir(os.path.join(os.path.dirname(__file__), "..", "..", "resources", "images"))
 
 # Loading definition files needs a functioning ContainerRegistry
 cr = UM.Settings.ContainerRegistry.ContainerRegistry(None)
 
+root_definitions = ["fdmprinter.def.json", "fdmextruder.def.json", "lulzbot.def.json", "lulzbot_extruder.def.json"]
 
 @pytest.fixture
 def definition_container():
@@ -71,7 +79,7 @@ def test_validateMachineDefinitionContainer(file_path, definition_container):
     """Tests all definition containers"""
 
     file_name = os.path.basename(file_path)
-    if file_name == "fdmprinter.def.json" or file_name == "fdmextruder.def.json":
+    if file_name in root_definitions:
         return  # Stop checking, these are root files.
 
     mocked_vum = MagicMock()
@@ -245,8 +253,8 @@ def test_noNewSettings(file_path: str):
     :param file_path: A path to a definition file to test.
     """
     filename = os.path.basename(file_path)
-    if filename == "fdmprinter.def.json" or filename == "fdmextruder.def.json":
-        return  # FDMPrinter and FDMExtruder, being the basis for all printers and extruders, are allowed to define new settings since they will be available for all printers then.
+    if filename in root_definitions:
+        return  # Root definition files, being the basis for all printers and extruders, are allowed to define new settings since they will be available for all printers then.
     with open(file_path, encoding = "utf-8") as f:
         doc = json.load(f)
     assert "settings" not in doc
