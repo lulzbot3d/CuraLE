@@ -20,7 +20,7 @@
     "overrides":
     {
         "acceleration_print": { "default_value": 500 },
-        "acceleration_travel": { "default_value": 500 },
+        "acceleration_travel": { "value": 500 },
         "firmware_machine_type": { "default_value": "LulzBot TAZ 5" },
         "machine_acceleration": { "default_value": 500 },
         "machine_depth": { "default_value": 275 },
