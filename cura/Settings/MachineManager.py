@@ -1411,6 +1411,10 @@ class MachineManager(QObject):
         candidate_quality_groups = ContainerTree.getInstance().getCurrentQualityGroups()
         available_quality_types = {qt for qt, g in candidate_quality_groups.items() if g.is_available}
 
+        if not available_quality_types:
+            Logger.log("w", "No available quality types found, setting all qualities to empty (Not Supported).")
+            self._setEmptyQuality()
+            return
         quality_type = sorted(list(available_quality_types))[0]
         if self._global_container_stack is None:
             Logger.log("e", "Global stack not present!")
