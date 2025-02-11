@@ -629,7 +629,6 @@ class CuraApplication(QtApplication):
         preferences.addPreference("view/settings_ypos", 45)
         preferences.addPreference("view/colorscheme_xpos", 0)
         preferences.addPreference("view/colorscheme_ypos", 56)
-        # preferences.addPreference("cura/currency", "€")
         preferences.addPreference("cura/currency", "$")
         preferences.addPreference("cura/material_settings", "{}")
 
@@ -1367,7 +1366,6 @@ class CuraApplication(QtApplication):
         self.processEvents()
         qmlRegisterType(FavoriteMaterialsModel, "Cura", 1, 0, "FavoriteMaterialsModel")
         qmlRegisterType(GenericMaterialsModel, "Cura", 1, 0, "GenericMaterialsModel")
-        # qmlRegisterType(MaterialBrandsModel, "Cura", 1, 0, "MaterialBrandsModel")
         qmlRegisterType(MaterialTypesModel, "Cura", 1, 0, "MaterialTypesModel")
         qmlRegisterSingletonType(QualityManagementModel, "Cura", 1, 0, self.getQualityManagementModelWrapper,"QualityManagementModel")
         qmlRegisterSingletonType(MaterialManagementModel, "Cura", 1, 5, self.getMaterialManagementModelWrapper,"MaterialManagementModel")
@@ -2160,7 +2158,7 @@ class CuraApplication(QtApplication):
         select_models_on_load = self.getPreferences().getValue("cura/select_models_on_load")
 
         nodes_to_arrange = []  # type: List[CuraSceneNode]
-
+        
         fixed_nodes = []
         for node_ in DepthFirstIterator(self.getController().getScene().getRoot()):
             # Only count sliceable objects

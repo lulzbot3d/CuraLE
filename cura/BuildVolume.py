@@ -972,8 +972,6 @@ class BuildVolume(SceneNode):
             return {}
 
         disallowed_areas = []
-        disallowed_areas += self._global_container_stack.getProperty("machine_disallowed_areas", "value")
-
         for area in self._global_container_stack.getProperty("machine_disallowed_areas", "value"):
             if  len(area) > 0:
                 disallowed_areas.append(area)

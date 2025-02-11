@@ -67,7 +67,7 @@ Control
         {
             id: image
             source: imageSource
-            width: 90 * screenScaleFactor
+            width: 180 * screenScaleFactor
             sourceSize.width: width
             sourceSize.height: height
         }

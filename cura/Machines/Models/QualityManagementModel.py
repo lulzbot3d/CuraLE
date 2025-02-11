@@ -151,9 +151,6 @@ class QualityManagementModel(ListModel):
         roles of this list model.
         """
 
-        machine_manager = cura.CuraApplication.CuraApplication.getInstance().getMachineManager()
-        active_machine = machine_manager.activeMachine
-
         global_stack = cura.CuraApplication.CuraApplication.getInstance().getGlobalContainerStack()
         if not global_stack:
             Logger.log("i", "No active global stack, cannot duplicate quality (changes) profile.")
@@ -162,26 +159,18 @@ class QualityManagementModel(ListModel):
         container_registry = cura.CuraApplication.CuraApplication.getInstance().getContainerRegistry()
         new_name = container_registry.uniqueName(new_name)
 
-        active_machine_def_id = active_machine.definition.id
-
-        if "material" in quality_model_item:
-            material_id = quality_model_item["material"]
-        else:
-            material_id = machine_manager.activeMaterialId.split("_" + active_machine_def_id)[0]
         intent_category = quality_model_item["intent_category"]
         quality_group = quality_model_item["quality_group"]
         quality_changes_group = quality_model_item["quality_changes_group"]
         if quality_changes_group is None:
             new_quality_changes = self._createQualityChanges(quality_group.quality_type, intent_category, new_name,
-                                                             global_stack, extruder_stack = None,
-                                                             material_id = material_id)
+                                                             global_stack, extruder_stack = None)
             container_registry.addContainer(new_quality_changes)
 
             for extruder in global_stack.extruderList:
                 new_extruder_quality_changes = self._createQualityChanges(quality_group.quality_type, intent_category,
                                                                           new_name,
-                                                                          global_stack, extruder_stack = extruder,
-                                                                          material_id = material_id)
+                                                                          global_stack, extruder_stack = extruder)
 
                 container_registry.addContainer(new_extruder_quality_changes)
         else:
@@ -217,9 +206,6 @@ class QualityManagementModel(ListModel):
             Logger.log("w", "No quality container found in stack %s, cannot create profile", global_stack.getId())
             return
 
-        active_machine_def_id = global_stack.definition.id
-        active_material_id = machine_manager.activeMaterialId.split("_" + active_machine_def_id)[0]
-
         machine_manager.blurSettings.emit()
         if base_name is None or base_name == "":
             base_name = active_quality_name
@@ -241,7 +227,7 @@ class QualityManagementModel(ListModel):
             if stack.getMetaDataEntry("position") is not None:
                 extruder_stack = stack
                 intent_category = stack.intent.getMetaDataEntry("intent_category")
-            new_changes = self._createQualityChanges(quality_container.getMetaDataEntry("quality_type"), intent_category, unique_name, global_stack, extruder_stack, active_material_id)
+            new_changes = self._createQualityChanges(quality_container.getMetaDataEntry("quality_type"), intent_category, unique_name, global_stack, extruder_stack)
             container_manager._performMerge(new_changes, quality_changes_container, clear_settings = False)
             container_manager._performMerge(new_changes, stack.userChanges)
 
@@ -255,7 +241,7 @@ class QualityManagementModel(ListModel):
                     machine_manager.setQualityChangesGroup(quality_changes)
                     break
 
-    def _createQualityChanges(self, quality_type: str, intent_category: Optional[str], new_name: str, machine: "GlobalStack", extruder_stack: Optional["ExtruderStack"], material_id: Optional[str]) -> "InstanceContainer":
+    def _createQualityChanges(self, quality_type: str, intent_category: Optional[str], new_name: str, machine: "GlobalStack", extruder_stack: Optional["ExtruderStack"]) -> "InstanceContainer":
         """Create a quality changes container with the given set-up.
 
         :param quality_type: The quality type of the new container.
@@ -276,8 +262,6 @@ class QualityManagementModel(ListModel):
         quality_changes.setName(new_name)
         quality_changes.setMetaDataEntry("type", "quality_changes")
         quality_changes.setMetaDataEntry("quality_type", quality_type)
-        if material_id is not None:
-            quality_changes.setMetaDataEntry("material", material_id)
         if intent_category is not None:
             quality_changes.setMetaDataEntry("intent_category", intent_category)
 
@@ -374,7 +358,7 @@ class QualityManagementModel(ListModel):
         for intent_category, quality_type in available_intent_list:
             if not quality_group_dict[quality_type].is_available:
                 continue
-
+            
             result.append({
                 "name": quality_group_dict[quality_type].name,  # Use the quality name as the display name
                 "is_read_only": True,

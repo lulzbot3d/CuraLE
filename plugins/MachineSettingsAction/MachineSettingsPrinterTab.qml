@@ -43,7 +43,7 @@ Item
         }
         height: childrenRect.height
         spacing: UM.Theme.getSize("default_margin").width
-
+        
         // =======================================
         // Left-side column for "Printer Settings"
         // =======================================

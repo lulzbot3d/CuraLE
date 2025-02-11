@@ -146,7 +146,6 @@ u_layer1 = 1
 u_layer2 = 2
 u_background_color = [0.965, 0.965, 0.965, 1.0]
 u_outline_strength = 1.0
-//u_outline_color = [0.05, 0.66, 0.89, 1.0]
 u_outline_color = [0.47, 0.53, 0.078, 1.0]
 
 [bindings]

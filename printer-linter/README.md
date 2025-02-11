@@ -36,3 +36,4 @@ A Linter class returns an iterator of Diagnostics, each diagnostic is an issue w
 Formatters load a file reformat it and write it to disk. There are separate formatters for each file type. All formatters implement the abstract class Formatter.
 
 Formatters should format based on the Format rules in .printer-linter
+

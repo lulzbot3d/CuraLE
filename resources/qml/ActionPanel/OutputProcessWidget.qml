@@ -32,7 +32,7 @@ Column
         id: information
         width: parent.width
         height: childrenRect.height
-
+        
         PrintInformationWidget
         {
             id: printInformationPanel

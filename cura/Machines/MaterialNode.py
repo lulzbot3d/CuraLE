@@ -96,7 +96,7 @@ class MaterialNode(ContainerNode):
                                                                                                definition = self.variant.machine.quality_definition,
                                                                                                variant = self.variant.variant_name)
                 else:
-                   qualities_any_material = container_registry.findInstanceContainersMetadata(type = "quality", definition = self.variant.machine.quality_definition)
+                    qualities_any_material = container_registry.findInstanceContainersMetadata(type = "quality", definition = self.variant.machine.quality_definition)
 
                 # First we attempt to find materials that have the same brand but not the right color
                 all_material_base_files_right_brand = {material_metadata["base_file"] for material_metadata in container_registry.findInstanceContainersMetadata(type = "material", material = my_material_type, brand = self.brand)}

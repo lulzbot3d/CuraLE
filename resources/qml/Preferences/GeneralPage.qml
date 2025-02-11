@@ -1081,34 +1081,6 @@ UM.PreferencesPage
                 }
             }
 
-            // UM.TooltipArea
-            // {
-            //     width: childrenRect.width
-            //     height: visible ? childrenRect.height : 0
-            //     text: catalog.i18nc("@info:tooltip", "Should anonymous data about your print be sent to LulzBot? Note, no models, IP addresses or other personally identifiable information is sent or stored.")
-
-            //     UM.CheckBox
-            //     {
-            //         id: sendDataCheckbox
-            //         text: catalog.i18nc("@option:check","Send (anonymous) print information")
-            //         checked: boolCheck(UM.Preferences.getValue("info/send_slice_info"))
-            //         onCheckedChanged: UM.Preferences.setValue("info/send_slice_info", checked)
-            //     }
-
-            //     UM.SimpleButton
-            //     {
-            //         onClicked: CuraApplication.showMoreInformationDialogForAnonymousDataCollection()
-            //         iconSource: UM.Theme.getIcon("Information")
-            //         anchors.left: sendDataCheckbox.right
-            //         anchors.verticalCenter: sendDataCheckbox.verticalCenter
-            //         hoverBackgroundColor: UM.Theme.getColor("secondary_button_hover")
-            //         backgroundRadius: width / 2
-            //         height: UM.Theme.getSize("small_button_icon").height
-            //         color: UM.Theme.getColor("small_button_text")
-            //         width: height
-            //     }
-            // }
-
             Item
             {
                 //: Spacer
@@ -1175,21 +1147,6 @@ UM.PreferencesPage
                     onClicked: UM.Preferences.setValue("info/latest_update_source", "beta")
                 }
             }
-            // UM.TooltipArea
-            // {
-            //     width: childrenRect.width
-            //     height: visible ? childrenRect.height : 0
-            //     text: catalog.i18nc("@info:tooltip", "Should an automatic check for new plugins be done every time Cura is started? It is highly recommended that you do not disable this!")
-
-            //     UM.CheckBox
-            //     {
-            //         id: pluginNotificationsUpdateCheckbox
-            //         text: catalog.i18nc("@option:check", "Get notifications for plugin updates")
-            //         checked: boolCheck(UM.Preferences.getValue("info/automatic_plugin_update_check"))
-            //         onCheckedChanged: UM.Preferences.setValue("info/automatic_plugin_update_check", checked)
-            //     }
-            // }
-
 
             /* Multi-buildplate functionality is disabled because it's broken. See CURA-4975 for the ticket to remove it.
             Item
@@ -1219,20 +1176,6 @@ UM.PreferencesPage
                     onCheckedChanged: UM.Preferences.setValue("cura/use_multi_build_plate", checked)
                 }
             }*/
-
-            // Connections
-            // {
-            //     target: UM.Preferences
-            //     function onPreferenceChanged(preference)
-            //     {
-            //         if (preference !== "info/send_slice_info")
-            //         {
-            //             return;
-            //         }
-
-            //         sendDataCheckbox.checked = boolCheck(UM.Preferences.getValue("info/send_slice_info"))
-            //     }
-            // }
         }
     }
 }
