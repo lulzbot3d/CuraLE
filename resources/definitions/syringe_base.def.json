@@ -5,14 +5,13 @@
     "metadata":
     {
         "visible": false,
+        "file_formats": "text/x-gcode",
         "has_machine_quality": true,
         "has_materials": true,
         "has_variants": true,
-        "file_formats": "text/x-gcode",
         "preferred_material": "Generic_Sodium_Alginate",
         "preferred_variant_name": "25 Gauge"
     },
     "overrides":
     {}
 }
-
