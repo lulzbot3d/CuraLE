@@ -56,9 +56,10 @@
         "initial_bottom_layers": { "value": "1 if magic_spiralize else bottom_layers" },
         "jerk_enabled": { "description": "Enables adjusting the jerk of print head when the velocity in the X or Y axis changes. Increasing the jerk can reduce printing time at the cost of print quality. Populated values are the firmware defaults." },
         "jerk_travel": { "value": "jerk_print if magic_spiralize else 20" },
-        "layer_height_0": {
-            "value": "round(0.75 * min(extruderValues('machine_nozzle_size')), 1)",
-            "maximum_value_warning": "0.85 * min(extruderValues('machine_nozzle_size'))"
+        "layer_height_0":
+        {
+            "maximum_value_warning": "0.85 * min(extruderValues('machine_nozzle_size'))",
+            "value": "round(0.75 * min(extruderValues('machine_nozzle_size')), 1)"
         },
         "machine_acceleration": { "default_value": 2000 },
         "machine_baudrate": { "default_value": "250000" },
