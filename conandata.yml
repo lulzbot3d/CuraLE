@@ -116,7 +116,7 @@ pyinstaller:
         - "cura"
         - "UM"
         - "serial"
-        - "Charon"
+        # - "Charon"
         - "sqlite3"
         - "trimesh"
         - "win32ctypes"
@@ -266,8 +266,8 @@ pycharm_targets:
 
 pip_requirements_core:
   any_os:
-    charon:
-      url: "git+https://github.com/lulzbot3d/libCharonLE@main#egg=charon"
+    # charon:
+    #   url: "git+https://github.com/lulzbot3d/libCharonLE@main#egg=charon"
     certifi:
       version: "2023.5.7"
       hashes:
