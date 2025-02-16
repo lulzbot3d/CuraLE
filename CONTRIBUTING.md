@@ -15,10 +15,10 @@ Since CuraLE has multiple repositories that influence it, we've listed the most 
 * [CuraLE](https://github.com/lulzbot3d/CuraLE)
 * [UraniumLE](https://github.com/lulzbot3d/UraniumLE)
 * [CuraEngineLE](https://github.com/lulzbot3d/CuraEngineLE)
-* [FDM_MaterialsLE](https://github.com/lulzbot3d/FDM_MaterialsLE)
+<!--* [FDM_MaterialsLE](https://github.com/lulzbot3d/FDM_MaterialsLE)-->
 * [libArcusLE](https://github.com/lulzbot3d/libArcusLE)
 * [libSavitarLE](https://github.com/lulzbot3d/libSavitarLE)
-* [libCharonLE](https://github.com/lulzbot3d/libCharonLE)
+<!--* [libCharonLE](https://github.com/lulzbot3d/libCharonLE)-->
 * [CuraLE_Binary_Data](https://github.com/lulzbot3d/CuraLE_Binary_Data)
 
 If your change requires changes on multiple of these repositories, please link them together so that we know to merge & review them together.
