@@ -1,7 +1,7 @@
 {
     "version": 2,
     "name": "Syringe Printer",
-    "inherits": "lulzbot",
+    "inherits": "lulzbot_base",
     "metadata":
     {
         "visible": false,

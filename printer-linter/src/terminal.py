@@ -112,6 +112,7 @@ def applyFixesToFile(file, settings, full_body_check) -> None:
 
 def applyFormattingToFile(file: Path, settings) -> None:
     if not file.exists():
+        print("File \"%s\" not found!", file.name)
         return
 
     ext = ".".join(file.name.split(".")[-2:])

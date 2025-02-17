@@ -39,7 +39,7 @@ FORMULA_NAMES = [
     "degrees"
 ]
 
-DELIMITERS = [r'\+', '-', '=', '/', r'\*', r'\(', r'\)', r'\[', r'\]', '{', '}', ' ', '^']
+DELIMITERS = [r'\+', r'-', r'=', r'/', r'\*', r'\(', r'\)', r'\[', r'\]', r'{', r'}', r' ', r'^']
 
 
 class Formulas(Linter):
