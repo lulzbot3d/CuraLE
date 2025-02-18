@@ -7,10 +7,10 @@
         "visible": false,
         "file_formats": "text/x-gcode",
         "has_machine_quality": true,
-        "has_materials": true,
         "has_variants": true,
         "preferred_material": "Generic_Sodium_Alginate",
-        "preferred_variant_name": "25 Gauge"
+        "preferred_variant_name": "25 Gauge",
+        "quality_definition": "syringe_base"
     },
     "overrides":
     {}

@@ -9,7 +9,8 @@
         "has_materials": true,
         "has_variants": true,
         "machine_extruder_trains": { "0": "ast285" },
-        "preferred_variant_name": "1.2mm"
+        "preferred_variant_name": "1.2mm",
+        "quality_definition": "ast285_base"
     },
     "overrides":
     {

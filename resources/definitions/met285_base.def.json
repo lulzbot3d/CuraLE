@@ -6,10 +6,10 @@
     {
         "visible": false,
         "has_machine_quality": true,
-        "has_materials": true,
         "has_variants": true,
         "machine_extruder_trains": { "0": "met285" },
-        "preferred_variant_name": "0.5mm"
+        "preferred_variant_name": "0.5mm",
+        "quality_definition": "met285_base"
     },
     "overrides":
     {}
