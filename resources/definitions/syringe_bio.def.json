@@ -6,7 +6,6 @@
     {
         "visible": true,
         "platform": "bed_plates/labeled/bio_labeled.stl",
-        "machine_extruder_trains": { "0": "bio_syringe" },
         "platform_offset": [
             0,
             -14.8,

@@ -2,14 +2,16 @@
 <fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
   <metadata>
     <name>
-      <brand>Generic</brand>
-      <material>Sodium Alginate</material>
+      <brand>Advanced BioMatrix</brand>
+      <material>Collagen Bioink</material>
       <color>Generic</color>
+      <category>Expert</category>
+      <label>Lifeink 200</label>
     </name>
-    <GUID>87649752-0616-4ac2-9c87-3007f690ef46</GUID>
+    <GUID>4a93345b-114d-40f9-9781-40216df0e2b4</GUID>
     <version>1</version>
     <color_code>#002677</color_code>
-    <purge_pattern>0</purge_pattern>
+    <info_link></info_link>
   </metadata>
   <properties>
     <density>1.25</density>
