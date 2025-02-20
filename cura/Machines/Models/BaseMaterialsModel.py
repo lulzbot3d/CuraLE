@@ -169,7 +169,8 @@ class BaseMaterialsModel(ListModel):
             return
         materials = machine_node.variants[nozzle_name].materials
         approximate_material_diameter = extruder_stack.getApproximateMaterialDiameter()
-        self._available_materials = {key: material for key, material in materials.items() if float(material.getMetaDataEntry("approximate_diameter", -1)) == approximate_material_diameter}
+        diameter_filtered_materials = {key: material for key, material in materials.items() if float(material.getMetaDataEntry("approximate_diameter", -1)) == approximate_material_diameter}
+        self._available_materials = {key: material for key, material in diameter_filtered_materials.items() if material.getMetaDataEntry("compatible", True)}
 
     def _canUpdate(self):
         """This method is used by all material models in the beginning of the _update() method in order to prevent

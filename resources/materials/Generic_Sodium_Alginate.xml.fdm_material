@@ -6,6 +6,7 @@
       <material>Sodium Alginate</material>
       <color>Generic</color>
     </name>
+    <definition>syringe_base</definition>
     <GUID>87649752-0616-4ac2-9c87-3007f690ef46</GUID>
     <version>1</version>
     <color_code>#002677</color_code>

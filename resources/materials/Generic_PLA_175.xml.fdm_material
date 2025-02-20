@@ -6,6 +6,7 @@
       <material>PLA (Easy Printing)</material>
       <color>Generic</color>
     </name>
+    <definition>lulzbot_base</definition>
     <GUID>8aa2165b-f826-49d0-bd24-ab80f38c83d8</GUID>
     <version>25</version>
     <color_code>#99AB21</color_code>

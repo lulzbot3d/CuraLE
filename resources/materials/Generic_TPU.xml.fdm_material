@@ -6,6 +6,7 @@
       <material>TPU (Flexible)</material>
       <color>Generic</color>
     </name>
+    <definition>lulzbot_base</definition>
     <GUID>06c10480-f55f-44ae-98f8-d170a7613b44</GUID>
     <version>1</version>
     <color_code>#FFD700</color_code>

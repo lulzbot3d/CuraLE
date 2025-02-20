@@ -6,6 +6,7 @@
       <material>PVA (Water Soluble)</material>
       <color>Generic</color>
     </name>
+    <definition>lulzbot_base</definition>
     <GUID>cc0f0ffc-f2a9-4337-9228-418ad95eb15b</GUID>
     <version>1</version>
     <color_code>#D3D3D3</color_code>

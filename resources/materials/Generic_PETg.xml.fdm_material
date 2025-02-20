@@ -6,6 +6,7 @@
       <material>PETg (Strong)</material>
       <color>Generic</color>
     </name>
+    <definition>lulzbot_base</definition>
     <color_code>#800080</color_code>
     <GUID>b720076a-bad4-4118-8e9a-d5ddb97828a9</GUID>
     <adhesion_info>Use glue stick.</adhesion_info>
