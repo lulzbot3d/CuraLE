@@ -75,7 +75,7 @@ Column
     Component
     {
         id: materialSlot
-        MaterialsSlot
+        LulzMaterialsSlot
         {
             material: element
         }
