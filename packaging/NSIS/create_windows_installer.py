@@ -78,7 +78,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description = "Create Windows exe installer of CuraLE.")
     parser.add_argument("--source_path", type=str, help="Path to Conan install CuraLE folder.")
     parser.add_argument("--dist_path", type=str, help="Path to Pyinstaller dist folder")
-    parser.add_argument("--filename", type = str, help = "Filename of the exe (e.g. 'Cura_LulzBot_Edition-5.1.0-beta-Windows-X64.exe')")
+    parser.add_argument("--filename", type=str, help="Filename of the exe (e.g. 'Cura_LulzBot_Edition-5.1.0-beta-Windows-X64.exe')")
     parser.add_argument("--version", type=str, help="The full curale version, e.g. 5.9.0-beta.1+24132")
     args = parser.parse_args()
     generate_nsi(args.source_path, args.dist_path, args.filename, args.version)
