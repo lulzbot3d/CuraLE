@@ -149,6 +149,11 @@ SettingItem
                 if(activeFocus)
                 {
                     base.focusReceived();
+                    setScrollPositionChangeLoseFocus(false);
+                }
+                else
+                {
+                    setScrollPositionChangeLoseFocus(true);
                 }
                 base.focusGainedByClick = false;
             }
