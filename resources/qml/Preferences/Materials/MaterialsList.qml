@@ -14,7 +14,7 @@ Item
     height: childrenRect.height
 
     // Children
-    Cura.MaterialBrandsModel
+    Cura.MaterialTypesModel
     {
         id: materialsModel
         extruderPosition: Cura.ExtruderManager.activeExtruderIndex
