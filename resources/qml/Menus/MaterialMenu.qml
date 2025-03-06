@@ -100,12 +100,12 @@ Cura.Menu
                         onObjectRemoved: function(index, object) { typeBrandsMenu.removeItem(index) }
                     }
                 }
-                onObjectAdded: function(index, object) { typeMenu.insertItem(index, object) }
-                onObjectRemoved: function(index, object) { typeMenu.removeItem(index) }
+                onObjectAdded: function(index, menu) { typeMenu.insertMenu(index, menu) }
+                onObjectRemoved: function(index, menu) { typeMenu.removeMenu(menu) }
             }
         }
-        onObjectAdded: function(index, object) { materialMenu.insertItem(index, object) }
-        onObjectRemoved: function(index, object) { materialMenu.removeItem(index) }
+        onObjectAdded: function(index, menu) { materialMenu.insertMenu(index, menu) }
+        onObjectRemoved: function(index, menu) { materialMenu.removeMenu(menu) }
 
     }
 
