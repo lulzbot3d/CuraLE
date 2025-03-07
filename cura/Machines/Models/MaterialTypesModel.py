@@ -47,6 +47,10 @@ class MaterialTypesModel(BaseMaterialsModel):
             if bool(container_node.getMetaDataEntry("removed", False)):
                 continue
 
+            # Ignore materials that are marked as not visible for whatever reason
+            if not bool(container_node.getMetaDataEntry("visible", True)):
+                continue
+
             # Only add results for the current printer
             global_stack = self._machine_manager.activeMachine
             if container_node.getMetaDataEntry("definition", "fdmprinter") != global_stack.definition.id:
@@ -84,7 +88,6 @@ class MaterialTypesModel(BaseMaterialsModel):
         #         ┃
         #         ┗ Polymaker ┳ White PLA
         #                     ┗ ...
-
         for material_type, brand_dict in material_group_dict.items():
 
             brand_item_list = []
