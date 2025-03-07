@@ -25,5 +25,14 @@
     <setting key="heated bed temperature">100</setting>
     <setting key="part removal temperature">50</setting>
 
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="ast285_taz_8" />
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met285_mini_3" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met285_taz_8" />
+    </machine>
+
   </settings>
 </fdmmaterial>
