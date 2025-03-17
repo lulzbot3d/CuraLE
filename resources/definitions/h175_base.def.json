@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "name": "H175 Printer",
+    "inherits": "lulzbot_base",
+    "metadata":
+    {
+        "visible": false,
+        "has_machine_quality": true,
+        "machine_extruder_trains": { "0": "h175" },
+        "quality_definition": "h175_base"
+    },
+    "overrides":
+    {}
+}

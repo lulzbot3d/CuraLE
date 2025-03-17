@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "name": "SL Printer",
+    "inherits": "lulzbot_base",
+    "metadata":
+    {
+        "visible": false,
+        "has_machine_quality": true,
+        "machine_extruder_trains": { "0": "sl" },
+        "quality_definition": "sl_base"
+    },
+    "overrides":
+    {}
+}

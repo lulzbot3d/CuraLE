@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "name": "HE Printer",
+    "inherits": "lulzbot_base",
+    "metadata":
+    {
+        "visible": false,
+        "has_machine_quality": true,
+        "machine_extruder_trains": { "0": "he" },
+        "quality_definition": "he_base"
+    },
+    "overrides":
+    {}
+}

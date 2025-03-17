@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "name": "HS+ Printer",
+    "inherits": "lulzbot_base",
+    "metadata":
+    {
+        "visible": false,
+        "has_machine_quality": true,
+        "machine_extruder_trains": { "0": "hsplus" },
+        "quality_definition": "hsplus_base"
+    },
+    "overrides":
+    {}
+}

@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "name": "M175v2 Printer",
+    "inherits": "lulzbot_base",
+    "metadata":
+    {
+        "visible": false,
+        "has_machine_quality": true,
+        "machine_extruder_trains": { "0": "m175v2" },
+        "quality_definition": "m175v2_base"
+    },
+    "overrides":
+    {}
+}
