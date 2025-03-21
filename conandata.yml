@@ -1,15 +1,15 @@
-version: "5.10.0-alpha.0"
+version: "5.10.0"
 requirements:
-  - "curale_resources/5.10.0-alpha.0@lulzbot/testing"
-  - "uraniumle/5.10.0-alpha.0@lulzbot/testing"
-  - "curaengine/5.10.0-alpha.0@lulzbot/testing"
-  - "curale_binary_data/5.10.0-alpha.0@lulzbot/testing"
-  # - "fdm_materialsle/5.10.0-alpha.0@lulzbot/testing"
-  - "dulcificum/5.10.0@lulzbot/stable"
-  - "pysavitar/5.10.0@lulzbot/stable"
-  - "pynest2d/5.10.0@lulzbot/stable"
+  - "curale_resources/5.10.0"
+  - "uraniumle/5.10.0"
+  - "curaengine/5.10.0"
+  - "curale_binary_data/5.10.0"
+  # - "fdm_materialsle/5.10.0"
+  - "dulcificum/5.10.0"
+  - "pysavitar/5.10.0"
+  - "pynest2d/5.10.0"
 requirements_internal:
-  - "fdm_materialsle/5.10.0-alpha.0@internal/testing"
+  # - "fdm_materialsle/5.10.0"
   - "curale_private_data/5.10.0-alpha.0@internal/testing"
 requirements_enterprise:
   - "native_cad_plugin/2.0.0"
@@ -264,6 +264,10 @@ pycharm_targets:
     module_name: CuraLE
     name: pytest in TestSettingVisibilityPresets.py
     script_name: tests/Settings/TestSettingVisibilityPresets.py
+  - jinja_path: .run_templates/pycharm_cura_test.run.xml.jinja
+    module_name: CuraLE
+    name: pytest in TestStartEndGCode.py
+    script_name: tests/Machines/TestStartEndGCode.py
 
 pip_requirements_core:
   any_os:
