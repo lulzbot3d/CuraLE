@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "name": "SK175 Printer",
+    "inherits": "lulzbot_base",
+    "metadata":
+    {
+        "visible": false,
+        "has_machine_quality": true,
+        "machine_extruder_trains": { "0": "sk175" },
+        "quality_definition": "sk175_base"
+    },
+    "overrides":
+    {}
+}

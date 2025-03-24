@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "name": "SK285 Printer",
+    "inherits": "lulzbot_base",
+    "metadata":
+    {
+        "visible": false,
+        "has_machine_quality": true,
+        "machine_extruder_trains": { "0": "sk285" },
+        "quality_definition": "sk285_base"
+    },
+    "overrides":
+    {}
+}
