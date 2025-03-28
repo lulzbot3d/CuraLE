@@ -1,7 +1,7 @@
 {
     "version": 2,
     "name": "SideKick 747 | M175 v2 | 0.50 mm",
-    "inherits": "m175v2_base",
+    "inherits": "m175_v2_base",
     "metadata":
     {
         "visible": true,
@@ -14,7 +14,7 @@
             -16.1,
             -2
         ],
-        "quality_definition": "m175v2_base"
+        "quality_definition": "m175_v2_base"
     },
     "overrides":
     {

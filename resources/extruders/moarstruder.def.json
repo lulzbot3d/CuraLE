@@ -1,14 +1,14 @@
 {
     "version": 2,
-    "name": "M175 v2",
+    "name": "MOARstruder",
     "inherits": "lulzbot_extruder",
     "metadata":
     {
-        "machine": "m175v2_base",
+        "machine": "moarstruder_base",
         "position": "0"
     },
     "overrides":
     {
-        "material_diameter": { "default_value": 1.75 }
+        "machine_nozzle_size": { "default_value": 1.2 }
     }
 }

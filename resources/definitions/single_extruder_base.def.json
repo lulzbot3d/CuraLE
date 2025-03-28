@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "name": "Single Extruder Printer",
+    "inherits": "lulzbot_base",
+    "metadata":
+    {
+        "visible": false,
+        "has_machine_quality": true,
+        "machine_extruder_trains": { "0": "single_extruder" },
+        "quality_definition": "single_extruder_base"
+    },
+    "overrides":
+    {}
+}

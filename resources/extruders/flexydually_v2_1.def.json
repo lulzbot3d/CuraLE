@@ -1,0 +1,21 @@
+{
+    "version": 2,
+    "name": "FlexyDually v2 Right",
+    "inherits": "lulzbot_extruder",
+    "metadata":
+    {
+        "machine": "flexydually_v2_base",
+        "position": "1"
+    },
+    "overrides":
+    {
+        "extruder_nr":
+        {
+            "default_value": 1,
+            "maximum_value": "1"
+        },
+        "machine_nozzle_offset_y": { "default_value": -50 },
+        "machine_nozzle_size": { "default_value": 0.6 },
+        "purge_line_location": { "value": "'frontright'" }
+    }
+}

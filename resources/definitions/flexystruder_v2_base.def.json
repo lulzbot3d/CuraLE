@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "name": "Flexystruder v2 Printer",
+    "inherits": "lulzbot_base",
+    "metadata":
+    {
+        "visible": false,
+        "has_machine_quality": true,
+        "machine_extruder_trains": { "0": "flexystruder_v2" },
+        "quality_definition": "flexystruder_v2_base"
+    },
+    "overrides":
+    {}
+}
