@@ -1,0 +1,40 @@
+{
+    "version": 2,
+    "name": "TAZ Pro Long Bed | MET175",
+    "inherits": "met175_base",
+    "metadata":
+    {
+        "visible": true,
+        "file_formats": "text/x-gcode",
+        "platform": "bed_plates/labeled/taz_pro_lb_labeled.stl",
+        "bltouch_is_standard": true,
+        "has_variants": true,
+        "platform_offset": [
+            0,
+            -25.8,
+            0
+        ],
+        "preferred_quality_type": "normal",
+        "preferred_variant_name": "0.5 mm",
+        "quality_definition": "met175_base"
+    },
+    "overrides":
+    {
+        "acceleration_print": { "default_value": 500 },
+        "cool_min_layer_time": { "value": 15 },
+        "firmware_machine_type": { "default_value": "LulzBot TAZ Pro" },
+        "jerk_print": { "default_value": 12 },
+        "jerk_travel": { "value": 12 },
+        "machine_acceleration": { "default_value": 500 },
+        "machine_depth": { "default_value": 582 },
+        "machine_end_gcode": { "default_value_from_file": "taz_pro_lb/taz_pro_lb_end" },
+        "machine_has_bltouch": { "value": true },
+        "machine_height": { "default_value": 285 },
+        "machine_level_x_axis_gcode": { "default_value_from_file": "taz_pro/taz_pro_level_x_axis" },
+        "machine_name": { "default_value": "LulzBot TAZ Pro Long Bed | MET175" },
+        "machine_start_gcode": { "default_value_from_file": "taz_pro_lb/taz_pro_lb_start" },
+        "machine_width": { "default_value": 280 },
+        "speed_travel": { "value": "speed_print if magic_spiralize else 125" },
+        "speed_travel_layer_0": { "value": 100 }
+    }
+}
