@@ -16,5 +16,13 @@
         "quality_definition": "twnb285_base"
     },
     "overrides":
-    {}
+    {
+        "cool_min_layer_time": { "value": 15 },
+        "jerk_print": { "default_value": 12 },
+        "jerk_travel": { "value": 12 },
+        "layer_start_x": { "value": "100" },
+        "layer_start_y": { "value": "100" },
+        "machine_extruder_count": { "default_value": 2 },
+        "speed_travel_layer_0": { "value": 100 }
+    }
 }

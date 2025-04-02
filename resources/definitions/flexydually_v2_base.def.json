@@ -14,5 +14,13 @@
         "quality_definition": "flexydually_v2_base"
     },
     "overrides":
-    {}
+    {
+        "acceleration_print": { "default_value": 500 },
+        "acceleration_travel": { "default_value": 500 },
+        "jerk_print": { "default_value": 12 },
+        "jerk_travel": { "value": 12 },
+        "machine_acceleration": { "default_value": 500 },
+        "machine_extruder_count": { "default_value": 2 },
+        "machine_max_feedrate_z": { "default_value": 3 }
+    }
 }

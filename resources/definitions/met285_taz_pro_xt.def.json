@@ -22,7 +22,6 @@
     "overrides":
     {
         "acceleration_print": { "default_value": 500 },
-        "cool_min_layer_time": { "value": 15 },
         "firmware_machine_type": { "default_value": "LulzBot TAZ ProXT" },
         "jerk_print": { "default_value": 12 },
         "jerk_travel": { "value": 12 },
@@ -35,7 +34,6 @@
         "machine_name": { "default_value": "LulzBot TAZ Pro XT | MET285" },
         "machine_start_gcode": { "default_value_from_file": "taz_pro/taz_pro_start" },
         "machine_width": { "default_value": 285 },
-        "machine_wipe_gcode": { "default_value_from_file": "taz_pro/taz_pro_wipe" },
-        "speed_travel_layer_0": { "value": 100 }
+        "machine_wipe_gcode": { "default_value_from_file": "taz_pro/taz_pro_wipe" }
     }
 }

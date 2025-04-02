@@ -18,7 +18,6 @@
     },
     "overrides":
     {
-        "cool_min_layer_time": { "value": 15 },
         "machine_depth": { "default_value": 180 },
         "machine_disallowed_areas":
         {
@@ -51,7 +50,6 @@
         "machine_max_feedrate_z": { "default_value": 200 },
         "machine_name": { "default_value": "LulzBot Mini 3 | MET175" },
         "machine_start_gcode": { "default_value_from_file": "mini_3/mini_3_start" },
-        "machine_width": { "default_value": 180 },
-        "speed_travel_layer_0": { "value": 100 }
+        "machine_width": { "default_value": 180 }
     }
 }

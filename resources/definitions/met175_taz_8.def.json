@@ -18,7 +18,6 @@
     "overrides":
     {
         "acceleration_print": { "default_value": 1000 },
-        "cool_min_layer_time": { "value": 15 },
         "firmware_machine_type": { "default_value": "LulzBot TAZ 8" },
         "jerk_print": { "default_value": 12 },
         "jerk_travel": { "value": 12 },
@@ -55,7 +54,6 @@
         "machine_name": { "default_value": "LulzBot TAZ 8 | MET175" },
         "machine_start_gcode": { "default_value_from_file": "taz_8/taz_8_start" },
         "machine_width": { "default_value": 295 },
-        "prime_tower_position_x": { "value": 265 },
-        "speed_travel_layer_0": { "value": 100 }
+        "prime_tower_position_x": { "value": 265 }
     }
 }
