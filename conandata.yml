@@ -5,7 +5,7 @@ requirements:
   - "curaengine/5.11.0-alpha.0@lulzbot/testing"
   - "curale_binary_data/5.11.0-alpha.0@lulzbot/testing"
   # - "fdm_materialsle/5.11.0-alpha.0@lulzbot/testing"
-  - "dulcificum/5.10.0"
+  - "dulcificum/5.11.0-alpha.0@lulzbot/testing"
   - "pysavitar/5.10.0"
   - "pynest2d/5.10.0"
 requirements_internal:
