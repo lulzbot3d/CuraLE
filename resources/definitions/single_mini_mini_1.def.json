@@ -1,7 +1,7 @@
 {
     "version": 2,
     "name": "Mini 1 | Single Extruder",
-    "inherits": "single_extruder_base",
+    "inherits": "single_mini_base",
     "metadata":
     {
         "visible": true,
@@ -14,7 +14,7 @@
             -11.3,
             -2
         ],
-        "quality_definition": "single_extruder_base"
+        "quality_definition": "single_mini_base"
     },
     "overrides":
     {

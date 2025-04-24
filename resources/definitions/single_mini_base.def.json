@@ -6,8 +6,8 @@
     {
         "visible": false,
         "has_machine_quality": true,
-        "machine_extruder_trains": { "0": "single_extruder" },
-        "quality_definition": "single_extruder_base"
+        "machine_extruder_trains": { "0": "single_mini" },
+        "quality_definition": "single_mini_base"
     },
     "overrides":
     {

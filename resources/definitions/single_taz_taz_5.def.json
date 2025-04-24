@@ -1,7 +1,7 @@
 {
     "version": 2,
     "name": "TAZ 5 | Single Extruder",
-    "inherits": "single_extruder_base",
+    "inherits": "single_taz_base",
     "metadata":
     {
         "visible": true,
