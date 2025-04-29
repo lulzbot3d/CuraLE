@@ -4,7 +4,7 @@
     "inherits": "h175_base",
     "metadata":
     {
-        "visible": false,
+        "visible": true,
         "platform": "bed_plates/labeled/workhorse_labeled.stl",
         "platform_offset": [
             -2,
