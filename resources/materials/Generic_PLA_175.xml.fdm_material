@@ -58,15 +58,15 @@
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_pro_xt_lb_v2" />
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_workhorse" />
       <setting key="print temperature">210</setting>
-      <hotend id="0.3 mm">
+      <hotend id="0.3mm">
       </hotend>
-      <hotend id="0.4 mm">
+      <hotend id="0.4mm">
       </hotend>
-      <hotend id="0.5 mm">
+      <hotend id="0.5mm">
         <setting key="retraction amount">1</setting>
         <setting key="retraction speed">10</setting>
       </hotend>
-      <hotend id="0.8 mm">
+      <hotend id="0.8mm">
         <setting key="print temperature">220</setting>
       </hotend>
     </machine>
@@ -80,14 +80,14 @@
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="twnb175_taz_8" />
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="twnb175_taz_pro" />
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="twnb175_taz_pro_xt" />
-      <hotend id="0.3 mm">
+      <hotend id="0.3mm">
         <setting key="hardware compatible">no</setting>
       </hotend>
-      <hotend id="0.4 mm">
+      <hotend id="0.4mm">
         <setting key="hardware compatible">no</setting>
       </hotend>
-      <hotend id="0.5 mm" />
-      <hotend id="0.8 mm">
+      <hotend id="0.5mm" />
+      <hotend id="0.8mm">
         <setting key="hardware compatible">no</setting>
       </hotend>
     </machine>

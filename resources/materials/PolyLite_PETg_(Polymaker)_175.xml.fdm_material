@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Polymaker</brand>
+      <material>PETg (Strong)</material>
+      <color>Generic</color>
+      <label>PolyLite PETg</label>
+    </name>
+    <GUID>9139f788-aae7-40d0-9850-799c0b6b1cfd</GUID>
+    <version>1</version>
+    <color_code>#800080</color_code>
+    <adhesion_info>Use glue stick.</adhesion_info>
+    <version>1</version>
+    <tension_position>1</tension_position>
+    <purge_pattern>4</purge_pattern>
+  </metadata>
+  <properties>
+    <density>1.25</density>
+    <diameter>1.75</diameter>
+  </properties>
+  <settings>
+    <setting key="print temperature">240</setting>
+    <setting key="standby temperature">170</setting>
+    <setting key="soften temperature">190</setting>
+    <setting key="probe temperature">170</setting>
+    <setting key="wipe temperature">190</setting>
+    <setting key="heated bed temperature">80</setting>
+    <setting key="part removal temperature">60</setting>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_mini_2" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_mini_3" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_sidekick_289" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_sidekick_747" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_8" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_pro" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_pro_lb" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_pro_lb_v2" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_pro_xt" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_pro_xt_lb_v2" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_workhorse" />
+      <hotend id="0.3 mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
+      <hotend id="0.4 mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
+      <hotend id="0.5 mm">
+      </hotend>
+      <hotend id="0.8 mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
+    </machine>
+
+  </settings>
+</fdmmaterial>
