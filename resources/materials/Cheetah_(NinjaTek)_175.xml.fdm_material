@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='utf-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>NinjaTek</brand>
+      <material>TPU (Flexible)</material>
+      <color>Generic</color>
+      <label>Cheetah 95A</label>
+    </name>
+    <color_code>#FFD700</color_code>
+    <description/>
+    <version>1</version>
+    <GUID>d6be588a-1fe3-48a7-a57f-3fb788149a01</GUID>
+    <adhesion_info>Use Glue stick or print directly on glass</adhesion_info>
+    <purge_pattern>3</purge_pattern>
+  </metadata>
+  <properties>
+    <diameter>1.75</diameter>
+    <density>1.22</density>
+  </properties>
+  <settings>
+    <setting key="print cooling">50.0</setting>
+    <setting key="retraction speed">25.0</setting>
+    <setting key="retraction amount">1.5</setting>
+    <setting key="part removal temperature">0.0</setting>
+    <setting key="heated bed temperature">50.0</setting>
+    <setting key="print temperature">230.0</setting>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="h175_mini_2" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="h175_sidekick_289" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="h175_sidekick_747" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="h175_taz_6" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="h175_taz_pro" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="h175_taz_pro_lb" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="h175_taz_pro_xt" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="h175_workhorse" />
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="m175_v2_mini_1" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="m175_v2_mini_2" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="m175_v2_sidekick_289" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="m175_v2_sidekick_747" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="m175_v2_taz_5" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="m175_v2_taz_6" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="m175_v2_taz_pro" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="m175_v2_taz_pro_lb" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="m175_v2_taz_pro_xt" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="m175_v2_workhorse" />
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_core_xy" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_mini_2" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_mini_3" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_sidekick_289" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_sidekick_747" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_8" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_pro" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_pro_lb" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_pro_lb_v2" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_pro_xt" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_pro_xt_lb_v2" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_workhorse" />
+      <hotend id="0.3mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
+      <hotend id="0.4mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
+      <hotend id="0.5mm">
+      </hotend>
+      <hotend id="0.8mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="sk175_sidekick_289" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="sk175_sidekick_747" />
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="twnb175_taz_8" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="twnb175_taz_pro" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="twnb175_taz_pro_xt" />
+      <hotend id="0.3mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
+      <hotend id="0.4mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
+      <hotend id="0.5mm">
+      </hotend>
+      <hotend id="0.8mm">
+        <setting key="hardware compatible">no</setting>
+      </hotend>
+    </machine>
+
+  </settings>
+</fdmmaterial>
