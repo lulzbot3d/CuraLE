@@ -1,6 +1,6 @@
 version: "5.11.0-alpha.0"
 requirements:
-  - "cura_resources/5.11.0-alpha.0@lulzbot/testing"
+  - "curale_resources/5.11.0-alpha.0@lulzbot/testing"
   - "uraniumle/5.11.0-alpha.0@lulzbot/testing"
   - "curaengine/5.11.0-alpha.0@lulzbot/testing"
   - "curale_binary_data/5.11.0-alpha.0@lulzbot/testing"
