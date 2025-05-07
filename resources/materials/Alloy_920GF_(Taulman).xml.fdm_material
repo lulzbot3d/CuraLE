@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Taulman</brand>
+      <material>Nylon (Very Strong)</material>
+      <color>Generic</color>
+      <label>Alloy 920GF</label>
+    </name>
+    <GUID>8c5eab64-5040-4fca-9903-778ddcbc359b</GUID>
+    <color_code>#007FFF</color_code>
+    <adhesion_info />
+    <description />
+    <version>1</version>
+    <adhesion_info>Use directly on clean PEI.</adhesion_info>
+    <purge_pattern>1</purge_pattern>
+  </metadata>
+  <properties>
+    <diameter>2.85</diameter>
+  </properties>
+  <settings>
+    <setting key="retraction amount">7.0</setting>
+    <setting key="standby temperature">200</setting>
+    <setting key="soften temperature">220</setting>
+    <setting key="probe temperature">200</setting>
+    <setting key="wipe temperature">220</setting>
+    <setting key="part removal temperature">60</setting>
+    <setting key="heated bed temperature">105</setting>
+    <setting key="print temperature">240.0</setting>
+    <setting key="retraction speed">30.0</setting>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="hsplus_mini_1" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="hsplus_mini_2" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="hsplus_sidekick_289" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="hsplus_sidekick_747" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="hsplus_taz_5" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="hsplus_taz_6" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="hsplus_taz_pro" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="hsplus_taz_pro_lb" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="hsplus_taz_pro_xt" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="hsplus_workhorse" />
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="pro_dual_taz_pro" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="pro_dual_taz_pro_xt" />
+    </machine>
+
+  </settings>
+</fdmmaterial>

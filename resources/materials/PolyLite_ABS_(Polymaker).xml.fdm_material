@@ -37,10 +37,10 @@
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="ast285_taz_pro_xt" />
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="ast285_taz_pro_xt_lb_v2" />
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="ast285_workhorse" />
-      <hotend id="1.2 mm">
+      <hotend id="1.2mm">
         <setting key="print temperature">250</setting>
       </hotend>
-      <hotend id="2.4 mm">
+      <hotend id="2.4mm">
       </hotend>
     </machine>
 
@@ -57,15 +57,15 @@
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met285_taz_pro_xt_lb_v2" />
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met285_workhorse" />
       <setting key="print temperature">250</setting>
-      <hotend id="0.3 mm">
+      <hotend id="0.3mm">
         <setting key="hardware compatible">no</setting>
       </hotend>
-      <hotend id="0.4 mm">
+      <hotend id="0.4mm">
         <setting key="hardware compatible">no</setting>
       </hotend>
-      <hotend id="0.5 mm">
+      <hotend id="0.5mm">
       </hotend>
-      <hotend id="0.8 mm">
+      <hotend id="0.8mm">
         <setting key="hardware compatible">no</setting>
       </hotend>
     </machine>
@@ -74,15 +74,15 @@
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="twnb285_taz_8" />
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="twnb285_taz_pro" />
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="twnb285_taz_pro_xt" />
-      <hotend id="0.3 mm">
+      <hotend id="0.3mm">
         <setting key="hardware compatible">no</setting>
       </hotend>
-      <hotend id="0.4 mm">
+      <hotend id="0.4mm">
         <setting key="hardware compatible">no</setting>
       </hotend>
-      <hotend id="0.5 mm">
+      <hotend id="0.5mm">
       </hotend>
-      <hotend id="0.8 mm">
+      <hotend id="0.8mm">
         <setting key="hardware compatible">no</setting>
       </hotend>
     </machine>

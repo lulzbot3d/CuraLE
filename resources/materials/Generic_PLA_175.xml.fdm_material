@@ -86,7 +86,8 @@
       <hotend id="0.4mm">
         <setting key="hardware compatible">no</setting>
       </hotend>
-      <hotend id="0.5mm" />
+      <hotend id="0.5mm">
+      </hotend>
       <hotend id="0.8mm">
         <setting key="hardware compatible">no</setting>
       </hotend>
