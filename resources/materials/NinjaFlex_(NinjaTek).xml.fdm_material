@@ -2,28 +2,26 @@
 <fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
   <metadata>
     <name>
-      <brand>Generic</brand>
-      <material>ABS (Strong)</material>
+      <brand>NinjaTek</brand>
+      <material>TPU (Flexible)</material>
       <color>Generic</color>
+      <label>NinjaFlex 85A</label>
     </name>
-    <GUID>d7bcbbc4-c2a1-485d-8562-b9d948d17e34</GUID>
-    <version>25</version>
-    <color_code>#40E0D0</color_code>
-    <tension_position>1</tension_position>
-    <purge_pattern>2</purge_pattern>
+    <GUID>1b7cf2ea-490f-40ab-820d-5bebfdae2998</GUID>
+    <version>1</version>
+    <color_code>#FFD700</color_code>
+    <adhesion_info>Use glue stick with PEI or print directly on glass.</adhesion_info>
+    <tension_position>3</tension_position>
+    <purge_pattern>3</purge_pattern>
   </metadata>
   <properties>
-    <density>1.13</density>
+    <density>1.2</density>
     <diameter>2.85</diameter>
   </properties>
   <settings>
-    <setting key="print temperature">240</setting>
-    <setting key="standby temperature">170</setting>
-    <setting key="soften temperature">190</setting>
-    <setting key="probe temperature">170</setting>
-    <setting key="wipe temperature">190</setting>
-    <setting key="heated bed temperature">100</setting>
-    <setting key="part removal temperature">50</setting>
+    <setting key="print temperature">225</setting>
+    <setting key="heated bed temperature">60</setting>
+    <setting key="part removal temperature">0</setting>
 
     <machine>
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="aerostruder_mini_1" />
@@ -40,10 +38,30 @@
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="ast285_taz_pro_xt" />
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="ast285_taz_pro_xt_lb_v2" />
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="ast285_workhorse" />
+      <setting key="print temperature">235</setting>
+      <setting key="wipe temperature">190</setting>
+      <setting key="part removal temperature">30</setting>
       <hotend id="1.2mm">
       </hotend>
       <hotend id="2.4mm">
+        <setting key="print temperature">225</setting>
       </hotend>
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="dual_v3_taz_5"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="dual_v3_taz_6"/>
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="flexydually_v2_taz_5"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="flexydually_v2_taz_6"/>
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="flexystruder_v2_mini_1"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="flexystruder_v2_taz_5"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="flexystruder_v2_taz_6"/>
     </machine>
 
     <machine>
@@ -95,9 +113,12 @@
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met285_taz_pro_xt" />
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met285_taz_pro_xt_lb_v2" />
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met285_workhorse" />
+      <setting key="print temperature">235</setting>
       <hotend id="0.3mm">
+        <setting key="hardware compatible">no</setting>
       </hotend>
       <hotend id="0.4mm">
+        <setting key="hardware compatible">no</setting>
       </hotend>
       <hotend id="0.5mm">
       </hotend>
