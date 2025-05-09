@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Keene Village Plastics</brand>
+      <material>PLA (Easy Printing)</material>
+      <color>Generic</color>
+      <label>PLA</label>
+    </name>
+    <GUID>57ffda11-0178-46ea-afc2-26414151975d</GUID>
+    <version>1</version>
+    <color_code>#99AB21</color_code>
+    <tension_position>1</tension_position>
+    <purge_pattern>5</purge_pattern>
+  </metadata>
+  <properties>
+    <density>1.24</density>
+    <diameter>2.85</diameter>
+  </properties>
+  <settings>
+    <setting key="print temperature">205</setting>
+    <setting key="heated bed temperature">60</setting>
+    <setting key="part removal temperature">45</setting>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="aerostruder_mini_1" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="aerostruder_taz_5" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="aerostruder_taz_6" />
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="dual_v2_taz_5"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="dual_v2_taz_6"/>
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="dual_v3_taz_5"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="dual_v3_taz_6"/>
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="flexydually_v2_taz_5"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="flexydually_v2_taz_6"/>
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="moarstruder_taz_5"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="moarstruder_taz_6"/>
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="pro_dual_taz_pro" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="pro_dual_taz_pro_xt" />
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_mini_1" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_mini_2" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_sidekick_289" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_sidekick_747" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_taz_5" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_taz_6" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_taz_pro" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_taz_pro_lb" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_taz_pro_xt" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_workhorse" />
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="single_mini_mini_1"/>
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="single_taz_taz_5"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="single_taz_taz_6"/>
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="twoolhead_taz_5"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="twoolhead_taz_6"/>
+    </machine>
+
+  </settings>
+</fdmmaterial>

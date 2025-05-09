@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>MatterHackers</brand>
+      <material>PLA (Easy Printing)</material>
+      <color>Generic</color>
+      <label>MH PRO Series PLA</label>
+    </name>
+    <GUID>dcdf3bca-204d-4867-8cbd-73fe71ea89f5</GUID>
+    <adhesion_info/>
+    <color_code>#99AB21</color_code>
+    <version>1</version>
+    <description/>
+    <tension_position>1</tension_position>
+    <purge_pattern>5</purge_pattern>
+  </metadata>
+  <properties>
+	<density>1.25</density>
+	<diameter>2.85</diameter>
+  </properties>
+  <settings>
+    <setting key="print temperature">215.0</setting>
+    <setting key="heated bed temperature">60.0</setting>
+    <setting key="part removal temperature">45.0</setting>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="flexydually_v2_taz_5"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="flexydually_v2_taz_6"/>
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="single_mini_mini_1"/>
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="single_taz_taz_5"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="single_taz_taz_6"/>
+    </machine>
+
+    <machine>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="twoolhead_taz_5"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="twoolhead_taz_6"/>
+    </machine>
+
+  </settings>
+</fdmmaterial>
