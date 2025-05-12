@@ -21,6 +21,9 @@
     <setting key="print temperature">225</setting>
     <setting key="heated bed temperature">60</setting>
     <setting key="part removal temperature">0</setting>
+    <setting key="adhesion tendency">3</setting>
+    <setting key="surface energy">100</setting>
+    <cura:setting key="material_crystallinity">true</cura:setting>
 
     <machine>
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="aerostruder_mini_1" />

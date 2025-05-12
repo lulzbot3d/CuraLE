@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material">
+  <metadata>
+    <name>
+      <brand>Generic</brand>
+      <material>HIPS (Dissolvable)</material>
+      <color>Generic</color>
+    </name>
+    <GUID>b2ce1eb4-7f8b-464c-abaf-66d90e73fa78</GUID>
+    <version>1</version>
+    <color_code>#FF00FF</color_code>
+    <description>Soluble in D-Limonene</description>
+    <purge_pattern>1</purge_pattern>
+  </metadata>
+  <properties>
+    <density>1.05</density>
+    <diameter>2.85</diameter>
+  </properties>
+  <settings>
+    <setting key="print temperature">240</setting>
+    <setting key="heated bed temperature">110</setting>
+    <setting key="part removal temperature">50</setting>
+
+    <cura:setting key="material_is_support_material">true</cura:setting>
+
+  </settings>
+</fdmmaterial>

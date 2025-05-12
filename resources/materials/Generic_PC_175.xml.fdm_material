@@ -6,7 +6,7 @@
       <material>PC (Very Strong)</material>
       <color>Generic</color>
     </name>
-    <GUID>fc98aaef-d49d-47de-8897-159f5f22920d</GUID>
+    <GUID>resources/materials/Generic_PC.xml.fdm_material</GUID>
     <version>1</version>
     <color_code>#0047AB</color_code>
     <adhesion_info>Use glue stick.</adhesion_info>
@@ -14,7 +14,7 @@
   </metadata>
   <properties>
     <density>1.2</density>
-    <diameter>2.85</diameter>
+    <diameter>1.75</diameter>
   </properties>
   <settings>
     <setting key="print temperature">255</setting>

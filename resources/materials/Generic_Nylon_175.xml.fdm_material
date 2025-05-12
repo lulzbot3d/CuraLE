@@ -3,18 +3,18 @@
   <metadata>
     <name>
       <brand>Generic</brand>
-      <material>PC (Very Strong)</material>
+      <material>Nylon (Very Strong)</material>
       <color>Generic</color>
     </name>
-    <GUID>fc98aaef-d49d-47de-8897-159f5f22920d</GUID>
+    <GUID>e86f10bc-7721-4839-b5b0-efe8f0b0500e</GUID>
     <version>1</version>
-    <color_code>#0047AB</color_code>
+    <color_code>#007FFF</color_code>
     <adhesion_info>Use glue stick.</adhesion_info>
-    <purge_pattern>7</purge_pattern>
+    <purge_pattern>1</purge_pattern>
   </metadata>
   <properties>
     <density>1.2</density>
-    <diameter>2.85</diameter>
+    <diameter>1.75</diameter>
   </properties>
   <settings>
     <setting key="print temperature">255</setting>
@@ -24,7 +24,8 @@
     <setting key="probe temperature">200</setting>
     <setting key="wipe temperature">220</setting>
     <setting key="part removal temperature">60</setting>
-    <setting key="adhesion tendency">0</setting>
-    <setting key="surface energy">65</setting>
+    <setting key="adhesion tendency">2</setting>
+    <setting key="surface energy">100</setting>
+    <cura:setting key="material_crystallinity">true</cura:setting>
   </settings>
 </fdmmaterial>
