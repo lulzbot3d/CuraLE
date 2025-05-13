@@ -21,6 +21,8 @@
     <setting key="print temperature">205</setting>
     <setting key="heated bed temperature">60</setting>
     <setting key="part removal temperature">45</setting>
+    <setting key="adhesion tendency">0</setting>
+    <setting key="surface energy">100</setting>
 
     <machine>
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="h175_mini_2" />
