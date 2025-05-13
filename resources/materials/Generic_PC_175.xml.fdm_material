@@ -6,7 +6,7 @@
       <material>PC (Very Strong)</material>
       <color>Generic</color>
     </name>
-    <GUID>resources/materials/Generic_PC.xml.fdm_material</GUID>
+    <GUID>fc3d3cee-5327-4555-9df1-73a004c64d9a</GUID>
     <version>1</version>
     <color_code>#0047AB</color_code>
     <adhesion_info>Use glue stick.</adhesion_info>
