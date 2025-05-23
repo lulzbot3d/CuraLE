@@ -1,7 +1,6 @@
 [5.10]
 
 * New features and improvements:
-- UltiMaker S8 Support: Added compatibility for the UltiMaker S8 printer.
 - Cheetah Gcode Flavor: Introduced a new Marlin-like Gcode flavor called Cheetah.
 - SpaceMouse support: Navigate the view seamlessly with a 3D mouse, thanks to a collaboration with 3Dconnexion.
 - Cloud Printing for Sketch Sprint: Enabled printing over cloud with Digital Factory for Sketch Sprint users.
@@ -30,13 +29,11 @@ Try it for yourself <a href="https://www.thingiverse.com/thing:6975650?utm_sourc
 
 
 * Bug fixes:
-- Resolved a crash that occurred when switching materials on Sovol printers.
 - Random Seam no longer favors one side and not is truly random again
 - Reduced the slicing time when no support needs to be generated 
 - Fixed a bug where Seam on Vertex with a User Defined seam position was not working correctly.
 - Gcode replacement with a single line of code no longer produces values in separate lines
 - Setting names that become too long after translation are now truncated.
-- Updated UltiMaker printer logos to align with the current style.
 - The number of decimal places displayed for layer height in the top bar has been reduced.
 - Fixed a bug that caused incorrect retracting and hopping on printers with more than 2 extruders.
 - Improved how fast the settings are loaded in the Settings Visibility window when scrolling
