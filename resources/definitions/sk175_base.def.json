@@ -13,7 +13,9 @@
     {
         "cool_min_layer_time": { "value": 15 },
         "machine_has_bltouch": { "value": true },
+        "machine_heat_zone_length": { "default_value": 20 },
         "machine_level_x_axis_gcode": { "default_value_from_file": "sidekick/sidekick_level_x_axis" },
+        "machine_nozzle_tip_outer_diameter": { "default_value": 1.5 },
         "machine_start_gcode": { "default_value_from_file": "sidekick/sidekick_start" },
         "speed_travel_layer_0": { "value": 100 }
     }

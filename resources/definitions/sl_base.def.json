@@ -10,5 +10,7 @@
         "quality_definition": "sl_base"
     },
     "overrides":
-    {}
+    {
+        "machine_heat_zone_length": { "default_value": 20 }
+    }
 }

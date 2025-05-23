@@ -22,6 +22,7 @@
         "jerk_print": { "default_value": 12 },
         "jerk_travel": { "value": 12 },
         "machine_acceleration": { "default_value": 1000 },
+        "machine_buildplate_type": { "default_value": "aluminum" },
         "machine_depth": { "default_value": 295 },
         "machine_disallowed_areas":
         {

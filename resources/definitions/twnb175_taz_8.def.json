@@ -20,6 +20,7 @@
         "acceleration_print": { "default_value": 1000 },
         "firmware_machine_type": { "default_value": "LulzBot TAZ 8" },
         "machine_acceleration": { "default_value": 1000 },
+        "machine_buildplate_type": { "default_value": "aluminum" },
         "machine_depth": { "default_value": 295 },
         "machine_disallowed_areas":
         {

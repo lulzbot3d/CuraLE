@@ -10,5 +10,8 @@
         "quality_definition": "se_base"
     },
     "overrides":
-    {}
+    {
+        "machine_heat_zone_length": { "default_value": 20 },
+        "machine_nozzle_tip_outer_diameter": { "default_value": 1.5 }
+    }
 }

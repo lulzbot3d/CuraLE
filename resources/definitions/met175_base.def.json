@@ -14,6 +14,17 @@
     "overrides":
     {
         "cool_min_layer_time": { "value": 15 },
+        "machine_head_with_fans_polygon":
+        {
+            "default_value": [
+                [-30, 44],
+                [-30, -35],
+                [58, -35],
+                [58, 44]
+            ]
+        },
+        "machine_heat_zone_length": { "default_value": 24 },
+        "machine_nozzle_tip_outer_diameter": { "default_value": 1.5 },
         "speed_travel_layer_0": { "value": 100 }
     }
 }

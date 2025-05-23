@@ -25,6 +25,7 @@
         "jerk_print": { "default_value": 12 },
         "jerk_travel": { "value": 12 },
         "machine_acceleration": { "default_value": 500 },
+        "machine_buildplate_type": { "default_value": "aluminum" },
         "machine_depth": { "default_value": 582 },
         "machine_end_gcode": { "default_value_from_file": "taz_pro_lb/taz_pro_lb_end" },
         "machine_has_bltouch": { "value": true },

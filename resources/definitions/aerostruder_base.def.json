@@ -14,6 +14,8 @@
         "acceleration_print": { "default_value": 500 },
         "acceleration_travel": { "default_value": 500 },
         "machine_acceleration": { "default_value": 500 },
-        "machine_max_feedrate_z": { "default_value": 3 }
+        "machine_heat_zone_length": { "default_value": 20 },
+        "machine_max_feedrate_z": { "default_value": 3 },
+        "machine_nozzle_tip_outer_diameter": { "default_value": 1.5 }
     }
 }

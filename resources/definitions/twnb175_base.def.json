@@ -23,6 +23,17 @@
         "layer_start_x": { "value": "100" },
         "layer_start_y": { "value": "100" },
         "machine_extruder_count": { "default_value": 2 },
+        "machine_head_with_fans_polygon":
+        {
+            "default_value": [
+                [-42, 22],
+                [-42, -78],
+                [88, -78],
+                [88, 22]
+            ]
+        },
+        "machine_heat_zone_length": { "default_value": 23 },
+        "machine_nozzle_tip_outer_diameter": { "default_value": 1.5 },
         "speed_travel_layer_0": { "value": 100 }
     }
 }

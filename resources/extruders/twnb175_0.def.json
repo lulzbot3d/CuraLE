@@ -8,5 +8,7 @@
         "position": "0"
     },
     "overrides":
-    {}
+    {
+        "machine_nozzle_head_distance": { "default_value": 4 }
+    }
 }

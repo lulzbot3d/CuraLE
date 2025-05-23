@@ -18,6 +18,7 @@
     },
     "overrides":
     {
+        "machine_buildplate_type": { "default_value": "aluminum" },
         "machine_depth": { "default_value": 180 },
         "machine_disallowed_areas":
         {

@@ -10,5 +10,8 @@
         "quality_definition": "hsplus_base"
     },
     "overrides":
-    {}
+    {
+        "machine_heat_zone_length": { "default_value": 28 },
+        "machine_nozzle_tip_outer_diameter": { "default_value": 3.0 }
+    }
 }
