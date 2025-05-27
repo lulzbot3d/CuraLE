@@ -62,41 +62,35 @@ class ThumbnailGenerator:
 
         # Create snapshot
         def create_snapshot(width, height):
-            snapshot = None
             Logger.log("d", "Creating thumbnail image...")
             try:
-                snapshot = Snapshot.snapshot(width, height)
+                return Snapshot.snapshot(width, height)
             except Exception:
                 Logger.logException("w", "Failed to create snapshot image")
-                return
-            return snapshot
 
         # Encode snapshot
         def encode_snapshot(raw_snapshot):
-            encoded_snapshot = None
             Logger.log("d", "Encoding thumbnail image...")
             try:
                 thumbnail_buffer = QBuffer()
-                thumbnail_buffer.open(QBuffer.ReadWrite)
+                thumbnail_buffer.open(QBuffer.OpenModeFlag.ReadWrite)
                 thumbnail_image = raw_snapshot
                 thumbnail_image.save(thumbnail_buffer, "PNG")
                 base64_bytes = base64.b64encode(thumbnail_buffer.data())
-                encoded_snapshot = base64_bytes.decode('ascii')
+                base64_message = base64_bytes.decode('ascii')
                 thumbnail_buffer.close()
+                return base64_message
             except Exception:
                 Logger.logException("w", "Failed to encode snapshot image")
-                return
-            return encoded_snapshot
 
         # Convert snapshot to gcode
-        def convert_snap_to_gcode(encoded_snapshot, width, height):
+        def convert_snap_to_gcode(encoded_snapshot, width, height, chunk_size=78):
             gcode = []
             encoded_snapshot_length = len(encoded_snapshot)
             gcode.append(";")
-            gcode.append("; thumbnail begin {} {} {}".format(
+            gcode.append("; thumbnail begin {}x{} {}".format(
                 width, height, encoded_snapshot_length))
 
-            chunk_size = 78
             chunks = ["; {}".format(encoded_snapshot[i:i+chunk_size])
                     for i in range(0, len(encoded_snapshot), chunk_size)]
             gcode.extend(chunks)
