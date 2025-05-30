@@ -8,6 +8,8 @@
         "file_formats": "text/x-gcode",
         "has_machine_quality": true,
         "has_variants": true,
+        "lulzbot_machine_tool_head": "Syringe",
+        "lulzbot_machine_tool_head_abbreviation": "SYR",
         "machine_extruder_trains": { "0": "syringe" },
         "preferred_material": "Generic_Sodium_Alginate",
         "preferred_variant_name": "25 Gauge",

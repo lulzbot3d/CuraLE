@@ -6,6 +6,8 @@
     {
         "visible": false,
         "has_machine_quality": true,
+        "lulzbot_machine_tool_head": "Dual v3",
+        "lulzbot_machine_tool_head_abbreviation": "DUALv3",
         "machine_extruder_trains":
         {
             "0": "dual_v3_0",

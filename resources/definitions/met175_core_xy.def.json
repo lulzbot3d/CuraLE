@@ -9,6 +9,9 @@
         "platform": "",
         "bltouch_is_standard": true,
         "has_variants": true,
+        "lulzbot_machine_category": "Other",
+        "lulzbot_machine_type": "Core XY",
+        "lulzbot_machine_type_abbreviation": "CXY",
         "preferred_quality_type": "normal",
         "preferred_variant_name": "0.5 mm",
         "quality_definition": "met175_base"

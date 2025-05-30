@@ -6,6 +6,8 @@
     {
         "visible": false,
         "has_machine_quality": true,
+        "lulzbot_machine_tool_head": "Twoolhead",
+        "lulzbot_machine_tool_head_abbreviation": "TWOOL",
         "machine_extruder_trains": { "0": "twoolhead" },
         "quality_definition": "twoolhead_base"
     },

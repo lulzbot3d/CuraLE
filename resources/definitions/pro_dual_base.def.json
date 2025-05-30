@@ -6,6 +6,8 @@
     {
         "visible": false,
         "has_machine_quality": true,
+        "lulzbot_machine_tool_head": "Pro Dual",
+        "lulzbot_machine_tool_head_abbreviation": "DUAL",
         "machine_extruder_trains":
         {
             "0": "pro_dual_0",

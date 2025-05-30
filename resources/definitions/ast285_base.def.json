@@ -8,6 +8,8 @@
         "has_machine_quality": true,
         "has_materials": true,
         "has_variants": true,
+        "lulzbot_machine_tool_head": "Asteroid 285",
+        "lulzbot_machine_tool_head_abbreviation": "AST285",
         "machine_extruder_trains": { "0": "ast285" },
         "preferred_variant_name": "1.2mm",
         "quality_definition": "ast285_base"

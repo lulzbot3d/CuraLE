@@ -9,6 +9,9 @@
         "platform": "bed_plates/labeled/mini_3_labeled.stl",
         "bltouch_is_standard": true,
         "firmware_type": "Klipper",
+        "lulzbot_machine_category": "Mini",
+        "lulzbot_machine_type": "Mini 3",
+        "lulzbot_machine_type_abbreviation": "M3",
         "platform_offset": [
             0,
             -15.5,

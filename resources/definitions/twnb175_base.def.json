@@ -7,6 +7,8 @@
         "visible": false,
         "has_machine_quality": true,
         "has_variants": true,
+        "lulzbot_machine_tool_head": "Twin Nebula 175",
+        "lulzbot_machine_tool_head_abbreviation": "TWNB175",
         "machine_extruder_trains":
         {
             "0": "twnb175_0",

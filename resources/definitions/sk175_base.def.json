@@ -6,6 +6,8 @@
     {
         "visible": false,
         "has_machine_quality": true,
+        "lulzbot_machine_tool_head": "SK175",
+        "lulzbot_machine_tool_head_abbreviation": "SK175",
         "machine_extruder_trains": { "0": "sk175" },
         "quality_definition": "sk175_base"
     },

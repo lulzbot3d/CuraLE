@@ -9,6 +9,9 @@
         "platform": "bed_plates/labeled/taz_pro_labeled.stl",
         "has_optional_bltouch": true,
         "has_variants": true,
+        "lulzbot_machine_category": "TAZ",
+        "lulzbot_machine_type": "TAZ Pro",
+        "lulzbot_machine_type_abbreviation": "PRO",
         "platform_offset": [
             0,
             -14.6,

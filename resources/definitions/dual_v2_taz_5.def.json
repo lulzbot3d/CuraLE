@@ -6,6 +6,9 @@
     {
         "visible": true,
         "platform": "bed_plates/labeled/taz_5_labeled.stl",
+        "lulzbot_machine_category": "TAZ",
+        "lulzbot_machine_type": "TAZ 5",
+        "lulzbot_machine_type_abbreviation": "T5",
         "nozzle_offsetting_for_disallowed_areas": false,
         "platform_offset": [
             0,

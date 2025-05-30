@@ -9,6 +9,9 @@
         "platform": "bed_plates/labeled/mini_1_labeled.stl",
         "has_optional_lcd": true,
         "lcd_is_standard": false,
+        "lulzbot_machine_category": "Mini",
+        "lulzbot_machine_type": "Mini 1",
+        "lulzbot_machine_type_abbreviation": "M1",
         "platform_offset": [
             10,
             -11.3,

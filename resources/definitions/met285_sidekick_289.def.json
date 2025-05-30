@@ -10,6 +10,9 @@
         "bltouch_is_standard": true,
         "has_optional_lcd": false,
         "has_variants": true,
+        "lulzbot_machine_category": "SideKick",
+        "lulzbot_machine_type": "SideKick 289",
+        "lulzbot_machine_type_abbreviation": "289",
         "platform_offset": [
             0,
             -17.3,
