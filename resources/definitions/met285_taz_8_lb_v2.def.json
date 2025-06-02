@@ -1,0 +1,41 @@
+{
+    "version": 2,
+    "name": "TAZ 8 Long Bed v2 | MET285",
+    "inherits": "met285_base",
+    "metadata":
+    {
+        "visible": true,
+        "file_formats": "text/x-gcode",
+        "platform": "bed_plates/labeled/taz_8_lb_labeled.stl",
+        "has_variants": true,
+        "lulzbot_machine_category": "TAZ",
+        "lulzbot_machine_subtype": "Long Bed v2",
+        "lulzbot_machine_type": "TAZ 8",
+        "lulzbot_machine_type_abbreviation": "T8_LBv2",
+        "platform_offset": [
+            0,
+            -12,
+            -3
+        ],
+        "preferred_quality_type": "normal",
+        "preferred_variant_name": "0.5mm",
+        "quality_definition": "met285_base"
+    },
+    "overrides":
+    {
+        "acceleration_print": { "default_value": 500 },
+        "firmware_machine_type": { "default_value": "LulzBot TAZ 8" },
+        "jerk_print": { "default_value": 12 },
+        "jerk_travel": { "value": 12 },
+        "machine_acceleration": { "default_value": 500 },
+        "machine_depth": { "default_value": 590 },
+        "machine_end_gcode": { "default_value_from_file": "taz_pro_lb/taz_pro_lb_end" },
+        "machine_has_bltouch": { "value": true },
+        "machine_height": { "default_value": 285 },
+        "machine_level_x_axis_gcode": { "default_value_from_file": "taz_pro/taz_pro_level_x_axis" },
+        "machine_name": { "default_value": "LulzBot TAZ 8 Long Bed v2 | MET285" },
+        "machine_start_gcode": { "default_value_from_file": "taz_pro_lb/taz_pro_lb_start" },
+        "machine_width": { "default_value": 292 },
+        "speed_travel": { "value": "speed_print if magic_spiralize else 125" }
+    }
+}

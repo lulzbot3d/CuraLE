@@ -13,7 +13,7 @@
         "lulzbot_machine_type": "Core XY",
         "lulzbot_machine_type_abbreviation": "CXY",
         "preferred_quality_type": "normal",
-        "preferred_variant_name": "1.2 mm",
+        "preferred_variant_name": "1.2mm",
         "quality_definition": "ast285_base"
     },
     "overrides":
