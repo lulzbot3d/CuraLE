@@ -4,7 +4,7 @@ requirements:
   - "uraniumle/5.11.0-alpha.0@lulzbot/testing"
   - "curaengine/5.11.0-alpha.0@lulzbot/testing"
   - "curale_binary_data/5.11.0-alpha.0@lulzbot/testing"
-  # - "fdm_materials/5.11.0-alpha.0@lulzbot/testing"
+  # - "fdm_materialsle/5.11.0-alpha.0@lulzbot/testing"
   - "dulcificum/5.10.0"
   - "pysavitar/5.11.0-alpha.0"
   - "pynest2d/5.10.0"
