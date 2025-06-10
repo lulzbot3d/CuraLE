@@ -22,119 +22,160 @@ class LulzBotPrintersModel(ListModel):
 
         self._lulzbot_machines = {
             "category": {
+                "Bio": {
+                    "image": "",
+                    "printers": {
+                        "Bio": {
+                            "image": "",
+                            "priority": 0,
+                            "subtypes": {},
+                            "toolheads": ["Syringe"]
+                        }
+                    },
+                    "priority": 3
+                },
+                "Mini": {
+                    "image": "",
+                    "printers": {
+                        "Mini 1": {
+                            "image": "",
+                            "priority": 2,
+                            "subtypes": {},
+                            "toolheads": ["Aerostruder", "Flexystruder v2", "HS", "HS+", "M175 v2", "SE",
+                                          "Single Extruder", "SL"]
+                        },
+                        "Mini 2": {
+                            "image": "",
+                            "priority": 1,
+                            "subtypes": {},
+                            "toolheads": ["H175", "HE", "HS", "HS+", "M175 v2", "Meteor 175", "Meteor 285", "SE", "SL"]
+                        },
+                        "Mini 3": {
+                            "image": "",
+                            "priority": 0,
+                            "subtypes": {},
+                            "toolheads": ["Meteor 175", "Meteor 285"]
+                        }
+                    },
+                    "priority": 1
+                },
+                "Other": {
+                    "image": "",
+                    "printers": {
+                        "Core XY": {
+                            "image": "",
+                            "priority": 0,
+                            "subtypes": {},
+                            "toolheads": ["Asteroid 285", "Meteor 175", "Meteor 285"]
+                        }
+                    },
+                    "priority": 4
+                },
+                "SideKick": {
+                    "image": "",
+                    "printers": {
+                        "SideKick 289": {
+                            "image": "",
+                            "priority": 1,
+                            "subtypes": {},
+                            "toolheads": ["H175", "HE", "HS", "HS+", "M175 v2", "Meteor 175", "Meteor 285", "SE", "SK175",
+                                          "SK285", "SL"]
+                        },
+                        "SideKick 747": {
+                            "image": "",
+                            "priority": 0,
+                            "subtypes": {},
+                            "toolheads": ["Asteroid 285", "H175", "HE", "HS", "HS+", "M175 v2", "Meteor 175", "Meteor 285",
+                                          "SE", "SK175", "SK285", "SL"]
+                        }
+                    },
+                    "priority": 2
+                },
                 "TAZ": {
+                    "image": "",
                     "printers": {
                         "TAZ 5": {
+                            "image": "",
                             "priority": 5,
                             "subtypes": {},
-                            "image": ""
+                            "toolheads": ["Aerostruder", "Dual v2", "Dual v3", "FlexyDually v2", "Flexystruder v2", "HS",
+                                          "HS+", "M175 v2", "MOARstruder", "SE", "Single Extruder", "SL", "Twoolhead"]
                         },
                         "TAZ 6": {
+                            "image": "",
                             "priority": 4,
                             "subtypes": {},
-                            "image": ""
+                            "toolheads": ["Aerostruder", "Dual v2", "Dual v3", "FlexyDually v2", "Flexystruder v2", "H175",
+                                          "HE", "HS", "HS+", "M175 v2", "MOARstruder", "SE", "Single Extruder", "SL", "Twoolhead"]
                         },
                         "TAZ Pro": {
+                            "image": "",
                             "priority": 1,
                             "subtypes": {
-                                "XT": {
-                                    "image": ""
-                                },
                                 "Long Bed": {
                                     "image": ""
                                 },
                                 "Long Bed v2": {
                                     "image": ""
-                                }
-                            },
-                            "image": ""
-                        },
-                        "TAZ 8": {
-                            "priority": 0,
-                            "subtypes": {
+                                },
                                 "XT": {
                                     "image": ""
-                                },
+                                }
+                            }
+                        },
+                        "TAZ 8": {
+                            "image": "",
+                            "priority": 0,
+                            "subtypes": {
                                 "Long Bed v2": {
                                     "image": ""
+                                },
+                                "XT": {
+                                    "image": ""
                                 }
-                            },
-                            "image": ""
+                            }
                         },
                         "Workhorse": {
+                            "image": "",
                             "priority": 3,
-                            "subtypes": {},
-                            "image": ""
+                            "subtypes": {}
                         },
                         "Workhorse 2": {
+                            "image": "",
                             "priority": 2,
-                            "subtypes": {},
-                            "image": ""
+                            "subtypes": {}
                         }
                     },
-                    "image": "",
                     "priority": 0
-                },
-                "Mini": {
-                    "printers": {
-                        "Mini 1": {
-                            "priority": 2,
-                            "subtypes": {},
-                            "image": ""
-                        },
-                        "Mini 2": {
-                            "priority": 1,
-                            "subtypes": {},
-                            "image": ""
-                        },
-                        "Mini 3": {
-                            "priority": 0,
-                            "subtypes": {},
-                            "image": ""
-                        }
-                    },
-                    "image": "",
-                    "priority": 1
-                },
-                "SideKick": {
-                    "printers": {
-                        "SideKick 289": {
-                            "priority": 1,
-                            "subtypes": {},
-                            "image": ""
-                        },
-                        "SideKick 747": {
-                            "priority": 0,
-                            "subtypes": {},
-                            "image": ""
-                        }
-                    },
-                    "image": "",
-                    "priority": 2
-                },
-                "Bio": {
-                    "printers": {
-                        "Bio": {
-                            "priority": 0,
-                            "subtypes": {},
-                            "image": ""
-                        }
-                    },
-                    "image": "",
-                    "priority": 3
-                },
-                "Other": {
-                    "printers": {
-                        "Core XY": {
-                            "priority": 0,
-                            "subtypes": {},
-                            "image": ""
-                        }
-                    },
-                    "image": "",
-                    "priority": 4
                 }
             }
+        }
+
+        self._lulzbot_toolheads = {
+            "Aerostruder": {},
+            "Asteroid 285": {},
+            "Dual v2": {},
+            "Dual v3": {},
+            "FlexyDually v2": {},
+            "Flexystruder v2": {},
+            "H175": {},
+            "HE": {},
+            "HS": {},
+            "HS+": {},
+            "M175 v2": {},
+            "Meteor 175": {},
+            "Meteor 285": {},
+            "MOARstruder": {},
+            "Pro Dual": {},
+            "SE": {},
+            "Single Extruder": {},
+            "SK175": {},
+            "SK285": {},
+            "SL": {},
+            "Syringe": {},
+            "Twin Nebula 175": {},
+            "Twin Nebula 285": {},
+            "Twoolhead": {}
         }
 
         self._level = 0
