@@ -26,6 +26,7 @@ class LulzBotPrintersModel(ListModel):
                     "image": "",
                     "printers": {
                         "Bio": {
+                            "has_subtypes": False,
                             "image": "",
                             "priority": 0,
                             "subtypes": {},
@@ -38,6 +39,7 @@ class LulzBotPrintersModel(ListModel):
                     "image": "",
                     "printers": {
                         "Mini 1": {
+                            "has_subtypes": False,
                             "image": "",
                             "priority": 2,
                             "subtypes": {},
@@ -45,12 +47,14 @@ class LulzBotPrintersModel(ListModel):
                                           "Single Extruder", "SL"]
                         },
                         "Mini 2": {
+                            "has_subtypes": False,
                             "image": "",
                             "priority": 1,
                             "subtypes": {},
                             "toolheads": ["H175", "HE", "HS", "HS+", "M175 v2", "Meteor 175", "Meteor 285", "SE", "SL"]
                         },
                         "Mini 3": {
+                            "has_subtypes": False,
                             "image": "",
                             "priority": 0,
                             "subtypes": {},
@@ -63,6 +67,7 @@ class LulzBotPrintersModel(ListModel):
                     "image": "",
                     "printers": {
                         "Core XY": {
+                            "has_subtypes": False,
                             "image": "",
                             "priority": 0,
                             "subtypes": {},
@@ -75,6 +80,7 @@ class LulzBotPrintersModel(ListModel):
                     "image": "",
                     "printers": {
                         "SideKick 289": {
+                            "has_subtypes": False,
                             "image": "",
                             "priority": 1,
                             "subtypes": {},
@@ -82,6 +88,7 @@ class LulzBotPrintersModel(ListModel):
                                           "SK285", "SL"]
                         },
                         "SideKick 747": {
+                            "has_subtypes": False,
                             "image": "",
                             "priority": 0,
                             "subtypes": {},
@@ -95,6 +102,7 @@ class LulzBotPrintersModel(ListModel):
                     "image": "",
                     "printers": {
                         "TAZ 5": {
+                            "has_subtypes": False,
                             "image": "",
                             "priority": 5,
                             "subtypes": {},
@@ -102,6 +110,7 @@ class LulzBotPrintersModel(ListModel):
                                           "HS+", "M175 v2", "MOARstruder", "SE", "Single Extruder", "SL", "Twoolhead"]
                         },
                         "TAZ 6": {
+                            "has_subtypes": False,
                             "image": "",
                             "priority": 4,
                             "subtypes": {},
@@ -109,41 +118,66 @@ class LulzBotPrintersModel(ListModel):
                                           "HE", "HS", "HS+", "M175 v2", "MOARstruder", "SE", "Single Extruder", "SL", "Twoolhead"]
                         },
                         "TAZ Pro": {
+                            "has_subtypes": True,
                             "image": "",
                             "priority": 1,
                             "subtypes": {
-                                "Long Bed": {
-                                    "image": ""
+                                "TAZ Pro": {
+                                    "image": "",
+                                    "toolheads": ["Asteroid 285", "H175", "HE", "HS", "HS+", "M175 v2", "Meteor 175", "Meteor 285",
+                                          "Pro Dual", "SE", "SL", "Twin Nebula 175", "Twin Nebula 285"]
                                 },
-                                "Long Bed v2": {
-                                    "image": ""
+                                "TAZ Pro Long Bed": {
+                                    "image": "",
+                                    "toolheads": ["Asteroid 285", "Meteor 175", "Meteor 285"]
                                 },
-                                "XT": {
-                                    "image": ""
+                                "TAZ Pro Long Bed v2": {
+                                    "image": "",
+                                    "toolheads": ["Asteroid 285", "H175", "HE", "HS", "HS+", "M175 v2", "Meteor 175", "Meteor 285",
+                                          "Pro Dual", "SE", "SL"]
+                                },
+                                "TAZ Pro XT": {
+                                    "image": "",
+                                    "toolheads": ["Asteroid 285", "H175", "HE", "HS", "HS+", "M175 v2", "Meteor 175", "Meteor 285",
+                                          "Pro Dual", "SE", "SL", "Twin Nebula 175", "Twin Nebula 285"]
                                 }
-                            }
+                            },
+                            "toolheads": ["Asteroid 285", "H175", "HE", "HS", "HS+", "M175 v2", "Meteor 175", "Meteor 285",
+                                          "Pro Dual", "SE", "SL", "Twin Nebula 175", "Twin Nebula 285"]
                         },
                         "TAZ 8": {
+                            "has_subtypes": True,
                             "image": "",
                             "priority": 0,
                             "subtypes": {
-                                "Long Bed v2": {
-                                    "image": ""
+                                "TAZ 8": {
+                                    "image": "",
+                                    "toolheads": ["Asteroid 285", "Meteor 175", "Meteor 285", "Twin Nebula 175", "Twin Nebula 285"]
                                 },
-                                "XT": {
-                                    "image": ""
+                                "TAZ 8 Long Bed v2": {
+                                    "image": "",
+                                    "toolheads": ["Asteroid 285", "Meteor 175", "Meteor 285", "Twin Nebula 175", "Twin Nebula 285"]
+                                },
+                                "TAZ 8 XT": {
+                                    "image": "",
+                                    "toolheads": ["Asteroid 285", "Meteor 175", "Meteor 285", "Twin Nebula 175", "Twin Nebula 285"]
                                 }
                             }
                         },
                         "Workhorse": {
+                            "has_subtypes": False,
                             "image": "",
                             "priority": 3,
-                            "subtypes": {}
+                            "subtypes": {},
+                            "toolheads": ["Asteroid 285", "H175", "HE", "HS", "HS+", "M175 v2", "Meteor 175", "Meteor 285"
+                                          "SE", "SL"]
                         },
                         "Workhorse 2": {
+                            "has_subtypes": False,
                             "image": "",
                             "priority": 2,
-                            "subtypes": {}
+                            "subtypes": {},
+                            "toolheads": ["Asteroid 285", "Meteor 175", "Meteor 285"]
                         }
                     },
                     "priority": 0
