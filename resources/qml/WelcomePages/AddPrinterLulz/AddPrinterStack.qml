@@ -18,10 +18,11 @@ ColumnLayout
     Layout.fillHeight: true
 
     // Stack navigation
-    property var goToAddPrinter: () => layout.currentIndex = 0
-    property var goToLulzBotPrinter: () => layout.currentIndex = 1
-    property var goToOtherPrinter: () => layout.currentIndex = 1
-    property var goToCustomPrinter: () => layout.currentIndex = 2
+    property var goToPrinterCategory: () => layout.currentIndex = 0
+    property var goToPrinterType: () => layout.currentIndex = 1
+    property var goToPrinterSubType: () => layout.currentIndex = 2
+    property var goToPrinterConditionals: () => layout.currentIndex = 3
+    property var goToPrinterToolHead: () => layout.currentIndex = 4
 
     UM.Label
     {
@@ -40,15 +41,34 @@ ColumnLayout
         Layout.fillWidth: true
         Layout.fillHeight: true
         currentIndex: 0
-        AddPrinter
+        PrinterCategory
         {
-            goToLulzBotPrinter: root.goToLulzBotPrinter
-            goToOtherPrinter: root.goToOtherPrinter
-            goToCustomPrinter: root.goToCustomPrinter
+            goToPrinterType: root.goToPrinterType
         }
-        AddLulzBotPrinter
+        PrinterType
         {
-            goToAddPrinter: root.goToAddPrinter
+            goToPrinterCategory: root.goToPrinterCategory
+            goToPrinterSubType: root.goToPrinterSubType
+            goToPrinterConditionals: root.goToPrinterConditionals
+            goToPrinterToolHead: root.goToPrinterToolHead
+        }
+        PrinterSubType
+        {
+            goToPrinterCategory: root.goToPrinterCategory
+            goToPrinterType: root.goToPrinterType
+            goToPrinterConditionals: root.goToPrinterConditionals
+            goToPrinterToolHead: root.goToPrinterToolHead
+        }
+        PrinterConditionals
+        {
+            goToPrinterCategory: root.goToPrinterCategory
+            goToPrinterType: root.goToPrinterType
+            goToPrinterSubType: root.goToPrinterSubType
+            goToPrinterToolHead: root.goToPrinterToolHead
+        }
+        PrinterToolHead
+        {
+            goToPrinterCategory: root.goToPrinterCategory
         }
         AddCustomPrinter
         {

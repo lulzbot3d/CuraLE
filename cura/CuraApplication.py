@@ -74,7 +74,8 @@ from cura.Machines.Models.GenericMaterialsModel import GenericMaterialsModel
 from cura.Machines.Models.GlobalStacksModel import GlobalStacksModel
 from cura.Machines.Models.IntentCategoryModel import IntentCategoryModel
 from cura.Machines.Models.IntentModel import IntentModel
-from cura.Machines.Models.LulzBotPrintersModel import LulzBotPrintersModel
+# from cura.Machines.Models.LulzBotPrintersModel import LulzBotPrintersModel
+from cura.Machines.Models.LulzBotNewPrintersModel import LulzBotNewPrintersModel
 from cura.Machines.Models.LulzBotToolheadsModel import LulzBotToolheadsModel
 from cura.Machines.Models.MaterialManagementModel import MaterialManagementModel
 from cura.Machines.Models.MaterialTypesModel import MaterialTypesModel
