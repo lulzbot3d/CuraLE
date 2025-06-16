@@ -2,7 +2,7 @@ name: Weekly Build - Stable Release
 run-name: Weekly Build - Stable Release
 
 on:
-  workflow_call:
+  workflow_dispatch:
 #   schedule:
 #     # Runs at 18:00 CST on Fridays
 #     - cron: '0 0 * * 6'
