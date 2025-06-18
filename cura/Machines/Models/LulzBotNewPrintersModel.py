@@ -24,13 +24,14 @@ class LulzBotPrintersModel(ListModel):
         ContainerRegistry.getInstance().containerAdded.connect(self._onContainerChanged)
         ContainerRegistry.getInstance().containerRemoved.connect(self._onContainerChanged)
 
-        self._lulzbot_machine_categories = [("Bio", ""), ("Mini", ""), ("Other", ""), ("SideKick", ""), ("TAZ", "")]
+        self._lulzbot_machine_categories = [("TAZ", ""), ("Mini", ""), ("SideKick", ""), ("Bio", ""), ("Other", "") ]
 
         self._level = 0
         self._machine_category_property = "TAZ"
         self._machine_type_property = "TAZ 8"
+        self._machine_subtype_property = ""
 
-        self._filter_dict = {"author": "LulzBot" , "is_subtype": False}
+        self._filter_dict = {"author": "LulzBot" , "lulzbot_machine_is_subtype": False}
         self._update()
 
     ##  Handler for container change events from registry
@@ -43,16 +44,16 @@ class LulzBotPrintersModel(ListModel):
     def _update(self):
         items = []
 
-        if self._level == 0:
+        if self._level == 0: # Machine Categories
             for category, image in self._lulzbot_machine_categories:
                 items.append({
                     "name": category,
                     "image": image
                 })
 
-        elif self._level == 1:
+        elif self._level == 1: # Machine Types within given Category
             new_filter = copy.deepcopy(self._filter_dict)
-            new_filter["machine_category"] = self._machine_category_property
+            new_filter["lulzbot_machine_category"] = self._machine_category_property
             definition_containers = ContainerRegistry.getInstance().findDefinitionContainersMetadata(**new_filter)
             for metadata in definition_containers:
                 metadata = metadata.copy()
@@ -64,13 +65,16 @@ class LulzBotPrintersModel(ListModel):
                 if not dupe:
                     items.append({
                         "name": metadata["lulzbot_machine_type"],
-                        "image": metadata["lulzbot_machine_type_image"],
+                        "image": metadata["lulzbot_machine_image"],
                         "has_subtypes": metadata["lulzbot_machine_has_subtypes"]
                     })
 
-        elif self._level == 2:
+        elif self._level == 2: # Machine Subtypes within a given Type
             new_filter = copy.deepcopy(self._filter_dict)
-            new_filter["machine_type"] = self._machine_type_property
+            new_filter["lulzbot_machine_type"] = self._machine_type_property
+            del new_filter["lulzbot_machine_is_subtype"]
+            definition_containers = ContainerRegistry.getInstance().findDefinitionContainersMetadata(**new_filter)
+            for metadata in definition_containers:
 
 
         ## new_filter = copy.deepcopy(self._filter_dict)
