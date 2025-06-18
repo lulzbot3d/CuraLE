@@ -18,7 +18,8 @@
         "lulzbot_machine_category": "LulzBot",
         "lulzbot_machine_image": "",
         "lulzbot_machine_is_subtype": false,
-        "lulzbot_machine_options": {},
+        "lulzbot_machine_options":
+        {},
         "lulzbot_machine_subtype": "",
         "lulzbot_machine_type": "Printer",
         "lulzbot_machine_type_abbreviation": "PRI",
