@@ -8,16 +8,24 @@ from UM.Settings.DefinitionContainer import DefinitionContainer
 import copy
 
 class LulzBotPrintersModel(ListModel):
-    NameRole = Qt.ItemDataRole.UserRole + 1
-    IdRole = Qt.ItemDataRole.UserRole + 2
-    ImageRole = Qt.ItemDataRole.UserRole + 3
-    HasSubtypesRole = Qt.ItemDataRole.UserRole + 4
+    IdRole = Qt.ItemDataRole.UserRole + 1
+    NameRole = Qt.ItemDataRole.UserRole + 2
+    TypeRole = Qt.ItemDataRole.UserRole + 3
+    SubtypeRole = Qt.ItemDataRole.UserRole + 4
+    ToolHeadRole = Qt.ItemDataRole.UserRole + 5
+    ImageRole = Qt.ItemDataRole.UserRole + 6
+    OptionsRole = Qt.ItemDataRole.UserRole + 7
+    HasSubtypesRole = Qt.ItemDataRole.UserRole + 8
 
     def __init__(self, parent = None):
         super().__init__(parent)
-        self.addRoleName(self.NameRole, "name")
         self.addRoleName(self.IdRole, "id")
+        self.addRoleName(self.NameRole, "name")
+        self.addRoleName(self.TypeRole, "type")
+        self.addRoleName(self.SubtypeRole, "subtype")
+        self.addRoleName(self.ToolHeadRole, "tool_head")
         self.addRoleName(self.ImageRole, "image")
+        self.addRoleName(self.OptionsRole, "options")
         self.addRoleName(self.HasSubtypesRole, "has_subtypes")
 
         # Listen to changes
@@ -30,8 +38,9 @@ class LulzBotPrintersModel(ListModel):
         self._machine_category_property = "TAZ"
         self._machine_type_property = "TAZ 8"
         self._machine_subtype_property = ""
+        self._machine_id_property = ""
 
-        self._filter_dict = {"author": "LulzBot" , "lulzbot_machine_is_subtype": False}
+        self._filter_dict = {"author": "LulzBot" , "visible": True}
         self._update()
 
     ##  Handler for container change events from registry
@@ -54,6 +63,7 @@ class LulzBotPrintersModel(ListModel):
         elif self._level == 1: # Machine Types within given Category
             new_filter = copy.deepcopy(self._filter_dict)
             new_filter["lulzbot_machine_category"] = self._machine_category_property
+            new_filter["lulzbot_machine_is_subtype"] = False
             definition_containers = ContainerRegistry.getInstance().findDefinitionContainersMetadata(**new_filter)
             for metadata in definition_containers:
                 metadata = metadata.copy()
@@ -65,6 +75,7 @@ class LulzBotPrintersModel(ListModel):
                 if not dupe:
                     items.append({
                         "name": metadata["lulzbot_machine_type"],
+                        "type": metadata["lulzbot_machine_type"],
                         "image": metadata["lulzbot_machine_image"],
                         "has_subtypes": metadata["lulzbot_machine_has_subtypes"]
                     })
@@ -72,9 +83,50 @@ class LulzBotPrintersModel(ListModel):
         elif self._level == 2: # Machine Subtypes within a given Type
             new_filter = copy.deepcopy(self._filter_dict)
             new_filter["lulzbot_machine_type"] = self._machine_type_property
-            del new_filter["lulzbot_machine_is_subtype"]
             definition_containers = ContainerRegistry.getInstance().findDefinitionContainersMetadata(**new_filter)
             for metadata in definition_containers:
+                metadata = metadata.copy()
+                dupe = False
+                for item in items:
+                    if metadata["lulzbot_machine_subtype"] == item["subtype"]:
+                        dupe = True
+                        break
+                if not dupe:
+                    items.append({
+                        "name": str(metadata["lulzbot_machine_type"] + " " + metadata["lulzbot_machine_subtype"]).strip(),
+                        "type": metadata["lulzbot_machine_type"],
+                        "subtype": metadata["lulzbot_machine_subtype"],
+                        "image": metadata["lulzbot_machine_image"]
+                    })
+
+        elif self._level == 3: # Tool Head Selection
+            new_filter = copy.deepcopy(self._filter_dict)
+            new_filter["lulzbot_machine_type"] = self._machine_type_property
+            new_filter["lulzbot_machine_subtype"] = self._machine_subtype_property
+            definition_containers = ContainerRegistry.getInstance().findDefinitionContainersMetadata(**new_filter)
+            for metadata in definition_containers:
+                metadata = metadata.copy()
+                items.append({
+                    "id": metadata["id"],
+                    "name": metadata["name"],
+                    "type": metadata["lulzbot_machine_type"],
+                    "subtype": metadata["lulzbot_machine_subtype"],
+                    "tool_head": metadata["lulzbot_tool_head"],
+                    "image": metadata["lulzbot_tool_head_image"]
+                })
+
+        elif self._level == 4: # Machine Options
+            new_filter = copy.deepcopy(self._filter_dict)
+            new_filter["id"] = self._machine_id_property
+            definition_containers = ContainerRegistry.getInstance().findDefinitionContainersMetadata(**new_filter)
+            for metadata in definition_containers:
+                metadata = metadata.copy()
+                items.append({
+                    "id": metadata["id"],
+                    "name": metadata["name"],
+                    "image": metadata["lulzbot_tool_head_image"],
+                    "options": metadata.get("lulzbot_machine_options", {})
+                })
 
 
         ## new_filter = copy.deepcopy(self._filter_dict)
@@ -106,6 +158,18 @@ class LulzBotPrintersModel(ListModel):
             self.machineTypePropertyChanged.emit()
             self._update()
 
+    def setMachineSubtypeProperty(self, new_machine_subtype):
+        if self._machine_subtype_property != new_machine_subtype:
+            self._machine_subtype_property = new_machine_subtype
+            self.machineSubtypePropertyChanged.emit()
+            self._update()
+
+    def setMachineIdProperty(self, new_machine_id):
+        if self._machine_id_property != new_machine_id:
+            self._machine_id_property = new_machine_id
+            self.machineIdPropertyChanged.emit()
+            self._update()
+
     levelPropertyChanged = pyqtSignal()
     @pyqtProperty(int, fset = setLevelProperty, notify = levelPropertyChanged)
     def levelProperty(self):
@@ -120,6 +184,16 @@ class LulzBotPrintersModel(ListModel):
     @pyqtProperty(str, fset = setMachineTypeProperty, notify = machineTypePropertyChanged)
     def machineTypeProperty(self):
         return self._machine_type_property
+
+    machineSubtypePropertyChanged = pyqtSignal()
+    @pyqtProperty(str, fset = setMachineSubtypeProperty, notify = machineSubtypePropertyChanged)
+    def machineSubtypeProperty(self):
+        return self._machine_subtype_property
+
+    machineIdPropertyChanged = pyqtSignal()
+    @pyqtProperty(str, fset = setMachineIdProperty, notify = machineIdPropertyChanged)
+    def machineIdProperty(self):
+        return self._machine_id_property
 
 
     ##  Set the filter of this model based on a string.
