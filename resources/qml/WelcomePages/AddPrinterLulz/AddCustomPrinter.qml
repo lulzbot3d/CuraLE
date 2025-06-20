@@ -29,27 +29,27 @@ Item
 
         spacing: UM.Theme.getSize("default_margin").height
 
-        DropDownWidget
-        {
-            id: addLocalPrinterDropDown
+        // DropDownWidget
+        // {
+        //     id: addLocalPrinterDropDown
 
-            Layout.fillWidth: true
-            Layout.fillHeight: contentShown
+        //     Layout.fillWidth: true
+        //     Layout.fillHeight: contentShown
 
-            contentShown: true
+        //     contentShown: true
 
-            title: catalog.i18nc("@label", "Custom Printer")
+        //     title: catalog.i18nc("@label", "Custom Printer")
 
-            contentComponent: localPrinterListComponent
-            Component
-            {
-                id: localPrinterListComponent
-                AddLocalPrinterScrollView
-                {
-                    id: localPrinterView
-                }
-            }
-        }
+        //     contentComponent: localPrinterListComponent
+        //     Component
+        //     {
+        //         id: localPrinterListComponent
+        //         AddLocalPrinterScrollView
+        //         {
+        //             id: localPrinterView
+        //         }
+        //     }
+        // }
     }
 
     Cura.SecondaryButton

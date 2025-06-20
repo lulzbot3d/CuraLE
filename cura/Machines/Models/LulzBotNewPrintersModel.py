@@ -7,7 +7,7 @@ from UM.Settings.DefinitionContainer import DefinitionContainer
 
 import copy
 
-class LulzBotPrintersModel(ListModel):
+class LulzBotNewPrintersModel(ListModel):
     IdRole = Qt.ItemDataRole.UserRole + 1
     NameRole = Qt.ItemDataRole.UserRole + 2
     TypeRole = Qt.ItemDataRole.UserRole + 3
@@ -34,7 +34,7 @@ class LulzBotPrintersModel(ListModel):
 
         self._lulzbot_machine_categories = [("TAZ", ""), ("Mini", ""), ("SideKick", ""), ("Bio", ""), ("Other", "") ]
 
-        self._level = 0
+        self._level = 0 # 0 = Categories, 1 = Types, 2 = Subtypes, 3 = Tool Heads, 4 = Printer Options
         self._machine_category_property = "TAZ"
         self._machine_type_property = "TAZ 8"
         self._machine_subtype_property = ""

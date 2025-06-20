@@ -257,9 +257,13 @@ class WelcomePagesModel(ListModel):
                           {"id": "user_agreement",
                            "page_url": self._getBuiltinWelcomePagePath("UserAgreementContent.qml"),
                            },
-                          {"id": "add_network_or_local_printer",
-                           "page_url": self._getBuiltinWelcomePagePath("AddUltimakerOrThirdPartyPrinterStack.qml"),
-                           "next_page_id": "machine_actions",
+                          # {"id": "add_network_or_local_printer",
+                          #  "page_url": self._getBuiltinWelcomePagePath("AddUltimakerOrThirdPartyPrinterStack.qml"),
+                          #  "next_page_id": "machine_actions",
+                          #  },
+                          {"id": "add_printer",
+                           "page_url": self._getBuiltinWelcomePagePath("AddPrinterLulz/AddPrinterStack.qml"),
+                           "next_page_id": "machine_actions"
                            },
                           {"id": "machine_actions",
                            "page_url": self._getBuiltinWelcomePagePath("FirstStartMachineActionsContent.qml"),
@@ -272,7 +276,7 @@ class WelcomePagesModel(ListModel):
                           {"id": "changelog",
                            "page_url": self._getBuiltinWelcomePagePath("ChangelogContent.qml"),
                            "next_page_button_text": self._catalog.i18nc("@action:button", "Finish"),
-                           },
+                           }
                           ]
 
         pages_to_show = all_pages_list

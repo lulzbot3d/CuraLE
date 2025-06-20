@@ -20,9 +20,9 @@ ColumnLayout
     // Stack navigation
     property var goToPrinterCategory: () => layout.currentIndex = 0
     property var goToPrinterType: () => layout.currentIndex = 1
-    property var goToPrinterSubType: () => layout.currentIndex = 2
-    property var goToPrinterConditionals: () => layout.currentIndex = 3
-    property var goToPrinterToolHead: () => layout.currentIndex = 4
+    property var goToPrinterSubtype: () => layout.currentIndex = 2
+    property var goToPrinterToolHead: () => layout.currentIndex = 3
+    property var goToPrinterConditionals: () => layout.currentIndex = 4
 
     UM.Label
     {
@@ -43,32 +43,31 @@ ColumnLayout
         currentIndex: 0
         PrinterCategory
         {
-            goToPrinterType: root.goToPrinterType
+            //goToPrinterType: root.goToPrinterType
         }
         PrinterType
         {
-            goToPrinterCategory: root.goToPrinterCategory
-            goToPrinterSubType: root.goToPrinterSubType
-            goToPrinterConditionals: root.goToPrinterConditionals
-            goToPrinterToolHead: root.goToPrinterToolHead
+            //goToPrinterCategory: root.goToPrinterCategory
+            //goToPrinterSubtype: root.goToPrinterSubtype
+            //goToPrinterToolHead: root.goToPrinterToolHead
         }
-        PrinterSubType
+        PrinterSubtype
         {
-            goToPrinterCategory: root.goToPrinterCategory
-            goToPrinterType: root.goToPrinterType
-            goToPrinterConditionals: root.goToPrinterConditionals
-            goToPrinterToolHead: root.goToPrinterToolHead
-        }
-        PrinterConditionals
-        {
-            goToPrinterCategory: root.goToPrinterCategory
-            goToPrinterType: root.goToPrinterType
-            goToPrinterSubType: root.goToPrinterSubType
-            goToPrinterToolHead: root.goToPrinterToolHead
+            //goToPrinterCategory: root.goToPrinterCategory
+            //goToPrinterType: root.goToPrinterType
+            //goToPrinterToolHead: root.goToPrinterToolHead
         }
         PrinterToolHead
         {
-            goToPrinterCategory: root.goToPrinterCategory
+            //goToPrinterCategory: root.goToPrinterCategory
+            //goToPrinterOptions: root.goToPrinterOptions
+        }
+        PrinterOptions
+        {
+            //goToPrinterCategory: root.goToPrinterCategory
+            //goToPrinterType: root.goToPrinterType
+            //goToPrinterSubtype: root.goToPrinterSubtype
+            //goToPrinterToolHead: root.goToPrinterToolHead
         }
         AddCustomPrinter
         {
