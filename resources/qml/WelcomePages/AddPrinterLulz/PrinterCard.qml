@@ -66,6 +66,7 @@ Control
         Image
         {
             id: image
+            visible: false
             source: imageSource
             width: 180 * screenScaleFactor
             sourceSize.width: width

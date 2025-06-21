@@ -17,9 +17,7 @@ Control
     UM.I18nCatalog { id: catalog; name: "cura" }
 
     property var updateLulzBotCategory
-    property var goToLulzBotPrinter
-    property var goToOtherPrinter
-    property var goToCustomPrinter
+    property var goToPrinterType
 
     contentItem: ColumnLayout
     {
@@ -63,9 +61,9 @@ Control
                     Layout.column: index % 3
                     Layout.alignment: Qt.AlignBottom
                     onClicked: {
-                        lulzPrinterModel.setMachineCategoryProperty(lulzPrinterModel.name)
-                        lulzPrinterModel.setLevelProperty("1")
-                        goToLulzBotPrinter
+                        lulzPrinterModel.machineCategoryProperty = name
+                        lulzPrinterModel.levelProperty = 1
+                        goToPrinterType
                     }
                     text: catalog.i18nc("@button", modelData.name)
                     imageSource: UM.Theme.getImage("ultimaker_printer")

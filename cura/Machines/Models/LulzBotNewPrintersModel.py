@@ -150,25 +150,21 @@ class LulzBotNewPrintersModel(ListModel):
         if self._machine_category_property != new_machine_category:
             self._machine_category_property = new_machine_category
             self.machineCategoryPropertyChanged.emit()
-            self._update()
 
     def setMachineTypeProperty(self, new_machine_type):
         if self._machine_type_property != new_machine_type:
             self._machine_type_property = new_machine_type
             self.machineTypePropertyChanged.emit()
-            self._update()
 
     def setMachineSubtypeProperty(self, new_machine_subtype):
         if self._machine_subtype_property != new_machine_subtype:
             self._machine_subtype_property = new_machine_subtype
             self.machineSubtypePropertyChanged.emit()
-            self._update()
 
     def setMachineIdProperty(self, new_machine_id):
         if self._machine_id_property != new_machine_id:
             self._machine_id_property = new_machine_id
             self.machineIdPropertyChanged.emit()
-            self._update()
 
     levelPropertyChanged = pyqtSignal()
     @pyqtProperty(int, fset = setLevelProperty, notify = levelPropertyChanged)
