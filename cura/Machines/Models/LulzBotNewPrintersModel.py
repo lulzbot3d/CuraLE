@@ -35,10 +35,10 @@ class LulzBotNewPrintersModel(ListModel):
         self._lulzbot_machine_categories = [("TAZ", ""), ("Mini", ""), ("SideKick", ""), ("Bio", ""), ("Other", "") ]
 
         self._level = 0 # 0 = Categories, 1 = Types, 2 = Subtypes, 3 = Tool Heads, 4 = Printer Options
-        self._machine_category_property = "TAZ"
-        self._machine_type_property = "TAZ 8"
-        self._machine_subtype_property = ""
-        self._machine_id_property = ""
+        self._machine_category = "TAZ"
+        self._machine_type = "TAZ 8"
+        self._machine_subtype = ""
+        self._machine_id = ""
 
         self._filter_dict = {"author": "LulzBot" , "visible": True}
         self._update()
@@ -51,6 +51,7 @@ class LulzBotNewPrintersModel(ListModel):
 
     ##  Private convenience function to reset & repopulate the model.
     def _update(self):
+        print("Updating Printers Model")
         items = []
 
         if self._level == 0: # Machine Categories
@@ -62,7 +63,7 @@ class LulzBotNewPrintersModel(ListModel):
 
         elif self._level == 1: # Machine Types within given Category
             new_filter = copy.deepcopy(self._filter_dict)
-            new_filter["lulzbot_machine_category"] = self._machine_category_property
+            new_filter["lulzbot_machine_category"] = self._machine_category
             new_filter["lulzbot_machine_is_subtype"] = False
             definition_containers = ContainerRegistry.getInstance().findDefinitionContainersMetadata(**new_filter)
             for metadata in definition_containers:
@@ -82,7 +83,7 @@ class LulzBotNewPrintersModel(ListModel):
 
         elif self._level == 2: # Machine Subtypes within a given Type
             new_filter = copy.deepcopy(self._filter_dict)
-            new_filter["lulzbot_machine_type"] = self._machine_type_property
+            new_filter["lulzbot_machine_type"] = self._machine_type
             definition_containers = ContainerRegistry.getInstance().findDefinitionContainersMetadata(**new_filter)
             for metadata in definition_containers:
                 metadata = metadata.copy()
@@ -101,8 +102,8 @@ class LulzBotNewPrintersModel(ListModel):
 
         elif self._level == 3: # Tool Head Selection
             new_filter = copy.deepcopy(self._filter_dict)
-            new_filter["lulzbot_machine_type"] = self._machine_type_property
-            new_filter["lulzbot_machine_subtype"] = self._machine_subtype_property
+            new_filter["lulzbot_machine_type"] = self._machine_type
+            new_filter["lulzbot_machine_subtype"] = self._machine_subtype
             definition_containers = ContainerRegistry.getInstance().findDefinitionContainersMetadata(**new_filter)
             for metadata in definition_containers:
                 metadata = metadata.copy()
@@ -117,7 +118,7 @@ class LulzBotNewPrintersModel(ListModel):
 
         elif self._level == 4: # Machine Options
             new_filter = copy.deepcopy(self._filter_dict)
-            new_filter["id"] = self._machine_id_property
+            new_filter["id"] = self._machine_id
             definition_containers = ContainerRegistry.getInstance().findDefinitionContainersMetadata(**new_filter)
             for metadata in definition_containers:
                 metadata = metadata.copy()
@@ -141,55 +142,57 @@ class LulzBotNewPrintersModel(ListModel):
         # items = sorted(items, key=lambda x: x["machine_priority"]+x["name"])
         self.setItems(items)
 
-    def setLevelProperty(self, new_level):
+    def setLevel(self, new_level):
+        print("Tried to set level")
         if self._level != new_level:
             self._level = new_level
+            self.levelChanged.emit()
             self._update()
 
-    def setMachineCategoryProperty(self, new_machine_category):
-        if self._machine_category_property != new_machine_category:
-            self._machine_category_property = new_machine_category
-            self.machineCategoryPropertyChanged.emit()
+    def setMachineCategory(self, new_machine_category):
+        if self._machine_category != new_machine_category:
+            self._machine_category = new_machine_category
+            self.machineCategoryChanged.emit()
 
-    def setMachineTypeProperty(self, new_machine_type):
-        if self._machine_type_property != new_machine_type:
-            self._machine_type_property = new_machine_type
-            self.machineTypePropertyChanged.emit()
+    def setMachineType(self, new_machine_type):
+        if self._machine_type != new_machine_type:
+            self._machine_type = new_machine_type
+            self.machineTypeChanged.emit()
 
-    def setMachineSubtypeProperty(self, new_machine_subtype):
-        if self._machine_subtype_property != new_machine_subtype:
-            self._machine_subtype_property = new_machine_subtype
-            self.machineSubtypePropertyChanged.emit()
+    def setMachineSubtype(self, new_machine_subtype):
+        if self._machine_subtype != new_machine_subtype:
+            self._machine_subtype = new_machine_subtype
+            self.machineSubtypeChanged.emit()
 
-    def setMachineIdProperty(self, new_machine_id):
-        if self._machine_id_property != new_machine_id:
-            self._machine_id_property = new_machine_id
-            self.machineIdPropertyChanged.emit()
+    def setMachineId(self, new_machine_id):
+        if self._machine_id != new_machine_id:
+            self._machine_id = new_machine_id
+            self.machineIdChanged.emit()
 
-    levelPropertyChanged = pyqtSignal()
-    @pyqtProperty(int, fset = setLevelProperty, notify = levelPropertyChanged)
-    def levelProperty(self):
+    levelChanged = pyqtSignal()
+    @pyqtProperty(int, fset = setLevel, notify = levelChanged)
+    def level(self):
         return self._level
 
-    machineCategoryPropertyChanged = pyqtSignal()
-    @pyqtProperty(str, fset = setMachineCategoryProperty, notify = machineCategoryPropertyChanged)
-    def machineCategoryProperty(self):
-        return self._machine_category_property
+    machineCategoryChanged = pyqtSignal()
+    @pyqtProperty(str, fset = setMachineCategory, notify = machineCategoryChanged)
+    def machineCategory(self):
+        return self._machine_category
 
-    machineTypePropertyChanged = pyqtSignal()
-    @pyqtProperty(str, fset = setMachineTypeProperty, notify = machineTypePropertyChanged)
-    def machineTypeProperty(self):
-        return self._machine_type_property
+    machineTypeChanged = pyqtSignal()
+    @pyqtProperty(str, fset = setMachineType, notify = machineTypeChanged)
+    def machineType(self):
+        return self._machine_type
 
-    machineSubtypePropertyChanged = pyqtSignal()
-    @pyqtProperty(str, fset = setMachineSubtypeProperty, notify = machineSubtypePropertyChanged)
-    def machineSubtypeProperty(self):
-        return self._machine_subtype_property
+    machineSubtypeChanged = pyqtSignal()
+    @pyqtProperty(str, fset = setMachineSubtype, notify = machineSubtypeChanged)
+    def machineSubtype(self):
+        return self._machine_subtype
 
-    machineIdPropertyChanged = pyqtSignal()
-    @pyqtProperty(str, fset = setMachineIdProperty, notify = machineIdPropertyChanged)
-    def machineIdProperty(self):
-        return self._machine_id_property
+    machineIdChanged = pyqtSignal()
+    @pyqtProperty(str, fset = setMachineId, notify = machineIdChanged)
+    def machineId(self):
+        return self._machine_id
 
 
     ##  Set the filter of this model based on a string.

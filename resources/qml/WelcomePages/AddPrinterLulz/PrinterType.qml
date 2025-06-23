@@ -16,10 +16,9 @@ Control
 {
     UM.I18nCatalog { id: catalog; name: "cura" }
 
-    property var updateLulzBotCategory
-    property var goToLulzBotPrinter
-    property var goToOtherPrinter
-    property var goToCustomPrinter
+    property alias printerModel: printerTypeRepeater.model
+    property var goToPrinterCategory
+    property var goToPrinterSubtype
 
     contentItem: ColumnLayout
     {
@@ -28,14 +27,7 @@ Control
 
         UM.Label
         {
-            text: catalog.i18nc("@label", "In order to start using Cura LulzBot Edition, you will need to configure a printer.")
-            font: UM.Theme.getFont("default")
-            Layout.alignment: Qt.AlignTop
-        }
-
-        UM.Label
-        {
-            text: catalog.i18nc("@label", "What printer would you like to setup?")
+            text: catalog.i18nc("@label", "What type of printer would you like to setup?")
             font: UM.Theme.getFont("default_bold")
             Layout.alignment: Qt.AlignTop
         }
@@ -54,34 +46,20 @@ Control
 
             Repeater 
             {
-                model: Cura.LulzBotNewPrintersModel {
-                    id: lulzPrinterModel
-                }
+                id: printerTypeRepeater
                 PrinterCard
                 {
                     Layout.row: Math.floor(index/3)
                     Layout.column: index % 3
                     Layout.alignment: Qt.AlignBottom
                     onClicked: {
-                        lulzPrinterModel.setMachineCategoryProperty(lulzPrinterModel.name)
-                        lulzPrinterModel.setLevelProperty("1")
-                        goToLulzBotPrinter
+                        model.level = 1
+                        goToPrinterCategory
                     }
-                    text: catalog.i18nc("@button", modelData.name)
+                    text: catalog.i18nc("@button", name)
                     imageSource: UM.Theme.getImage("ultimaker_printer")
                 }
             }
-        }
-
-        Cura.TertiaryButton
-        {
-            id: learnMoreButton
-            Layout.alignment: Qt.AlignBottom
-            text: catalog.i18nc("@button", "Learn more about adding printers to CuraLE")
-            iconSource: UM.Theme.getIcon("LinkExternal")
-            isIconOnRightSide: true
-            textFont: UM.Theme.getFont("small")
-            onClicked: Qt.openUrlExternally("https://lulzbot.com/")
         }
     }
 }

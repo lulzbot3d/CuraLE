@@ -17,6 +17,8 @@ ColumnLayout
     Layout.fillWidth: true
     Layout.fillHeight: true
 
+    property var printersModel: Cura.LulzBotNewPrintersModel{ }
+
     // Stack navigation
     property var goToPrinterCategory: () => layout.currentIndex = 0
     property var goToPrinterType: () => layout.currentIndex = 1
@@ -43,35 +45,37 @@ ColumnLayout
         currentIndex: 0
         PrinterCategory
         {
-            //goToPrinterType: root.goToPrinterType
+            printerModel: root.printersModel
+            goToPrinterType: root.goToPrinterType
         }
         PrinterType
         {
-            //goToPrinterCategory: root.goToPrinterCategory
+            printerModel: root.printersModel
+            goToPrinterCategory: root.goToPrinterCategory
             //goToPrinterSubtype: root.goToPrinterSubtype
             //goToPrinterToolHead: root.goToPrinterToolHead
         }
-        PrinterSubtype
-        {
+        //PrinterSubtype
+        //{
             //goToPrinterCategory: root.goToPrinterCategory
             //goToPrinterType: root.goToPrinterType
             //goToPrinterToolHead: root.goToPrinterToolHead
-        }
-        PrinterToolHead
-        {
+        //}
+        //PrinterToolHead
+        //{
             //goToPrinterCategory: root.goToPrinterCategory
             //goToPrinterOptions: root.goToPrinterOptions
-        }
-        PrinterOptions
-        {
+        //}
+        //PrinterOptions
+        //{
             //goToPrinterCategory: root.goToPrinterCategory
             //goToPrinterType: root.goToPrinterType
             //goToPrinterSubtype: root.goToPrinterSubtype
             //goToPrinterToolHead: root.goToPrinterToolHead
-        }
-        AddCustomPrinter
-        {
-            goToAddPrinter: root.goToAddPrinter
-        }
+        //}
+        //AddCustomPrinter
+        //{
+            //goToAddPrinter: root.goToAddPrinter
+        //}
     }
 }
