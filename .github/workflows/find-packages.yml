@@ -1,0 +1,19 @@
+name: Conan Package Discovery by Jira Ticket
+
+on:
+  workflow_dispatch:
+    inputs:
+      jira_ticket_number:
+        description: 'Jira ticket number for Conan package discovery (e.g., cura_12345)'
+        required: true
+        type: string
+
+permissions: {}
+
+jobs:
+  find-packages:
+    name: Find packages for Jira ticket
+    uses: lulzbot3d/CuraLE_Workflows/.github/workflows/find_package_by_ticket.yml@jira_find_package
+    with:
+      jira_ticket_number: ${{ inputs.jira_ticket_number }}
+    secrets: inherit
