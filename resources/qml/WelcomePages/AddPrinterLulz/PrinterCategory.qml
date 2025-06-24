@@ -14,6 +14,8 @@ import Cura 1.1 as Cura
 //
 Control
 {
+    id: catControl
+
     UM.I18nCatalog { id: catalog; name: "cura" }
 
     property alias printerModel: categoryRepeater.model
@@ -59,11 +61,16 @@ Control
                     Layout.column: index % 3
                     Layout.alignment: Qt.AlignBottom
                     onClicked: {
-                        console.log(name)
-                        goToPrinterType(name)
+                        selectCategory
                     }
                     text: catalog.i18nc("@button", name)
                     imageSource: UM.Theme.getImage("ultimaker_printer")
+
+                    function selectCategory () {
+                        console.log("Selected a category: " + name)
+                        printerModel.machineCategory = name
+                        printerModel.level = 1
+                    }
                 }
             }
         }
