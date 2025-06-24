@@ -20,11 +20,33 @@ ColumnLayout
     property var printersModel: Cura.LulzBotNewPrintersModel{ }
 
     // Stack navigation
-    property var goToPrinterCategory: () => layout.currentIndex = 0
-    property var goToPrinterType: () => layout.currentIndex = 1
-    property var goToPrinterSubtype: () => layout.currentIndex = 2
-    property var goToPrinterToolHead: () => layout.currentIndex = 3
-    property var goToPrinterConditionals: () => layout.currentIndex = 4
+    property var goToPrinterCategory: () => {
+        printersModel.level = 0
+        layout.currentIndex = 0
+    }
+    property var goToPrinterType: (pCat) => {
+        console.log(pCat)
+        printersModel.machineCategory = pCat
+        printersModel.level = 1
+        layout.currentIndex = 1
+    }
+    property var goToPrinterSubtype: (pCat, pType) => {
+        printersModel.machineCategory = pCat
+        printersModel.machineType = pType
+        printersModel.level = 2
+        layout.currentIndex = 2
+    }
+    property var goToPrinterToolHead: (pCat, pType, pSub) => {
+        printersModel.machineCategory = pCat
+        printersModel.machineType = pType
+        printersModel.machineSubtype = pSub
+        printersModel.level = 3
+        layout.currentIndex = 3
+    }
+    property var goToPrinterConditionals: () => {
+        printersModel.level = 4
+        layout.currentIndex = 4
+    }
 
     UM.Label
     {

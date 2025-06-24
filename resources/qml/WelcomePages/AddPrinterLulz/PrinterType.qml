@@ -47,13 +47,12 @@ Control
             Repeater 
             {
                 id: printerTypeRepeater
-                PrinterCard
+                delegate: PrinterCard
                 {
                     Layout.row: Math.floor(index/3)
                     Layout.column: index % 3
                     Layout.alignment: Qt.AlignBottom
                     onClicked: {
-                        model.level = 1
                         goToPrinterCategory
                     }
                     text: catalog.i18nc("@button", name)

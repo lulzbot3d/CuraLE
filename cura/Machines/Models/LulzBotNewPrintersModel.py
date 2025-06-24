@@ -51,7 +51,6 @@ class LulzBotNewPrintersModel(ListModel):
 
     ##  Private convenience function to reset & repopulate the model.
     def _update(self):
-        print("Updating Printers Model")
         items = []
 
         if self._level == 0: # Machine Categories
@@ -143,13 +142,13 @@ class LulzBotNewPrintersModel(ListModel):
         self.setItems(items)
 
     def setLevel(self, new_level):
-        print("Tried to set level")
         if self._level != new_level:
             self._level = new_level
             self.levelChanged.emit()
             self._update()
 
     def setMachineCategory(self, new_machine_category):
+        print("Setting Category")
         if self._machine_category != new_machine_category:
             self._machine_category = new_machine_category
             self.machineCategoryChanged.emit()

@@ -50,17 +50,17 @@ Control
             uniformCellHeights: true
             uniformCellWidths: true
 
-            Repeater 
+            Repeater
             {
                 id: categoryRepeater
-                PrinterCard
+                delegate: PrinterCard
                 {
                     Layout.row: Math.floor(index/3)
                     Layout.column: index % 3
                     Layout.alignment: Qt.AlignBottom
                     onClicked: {
-                        model.level = 1
-                        goToPrinterType
+                        console.log(name)
+                        goToPrinterType(name)
                     }
                     text: catalog.i18nc("@button", name)
                     imageSource: UM.Theme.getImage("ultimaker_printer")
