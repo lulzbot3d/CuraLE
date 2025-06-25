@@ -74,9 +74,7 @@ from cura.Machines.Models.GenericMaterialsModel import GenericMaterialsModel
 from cura.Machines.Models.GlobalStacksModel import GlobalStacksModel
 from cura.Machines.Models.IntentCategoryModel import IntentCategoryModel
 from cura.Machines.Models.IntentModel import IntentModel
-# from cura.Machines.Models.LulzBotPrintersModel import LulzBotPrintersModel
-from cura.Machines.Models.LulzBotNewPrintersModel import LulzBotNewPrintersModel
-# from cura.Machines.Models.LulzBotToolheadsModel import LulzBotToolheadsModel
+from cura.Machines.Models.LulzBotPrintersModel import LulzBotPrintersModel
 from cura.Machines.Models.MaterialManagementModel import MaterialManagementModel
 from cura.Machines.Models.MaterialTypesModel import MaterialTypesModel
 from cura.Machines.Models.MultiBuildPlateModel import MultiBuildPlateModel
@@ -1387,7 +1385,7 @@ class CuraApplication(QtApplication):
         self.processEvents()
         # qmlRegisterType(LulzBotPrintersModel, "Cura", 1, 0, "LulzBotPrintersModel")
         # qmlRegisterType(LulzBotToolheadsModel, "Cura", 1, 0, "LulzBotToolheadsModel")
-        qmlRegisterType(LulzBotNewPrintersModel, "Cura", 1, 0, "LulzBotNewPrintersModel")
+        qmlRegisterType(LulzBotPrintersModel, "Cura", 1, 0, "LulzBotPrintersModel")
 
 
         self.processEvents()

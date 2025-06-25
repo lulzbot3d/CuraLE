@@ -6,8 +6,8 @@
     {
         "visible": false,
         "has_machine_quality": true,
-        "lulzbot_machine_tool_head": "HE",
-        "lulzbot_machine_tool_head_abbreviation": "HE",
+        "lulzbot_tool_head": "HE",
+        "lulzbot_tool_head_abbreviation": "HE",
         "machine_extruder_trains": { "0": "he" },
         "quality_definition": "he_base"
     },

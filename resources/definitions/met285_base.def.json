@@ -7,8 +7,8 @@
         "visible": false,
         "has_machine_quality": true,
         "has_variants": true,
-        "lulzbot_machine_tool_head": "Meteor 285",
-        "lulzbot_machine_tool_head_abbreviation": "MET285",
+        "lulzbot_tool_head": "Meteor 285",
+        "lulzbot_tool_head_abbreviation": "MET285",
         "machine_extruder_trains": { "0": "met285" },
         "preferred_variant_name": "0.5mm",
         "quality_definition": "met285_base"

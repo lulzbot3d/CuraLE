@@ -6,8 +6,8 @@
     {
         "visible": false,
         "has_machine_quality": true,
-        "lulzbot_machine_tool_head": "Single Extruder",
-        "lulzbot_machine_tool_head_abbreviation": "SINGLE",
+        "lulzbot_tool_head": "Single Extruder",
+        "lulzbot_tool_head_abbreviation": "SINGLE",
         "machine_extruder_trains": { "0": "single_taz" },
         "quality_definition": "single_taz_base"
     },

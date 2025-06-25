@@ -262,7 +262,7 @@ class WelcomePagesModel(ListModel):
                           #  "next_page_id": "machine_actions",
                           #  },
                           {"id": "add_printer",
-                           "page_url": self._getBuiltinWelcomePagePath("AddPrinterLulz/AddPrinterStack.qml"),
+                           "page_url": self._getBuiltinWelcomePagePath("AddLulzBotPrinter.qml"),
                            "next_page_id": "machine_actions"
                            },
                           {"id": "machine_actions",

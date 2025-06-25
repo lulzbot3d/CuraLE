@@ -6,8 +6,8 @@
     {
         "visible": false,
         "has_machine_quality": true,
-        "lulzbot_machine_tool_head": "SK285",
-        "lulzbot_machine_tool_head_abbreviation": "SK285",
+        "lulzbot_tool_head": "SK285",
+        "lulzbot_tool_head_abbreviation": "SK285",
         "machine_extruder_trains": { "0": "sk285" },
         "quality_definition": "sk285_base"
     },
