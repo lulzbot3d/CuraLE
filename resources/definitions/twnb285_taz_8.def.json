@@ -9,6 +9,7 @@
         "platform": "bed_plates/labeled/taz_8_labeled.stl",
         "bltouch_is_standard": true,
         "lulzbot_machine_category": "TAZ",
+        "lulzbot_machine_has_subtypes": true,
         "lulzbot_machine_type": "TAZ 8",
         "lulzbot_machine_type_abbreviation": "T8",
         "platform_offset": [

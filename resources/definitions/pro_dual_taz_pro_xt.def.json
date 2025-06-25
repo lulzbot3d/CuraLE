@@ -9,6 +9,7 @@
         "platform": "bed_plates/labeled/taz_pro_xt_labeled.stl",
         "has_optional_bltouch": false,
         "lulzbot_machine_category": "TAZ",
+        "lulzbot_machine_is_subtype": true,
         "lulzbot_machine_subtype": "XT",
         "lulzbot_machine_type": "TAZ Pro",
         "lulzbot_machine_type_abbreviation": "PRO_XT",
