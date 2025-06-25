@@ -35,6 +35,7 @@ class LulzBotNewPrintersModel(ListModel):
         self._lulzbot_machine_categories = [("TAZ", ""), ("Mini", ""), ("SideKick", ""), ("Bio", ""), ("Other", "") ]
 
         self._level = 0 # 0 = Categories, 1 = Types, 2 = Subtypes, 3 = Tool Heads, 4 = Printer Options
+        self._level_history = []
         self._machine_category = "TAZ"
         self._machine_type = "TAZ 8"
         self._machine_subtype = ""
@@ -143,12 +144,19 @@ class LulzBotNewPrintersModel(ListModel):
 
     def setLevel(self, new_level):
         if self._level != new_level:
+            if new_level < self._level:
+                if new_level == 0:
+                    self._level_history = []
+                else:
+                    if len(self._level_history > 0):
+                        self._level_history.pop()
+            else:
+                self._level_history.append(self._level)
             self._level = new_level
             self.levelChanged.emit()
             self._update()
 
     def setMachineCategory(self, new_machine_category):
-        print("Setting Category")
         if self._machine_category != new_machine_category:
             self._machine_category = new_machine_category
             self.machineCategoryChanged.emit()
@@ -172,6 +180,11 @@ class LulzBotNewPrintersModel(ListModel):
     @pyqtProperty(int, fset = setLevel, notify = levelChanged)
     def level(self):
         return self._level
+
+    levelHistoryChanged = pyqtSignal()
+    @pyqtProperty(int, fset = None, notify = levelHistoryChanged)
+    def levelHistory(self):
+        return self._level_history[-1]
 
     machineCategoryChanged = pyqtSignal()
     @pyqtProperty(str, fset = setMachineCategory, notify = machineCategoryChanged)
