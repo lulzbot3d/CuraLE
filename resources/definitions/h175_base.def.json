@@ -8,6 +8,7 @@
         "has_machine_quality": true,
         "lulzbot_tool_head": "H175",
         "lulzbot_tool_head_abbreviation": "H175",
+        "lulzbot_tool_head_image": "h175",
         "machine_extruder_trains": { "0": "h175" },
         "quality_definition": "h175_base"
     },

@@ -10,6 +10,7 @@
         "bltouch_is_standard": true,
         "has_variants": true,
         "lulzbot_machine_category": "TAZ",
+        "lulzbot_machine_image": "taz_pro_long_bed",
         "lulzbot_machine_is_subtype": true,
         "lulzbot_machine_subtype": "Long Bed",
         "lulzbot_machine_type": "TAZ Pro",

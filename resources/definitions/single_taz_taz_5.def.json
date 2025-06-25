@@ -7,8 +7,10 @@
         "visible": true,
         "platform": "bed_plates/labeled/taz_5_labeled.stl",
         "lulzbot_machine_category": "TAZ",
+        "lulzbot_machine_image": "taz_5",
         "lulzbot_machine_type": "TAZ 5",
         "lulzbot_machine_type_abbreviation": "T5",
+        "lulzbot_tool_head_image": "single_taz_5",
         "platform_offset": [
             0,
             -17.6,

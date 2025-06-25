@@ -68,7 +68,7 @@ ColumnLayout
                         updateModel
                     }
                     text: catalog.i18nc("@button", name)
-                    imageSource: UM.Theme.getImage("ultimaker_printer")
+                    imageSource: UM.Theme.getImage(image)
 
                     function updateModel () {
                         switch (currentLevel) {

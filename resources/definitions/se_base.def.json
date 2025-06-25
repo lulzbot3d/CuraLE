@@ -8,6 +8,7 @@
         "has_machine_quality": true,
         "lulzbot_tool_head": "SE",
         "lulzbot_tool_head_abbreviation": "SE",
+        "lulzbot_tool_head_image": "se",
         "machine_extruder_trains": { "0": "se" },
         "quality_definition": "se_base"
     },

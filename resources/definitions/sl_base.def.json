@@ -8,6 +8,7 @@
         "has_machine_quality": true,
         "lulzbot_tool_head": "SL",
         "lulzbot_tool_head_abbreviation": "SL",
+        "lulzbot_tool_head_image": "sl",
         "machine_extruder_trains": { "0": "sl" },
         "quality_definition": "sl_base"
     },

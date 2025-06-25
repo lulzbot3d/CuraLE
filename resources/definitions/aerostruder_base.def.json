@@ -8,6 +8,7 @@
         "has_machine_quality": true,
         "lulzbot_tool_head": "Aerostruder",
         "lulzbot_tool_head_abbreviation": "AERO",
+        "lulzbot_tool_head_image": "aerostruder",
         "machine_extruder_trains": { "0": "aerostruder" },
         "quality_definition": "aerostruder_base"
     },

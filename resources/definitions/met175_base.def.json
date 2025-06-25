@@ -9,6 +9,7 @@
         "has_variants": true,
         "lulzbot_tool_head": "Meteor 175",
         "lulzbot_tool_head_abbreviation": "MET175",
+        "lulzbot_tool_head_image": "met175",
         "machine_extruder_trains": { "0": "met175" },
         "preferred_variant_name": "0.5mm",
         "quality_definition": "met175_base"

@@ -32,7 +32,7 @@ class LulzBotPrintersModel(ListModel):
         ContainerRegistry.getInstance().containerAdded.connect(self._onContainerChanged)
         ContainerRegistry.getInstance().containerRemoved.connect(self._onContainerChanged)
 
-        self._lulzbot_machine_categories = [("TAZ", ""), ("Mini", ""), ("SideKick", ""), ("Bio", ""), ("Other", "") ]
+        self._lulzbot_machine_categories = [("TAZ", "taz_8"), ("Mini", "mini_3"), ("SideKick", "sidekick_747"), ("Bio", "bio"), ("Other", "lulz_logo") ]
 
         self._level = 0 # 0 = Categories, 1 = Types, 2 = Subtypes, 3 = Tool Heads, 4 = Printer Options
         self._level_history = []
@@ -77,7 +77,7 @@ class LulzBotPrintersModel(ListModel):
                     items.append({
                         "name": metadata["lulzbot_machine_type"],
                         "type": metadata["lulzbot_machine_type"],
-                        "image": metadata["lulzbot_machine_image"],
+                        "image": metadata["lulzbot_machine_image"] if metadata["lulzbot_machine_image"] != "" else "lulz_logo",
                         "has_subtypes": metadata["lulzbot_machine_has_subtypes"]
                     })
 
@@ -97,7 +97,7 @@ class LulzBotPrintersModel(ListModel):
                         "name": str(metadata["lulzbot_machine_type"] + " " + metadata["lulzbot_machine_subtype"]).strip(),
                         "type": metadata["lulzbot_machine_type"],
                         "subtype": metadata["lulzbot_machine_subtype"],
-                        "image": metadata["lulzbot_machine_image"]
+                        "image": metadata["lulzbot_machine_image"] if metadata["lulzbot_machine_image"] != "" else "lulz_logo"
                     })
 
         elif self._level == 3: # Tool Head Selection
@@ -113,7 +113,7 @@ class LulzBotPrintersModel(ListModel):
                     "type": metadata["lulzbot_machine_type"],
                     "subtype": metadata["lulzbot_machine_subtype"],
                     "tool_head": metadata["lulzbot_tool_head"],
-                    "image": metadata["lulzbot_tool_head_image"]
+                    "image": metadata["lulzbot_tool_head_image"] if metadata["lulzbot_tool_head_image"] != "" else "lulz_logo"
                 })
 
         elif self._level == 4: # Machine Options
@@ -125,7 +125,7 @@ class LulzBotPrintersModel(ListModel):
                 items.append({
                     "id": metadata["id"],
                     "name": metadata["name"],
-                    "image": metadata["lulzbot_tool_head_image"],
+                    "image": metadata["lulzbot_tool_head_image"] if metadata["lulzbot_tool_head_image"] != "" else "lulz_logo",
                     "options": metadata.get("lulzbot_machine_options", {})
                 })
 

@@ -11,6 +11,7 @@
         "has_optional_lcd": false,
         "has_variants": true,
         "lulzbot_machine_category": "SideKick",
+        "lulzbot_machine_image": "sidekick_747",
         "lulzbot_machine_type": "SideKick 747",
         "lulzbot_machine_type_abbreviation": "747",
         "platform_offset": [
