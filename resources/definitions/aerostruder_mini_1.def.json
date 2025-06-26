@@ -13,6 +13,7 @@
         "lulzbot_machine_image": "mini_1",
         "lulzbot_machine_type": "Mini 1",
         "lulzbot_machine_type_abbreviation": "M1",
+        "lulzbot_tool_head_image": "aerostruder_mini",
         "platform_offset": [
             10,
             -11.3,

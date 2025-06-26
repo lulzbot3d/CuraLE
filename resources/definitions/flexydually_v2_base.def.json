@@ -7,6 +7,7 @@
         "visible": false,
         "has_machine_quality": true,
         "lulzbot_tool_head": "FlexyDually v2",
+        "lulzbot_tool_head_image": "flexydually_v2",
         "lulzbot_tool_head_abbreviation": "FLXDUAL",
         "machine_extruder_trains":
         {
