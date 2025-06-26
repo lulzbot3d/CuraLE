@@ -9,6 +9,7 @@
         "lulzbot_tool_head": "Twoolhead",
         "lulzbot_tool_head_abbreviation": "TWOOL",
         "lulzbot_tool_head_image": "twoolhead",
+        "lulzbot_tool_head_priority": 26,
         "machine_extruder_trains": { "0": "twoolhead" },
         "quality_definition": "twoolhead_base"
     },

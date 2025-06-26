@@ -11,9 +11,11 @@
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_image": "taz_pro_long_bed",
         "lulzbot_machine_is_subtype": true,
+        "lulzbot_machine_priority": 12,
         "lulzbot_machine_subtype": "Long Bed",
         "lulzbot_machine_type": "TAZ Pro",
         "lulzbot_machine_type_abbreviation": "PRO_LB",
+        "lulzbot_tool_head_priority": 0,
         "platform_offset": [
             0,
             -25.8,

@@ -11,6 +11,7 @@
         "firmware_type": "Klipper",
         "lulzbot_machine_category": "Mini",
         "lulzbot_machine_image": "mini_3",
+        "lulzbot_machine_priority": 0,
         "lulzbot_machine_type": "Mini 3",
         "lulzbot_machine_type_abbreviation": "M3",
         "platform_offset": [

@@ -10,6 +10,7 @@
         "lulzbot_tool_head": "Twin Nebula 175",
         "lulzbot_tool_head_abbreviation": "TWNB175",
         "lulzbot_tool_head_image": "twnb175",
+        "lulzbot_tool_head_priority": 1,
         "machine_extruder_trains":
         {
             "0": "twnb175_0",

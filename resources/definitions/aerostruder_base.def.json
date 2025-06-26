@@ -9,6 +9,7 @@
         "lulzbot_tool_head": "Aerostruder",
         "lulzbot_tool_head_abbreviation": "AERO",
         "lulzbot_tool_head_image": "aerostruder_taz",
+        "lulzbot_tool_head_priority": 20,
         "machine_extruder_trains": { "0": "aerostruder" },
         "quality_definition": "aerostruder_base"
     },

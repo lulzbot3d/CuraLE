@@ -9,6 +9,7 @@
         "lulzbot_tool_head": "SK285",
         "lulzbot_tool_head_abbreviation": "SK285",
         "lulzbot_tool_head_image": "sk285",
+        "lulzbot_tool_head_priority": 10,
         "machine_extruder_trains": { "0": "sk285" },
         "quality_definition": "sk285_base"
     },

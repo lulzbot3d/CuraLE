@@ -11,9 +11,11 @@
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_image": "taz_8_long_bed",
         "lulzbot_machine_is_subtype": true,
+        "lulzbot_machine_priority": 11,
         "lulzbot_machine_subtype": "Long Bed",
         "lulzbot_machine_type": "TAZ 8",
         "lulzbot_machine_type_abbreviation": "T8_LB",
+        "lulzbot_tool_head_priority": 0,
         "platform_offset": [
             0,
             -12,

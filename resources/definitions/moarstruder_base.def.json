@@ -9,6 +9,7 @@
         "lulzbot_tool_head": "MOARstruder",
         "lulzbot_tool_head_abbreviation": "MOAR",
         "lulzbot_tool_head_image": "moarstruder",
+        "lulzbot_tool_head_priority": 25,
         "machine_extruder_trains": { "0": "moarstruder" },
         "quality_definition": "moarstruder_base"
     },

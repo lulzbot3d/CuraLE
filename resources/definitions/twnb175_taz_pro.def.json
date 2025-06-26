@@ -10,7 +10,9 @@
         "has_optional_bltouch": false,
         "has_variants": true,
         "lulzbot_machine_category": "TAZ",
+        "lulzbot_machine_has_subtypes": true,
         "lulzbot_machine_image": "taz_pro",
+        "lulzbot_machine_priority": 1,
         "lulzbot_machine_type": "TAZ Pro",
         "lulzbot_machine_type_abbreviation": "PRO",
         "platform_offset": [

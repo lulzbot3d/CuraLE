@@ -9,6 +9,7 @@
         "lulzbot_tool_head": "Pro Dual",
         "lulzbot_tool_head_abbreviation": "DUAL",
         "lulzbot_tool_head_image": "pro_dual",
+        "lulzbot_tool_head_priority": 10,
         "machine_extruder_trains":
         {
             "0": "pro_dual_0",

@@ -9,6 +9,7 @@
         "lulzbot_tool_head": "Dual v2",
         "lulzbot_tool_head_abbreviation": "DUALv2",
         "lulzbot_tool_head_image": "dual_v2",
+        "lulzbot_tool_head_priority": 21,
         "machine_extruder_trains":
         {
             "0": "dual_v2_0",

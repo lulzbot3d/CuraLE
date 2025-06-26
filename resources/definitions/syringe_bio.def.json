@@ -8,6 +8,7 @@
         "platform": "bed_plates/labeled/bio_labeled.stl",
         "lulzbot_machine_category": "Bio",
         "lulzbot_machine_image": "bio",
+        "lulzbot_machine_priority": 0,
         "lulzbot_machine_type": "Bio",
         "lulzbot_machine_type_abbreviation": "BIO",
         "platform_offset": [
