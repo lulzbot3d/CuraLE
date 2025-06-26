@@ -59,15 +59,17 @@ Control
     contentItem: ColumnLayout
     {
         id: column
-        spacing: UM.Theme.getSize("wide_margin").height
-        height: childrenRect.height
-        width: childrenRect.width
+        Layout.alignment: Qt.AlignVCenter
+        spacing: UM.Theme.getSize("default_margin").height
+        height: parent.height
+        width: parent.width
 
         Image
         {
             id: image
             source: imageSource
-            width: 120 * screenScaleFactor
+            Layout.topMargin: UM.Theme.getSize("wide_margin").height
+            width: 110 * screenScaleFactor
             sourceSize.width: width
             sourceSize.height: height
         }

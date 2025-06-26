@@ -19,7 +19,6 @@ ColumnLayout
 
     property var printersModel: Cura.LulzBotPrintersModel{ }
     property int currentLevel: printersModel.level
-    property list<int> previousLevels
 
     UM.Label
     {
@@ -37,22 +36,24 @@ ColumnLayout
     {
         text: catalog.i18nc("@label", "In order to start using Cura LulzBot Edition, you will need to configure a printer.")
         font: UM.Theme.getFont("default")
-        Layout.alignment: Qt.AlignTop
+        Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
     }
 
-    Control
+    ScrollView
     {
+        Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
+        Layout.fillHeight: true
 
-        contentItem: GridLayout
+        GridLayout
         {
-            columns: 3
+            width: parent.width
+            columns: 5
             columnSpacing: UM.Theme.getSize("default_margin").height
             rowSpacing: UM.Theme.getSize("default_margin").width
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.topMargin: UM.Theme.getSize("default_margin").height
             Layout.bottomMargin: UM.Theme.getSize("default_margin").height
-            Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
             uniformCellHeights: true
             uniformCellWidths: true
 
@@ -62,8 +63,8 @@ ColumnLayout
                 model: printersModel
                 delegate: PrinterCard
                 {
-                    Layout.row: Math.floor(index/3)
-                    Layout.column: index % 3
+                    //Layout.row: Math.floor(index/5)
+                    //Layout.column: index % 5
                     onClicked: {
                         updateModel
                     }

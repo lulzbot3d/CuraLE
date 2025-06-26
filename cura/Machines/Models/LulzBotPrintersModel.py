@@ -15,8 +15,9 @@ class LulzBotPrintersModel(ListModel):
     SubtypeRole = Qt.ItemDataRole.UserRole + 5
     ToolHeadRole = Qt.ItemDataRole.UserRole + 6
     ImageRole = Qt.ItemDataRole.UserRole + 7
-    OptionsRole = Qt.ItemDataRole.UserRole + 8
-    HasSubtypesRole = Qt.ItemDataRole.UserRole + 9
+    ToolHeadImageRole = Qt.ItemDataRole.UserRole + 8
+    OptionsRole = Qt.ItemDataRole.UserRole + 9
+    HasSubtypesRole = Qt.ItemDataRole.UserRole + 10
 
     def __init__(self, parent = None):
         super().__init__(parent)
@@ -27,6 +28,7 @@ class LulzBotPrintersModel(ListModel):
         self.addRoleName(self.SubtypeRole, "subtype")
         self.addRoleName(self.ToolHeadRole, "tool_head")
         self.addRoleName(self.ImageRole, "image")
+        self.addRoleName(self.ToolHeadImageRole, "tool_head_image")
         self.addRoleName(self.OptionsRole, "options")
         self.addRoleName(self.HasSubtypesRole, "has_subtypes")
 
@@ -133,7 +135,8 @@ class LulzBotPrintersModel(ListModel):
                 items.append({
                     "id": metadata["id"],
                     "name": metadata["name"],
-                    "image": metadata["lulzbot_tool_head_image"] if metadata["lulzbot_tool_head_image"] != "" else "lulz_logo",
+                    "image": metadata["lulzbot_machine_image"] if metadata["lulzbot_machine_image"] != "" else "lulz_logo",
+                    "tool_head_image": metadata["lulzbot_tool_head_image"] if metadata["lulzbot_tool_head_image"] != "" else "lulz_logo",
                     "options": metadata.get("lulzbot_machine_options", {})
                 })
 

@@ -19,8 +19,7 @@ Item
 
     property int columnWidth: ((parent.width - 2 * UM.Theme.getSize("default_margin").width) / 2) | 0
     property int columnSpacing: 3 * screenScaleFactor
-    property bool correctManager: manager.label.toLowerCase() == "machine settings"
-    property int propertyStoreIndex: correctManager ? manager.storeContainerIndex : 6 // definition_changes
+    property int propertyStoreIndex: manager ? manager.storeContainerIndex : 1  // definition_changes
 
     property int labelWidth: (columnWidth * 2 / 3 - UM.Theme.getSize("default_margin").width * 2) | 0
     property int controlWidth: (columnWidth / 3) | 0
@@ -30,8 +29,7 @@ Item
 
     property var forceUpdateFunction: manager.forceUpdate
 
-    // RowLayout
-    Row
+    RowLayout
     {
         id: upperBlock
         anchors
@@ -41,7 +39,6 @@ Item
             right: parent.right
             margins: UM.Theme.getSize("default_margin").width
         }
-        height: childrenRect.height
         spacing: UM.Theme.getSize("default_margin").width
         
         // =======================================
@@ -49,11 +46,8 @@ Item
         // =======================================
         Column
         {
-            // Layout.fillWidth: true
-            // Layout.alignment: Qt.AlignTop
-            anchors.top: parent.top
-
-            width: (parent.width / 2) - spacing
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignTop
 
             spacing: base.columnSpacing
 
@@ -175,7 +169,7 @@ Item
                 afterOnEditingFinishedFunction: manager.updateHasMaterialsMetadata
             }
 
-            Cura.SimpleCheckBox // "LCD"
+            /*Cura.SimpleCheckBox // "LCD"
             {
                 id: lcdCheckBox
                 containerStackId: machineStackId
@@ -199,7 +193,7 @@ Item
                 labelWidth: base.labelWidth
                 checkBoxEnabled: Cura.MachineManager.activeMachineOptionalBLTouch
                 forceUpdateOnChangeFunction: forceUpdateFunction
-            }
+            }*/
 
         }
 
@@ -208,11 +202,8 @@ Item
         // =======================================
         Column
         {
-            // Layout.fillWidth: true
-            // Layout.alignment: Qt.AlignTop
-            anchors.top: parent.top
-
-            width: (parent.width / 2) - spacing
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignTop
 
             spacing: base.columnSpacing
 
@@ -418,7 +409,8 @@ Item
             }
             */
 
-            Label { // USB Title Label
+            /*Label
+            { // USB Title Label
                 text: catalog.i18nc("@title:label", "USB Settings")
                 font: UM.Theme.getFont("medium_bold")
                 color: UM.Theme.getColor("text")
@@ -502,7 +494,7 @@ Item
                     target: Cura.MachineManager
                     function onGlobalContainerChanged() { baudrateModel.update() }
                 }
-            }
+            }*/
         }
     }
 
