@@ -13,7 +13,7 @@
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_image": "taz_pro_xt",
         "lulzbot_machine_is_subtype": true,
-        "lulzbot_machine_priority": 10,
+        "lulzbot_machine_priority": "10",
         "lulzbot_machine_subtype": "XT",
         "lulzbot_machine_type": "TAZ Pro",
         "lulzbot_machine_type_abbreviation": "PRO_XT",

@@ -10,7 +10,7 @@
         "has_variants": true,
         "lulzbot_machine_category": "Mini",
         "lulzbot_machine_image": "mini_2",
-        "lulzbot_machine_priority": 1,
+        "lulzbot_machine_priority": "01",
         "lulzbot_machine_type": "Mini 2",
         "lulzbot_machine_type_abbreviation": "M2",
         "platform_offset": [

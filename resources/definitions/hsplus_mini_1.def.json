@@ -11,7 +11,7 @@
         "lcd_is_standard": false,
         "lulzbot_machine_category": "Mini",
         "lulzbot_machine_image": "mini_1",
-        "lulzbot_machine_priority": 2,
+        "lulzbot_machine_priority": "02",
         "lulzbot_machine_type": "Mini 1",
         "lulzbot_machine_type_abbreviation": "M1",
         "platform_offset": [

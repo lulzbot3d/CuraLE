@@ -9,7 +9,7 @@
         "lulzbot_tool_head": "Flexystruder v2",
         "lulzbot_tool_head_abbreviation": "FLXY",
         "lulzbot_tool_head_image": "flexystruder_taz",
-        "lulzbot_tool_head_priority": 24,
+        "lulzbot_tool_head_priority": "24",
         "machine_extruder_trains": { "0": "flexystruder_v2" },
         "quality_definition": "flexystruder_v2_base"
     },

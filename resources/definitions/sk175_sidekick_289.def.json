@@ -11,7 +11,7 @@
         "has_optional_lcd": true,
         "lulzbot_machine_category": "SideKick",
         "lulzbot_machine_image": "sidekick_289",
-        "lulzbot_machine_priority": 1,
+        "lulzbot_machine_priority": "01",
         "lulzbot_machine_type": "SideKick 289",
         "lulzbot_machine_type_abbreviation": "289",
         "platform_offset": [

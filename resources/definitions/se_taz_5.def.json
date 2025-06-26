@@ -8,7 +8,7 @@
         "platform": "bed_plates/labeled/taz_5_labeled.stl",
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_image": "taz_5",
-        "lulzbot_machine_priority": 4,
+        "lulzbot_machine_priority": "04",
         "lulzbot_machine_type": "TAZ 5",
         "lulzbot_machine_type_abbreviation": "T5",
         "platform_offset": [

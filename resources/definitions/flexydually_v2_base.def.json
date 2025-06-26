@@ -9,7 +9,7 @@
         "lulzbot_tool_head": "FlexyDually v2",
         "lulzbot_tool_head_abbreviation": "FLXDUAL",
         "lulzbot_tool_head_image": "flexydually_v2",
-        "lulzbot_tool_head_priority": 23,
+        "lulzbot_tool_head_priority": "23",
         "machine_extruder_trains":
         {
             "0": "flexydually_v2_0",

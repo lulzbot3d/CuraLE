@@ -9,17 +9,19 @@ import copy
 
 class LulzBotPrintersModel(ListModel):
     IdRole = Qt.ItemDataRole.UserRole + 1
-    NameRole = Qt.ItemDataRole.UserRole + 2
-    TypeRole = Qt.ItemDataRole.UserRole + 3
-    SubtypeRole = Qt.ItemDataRole.UserRole + 4
-    ToolHeadRole = Qt.ItemDataRole.UserRole + 5
-    ImageRole = Qt.ItemDataRole.UserRole + 6
-    OptionsRole = Qt.ItemDataRole.UserRole + 7
-    HasSubtypesRole = Qt.ItemDataRole.UserRole + 8
+    PriorityRole = Qt.ItemDataRole.UserRole + 2
+    NameRole = Qt.ItemDataRole.UserRole + 3
+    TypeRole = Qt.ItemDataRole.UserRole + 4
+    SubtypeRole = Qt.ItemDataRole.UserRole + 5
+    ToolHeadRole = Qt.ItemDataRole.UserRole + 6
+    ImageRole = Qt.ItemDataRole.UserRole + 7
+    OptionsRole = Qt.ItemDataRole.UserRole + 8
+    HasSubtypesRole = Qt.ItemDataRole.UserRole + 9
 
     def __init__(self, parent = None):
         super().__init__(parent)
         self.addRoleName(self.IdRole, "id")
+        self.addRoleName(self.PriorityRole, "priority")
         self.addRoleName(self.NameRole, "name")
         self.addRoleName(self.TypeRole, "type")
         self.addRoleName(self.SubtypeRole, "subtype")
@@ -76,10 +78,12 @@ class LulzBotPrintersModel(ListModel):
                 if not dupe:
                     items.append({
                         "name": metadata["lulzbot_machine_type"],
+                        "priority": metadata["lulzbot_machine_priority"],
                         "type": metadata["lulzbot_machine_type"],
                         "image": metadata["lulzbot_machine_image"] if metadata["lulzbot_machine_image"] != "" else "lulz_logo",
                         "has_subtypes": metadata["lulzbot_machine_has_subtypes"]
                     })
+            items = sorted(items, key=lambda x: str(x["priority"])+x["name"])
 
         elif self._level == 2: # Machine Subtypes within a given Type
             new_filter = copy.deepcopy(self._filter_dict)
@@ -95,10 +99,12 @@ class LulzBotPrintersModel(ListModel):
                 if not dupe:
                     items.append({
                         "name": str(metadata["lulzbot_machine_type"] + " " + metadata["lulzbot_machine_subtype"]).strip(),
+                        "priority": metadata["lulzbot_machine_priority"],
                         "type": metadata["lulzbot_machine_type"],
                         "subtype": metadata["lulzbot_machine_subtype"],
                         "image": metadata["lulzbot_machine_image"] if metadata["lulzbot_machine_image"] != "" else "lulz_logo"
                     })
+            items = sorted(items, key=lambda x: str(x["priority"])+x["name"])
 
         elif self._level == 3: # Tool Head Selection
             new_filter = copy.deepcopy(self._filter_dict)
@@ -109,12 +115,14 @@ class LulzBotPrintersModel(ListModel):
                 metadata = metadata.copy()
                 items.append({
                     "id": metadata["id"],
+                    "priority": metadata["lulzbot_tool_head_priority"],
                     "name": metadata["lulzbot_tool_head"],
                     "type": metadata["lulzbot_machine_type"],
                     "subtype": metadata["lulzbot_machine_subtype"],
                     "tool_head": metadata["lulzbot_tool_head"],
                     "image": metadata["lulzbot_tool_head_image"] if metadata["lulzbot_tool_head_image"] != "" else "lulz_logo"
                 })
+            items = sorted(items, key=lambda x: str(x["priority"])+x["name"])
 
         elif self._level == 4: # Machine Options
             new_filter = copy.deepcopy(self._filter_dict)
@@ -129,17 +137,6 @@ class LulzBotPrintersModel(ListModel):
                     "options": metadata.get("lulzbot_machine_options", {})
                 })
 
-
-        ## new_filter = copy.deepcopy(self._filter_dict)
-        # definition_containers = ContainerRegistry.getInstance().findDefinitionContainersMetadata(**new_filter)
-
-        # for metadata in definition_containers:
-        #     metadata = metadata.copy()
-        #     items.append({
-        #         "name": metadata["name"],
-        #         "id": metadata["id"],
-        #     })
-        # items = sorted(items, key=lambda x: x["machine_priority"]+x["name"])
         self.setItems(items)
 
     def setLevel(self, new_level):

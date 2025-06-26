@@ -9,7 +9,7 @@
         "lulzbot_tool_head": "M175 v2",
         "lulzbot_tool_head_abbreviation": "M175",
         "lulzbot_tool_head_image": "m175_v2",
-        "lulzbot_tool_head_priority": 17,
+        "lulzbot_tool_head_priority": "17",
         "machine_extruder_trains": { "0": "m175_v2" },
         "quality_definition": "m175_v2_base"
     },

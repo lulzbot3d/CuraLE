@@ -9,7 +9,7 @@
         "lulzbot_tool_head": "HE",
         "lulzbot_tool_head_abbreviation": "HE",
         "lulzbot_tool_head_image": "he",
-        "lulzbot_tool_head_priority": 13,
+        "lulzbot_tool_head_priority": "13",
         "machine_extruder_trains": { "0": "he" },
         "quality_definition": "he_base"
     },

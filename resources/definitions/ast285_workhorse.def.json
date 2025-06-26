@@ -8,7 +8,7 @@
         "platform": "bed_plates/labeled/workhorse_labeled.stl",
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_image": "workhorse",
-        "lulzbot_machine_priority": 2,
+        "lulzbot_machine_priority": "02",
         "lulzbot_machine_type": "Workhorse",
         "lulzbot_machine_type_abbreviation": "WH",
         "platform_offset": [

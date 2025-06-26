@@ -9,7 +9,7 @@
         "lulzbot_tool_head": "SE",
         "lulzbot_tool_head_abbreviation": "SE",
         "lulzbot_tool_head_image": "se",
-        "lulzbot_tool_head_priority": 12,
+        "lulzbot_tool_head_priority": "12",
         "machine_extruder_trains": { "0": "se" },
         "quality_definition": "se_base"
     },

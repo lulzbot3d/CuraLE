@@ -10,7 +10,7 @@
         "lulzbot_tool_head": "Meteor 285",
         "lulzbot_tool_head_abbreviation": "MET285",
         "lulzbot_tool_head_image": "met285",
-        "lulzbot_tool_head_priority": 2,
+        "lulzbot_tool_head_priority": "02",
         "machine_extruder_trains": { "0": "met285" },
         "preferred_variant_name": "0.5mm",
         "quality_definition": "met285_base"
