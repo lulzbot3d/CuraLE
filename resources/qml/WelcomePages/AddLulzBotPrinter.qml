@@ -170,6 +170,7 @@ ColumnLayout
         UM.Label
         {
             id: printerNameLabel
+            visible: currentLevel == 4
             Layout.leftMargin: UM.Theme.getSize("default_margin").width
             text: catalog.i18nc("@label", "Printer name")
         }

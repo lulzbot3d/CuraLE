@@ -11,10 +11,14 @@ from .WelcomePagesModel import WelcomePagesModel
 class AddPrinterPagesModel(WelcomePagesModel):
 
     def initialize(self, cancellable: bool = True) -> None:
-        self._pages.append({"id": "add_network_or_local_printer",
-                            "page_url": self._getBuiltinWelcomePagePath("AddUltimakerOrThirdPartyPrinterStack.qml"),
-                            "next_page_id": "machine_actions",
-                            "next_page_button_text": self._catalog.i18nc("@action:button", "Add"),
+        # self._pages.append({"id": "add_network_or_local_printer",
+        #                     "page_url": self._getBuiltinWelcomePagePath("AddUltimakerOrThirdPartyPrinterStack.qml"),
+        #                     "next_page_id": "machine_actions",
+        #                     "next_page_button_text": self._catalog.i18nc("@action:button", "Add"),
+        #                     })
+        self._pages.append({"id": "add_printer",
+                           "page_url": self._getBuiltinWelcomePagePath("AddLulzBotPrinter.qml"),
+                           "next_page_id": "machine_actions"
                             })
         self._pages.append({"id": "machine_actions",
                             "page_url": self._getBuiltinWelcomePagePath("FirstStartMachineActionsContent.qml"),

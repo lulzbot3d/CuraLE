@@ -130,15 +130,15 @@ Control
             sourceSize.height: height
         }
 
-        Image
+        UM.ColorImage
         {
             id: checkbox
             visible: isCheckbox
             Layout.alignment: Qt.AlignHCenter
+            width: 50
+            height: 50
             source: checked? UM.Theme.getIcon("CheckCircle") : UM.Theme.getIcon("CancelCircle")
-            width: 80
-            sourceSize.width: width
-            sourceSize.height: height
+            color: checked? "green" : "red"
         }
     }
 }

@@ -831,6 +831,8 @@ UM.MainWindow
         Cura.WizardDialog
         {
             title: catalog.i18nc("@title:window", "Add Printer")
+            minimumWidth: UM.Theme.getSize("welcome_wizard_window").width
+            minimumHeight: UM.Theme.getSize("welcome_wizard_window").height
             maximumWidth: Screen.width * 2
             maximumHeight: Screen.height * 2
             model: CuraApplication.getAddPrinterPagesModel()

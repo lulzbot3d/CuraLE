@@ -253,7 +253,7 @@
         "wide_lining": [245, 245, 245, 255],
         "thick_lining": [180, 180, 180, 255],
         "lining": [192, 193, 194, 255],
-        "viewport_overlay": [246, 246, 246, 255],
+        "viewport_overlay": [102, 102, 102, 200],
 
         "primary": "lulz_green",
         "primary_hover": [48, 182, 231, 255],
@@ -448,7 +448,7 @@
         "z_axis": [36, 162, 73, 255],
         "all_axis": [255, 255, 255, 255],
 
-        "viewport_background": [250, 250, 250, 255],
+        "viewport_background": [130, 132, 130, 255],
         "volume_outline": "lulz_green",
         "buildplate": [244, 244, 244, 255],
         "buildplate_grid": [180, 180, 180, 255],

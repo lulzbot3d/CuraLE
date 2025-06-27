@@ -11,6 +11,14 @@
         "has_optional_lcd": true,
         "lulzbot_machine_category": "SideKick",
         "lulzbot_machine_image": "sidekick_747",
+        "lulzbot_machine_options":
+        {
+            "lcd": [
+                "LCD Screen",
+                true,
+                "lcd_sidekick"
+            ]
+        },
         "lulzbot_machine_priority": "00",
         "lulzbot_machine_type": "SideKick 747",
         "lulzbot_machine_type_abbreviation": "747",

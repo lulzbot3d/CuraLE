@@ -150,7 +150,7 @@ class LulzBotPrintersModel(ListModel):
                         "name": data["lulzbot_tool_head"],
                         "image": data["lulzbot_tool_head_image"] if data["lulzbot_tool_head_image"] != "" else "lulz_logo"
                     })
-            for option in metadata["lulzbot_machine_options"]:
+            for option in metadata["lulzbot_machine_options"].values():
                 items.append({
                     "name": str(option[0]),
                     "image": option[2],
