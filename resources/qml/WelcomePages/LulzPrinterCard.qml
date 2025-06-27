@@ -115,6 +115,7 @@ Control
         {
             id: link_text
             Layout.fillWidth: true
+            Layout.topMargin: UM.Theme.getSize("wide_margin").height
             font: UM.Theme.getFont("medium")
             color: UM.Theme.getColor("text_link")
             horizontalAlignment: Text.AlignHCenter
@@ -124,7 +125,6 @@ Control
         {
             id: image
             source: imageSource
-            Layout.topMargin: UM.Theme.getSize("wide_margin").height
             width: 110 * screenScaleFactor
             sourceSize.width: width
             sourceSize.height: height
@@ -134,8 +134,9 @@ Control
         {
             id: checkbox
             visible: isCheckbox
+            Layout.alignment: Qt.AlignHCenter
             source: checked? UM.Theme.getIcon("CheckCircle") : UM.Theme.getIcon("CancelCircle")
-            width: 50
+            width: 80
             sourceSize.width: width
             sourceSize.height: height
         }

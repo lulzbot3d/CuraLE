@@ -12,9 +12,9 @@ class LulzBotPrintersModel(ListModel):
     IdRole = Qt.ItemDataRole.UserRole + 1
     PriorityRole = Qt.ItemDataRole.UserRole + 2
     NameRole = Qt.ItemDataRole.UserRole + 3
-    TypeRole = Qt.ItemDataRole.UserRole + 4
-    SubtypeRole = Qt.ItemDataRole.UserRole + 5
-    ToolHeadRole = Qt.ItemDataRole.UserRole + 6
+    FullNameRole = Qt.ItemDataRole.UserRole + 4
+    TypeRole = Qt.ItemDataRole.UserRole + 5
+    SubtypeRole = Qt.ItemDataRole.UserRole + 6
     ImageRole = Qt.ItemDataRole.UserRole + 7
     ToolHeadImageRole = Qt.ItemDataRole.UserRole + 8
     OptionsRole = Qt.ItemDataRole.UserRole + 9
@@ -26,9 +26,9 @@ class LulzBotPrintersModel(ListModel):
         self.addRoleName(self.IdRole, "id")
         self.addRoleName(self.PriorityRole, "priority")
         self.addRoleName(self.NameRole, "name")
+        self.addRoleName(self.FullNameRole, "full_name")
         self.addRoleName(self.TypeRole, "type")
         self.addRoleName(self.SubtypeRole, "subtype")
-        self.addRoleName(self.ToolHeadRole, "tool_head")
         self.addRoleName(self.ImageRole, "image")
         self.addRoleName(self.ToolHeadImageRole, "tool_head_image")
         self.addRoleName(self.OptionsRole, "options")
@@ -47,6 +47,7 @@ class LulzBotPrintersModel(ListModel):
         self._machine_type = "TAZ 8"
         self._machine_subtype = ""
         self._machine_id = ""
+        self._machine_name = ""
 
         self._filter_dict = {"author": "LulzBot" , "visible": True}
         self._update()
@@ -122,9 +123,9 @@ class LulzBotPrintersModel(ListModel):
                     "id": metadata["id"],
                     "priority": metadata["lulzbot_tool_head_priority"],
                     "name": metadata["lulzbot_tool_head"],
+                    "full_name": metadata["name"],
                     "type": metadata["lulzbot_machine_type"],
                     "subtype": metadata["lulzbot_machine_subtype"],
-                    "tool_head": metadata["lulzbot_tool_head"],
                     "image": metadata["lulzbot_tool_head_image"] if metadata["lulzbot_tool_head_image"] != "" else "lulz_logo"
                 })
             items = sorted(items, key=lambda x: str(x["priority"])+x["name"])
@@ -158,6 +159,8 @@ class LulzBotPrintersModel(ListModel):
 
         self.setItems(items)
 
+    ### Setters and Getters
+    ## Level
     def setLevel(self, new_level):
         if self._level != new_level:
             if new_level < self._level:
@@ -172,65 +175,79 @@ class LulzBotPrintersModel(ListModel):
             self.levelChanged.emit()
             self._update()
 
-    def setMachineCategory(self, new_machine_category):
-        if self._machine_category != new_machine_category:
-            self._machine_category = new_machine_category
-            self.machineCategoryChanged.emit()
-
-    def setMachineType(self, new_machine_type):
-        if self._machine_type != new_machine_type:
-            self._machine_type = new_machine_type
-            self.machineTypeChanged.emit()
-
-    def setMachineSubtype(self, new_machine_subtype):
-        if self._machine_subtype != new_machine_subtype:
-            self._machine_subtype = new_machine_subtype
-            self.machineSubtypeChanged.emit()
-
-    def setMachineId(self, new_machine_id):
-        if self._machine_id != new_machine_id:
-            self._machine_id = new_machine_id
-            self.machineIdChanged.emit()
 
     levelChanged = pyqtSignal()
     @pyqtProperty(int, fset = setLevel, notify = levelChanged)
     def level(self):
         return self._level
 
+    ## Level History
     levelHistoryChanged = pyqtSignal()
     @pyqtProperty(int, fset = None, notify = levelHistoryChanged)
     def levelHistory(self):
         return self._level_history[-1]
+
+    ## Machine Category
+    def setMachineCategory(self, new_machine_category):
+        if self._machine_category != new_machine_category:
+            self._machine_category = new_machine_category
+            self.machineCategoryChanged.emit()
 
     machineCategoryChanged = pyqtSignal()
     @pyqtProperty(str, fset = setMachineCategory, notify = machineCategoryChanged)
     def machineCategory(self):
         return self._machine_category
 
+    ## Machine Type
+    def setMachineType(self, new_machine_type):
+        if self._machine_type != new_machine_type:
+            self._machine_type = new_machine_type
+            self.machineTypeChanged.emit()
+
     machineTypeChanged = pyqtSignal()
     @pyqtProperty(str, fset = setMachineType, notify = machineTypeChanged)
     def machineType(self):
         return self._machine_type
+
+    ## Machine Subtype
+    def setMachineSubtype(self, new_machine_subtype):
+        if self._machine_subtype != new_machine_subtype:
+            self._machine_subtype = new_machine_subtype
+            self.machineSubtypeChanged.emit()
 
     machineSubtypeChanged = pyqtSignal()
     @pyqtProperty(str, fset = setMachineSubtype, notify = machineSubtypeChanged)
     def machineSubtype(self):
         return self._machine_subtype
 
+    ## Machine ID
+    def setMachineId(self, new_machine_id):
+        if self._machine_id != new_machine_id:
+            self._machine_id = new_machine_id
+            self.machineIdChanged.emit()
+
     machineIdChanged = pyqtSignal()
     @pyqtProperty(str, fset = setMachineId, notify = machineIdChanged)
     def machineId(self):
         return self._machine_id
 
+    ## Machine Name
+    def setMachineName(self, new_machine_name):
+        if self._machine_name != new_machine_name:
+            self._machine_name = new_machine_name
+            self.machineNameChanged.emit()
 
-    ##  Set the filter of this model based on a string.
-    #   \param filter_dict Dictionary to do the filtering by.
+    machineNameChanged = pyqtSignal()
+    @pyqtProperty(str, fset = setMachineName, notify = machineNameChanged)
+    def machineName(self):
+        return self._machine_name
+
+    ## Filter
     def setFilter(self, filter_dict):
         self._filter_dict = filter_dict
         self._update()
 
     filterChanged = pyqtSignal()
-
     @pyqtProperty("QVariantMap", fset = setFilter, notify = filterChanged)
     def filter(self):
         return self._filter_dict

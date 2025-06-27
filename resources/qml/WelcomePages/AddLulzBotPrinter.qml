@@ -1,7 +1,7 @@
 // Copyright (c) 2022 Ultimaker B.V.
 // Cura is released under the terms of the LGPLv3 or higher.
 
-import QtQuick 2.10
+import QtQuick 2.15
 import QtQuick.Controls 2.3
 import QtQuick.Layouts 6.6
 
@@ -35,8 +35,36 @@ ColumnLayout
     UM.Label
     {
         text: catalog.i18nc("@label", "In order to start using Cura LulzBot Edition, you will need to configure a printer.")
-        font: UM.Theme.getFont("default")
+        font: UM.Theme.getFont("large")
         Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
+    }
+
+    UM.Label
+    {
+        id: instructionsLabel
+        text: {
+            let instruction = ""
+            switch(currentLevel) {
+                case 0:
+                    instruction = "Please select a Printer Category"
+                    break;
+                case 1:
+                case 2:
+                    instruction = "Please select a Printer Model"
+                    break;
+                case 3:
+                    instruction = "Please select the Tool Head on your Printer"
+                    break;
+                case 4:
+                    instruction = "Please verify your selections and select any potential relevant options."
+                    break;
+                default:
+                    break;
+            }
+            return instruction
+        }
+        font: UM.Theme.getFont("large")
+        Layout.alignment: Qt.AlignHCenter
     }
 
     ScrollView
@@ -63,11 +91,19 @@ ColumnLayout
                 model: printersModel
                 delegate: LulzPrinterCard
                 {
-                    onClicked: {
-                        updateModel
+                    isDisplayOnly: currentLevel == 4 && index <= 1
+                    isCheckbox: currentLevel == 4 && index > 1
+                    checked: {
+                        if (option_is_default != undefined) {
+                            return isCheckbox && option_is_default;
+                        }
+                        return false
                     }
                     text: catalog.i18nc("@button", name)
                     imageSource: UM.Theme.getImage(image)
+                    onClicked: {
+                        updateModel
+                    }
 
                     function updateModel () {
                         switch (currentLevel) {
@@ -88,7 +124,8 @@ ColumnLayout
                                 printersModel.level = 3;
                                 break;
                             case 3:
-                                printersModel.machineId = id
+                                printersModel.machineId = id;
+                                printersModel.machineName = full_name;
                                 printersModel.level = 4;
                                 break;
                             case 4:
@@ -127,6 +164,40 @@ ColumnLayout
             onClicked: {
                 let backPage = printersModel.levelHistory
                 printersModel.level = backPage
+            }
+        }
+
+        UM.Label
+        {
+            id: printerNameLabel
+            Layout.leftMargin: UM.Theme.getSize("default_margin").width
+            text: catalog.i18nc("@label", "Printer name")
+        }
+
+        Cura.TextField
+        {
+            id: printerNameTextField
+            enabled: currentLevel == 4
+            text: printersModel.machineName
+            Layout.fillWidth: true
+            Layout.rightMargin: UM.Theme.getSize("default_margin").width
+            Layout.leftMargin: UM.Theme.getSize("thin_margin").width
+            maximumLength: 40
+            validator: RegularExpressionValidator { regularExpression: printerNameTextField.machineNameValidator.machineNameRegex }
+            property var machineNameValidator: Cura.MachineNameValidator { }
+        }
+
+        Cura.SecondaryButton
+        {
+            id: addButton
+            enabled: currentLevel == 4
+            text: catalog.i18nc("@button", "Add Printer")
+            onClicked: {
+                const printerName = printerNameTextField.text
+                if(Cura.MachineManager.addMachine(printersModel.machineId, printerName))
+                {
+                    base.showNextPage()
+                }
             }
         }
     }
