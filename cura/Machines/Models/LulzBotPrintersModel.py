@@ -2,6 +2,7 @@ from UM.Qt.ListModel import ListModel
 
 from PyQt6.QtCore import pyqtProperty, Qt, pyqtSignal
 
+from UM.Logger import Logger
 from UM.Settings.ContainerRegistry import ContainerRegistry
 from UM.Settings.DefinitionContainer import DefinitionContainer
 
@@ -17,7 +18,8 @@ class LulzBotPrintersModel(ListModel):
     ImageRole = Qt.ItemDataRole.UserRole + 7
     ToolHeadImageRole = Qt.ItemDataRole.UserRole + 8
     OptionsRole = Qt.ItemDataRole.UserRole + 9
-    HasSubtypesRole = Qt.ItemDataRole.UserRole + 10
+    OptionIsDefaultRole = Qt.ItemDataRole.UserRole + 10
+    HasSubtypesRole = Qt.ItemDataRole.UserRole + 11
 
     def __init__(self, parent = None):
         super().__init__(parent)
@@ -30,6 +32,7 @@ class LulzBotPrintersModel(ListModel):
         self.addRoleName(self.ImageRole, "image")
         self.addRoleName(self.ToolHeadImageRole, "tool_head_image")
         self.addRoleName(self.OptionsRole, "options")
+        self.addRoleName(self.OptionIsDefaultRole, "option_is_default")
         self.addRoleName(self.HasSubtypesRole, "has_subtypes")
 
         # Listen to changes
@@ -130,14 +133,27 @@ class LulzBotPrintersModel(ListModel):
             new_filter = copy.deepcopy(self._filter_dict)
             new_filter["id"] = self._machine_id
             definition_containers = ContainerRegistry.getInstance().findDefinitionContainersMetadata(**new_filter)
-            for metadata in definition_containers:
-                metadata = metadata.copy()
+            # for metadata in definition_containers:
+            if len(definition_containers) > 1:
+                Logger.log("w", "There was more than one printer definition with the same ID!?")
+            metadata = definition_containers[0]
+            for num in range(2):
+                data = metadata.copy()
+                if num == 0:
+                    items.append({
+                        "name": str(data["lulzbot_machine_type"] + " " + data["lulzbot_machine_subtype"]).strip(),
+                        "image": data["lulzbot_machine_image"] if data["lulzbot_machine_image"] != "" else "lulz_logo"
+                    })
+                elif num == 1:
+                    items.append({
+                        "name": data["lulzbot_tool_head"],
+                        "image": data["lulzbot_tool_head_image"] if data["lulzbot_tool_head_image"] != "" else "lulz_logo"
+                    })
+            for option in metadata["lulzbot_machine_options"]:
                 items.append({
-                    "id": metadata["id"],
-                    "name": metadata["name"],
-                    "image": metadata["lulzbot_machine_image"] if metadata["lulzbot_machine_image"] != "" else "lulz_logo",
-                    "tool_head_image": metadata["lulzbot_tool_head_image"] if metadata["lulzbot_tool_head_image"] != "" else "lulz_logo",
-                    "options": metadata.get("lulzbot_machine_options", {})
+                    "name": str(option[0]),
+                    "image": option[2],
+                    "option_is_default": option[1]
                 })
 
         self.setItems(items)
