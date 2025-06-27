@@ -61,10 +61,8 @@ ColumnLayout
             {
                 id: cardRepeater
                 model: printersModel
-                delegate: PrinterCard
+                delegate: LulzPrinterCard
                 {
-                    //Layout.row: Math.floor(index/5)
-                    //Layout.column: index % 5
                     onClicked: {
                         updateModel
                     }
