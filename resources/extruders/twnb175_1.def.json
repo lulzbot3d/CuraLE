@@ -9,6 +9,11 @@
     },
     "overrides":
     {
+        "extruder_nr":
+        {
+            "default_value": 1,
+            "maximum_value": "1"
+        },
         "machine_nozzle_head_distance": { "default_value": 4 },
         "machine_nozzle_offset_x": { "default_value": 43 }
     }
