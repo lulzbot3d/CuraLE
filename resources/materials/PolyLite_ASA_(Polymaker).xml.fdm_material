@@ -28,34 +28,41 @@
     <setting key="retraction amount">1.0</setting>
     <setting key="heated bed temperature">90.0</setting>
     <setting key="retraction speed">20.0</setting>
+    <setting key="adhesion tendency">0</setting>
+    <setting key="surface energy">70</setting>
 
     <machine>
-      <machine_identifier product="taz_7_dual" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="he_mini_2" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="he_sidekick_289" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="he_sidekick_747" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="he_taz_6" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="he_taz_pro" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="he_taz_pro_lb" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="he_taz_pro_xt" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="he_workhorse" />
     </machine>
 
     <machine>
-      <machine_identifier product="mini_2_he" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="sidekick_289_he" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="sidekick_747_he" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="taz_6_he" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="taz_7_he" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="workhorse_he" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="pro_dual_taz_pro" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="pro_dual_taz_pro_xt" />
     </machine>
 
     <machine>
-      <machine_identifier product="mini_1_se" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="mini_2_se" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="sidekick_289_se" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="sidekick_747_se" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="taz_5_se" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="taz_6_se" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="taz_7_se" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="workhorse_se" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_mini_1" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_mini_2" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_sidekick_289" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_sidekick_747" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_taz_5" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_taz_6" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_taz_pro" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_taz_pro_lb" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_taz_pro_xt" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="se_workhorse" />
     </machine>
 
     <machine>
-      <machine_identifier product="sidekick_289_sk285" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="sidekick_747_sk285" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="sk285_sidekick_289" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="sk285_sidekick_747" />
     </machine>
 
   </settings>

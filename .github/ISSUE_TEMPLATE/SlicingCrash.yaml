@@ -13,16 +13,16 @@ body:
        
        ### Project File
        **⚠️ Before you continue, we need your project file to troubleshoot a slicing crash.**
-       It contains the printer and settings we need for troubleshooting.
-
+       It contains the printer and settings we need for troubleshooting. 
+       
        ![Alt Text](https://user-images.githubusercontent.com/40423138/240616958-5a9751f2-bd34-4808-9752-6fde2e27516e.gif)
-
-       To save a project file go to File -> Save project.
-       Please make sure to .zip your project file.
+       
+       To save a project file go to File -> Save project. 
+       Please make sure to .zip your project file. 
        For big files, you may need to use [WeTransfer](https://wetransfer.com/) or similar file-sharing sites.
-
+       
        🤔 Before you share, please think to yourself. Is this a model that can be shared?
-           Unfortunately we cannot help if this file is missing.
+           Unfortunately we cannot help if this file is missing. 
            Do you have the project file? Than let's continue ⬇️
 
        ### Questions
@@ -41,7 +41,7 @@ body:
   attributes:
     label: Operating System
     description: Information about the operating system the issue occurs on. Include at least the operating system and maybe GPU.
-    placeholder: Windows 11 / MacOS Catalina / MX Linux
+    placeholder: Windows 11 / MacOS Catalina / MX Linux 
   validations:
     required: true
 - type: input
@@ -59,7 +59,7 @@ body:
 - type: input
   attributes:
     label: Describe model location
-    description: Does your model slice if you rotate the model 90 degrees or if you move it away from the center of the buildplate?
+    description: Does your model slice if you rotate the model 90 degrees or if you move it away from the center of the buildplate? 
     placeholder:
   validations:
 - type: input
@@ -70,7 +70,7 @@ body:
     required: true
 - type: textarea
   attributes:
-    label: Add your .zip here ⬇️
+    label: Add your .zip here ⬇️ 
     description: You can add the zip file and additional information that is relevant to the issue in the comments below.
   validations:
     required: true

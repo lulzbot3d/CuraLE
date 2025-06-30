@@ -1,0 +1,38 @@
+{
+    "version": 2,
+    "name": "Workhorse 2 | MET285",
+    "inherits": "met285_base",
+    "metadata":
+    {
+        "visible": true,
+        "platform": "bed_plates/labeled/workhorse_2_labeled.stl",
+        "has_variants": true,
+        "lulzbot_machine_category": "TAZ",
+        "lulzbot_machine_priority": "05",
+        "lulzbot_machine_type": "Workhorse 2",
+        "lulzbot_machine_type_abbreviation": "WH2",
+        "platform_offset": [
+            -2,
+            -12,
+            -2
+        ],
+        "preferred_quality_type": "normal",
+        "preferred_variant_name": "0.5mm",
+        "quality_definition": "met285_base"
+    },
+    "overrides":
+    {
+        "acceleration_print": { "default_value": 1000 },
+        "firmware_machine_type": { "default_value": "LulzBot Workhorse 2" },
+        "jerk_print": { "default_value": 12 },
+        "jerk_travel": { "value": 12 },
+        "machine_acceleration": { "default_value": 1000 },
+        "machine_depth": { "default_value": 285 },
+        "machine_end_gcode": { "default_value_from_file": "workhorse_2/workhorse_2_end" },
+        "machine_height": { "default_value": 295 },
+        "machine_level_x_axis_gcode": { "default_value_from_file": "taz_pro/taz_pro_level_x_axis" },
+        "machine_name": { "default_value": "LulzBot Workhorse 2 | MET285" },
+        "machine_start_gcode": { "default_value_from_file": "workhorse_2/workhorse_2_start" },
+        "machine_width": { "default_value": 285 }
+    }
+}

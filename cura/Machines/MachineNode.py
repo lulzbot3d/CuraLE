@@ -151,16 +151,13 @@ class MachineNode(ContainerNode):
         for quality_changes_group in groups_by_name.values():
             if quality_changes_group.quality_type not in quality_groups:
                 if quality_changes_group.quality_type == "not_supported":
-                    # Quality changes based on an empty profile are always available.
+                    # Quality changes based on an empty profile are always available. 
                     quality_changes_group.is_available = True
                 else:
                     quality_changes_group.is_available = False
             else:
                 # Quality changes group is available iff the quality group it depends on is available. Irrespective of whether the intent category is available.
-                if quality_changes_group.metadata_for_global.get("material") not in material_bases:
-                    quality_changes_group.is_available = False
-                else:
-                    quality_changes_group.is_available = quality_groups[quality_changes_group.quality_type].is_available
+                quality_changes_group.is_available = quality_groups[quality_changes_group.quality_type].is_available
 
         return list(groups_by_name.values())
 

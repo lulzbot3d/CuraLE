@@ -39,7 +39,7 @@ FORMULA_NAMES = [
     "degrees"
 ]
 
-DELIMITERS = [r'\+', '-', '=', '/', r'\*', r'\(', r'\)', r'\[', r'\]', '{', '}', ' ', '^']
+DELIMITERS = [r'\+', r'-', r'=', r'/', r'\*', r'\(', r'\)', r'\[', r'\]', r'{', r'}', r' ', r'^']
 
 
 class Formulas(Linter):
@@ -57,7 +57,15 @@ class Formulas(Linter):
             json_data = json.load(data)
         settings_list += self.extractKeys(json_data)
 
+        with open(os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "resources", "definitions", "lulzbot_base.def.json")) as data:
+            json_data = json.load(data)
+        settings_list += self.extractKeys(json_data)
+
         with open(os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "resources", "definitions", "fdmextruder.def.json")) as data:
+            json_data = json.load(data)
+        settings_list += self.extractKeys(json_data)
+
+        with open(os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "resources", "definitions", "lulzbot_extruder.def.json")) as data:
             json_data = json.load(data)
         settings_list += self.extractKeys(json_data)
 

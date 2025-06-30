@@ -41,7 +41,7 @@ all_images = os.listdir(os.path.join(os.path.dirname(__file__), "..", "..", "res
 # Loading definition files needs a functioning ContainerRegistry
 cr = UM.Settings.ContainerRegistry.ContainerRegistry(None)
 
-root_definitions = ["fdmprinter.def.json", "fdmextruder.def.json", "lulzbot.def.json", "lulzbot_extruder.def.json"]
+root_definitions = ["fdmprinter.def.json", "fdmextruder.def.json", "lulzbot_base.def.json", "lulzbot_extruder.def.json"]
 
 @pytest.fixture
 def definition_container():

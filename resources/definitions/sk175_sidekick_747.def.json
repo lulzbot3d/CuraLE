@@ -1,0 +1,42 @@
+{
+    "version": 2,
+    "name": "SideKick 747 | SK175 | 0.50 mm",
+    "inherits": "sk175_base",
+    "metadata":
+    {
+        "visible": true,
+        "file_formats": "text/x-gcode",
+        "platform": "bed_plates/labeled/sidekick_747_labeled.stl",
+        "bltouch_is_standard": true,
+        "has_optional_lcd": true,
+        "lulzbot_machine_category": "SideKick",
+        "lulzbot_machine_image": "sidekick_747",
+        "lulzbot_machine_options":
+        {
+            "lcd": [
+                "LCD Screen",
+                true,
+                "lcd_sidekick"
+            ]
+        },
+        "lulzbot_machine_priority": "00",
+        "lulzbot_machine_type": "SideKick 747",
+        "lulzbot_machine_type_abbreviation": "747",
+        "platform_offset": [
+            0,
+            -16.1,
+            -2
+        ],
+        "quality_definition": "sk175_base"
+    },
+    "overrides":
+    {
+        "acceleration_travel": { "value": 4750 },
+        "firmware_machine_type": { "default_value": "Taz SideKick 747" },
+        "machine_depth": { "default_value": 232.3 },
+        "machine_end_gcode": { "default_value_from_file": "sidekick/sidekick_747_end" },
+        "machine_height": { "default_value": 248 },
+        "machine_name": { "default_value": "LulzBot SideKick 747 | SK175" },
+        "machine_width": { "default_value": 232.3 }
+    }
+}

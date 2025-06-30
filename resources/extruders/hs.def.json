@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "name": "HS",
+    "inherits": "lulzbot_extruder",
+    "metadata":
+    {
+        "machine": "hs_base",
+        "position": "0"
+    },
+    "overrides":
+    {
+        "machine_nozzle_head_distance": { "default_value": 5 },
+        "machine_nozzle_size": { "default_value": 0.8 }
+    }
+}

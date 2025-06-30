@@ -15,7 +15,6 @@ Item
     height: childrenRect.height
 
     // Children
-    UM.I18nCatalog { id: catalog; name: "cura"; }
     Cura.MaterialTypesModel
     {
         id: materialsModel

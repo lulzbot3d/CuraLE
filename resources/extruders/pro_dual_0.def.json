@@ -1,0 +1,18 @@
+{
+    "version": 2,
+    "name": "Pro Dual Left",
+    "inherits": "lulzbot_extruder",
+    "metadata":
+    {
+        "machine": "pro_dual_base",
+        "position": "0"
+    },
+    "overrides":
+    {
+        "extruder_nr":
+        {
+            "default_value": 0,
+            "maximum_value": "1"
+        }
+    }
+}

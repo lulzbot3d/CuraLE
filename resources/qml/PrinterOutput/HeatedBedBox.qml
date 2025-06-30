@@ -138,7 +138,6 @@ Item
             anchors.bottomMargin: UM.Theme.getSize("default_margin").height
             width: UM.Theme.getSize("monitor_preheat_temperature_control").width
             height: UM.Theme.getSize("monitor_preheat_temperature_control").height
-            // visible: printerModel != null ? enabled && printerModel.canPreHeatBed && !printerModel.isPreheating : true
             visible: true
             Rectangle //Highlight of input field.
             {

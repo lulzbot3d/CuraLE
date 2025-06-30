@@ -75,7 +75,6 @@ from cura.Machines.Models.GlobalStacksModel import GlobalStacksModel
 from cura.Machines.Models.IntentCategoryModel import IntentCategoryModel
 from cura.Machines.Models.IntentModel import IntentModel
 from cura.Machines.Models.LulzBotPrintersModel import LulzBotPrintersModel
-from cura.Machines.Models.LulzBotToolheadsModel import LulzBotToolheadsModel
 from cura.Machines.Models.MaterialManagementModel import MaterialManagementModel
 from cura.Machines.Models.MaterialTypesModel import MaterialTypesModel
 from cura.Machines.Models.MultiBuildPlateModel import MultiBuildPlateModel
@@ -630,7 +629,6 @@ class CuraApplication(QtApplication):
         preferences.addPreference("view/settings_ypos", 45)
         preferences.addPreference("view/colorscheme_xpos", 0)
         preferences.addPreference("view/colorscheme_ypos", 56)
-        # preferences.addPreference("cura/currency", "€")
         preferences.addPreference("cura/currency", "$")
         preferences.addPreference("cura/material_settings", "{}")
 
@@ -1369,7 +1367,6 @@ class CuraApplication(QtApplication):
         self.processEvents()
         qmlRegisterType(FavoriteMaterialsModel, "Cura", 1, 0, "FavoriteMaterialsModel")
         qmlRegisterType(GenericMaterialsModel, "Cura", 1, 0, "GenericMaterialsModel")
-        # qmlRegisterType(MaterialBrandsModel, "Cura", 1, 0, "MaterialBrandsModel")
         qmlRegisterType(MaterialTypesModel, "Cura", 1, 0, "MaterialTypesModel")
         qmlRegisterSingletonType(QualityManagementModel, "Cura", 1, 0, self.getQualityManagementModelWrapper,"QualityManagementModel")
         qmlRegisterSingletonType(MaterialManagementModel, "Cura", 1, 5, self.getMaterialManagementModelWrapper,"MaterialManagementModel")
@@ -1386,8 +1383,9 @@ class CuraApplication(QtApplication):
         qmlRegisterType(ActiveIntentQualitiesModel, "Cura", 1, 7, "ActiveIntentQualitiesModel")
 
         self.processEvents()
+        # qmlRegisterType(LulzBotPrintersModel, "Cura", 1, 0, "LulzBotPrintersModel")
+        # qmlRegisterType(LulzBotToolheadsModel, "Cura", 1, 0, "LulzBotToolheadsModel")
         qmlRegisterType(LulzBotPrintersModel, "Cura", 1, 0, "LulzBotPrintersModel")
-        qmlRegisterType(LulzBotToolheadsModel, "Cura", 1, 0, "LulzBotToolheadsModel")
 
 
         self.processEvents()
@@ -2162,7 +2160,7 @@ class CuraApplication(QtApplication):
         select_models_on_load = self.getPreferences().getValue("cura/select_models_on_load")
 
         nodes_to_arrange = []  # type: List[CuraSceneNode]
-
+        
         fixed_nodes = []
         for node_ in DepthFirstIterator(self.getController().getScene().getRoot()):
             # Only count sliceable objects

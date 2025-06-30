@@ -1,0 +1,23 @@
+{
+    "version": 2,
+    "name": "Flexystruder v2 Printer",
+    "inherits": "lulzbot_base",
+    "metadata":
+    {
+        "visible": false,
+        "has_machine_quality": true,
+        "lulzbot_tool_head": "Flexystruder v2",
+        "lulzbot_tool_head_abbreviation": "FLXY",
+        "lulzbot_tool_head_image": "flexystruder_taz",
+        "lulzbot_tool_head_priority": "24",
+        "machine_extruder_trains": { "0": "flexystruder_v2" },
+        "quality_definition": "flexystruder_v2_base"
+    },
+    "overrides":
+    {
+        "acceleration_print": { "default_value": 500 },
+        "acceleration_travel": { "default_value": 500 },
+        "machine_acceleration": { "default_value": 500 },
+        "machine_max_feedrate_z": { "default_value": 3 }
+    }
+}

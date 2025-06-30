@@ -1,0 +1,31 @@
+{
+    "version": 2,
+    "name": "Dual v2 Printer",
+    "inherits": "lulzbot_base",
+    "metadata":
+    {
+        "visible": false,
+        "has_machine_quality": true,
+        "lulzbot_tool_head": "Dual v2",
+        "lulzbot_tool_head_abbreviation": "DUALv2",
+        "lulzbot_tool_head_image": "dual_v2",
+        "lulzbot_tool_head_priority": "21",
+        "machine_extruder_trains":
+        {
+            "0": "dual_v2_0",
+            "1": "dual_v2_1"
+        },
+        "quality_definition": "dual_v2_base"
+    },
+    "overrides":
+    {
+        "acceleration_print": { "default_value": 500 },
+        "acceleration_travel": { "default_value": 500 },
+        "jerk_print": { "default_value": 12 },
+        "jerk_travel": { "value": 12 },
+        "machine_acceleration": { "default_value": 500 },
+        "machine_extruder_count": { "default_value": 2 },
+        "machine_max_feedrate_z": { "default_value": 3 },
+        "machine_use_extruder_offset_to_offset_coords": { "default_value": true }
+    }
+}
