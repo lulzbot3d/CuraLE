@@ -35,7 +35,7 @@
         "preferred_quality_type": "standard",
         "supported_actions": [
             "MachineSettingsAction",
-            "UpgradeFirmware"
+            "LulzBotUpgradeFirmware"
         ],
         "supports_usb_connection": true,
         "variants_name": "Nozzle Size"
