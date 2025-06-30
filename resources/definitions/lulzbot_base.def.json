@@ -30,6 +30,7 @@
         "lulzbot_tool_head_image": "",
         "lulzbot_tool_head_priority": "99",
         "machine_extruder_trains": { "0": "lulzbot_extruder" },
+        "nozzle_offsetting_for_disallowed_areas": false,
         "preferred_material": "PolyLite_PLA_(Polymaker)",
         "preferred_quality_type": "standard",
         "supported_actions": [
@@ -112,6 +113,7 @@
         "skirt_brim_minimal_length": { "default_value": 200 },
         "skirt_line_count": { "default_value": 2 },
         "speed_travel": { "value": "speed_print if magic_spiralize else 175" },
+        "speed_z_hop": { "value": "10 if machine_max_feedrate_z > 10 else machine_max_feedrate_z"},
         "support_angle":
         {
             "default_value": 60.0,
