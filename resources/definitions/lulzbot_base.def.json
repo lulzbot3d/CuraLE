@@ -71,7 +71,6 @@
             "value": "round(0.75 * min(extruderValues('machine_nozzle_size')), 1)"
         },
         "machine_acceleration": { "default_value": 2000 },
-        "machine_baudrate": { "default_value": "250000" },
         "machine_heat_zone_length": { "default_value": 20 },
         "machine_heated_bed": { "default_value": true },
         "machine_max_feedrate_e": { "default_value": 40 },
@@ -180,6 +179,14 @@
                     "label": "Firmware Machine Type",
                     "type": "str"
                 },
+                "machine_baudrate":
+                {
+                    "default_value": "250000",
+                    "description": "Baud Rate used to communicate with this printer via serial connection.",
+                    "enabled": false,
+                    "label": "Machine Baud Rate",
+                    "type": "int"
+                },
                 "machine_bltouch_start_gcode":
                 {
                     "default_value": ";A cool generic default value",
@@ -204,6 +211,16 @@
                     "label": "Has LCD",
                     "type": "bool"
                 },
+                "machine_level_x_axis_gcode":
+                {
+                    "default_value": "",
+                    "description": "G-code commands used to level the machine's X axis.",
+                    "label": "Level X Axis G-code",
+                    "settable_per_extruder": false,
+                    "settable_per_mesh": false,
+                    "settable_per_meshgroup": false,
+                    "type": "str"
+                },
                 "machine_nozzle_z_offset":
                 {
                     "default_value": 0,
@@ -213,6 +230,16 @@
                     "settable_per_extruder": true,
                     "type": "float",
                     "unit": "mm"
+                },
+                "machine_wipe_gcode":
+                {
+                    "default_value": "",
+                    "description": "G-code commands used to perform a wipe move.",
+                    "label": "Wipe G-code",
+                    "settable_per_extruder": false,
+                    "settable_per_mesh": false,
+                    "settable_per_meshgroup": false,
+                    "type": "str"
                 }
             }
         },
