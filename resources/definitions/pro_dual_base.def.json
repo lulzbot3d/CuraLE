@@ -6,6 +6,10 @@
     {
         "visible": false,
         "has_machine_quality": true,
+        "lulzbot_example_model": [
+            "pro_dual_cal1.stl",
+            "pro_dual_cal2.stl"
+        ],
         "lulzbot_tool_head": "Pro Dual",
         "lulzbot_tool_head_abbreviation": "DUAL",
         "lulzbot_tool_head_image": "pro_dual",

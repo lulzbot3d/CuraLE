@@ -20,7 +20,7 @@
     "overrides":
     {
         "acceleration_print": { "default_value": 500 },
-        "acceleration_travel": { "default_value": 500 },
+        "acceleration_travel": { "value": 500 },
         "jerk_print": { "default_value": 12 },
         "jerk_travel": { "value": 12 },
         "machine_acceleration": { "default_value": 500 },

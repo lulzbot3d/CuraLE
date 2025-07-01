@@ -32,7 +32,7 @@
     "overrides":
     {
         "acceleration_print": { "default_value": 500 },
-        "acceleration_travel": { "default_value": 500 },
+        "acceleration_travel": { "value": 500 },
         "firmware_machine_type": { "resolve": "'LulzBot Mini LCD' if machine_has_lcd else 'LulzBot Mini'" },
         "machine_acceleration": { "default_value": 500 },
         "machine_depth": { "default_value": 154 },

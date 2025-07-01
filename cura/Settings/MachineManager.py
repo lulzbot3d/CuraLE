@@ -460,19 +460,10 @@ class MachineManager(QObject):
     def addMachineProvideExampleModel(self) -> None:
         # Load new machine STL
         definition_id = self._global_container_stack.getDefinition().getId()
+        model_paths = self._global_container_stack.getMetaDataEntry("lulzbot_example_model", "rocktopus.stl")
         res_path = Resources.getPath(Resources.Meshes)
-        load_models = []
-        if "bio" in definition_id:
-            load_models.append(os.path.join(res_path, "right_coronary_artery_tree.stl"))
-        elif "taz_pro_dual" in definition_id or "taz_pro_xt_dual" in definition_id:
-            load_models.append(os.path.join(res_path, "pro_dual_cal1.stl"))
-            load_models.append(os.path.join(res_path, "pro_dual_cal2.stl"))
-        elif "taz_pro_m175" in definition_id or "taz_workhorse_se" in definition_id:
-            load_models.append(os.path.join(res_path, "octo_gear.stl"))
-        else:
-            load_models.append(os.path.join(res_path, "rocktopus.stl"))
-        for model_path in load_models:
-            self._application._openFile(model_path)
+        for model_path in model_paths:
+            self._application._openFile(os.path.join(res_path, model_path))
 
     def _checkStacksHaveErrors(self) -> bool:
         time_start = time.time()

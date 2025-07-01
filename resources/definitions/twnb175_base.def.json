@@ -7,6 +7,10 @@
         "visible": false,
         "has_machine_quality": true,
         "has_variants": true,
+        "lulzbot_example_model": [
+            "pro_dual_cal1.stl",
+            "pro_dual_cal2.stl"
+        ],
         "lulzbot_tool_head": "Twin Nebula 175",
         "lulzbot_tool_head_abbreviation": "TWNB175",
         "lulzbot_tool_head_image": "twnb175",

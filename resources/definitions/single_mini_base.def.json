@@ -16,7 +16,7 @@
     "overrides":
     {
         "acceleration_print": { "default_value": 500 },
-        "acceleration_travel": { "default_value": 500 },
+        "acceleration_travel": { "value": 500 },
         "machine_acceleration": { "default_value": 500 },
         "machine_max_feedrate_z": { "default_value": 3 }
     }
