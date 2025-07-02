@@ -143,7 +143,8 @@ class MaterialManagementModel(QObject):
                 continue  # We already have that one. Skip it.
             new_id = new_base_id
             definition = container_to_copy.getMetaDataEntry("definition")
-            if definition != "fdmprinter":
+            # if definition != "fdmprinter":
+            if definition not in ("fdmprinter", "lulzbot_base"):
                 new_id += "_" + definition
                 variant_name = container_to_copy.getMetaDataEntry("variant_name")
                 if variant_name:

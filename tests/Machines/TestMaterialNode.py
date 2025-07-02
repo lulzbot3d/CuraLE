@@ -6,7 +6,9 @@ import pytest
 
 from cura.Machines.MaterialNode import MaterialNode
 
-instance_container_metadata_dict = {"fdmprinter": {"no_variant": [{"id": "quality_1", "material": "material_1"}]},
+# instance_container_metadata_dict = {"fdmprinter": {"no_variant": [{"id": "quality_1", "material": "material_1"}]},
+#                                     "machine_1": {"variant_1": {"material_1": [{"id": "quality_2", "material": "material_1"}, {"id": "quality_3","material": "material_1"}]}}}
+instance_container_metadata_dict = {"lulzbot_base": {"no_variant": [{"id": "quality_1", "material": "material_1"}]},
                                     "machine_1": {"variant_1": {"material_1": [{"id": "quality_2", "material": "material_1"}, {"id": "quality_3","material": "material_1"}]}}}
 
 metadata_dict = {}

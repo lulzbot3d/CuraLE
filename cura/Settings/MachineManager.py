@@ -263,7 +263,8 @@ class MachineManager(QObject):
         return len(self.getAllSettingKeys())
 
     def getAllSettingKeys(self) -> Set[str]:
-        general_definition_containers = CuraContainerRegistry.getInstance().findDefinitionContainers(id="lulzbot")
+        # general_definition_containers = CuraContainerRegistry.getInstance().findDefinitionContainers(id="fdmprinter")
+        general_definition_containers = CuraContainerRegistry.getInstance().findDefinitionContainers(id="lulzbot_base")
         if not general_definition_containers:
             return set()
         return general_definition_containers[0].getAllKeys()
@@ -445,9 +446,10 @@ class MachineManager(QObject):
         new_stack = CuraStackBuilder.createMachine(cast(str, name), definition_id)
         if new_stack:
             # Check for LCD and BLTouch values
-            if new_stack.getMetaDataEntry("has_optional_lcd", False):
+            options = new_stack.getMetaDataEntry("lulzbot_machine_options", {})
+            if "lcd" in options.keys():
                 new_stack.definitionChanges.setProperty("machine_has_lcd", "value", lcd)
-            if new_stack.getMetaDataEntry("has_optional_bltouch", False):
+            if "bltouch" in options.keys():
                 new_stack.definitionChanges.setProperty("machine_has_bltouch", "value", bltouch)
             # Instead of setting the global container stack here, we set the active machine and so the signals are emitted
             self.setActiveMachine(new_stack.getId())
@@ -545,48 +547,31 @@ class MachineManager(QObject):
     def activeMachineOptionalLCD(self) -> bool:
         if self.activeMachine is None:
             return False
-        return self.activeMachine.getBottom().getMetaDataEntry("has_optional_lcd")
+        options = self.activeMachine.getBottom().getMetaDataEntry("lulzbot_machine_options", {})
+        if "lcd" in options.keys():
+            return True
+        return False
 
     @pyqtProperty(bool, notify = globalContainerChanged)
     def activeMachineOptionalBLTouch(self) -> bool:
         if self.activeMachine is None:
             return False
-        return self.activeMachine.getBottom().getMetaDataEntry("has_optional_bltouch")
+        options = self.activeMachine.getBottom().getMetaDataEntry("lulzbot_machine_options", {})
+        if "bltouch" in options.keys():
+            return True
+        return False
 
     @pyqtProperty(str, notify = globalContainerChanged)
     def activeMachineFirmwareType(self) -> str:
         if self.activeMachine is None:
             return ""
-        return self.activeMachine.getBottom().getMetaDataEntry("firmware_type")
+        return self.activeMachine.getBottom().getMetaDataEntry("lulzbot_firmware_type", "Marlin")
 
-    @pyqtProperty(str, notify = printerConnectedStatusChanged)
+    @pyqtProperty(str, notify = globalContainerChanged)
     def activeMachineFirmwareVersion(self) -> str:
         if not self._printer_output_devices:
             return ""
-        return self._printer_output_devices[-1].getFirmwareVersion()
-
-    @pyqtProperty(str, notify= globalContainerChanged)
-    def activeMachineLatestFirmwareVersion(self) -> str:
-        version = ""
-        if self.activeMachine is None:
-            return version
-
-        stack = self._global_container_stack
-        meta = self.activeMachine.getBottom()
-        tripped = False
-
-        if meta.getMetaDataEntry("has_optional_bltouch") and stack.getProperty("machine_has_bltouch", "value"):
-            version = meta.getMetaDataEntry("firmware_bltouch_latest_version")
-        elif meta.getMetaDataEntry("has_optional_lcd") and not stack.getProperty("machine_has_lcd", "value"):
-            version = meta.getMetaDataEntry("firmware_no_lcd_latest_version")
-
-        if version == "":
-            if tripped:
-                Logger.log("w", "Printer was determined to have non-standard config firmware, but the version came up blank!")
-            version = meta.getMetaDataEntry("firmware_latest_version")
-
-        Logger.log("i", "Found firmware version {0} for current printer configuration.".format(version))
-        return version
+        return self._printer_output_devices[0].firmwareVersion
 
     @pyqtProperty(str, notify = globalContainerChanged)
     def activeMachineAddress(self) -> str:

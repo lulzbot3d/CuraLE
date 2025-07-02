@@ -855,7 +855,8 @@ class ThreeMFWorkspaceReader(WorkspaceReader):
                         # machine definition cannot be found.
                         Logger.logException("e", "Failed to deserialize definition file %s in project file %s",
                                             definition_container_file, file_name)
-                        definition_container = self._container_registry.findDefinitionContainers(id = "fdmprinter")[0] #Fall back to defaults.
+                        # definition_container = self._container_registry.findDefinitionContainers(id = "fdmprinter")[0] #Fall back to defaults.
+                        definition_container = self._container_registry.findDefinitionContainers(id = "lulzbot_base")[0] #Fall back to defaults.
                     self._container_registry.addContainer(definition_container)
                 Job.yieldThread()
                 QCoreApplication.processEvents()  # Ensure that the GUI does not freeze.

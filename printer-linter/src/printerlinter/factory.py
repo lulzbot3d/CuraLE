@@ -18,7 +18,8 @@ def getLinter(file: Path, settings: dict) -> Optional[List[Linter]]:
         return [Directory(file, settings), Profile(file, settings), Formulas(file, settings)]
 
     if ".def" in file.suffixes and file.suffixes[-1] == ".json":
-        if file.stem in ("fdmprinter.def", "fdmextruder.def"):
+        # if file.stem in ("fdmprinter.def", "fdmextruder.def"):
+        if file.stem in ("fdmprinter.def", "fdmextruder.def", "lulzbot_base.def", "lulzbot_extruder.def"):
             return  [Formulas(file, settings)]
         return [Directory(file, settings), Definition(file, settings), Formulas(file, settings)]
 

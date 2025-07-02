@@ -222,7 +222,8 @@ class XmlMaterialProfile(InstanceContainer):
         ## Begin Settings Block
         builder.start("settings", {}) # type: ignore
 
-        if self.getMetaDataEntry("definition") == "fdmprinter":
+        # if self.getMetaDataEntry("definition") == "fdmprinter":
+        if self.getMetaDataEntry("definition") == "lulzbot_base":
             for instance in self.findInstances():
                 self._addSettingElement(builder, instance)
 
@@ -234,7 +235,8 @@ class XmlMaterialProfile(InstanceContainer):
 
         for container in all_containers:
             definition_id = container.getMetaDataEntry("definition")
-            if definition_id == "fdmprinter":
+            # if definition_id == "fdmprinter":
+            if definition_id == "lulzbot_base":
                 continue
 
             if definition_id not in machine_container_map:
@@ -274,7 +276,8 @@ class XmlMaterialProfile(InstanceContainer):
             builder.end("machine_identifier")
 
             for instance in container.findInstances():
-                if self.getMetaDataEntry("definition") == "fdmprinter" and self.getInstance(instance.definition.key) and self.getProperty(instance.definition.key, "value") == instance.value:
+                # if self.getMetaDataEntry("definition") == "fdmprinter" and self.getInstance(instance.definition.key) and self.getProperty(instance.definition.key, "value") == instance.value:
+                if self.getMetaDataEntry("definition") == "lulzbot_base" and self.getInstance(instance.definition.key) and self.getProperty(instance.definition.key, "value") == instance.value:
                     # If the settings match that of the base profile, just skip since we inherit the base profile.
                     continue
 
@@ -616,7 +619,8 @@ class XmlMaterialProfile(InstanceContainer):
 
         meta_data["approximate_diameter"] = str(round(float(property_values.get("diameter", 2.85)))) # In mm
         meta_data["properties"] = property_values
-        meta_data["definition"] = "fdmprinter"
+        # meta_data["definition"] = "fdmprinter"
+        meta_data["definition"] = "lulzbot_base"
 
         common_compatibility = True
         settings = data.iterfind("./um:settings/um:setting", self.__namespaces)
@@ -921,7 +925,8 @@ class XmlMaterialProfile(InstanceContainer):
 
         base_metadata["approximate_diameter"] = str(round(float(cast(float, property_values.get("diameter", 2.85))))) # In mm
         base_metadata["properties"] = property_values
-        base_metadata["definition"] = "fdmprinter"
+        # base_metadata["definition"] = "fdmprinter"
+        base_metadata["definition"] = "lulzbot_base"
 
         compatible_entries = data.iterfind("./um:settings/um:setting[@key='hardware compatible']", cls.__namespaces)
         try:

@@ -8,7 +8,10 @@ import pytest
 from cura.Machines.VariantNode import VariantNode
 import copy
 
-instance_container_metadata_dict = {"fdmprinter": {"no_variant": [{"base_file": "material_1", "id": "material_1"}, {"base_file": "material_2", "id": "material_2"}]},
+# instance_container_metadata_dict = {"fdmprinter": {"no_variant": [{"base_file": "material_1", "id": "material_1"}, {"base_file": "material_2", "id": "material_2"}]},
+#                  "machine_1": {"no_variant": [{"base_file": "material_1", "id": "material_1"}, {"base_file": "material_2", "id": "material_2"}],
+#                                "Variant One": [{"base_file": "material_1", "id": "material_1"}, {"base_file": "material_2", "id": "material_2"}]}}
+instance_container_metadata_dict = {"lulzbot_base": {"no_variant": [{"base_file": "material_1", "id": "material_1"}, {"base_file": "material_2", "id": "material_2"}]},
                  "machine_1": {"no_variant": [{"base_file": "material_1", "id": "material_1"}, {"base_file": "material_2", "id": "material_2"}],
                                "Variant One": [{"base_file": "material_1", "id": "material_1"}, {"base_file": "material_2", "id": "material_2"}]}}
 
@@ -22,7 +25,7 @@ material_node_added_test_data = [({"type": "Not a material"}, ["material_1", "ma
                                  ]
 
 material_node_update_test_data = [({"type": "material", "base_file": "material_1", "definition": "machine_1", "variant_name": "Variant One"}, ["material_1"], ["material_2"]),
-                                  ({"type": "material", "base_file": "material_1", "definition": "fdmprinter", "variant_name": "Variant One"}, [], ["material_2", "material_1"]),  # Too generic
+                                  ({"type": "material", "base_file": "material_1", "definition": "lulzbot_base", "variant_name": "Variant One"}, [], ["material_2", "material_1"]),  # Too generic
                                   ({"type": "material", "base_file": "material_1", "definition": "machine_2", "variant_name": "Variant One"}, [], ["material_2", "material_1"])   # Wrong definition
                                   ]
 

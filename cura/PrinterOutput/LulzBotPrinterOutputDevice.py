@@ -34,6 +34,9 @@ class ConnectionState(IntEnum):
     Connected = 2
     Busy = 3
     Error = 4
+    Searching = 5
+    Timeout = 6
+    WrongMachine = 7
 
 
 class ConnectionType(IntEnum):
@@ -98,6 +101,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
 
         self._firmware_updater = None  # type: Optional[FirmwareUpdater]
         self._firmware_name = None  # type: Optional[str]
+        self._printer_name = None
         self._address = ""  # type: str
         self._connection_text = ""  # type: str
         self.printersChanged.connect(self._onPrintersChanged)
@@ -125,7 +129,7 @@ class PrinterOutputDevice(QObject, OutputDevice):
         Returns whether we could theoretically send commands to this printer.
         :return: `True` if we are connected, or `False` if not.
         """
-        return self.connectionState != ConnectionState.Closed and self.connectionState != ConnectionState.Error
+        return self.connectionState != ConnectionState.Closed and self.connectionState != ConnectionState.Error and self.connectionState != ConnectionState.WrongMachine
 
     def setConnectionState(self, connection_state: "ConnectionState") -> None:
         """
@@ -221,8 +225,10 @@ class PrinterOutputDevice(QObject, OutputDevice):
 
     def __del__(self) -> None:
         """Ensure that close gets called when object is destroyed"""
-
-        self.close()
+        try:
+            self.close()
+        except RuntimeError:
+            Logger.log("w", "Printer %s threw a runtime error while closing out! It probably was already deleted." % self._id)
 
     @pyqtProperty(bool, notify = acceptsCommandsChanged)
     def acceptsCommands(self) -> bool:
@@ -253,7 +259,6 @@ class PrinterOutputDevice(QObject, OutputDevice):
             Logger.log("e", "Found a broken configuration in the synced list!")
             all_configurations.remove(None)
         new_configurations = sorted(all_configurations, key = lambda config: config.printerType or "", reverse = True)
-        print("New configurations: " + str(new_configurations))
         if new_configurations != self._unique_configurations:
             self._unique_configurations = new_configurations
             self.uniqueConfigurationsChanged.emit()

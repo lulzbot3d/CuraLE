@@ -51,7 +51,8 @@ class VariantNode(ContainerNode):
 
         # Find all the materials for this variant's name.
         else:  # Printer has its own material profiles. Look for material profiles with this printer's definition.
-            base_materials = container_registry.findInstanceContainersMetadata(type = "material", definition = "fdmprinter")
+            # base_materials = container_registry.findInstanceContainersMetadata(type = "material", definition = "fdmprinter")
+            base_materials = container_registry.findInstanceContainersMetadata(type = "material", definition = "lulzbot_base")
             printer_specific_materials = container_registry.findInstanceContainersMetadata(type = "material", definition = self.machine.container_id)
             variant_specific_materials = container_registry.findInstanceContainersMetadata(type = "material", definition = self.machine.container_id, variant_name = self.variant_name)  # If empty_variant, this won't return anything.
             materials_per_base_file = {material["base_file"]: material for material in base_materials}
@@ -134,14 +135,16 @@ class VariantNode(ContainerNode):
         if self.machine.isExcludedMaterialBaseFile(base_file):
             return  # Material is forbidden for this printer.
         if base_file not in self.materials:  # Completely new base file. Always better than not having a file as long as it matches our set-up.
-            if material_definition != "fdmprinter" and material_definition != self.machine.container_id:
+            # if material_definition != "fdmprinter" and material_definition != self.machine.container_id:
+            if material_definition not in ("fdmprinter", "lulzbot_base") and material_definition != self.machine.container_id:
                 return
             material_variant = container.getMetaDataEntry("variant_name")
             if material_variant is not None and material_variant != self.variant_name:
                 return
         else:  # We already have this base profile. Replace the base profile if the new one is more specific.
             new_definition = container.getMetaDataEntry("definition")
-            if new_definition == "fdmprinter":
+            # if new_definition == "fdmprinter":
+            if new_definition in ("fdmprinter", "lulzbot_base"):
                 return  # Just as unspecific or worse.
             material_variant = container.getMetaDataEntry("variant_name")
             if new_definition != self.machine.container_id or material_variant != self.variant_name:

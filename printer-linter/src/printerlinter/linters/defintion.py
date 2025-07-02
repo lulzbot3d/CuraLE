@@ -49,7 +49,8 @@ class Definition(Linter):
     def checkRedefineOverride(self) -> Iterator[Diagnostic]:
         """ Checks if definition file overrides its parents settings with the same value. """
         definition = self._definitions[self._definition_name]
-        if "overrides" in definition and self._definition_name not in ("fdmprinter", "fdmextruder"):
+        # if "overrides" in definition and self._definition_name not in ("fdmprinter", "fdmextruder"):
+        if "overrides" in definition and self._definition_name not in ("fdmprinter", "fdmextruder", "lulzbot_base", "lulzbot_extruder"):
             for key, value_dict in definition["overrides"].items():
                 is_redefined, child_key, child_value, parent, inherited_by= self._isDefinedInParent(key, value_dict, definition['inherits'])
                 if is_redefined:
@@ -78,7 +79,8 @@ class Definition(Linter):
     def checkMaterialTemperature(self) -> Iterator[Diagnostic]:
         """Checks if definition file has material tremperature defined within them"""
         definition = self._definitions[self._definition_name]
-        if "overrides" in definition and self._definition_name not in ("fdmprinter", "fdmextruder"):
+        # if "overrides" in definition and self._definition_name not in ("fdmprinter", "fdmextruder"):
+        if "overrides" in definition and self._definition_name not in ("fdmprinter", "fdmextruder", "lulzbot_base", "lulzbot_extruder"):
             for key, value_dict in definition["overrides"].items():
                 if "temperature" in key and "material" in key:
 
@@ -105,7 +107,8 @@ class Definition(Linter):
     def checkExperimentalSetting(self) -> Iterator[Diagnostic]:
         """Checks if definition uses experimental settings"""
         definition = self._definitions[self._definition_name]
-        if "overrides" in definition and self._definition_name not in ("fdmprinter", "fdmextruder"):
+        # if "overrides" in definition and self._definition_name not in ("fdmprinter", "fdmextruder"):
+        if "overrides" in definition and self._definition_name not in ("fdmprinter", "fdmextruder", "lulzbot_base", "lulzbot_extruder"):
             for setting in definition["overrides"]:
                 if setting in self._experimental_settings:
                     redefined = re.compile(setting)

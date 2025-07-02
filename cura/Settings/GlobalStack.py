@@ -322,6 +322,7 @@ class GlobalStack(CuraContainerStack):
     def getDefaultFirmwareName(self) -> str:
         """Get default firmware file name if one is specified in the firmware"""
 
+        machine_has_heated_bed = self.getProperty("machine_heated_bed", "value")
         machine_has_bltouch = self.getProperty("machine_has_bltouch", "value")
         machine_has_lcd = self.getProperty("machine_has_lcd", "value")
 
@@ -333,6 +334,8 @@ class GlobalStack(CuraContainerStack):
 
         # If a firmware file is available, it should be specified in the definition for the printer
         hex_file = self.getMetaDataEntry("firmware_file", None)
+        # if machine_has_heated_bed:
+        #     hex_file = self.getMetaDataEntry("firmware_hbk_file", hex_file)
         if machine_has_bltouch:
             hex_file = self.getMetaDataEntry("firmware_file_bltouch", hex_file)
         if not machine_has_lcd:
