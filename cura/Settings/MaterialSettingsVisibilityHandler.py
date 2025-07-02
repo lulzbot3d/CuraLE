@@ -19,7 +19,7 @@ class MaterialSettingsVisibilityHandler(UM.Settings.Models.SettingVisibilityHand
             #"material_flow_temp_graph",
             "cool_fan_speed",
             "retraction_amount",
-            "retraction_speed"
+            "retraction_speed",
         }
 
         self.setVisible(material_settings)

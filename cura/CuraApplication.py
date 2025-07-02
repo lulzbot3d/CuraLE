@@ -1383,8 +1383,6 @@ class CuraApplication(QtApplication):
         qmlRegisterType(ActiveIntentQualitiesModel, "Cura", 1, 7, "ActiveIntentQualitiesModel")
 
         self.processEvents()
-        # qmlRegisterType(LulzBotPrintersModel, "Cura", 1, 0, "LulzBotPrintersModel")
-        # qmlRegisterType(LulzBotToolheadsModel, "Cura", 1, 0, "LulzBotToolheadsModel")
         qmlRegisterType(LulzBotPrintersModel, "Cura", 1, 0, "LulzBotPrintersModel")
 
 
