@@ -5,6 +5,7 @@
     "metadata": { "machine": "syringe_base" },
     "overrides":
     {
+        "extruder_nr": { "default_value": 0 },
         "machine_nozzle_size": { "default_value": 0.26 }
     }
 }
