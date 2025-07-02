@@ -8,7 +8,7 @@
         "file_formats": "text/x-gcode",
         "platform": "bed_plates/labeled/mini_3_labeled.stl",
         "bltouch_is_standard": true,
-        "firmware_type": "Klipper",
+        "lulzbot_firmware_type": "Klipper",
         "lulzbot_machine_category": "Mini",
         "lulzbot_machine_image": "mini_3",
         "lulzbot_machine_priority": "00",

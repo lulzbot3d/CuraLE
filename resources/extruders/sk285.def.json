@@ -4,7 +4,7 @@
     "inherits": "lulzbot_extruder",
     "metadata":
     {
-        "machine": "sk175_base",
+        "machine": "sk285_base",
         "position": "0"
     },
     "overrides":

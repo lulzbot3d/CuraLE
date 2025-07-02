@@ -6,12 +6,18 @@
     {
         "visible": true,
         "file_formats": "text/x-gcode",
-        "platform": "",
+        "platform": "bed_plates/unlabeled/taz_pro.stl",
         "bltouch_is_standard": true,
         "has_variants": true,
+        "lulzbot_firmware_type": "Klipper",
         "lulzbot_machine_category": "Other",
         "lulzbot_machine_type": "Core XY",
         "lulzbot_machine_type_abbreviation": "CXY",
+        "platform_offset": [
+            0,
+            -9,
+            8
+        ],
         "preferred_quality_type": "normal",
         "preferred_variant_name": "0.5mm",
         "quality_definition": "met285_base"
