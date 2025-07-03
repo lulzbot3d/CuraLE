@@ -1,0 +1,8 @@
+{
+    "name": "Filament Change Tool",
+    "author": "FAME3D, LLC.",
+    "version": "1.0.0",
+    "description": "Provides a simpler means of pausing a print at a given layer.",
+    "api": 8,
+    "i18n-catalog": "cura"
+}
