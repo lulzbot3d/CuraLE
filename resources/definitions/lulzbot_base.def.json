@@ -241,6 +241,16 @@
                     "settable_per_mesh": false,
                     "settable_per_meshgroup": false,
                     "type": "str"
+                },
+                "machine_abort_gcode":
+                {
+                    "default_value": "",
+                    "description": "G-code commands used to abort a print.",
+                    "label": "Abort G-code",
+                    "settable_per_extruder": false,
+                    "settable_per_mesh": false,
+                    "settable_per_meshgroup": false,
+                    "type": "str"
                 }
             }
         },
