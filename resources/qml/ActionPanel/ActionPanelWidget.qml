@@ -78,6 +78,7 @@ Item
         anchors.right: actionPanelWidget.left
         anchors.rightMargin: UM.Theme.getSize("default_margin").width
         anchors.bottom: actionPanelWidget.bottom
+        anchors.bottomMargin: UM.Theme.getSize("thick_margin").height * 2
         visible: actionPanelWidget.visible
 
         Column

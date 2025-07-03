@@ -11,8 +11,7 @@ Item
 {
     implicitWidth: parent.width
     height: visible ? Math.round(UM.Theme.getSize("print_setup_extruder_box").height * 0.7) : 0
-    property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
-    property var connectedPrinter: outputDeviceCount >= 1 ? Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1] : null
+    property var connectedPrinter: Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null
     property var printerModel: connectedPrinter != null ? connectedPrinter.activePrinter : null
 
     Rectangle

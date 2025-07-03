@@ -13,9 +13,7 @@ Item
 {
     implicitWidth: parent.width
     implicitHeight: Math.floor(childrenRect.height + UM.Theme.getSize("default_margin").height * 2)
-    property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
     property var outputDevice: null
-    property var activeDevice: null
     property var connectionState: outputDevice == null ? null : outputDevice.connectionState
 
     Connections
@@ -23,7 +21,7 @@ Item
         target: Cura.MachineManager
         function onGlobalContainerChanged()
         {
-            outputDevice = outputDeviceCount >= 1 ? Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1] : null;
+            outputDevice = Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null;
         }
     }
 
@@ -43,19 +41,15 @@ Item
             {
                 if(outputDevice != null && outputDevice.address != "None")
                 {
-                    if(activeDevice != null)
+                    switch(connectionState)
                     {
-                        switch(connectionState)
-                        {
-                            case 2:
-                                outputDevice.activePrinter.name
-                                break;
-                            default:
-                                "No USB Printer Connected"
-                                break;
-                        }
+                        case 2:
+                            outputDevice.activePrinter.name
+                            break;
+                        default:
+                            "No USB Printer Connected"
+                            break;
                     }
-                    else{ "Unexpected Device State" }
                 }
                 else { "No USB Printers Connected" }
             }

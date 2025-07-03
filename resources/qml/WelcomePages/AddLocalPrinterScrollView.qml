@@ -10,7 +10,7 @@ import Cura 1.1 as Cura
 
 //
 // This is the scroll view widget for adding a (local) printer. This scroll view shows a list view with printers
-// categorized into 3 categories: "LulzBot", "Custom", and "Other".
+// categorized into 3 categories: "Ultimaker", "Custom", and "Other".
 //
 Item
 {
@@ -20,9 +20,9 @@ Item
     property var currentItem: machineList.currentIndex >= 0 ? machineList.model.getItem(machineList.currentIndex) : null
     // The currently active (expanded) section/category, where section/category is the grouping of local machine items.
     property var currentSections: new Set()
-    // By default (when this list shows up) we always expand the "LulzBot" section.
+    // By default (when this list shows up) we always expand the "Ultimaker" section.
     property var preferredCategories: {
-        "LulzBot": -2,
+        "Ultimaker B.V.": -2,
         "Custom": -1
     }
 
@@ -69,7 +69,7 @@ Item
 
     Component.onCompleted:
     {
-        const initialSection = "LulzBot";
+        const initialSection = "Ultimaker B.V.";
         base.currentSections.add(initialSection);
         updateCurrentItemUponSectionChange(initialSection);
         // Trigger update on base.currentSections
@@ -151,7 +151,7 @@ Item
                         }
                         else
                         {
-                            const initialSection = "LulzBot";
+                            const initialSection = "Ultimaker B.V.";
                             base.currentSections.clear();
                             base.currentSections.add(initialSection);
                             updateCurrentItemUponSectionChange(initialSection);
