@@ -1,1 +1,1 @@
-JOB_COMPLETE REMOVAL_TEMP={material_part_removal_temperature}
+JOB_COMPLETE REMOVAL_TEMP={material_part_removal_temperature} KEEP_TEMP={material_keep_part_removal_temperature_t}
