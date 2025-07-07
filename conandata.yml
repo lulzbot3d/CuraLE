@@ -1,15 +1,15 @@
-version: "5.10.1"
+version: "5.10.2"
 requirements:
-  - "curale_resources/5.10.1"
-  - "uraniumle/5.10.1"
-  - "curaengine/5.10.1"
-  - "curale_binary_data/5.10.1"
-  # - "fdm_materialsle/5.10.1"
+  - "curale_resources/5.10.2"
+  - "uraniumle/5.10.2"
+  - "curaengine/5.10.2"
+  - "curale_binary_data/5.10.2"
+  # - "fdm_materialsle/5.10.2"
   - "dulcificum/5.10.0"
   - "pysavitar/5.10.0"
   - "pynest2d/5.10.0"
 requirements_internal:
-  # - "fdm_materialsle/5.10.1"
+  # - "fdm_materialsle/5.10.2"
   - "curale_private_data/5.10.0-alpha.0@internal/testing"
 requirements_enterprise:
   - "native_cad_plugin/2.0.0"
