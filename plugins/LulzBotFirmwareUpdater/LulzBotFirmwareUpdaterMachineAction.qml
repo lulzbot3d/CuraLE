@@ -14,10 +14,9 @@ import Cura 1.0 as Cura
 Cura.MachineAction
 {
     anchors.fill: parent
-    property int outputDevicesCount: Cura.MachineManager.printerOutputDevices.length
-    property bool printerConnected: outputDevicesCount > 1
+    property bool printerConnected: Cura.MachineManager.printerConnected
     property bool klipperPrinter: Cura.MachineManager.activeMachineFirmwareType == "Klipper"
-    property var activeOutputDevice: printerConnected ? Cura.MachineManager.printerOutputDevices[outputDevicesCount - 1] : null
+    property var activeOutputDevice: printerConnected ? Cura.MachineManager.printerOutputDevices[0] : null
     property bool canUpdateFirmware: activeOutputDevice ? activeOutputDevice.activePrinter.canUpdateFirmware : false
     property string firmwareName: Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.getDefaultFirmwareName() : ""
 
@@ -74,7 +73,8 @@ Cura.MachineAction
             width: parent.width
             wrapMode: Text.WordWrap
             font.pointSize: 10
-            text: {
+            text:
+            {
                 catalog.i18nc("@label", " \
                 <b>Before Updating, Note Down:</b> \
                 <ul type=\"bullet\"> \
@@ -88,7 +88,8 @@ Cura.MachineAction
             }
             onLinkActivated: Qt.openUrlExternally(link)
 
-            MouseArea {
+            MouseArea
+            {
                 anchors.fill: parent
                 acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
                 cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
@@ -100,7 +101,8 @@ Cura.MachineAction
             width: parent.width
             wrapMode: Text.WordWrap
             font.pointSize: 10
-            text: {
+            text:
+            {
                 catalog.i18nc("@label", " \
                 <b>After Updating:</b> \
                 <ul type=\"bullet\"> \
@@ -109,7 +111,8 @@ Cura.MachineAction
                 </ul>")
             }
             onLinkActivated: Qt.openUrlExternally(link)
-            MouseArea {
+            MouseArea
+            {
                 anchors.fill: parent
                 acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
                 cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
@@ -165,7 +168,8 @@ Cura.MachineAction
             outlineColor: "black"
             fixedWidthMode: true
             enabled: printerConnected && firmwareName != ""
-            onClicked: {
+            onClicked:
+            {
                 updateProgressDialog.visible = true;
                 activeOutputDevice.updateFirmware(firmwareName);
             }
@@ -181,16 +185,21 @@ Cura.MachineAction
             font.underline: true
             font.bold: true
 
-            MouseArea {
+            MouseArea
+            {
                 id: manualUpgradeTextButtonArea
                 anchors.fill: parent
                 hoverEnabled: true
-                cursorShape: {
-                    if (printerConnected) {
+                cursorShape:
+                {
+                    if (printerConnected)
+                    {
                         return Qt.PointingHandCursor
-                    } else { return Qt.ArrowCursor }
+                    }
+                    else { return Qt.ArrowCursor }
                 }
-                onClicked: {
+                onClicked:
+                {
                     if (printerConnected) {
                         customFirmwareDialog.open()
                     }
@@ -199,7 +208,8 @@ Cura.MachineAction
         }
     }
 
-    Column {
+    Column
+    {
         id: klipperFirmwareUpdateScreen
 
         anchors.fill: parent;
@@ -209,7 +219,8 @@ Cura.MachineAction
 
         visible: klipperPrinter
 
-        Label {
+        Label
+        {
             width: parent.width
             text: catalog.i18nc("@title", "<b>Firmware Updating for Klipper Printers</b>")
             horizontalAlignment: Text.AlignHCenter
@@ -217,7 +228,8 @@ Cura.MachineAction
             font.pointSize: 18
         }
 
-        Label {
+        Label
+        {
             width: parent.width
 
             text: catalog.i18nc("@title", "<p>Klipper firmware printers will need to have their firmware updated via Mainsail, \
@@ -229,19 +241,22 @@ Cura.MachineAction
         }
     }
 
-    FileDialog {
+    FileDialog
+    {
         id: customFirmwareDialog
         title: catalog.i18nc("@title:window", "Select custom firmware")
         nameFilters:  "Firmware image files (*.hex *.bin)"
         folder: "../../resources/firmware"
         selectExisting: true
-        onAccepted: {
+        onAccepted:
+        {
             updateProgressDialog.visible = true;
             activeOutputDevice.updateFirmware(selectedFile);
         }
     }
 
-    UM.Dialog {
+    UM.Dialog
+    {
         id: updateProgressDialog
 
         width: minimumWidth
@@ -253,23 +268,27 @@ Cura.MachineAction
 
         title: catalog.i18nc("@title:window","Firmware Update")
 
-        Column {
+        Column
+        {
             anchors.fill: parent
             spacing: 5
 
-            UM.Label {
+            UM.Label
+            {
                 id: statusLabel
-
-                anchors {
+                anchors
+                {
                     left: parent.left
                     right: parent.right
                 }
 
                 text: {
-                    if(manager.firmwareUpdater == null) {
+                    if(manager.firmwareUpdater == null)
+                    {
                         return "";
                     }
-                    switch (manager.firmwareUpdater.firmwareUpdateState) {
+                    switch (manager.firmwareUpdater.firmwareUpdateState)
+                    {
                         case 0:
                             return ""; //Not doing anything (eg; idling)
                         case 1:
@@ -304,7 +323,7 @@ Cura.MachineAction
                     {
                         return false;
                     }
-                    return manager.firmwareUpdater.firmwareProgress < 0
+                    return manager.firmwareUpdater.firmwareProgress < 1 && manager.firmwareUpdater.firmwareProgress > 0;
                 }
                 anchors
                 {
