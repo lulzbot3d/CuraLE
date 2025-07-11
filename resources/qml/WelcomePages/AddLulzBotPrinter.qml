@@ -104,6 +104,12 @@ ColumnLayout
                     onClicked: {
                         updateModel
                     }
+                    onCheckedChanged: {
+                        printersModel.machineOptions = {
+                            option: model.option,
+                            value: checked
+                        }
+                    }
 
                     function updateModel () {
                         switch (currentLevel) {
@@ -129,7 +135,6 @@ ColumnLayout
                                 printersModel.level = 4;
                                 break;
                             case 4:
-                                break;
                             default:
                                 console.log("Unknown level state! Reverting...");
                                 printersModel.level = 0;
@@ -195,7 +200,7 @@ ColumnLayout
             text: catalog.i18nc("@button", "Add Printer")
             onClicked: {
                 const printerName = printerNameTextField.text
-                if(Cura.MachineManager.addMachine(printersModel.machineId, printerName))
+                if(Cura.MachineManager.addMachine(printersModel.machineId, printerName, printersModel.machineOptions))
                 {
                     base.showNextPage()
                 }

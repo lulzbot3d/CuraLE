@@ -17,7 +17,7 @@ class LulzBotPrintersModel(ListModel):
     SubtypeRole = Qt.ItemDataRole.UserRole + 6
     ImageRole = Qt.ItemDataRole.UserRole + 7
     ToolHeadImageRole = Qt.ItemDataRole.UserRole + 8
-    OptionsRole = Qt.ItemDataRole.UserRole + 9
+    OptionRole = Qt.ItemDataRole.UserRole + 9
     OptionIsDefaultRole = Qt.ItemDataRole.UserRole + 10
     HasSubtypesRole = Qt.ItemDataRole.UserRole + 11
 
@@ -31,7 +31,7 @@ class LulzBotPrintersModel(ListModel):
         self.addRoleName(self.SubtypeRole, "subtype")
         self.addRoleName(self.ImageRole, "image")
         self.addRoleName(self.ToolHeadImageRole, "tool_head_image")
-        self.addRoleName(self.OptionsRole, "options")
+        self.addRoleName(self.OptionRole, "option")
         self.addRoleName(self.OptionIsDefaultRole, "option_is_default")
         self.addRoleName(self.HasSubtypesRole, "has_subtypes")
 
@@ -47,6 +47,7 @@ class LulzBotPrintersModel(ListModel):
         self._machine_type = "TAZ 8"
         self._machine_subtype = ""
         self._machine_id = ""
+        self._machine_options = {}
         self._machine_name = ""
 
         self._filter_dict = {"author": "LulzBot" , "visible": True}
@@ -138,6 +139,8 @@ class LulzBotPrintersModel(ListModel):
             if len(definition_containers) > 1:
                 Logger.log("w", "There was more than one printer definition with the same ID!?")
             metadata = definition_containers[0]
+            options_dict = metadata["lulzbot_machine_options"]
+            self._machine_options = {}
             for num in range(2):
                 data = metadata.copy()
                 if num == 0:
@@ -150,10 +153,12 @@ class LulzBotPrintersModel(ListModel):
                         "name": data["lulzbot_tool_head"],
                         "image": data["lulzbot_tool_head_image"] if data["lulzbot_tool_head_image"] != "" else "lulz_logo"
                     })
-            for option in metadata["lulzbot_machine_options"].values():
+            for key, option in options_dict.items():
+                self._machine_options[key] = option[1]
                 items.append({
                     "name": str(option[0]),
                     "image": option[2],
+                    "option": key,
                     "option_is_default": option[1]
                 })
 
@@ -230,6 +235,23 @@ class LulzBotPrintersModel(ListModel):
     @pyqtProperty(str, fset = setMachineId, notify = machineIdChanged)
     def machineId(self):
         return self._machine_id
+
+    ## Machine Options
+    def setMachineOptions(self, new_option):
+        if "option" in new_option.keys():
+            changed_option = new_option["option"]
+        else:
+            return
+
+        if "value" in new_option.keys():
+            if changed_option in self._machine_options.keys():
+                self._machine_options[changed_option] = new_option["value"]
+                self.machineOptionsChanged.emit()
+
+    machineOptionsChanged = pyqtSignal()
+    @pyqtProperty("QVariantMap", fset = setMachineOptions, notify = machineOptionsChanged)
+    def machineOptions(self):
+        return self._machine_options
 
     ## Machine Name
     def setMachineName(self, new_machine_name):

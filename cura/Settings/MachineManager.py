@@ -49,7 +49,7 @@ from UM.i18n import i18nCatalog
 catalog = i18nCatalog("cura")
 from cura.Settings.GlobalStack import GlobalStack
 if TYPE_CHECKING:
-    from PyQt6.QtCore import QVariantList
+    from PyQt6.QtCore import QVariantList, QVariantMap
 
     from cura.CuraApplication import CuraApplication
     from cura.Machines.MaterialNode import MaterialNode
@@ -433,8 +433,16 @@ class MachineManager(QObject):
 
     @pyqtSlot(str, result=bool)
     @pyqtSlot(str, str, result = bool)
-    @pyqtSlot(str, str, bool, bool, result = bool)
-    def addMachine(self, definition_id: str, name: Optional[str] = None, lcd: bool = True, bltouch: bool = False) -> bool:
+    @pyqtSlot(str, str, "QVariantMap", result = bool)
+    def addMachine(self, definition_id: str, name: Optional[str] = None, options: Optional["QVariantMap"] = None) -> bool:
+        """Given a definition id, create a machine with this id.
+
+        Optional: add a name to create the machine with a non-standard name and add a list of options
+        to create the machine with non-default optional parameters (e.g. Optional LCD screen)
+        :param definition_id: :type{str} definition id to create machine from
+        :param name: :type{str} name to give to the created machine
+        :param options: :type{dict} list of options and a boolean to set whether the option is enabled
+        """
         Logger.log("i", "Trying to add a machine with the definition id [%s]", definition_id)
         if name is None:
             definitions = CuraContainerRegistry.getInstance().findDefinitionContainers(id = definition_id)
@@ -445,12 +453,13 @@ class MachineManager(QObject):
 
         new_stack = CuraStackBuilder.createMachine(cast(str, name), definition_id)
         if new_stack:
-            # Check for LCD and BLTouch values
-            options = new_stack.getMetaDataEntry("lulzbot_machine_options", {})
-            if "lcd" in options.keys():
-                new_stack.definitionChanges.setProperty("machine_has_lcd", "value", lcd)
-            if "bltouch" in options.keys():
-                new_stack.definitionChanges.setProperty("machine_has_bltouch", "value", bltouch)
+            if options != None:
+                Logger.log("i", "Attempting to set configured options: [%s]", str(options))
+                # Check for LCD and BLTouch values
+                if "lcd" in options.keys():
+                    new_stack.definitionChanges.setProperty("machine_has_lcd", "value", options["lcd"])
+                if "bltouch" in options.keys():
+                    new_stack.definitionChanges.setProperty("machine_has_bltouch", "value", options["bltouch"])
             # Instead of setting the global container stack here, we set the active machine and so the signals are emitted
             self.setActiveMachine(new_stack.getId())
         else:
