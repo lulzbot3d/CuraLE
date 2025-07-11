@@ -222,7 +222,10 @@ class PrinterOutputDevice(QObject, OutputDevice):
     def __del__(self) -> None:
         """Ensure that close gets called when object is destroyed"""
 
-        self.close()
+        try:
+            self.close()
+        except RuntimeError:
+            Logger.log("w", "Printer %s threw a runtime error while closing out! It probably was already deleted." % self._id)
 
     @pyqtProperty(bool, notify = acceptsCommandsChanged)
     def acceptsCommands(self) -> bool:

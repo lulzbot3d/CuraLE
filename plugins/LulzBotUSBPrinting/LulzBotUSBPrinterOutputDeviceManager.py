@@ -18,13 +18,13 @@ from UM.Logger import Logger
 
 from cura.PrinterOutput.PrinterOutputDevice import ConnectionState
 
-from .USBPrinterOutputDevice import USBPrinterOutputDevice
+from .LulzBotUSBPrinterOutputDevice import USBPrinterOutputDevice
 
 i18n_catalog = i18nCatalog("cura")
 
 
 @signalemitter
-class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
+class LulzBotUSBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
     """Manager class that ensures that an USBPrinterOutput device is created for every connected USB printer."""
 
     addUSBOutputDeviceSignal = Signal()
@@ -33,7 +33,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
     serialListChanged = pyqtSignal()
 
     def __init__(self, application, parent = None):
-        if USBPrinterOutputDeviceManager.__instance is not None:
+        if LulzBotUSBPrinterOutputDeviceManager.__instance is not None:
             raise RuntimeError("Try to create singleton '%s' more than once" % self.__class__.__name__)
 
         super().__init__(parent = parent)

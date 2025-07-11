@@ -41,8 +41,8 @@ if TYPE_CHECKING:
 catalog = i18nCatalog("cura")
 
 
-class USBPrinterOutputDevice(PrinterOutputDevice):
-    """USB Printer Output Device adds USB options on top of a printer output device.
+class LulzBotUSBPrinterOutputDevice(PrinterOutputDevice):
+    """LulzBot USB Printer Output Device adds USB options on top of a printer output device.
     """
 
     messageFromPrinter = pyqtSignal(str)
