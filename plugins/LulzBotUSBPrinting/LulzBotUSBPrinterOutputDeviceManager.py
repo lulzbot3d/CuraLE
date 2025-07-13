@@ -18,7 +18,7 @@ from UM.Logger import Logger
 
 from cura.PrinterOutput.PrinterOutputDevice import ConnectionState
 
-from .LulzBotUSBPrinterOutputDevice import USBPrinterOutputDevice
+from .LulzBotUSBPrinterOutputDevice import LulzBotUSBPrinterOutputDevice
 
 i18n_catalog = i18nCatalog("cura")
 
@@ -37,7 +37,7 @@ class LulzBotUSBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
             raise RuntimeError("Try to create singleton '%s' more than once" % self.__class__.__name__)
 
         super().__init__(parent = parent)
-        USBPrinterOutputDeviceManager.__instance = self
+        LulzBotUSBPrinterOutputDeviceManager.__instance = self
 
         self._application = application
 
@@ -219,8 +219,8 @@ class LulzBotUSBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
             error_printer_message.show()
             changed_device.close()
 
-    __instance = None # type: USBPrinterOutputDeviceManager
+    __instance = None # type: LulzBotUSBPrinterOutputDeviceManager
 
     @classmethod
-    def getInstance(cls, *args, **kwargs) -> "USBPrinterOutputDeviceManager":
+    def getInstance(cls, *args, **kwargs) -> "LulzBotUSBPrinterOutputDeviceManager":
         return cls.__instance
