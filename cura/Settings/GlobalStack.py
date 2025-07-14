@@ -323,8 +323,6 @@ class GlobalStack(CuraContainerStack):
         """Get default firmware file name if one is specified in the firmware"""
 
         machine_has_heated_bed = self.getProperty("machine_heated_bed", "value")
-        machine_has_bltouch = self.getProperty("machine_has_bltouch", "value")
-        machine_has_lcd = self.getProperty("machine_has_lcd", "value")
 
         baudrate = 250000
         if Platform.isLinux():
@@ -332,14 +330,16 @@ class GlobalStack(CuraContainerStack):
             # pySerial did not support a baudrate of 250000
             baudrate = 115200
 
-        # If a firmware file is available, it should be specified in the definition for the printer
-        hex_file = self.getMetaDataEntry("firmware_file", None)
-        # if machine_has_heated_bed:
-        #     hex_file = self.getMetaDataEntry("firmware_hbk_file", hex_file)
-        if machine_has_bltouch:
-            hex_file = self.getMetaDataEntry("firmware_file_bltouch", hex_file)
-        if not machine_has_lcd:
-            hex_file = self.getMetaDataEntry("firmware_file_no_lcd", hex_file)
+        if self.getMetaDataEntry("manufacturer", "") == "Fargo Additive Manufacturing Equipment 3D, LLC":
+            # It's a LulzBot machine, use LulzBot method for getting firmware file
+            Resources.getPath(cura.CuraApplication.CuraApplication.ResourceTypes.Firmware, "firmware_directory.json")
+            return ""
+
+        else:
+            # If a firmware file is available, it should be specified in the definition for the printer
+            hex_file = self.getMetaDataEntry("firmware_file", None)
+            if machine_has_heated_bed:
+                hex_file = self.getMetaDataEntry("firmware_hbk_file", hex_file)
 
         if not hex_file:
             Logger.log("w", "There is no firmware for machine %s.", self.getBottom().id)

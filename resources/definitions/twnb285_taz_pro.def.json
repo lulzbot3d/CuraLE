@@ -9,6 +9,8 @@
         "platform": "bed_plates/labeled/taz_pro_labeled.stl",
         "has_optional_bltouch": false,
         "has_variants": true,
+        "lulzbot_firmware_extension": "bin",
+        "lulzbot_firmware_name": { "default": "Marlin_TAZPro_Galaxy_Dual" },
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_has_subtypes": true,
         "lulzbot_machine_image": "taz_pro",

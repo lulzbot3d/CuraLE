@@ -9,6 +9,12 @@
         "platform": "bed_plates/labeled/taz_pro_labeled.stl",
         "has_optional_bltouch": true,
         "lulzbot_example_model": [ "octo_gear.stl" ],
+        "lulzbot_firmware_extension": "bin",
+        "lulzbot_firmware_name":
+        {
+            "default": "Marlin_TAZPro_Universal",
+            "has_bltouch": "Marlin_TAZPro_Universal_BLTouch"
+        },
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_has_subtypes": true,
         "lulzbot_machine_image": "taz_pro",

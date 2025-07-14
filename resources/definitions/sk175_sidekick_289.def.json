@@ -9,6 +9,16 @@
         "platform": "bed_plates/labeled/sidekick_289_labeled.stl",
         "bltouch_is_standard": true,
         "has_optional_lcd": true,
+        "lulzbot_firmware_name":
+        {
+            "default": "Marlin_SideKick_289_SK175",
+            "has_lcd": "Marlin_SideKick_289_Universal"
+        },
+        "lulzbot_firmware_version":
+        {
+            "default": "2.0.9.0.16_8235204",
+            "has_lcd": "2.1.3.0.47_aa0310b4db"
+        },
         "lulzbot_machine_category": "SideKick",
         "lulzbot_machine_image": "sidekick_289",
         "lulzbot_machine_options":

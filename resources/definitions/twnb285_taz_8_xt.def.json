@@ -8,6 +8,7 @@
         "file_formats": "text/x-gcode",
         "platform": "bed_plates/labeled/taz_8_xt_labeled.stl",
         "has_variants": true,
+        "lulzbot_firmware_extension": "bin",
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_image": "",
         "lulzbot_machine_is_subtype": true,
