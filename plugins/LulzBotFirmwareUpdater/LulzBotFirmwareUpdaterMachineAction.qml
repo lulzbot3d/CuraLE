@@ -39,11 +39,7 @@ Cura.MachineAction
             wrapMode: Text.WordWrap
             font.pointSize: 18
         }
-        Label
-        {
-            text: " " //Spacer
-        }
-        Label
+        UM.Label
         {
             width: parent.width
             wrapMode: Text.WordWrap
@@ -59,7 +55,7 @@ Cura.MachineAction
             text: catalog.i18nc("@label", "<b>Why Update:</b> Gain new features and boost performance.")
         }
 
-        Label 
+        UM.Label
         {
             width: parent.width
             wrapMode: Text.WordWrap
@@ -68,7 +64,7 @@ Cura.MachineAction
             text: catalog.i18nc("@label", "<b>WARNING:</b> Updating will reset certain machine settings. It's a good idea to note down any settings you might want later.</font><br>")
         }
 
-        Label
+        UM.Label
         {
             width: parent.width
             wrapMode: Text.WordWrap
@@ -96,7 +92,7 @@ Cura.MachineAction
             }
         }
 
-        Label
+        UM.Label
         {
             width: parent.width
             wrapMode: Text.WordWrap
@@ -119,7 +115,7 @@ Cura.MachineAction
             }
         }
 
-        Label
+        UM.Label
         {
             width: parent.width
             wrapMode: Text.WordWrap
@@ -128,7 +124,7 @@ Cura.MachineAction
             text: catalog.i18nc("@label", "Enjoy enhanced reliability, repeatability, and performance from your LulzBot!")
         }
 
-        Label
+        UM.Label
         {
             width: parent.width
             wrapMode: Text.WordWrap
@@ -138,7 +134,7 @@ Cura.MachineAction
             text: catalog.i18nc("@label", "Firmware Version to be Flashed: <b>") + Cura.MachineManager.activeMachineLatestFirmwareVersion + "</b>";
         }
 
-        Label
+        UM.Label
         {
             width: parent.width
             visible: printerConnected && !canUpdateFirmware
@@ -147,7 +143,7 @@ Cura.MachineAction
             text: catalog.i18nc("@label", "Firmware can not be updated because the connection with the printer does not support updating firmware.");
         }
 
-        Label
+        UM.Label
         {
             width: parent.width
             wrapMode: Text.WordWrap
@@ -219,7 +215,7 @@ Cura.MachineAction
 
         visible: klipperPrinter
 
-        Label
+        UM.Label
         {
             width: parent.width
             text: catalog.i18nc("@title", "<b>Firmware Updating for Klipper Printers</b>")
@@ -228,7 +224,7 @@ Cura.MachineAction
             font.pointSize: 18
         }
 
-        Label
+        UM.Label
         {
             width: parent.width
 
@@ -246,8 +242,6 @@ Cura.MachineAction
         id: customFirmwareDialog
         title: catalog.i18nc("@title:window", "Select custom firmware")
         nameFilters:  "Firmware image files (*.hex *.bin)"
-        folder: "../../resources/firmware"
-        selectExisting: true
         onAccepted:
         {
             updateProgressDialog.visible = true;

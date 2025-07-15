@@ -332,8 +332,33 @@ class GlobalStack(CuraContainerStack):
 
         if self.getMetaDataEntry("manufacturer", "") == "Fargo Additive Manufacturing Equipment 3D, LLC":
             # It's a LulzBot machine, use LulzBot method for getting firmware file
-            Resources.getPath(cura.CuraApplication.CuraApplication.ResourceTypes.Firmware, "firmware_directory.json")
-            return ""
+            hex_file = None
+            firmware_type = self.getMetaDataEntry("lulzbot_firmware_type", "")
+            if firmware_type == "Marlin":
+                firmware_names = self.getMetaDataEntry("lulzbot_firmware_name", None)
+                firmware_versions = self.getMetaDataEntry("lulzbot_firmware_version", None)
+                firmware_extension = self.getMetaDataEntry("lulzbot_firmware_extension", "hex")
+                bltouch_machine = self.getProperty("machine_has_bltouch", "value")
+                lcd_machine = self.getProperty("machine_has_lcd", "value")
+
+                name = firmware_names["default"]
+                if "has_bltouch" in firmware_names.keys() and bltouch_machine == True:
+                    name = firmware_names["has_bltouch"]
+
+                if "has_lcd" in firmware_names.keys() and lcd_machine == True:
+                    name= firmware_names["has_lcd"]
+
+                version = firmware_versions["default"]
+                if "has_bltouch" in firmware_versions.keys() and bltouch_machine == True:
+                    version = firmware_versions["has_bltouch"]
+
+                if "has_lcd" in firmware_versions.keys() and lcd_machine == True:
+                    version = firmware_versions["has_lcd"]
+
+                hex_file = name + "_" + version + "." + firmware_extension
+            else:
+                Logger.log("w", "LulzBot firmware in CuraLE is only available for Marlin printers. Current printer firmware type: ")
+                return ""
 
         else:
             # If a firmware file is available, it should be specified in the definition for the printer
