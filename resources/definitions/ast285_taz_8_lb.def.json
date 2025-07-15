@@ -8,6 +8,7 @@
         "file_formats": "text/x-gcode",
         "platform": "bed_plates/labeled/taz_8_lb_labeled.stl",
         "has_variants": true,
+        "lulzbot_firmware_name": { "default": "Marlin_TAZ8_LongBed_Galaxy" },
         "lulzbot_firmware_extension": "bin",
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_image": "taz_8_long_bed",

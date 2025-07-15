@@ -6,6 +6,7 @@
     {
         "visible": true,
         "platform": "bed_plates/labeled/workhorse_labeled.stl",
+        "lulzbot_firmware_name": { "default": "Marlin_Workhorse_Universal" },
         "lulzbot_example_model": [ "octo_gear.stl" ],
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_image": "workhorse",
