@@ -7,7 +7,7 @@
         "visible": true,
         "file_formats": "text/x-gcode",
         "platform": "bed_plates/labeled/mini_2_labeled.stl",
-        "lulzbot_firmware_name": { "default": "Marlin_Mini2_Universal" },
+        "lulzbot_firmware_name": { "default": "Mini2/Marlin_Mini2_Universal" },
         "lulzbot_machine_category": "Mini",
         "lulzbot_machine_image": "mini_2",
         "lulzbot_machine_priority": "01",

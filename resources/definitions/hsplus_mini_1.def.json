@@ -11,8 +11,8 @@
         "lcd_is_standard": false,
         "lulzbot_firmware_name":
         {
-            "default": "Marlin_Mini_HardenedSteelPlus",
-            "has_lcd": "Marlin_MiniLCD_HardenedSteelPlus"
+            "default": "Mini/Marlin_Mini_HardenedSteelPlus",
+            "has_lcd": "Mini/Marlin_MiniLCD_HardenedSteelPlus"
         },
         "lulzbot_firmware_version": { "default": "2.0.0.144_aded3b617" },
         "lulzbot_machine_category": "Mini",

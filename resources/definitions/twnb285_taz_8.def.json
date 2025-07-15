@@ -9,7 +9,7 @@
         "platform": "bed_plates/labeled/taz_8_labeled.stl",
         "bltouch_is_standard": true,
         "lulzbot_firmware_extension": "bin",
-        "lulzbot_firmware_name": { "default": "Marlin_TAZ8_Galaxy" },
+        "lulzbot_firmware_name": { "default": "TAZ8/Marlin_TAZ8_Galaxy_Dual" },
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_has_subtypes": true,
         "lulzbot_machine_image": "taz_8",

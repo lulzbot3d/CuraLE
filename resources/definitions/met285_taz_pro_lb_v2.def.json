@@ -10,7 +10,7 @@
         "bltouch_is_standard": true,
         "has_variants": true,
         "lulzbot_firmware_extension": "bin",
-        "lulzbot_firmware_name": { "default": "Marlin_TAZPro_LongBedv2_Galaxy" },
+        "lulzbot_firmware_name": { "default": "TAZPro_LongBedv2/Marlin_TAZPro_LongBedv2_Galaxy" },
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_image": "taz_pro_long_bed_v2",
         "lulzbot_machine_is_subtype": true,
