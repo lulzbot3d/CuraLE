@@ -204,7 +204,7 @@
     "base_colors": {
         "background_1": [245, 245, 245, 255],
         "background_2": [233, 233, 233, 255],
-        "background_3": [226, 232, 104, 255],
+        "background_3": [242, 252, 232, 255],
         "background_4": [66, 80, 12, 255],
 
         "accent_1": [193, 216, 47, 255],
@@ -216,8 +216,8 @@
 
         "text_default": [24, 30, 5, 255],
         "text_disabled": [180, 180, 180, 255],
-        "text_primary_button": [255, 255, 255, 255],
-        "text_secondary_button": [193, 216, 47, 255],
+        "text_primary_button": [245, 245, 245, 255],
+        "text_secondary_button": [120, 136, 20, 255],
         "text_link_hover": [120, 136, 20, 255],
         "text_lighter": [108, 108, 108, 255],
 
@@ -246,7 +246,7 @@
 
         "primary": "accent_1",
         "primary_hover": [184, 230, 35, 255],
-        "primary_text": [255, 255, 255, 255],
+        "primary_text": [245, 245, 245, 255],
         "text_selection": [204, 255, 40, 127],
         "border": [127, 127, 127, 255],
         "border_field": [180, 180, 180, 255],
@@ -255,16 +255,16 @@
         "expandable_active": [240, 240, 240, 255],
         "expandable_hover": [242, 252, 232, 255],
 
-        "icon": [52, 65, 10, 255],
+        "icon": "accent_2",
 
         "primary_button": "accent_1",
         "primary_button_hover": [120, 136, 20, 255],
-        "primary_button_text": [255, 255, 255, 255],
+        "primary_button_text": [245, 245, 245, 255],
 
         "secondary_button": "background_1",
         "secondary_button_shadow": [216, 216, 216, 255],
-        "secondary_button_hover": [226, 232, 104, 255],
-        "secondary_button_text": "accent_1",
+        "secondary_button_hover": [242, 252, 232, 255],
+        "secondary_button_text": "accent_2",
 
         "main_window_header_background": "accent_2",
         "main_window_header_background_gradient": [72, 90, 14, 255],
@@ -280,7 +280,7 @@
 
         "machine_selector_printer_icon": [52, 65, 10, 255],
 
-        "action_panel_secondary": "accent_1",
+        "action_panel_secondary": "accent_2",
 
         "first_run_shadow": [50, 50, 50, 255],
 
@@ -295,7 +295,7 @@
         "text": [25, 25, 25, 255],
         "text_disabled": [180, 180, 180, 255],
         "text_detail": [174, 174, 174, 128],
-        "text_link": "accent_1",
+        "text_link": "accent_2",
         "text_inactive": [174, 174, 174, 255],
         "text_medium": [128, 128, 128, 255],
         "text_scene": [102, 102, 102, 255],
@@ -310,7 +310,7 @@
         "toolbar_button_active": [200, 250, 38, 255],
         "toolbar_button_active_hover": [200, 242, 38, 255],
 
-        "button_text": [255, 255, 255, 255],
+        "button_text": [245, 245, 245, 255],
 
         "small_button_text": [102, 102, 102, 255],
         "small_button_text_hover": [52, 65, 10, 255],
@@ -327,8 +327,8 @@
 
         "scrollbar_background": [245, 245, 245, 255],
         "scrollbar_handle": [64, 80, 12, 255],
-        "scrollbar_handle_hover": [200, 250, 38, 255],
-        "scrollbar_handle_down": [200, 250, 38, 255],
+        "scrollbar_handle_hover": "accent_2",
+        "scrollbar_handle_down": "accent_2",
 
         "setting_category": "background_1",
         "setting_category_disabled": [245, 245, 245, 255],
@@ -340,7 +340,7 @@
         "setting_control": "background_2",
         "setting_control_highlight": "background_3",
         "setting_control_border": [199, 199, 199, 255],
-        "setting_control_border_highlight": [50, 130, 255, 255],
+        "setting_control_border_highlight": [130, 255, 50, 255],
         "setting_control_text": [35, 35, 35, 255],
         "setting_control_button": [102, 102, 102, 255],
         "setting_control_button_hover": [52, 65, 10, 255],
@@ -358,12 +358,12 @@
         "core_compatibility_warning": [243, 166, 59, 255],
 
         "progressbar_background": [245, 245, 245, 255],
-        "progressbar_control": [50, 130, 255, 255],
+        "progressbar_control": [130, 255, 50, 255],
 
         "slider_groove": [223, 223, 223, 255],
         "slider_groove_fill": [52, 65, 10, 255],
         "slider_handle": [52, 65, 10, 255],
-        "slider_handle_active": [200, 250, 38, 255],
+        "slider_handle_active": "accent_2",
         "slider_text_background": [245, 245, 245, 255],
 
         "quality_slider_unavailable": [179, 179, 179, 255],
@@ -464,7 +464,7 @@
         "layerview_move_combing": [0, 0, 255, 255],
         "layerview_move_retraction": [128, 127, 255, 255],
         "layerview_support_interface": [63, 127, 255, 127],
-        "layerview_prime_tower": [0, 255, 255, 255],
+        "layerview_prime_tower": [0, 245, 245, 245],
         "layerview_nozzle": [224, 192, 16, 64],
         "layerview_starts": [245, 245, 245, 255],
 
@@ -496,7 +496,7 @@
         "monitor_carousel_dot_current": [119, 119, 119, 255],
 
         "cloud_unavailable": [153, 153, 153, 255],
-        "connection_badge_background": [255, 255, 255, 255],
+        "connection_badge_background": [245, 245, 245, 255],
         "warning_badge_background": [0, 0, 0, 255],
         "error_badge_background": [245, 245, 245, 255],
 
