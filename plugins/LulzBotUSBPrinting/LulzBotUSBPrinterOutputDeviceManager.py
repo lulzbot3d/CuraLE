@@ -1,11 +1,11 @@
 # Copyright (c) 2020 Ultimaker B.V.
 # Cura is released under the terms of the LGPLv3 or higher.
 
-import threading
 import time
 import serial.tools.list_ports
 from os import environ
 from re import search
+from threading import Thread
 
 from PyQt6.QtCore import QObject, pyqtSignal, pyqtProperty
 
@@ -44,8 +44,8 @@ class LulzBotUSBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         self._serial_port_list = []
         self._usb_output_devices = {}
         self._usb_output_devices_model = None
-        # self._update_thread = Thread()
-        # self.createUpdateThread() # Sets up the thread properly
+        self._update_thread = Thread()
+        self.createUpdateThread() # Sets up the thread properly
 
         self._check_updates = True
         self._port_check_frequency = 3
@@ -67,8 +67,8 @@ class LulzBotUSBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
 
     def createUpdateThread(self):
         # Sets _update_thread to a new Thread object
-        # self._update_thread = Thread(target = self._updateThread)
-        # self._update_thread.daemon = True
+        self._update_thread = Thread(target = self._updateThread)
+        self._update_thread.daemon = True
         return
 
     # Update thread is the USB printer discovery loop. Gets a list of viable serial ports and hands them to our add/remove ports method.
@@ -94,7 +94,7 @@ class LulzBotUSBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
 
         :param only_list_usb: If true, only usb ports are listed
         """
-        base_list = ["None"]
+        base_list = []
         required_port = self._application.getGlobalContainerStack().getProperty("machine_port", "value")
         try:
             port_list = serial.tools.list_ports.comports()
@@ -165,7 +165,7 @@ class LulzBotUSBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
     def addOutputDevice(self, serial_port):
         """Because the model needs to be created in the same thread as the QMLEngine, we use a signal."""
 
-        device = USBPrinterOutputDevice(serial_port)
+        device = LulzBotUSBPrinterOutputDevice(serial_port)
         device.connectionStateChanged.connect(self._onConnectionStateChanged)
         self._usb_output_devices[serial_port] = device
         self.getOutputDeviceManager().addOutputDevice(device)
@@ -194,7 +194,7 @@ class LulzBotUSBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
     # The method updates/reset the USB settings for all connected USB devices
     def updateUSBPrinterOutputDevices(self):
         for device in self._usb_output_devices.values():
-            if isinstance(device, USBPrinterOutputDevice):
+            if isinstance(device, LulzBotUSBPrinterOutputDevice):
                 device.resetDeviceSettings()
 
     def _onConnectionStateChanged(self, serial_port):

@@ -106,11 +106,11 @@ class LulzBotUSBPrinterOutputDevice(PrinterOutputDevice):
         self._firmware_updater.firmwareUpdating.connect(self.setIsFlashing)
         self.printersChanged.connect(self.printersChanged)
 
-        plugin_path = PluginRegistry.getInstance().getPluginPath("USBPrinting")
+        plugin_path = PluginRegistry.getInstance().getPluginPath("LulzBotUSBPrinting")
         if plugin_path:
             self._monitor_view_qml_path = os.path.join(plugin_path, "MonitorItem.qml")
         else:
-            Logger.log("e", "Cannot create Monitor QML view: cannot find plugin path for plugin [USBPrinting]")
+            Logger.log("e", "Cannot create Monitor QML view: cannot find plugin path for plugin [LulzBotUSBPrinting]")
             self._monitor_view_qml_path = ""
 
         self._onGlobalContainerStackChanged()
