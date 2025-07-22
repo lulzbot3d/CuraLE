@@ -1,4 +1,5 @@
 version: "5.11.0-alpha.0"
+commit: "unknown"
 requirements:
   - "curale_resources/5.11.0-alpha.0@lulzbot/testing"
   - "uraniumle/5.11.0-alpha.0@lulzbot/testing"
