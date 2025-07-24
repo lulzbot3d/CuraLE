@@ -266,7 +266,9 @@ class CuraContainerRegistry(ContainerRegistry):
                 # Get the expected machine definition.
                 # i.e.: We expect gcode for a UM2 Extended to be defined as normal UM2 gcode...
                 has_machine_quality = parseBool(machine_definition.getMetaDataEntry("has_machine_quality", "false"))
-                profile_definition = machine_definition.getMetaDataEntry("quality_definition", machine_definition.getId()) if has_machine_quality else "fdmprinter"
+                # profile_definition = machine_definition.getMetaDataEntry("quality_definition", machine_definition.getId()) if has_machine_quality else "fdmprinter"
+                profile_definition = machine_definition.getMetaDataEntry("quality_definition", machine_definition.getId()) if has_machine_quality else "lulzbot_base"
+
                 expected_machine_definition = container_tree.machines[global_stack.definition.getId()].quality_definition
 
                 # And check if the profile_definition matches either one (showing error if not):
@@ -747,7 +749,8 @@ class CuraContainerRegistry(ContainerRegistry):
                 container_registry = ContainerRegistry.getInstance()
                 whole_machine_definition = container_registry.findDefinitionContainers(id = machine_entry)[0]
 
-            quality_changes_machine_definition_id = "fdmprinter"
+            # quality_changes_machine_definition_id = "fdmprinter"
+            quality_changes_machine_definition_id = "lulzbot_base"
             if whole_machine_definition.getMetaDataEntry("has_machine_quality"):
                 quality_changes_machine_definition_id = machine.definition.getMetaDataEntry("quality_definition",
                                                                                             whole_machine_definition.getId())

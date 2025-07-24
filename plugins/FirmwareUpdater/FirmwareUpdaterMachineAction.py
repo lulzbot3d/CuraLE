@@ -24,7 +24,7 @@ class FirmwareUpdaterMachineAction(MachineAction):
     """Upgrade the firmware of a machine by USB with this action."""
 
     def __init__(self) -> None:
-        super().__init__("UpgradeFirmware", catalog.i18nc("@action", "Firmware Update"))
+        super().__init__("UpgradeFirmware", catalog.i18nc("@action", "Update Firmware"))
         self._qml_url = "FirmwareUpdaterMachineAction.qml"
         ContainerRegistry.getInstance().containerAdded.connect(self._onContainerAdded)
 
@@ -46,7 +46,7 @@ class FirmwareUpdaterMachineAction(MachineAction):
             self._active_output_device.activePrinter.getController().canUpdateFirmwareChanged.disconnect(self._onControllerCanUpdateFirmwareChanged)
 
         output_devices = CuraApplication.getInstance().getMachineManager().printerOutputDevices
-        self._active_output_device = output_devices[len(output_devices) - 1] if output_devices else None
+        self._active_output_device = output_devices[0] if output_devices else None
 
         if self._active_output_device and self._active_output_device.activePrinter:
             self._active_output_device.activePrinter.getController().canUpdateFirmwareChanged.connect(self._onControllerCanUpdateFirmwareChanged)

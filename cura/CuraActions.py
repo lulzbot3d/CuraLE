@@ -280,23 +280,3 @@ class CuraActions(QObject):
 
     def _openUrl(self, url: QUrl) -> None:
         QDesktopServices.openUrl(url)
-
-    @pyqtSlot()
-    def openFilamentsPage(self):
-        event = CallFunctionEvent(self._openUrl, [QUrl("https://www.lulzbot.com/store/filament")], {})
-        cura.CuraApplication.CuraApplication.getInstance().functionEvent(event)
-
-    @pyqtSlot()
-    def openPrintersPage(self):
-        event = CallFunctionEvent(self._openUrl, [QUrl("https://www.lulzbot.com/store/printers")], {})
-        cura.CuraApplication.CuraApplication.getInstance().functionEvent(event)
-
-    @pyqtSlot()
-    def openToolheadsPage(self):
-        event = CallFunctionEvent(self._openUrl, [QUrl("https://www.lulzbot.com/store/tool-heads")], {})
-        cura.CuraApplication.CuraApplication.getInstance().functionEvent(event)
-
-    @pyqtSlot()
-    def openPartsPage(self):
-        event = CallFunctionEvent(self._openUrl, [QUrl("https://www.lulzbot.com/store/parts")], {})
-        cura.CuraApplication.CuraApplication.getInstance().functionEvent(event)

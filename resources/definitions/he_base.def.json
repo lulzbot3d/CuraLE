@@ -1,0 +1,21 @@
+{
+    "version": 2,
+    "name": "HE Printer",
+    "inherits": "lulzbot_base",
+    "metadata":
+    {
+        "visible": false,
+        "has_machine_quality": true,
+        "lulzbot_tool_head": "HE",
+        "lulzbot_tool_head_abbreviation": "HE",
+        "lulzbot_tool_head_image": "he",
+        "lulzbot_tool_head_priority": "13",
+        "machine_extruder_trains": { "0": "he" },
+        "quality_definition": "he_base"
+    },
+    "overrides":
+    {
+        "machine_heat_zone_length": { "default_value": 20 },
+        "machine_nozzle_tip_outer_diameter": { "default_value": 1.5 }
+    }
+}

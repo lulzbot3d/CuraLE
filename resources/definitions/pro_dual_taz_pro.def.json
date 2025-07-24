@@ -1,0 +1,36 @@
+{
+    "version": 2,
+    "name": "TAZ Pro | Pro Dual | 0.50 mm",
+    "inherits": "pro_dual_base",
+    "metadata":
+    {
+        "visible": true,
+        "file_formats": "text/x-gcode",
+        "platform": "bed_plates/labeled/taz_pro_labeled.stl",
+        "has_optional_bltouch": false,
+        "lulzbot_firmware_extension": "bin",
+        "lulzbot_firmware_name": { "default": "Marlin_TAZPro_Universal_Dual" },
+        "lulzbot_machine_category": "TAZ",
+        "lulzbot_machine_has_subtypes": true,
+        "lulzbot_machine_image": "taz_pro",
+        "lulzbot_machine_priority": "01",
+        "lulzbot_machine_type": "TAZ Pro",
+        "lulzbot_machine_type_abbreviation": "PRO",
+        "platform_offset": [
+            0,
+            -14.6,
+            2
+        ],
+        "quality_definition": "pro_dual_base"
+    },
+    "overrides":
+    {
+        "acceleration_print": { "default_value": 1000 },
+        "firmware_machine_type": { "default_value": "LulzBot TAZ Pro" },
+        "machine_acceleration": { "default_value": 1000 },
+        "machine_depth": { "default_value": 285 },
+        "machine_height": { "default_value": 285 },
+        "machine_name": { "default_value": "LulzBot TAZ Pro | Pro Dual" },
+        "machine_width": { "default_value": 285 }
+    }
+}

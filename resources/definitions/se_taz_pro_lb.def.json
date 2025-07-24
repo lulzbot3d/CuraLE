@@ -1,0 +1,45 @@
+{
+    "version": 2,
+    "name": "TAZ Pro Long Bed | SE | 0.50 mm",
+    "inherits": "se_base",
+    "metadata":
+    {
+        "visible": true,
+        "file_formats": "text/x-gcode",
+        "platform": "bed_plates/labeled/taz_pro_lb_labeled.stl",
+        "bltouch_is_standard": true,
+        "lulzbot_firmware_extension": "bin",
+        "lulzbot_firmware_name": { "default": "Marlin_TAZPro_LongBed_Universal" },
+        "lulzbot_machine_category": "TAZ",
+        "lulzbot_machine_image": "taz_pro_long_bed",
+        "lulzbot_machine_is_subtype": true,
+        "lulzbot_machine_priority": "12",
+        "lulzbot_machine_subtype": "Long Bed",
+        "lulzbot_machine_type": "TAZ Pro",
+        "lulzbot_machine_type_abbreviation": "PRO_LB",
+        "platform_offset": [
+            0,
+            -25.8,
+            0
+        ],
+        "quality_definition": "se_base"
+    },
+    "overrides":
+    {
+        "acceleration_print": { "default_value": 500 },
+        "firmware_machine_type": { "default_value": "LulzBot TAZ Pro" },
+        "jerk_print": { "default_value": 12 },
+        "jerk_travel": { "value": 12 },
+        "machine_acceleration": { "default_value": 500 },
+        "machine_buildplate_type": { "default_value": "aluminum" },
+        "machine_depth": { "default_value": 582 },
+        "machine_end_gcode": { "default_value_from_file": "taz_pro_lb/taz_pro_lb_end" },
+        "machine_has_bltouch": { "value": true },
+        "machine_height": { "default_value": 285 },
+        "machine_level_x_axis_gcode": { "default_value_from_file": "taz_pro/taz_pro_level_x_axis" },
+        "machine_name": { "default_value": "LulzBot TAZ Pro Long Bed | SE" },
+        "machine_start_gcode": { "default_value_from_file": "taz_pro_lb/taz_pro_lb_start" },
+        "machine_width": { "default_value": 280 },
+        "speed_travel": { "value": "speed_print if magic_spiralize else 125" }
+    }
+}

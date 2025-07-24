@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fdmmaterial version="1.3" xmlns="http://www.ultimaker.com/material" xmlns:cura="http://www.ultimaker.com/cura">
+  <metadata>
+    <name>
+      <brand>BASF</brand>
+      <material>TPU (Flexible)</material>
+      <color>Generic</color>
+      <label>Ultrafuse TPU 85A</label>
+    </name>
+    <GUID>9cd7c4df-0218-41a1-8f24-b25e9030b076</GUID>
+    <version>1</version>
+    <color_code>#FFD700</color_code>
+    <adhesion_info></adhesion_info>
+    <tension_position>2</tension_position>
+    <purge_pattern>3</purge_pattern>
+  </metadata>
+  <properties>
+    <density>1.11</density>
+    <diameter>2.85</diameter>
+  </properties>
+  <settings>
+    <setting key="print temperature">225</setting>
+    <setting key="heated bed temperature">60</setting>
+    <setting key="part removal temperature">0</setting>
+    <setting key="adhesion tendency">3</setting>
+    <setting key="surface energy">100</setting>
+    <cura:setting key="material_crystallinity">true</cura:setting>
+
+  </settings>
+</fdmmaterial>

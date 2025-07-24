@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "name": "SE",
+    "inherits": "lulzbot_extruder",
+    "metadata":
+    {
+        "machine": "se_base",
+        "position": "0"
+    },
+    "overrides":
+    {
+        "extruder_nr": { "default_value": 0 }
+    }
+}

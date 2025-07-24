@@ -1,0 +1,52 @@
+{
+    "version": 2,
+    "name": "SideKick 289 | SK175 | 0.50 mm",
+    "inherits": "sk175_base",
+    "metadata":
+    {
+        "visible": true,
+        "file_formats": "text/x-gcode",
+        "platform": "bed_plates/labeled/sidekick_289_labeled.stl",
+        "bltouch_is_standard": true,
+        "has_optional_lcd": true,
+        "lulzbot_firmware_name":
+        {
+            "default": "Marlin_SideKick_289_SK175",
+            "has_lcd": "Marlin_SideKick_289_Universal"
+        },
+        "lulzbot_firmware_version":
+        {
+            "default": "2.0.9.0.16_8235204",
+            "has_lcd": "2.1.3.0.47_aa0310b4db"
+        },
+        "lulzbot_machine_category": "SideKick",
+        "lulzbot_machine_image": "sidekick_289",
+        "lulzbot_machine_options":
+        {
+            "lcd": [
+                "LCD Screen",
+                true,
+                "lcd_sidekick"
+            ]
+        },
+        "lulzbot_machine_priority": "01",
+        "lulzbot_machine_type": "SideKick 289",
+        "lulzbot_machine_type_abbreviation": "289",
+        "platform_offset": [
+            0,
+            -17.3,
+            0
+        ],
+        "quality_definition": "sk175_base"
+    },
+    "overrides":
+    {
+        "acceleration_travel": { "value": 5000 },
+        "firmware_machine_type": { "default_value": "Taz SideKick 289" },
+        "machine_depth": { "default_value": 165.3 },
+        "machine_end_gcode": { "default_value_from_file": "sidekick/sidekick_289_end" },
+        "machine_height": { "default_value": 181 },
+        "machine_name": { "default_value": "LulzBot SideKick 289 | SK175" },
+        "machine_width": { "default_value": 165.3 }
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "version": 2,
+    "name": "Dual v3 Right",
+    "inherits": "lulzbot_extruder",
+    "metadata":
+    {
+        "machine": "dual_v3_base",
+        "position": "1"
+    },
+    "overrides":
+    {
+        "extruder_nr":
+        {
+            "default_value": 1,
+            "maximum_value": "1"
+        },
+        "machine_nozzle_offset_x": { "default_value": 6.5 },
+        "purge_line_location": { "value": "'frontright'" }
+    }
+}

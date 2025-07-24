@@ -1,0 +1,57 @@
+{
+    "version": 2,
+    "name": "SideKick 747 | M175 v2 | 0.50 mm",
+    "inherits": "m175_v2_base",
+    "metadata":
+    {
+        "visible": true,
+        "file_formats": "text/x-gcode",
+        "platform": "bed_plates/labeled/sidekick_747_labeled.stl",
+        "bltouch_is_standard": true,
+        "has_optional_lcd": true,
+        "lulzbot_firmware_name":
+        {
+            "default": "Marlin_SideKick_747_M175v2",
+            "has_lcd": "Marlin_SideKick_747_Universal"
+        },
+        "lulzbot_firmware_version":
+        {
+            "default": "2.0.9.0.16_8235204",
+            "has_lcd": "2.1.3.0.47_aa0310b4db"
+        },
+        "lulzbot_machine_category": "SideKick",
+        "lulzbot_machine_image": "sidekick_747",
+        "lulzbot_machine_options":
+        {
+            "lcd": [
+                "LCD Screen",
+                true,
+                "lcd_sidekick"
+            ]
+        },
+        "lulzbot_machine_priority": "00",
+        "lulzbot_machine_type": "SideKick 747",
+        "lulzbot_machine_type_abbreviation": "747",
+        "platform_offset": [
+            0,
+            -16.1,
+            -2
+        ],
+        "quality_definition": "m175_v2_base"
+    },
+    "overrides":
+    {
+        "acceleration_travel": { "value": 4750 },
+        "cool_min_layer_time": { "value": 15 },
+        "firmware_machine_type": { "default_value": "Taz SideKick 747" },
+        "machine_depth": { "default_value": 232.3 },
+        "machine_end_gcode": { "default_value_from_file": "sidekick/sidekick_747_end" },
+        "machine_has_bltouch": { "value": true },
+        "machine_height": { "default_value": 248 },
+        "machine_level_x_axis_gcode": { "default_value_from_file": "sidekick/sidekick_level_x_axis" },
+        "machine_name": { "default_value": "LulzBot SideKick 747 | M175 v2" },
+        "machine_start_gcode": { "default_value_from_file": "sidekick/sidekick_start" },
+        "machine_width": { "default_value": 232.3 },
+        "speed_travel_layer_0": { "value": 100 }
+    }
+}

@@ -49,7 +49,7 @@ from UM.i18n import i18nCatalog
 catalog = i18nCatalog("cura")
 from cura.Settings.GlobalStack import GlobalStack
 if TYPE_CHECKING:
-    from PyQt6.QtCore import QVariantList
+    from PyQt6.QtCore import QVariantList, QVariantMap
 
     from cura.CuraApplication import CuraApplication
     from cura.Machines.MaterialNode import MaterialNode
@@ -268,7 +268,7 @@ class MachineManager(QObject):
 
     def getAllSettingKeys(self) -> Set[str]:
         # general_definition_containers = CuraContainerRegistry.getInstance().findDefinitionContainers(id="fdmprinter")
-        general_definition_containers = CuraContainerRegistry.getInstance().findDefinitionContainers(id="lulzbot")
+        general_definition_containers = CuraContainerRegistry.getInstance().findDefinitionContainers(id="lulzbot_base")
         if not general_definition_containers:
             return set()
         return general_definition_containers[0].getAllKeys()
@@ -437,8 +437,16 @@ class MachineManager(QObject):
 
     @pyqtSlot(str, result=bool)
     @pyqtSlot(str, str, result = bool)
-    @pyqtSlot(str, str, bool, bool, result = bool)
-    def addMachine(self, definition_id: str, name: Optional[str] = None, lcd: bool = True, bltouch: bool = False) -> bool:
+    @pyqtSlot(str, str, "QVariantMap", result = bool)
+    def addMachine(self, definition_id: str, name: Optional[str] = None, options: Optional["QVariantMap"] = None) -> bool:
+        """Given a definition id, create a machine with this id.
+
+        Optional: add a name to create the machine with a non-standard name and add a list of options
+        to create the machine with non-default optional parameters (e.g. Optional LCD screen)
+        :param definition_id: :type{str} definition id to create machine from
+        :param name: :type{str} name to give to the created machine
+        :param options: :type{dict} list of options and a boolean to set whether the option is enabled
+        """
         Logger.log("i", "Trying to add a machine with the definition id [%s]", definition_id)
         if name is None:
             definitions = CuraContainerRegistry.getInstance().findDefinitionContainers(id = definition_id)
@@ -449,11 +457,13 @@ class MachineManager(QObject):
 
         new_stack = CuraStackBuilder.createMachine(cast(str, name), definition_id)
         if new_stack:
-            # Check for LCD and BLTouch values
-            if new_stack.getMetaDataEntry("has_optional_lcd", False):
-                new_stack.definitionChanges.setProperty("machine_has_lcd", "value", lcd)
-            if new_stack.getMetaDataEntry("has_optional_bltouch", False):
-                new_stack.definitionChanges.setProperty("machine_has_bltouch", "value", bltouch)
+            if options != None:
+                Logger.log("i", "Attempting to set configured options: [%s]", str(options))
+                # Check for LCD and BLTouch values
+                if "lcd" in options.keys():
+                    new_stack.definitionChanges.setProperty("machine_has_lcd", "value", options["lcd"])
+                if "bltouch" in options.keys():
+                    new_stack.definitionChanges.setProperty("machine_has_bltouch", "value", options["bltouch"])
             # Instead of setting the global container stack here, we set the active machine and so the signals are emitted
             self.setActiveMachine(new_stack.getId())
         else:
@@ -465,19 +475,10 @@ class MachineManager(QObject):
     def addMachineProvideExampleModel(self) -> None:
         # Load new machine STL
         definition_id = self._global_container_stack.getDefinition().getId()
+        model_paths = self._global_container_stack.getMetaDataEntry("lulzbot_example_model", "rocktopus.stl")
         res_path = Resources.getPath(Resources.Meshes)
-        load_models = []
-        if "bio" in definition_id:
-            load_models.append(os.path.join(res_path, "right_coronary_artery_tree.stl"))
-        elif "taz_pro_dual" in definition_id or "taz_pro_xt_dual" in definition_id:
-            load_models.append(os.path.join(res_path, "pro_dual_cal1.stl"))
-            load_models.append(os.path.join(res_path, "pro_dual_cal2.stl"))
-        elif "taz_pro_m175" in definition_id or "taz_workhorse_se" in definition_id:
-            load_models.append(os.path.join(res_path, "octo_gear.stl"))
-        else:
-            load_models.append(os.path.join(res_path, "rocktopus.stl"))
-        for model_path in load_models:
-            self._application._openFile(model_path)
+        for model_path in model_paths:
+            self._application._openFile(os.path.join(res_path, model_path))
 
     def _checkStacksHaveErrors(self) -> bool:
         time_start = time.time()
@@ -559,54 +560,37 @@ class MachineManager(QObject):
     def activeMachineOptionalLCD(self) -> bool:
         if self.activeMachine is None:
             return False
-        return self.activeMachine.getBottom().getMetaDataEntry("has_optional_lcd")
+        options = self.activeMachine.getBottom().getMetaDataEntry("lulzbot_machine_options", {})
+        if "lcd" in options.keys():
+            return True
+        return False
 
     @pyqtProperty(bool, notify = globalContainerChanged)
     def activeMachineOptionalBLTouch(self) -> bool:
         if self.activeMachine is None:
             return False
-        return self.activeMachine.getBottom().getMetaDataEntry("has_optional_bltouch")
+        options = self.activeMachine.getBottom().getMetaDataEntry("lulzbot_machine_options", {})
+        if "bltouch" in options.keys():
+            return True
+        return False
 
     @pyqtProperty(str, notify = globalContainerChanged)
     def activeMachineFirmwareType(self) -> str:
         if self.activeMachine is None:
             return ""
-        return self.activeMachine.getBottom().getMetaDataEntry("firmware_type")
+        return self.activeMachine.getBottom().getMetaDataEntry("lulzbot_firmware_type", "Marlin")
 
-    @pyqtProperty(str, notify = printerConnectedStatusChanged)
+    @pyqtProperty(str, notify = globalContainerChanged)
     def activeMachineFirmwareVersion(self) -> str:
         if not self._printer_output_devices:
             return ""
-        return self._printer_output_devices[-1].getFirmwareVersion()
-
-    @pyqtProperty(str, notify= globalContainerChanged)
-    def activeMachineLatestFirmwareVersion(self) -> str:
-        version = ""
-        if self.activeMachine is None:
-            return version
-
-        stack = self._global_container_stack
-        meta = self.activeMachine.getBottom()
-        tripped = False
-
-        if meta.getMetaDataEntry("has_optional_bltouch") and stack.getProperty("machine_has_bltouch", "value"):
-            version = meta.getMetaDataEntry("firmware_bltouch_latest_version")
-        elif meta.getMetaDataEntry("has_optional_lcd") and not stack.getProperty("machine_has_lcd", "value"):
-            version = meta.getMetaDataEntry("firmware_no_lcd_latest_version")
-
-        if version == "":
-            if tripped:
-                Logger.log("w", "Printer was determined to have non-standard config firmware, but the version came up blank!")
-            version = meta.getMetaDataEntry("firmware_latest_version")
-
-        Logger.log("i", "Found firmware version {0} for current printer configuration.".format(version))
-        return version
+        return self._printer_output_devices[0].firmwareVersion
 
     @pyqtProperty(str, notify = globalContainerChanged)
     def activeMachineAddress(self) -> str:
         if not self._printer_output_devices:
             return ""
-        return self._printer_output_devices[-1].address
+        return self._printer_output_devices[0].address
 
     @pyqtProperty(bool, notify = printerConnectedStatusChanged)
     def printerConnected(self) -> bool:
@@ -1424,6 +1408,10 @@ class MachineManager(QObject):
         candidate_quality_groups = ContainerTree.getInstance().getCurrentQualityGroups()
         available_quality_types = {qt for qt, g in candidate_quality_groups.items() if g.is_available}
 
+        if not available_quality_types:
+            Logger.log("w", "No available quality types found, setting all qualities to empty (Not Supported).")
+            self._setEmptyQuality()
+            return
         quality_type = sorted(list(available_quality_types))[0]
         if self._global_container_stack is None:
             Logger.log("e", "Global stack not present!")

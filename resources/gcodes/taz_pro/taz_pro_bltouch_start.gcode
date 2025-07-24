@@ -26,6 +26,7 @@ M900 K{linear_advance}                     ; set linear advance
 G90                                        ; absolute positioning
 G0 X145 Y187 Z156 F3000                    ; move away from endstops
 M117 Leveling Print Bed...;                ; Progress indicator message on LCD
+G30 X150 Y150                              ; probe to locate bed
 G29 O                                      ; start auto-leveling sequence (if first print)
 M420 S1                                    ; enable leveling matrix
 G0 X0 Y0 Z10 F6000                         ; move up off last probe point

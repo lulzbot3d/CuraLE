@@ -11,13 +11,21 @@ body:
           Are you seeing spots and dots on your model? That is Cura indicating that your model is not watertight.  
           You can try doing a quick [Mesh Fix with the Meshtools Plugin](https://marketplace.ultimaker.com/app/cura/plugins/fieldofview/MeshTools) or other mesh editing software. 
        
-       If you still encounter a crash you are welcome to report the issue so we can use your model as a test case. 
-       You can find instructions on how to share your model in a Package for Technical Support below.        
+       ### Project File
+       **⚠️ Before you continue, we need your project file to troubleshoot a slicing crash.**
+       It contains the printer and settings we need for troubleshooting. 
        
-       🤔 Before you share, please think to yourself. Is this a model that can be shared on the internet?
-       **Unfortunately, we cannot help if this file is missing.** 
-     
-### Questions
+       ![Alt Text](https://user-images.githubusercontent.com/40423138/240616958-5a9751f2-bd34-4808-9752-6fde2e27516e.gif)
+       
+       To save a project file go to File -> Save project. 
+       Please make sure to .zip your project file. 
+       For big files, you may need to use [WeTransfer](https://wetransfer.com/) or similar file-sharing sites.
+       
+       🤔 Before you share, please think to yourself. Is this a model that can be shared?
+           Unfortunately we cannot help if this file is missing. 
+           Do you have the project file? Than let's continue ⬇️
+
+       ### Questions
 - type: input
   attributes:
     label: Cura LE Version
@@ -28,7 +36,7 @@ body:
   attributes:
     label: Operating System
     description: Information about the operating system the issue occurs on. Include at least the operating system and maybe GPU.
-    placeholder: Windows 11 / MacOS Catalina / MX Linux
+    placeholder: Windows 11 / MacOS Catalina / MX Linux 
   validations:
     required: true
 - type: input

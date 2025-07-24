@@ -27,9 +27,10 @@ G90                                        ; absolute positioning
 M82                                        ; set extruder to absolute mode
 G92 E0                                     ; set extruder position to 0
 M117 Tramming X Axis...;                   ; Progress indicator message on LCD
+G30 X150 Y150                              ; probe to locate bed
 G34                                        ; tram X-axis
 M117 Leveling Print Bed...;                ; Progress indicator message on LCD
-G29 O                                      ; start auto-leveling sequence (if first print)
+G29                                        ; start auto-leveling sequence
 M420 S1                                    ; enable leveling matrix
 G0 X0 Y0 Z10 F6000                         ; move to start location
 G4 S1                                      ; pause

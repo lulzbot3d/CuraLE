@@ -43,7 +43,8 @@ class MachineNode(ContainerNode):
         self.has_materials = parseBool(my_metadata.get("has_materials", "true"))
         self.has_variants = parseBool(my_metadata.get("has_variants", "false"))
         self.has_machine_quality = parseBool(my_metadata.get("has_machine_quality", "false"))
-        self.quality_definition = my_metadata.get("quality_definition", container_id) if self.has_machine_quality else "fdmprinter"
+        # self.quality_definition = my_metadata.get("quality_definition", container_id) if self.has_machine_quality else "fdmprinter"
+        self.quality_definition = my_metadata.get("quality_definition", container_id) if self.has_machine_quality else "lulzbot_base"
         self.exclude_materials = my_metadata.get("exclude_materials", [])
         self.preferred_variant_name = my_metadata.get("preferred_variant_name", "")
         self.preferred_material = my_metadata.get("preferred_material", "")
@@ -151,16 +152,13 @@ class MachineNode(ContainerNode):
         for quality_changes_group in groups_by_name.values():
             if quality_changes_group.quality_type not in quality_groups:
                 if quality_changes_group.quality_type == "not_supported":
-                    # Quality changes based on an empty profile are always available.
+                    # Quality changes based on an empty profile are always available. 
                     quality_changes_group.is_available = True
                 else:
                     quality_changes_group.is_available = False
             else:
                 # Quality changes group is available iff the quality group it depends on is available. Irrespective of whether the intent category is available.
-                if quality_changes_group.metadata_for_global.get("material") not in material_bases:
-                    quality_changes_group.is_available = False
-                else:
-                    quality_changes_group.is_available = quality_groups[quality_changes_group.quality_type].is_available
+                quality_changes_group.is_available = quality_groups[quality_changes_group.quality_type].is_available
 
         return list(groups_by_name.values())
 
@@ -211,7 +209,8 @@ class MachineNode(ContainerNode):
         # Find the global qualities for this printer.
         global_qualities = container_registry.findInstanceContainersMetadata(type = "quality", definition = self.quality_definition, global_quality = "True")  # First try specific to this printer.
         if not global_qualities:  # This printer doesn't override the global qualities.
-            global_qualities = container_registry.findInstanceContainersMetadata(type = "quality", definition = "fdmprinter", global_quality = "True")  # Otherwise pick the global global qualities.
+            # global_qualities = container_registry.findInstanceContainersMetadata(type = "quality", definition = "fdmprinter", global_quality = "True")  # Otherwise pick the global global qualities.
+            global_qualities = container_registry.findInstanceContainersMetadata(type = "quality", definition = "lulzbot_base", global_quality = "True")  # Otherwise pick the global global qualities.
             if not global_qualities:  # There are no global qualities either?! Something went very wrong, but we'll not crash and properly fill the tree.
                 global_qualities = [cura.CuraApplication.CuraApplication.getInstance().empty_quality_container.getMetaData()]
         for global_quality in global_qualities:

@@ -44,7 +44,6 @@ class FirmwareUpdater(QObject):
             self._update_firmware_thread.start()
         except RuntimeError:
             Logger.warning("Could not start the update thread, since it's still running!")
-            self._setFirmwareUpdateState(FirmwareUpdateState.unknown_error)
 
     def _updateFirmware(self) -> None:
         raise NotImplementedError("_updateFirmware needs to be implemented")

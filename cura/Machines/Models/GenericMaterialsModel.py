@@ -25,11 +25,6 @@ class GenericMaterialsModel(BaseMaterialsModel):
             if container_node.getMetaDataEntry("brand", "unknown").lower() != "generic":
                 continue
 
-            # Only add results for the current printer
-            global_stack = self._machine_manager.activeMachine
-            if container_node.getMetaDataEntry("definition", "fdmprinter") != global_stack.definition.id:
-                continue
-
             item = self._createMaterialItem(root_material_id, container_node)
             if item:
                 item_list.append(item)

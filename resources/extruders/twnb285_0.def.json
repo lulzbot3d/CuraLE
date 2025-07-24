@@ -1,0 +1,19 @@
+{
+    "version": 2,
+    "name": "TWNB285 Left",
+    "inherits": "lulzbot_extruder",
+    "metadata":
+    {
+        "machine": "twnb285_base",
+        "position": "0"
+    },
+    "overrides":
+    {
+        "extruder_nr":
+        {
+            "default_value": 0,
+            "maximum_value": "1"
+        },
+        "machine_nozzle_head_distance": { "default_value": 4 }
+    }
+}

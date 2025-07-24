@@ -1,0 +1,47 @@
+{
+    "version": 2,
+    "name": "TWNB285 Printer",
+    "inherits": "lulzbot_base",
+    "metadata":
+    {
+        "visible": false,
+        "has_machine_quality": true,
+        "has_variants": true,
+        "lulzbot_example_model": [
+            "pro_dual_cal1.stl",
+            "pro_dual_cal2.stl"
+        ],
+        "lulzbot_tool_head": "Twin Nebula 285",
+        "lulzbot_tool_head_abbreviation": "TWNB285",
+        "lulzbot_tool_head_image": "twnb285",
+        "lulzbot_tool_head_priority": "00",
+        "machine_extruder_trains":
+        {
+            "0": "twnb285_0",
+            "1": "twnb285_1"
+        },
+        "preferred_variant_name": "0.5mm",
+        "quality_definition": "twnb285_base"
+    },
+    "overrides":
+    {
+        "cool_min_layer_time": { "value": 15 },
+        "jerk_print": { "default_value": 12 },
+        "jerk_travel": { "value": 12 },
+        "layer_start_x": { "value": "100" },
+        "layer_start_y": { "value": "100" },
+        "machine_extruder_count": { "default_value": 2 },
+        "machine_head_with_fans_polygon":
+        {
+            "default_value": [
+                [-42, 22],
+                [-42, -78],
+                [88, -78],
+                [88, 22]
+            ]
+        },
+        "machine_heat_zone_length": { "default_value": 23 },
+        "machine_nozzle_tip_outer_diameter": { "default_value": 1.5 },
+        "speed_travel_layer_0": { "value": 100 }
+    }
+}

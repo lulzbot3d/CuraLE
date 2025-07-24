@@ -13,6 +13,7 @@
 [5.10]
 
 * New features and improvements:
+- UltiMaker S8 Support: Added compatibility for the UltiMaker S8 printer.
 - Cheetah Gcode Flavor: Introduced a new Marlin-like Gcode flavor called Cheetah.
 - SpaceMouse support: Navigate the view seamlessly with a 3D mouse, thanks to a collaboration with 3Dconnexion.
 - Cloud Printing for Sketch Sprint: Enabled printing over cloud with Digital Factory for Sketch Sprint users.
@@ -41,11 +42,13 @@ Try it for yourself <a href="https://www.thingiverse.com/thing:6975650?utm_sourc
 
 
 * Bug fixes:
+- Resolved a crash that occurred when switching materials on Sovol printers.
 - Random Seam no longer favors one side and not is truly random again
 - Reduced the slicing time when no support needs to be generated 
 - Fixed a bug where Seam on Vertex with a User Defined seam position was not working correctly.
 - Gcode replacement with a single line of code no longer produces values in separate lines
 - Setting names that become too long after translation are now truncated.
+- Updated UltiMaker printer logos to align with the current style.
 - The number of decimal places displayed for layer height in the top bar has been reduced.
 - Fixed a bug that caused incorrect retracting and hopping on printers with more than 2 extruders.
 - Improved how fast the settings are loaded in the Settings Visibility window when scrolling
@@ -86,292 +89,121 @@ The About Page now shows some of the used sources, their licenses, and their ver
 
 [5.9]
 
-[4.13.9]
-* Added experimental high speed detailed qualities for all PLA materials on MET175/285 Tool Heads
-* Added experimental high speed standard qualities for all PLA materials on MET175/285 Tool Heads
-* Added "MarlinCancelObject" script to the PostProcessingPlugin	by default, credit to Aapo Saaristo
-* Re-added the missing USB Port and Baudrate machine settings that had existed in 3.6
-* Expanded profiles to the Mini 3 and Twin Nebulas
-* 2.1.3.0.28 Firmware to all LulzBot TAZ printers and went to 2.1.3.0.27 for all other current LulzBot printers
-* Adjusted TAZ Pro XT and LB accelerations back down to 500mm/s/s
-* Adjusted MET175 PLA retraction values to 1mm at 10mm/s
-* Cleaned up Dual Extruder start and end gcode scripts
-* Moved Mini 3 to the current printers list
-* Adjusted Mini 3 accelerations to be in line with other similar printers for the time being
-* Shuffled around the Printer list on the "Add Printer" screen
-* FilamentChangeManager now inserts an M600 for all printers instead of using an M25 for Pro series printers
-* Added printer names to the build plates in the view window
-* "Load Example Model" checkbox is now only checked on first load
+* New features and improvements:
+- Introduced scarf seam settings in experimental, Scarf Seam Length, Scarf Seam Start Height, and Scarf Seam Split Distance
+- Updated the Start and End G-code edit options (for both Machine and Extruder) to include If/Else statements and formulas
+- Introduced Build Fan Speed at Height, Build Fan Speed at Layer, and Build Volume Fan Number to control extra fans, like those controlling the build volume separately
+- Added the "Extra Infill Lines to Support Skins" setting and other improvements to help make printing over sparse infill more reliable, contributed by @Hello1024
+- Significant UI speed improvements interacting with custom settings especially if your printer has multiple extruders
+- Introduced an Anycolor option for the UltiMaker S and F series enabling you to print with any UltiMaker color loaded in the material station that is compatible with the printjobs. Note that it’s only compatible with the latest version of the firmware (for Factor 4 >=10.1  and for S-series >=9.0, and it does not include the UltiMaker S3)
+- Added an option to Export Package for Technical Support to the help menu, it includes a project file with the settings but also the logs
+- Improved the way materials are selected when using multiple extruders to print the build plate adhesion so it doesn't default to the first extruder but the best option instead.
+- Improved processes so not only installers but also executables inside installers are signed for Windows
+- Introduced improvements to how models and projects with large file size (500MB) slice. A message was also added to inform the user when a file size is too big to slice.
+- Made it possible for multiple Engine plugins that are registered to the same slot to be used together. (Only for Modify plugins, and Plugins will be addressed alphabetically)
+- Moved the Gradual Flow Engine Plug-in to CuraEngine, this also resolved slicing crashes when the plugin was used in combination with large number of smaller models that were printed at once.
+- Improved and expanded the Insert at Layer Change post-processing script, contributed by @GregValiant
+- Improved and expanded the Time Lapse Post Processing script, contributed by @GregValiant
+- Added a registry entry to provide the option to silent uninstall on Windows, contributed by @Rotzbua
 
-[4.13.8]
-* Small patch build
-* Fixed some incorrect Tool Head names that caused a mismatch between what the firmware reported and what Cura LE expected during a USB connection
-* Added a missing M420 S1 command to SideKick start gcode
+* Bug fixes:
+- Fixed a crash that would occur when renaming profile names that would result in changing the order of the profiles
+- Fixed a bug so objects in a 3MF reload in the same position as they were saved again, contributed by @nilsiism
+- Fixed an issue where overhanging walls and walls that were adjacent to overhanging walls were not printed at the correct speed
+- Fixed a bug that prevented the "Sync materials with printers" page from displaying when accessed immediately after starting Cura or signing in
+- Fixed a bug where reloading an updated model would not update the duplicates of the model on the build plate
+- Fixed a bug that showed incompatible materials when switching between printers with a different filament diameter. 
+- Fixed a bug where tree support in enclosed holes has missing layers
+- Made improvements in the G-codePathModify slot for Engine Plugins, contributed by @ThomasRahm
+- Fixed a bug that prevented changes to the initial layer diameter from being applied properly in tree support, contributed by @ThomasRahm
+- Fixed a rounding issue in the engine math, @0x5844
 
-[4.13.7]
-* Added some Standard profiles for 0.3, 0.4, and 0.8mm nozzles on the Meteor Tool Heads
-* Started work on a potential new setting category
-* Fixed a bug where duplicating profiles crashed the application
-* Fixed an issue with the Workhorse looking for the wrong name in Firmware
-* Fixed an issue with Mini 1s potentially being created with and LCD when they aren't supposed to have one
-* Corrected some flawed logic in the checkFirmware stage of USB connections that may have overwhelmed some printers
+* Bugs resolved since the Beta release
+- Spiralize outer contour no longer adds unnecessary seams to the model
+- When coasting is enabled the printhead no longer drops down 
+- Fixed coasting strategy so it's only applied to outer/inner walls, and not to skin, top-bottom, or infill
+- Fixed wiping direction when printing a single wall
+- Improved wiping in combination with the scarf seam
+- Significantly improved the strategy for sharpest corner - smart hiding seam location combination
+- Fixed a bug where long scarf seam length and short scarf seam steps would result in the seam being moved outward
+- Fixed a bug where seam acceleration and deceleration around seam were not working
+- Fixed a bug where infill was wrongly removed from narrow spaces 
+- Triple-clicking values and searches that you entered now has you select everything so you can edit it in the field similar to other desktop applications
+- Updated dependencies and improved how unwanted and unused binaries are excluded from the building process. 
+- Added Eazao material for the new Eazao printers
+- Updated the urls schemes to make them more robust when attempting to open files in Cura
+- Retract before outer wall now works correctly on all layers
+- Resolved top reported crashes coming in via the analyzing tool Sentry
+- Removed an unwanted Z-hop when starting a new layer
+- Layer starts are more visible in the print preview with the scarf seam
+- Made the X to close floating and pop up windows a little bigger
+- Improved the visuals of printers with a build plate texture, they now render more consistently regardless of zoom or angle of view
+- The UI now displays correctly on Wayland, with this fix we noticed some performance drop compared to X11
 
-[4.13.6]
-* Primarily a firmware update
-* Updated firmware on all TAZ Pro printers to 2.1.3.0.23
-* Updated firmware on all current-model GLCD printers to 2.1.3.0.24
-* Slight changes to first layer speeds on Galaxy extruders
-* Patched a bug dealing with wrong values being used in Bio profiles
+* Printer definitions, profiles, and materials:
+- Introduced Makerbot Sketch Sprint
+- Introduced Makerbot Sketch and Sketch Large
+- Introduced new materials to the UltiMaker Method series, ABS, PETG, Nylon-CF, and Tough PLA
+- Introduced new materials for Labs Extruder of the UltiMaker Method series, BASF Ultrafuse 316L, TPE SEBS 1300 95A, and Polymax PC. Except BASF Ultrafuse 316L is not available on the Method XL.
+- Various setting improvements for ABS and Nylon for UltiMaker Method series
+- Various setting improvements for dual extrusion support for the UltiMaker Method series
+- Implemented a hard limit so the bed temperature cannot be more than 120°C on all UltiMaker printers.
+- Fixed an error in the profile Ultimaker 2 profile naming
+- Introduced the Creality CR-M4, contributed by @kixell
+- Introduced Eazao M500, M600, M700, and Potter, and updated the Eazao Zero, contributed by @Eazo
+- Introduced ZYYX+ and ZYYX Pro, contributed by @theodorhansson
+- Updated acceleration settings for the Creality Ender-2 V3 SE, contributed by @T9Air
 
-[4.13.5]
-* Added in Twin Nebula Tool Heads for the TAZ Pro XT
-* Added profiles for BASF Ultrafuse TPU on MET285 Tool Heads
-* Added the developmental "TAZ Pro XT Long Bed" configuration for experimental use.
-* Added High Speed and Detailed quality profiles for some materials on the MET285
-* Removed Linear Advance K factor command from all pre-galaxy start gcodes, only galaxies have them now.
-* Added a couple more status messages into start gcodes
-* Started the addition of a "Material Printing Tips" entry on the settings dropdown.
-* Started modifying the Firmware Update and Monitor pages for use (or lack thereof) with Klipper-run printers.
-* Updated firmware to 2.1.3.0.21 on all non-Legacy printer configurations
-* Updated firmware to 2.1.3.0.22 on all Pro printers and Workhorse Galaxy printers
-* Mini 3 and Core XY gcode files now have the thumbnails required by Mainsail generated by default automatically
-* Mini 3 End Gcode updated
-* Firmware version that Automatic Firmware Update is now always displayed
-* Updated some of the printer names in the "Add Printer" menu
-* Fixed a small bug in the "Pause At Height or Layer" script in the PostProcessingPlugin
-* Custom profile visibility is now limited to which material it was made with.
-* Fixed TAZ 6 with the Aerostruder Tool Head receiving the wrong firmware on an automatic update
-* Added a dropdown on the recommended tab that allows you to create parts with textured walls to better hide z seams
-* Added a checkbox on the recommended tab that will	enable vase mode
-* Removed Linear Advance K factor command from all pre-galaxy start gcodes, only galaxies have them now.
-* Added a couple more status messages into start gcodes
-* Tethered printing now communicates print completion percentages to your printer to display on the LCD
-* Fixed TAZ 6 with the Aerostruder Tool Head receiving the wrong firmware on an automatic update
-* Slight changes and fixes to the rotate tool
-* Patched a small bug related to the progress message when performing a "Lay Flat" operation that takes too long
+* Community Translations
+- Updated Japanese translations by @h1data
+- Brazilian Portuguese by @Patola
 
+[5.8.1]
 
-[4.13.4]
-* New Pro Firmware (2.1.3.0.20)
-* You can now toggle whether you'd like a removable drive to automatically eject after you save a gcode file to it.
-* Increased Mini 3 default acceleration across the board
-* Changed MET Tool Heads to have 17.5% support density
+* Bug fixes:
+- Fixed an issue where materials could not be synced to UltiMaker Printers
 
-[4.13.3]
-* Added a button to drop a model to the build plate on the scale tool menu.
-* Added hotkeys for the "`", "1", "2", "3", and "4" keys that toggle between Prepare and Preview, open the Open File dialog, slice, save gcode, and both clear bed/open file for each key respectively
-* Made red notification icon on the Filament Change Tool more prominent and harder to miss
-* Changed TAZ Pro Dual start gcode to use a G12 command instead of manually done wiping
-* Patched up some of the firmware Tool Head names that have been coming up wrong. Made a mismatch not be a connection-dropping error.
-* Switched default combing mode to "Within Infill" for realsies
-* Happy Holidays!
+* Profile Improvements
+- Significant improvements for PVA and TPU 95A profiles for UltiMaker Factor 4
 
-[4.13.2]
-* Added High Speed profiles for MET285 PLA materials
-* Updated TAZ Pro series printers firmware to 2.1.3.0.19
-* Updated default travel speed on Pro Long Bed printers to 125mm/s
-* Changed Horizontal Expansion value from -0.113 back to 0
-* Switched default combing mode back to "Within Infill"
-* Mini 1 and TAZ Pro Long Bed should now be able to connect via USB without having the "Connect to Wrong Printers" setting checked.
-* Fixed some glitchy behavior with the rotate and scale tools de-selecting back to the translate tool whenever you would attempt to use the handles
+[5.8]
 
-[4.13.1]
-* Monitor tab now includes buttons for extruding and retracting filament
-* Updated TAZ Pro series printers firmware to 2.1.3.0.18
-* Expanded the default build area of TAZ Pro and TAZ Pro XT printers to 285mm x 285mm.
-* Opening the "Open File(s)" dialog now reverts Cura LE back to the Prepare screen
-* Minor change to end gcode files stops printers from disabling the Y motor at the conclusion of a print, which makes it slightly easier to remove a part from the bed
+* New Z Seam Settings:
+New settings have been added that let you tweak how and where the Z seam is placed
+- "Z Seam On Vertex" allows you to choose if the Z seam is placed on the vertices closest to a selected Z seam position or if it instead follows the selected position exactly
+- "Seam overhang angle" enables you to select the angle at which Z seams will not be printed on overhangs
+- "Support Z Seam Away from Model" and "Min Z Seam Distance from Model" define where the Z seam is placed on supports
+Try it for yourself <a href="https://www.thingiverse.com/thing:6692375?utm_source=changelog&utm_medium=cura&utm_campaign=58">with this toast post-it holder</a>.
 
-[4.13.0-release]
-* We figure it's about time.
-* Added some more support for a 2.4mm nozzle on the AST285
-* Added select settings to the start gcode for all printers that should make for easier debugging
-* Moved the Filament Change script out of PostProcessing and into its own Tool Button. This should make it easier for casual users to find!
-* Made slight corrections to most of our current Galaxy Tool Head profiles to improve overall print quality
-* Updated all TAZ Pro model printers' firmware up to 2.1.3.0.17
-* Moved Cura LulzBot Edition out of Beta
+* New features and improvements:
+- A search bar has been added to the “Add an offline printer” list
+- Introduced “Support Infill Density Multiplier Initial Layer”, “Raft Infill Overlap Percentage”, Raft Surface Z Offset, and Raft Flow settings to improve dual extrusion rafts
+- Introduced “Cooling during extruder switch" to define the cooling fan behavior during an extruder switch by defining Unchanged, Only last extruder, All fans
+- Updated the retract behavior for a nozzle switch to reduce the chance of oozing
+- Updated Insert at Layer Change Post Processing Script so layers can be skipped, contributed by  @tastyratz
+- Updated the "Interleaved Prime Tower" with "Prime Tower Minimum Shell Thickness" so it uses less filament, contributed by @wawanbreton
 
-[4.13.0-Beta v2.13]
-* Another small update!
-* Firmware for TAZ Pro and derivative printers bumped up to 2.1.3.0.15
-* Disabled jerk control on Mini 3
-* Added 2.4mm variant to the Asteroid Tool Heads
+* Bug fixes:
+- Fixed a bug that caused spiked objects to have missing layers, thanks to @thomasrahm
+- Updated the text in the Open Universal Cura Project (UCP) file to be more correct
+- Fixed the interpolated values for fan speeds and improved the check for minimum layer time
+- Fix a bug where material_print_temp_prepend not being disabled
+- Reduced the chance that oozing in the first travel move will cause a scar on the bottom of the model by updating the Layer Start X and Y
+- Fixed a bug where a slice would fail if the overhang angle was set to 90 degrees
+- Fixed a bug where infill lines are going through the model with a certain setting combination, contributed by @thomasrahm
+- Updated the temperature values in the monitor page to reflect the initial instead of the final bed and print temperatures, contributed by @GregValiant
 
-[4.13.0-Beta v2.12]
-* Small update!
-* Couple more small changes to the Recommended tab! Go figure, huh!
-* Touched on issues noted from a couple of anonymous crash reports; Yes, I do get those, thank you!
-* Updated TAZ Pro and derivatives firmware to 2.1.3.0.13
-* Modified the horizontal expansion value slightly for the METEOR Tool Heads
+* Printer definitions, profiles, and materials:
+- Introduced the Ultimaker Method with PLA, PVA, and N12CF profiles and intents
+- Improved dual-support settings for UltiMaker Sline and Method printers
+- Expanded and updated intents for Factor 4
+- Updated CPE and PC settings to improve surface quality for Factor 4
+- Introduced Creality Ender 3 V3 KE, contributed by @vadim-danilchik, @daitj, @VladislavVidenov, @fjventura20
+- Introduced Voron2 StealthChanger 250, StealthChanger 300, and StealthChanger 350,  contributed by @TheSin-
+- Introduced K1 Max, contributed by @itay-grudev
+- Introduced Ankermake M5C, contributed by @augustchi
+- Introduced WEEDO F150S, F152S, F370, ME40, ME40 Lite, and X40 V3+, contributed by @WinstonMao
 
-[4.13.0-Beta v2.11]
-* Added a button on the bottom right that allows you to clear the build plate and open a new file with a single click
-* Pro and Pro XT have an updated bed STL, along with the Mini 3 getting an official one
-* Open File button is now persistent between Prepare and Preview
-* Squashed down the Slice/Output widget a bit for spacial concerns
-* Cleaned up the "Add Printer" menu a little
-* Patched up the visibility of some qualities for TAZ 5, 6, and Mini 1
-* Revisited the Firmware Updater, it should consistently provide the correct firmware files now
-* USB Connections will now properly time-out after several seconds without any response from the 3D Printer
-* Switching printers while there is an active USB connection is now prevented to avoid accidentally cancelling prints
-
-[4.13.0-Beta v2.10]
-* More tweaks to the Recommended tab
-* Small USB printing bugfixes, more on the way
-* New Logo for the application header
-* Tweaks to the job info widget
-* New preferences regarding job name generation!
-* Many more small setting tweaks under the hood
-
-[4.13.0-Beta v2.9.1]
-* Quick patch update
-* Fixed issue causing CuraLE to not be able to locate firmware files for update on some printer configurations
-* Quick update to Firmware for TAZ Pro series printers
-* Updated temperatures for Wipe and Soften slightly across the board for better start performance
-* Looking into bugs regarding the drop-down boxes on the recommended settings tab
-
-[4.13.0-Beta v2.9]
-* Finished revamping the recommended tab, everything should be added back in as intended
-* Plugged in media now takes priority after slicing, so USB drives and SD cards should now be automatically selected when saving (You can still save to drive!)
-* Version Marlin 2.1 Firmware for the TAZ Pro series printers! You may encounter some quirks but we're pretty excited about how this is coming along!
-* Colors of different materials of the same material type (PLA, ABS, etc.) now match for simplicity
-* Made settings for Probe, Wipe, Soften, and Standby temperatures along with Skirt settings much more consistent across profiles
-* Many many small changes related to overall code safety and stability. Should result in much cleaner log files (yay for me)!
-
-[4.13.0-Beta v2.8]
-* Did some work on the recommended tab, Some items were temporarily removed to be reworked for better overall functionality
-* Patched Firmware for Mini 2, SideKicks, and Workhorse to fix an issue where the Tool Head selection screen came up blank
-* CuraLE now transitions straight to the Preview screen after slicing (only when "Automatically Slice" is turned off)
-* CuraLE now asks you if you'd like to discard changes when switching between profiles while the recommended tab is open
-* Added "Ensure Models Are Kept Apart" toggle into the Custom Supports tool for ease of access
-* Changed the default material when opening CuraLE to be PolyLite PLA
-* Cleaned up some of our profiles and printer definitions
-* Added the Twin Nebula Tool Heads as an option for the TAZ Pro
-
-[4.13.0-Beta v2.7]
-* Fixed MacOS bug that prevented USB connections with M1 and M2 chips
-* Made major changes to the recommended print settings tab to make things a little easier to understand for less experienced users
-* Continued expanding material profiles for our newer model Tool Heads
-
-[4.13.0-Beta v2.6]
-* Build primarily to revert TAZ Pro firmware back to an older version
-* Newer TAZ Pro firmware with stability improvements is in the works
-* More profile additions and corrections for the Galaxy Series Tool Heads
-
-[4.13.0-Beta v2.5]
-* Added Linear Advance setting (Does not currently affect prints, but will be added via start gcode)
-* Expanded profile options for AST285 and MET285 slightly
-* Quite a few more profiles are in the works, so more will come soon
-* Added button on Monitor page that will allow you to start a tethered print from there rather than on the Prepare page
-* Made changes to the recommended print settings tab to make it simpler
-
-[4.13.0-Beta v2.4]
-* Language on the Update Firmware page has been updated for clarity.
-* Updated firmware on the Mini 2, SideKicks 289/747, and TAZ Workhorse.
-* Reviewed and updated Galaxy Series quality profiles to be more accurate
-* Added PLA profiles for the AST285 Tool Head.
-* More profiles will be added for the Galaxy Tool Heads in the coming updates.
-
-[4.13.0-Beta v2.3]
-* Fixed background color of add printer screen on MacOS Dark model
-* Fixed profiles not appearing for TAZ 5 and 6 single extruders
-* Minor spelling corrections
-* Expanding profile options for MET285
-* Consolidating Material Families
-* Model that loads onto build plate of first start-up will now load any time a new printer is added.
-* The add printer model is now different for the TAZ Pro Dual and TAZ Workhorse with SE Tool Head.
-* Adjusted location of Multiply button in the tool bar.
-* !! First launch stl files will still occasionally load off of the build plate. This issue is turning out to be relatively hard to pin down.
-
-[4.13.0-Beta v2.2]
-* Fixed a couple of missing gcode files for certain printers
-* Added ability to select Bio, TAZ 5, and Mini 1 printers (Limited to Legacy Universal Tool Heads on TAZ 5 and Mini 1 for now)
-* Added a "Multiply" button on the tool bar instead of needing to right click
-* Ensured "Scale To Max" results in a part above the build plate
-* Fixed monitor page not being able to scroll correctly
-* Expanded "Add Printer" dialog slightly by default and added the ability to increase the size of the window, it had been locked to size before
-* Fixed bug where the rocktopus.stl file would load off the buildplate
-
-[4.13.0-Beta v2.1]
-* Improved job name setting options
-* Temp fix for ugly warning regarding incompatable qualities
-* Cleaned up add printer screen
-
-[4.13.0-Beta v2.0.1]
-* Fixed issue that made SideKick 289 unable to Slice
-* Made TAZ 6 with Universal Tool Heads visible
-* TAZ 5, Mini 1, and older Legacy TAZ 6 Tool Heads will come soon, never fear!
-
-[4.13.0-Beta v2]
-* Refactored printer definitions and settings to improve workflow
-* Added Generic profiles for some material types
-* Added Update Firmware button to Monitor screen
-* Removed LulzBot Dark theme until it can be redone
-* Added a new setting that allows flexibility in auto generated job names
-* Some small bug fixes
-
-[4.13.0-Beta v1.10]
-* Added material profiles for MET175 and MET285
-* Improved Galaxy Firmware slightly
-* Working on refactoring quality system
-
-[4.13.0-Beta v1.8.1]
-* Added basic material profiles for Galaxy Tool Heads
-* Resized first start and add machine menus to better fit content.
-
-[4.13.0-Beta v1.7]
-* Small bugfix patch
-* Mainly just fixed an issue with flashing Pro firmware on Windows
-
-[4.13.0-Beta v1.6]
-* Fixed small but in monitor screen regarding the print bed
-* Reworked material selection to go by material type and then brand
-* Added the ability to mark a machine as having an optional BLTouch
-* Added the Asteroid and Meteor Experimental Tool Heads
-* Added firmware for the aformentioned Tool Heads
-
-[4.13.0-Beta v1.5]
-* Reworked printer connections
-* Improved consistency of firmware updating
-* Fixed automatic firmware updating (hopefully!)
-* Please note: OctoPrint plugin may be a bit buggy with these changes
-* Updated monitor page to look more similar to 3.6, will continue to be improved
-* Re-added the ability to change filament diameter in custom settings
-* Fixed an issue where Cura LE would crash when scrolling in the preferences menu
-* Fixed an issue that caused PolyFlex to not be usable
-* Adjusted default visible settings to include a couple more useful settings
-
-[4.13.0-Beta v1.4]
-* Reimplemented the OctoPrint plugin
-* Reimplemented a Custom Supports plugin
-* Added ability to input accurate values in rotation tool
-* Added "Scale to Max" button, though functionality needs work
-* Fixed some firmware file locations and added a couple missing files
-* Corrected issue that caused missing temperature values in Dual Extruder gcode files
-* Corrected naming issue with PolyFlex 1.75mm filament
-* Adjusted the About dialog to use more relevant links
-* Removed outdated M425 commands from remaining gcode files
-* Updated included firmware file for TAZ Pro Long Bed to 2.0.0.144.10
-
-[4.13.0-Beta v1.3]
-* "Ensure models are kept apart" setting is now checked by default
-* "No Material" is now listed under "Dual Extrusion" as a brand name for the time being
-* "Console" button on the Monitor screen is now enabled during a print
-* Cura LE will once again react to LCD printer pauses, resumes, and stops
-* Cura LE will now recognize a printer error has occured during a print and will drop the connection
-
-[4.13.0-Beta v1.2]
-* Fixed missing start and end gcode scripts on some configurations
-* Fixed issue that caused application to crash upon creating a Mini 1 machine
-* Fixed issue that caused a crash when creating a Workhorse with HS+ Tool Head
-* Fixed broken quality profiles for NinjaFlex Edge on M175v2 Tool Heads
-
-[4.13.0-Beta v1.1]
-* Updated default settings to the "Advanced" preset instead of "Basic"
-
-[4.13.0-Beta v1.0]
-* Updated to be more in-line with upstream Cura as of Ultimaker Cura 4.13
-* A more in-depth patch-notes will be created as we approach a full launch
 [5.7.2]
 
 * Bugfixes
@@ -1139,3 +971,291 @@ Ubuntu 18.04 is also no longer supported because of the update to Qt6.</i>
 
 [4.13.1]
 The release notes of versions &lt;= 4.13 can be found in our <a href="https://github.com/Ultimaker/Cura/releases?page=3">releases GitHub page</a>.
+
+[4.13.9]
+* Added experimental high speed detailed qualities for all PLA materials on MET175/285 Tool Heads
+* Added experimental high speed standard qualities for all PLA materials on MET175/285 Tool Heads
+* Added "MarlinCancelObject" script to the PostProcessingPlugin	by default, credit to Aapo Saaristo
+* Re-added the missing USB Port and Baudrate machine settings that had existed in 3.6
+* Expanded profiles to the Mini 3 and Twin Nebulas
+* 2.1.3.0.28 Firmware to all LulzBot TAZ printers and went to 2.1.3.0.27 for all other current LulzBot printers
+* Adjusted TAZ Pro XT and LB accelerations back down to 500mm/s/s
+* Adjusted MET175 PLA retraction values to 1mm at 10mm/s
+* Cleaned up Dual Extruder start and end gcode scripts
+* Moved Mini 3 to the current printers list
+* Adjusted Mini 3 accelerations to be in line with other similar printers for the time being
+* Shuffled around the Printer list on the "Add Printer" screen
+* FilamentChangeManager now inserts an M600 for all printers instead of using an M25 for Pro series printers
+* Added printer names to the build plates in the view window
+* "Load Example Model" checkbox is now only checked on first load
+
+[4.13.8]
+* Small patch build
+* Fixed some incorrect Tool Head names that caused a mismatch between what the firmware reported and what Cura LE expected during a USB connection
+* Added a missing M420 S1 command to SideKick start gcode
+
+[4.13.7]
+* Added some Standard profiles for 0.3, 0.4, and 0.8mm nozzles on the Meteor Tool Heads
+* Started work on a potential new setting category
+* Fixed a bug where duplicating profiles crashed the application
+* Fixed an issue with the Workhorse looking for the wrong name in Firmware
+* Fixed an issue with Mini 1s potentially being created with and LCD when they aren't supposed to have one
+* Corrected some flawed logic in the checkFirmware stage of USB connections that may have overwhelmed some printers
+
+[4.13.6]
+* Primarily a firmware update
+* Updated firmware on all TAZ Pro printers to 2.1.3.0.23
+* Updated firmware on all current-model GLCD printers to 2.1.3.0.24
+* Slight changes to first layer speeds on Galaxy extruders
+* Patched a bug dealing with wrong values being used in Bio profiles
+
+[4.13.5]
+* Added in Twin Nebula Tool Heads for the TAZ Pro XT
+* Added profiles for BASF Ultrafuse TPU on MET285 Tool Heads
+* Added the developmental "TAZ Pro XT Long Bed" configuration for experimental use.
+* Added High Speed and Detailed quality profiles for some materials on the MET285
+* Removed Linear Advance K factor command from all pre-galaxy start gcodes, only galaxies have them now.
+* Added a couple more status messages into start gcodes
+* Started the addition of a "Material Printing Tips" entry on the settings dropdown.
+* Started modifying the Firmware Update and Monitor pages for use (or lack thereof) with Klipper-run printers.
+* Updated firmware to 2.1.3.0.21 on all non-Legacy printer configurations
+* Updated firmware to 2.1.3.0.22 on all Pro printers and Workhorse Galaxy printers
+* Mini 3 and Core XY gcode files now have the thumbnails required by Mainsail generated by default automatically
+* Mini 3 End Gcode updated
+* Firmware version that Automatic Firmware Update is now always displayed
+* Updated some of the printer names in the "Add Printer" menu
+* Fixed a small bug in the "Pause At Height or Layer" script in the PostProcessingPlugin
+* Custom profile visibility is now limited to which material it was made with.
+* Fixed TAZ 6 with the Aerostruder Tool Head receiving the wrong firmware on an automatic update
+* Added a dropdown on the recommended tab that allows you to create parts with textured walls to better hide z seams
+* Added a checkbox on the recommended tab that will	enable vase mode
+* Removed Linear Advance K factor command from all pre-galaxy start gcodes, only galaxies have them now.
+* Added a couple more status messages into start gcodes
+* Tethered printing now communicates print completion percentages to your printer to display on the LCD
+* Fixed TAZ 6 with the Aerostruder Tool Head receiving the wrong firmware on an automatic update
+* Slight changes and fixes to the rotate tool
+* Patched a small bug related to the progress message when performing a "Lay Flat" operation that takes too long
+
+
+[4.13.4]
+* New Pro Firmware (2.1.3.0.20)
+* You can now toggle whether you'd like a removable drive to automatically eject after you save a gcode file to it.
+* Increased Mini 3 default acceleration across the board
+* Changed MET Tool Heads to have 17.5% support density
+
+[4.13.3]
+* Added a button to drop a model to the build plate on the scale tool menu.
+* Added hotkeys for the "`", "1", "2", "3", and "4" keys that toggle between Prepare and Preview, open the Open File dialog, slice, save gcode, and both clear bed/open file for each key respectively
+* Made red notification icon on the Filament Change Tool more prominent and harder to miss
+* Changed TAZ Pro Dual start gcode to use a G12 command instead of manually done wiping
+* Patched up some of the firmware Tool Head names that have been coming up wrong. Made a mismatch not be a connection-dropping error.
+* Switched default combing mode to "Within Infill" for realsies
+* Happy Holidays!
+
+[4.13.2]
+* Added High Speed profiles for MET285 PLA materials
+* Updated TAZ Pro series printers firmware to 2.1.3.0.19
+* Updated default travel speed on Pro Long Bed printers to 125mm/s
+* Changed Horizontal Expansion value from -0.113 back to 0
+* Switched default combing mode back to "Within Infill"
+* Mini 1 and TAZ Pro Long Bed should now be able to connect via USB without having the "Connect to Wrong Printers" setting checked.
+* Fixed some glitchy behavior with the rotate and scale tools de-selecting back to the translate tool whenever you would attempt to use the handles
+
+[4.13.1]
+* Monitor tab now includes buttons for extruding and retracting filament
+* Updated TAZ Pro series printers firmware to 2.1.3.0.18
+* Expanded the default build area of TAZ Pro and TAZ Pro XT printers to 285mm x 285mm.
+* Opening the "Open File(s)" dialog now reverts Cura LE back to the Prepare screen
+* Minor change to end gcode files stops printers from disabling the Y motor at the conclusion of a print, which makes it slightly easier to remove a part from the bed
+
+[4.13.0-release]
+* We figure it's about time.
+* Added some more support for a 2.4mm nozzle on the AST285
+* Added select settings to the start gcode for all printers that should make for easier debugging
+* Moved the Filament Change script out of PostProcessing and into its own Tool Button. This should make it easier for casual users to find!
+* Made slight corrections to most of our current Galaxy Tool Head profiles to improve overall print quality
+* Updated all TAZ Pro model printers' firmware up to 2.1.3.0.17
+* Moved Cura LulzBot Edition out of Beta
+
+[4.13.0-Beta v2.13]
+* Another small update!
+* Firmware for TAZ Pro and derivative printers bumped up to 2.1.3.0.15
+* Disabled jerk control on Mini 3
+* Added 2.4mm variant to the Asteroid Tool Heads
+
+[4.13.0-Beta v2.12]
+* Small update!
+* Couple more small changes to the Recommended tab! Go figure, huh!
+* Touched on issues noted from a couple of anonymous crash reports; Yes, I do get those, thank you!
+* Updated TAZ Pro and derivatives firmware to 2.1.3.0.13
+* Modified the horizontal expansion value slightly for the METEOR Tool Heads
+
+[4.13.0-Beta v2.11]
+* Added a button on the bottom right that allows you to clear the build plate and open a new file with a single click
+* Pro and Pro XT have an updated bed STL, along with the Mini 3 getting an official one
+* Open File button is now persistent between Prepare and Preview
+* Squashed down the Slice/Output widget a bit for spacial concerns
+* Cleaned up the "Add Printer" menu a little
+* Patched up the visibility of some qualities for TAZ 5, 6, and Mini 1
+* Revisited the Firmware Updater, it should consistently provide the correct firmware files now
+* USB Connections will now properly time-out after several seconds without any response from the 3D Printer
+* Switching printers while there is an active USB connection is now prevented to avoid accidentally cancelling prints
+
+[4.13.0-Beta v2.10]
+* More tweaks to the Recommended tab
+* Small USB printing bugfixes, more on the way
+* New Logo for the application header
+* Tweaks to the job info widget
+* New preferences regarding job name generation!
+* Many more small setting tweaks under the hood
+
+[4.13.0-Beta v2.9.1]
+* Quick patch update
+* Fixed issue causing CuraLE to not be able to locate firmware files for update on some printer configurations
+* Quick update to Firmware for TAZ Pro series printers
+* Updated temperatures for Wipe and Soften slightly across the board for better start performance
+* Looking into bugs regarding the drop-down boxes on the recommended settings tab
+
+[4.13.0-Beta v2.9]
+* Finished revamping the recommended tab, everything should be added back in as intended
+* Plugged in media now takes priority after slicing, so USB drives and SD cards should now be automatically selected when saving (You can still save to drive!)
+* Version Marlin 2.1 Firmware for the TAZ Pro series printers! You may encounter some quirks but we're pretty excited about how this is coming along!
+* Colors of different materials of the same material type (PLA, ABS, etc.) now match for simplicity
+* Made settings for Probe, Wipe, Soften, and Standby temperatures along with Skirt settings much more consistent across profiles
+* Many many small changes related to overall code safety and stability. Should result in much cleaner log files (yay for me)!
+
+[4.13.0-Beta v2.8]
+* Did some work on the recommended tab, Some items were temporarily removed to be reworked for better overall functionality
+* Patched Firmware for Mini 2, SideKicks, and Workhorse to fix an issue where the Tool Head selection screen came up blank
+* CuraLE now transitions straight to the Preview screen after slicing (only when "Automatically Slice" is turned off)
+* CuraLE now asks you if you'd like to discard changes when switching between profiles while the recommended tab is open
+* Added "Ensure Models Are Kept Apart" toggle into the Custom Supports tool for ease of access
+* Changed the default material when opening CuraLE to be PolyLite PLA
+* Cleaned up some of our profiles and printer definitions
+* Added the Twin Nebula Tool Heads as an option for the TAZ Pro
+
+[4.13.0-Beta v2.7]
+* Fixed MacOS bug that prevented USB connections with M1 and M2 chips
+* Made major changes to the recommended print settings tab to make things a little easier to understand for less experienced users
+* Continued expanding material profiles for our newer model Tool Heads
+
+[4.13.0-Beta v2.6]
+* Build primarily to revert TAZ Pro firmware back to an older version
+* Newer TAZ Pro firmware with stability improvements is in the works
+* More profile additions and corrections for the Galaxy Series Tool Heads
+
+[4.13.0-Beta v2.5]
+* Added Linear Advance setting (Does not currently affect prints, but will be added via start gcode)
+* Expanded profile options for AST285 and MET285 slightly
+* Quite a few more profiles are in the works, so more will come soon
+* Added button on Monitor page that will allow you to start a tethered print from there rather than on the Prepare page
+* Made changes to the recommended print settings tab to make it simpler
+
+[4.13.0-Beta v2.4]
+* Language on the Update Firmware page has been updated for clarity.
+* Updated firmware on the Mini 2, SideKicks 289/747, and TAZ Workhorse.
+* Reviewed and updated Galaxy Series quality profiles to be more accurate
+* Added PLA profiles for the AST285 Tool Head.
+* More profiles will be added for the Galaxy Tool Heads in the coming updates.
+
+[4.13.0-Beta v2.3]
+* Fixed background color of add printer screen on MacOS Dark model
+* Fixed profiles not appearing for TAZ 5 and 6 single extruders
+* Minor spelling corrections
+* Expanding profile options for MET285
+* Consolidating Material Families
+* Model that loads onto build plate of first start-up will now load any time a new printer is added.
+* The add printer model is now different for the TAZ Pro Dual and TAZ Workhorse with SE Tool Head.
+* Adjusted location of Multiply button in the tool bar.
+* !! First launch stl files will still occasionally load off of the build plate. This issue is turning out to be relatively hard to pin down.
+
+[4.13.0-Beta v2.2]
+* Fixed a couple of missing gcode files for certain printers
+* Added ability to select Bio, TAZ 5, and Mini 1 printers (Limited to Legacy Universal Tool Heads on TAZ 5 and Mini 1 for now)
+* Added a "Multiply" button on the tool bar instead of needing to right click
+* Ensured "Scale To Max" results in a part above the build plate
+* Fixed monitor page not being able to scroll correctly
+* Expanded "Add Printer" dialog slightly by default and added the ability to increase the size of the window, it had been locked to size before
+* Fixed bug where the rocktopus.stl file would load off the buildplate
+
+[4.13.0-Beta v2.1]
+* Improved job name setting options
+* Temp fix for ugly warning regarding incompatable qualities
+* Cleaned up add printer screen
+
+[4.13.0-Beta v2.0.1]
+* Fixed issue that made SideKick 289 unable to Slice
+* Made TAZ 6 with Universal Tool Heads visible
+* TAZ 5, Mini 1, and older Legacy TAZ 6 Tool Heads will come soon, never fear!
+
+[4.13.0-Beta v2]
+* Refactored printer definitions and settings to improve workflow
+* Added Generic profiles for some material types
+* Added Update Firmware button to Monitor screen
+* Removed LulzBot Dark theme until it can be redone
+* Added a new setting that allows flexibility in auto generated job names
+* Some small bug fixes
+
+[4.13.0-Beta v1.10]
+* Added material profiles for MET175 and MET285
+* Improved Galaxy Firmware slightly
+* Working on refactoring quality system
+
+[4.13.0-Beta v1.8.1]
+* Added basic material profiles for Galaxy Tool Heads
+* Resized first start and add machine menus to better fit content.
+
+[4.13.0-Beta v1.7]
+* Small bugfix patch
+* Mainly just fixed an issue with flashing Pro firmware on Windows
+
+[4.13.0-Beta v1.6]
+* Fixed small but in monitor screen regarding the print bed
+* Reworked material selection to go by material type and then brand
+* Added the ability to mark a machine as having an optional BLTouch
+* Added the Asteroid and Meteor Experimental Tool Heads
+* Added firmware for the aformentioned Tool Heads
+
+[4.13.0-Beta v1.5]
+* Reworked printer connections
+* Improved consistency of firmware updating
+* Fixed automatic firmware updating (hopefully!)
+* Please note: OctoPrint plugin may be a bit buggy with these changes
+* Updated monitor page to look more similar to 3.6, will continue to be improved
+* Re-added the ability to change filament diameter in custom settings
+* Fixed an issue where Cura LE would crash when scrolling in the preferences menu
+* Fixed an issue that caused PolyFlex to not be usable
+* Adjusted default visible settings to include a couple more useful settings
+
+[4.13.0-Beta v1.4]
+* Reimplemented the OctoPrint plugin
+* Reimplemented a Custom Supports plugin
+* Added ability to input accurate values in rotation tool
+* Added "Scale to Max" button, though functionality needs work
+* Fixed some firmware file locations and added a couple missing files
+* Corrected issue that caused missing temperature values in Dual Extruder gcode files
+* Corrected naming issue with PolyFlex 1.75mm filament
+* Adjusted the About dialog to use more relevant links
+* Removed outdated M425 commands from remaining gcode files
+* Updated included firmware file for TAZ Pro Long Bed to 2.0.0.144.10
+
+[4.13.0-Beta v1.3]
+* "Ensure models are kept apart" setting is now checked by default
+* "No Material" is now listed under "Dual Extrusion" as a brand name for the time being
+* "Console" button on the Monitor screen is now enabled during a print
+* Cura LE will once again react to LCD printer pauses, resumes, and stops
+* Cura LE will now recognize a printer error has occured during a print and will drop the connection
+
+[4.13.0-Beta v1.2]
+* Fixed missing start and end gcode scripts on some configurations
+* Fixed issue that caused application to crash upon creating a Mini 1 machine
+* Fixed issue that caused a crash when creating a Workhorse with HS+ Tool Head
+* Fixed broken quality profiles for NinjaFlex Edge on M175v2 Tool Heads
+
+[4.13.0-Beta v1.1]
+* Updated default settings to the "Advanced" preset instead of "Basic"
+
+[4.13.0-Beta v1.0]
+* Updated to be more in-line with upstream Cura as of Ultimaker Cura 4.13
+* A more in-depth patch-notes will be created as we approach a full launch
+

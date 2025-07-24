@@ -25,7 +25,9 @@
     <setting key="part removal temperature">0</setting>
 
     <machine>
-      <machine_identifier product="bio" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="syringe_bio" />
+      <hotend id="25 Gauge" />
+      <hotend id="30 Gauge" />
     </machine>
 
   </settings>

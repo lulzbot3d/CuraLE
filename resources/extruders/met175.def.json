@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "name": "MET175",
+    "inherits": "lulzbot_extruder",
+    "metadata":
+    {
+        "machine": "met175_base",
+        "position": "0"
+    },
+    "overrides":
+    {
+        "extruder_nr": { "default_value": 0 },
+        "machine_nozzle_head_distance": { "default_value": 5 }
+    }
+}

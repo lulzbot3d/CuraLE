@@ -1,0 +1,25 @@
+{
+    "version": 2,
+    "name": "Aerostruder Printer",
+    "inherits": "lulzbot_base",
+    "metadata":
+    {
+        "visible": false,
+        "has_machine_quality": true,
+        "lulzbot_tool_head": "Aerostruder",
+        "lulzbot_tool_head_abbreviation": "AERO",
+        "lulzbot_tool_head_image": "aerostruder_taz",
+        "lulzbot_tool_head_priority": "20",
+        "machine_extruder_trains": { "0": "aerostruder" },
+        "quality_definition": "aerostruder_base"
+    },
+    "overrides":
+    {
+        "acceleration_print": { "default_value": 500 },
+        "acceleration_travel": { "value": 500 },
+        "machine_acceleration": { "default_value": 500 },
+        "machine_heat_zone_length": { "default_value": 20 },
+        "machine_max_feedrate_z": { "default_value": 3 },
+        "machine_nozzle_tip_outer_diameter": { "default_value": 1.5 }
+    }
+}

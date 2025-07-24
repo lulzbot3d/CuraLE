@@ -1,0 +1,48 @@
+{
+    "version": 2,
+    "name": "Pro Dual Printer",
+    "inherits": "lulzbot_base",
+    "metadata":
+    {
+        "visible": false,
+        "has_machine_quality": true,
+        "lulzbot_example_model": [
+            "pro_dual_cal1.stl",
+            "pro_dual_cal2.stl"
+        ],
+        "lulzbot_tool_head": "Pro Dual",
+        "lulzbot_tool_head_abbreviation": "DUAL",
+        "lulzbot_tool_head_image": "pro_dual",
+        "lulzbot_tool_head_priority": "10",
+        "machine_extruder_trains":
+        {
+            "0": "pro_dual_0",
+            "1": "pro_dual_1"
+        },
+        "quality_definition": "pro_dual_base"
+    },
+    "overrides":
+    {
+        "jerk_print": { "default_value": 12 },
+        "jerk_travel": { "value": 12 },
+        "layer_start_x": { "value": "100" },
+        "layer_start_y": { "value": "100" },
+        "machine_bltouch_start_gcode": { "default_value_from_file": "taz_pro/taz_pro_bltouch_start" },
+        "machine_end_gcode": { "default_value_from_file": "taz_pro/taz_pro_dual_end" },
+        "machine_extruder_count": { "default_value": 2 },
+        "machine_head_with_fans_polygon":
+        {
+            "default_value": [
+                [-37.5, 35],
+                [-37.5, -75],
+                [82.5, -75],
+                [82.5, 35]
+            ]
+        },
+        "machine_heat_zone_length": { "default_value": 20 },
+        "machine_level_x_axis_gcode": { "default_value_from_file": "taz_pro/taz_pro_level_x_axis" },
+        "machine_nozzle_tip_outer_diameter": { "default_value": 1.5 },
+        "machine_start_gcode": { "default_value_from_file": "taz_pro/taz_pro_dual_start" },
+        "machine_wipe_gcode": { "default_value_from_file": "taz_pro/taz_pro_dual_wipe" }
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "name": "M175 v2",
+    "inherits": "lulzbot_extruder",
+    "metadata":
+    {
+        "machine": "m175_v2_base",
+        "position": "0"
+    },
+    "overrides":
+    {
+        "extruder_nr": { "default_value": 0 },
+        "material_diameter": { "default_value": 1.75 }
+    }
+}

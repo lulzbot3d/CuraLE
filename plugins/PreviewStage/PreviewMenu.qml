@@ -35,6 +35,9 @@ Item
     Item {
 
         anchors.fill: parent
+        // This is a trick to make sure that the borders of the two adjacent buttons' borders overlap. Otherwise
+        // there will be double border (one from each button)
+        //spacing: -UM.Theme.getSize("default_lining").width
 
         RowLayout {
             id: stageMenuRow

@@ -21,24 +21,32 @@
     <setting key="print temperature">205</setting>
     <setting key="heated bed temperature">60</setting>
     <setting key="part removal temperature">45</setting>
+    <setting key="adhesion tendency">0</setting>
+    <setting key="surface energy">100</setting>
 
     <machine>
-      <machine_identifier product="mini_2_met175" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="mini_3_met175" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="sidekick_289_met175" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="sidekick_747_met175" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="taz_7_met175" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="taz_8_met175" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
-      <machine_identifier product="workhorse_met175" manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC"/>
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_core_xy" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_mini_2" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_mini_3" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_sidekick_289" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_sidekick_747" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_8" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_pro" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_pro_lb" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_pro_lb_v2" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_pro_xt" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_taz_pro_xt_lb_v2" />
+      <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="met175_workhorse" />
       <setting key="print temperature">210</setting>
-      <hotend id="0.3 mm">
+      <hotend id="0.3mm">
         <setting key="hardware compatible">no</setting>
       </hotend>
-      <hotend id="0.4 mm">
+      <hotend id="0.4mm">
         <setting key="hardware compatible">no</setting>
       </hotend>
-      <hotend id="0.5 mm" />
-      <hotend id="0.8 mm">
+      <hotend id="0.5mm">
+      </hotend>
+      <hotend id="0.8mm">
         <setting key="hardware compatible">no</setting>
       </hotend>
     </machine>

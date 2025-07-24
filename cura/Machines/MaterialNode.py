@@ -71,8 +71,10 @@ class MaterialNode(ContainerNode):
         container_registry = ContainerRegistry.getInstance()
         # Find all quality profiles that fit on this material.
         if not self.variant.machine.has_machine_quality:  # Need to find the global qualities.
+            # qualities = container_registry.findInstanceContainersMetadata(type = "quality",
+            #                                                               definition = "fdmprinter")
             qualities = container_registry.findInstanceContainersMetadata(type = "quality",
-                                                                          definition = "fdmprinter")
+                                                                            definition = "lulzbot_base")
         elif not self.variant.machine.has_materials:
             qualities = container_registry.findInstanceContainersMetadata(type = "quality",
                                                                           definition = self.variant.machine.quality_definition)
@@ -96,7 +98,7 @@ class MaterialNode(ContainerNode):
                                                                                                definition = self.variant.machine.quality_definition,
                                                                                                variant = self.variant.variant_name)
                 else:
-                   qualities_any_material = container_registry.findInstanceContainersMetadata(type = "quality", definition = self.variant.machine.quality_definition)
+                    qualities_any_material = container_registry.findInstanceContainersMetadata(type = "quality", definition = self.variant.machine.quality_definition)
 
                 # First we attempt to find materials that have the same brand but not the right color
                 all_material_base_files_right_brand = {material_metadata["base_file"] for material_metadata in container_registry.findInstanceContainersMetadata(type = "material", material = my_material_type, brand = self.brand)}

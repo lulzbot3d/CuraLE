@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "name": "Single Extruder",
+    "inherits": "lulzbot_extruder",
+    "metadata":
+    {
+        "machine": "single_mini_base",
+        "position": "0"
+    },
+    "overrides":
+    {
+        "extruder_nr": { "default_value": 0 }
+    }
+}

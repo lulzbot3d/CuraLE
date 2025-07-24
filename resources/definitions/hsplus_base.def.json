@@ -1,0 +1,21 @@
+{
+    "version": 2,
+    "name": "HS+ Printer",
+    "inherits": "lulzbot_base",
+    "metadata":
+    {
+        "visible": false,
+        "has_machine_quality": true,
+        "lulzbot_tool_head": "HS+",
+        "lulzbot_tool_head_abbreviation": "HSPLUS",
+        "lulzbot_tool_head_image": "hsplus",
+        "lulzbot_tool_head_priority": "15",
+        "machine_extruder_trains": { "0": "hsplus" },
+        "quality_definition": "hsplus_base"
+    },
+    "overrides":
+    {
+        "machine_heat_zone_length": { "default_value": 28 },
+        "machine_nozzle_tip_outer_diameter": { "default_value": 3.0 }
+    }
+}

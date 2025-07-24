@@ -1,0 +1,25 @@
+{
+    "version": 2,
+    "name": "MOARstruder Printer",
+    "inherits": "lulzbot_base",
+    "metadata":
+    {
+        "visible": false,
+        "has_machine_quality": true,
+        "lulzbot_tool_head": "MOARstruder",
+        "lulzbot_tool_head_abbreviation": "MOAR",
+        "lulzbot_tool_head_image": "moarstruder",
+        "lulzbot_tool_head_priority": "25",
+        "machine_extruder_trains": { "0": "moarstruder" },
+        "quality_definition": "moarstruder_base"
+    },
+    "overrides":
+    {
+        "acceleration_print": { "default_value": 500 },
+        "acceleration_travel": { "value": 500 },
+        "jerk_print": { "default_value": 12 },
+        "jerk_travel": { "value": 12 },
+        "machine_acceleration": { "default_value": 500 },
+        "machine_max_feedrate_z": { "default_value": 3 }
+    }
+}

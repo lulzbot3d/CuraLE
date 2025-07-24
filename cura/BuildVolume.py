@@ -971,20 +971,7 @@ class BuildVolume(SceneNode):
         if self._global_container_stack is None:
             return {}
 
-        disallowed_areas = []
-        disallowed_areas += self._global_container_stack.getProperty("machine_disallowed_areas", "value")
-
         for area in self._global_container_stack.getProperty("machine_disallowed_areas", "value"):
-            if  len(area) > 0:
-                disallowed_areas.append(area)
-
-        for extruder in used_extruders:
-            if extruder.getProperty("extruder_disallowed_areas", "value") is not None:
-                for area in extruder.getProperty("extruder_disallowed_areas", "value"):
-                    if len(area) > 0:
-                        disallowed_areas.append(area)
-
-        for area in disallowed_areas:
             if len(area) == 0:
                 continue  # Numpy doesn't deal well with 0-length arrays, since it can't determine the dimensionality of them.
             polygon = Polygon(numpy.array(area, numpy.float32))

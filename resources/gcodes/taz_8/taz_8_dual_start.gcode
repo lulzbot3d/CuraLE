@@ -31,9 +31,10 @@ G28 O                                              ; home all axes
 G0 X145 Y187 Z156 F3000                            ; move away from endstops
 M280 P1 S125                                       ; raise extruders for cleaner probing
 M117 Tramming X Axis...;                           ; Progress indicator message on LCD
+G30 X150 Y150                                      ; probe to locate bed
 G34                                                ; tram X-axis
 M117 Leveling Print Bed...;                        ; Progress indicator message on LCD
-G29 O                                              ; start auto-leveling sequence
+G29                                                ; start auto-leveling sequence
 M280 P1 S75                                        ; bring extruder 1 back down
 M420 S1                                            ; enable leveling matrix
 T{second_extruder_nr}                              ; ensure we're using the SECOND extruder

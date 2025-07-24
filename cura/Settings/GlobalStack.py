@@ -322,8 +322,7 @@ class GlobalStack(CuraContainerStack):
     def getDefaultFirmwareName(self) -> str:
         """Get default firmware file name if one is specified in the firmware"""
 
-        machine_has_bltouch = self.getProperty("machine_has_bltouch", "value")
-        machine_has_lcd = self.getProperty("machine_has_lcd", "value")
+        machine_has_heated_bed = self.getProperty("machine_heated_bed", "value")
 
         baudrate = 250000
         if Platform.isLinux():
@@ -331,12 +330,41 @@ class GlobalStack(CuraContainerStack):
             # pySerial did not support a baudrate of 250000
             baudrate = 115200
 
-        # If a firmware file is available, it should be specified in the definition for the printer
-        hex_file = self.getMetaDataEntry("firmware_file", None)
-        if machine_has_bltouch:
-            hex_file = self.getMetaDataEntry("firmware_file_bltouch", hex_file)
-        if not machine_has_lcd:
-            hex_file = self.getMetaDataEntry("firmware_file_no_lcd", hex_file)
+        if self.getMetaDataEntry("manufacturer", "") == "Fargo Additive Manufacturing Equipment 3D, LLC":
+            # It's a LulzBot machine, use LulzBot method for getting firmware file
+            hex_file = None
+            firmware_type = self.getMetaDataEntry("lulzbot_firmware_type", "")
+            if firmware_type == "Marlin":
+                firmware_names = self.getMetaDataEntry("lulzbot_firmware_name", None)
+                firmware_versions = self.getMetaDataEntry("lulzbot_firmware_version", None)
+                firmware_extension = self.getMetaDataEntry("lulzbot_firmware_extension", "hex")
+                bltouch_machine = self.getProperty("machine_has_bltouch", "value")
+                lcd_machine = self.getProperty("machine_has_lcd", "value")
+
+                name = firmware_names["default"]
+                if "has_bltouch" in firmware_names.keys() and bltouch_machine == True:
+                    name = firmware_names["has_bltouch"]
+
+                if "has_lcd" in firmware_names.keys() and lcd_machine == True:
+                    name= firmware_names["has_lcd"]
+
+                version = firmware_versions["default"]
+                if "has_bltouch" in firmware_versions.keys() and bltouch_machine == True:
+                    version = firmware_versions["has_bltouch"]
+
+                if "has_lcd" in firmware_versions.keys() and lcd_machine == True:
+                    version = firmware_versions["has_lcd"]
+
+                hex_file = name + "_" + version + "." + firmware_extension
+            else:
+                Logger.log("w", "LulzBot firmware in CuraLE is only available for Marlin printers. Current printer firmware type: ")
+                return ""
+
+        else:
+            # If a firmware file is available, it should be specified in the definition for the printer
+            hex_file = self.getMetaDataEntry("firmware_file", None)
+            if machine_has_heated_bed:
+                hex_file = self.getMetaDataEntry("firmware_hbk_file", hex_file)
 
         if not hex_file:
             Logger.log("w", "There is no firmware for machine %s.", self.getBottom().id)

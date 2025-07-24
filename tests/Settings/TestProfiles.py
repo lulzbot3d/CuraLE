@@ -42,7 +42,7 @@ def collectAllSettingIds():
         definition_container.deserialize(data.read())
 
     lulz_container = DefinitionContainer("lulz")
-    with open(os.path.join(os.path.dirname(__file__), "..", "..", "resources", "definitions", "lulzbot.def.json"), encoding = "utf-8") as lulzy_data:
+    with open(os.path.join(os.path.dirname(__file__), "..", "..", "resources", "definitions", "lulzbot_base.def.json"), encoding = "utf-8") as lulzy_data:
         lulz_container.deserialize(lulzy_data.read())
 
     key_set = definition_container.getAllKeys()

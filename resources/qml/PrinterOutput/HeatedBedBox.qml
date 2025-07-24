@@ -11,8 +11,7 @@ Item
 {
     implicitWidth: parent.width
     height: visible ? Math.round(UM.Theme.getSize("print_setup_extruder_box").height * 0.7) : 0
-    property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
-    property var connectedPrinter: outputDeviceCount >= 1 ? Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1] : null
+    property var connectedPrinter: Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null
     property var printerModel: connectedPrinter != null ? connectedPrinter.activePrinter : null
 
     Rectangle
@@ -138,7 +137,6 @@ Item
             anchors.bottomMargin: UM.Theme.getSize("default_margin").height
             width: UM.Theme.getSize("monitor_preheat_temperature_control").width
             height: UM.Theme.getSize("monitor_preheat_temperature_control").height
-            // visible: printerModel != null ? enabled && printerModel.canPreHeatBed && !printerModel.isPreheating : true
             visible: true
             Rectangle //Highlight of input field.
             {

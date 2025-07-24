@@ -1,0 +1,36 @@
+{
+    "version": 2,
+    "name": "TAZ 8 XT | TWNB175",
+    "inherits": "twnb175_base",
+    "metadata":
+    {
+        "visible": true,
+        "file_formats": "text/x-gcode",
+        "platform": "bed_plates/labeled/taz_8_xt_labeled.stl",
+        "has_variants": true,
+        "lulzbot_firmware_extension": "bin",
+        "lulzbot_machine_category": "TAZ",
+        "lulzbot_machine_image": "",
+        "lulzbot_machine_is_subtype": true,
+        "lulzbot_machine_priority": "10",
+        "lulzbot_machine_subtype": "XT",
+        "lulzbot_machine_type": "TAZ 8",
+        "lulzbot_machine_type_abbreviation": "T8_XT",
+        "lulzbot_tool_head_priority": "04",
+        "platform_offset": [
+            0,
+            -12,
+            -3
+        ],
+        "preferred_quality_type": "normal",
+        "preferred_variant_name": "0.5 mm",
+        "quality_definition": "twnb175_base"
+    },
+    "overrides":
+    {
+        "machine_end_gcode": { "default_value_from_file": "taz_8/taz_8_dual_end" },
+        "machine_extruder_count": { "default_value": 2 },
+        "machine_name": { "default_value": "LulzBot TAZ 8 XT | TWNB175" },
+        "machine_start_gcode": { "default_value_from_file": "taz_8/taz_8_dual_start" }
+    }
+}

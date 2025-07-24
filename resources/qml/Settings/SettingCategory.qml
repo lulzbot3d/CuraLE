@@ -23,6 +23,7 @@ Cura.CategoryButton
     signal showAllHiddenInheritedSettings(string category_id)
     signal focusReceived()
     signal setActiveFocusToNextSetting(bool forward)
+    signal setScrollPositionChangeLoseFocus(bool lose_focus)
 
     property var focusItem: base
 
