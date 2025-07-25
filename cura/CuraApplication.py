@@ -61,7 +61,6 @@ from cura import ApplicationMetadata
 from cura.API import CuraAPI
 from cura.API.Account import Account
 from cura.Arranging.ArrangeObjectsJob import ArrangeObjectsJob
-from cura.FilamentChangeManager import FilamentChangeManager
 from cura.Machines.MachineErrorChecker import MachineErrorChecker
 from cura.Machines.Models.BuildPlateModel import BuildPlateModel
 from cura.Machines.Models.CustomQualityProfilesDropDownMenuModel import CustomQualityProfilesDropDownMenuModel
@@ -75,6 +74,7 @@ from cura.Machines.Models.GlobalStacksModel import GlobalStacksModel
 from cura.Machines.Models.IntentCategoryModel import IntentCategoryModel
 from cura.Machines.Models.IntentModel import IntentModel
 from cura.Machines.Models.LulzBotPrintersModel import LulzBotPrintersModel
+from cura.Machines.Models.MaterialBrandsModel import MaterialBrandsModel
 from cura.Machines.Models.MaterialManagementModel import MaterialManagementModel
 from cura.Machines.Models.MaterialTypesModel import MaterialTypesModel
 from cura.Machines.Models.MultiBuildPlateModel import MultiBuildPlateModel
@@ -241,7 +241,6 @@ class CuraApplication(QtApplication):
         self._custom_quality_profile_drop_down_menu_model = None
         self._cura_API = CuraAPI(self)
 
-        self._filament_change_manager = None
         self._thumbnail_generator = None
 
         self._physics = None
@@ -640,8 +639,6 @@ class CuraApplication(QtApplication):
         preferences.addPreference("cura/favorite_materials", "")
         preferences.addPreference("cura/expanded_brands", "")
         preferences.addPreference("cura/expanded_types", "")
-
-        preferences.addPreference("filament_change/ensure_pause", False)
 
         preferences.addPreference("general/accepted_user_agreement", False)
 
@@ -1275,12 +1272,6 @@ class CuraApplication(QtApplication):
             self._custom_quality_profile_drop_down_menu_model = CustomQualityProfilesDropDownMenuModel(self)
         return self._custom_quality_profile_drop_down_menu_model
 
-    @pyqtSlot(result=QObject)
-    def getFilamentChangeManager(self, *args, **kwargs) -> FilamentChangeManager:
-        if self._filament_change_manager is None:
-            self._filament_change_manager = FilamentChangeManager(self)
-        return self._filament_change_manager
-
     def getThumbnailGenerator(self, *args) -> ThumbnailGenerator:
         if self._thumbnail_generator is None:
             self._thumbnail_generator = ThumbnailGenerator(self)
@@ -1342,7 +1333,6 @@ class CuraApplication(QtApplication):
         qmlRegisterSingletonType(SettingInheritanceManager, "Cura", 1, 0, self.getSettingInheritanceManager, "SettingInheritanceManager")
         qmlRegisterSingletonType(SimpleModeSettingsManager, "Cura", 1, 0, self.getSimpleModeSettingsManagerWrapper, "SimpleModeSettingsManager")
         qmlRegisterSingletonType(MachineActionManager, "Cura", 1, 0, self.getMachineActionManagerWrapper, "MachineActionManager")
-        # qmlRegisterSingletonType(FilamentChangeManager, "Cura", 1, 0, self.getFilamentChangeManager, "FilamentChangeManager")
 
         self.processEvents()
         qmlRegisterType(NetworkingUtil, "Cura", 1, 5, "NetworkingUtil")
@@ -1367,6 +1357,7 @@ class CuraApplication(QtApplication):
         self.processEvents()
         qmlRegisterType(FavoriteMaterialsModel, "Cura", 1, 0, "FavoriteMaterialsModel")
         qmlRegisterType(GenericMaterialsModel, "Cura", 1, 0, "GenericMaterialsModel")
+        qmlRegisterType(MaterialBrandsModel, "Cura", 1, 0, "MaterialBrandsModel")
         qmlRegisterType(MaterialTypesModel, "Cura", 1, 0, "MaterialTypesModel")
         qmlRegisterSingletonType(QualityManagementModel, "Cura", 1, 0, self.getQualityManagementModelWrapper,"QualityManagementModel")
         qmlRegisterSingletonType(MaterialManagementModel, "Cura", 1, 5, self.getMaterialManagementModelWrapper,"MaterialManagementModel")
@@ -1384,7 +1375,6 @@ class CuraApplication(QtApplication):
 
         self.processEvents()
         qmlRegisterType(LulzBotPrintersModel, "Cura", 1, 0, "LulzBotPrintersModel")
-
 
         self.processEvents()
         qmlRegisterType(MaterialSettingsVisibilityHandler, "Cura", 1, 0, "MaterialSettingsVisibilityHandler")
