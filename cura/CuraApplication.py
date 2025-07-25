@@ -176,7 +176,7 @@ class CuraApplication(QtApplication):
                          tray_icon_name = "curale-32.png" if not ApplicationMetadata.IsAlternateVersion else "curale-32.png",
                          **kwargs)
 
-        self.default_theme = "cura-le-light"
+        self.default_theme = "cura-light"
 
         self.change_log_url = "https://github.com/lulzbot3d/CuraLE/blob/main/cura_patchnotes.txt"
         self.beta_change_log_url = ""
