@@ -70,9 +70,9 @@ G1 X153 Y25 F1000                   ; slow wipe
 G1 X155 Y23 F1000                   ; slow wipe
 G1 Z15                              ; raise extruder
 T0                                  ; switch extruder
-M104 S{material_probe_temperature}  ; set but don't wait
+M104 S{material_standby_temperature}  ; set but don't wait
 T1                                  ; switch extruder
-M109 R{material_probe_temperature}  ; wait for extruder to reach probe temp
+M109 R{material_standby_temperature}  ; wait for extruder to reach probe temp
 G28 XY                              ; home X and Y
 M204 S100                           ; set probing acceleration
 G29                                 ; start auto-leveling sequence

@@ -858,21 +858,19 @@ class CuraEngineBackend(QObject, Backend):
         print_info = application.getPrintInformation()
         currency = CuraApplication.getInstance().getPreferences().getValue("cura/currency")
         # Store these arrays nicely up here so we can display them nicer
-        mat_lengths = print_info.materialLengths
-        mat_weights = print_info.materialWeights
-        mat_costs = print_info.materialCosts
+        lengths = print_info.materialLengths
+        weights = print_info.materialWeights
+        costs = print_info.materialCosts
         job_name = print_info.jobName
-        is_dual_extruder = len(mat_lengths) > 1
         for index, line in enumerate(gcode_list):
+            replaced = line.replace("{filament_amount}", (str(lengths[0])+"m"))
+            replaced = replaced.replace("{filament_weight}", ("~"+str(round(float(weights[0]), 2))+"g"))
+            replaced = replaced.replace("{filament_cost}", ((currency + '{:.2f}'.format(round(float(costs[0]), 2))) if costs[0] > 0 else "Unknown"))
+            for i in range(len(lengths)):
+                replaced = replaced.replace("{filament_amount_%s}".format(i), (str(lengths[i])+"m"))
+                replaced = replaced.replace("{filament_weight_%s}".format(i), ("~"+str(round(float(weights[1]), 2))+"g"))
+                replaced = replaced.replace("{filament_cost_%s}".format(((currency + '{:.2f}'.format(round(float(costs[i]), 2))) if costs[i] > 0 else "Unknown")))
             replaced = line.replace("{print_time}", str(print_info.currentPrintTime.getDisplayString(DurationFormat.Format.ISO8601)))
-            replaced = replaced.replace("{filament_amount}", (str(mat_lengths[0])+"m"))
-            replaced = replaced.replace("{filament_weight}", ("~"+str(round(float(mat_weights[0]), 2))+"g"))
-            replaced = replaced.replace("{filament_cost}", ((currency + '{:.2f}'.format(round(float(mat_costs[0]), 2))) if mat_costs[0] > 0 else "Unknown"))
-            replaced = replaced.replace("{print_job_name}", (job_name))
-            if is_dual_extruder:
-                replaced = replaced.replace("{filament_amount_1}", (str(mat_lengths[1])+"m"))
-                replaced = replaced.replace("{filament_weight_1}", ("~"+str(round(float(mat_weights[1]), 2))+"g"))
-                replaced = replaced.replace("{filament_cost_1}", ((currency + '{:.2f}'.format(round(float(mat_costs[1]), 2))) if mat_costs[0] > 0 else "Unknown"))
             replaced = replaced.replace("{jobname}", str(print_info.jobName))
 
             gcode_list[index] = replaced

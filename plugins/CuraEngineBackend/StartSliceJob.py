@@ -125,6 +125,8 @@ class GcodeStartEndFormatter:
         # when these variables are encountered, we return them as-is. They are replaced later
         # when the actual values are known.
         post_slice_data_variables = ["filament_cost", "print_time", "filament_amount", "filament_weight", "jobname"]
+        extruder_variables = [f"{variable}_{extruder}" for variable in ["filament_cost", "filament_amount", "filament_weight"] for extruder in range(10)]
+        post_slice_data_variables.extend(extruder_variables)
         if expression in post_slice_data_variables:
             return f"{{{expression}}}"
 

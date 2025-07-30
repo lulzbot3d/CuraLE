@@ -1175,7 +1175,6 @@ class XmlMaterialProfile(InstanceContainer):
         "no load move factor": "material_no_load_move_factor",
         "break speed": "material_break_speed",
         "break temperature": "material_break_temperature",
-        "probe temperature": "material_probe_temperature",
         "wipe temperature": "material_wipe_temperature",
         "part removal temperature": "material_part_removal_temperature",
         "soften temperature": "material_soften_temperature"

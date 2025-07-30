@@ -66,7 +66,7 @@ G1 X-17 Y80 F2000                                 ; fast wipe
 G1 X-19 Y90 F2000                                 ; fast wipe
 G1 X-17 Y85 F2000                                 ; fast wipe
 G1 Z10                                            ; raise extruder
-M109 R{material_probe_temperature_0}              ; heat to probe temp
+M109 R{material_standby_temperature_0}              ; heat to probe temp
 G1 X-9 Y-9                                        ; move above first probe point
 M204 S100                                         ; set accel for probing
 G29                                               ; probe sequence (for auto-leveling)

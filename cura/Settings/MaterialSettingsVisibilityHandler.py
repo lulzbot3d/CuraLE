@@ -12,7 +12,6 @@ class MaterialSettingsVisibilityHandler(UM.Settings.Models.SettingVisibilityHand
             "default_material_print_temperature",
             "default_material_bed_temperature",
             "material_part_removal_temperature",
-            "material_probe_temperature",
             "material_soften_temperature",
             "material_wipe_temperature",
             "material_standby_temperature",

@@ -17,7 +17,7 @@
 ;
 M73 P0                                      ; clear GLCD progress bar
 M75                                         ; start GLCD timer
-M117 Starting {print_job_name}...;          ; progress indicator message on LCD
+M117 Starting {jobname}...;          ; progress indicator message on LCD
 M107                                        ; disable fans
 M420 S0                                     ; disable previous leveling matrix
 M900 K{linear_advance}                      ; set linear advance K factor
@@ -28,7 +28,7 @@ G28 O                                       ; home all axes
 M117 Heating...;                            ; progress indicator message on LCD
 G0 X0 Y187 Z156 F1000 			            ; move away from endstops
 M109 R{material_wipe_temperature}           ; wait for extruder to reach wiping temp
-M104 S{material_probe_temperature}          ; set extruder to probe temp
+M104 S{material_standby_temperature}          ; set extruder to probe temp
 M83                                         ; set extruder to relative mode
 G1 E-4 F500                                 ; retract 4mm to help with drool on fresh filament load
 M82                                         ; set extruder to absolute mode
@@ -39,7 +39,7 @@ M206 X0 Y0 Z{machine_nozzle_z_offset}       ; restoring offsets and adjusting of
 M117 Wiping Nozzle...;                      ; progress indicator message on LCD
 G12                                         ; wiping sequence
 M206 X0 Y0 Z0                               ; reseting stock nozzle position ### CAUTION: changing this line can affect print quality ###
-M109 R{material_probe_temperature}          ; wait for extruder to reach probe temp
+M109 R{material_standby_temperature}          ; wait for extruder to reach probe temp
 M107                                        ; turn off part cooling fan
 M117 Probing...;                            ; progress indicator message on LCD
 G29                                         ; start auto-leveling sequence
@@ -64,5 +64,5 @@ M83                                         ; set extruder to relative mode
 G0 E-1 F1800                                ; retract 1mm
 G92 E0                                      ; set extruder position to 0
 M82                                         ; set extruder to absolute mode
-M117 {print_job_name};                      ; progress indicator message on LCD
+M117 {jobname};                      ; progress indicator message on LCD
 ;Start G-Code End

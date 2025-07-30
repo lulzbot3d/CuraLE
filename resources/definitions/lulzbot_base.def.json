@@ -95,7 +95,11 @@
             "minimum_value": "0"
         },
         "material_print_temperature_layer_0": { "value": "min(295, material_print_temperature + 5) if material_print_temperature > 0 else 0" },
-        "material_standby_temperature": { "default_value": 160 },
+        "material_standby_temperature":
+        {
+            "description": "The temperature of the nozzle when it is not in-use and during probing.",
+            "default_value": 160
+        },
         "prime_tower_enable":
         {
             "resolve": "None",
@@ -308,20 +312,6 @@
                 {
                     "children":
                     {
-                        "material_probe_temperature":
-                        {
-                            "default_value": 160,
-                            "description": "The nozzle temperature used before probing. This should be set cool enough that the printing material does not ooze from the nozzle while also not cooling the nozzle down entirely.",
-                            "enabled": true,
-                            "label": "Probe Temperature",
-                            "maximum_value": "300",
-                            "maximum_value_warning": "250",
-                            "minimum_value": "0",
-                            "settable_per_extruder": true,
-                            "settable_per_mesh": false,
-                            "type": "float",
-                            "unit": "\u00b0C"
-                        },
                         "material_soften_temperature":
                         {
                             "default_value": 180,
