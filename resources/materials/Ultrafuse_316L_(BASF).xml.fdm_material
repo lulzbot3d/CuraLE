@@ -20,7 +20,6 @@
   <settings>
     <setting key="print temperature">235</setting>
     <setting key="soften temperature">200</setting>
-    <setting key="wipe temperature">200</setting>
     <setting key="heated bed temperature">110</setting>
     <setting key="retraction amount">6.5</setting>
     <setting key="part removal temperature">0.0</setting>

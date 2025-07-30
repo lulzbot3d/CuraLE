@@ -22,12 +22,12 @@ M107                                        ; disable fans
 M420 S0                                     ; disable previous leveling matrix
 M900 K{linear_advance}                      ; set linear advance K factor
 G90                                         ; absolute positioning
-M104 R{material_wipe_temperature}           ; start extruder heating up
+M104 R{material_soften_temperature}           ; start extruder heating up
 M140 S{material_bed_temperature_layer_0}    ; start bed heating up
 G28 O                                       ; home all axes
 M117 Heating...;                            ; progress indicator message on LCD
 G0 X0 Y187 Z156 F1000 			            ; move away from endstops
-M109 R{material_wipe_temperature}           ; wait for extruder to reach wiping temp
+M109 R{material_soften_temperature}           ; wait for extruder to reach wiping temp
 M104 S{material_standby_temperature}          ; set extruder to probe temp
 M83                                         ; set extruder to relative mode
 G1 E-4 F500                                 ; retract 4mm to help with drool on fresh filament load

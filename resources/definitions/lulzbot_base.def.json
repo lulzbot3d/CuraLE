@@ -325,20 +325,6 @@
                             "settable_per_mesh": false,
                             "type": "float",
                             "unit": "\u00b0C"
-                        },
-                        "material_wipe_temperature":
-                        {
-                            "default_value": 180,
-                            "description": "The nozzle temperature used during nozzle wiping. This should be set just warm enough that the printing material has softened to the point that the wiper pad will be able to remove excess material from the nozzle.",
-                            "enabled": true,
-                            "label": "Wipe Temperature",
-                            "maximum_value": "300",
-                            "maximum_value_warning": "250",
-                            "minimum_value": "0",
-                            "settable_per_extruder": true,
-                            "settable_per_mesh": false,
-                            "type": "float",
-                            "unit": "\u00b0C"
                         }
                     }
                 }

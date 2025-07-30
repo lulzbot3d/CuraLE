@@ -41,8 +41,7 @@
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="ast285_taz_pro_xt" />
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="ast285_taz_pro_xt_lb_v2" />
       <machine_identifier manufacturer="Fargo Additive Manufacturing Equipment 3D, LLC" product="ast285_workhorse" />
-      <setting key="soften temperature">180</setting>
-      <setting key="wipe temperature">190</setting>
+      <setting key="soften temperature">185</setting>
       <setting key="heated bed temperature">50</setting>
       <hotend id="1.2mm">
       </hotend>

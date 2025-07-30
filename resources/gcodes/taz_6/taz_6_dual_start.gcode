@@ -30,9 +30,9 @@ M109 R{material_soften_temperature_0} T0          ; soften filament
 M109 R{material_soften_temperature_1} T1          ; soften filament
 G28 X Y                                           ; home X and Y
 G1 X-19 Y258                                      ; move over the Z_MIN switch
-M104 R{material_wipe_temperature_1} T1            ; wait for T1 to reach temp
-M109 R{material_wipe_temperature_0} T0            ; wait for T0 to reach temp
-M109 R{material_wipe_temperature_1} T1            ; wait for T1 to reach temp
+M104 R{material_soften_temperature_1} T1            ; wait for T1 to reach temp
+M109 R{material_soften_temperature_0} T0            ; wait for T0 to reach temp
+M109 R{material_soften_temperature_1} T1            ; wait for T1 to reach temp
 G28 Z                                             ; home Z
 G1 E-15 F100                                      ; suck up XXmm of filament
 T1                                                ; switch extruders

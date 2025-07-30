@@ -26,7 +26,6 @@
     <setting key="print temperature">260.0</setting>
     <setting key="standby temperature">200</setting>
     <setting key="soften temperature">220</setting>
-    <setting key="wipe temperature">220</setting>
     <setting key="retraction speed">30.0</setting>
     <setting key="adhesion tendency">2</setting>
     <setting key="surface energy">100</setting>

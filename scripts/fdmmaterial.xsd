@@ -202,8 +202,6 @@
                     <xsd:enumeration value="tainted print core max temperature"/>
                     <xsd:enumeration value="recommend cleaning after n prints"/>
                     <xsd:enumeration value="soften temperature"/>
-                    <xsd:enumeration value="wipe temperature"/>
-                    <xsd:enumeration value="probe temperature"/>
                     <xsd:enumeration value="part removal temperature"/>
                 </xsd:restriction>
             </xsd:simpleType>

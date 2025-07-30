@@ -29,7 +29,7 @@ M82                                        ; set extruder to absolute mode
 G92 E0                                     ; set extruder position to 0
 M117 Heating Nozzle...;                    ; progress indicator message on LCD
 M109 R{material_soften_temperature}        ; wait for extruder to reach wiping temp
-M104 S{material_wipe_temperature}          ; start cooling to probe temp during wipe
+M104 S{material_soften_temperature}          ; start cooling to probe temp during wipe
 M83                                        ; set extruder to relative mode
 G1 E-4 F500                                ; retract 4mm to help with drool on fresh filament load
 M82                                        ; set extruder to absolute mode
@@ -37,7 +37,7 @@ M82                                        ; set extruder to absolute mode
 ; X ~ (+)left/(-)right, Y ~ (+)front/(-)back, Z ~ (+)down/(-)up
 M206 X0 Y0 Z{machine_nozzle_z_offset}      ; restoring offsets and adjusting offset if AST285 is enabled
 M117 Wiping Nozzle...;                     ; progress indicator message on LCD
-M109 S{material_wipe_temperature}          ; start cooling to probe temp during wipe
+M109 S{material_soften_temperature}          ; start cooling to probe temp during wipe
 M106 S255                                  ; turn fan on to help drop temp
 M104 S{material_standby_temperature}       ; set probe temp
 G12                                        ; wiping sequence

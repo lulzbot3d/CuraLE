@@ -20,7 +20,7 @@ G28 ; home all axes
 G0 X0 Y187 Z156 F200 ; move away from endstops
 M109 R{material_soften_temperature} ;
 G1 E-30 F75 ; retract filament
-M109 R{material_wipe_temperature} ; wait for extruder to reach wiping temp
+M109 R{material_soften_temperature} ; wait for extruder to reach wiping temp
 G1 X45 Y173 F11520 ; move above wiper pad
 G1 Z0 F1200 ; push nozzle into wiper
 G1 X42 Y173 Z-.5 F4000             ; wiping

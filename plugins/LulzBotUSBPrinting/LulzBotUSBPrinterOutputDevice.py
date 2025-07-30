@@ -819,7 +819,7 @@ class LulzBotUSBPrinterOutputDevice(PrinterOutputDevice):
         if not safe:
             # We can't wipe, there's probably already a print in progress
             return
-        code = code.replace("{material_wipe_temperature}", str(CuraApplication.getInstance().getGlobalContainerStack().getProperty("material_wipe_temperature", "value")))#.split("\n")
+        code = code.replace("{material_soften_temperature}", str(CuraApplication.getInstance().getGlobalContainerStack().getProperty("material_soften_temperature", "value")))#.split("\n")
         self.writeStarted.emit(self)
         self._printGCode(code)
 

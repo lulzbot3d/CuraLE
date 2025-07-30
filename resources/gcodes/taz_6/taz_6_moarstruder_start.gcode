@@ -19,7 +19,7 @@ M140 S{material_bed_temperature_layer_0} ; start bed heating up
 M109 R{material_soften_temperature} ; soften filament before homing Z
 G28 ; Home all axis
 G1 E-15 F100 ; retract filament
-M109 R{material_wipe_temperature} ; wait for extruder to reach wiping temp
+M109 R{material_soften_temperature} ; wait for extruder to reach wiping temp
 G1 X-15 Y100 F3000 ; move above wiper pad
 G1 Z1 ; push nozzle into wiper
 G1 X-17 Y95 F1000 ; slow wipe
