@@ -659,8 +659,8 @@ Item
 
     Connections
     {
-        target: tooltipItem
-        onOpacityChanged: function()
+        target: tooltipItem != undefined ? tooltipItem : null
+        function onOpacityChanged()
         {
             // ensure invisible tooltips don't cover the tabs
             if(tooltipItem.opacity == 0)

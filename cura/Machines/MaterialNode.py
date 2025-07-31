@@ -57,6 +57,9 @@ class MaterialNode(ContainerNode):
         for quality_id, quality_node in self.qualities.items():
             if self.variant.machine.preferred_quality_type == quality_node.quality_type:
                 return quality_node
+            quality_type_without_nozzle = quality_node.quality_type.split("_")[-1]
+            if self.variant.machine.preferred_quality_type == quality_type_without_nozzle:
+                return quality_node # Some of our qualities include the nozzle size but we want them to behave the same
         fallback = next(iter(self.qualities.values()))  # Should only happen with empty quality node.
         Logger.log("w", "Could not find preferred quality type {preferred_quality_type} for material {material_id} and variant {variant_id}, falling back to {fallback}.".format(
             preferred_quality_type = self.variant.machine.preferred_quality_type,

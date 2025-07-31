@@ -23,8 +23,8 @@
             -12,
             -3
         ],
-        "preferred_quality_type": "normal",
-        "preferred_variant_name": "1.2mm"
+        "preferred_variant_name": "1.2mm",
+        "quality_definition": "ast285_base"
     },
     "overrides":
     {
