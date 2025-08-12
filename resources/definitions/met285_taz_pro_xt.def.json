@@ -13,8 +13,8 @@
         "lulzbot_firmware_extension": "bin",
         "lulzbot_firmware_name":
         {
-            "default": "TAZProXT/Marlin_TAZProXT_Galaxy",
-            "has_bltouch": "TAZProXT/Marlin_TAZProXT_Galaxy_BLTouch"
+            "default": "Marlin_TAZProXT_Galaxy",
+            "has_bltouch": "Marlin_TAZProXT_Galaxy_BLTouch"
         },
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_image": "taz_pro_xt",

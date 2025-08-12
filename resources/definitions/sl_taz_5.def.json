@@ -6,7 +6,7 @@
     {
         "visible": true,
         "platform": "bed_plates/labeled/taz_5_labeled.stl",
-        "lulzbot_firmware_name": { "default": "TAZ5/Marlin_TAZ5_SmallLayer" },
+        "lulzbot_firmware_name": { "default": "Marlin_TAZ5_SmallLayer" },
         "lulzbot_firmware_version": { "default": "1.1.9.34_5f9c029d1" },
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_image": "taz_5",

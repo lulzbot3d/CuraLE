@@ -9,7 +9,7 @@
         "platform": "bed_plates/labeled/taz_pro_xt_labeled.stl",
         "has_optional_bltouch": false,
         "lulzbot_firmware_extension": "bin",
-        "lulzbot_firmware_name": { "default": "TAZProXT/Marlin_TAZProXT_Universal_Dual" },
+        "lulzbot_firmware_name": { "default": "Marlin_TAZProXT_Universal_Dual" },
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_image": "taz_pro_xt",
         "lulzbot_machine_is_subtype": true,

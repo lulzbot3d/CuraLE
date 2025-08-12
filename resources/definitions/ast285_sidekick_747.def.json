@@ -10,6 +10,7 @@
         "bltouch_is_standard": true,
         "has_optional_lcd": false,
         "has_variants": true,
+        "lulzbot_firmware_name": { "default": "Marlin_SideKick747_Galaxy" },
         "lulzbot_machine_category": "SideKick",
         "lulzbot_machine_image": "sidekick_747",
         "lulzbot_machine_priority": "00",

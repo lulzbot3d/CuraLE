@@ -11,8 +11,8 @@
         "has_optional_lcd": true,
         "lulzbot_firmware_name":
         {
-            "default": "SideKick289/Marlin_SideKick289_HSHSPLUS",
-            "has_lcd": "SideKick289/Marlin_SideKick289_Universal"
+            "default": "Marlin_SideKick289_HSHSPLUS",
+            "has_lcd": "Marlin_SideKick289_Universal"
         },
         "lulzbot_firmware_version":
         {
