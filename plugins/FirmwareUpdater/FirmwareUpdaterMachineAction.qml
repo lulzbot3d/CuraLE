@@ -131,7 +131,14 @@ Cura.MachineAction
             horizontalAlignment: Text.AlignHCenter
             font.pointSize: 10
             visible: firmwareName != ""
-            text: catalog.i18nc("@label", "Firmware Version to be Flashed: <b>") + Cura.MachineManager.activeMachineLatestFirmwareVersion + "</b>";
+            text: {
+                let splitVersion = firmwareName.split("_").reverse()
+                splitVersion.pop();
+                splitVersion = splitVersion.reverse();
+                splitVersion.pop();
+                let firmwareVersion = splitVersion.join(" ");
+                return catalog.i18nc("@label", "Firmware Version to be Flashed: <b>") + firmwareVersion + "</b>";
+            }
         }
 
         UM.Label

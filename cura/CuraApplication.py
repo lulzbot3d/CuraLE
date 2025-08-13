@@ -408,6 +408,7 @@ class CuraApplication(QtApplication):
 
             # venv site-packages
             Resources.addSearchPath(os.path.join(app_root, "..", "share", "cura", "resources"))
+            Resources.addSearchPath(os.path.join(os.path.abspath(os.path.dirname(__file__)), "..", "venv", "share", "cura", "resources"))
 
     @classmethod
     def _initializeSettingDefinitions(cls):
