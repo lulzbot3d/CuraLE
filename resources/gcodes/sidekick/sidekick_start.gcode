@@ -15,7 +15,7 @@
 ;M906 E960                                  ;TMC Motor Current
 ;
 G90                                        ; absolute coordinate
-M117 Starting {print_job_name}             ; progress indicator message on LCD
+M117 Starting {jobname}             ; progress indicator message on LCD
 M140 S{material_bed_temperature_layer_0}   ; start bed heating up
 M104 S{material_soften_temperature}        ; start extruder heating to probe temp
 G28 O                                      ; Home all axis
@@ -40,5 +40,5 @@ M83                                        ; set extruder to relative mode
 G0 E-1 F1800                               ; retract 1mm
 G92 E0                                     ; set extruder position to 0
 M82                                        ; set extruder to absolute mode
-M117 {print_job_name};                     ; progress indicator message on LCD
+M117 {jobname};                     ; progress indicator message on LCD
 ;Start G-Code End

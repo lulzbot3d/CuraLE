@@ -1138,7 +1138,7 @@ UM.PreferencesPage
             //         color: UM.Theme.getColor("small_button_text")
             //         width: height
             //     }
-            }
+            //}
 
             Item
             {

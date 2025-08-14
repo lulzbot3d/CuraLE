@@ -11,13 +11,13 @@
         "has_optional_lcd": true,
         "lulzbot_firmware_name":
         {
-            "default": "Marlin_SideKick_289_SK175",
-            "has_lcd": "Marlin_SideKick_289_Universal"
+            "default": "Marlin_SideKick289_SK175",
+            "has_lcd": "Marlin_SideKick289_Universal"
         },
         "lulzbot_firmware_version":
         {
             "default": "2.0.9.0.16_8235204",
-            "has_lcd": "2.1.3.0.47_aa0310b4db"
+            "has_lcd": "2.1.3.0.48_29556655fa"
         },
         "lulzbot_machine_category": "SideKick",
         "lulzbot_machine_image": "sidekick_289",

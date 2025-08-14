@@ -21,7 +21,7 @@ G28 XY                       ; home X and Y
 G1 X-19 Y258 F1000           ; move to safe homing position
 M109 R{material_soften_temperature}                   ; soften filament for z homing
 G28 Z                        ; home Z
-M109 R{material_wipe_temperature}                    ; cool to probing temp during wipe
+M109 R{material_soften_temperature}                    ; cool to probing temp during wipe
 G1 E-30 F100                 ; suck up XXmm of filament
 G1 X-15 Y100 F3000           ; move above wiper pad
 G1 Z1                        ; push nozzle into wiper
@@ -49,7 +49,7 @@ G1 X-17 Y30 F2000            ; fast wipe
 G1 X-15 Y25 Z1.5 F1000       ; slow wipe
 G1 X-17 Y23 F1000            ; slow wipe
 G1 Z10                       ; raise extruder
-M109 R{material_probe_temperature}                   ; heat to probe temp
+M109 R{material_standby_temperature}                   ; heat to probe temp
 G1 X-9 Y-9                   ; move above probe
 M204 S100                    ; set accel for probing
 G29                          ; probe sequence (for auto-leveling)

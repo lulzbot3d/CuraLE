@@ -15,75 +15,232 @@ Cura.MachineAction
 {
     anchors.fill: parent
     property bool printerConnected: Cura.MachineManager.printerConnected
+    property bool klipperPrinter: Cura.MachineManager.activeMachineFirmwareType == "Klipper"
     property var activeOutputDevice: printerConnected ? Cura.MachineManager.printerOutputDevices[0] : null
     property bool canUpdateFirmware: activeOutputDevice ? activeOutputDevice.activePrinter.canUpdateFirmware : false
+    property string firmwareName: Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.getDefaultFirmwareName() : ""
 
     Column
     {
         id: firmwareUpdaterMachineAction
         anchors.fill: parent;
+        anchors.leftMargin: UM.Theme.getSize("default_margin").width * 2
+        anchors.rightMargin: UM.Theme.getSize("default_margin").width * 2
         UM.I18nCatalog { id: catalog; name: "cura"}
         spacing: UM.Theme.getSize("default_margin").height
+
+        visible: !klipperPrinter
 
         UM.Label
         {
             width: parent.width
-            text: catalog.i18nc("@title", "Update Firmware")
+            text: catalog.i18nc("@title", "<b>Updating Your LulzBot's Firmware</b>")
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.WordWrap
             font.pointSize: 18
         }
         UM.Label
         {
             width: parent.width
-            text: catalog.i18nc("@label", "Firmware is the piece of software running directly on your 3D printer. This firmware controls the step motors, regulates the temperature and ultimately makes your printer work.")
+            wrapMode: Text.WordWrap
+            font.pointSize: 10
+            text: catalog.i18nc("@label", "<b>What It Does:</b> Firmware controls your 3D printer's mechanical functions.")
         }
 
         UM.Label
         {
             width: parent.width
-            text: catalog.i18nc("@label", "The firmware shipping with new printers works, but new versions tend to have more features and improvements.")
+            wrapMode: Text.WordWrap
+            font.pointSize: 10
+            text: catalog.i18nc("@label", "<b>Why Update:</b> Gain new features and boost performance.")
         }
 
-        Row
+        UM.Label
         {
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: childrenRect.width
-            spacing: UM.Theme.getSize("default_margin").width
-            property string firmwareName: Cura.MachineManager.activeMachine.getDefaultFirmwareName()
-            Cura.SecondaryButton
+            width: parent.width
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
+            color: "red"
+            text: catalog.i18nc("@label", "<b>WARNING:</b> Updating will reset certain machine settings. It's a good idea to note down any settings you might want later.</font><br>")
+        }
+
+        UM.Label
+        {
+            width: parent.width
+            wrapMode: Text.WordWrap
+            font.pointSize: 10
+            text:
             {
-                id: autoUpgradeButton
-                text: catalog.i18nc("@action:button", "Automatically upgrade Firmware")
-                enabled: parent.firmwareName != "" && canUpdateFirmware
-                onClicked:
-                {
-                    updateProgressDialog.visible = true;
-                    activeOutputDevice.updateFirmware(parent.firmwareName);
-                }
+                catalog.i18nc("@label", " \
+                <b>Before Updating, Note Down:</b> \
+                <ul type=\"bullet\"> \
+                    <li>For All Machines: \
+                        (<a href='https://ohai.lulzbot.com/project/finding-recording-and-restoring-your-z-axis-offset/maintenance-repairs/'>Z-offset</a>) \
+                    <li>For TAZ Pro Platform: \
+                        (<a href='https://www.youtube.com/watch?v=fwazYrkyaMI'>Backlash Compensation</a>) \
+                    <li>For Legacy Machines (Mini 1, TAZ 6, etc): \
+                        (<a href='https://ohai.lulzbot.com/project/fine-tune-mini-extruder/calibration/'>E-Steps</a>) \
+                </ul>")
             }
-            Cura.SecondaryButton
+            onLinkActivated: Qt.openUrlExternally(link)
+
+            MouseArea
             {
-                id: manualUpgradeButton
-                text: catalog.i18nc("@action:button", "Upload custom Firmware")
-                enabled: canUpdateFirmware
-                onClicked:
-                {
-                    customFirmwareDialog.open()
-                }
+                anchors.fill: parent
+                acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
+                cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
             }
         }
 
         UM.Label
         {
             width: parent.width
-            visible: !printerConnected && !updateProgressDialog.visible
-            text: catalog.i18nc("@label", "Firmware can not be updated because there is no connection with the printer.")
+            wrapMode: Text.WordWrap
+            font.pointSize: 10
+            text:
+            {
+                catalog.i18nc("@label", " \
+                <b>After Updating:</b> \
+                <ul type=\"bullet\"> \
+                    <li>Re-enter the noted values or calibrate them anew. \
+                    <li>If using Universal Firmware (2.0.9.X+), <a href='https://ohai.lulzbot.com/project/flashing-firmware-through-cura-3620/firmware-flashing/'>select the proper tool head</a> from the printer's display. \
+                </ul>")
+            }
+            onLinkActivated: Qt.openUrlExternally(link)
+            MouseArea
+            {
+                anchors.fill: parent
+                acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
+                cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+            }
         }
 
-        Label
+        UM.Label
+        {
+            width: parent.width
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
+            font.pointSize: 12
+            text: catalog.i18nc("@label", "Enjoy enhanced reliability, repeatability, and performance from your LulzBot!")
+        }
+
+        UM.Label
+        {
+            width: parent.width
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
+            font.pointSize: 10
+            visible: firmwareName != ""
+            text: {
+                let splitVersion = firmwareName.split("_").reverse()
+                splitVersion.pop();
+                splitVersion = splitVersion.reverse();
+                splitVersion.pop();
+                let firmwareVersion = splitVersion.join(" ");
+                return catalog.i18nc("@label", "Firmware Version to be Flashed: <b>") + firmwareVersion + "</b>";
+            }
+        }
+
+        UM.Label
         {
             width: parent.width
             visible: printerConnected && !canUpdateFirmware
-            text: catalog.i18nc("@label", "Firmware can not be updated because the connection with the printer does not support upgrading firmware.")
+            horizontalAlignment: Text.AlignHCenter
+            font.pointSize: 8
+            text: catalog.i18nc("@label", "Firmware can not be updated because the connection with the printer does not support updating firmware.");
+        }
+
+        UM.Label
+        {
+            width: parent.width
+            wrapMode: Text.WordWrap
+            visible: !printerConnected
+            horizontalAlignment: Text.AlignHCenter
+            color: "red"
+            text: catalog.i18nc("@label", "Firmware can not be updated because there is no 3D printer detected!");
+        }
+
+        Cura.PrimaryButton
+        {
+            id: autoUpgradeButton
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: UM.Theme.getSize("setting_control").width * 2
+            height: UM.Theme.getSize("setting_control").height * 2
+            text: catalog.i18nc("@action:button", "Update Firmware")
+            textFont: UM.Theme.getFont("large_bold")
+            outlineColor: "black"
+            fixedWidthMode: true
+            enabled: printerConnected && firmwareName != ""
+            onClicked:
+            {
+                updateProgressDialog.visible = true;
+                activeOutputDevice.updateFirmware(firmwareName);
+            }
+        }
+
+        Text
+        {
+            id: manualUpgradeTextButton
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: catalog.i18nc("@action:button", "Upload Custom Firmware")
+            color: "grey"
+            font.pixelSize: 10
+            font.underline: true
+            font.bold: true
+
+            MouseArea
+            {
+                id: manualUpgradeTextButtonArea
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape:
+                {
+                    if (printerConnected)
+                    {
+                        return Qt.PointingHandCursor
+                    }
+                    else { return Qt.ArrowCursor }
+                }
+                onClicked:
+                {
+                    if (printerConnected) {
+                        customFirmwareDialog.open()
+                    }
+                }
+            }
+        }
+    }
+
+    Column
+    {
+        id: klipperFirmwareUpdateScreen
+
+        anchors.fill: parent;
+        anchors.leftMargin: UM.Theme.getSize("default_margin").width * 2
+        anchors.rightMargin: UM.Theme.getSize("default_margin").width * 2
+        spacing: UM.Theme.getSize("default_margin").height
+
+        visible: klipperPrinter
+
+        UM.Label
+        {
+            width: parent.width
+            text: catalog.i18nc("@title", "<b>Firmware Updating for Klipper Printers</b>")
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.WordWrap
+            font.pointSize: 18
+        }
+
+        UM.Label
+        {
+            width: parent.width
+
+            text: catalog.i18nc("@title", "<p>Klipper firmware printers will need to have their firmware updated via Mainsail, \
+            it cannot be done through Cura LE. This section will be updated with more detailed information at a later date</p>")
+
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.WordWrap
+            font.pointSize: 12
         }
     }
 
@@ -91,7 +248,7 @@ Cura.MachineAction
     {
         id: customFirmwareDialog
         title: catalog.i18nc("@title:window", "Select custom firmware")
-        nameFilters:  "Firmware image files (*.hex)"
+        nameFilters:  "Firmware image files (*.hex *.bin)"
         onAccepted:
         {
             updateProgressDialog.visible = true;
@@ -115,9 +272,11 @@ Cura.MachineAction
         Column
         {
             anchors.fill: parent
+            spacing: 5
 
             UM.Label
             {
+                id: statusLabel
                 anchors
                 {
                     left: parent.left
@@ -134,17 +293,23 @@ Cura.MachineAction
                         case 0:
                             return ""; //Not doing anything (eg; idling)
                         case 1:
-                            return catalog.i18nc("@label","Updating firmware.");
+                            return catalog.i18nc("@label","Updating firmware...");
                         case 2:
-                            return catalog.i18nc("@label","Firmware update completed.");
+                            return catalog.i18nc("@label","Firmware update completed!");
                         case 3:
-                            return catalog.i18nc("@label","Firmware update failed due to an unknown error.");
+                            return catalog.i18nc("@label","Firmware update failed due to an unknown error!");
                         case 4:
-                            return catalog.i18nc("@label","Firmware update failed due to an communication error.");
+                            return catalog.i18nc("@label","Firmware update failed due to an communication error!");
                         case 5:
-                            return catalog.i18nc("@label","Firmware update failed due to an input/output error.");
+                            return catalog.i18nc("@label","Firmware update failed due to an input/output error!");
                         case 6:
-                            return catalog.i18nc("@label","Firmware update failed due to missing firmware.");
+                            return catalog.i18nc("@label","Firmware update failed due to missing firmware!");
+                        case 7:
+                            return catalog.i18nc("@label","Preparing to update firmware...")
+                        case 8:
+                            return catalog.i18nc("@label","Printer not quite ready, please wait...")
+                        default:
+                            return catalog.i18nc("@label","Unknown State, something has gone wrong!")
                     }
                 }
             }

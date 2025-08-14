@@ -289,7 +289,6 @@ class WorkspaceDialog(QObject):
 
     @pyqtProperty(int, constant = True)
     def totalNumberOfSettings(self) -> int:
-        # general_definition_containers = ContainerRegistry.getInstance().findDefinitionContainers(id = "fdmprinter")
         general_definition_containers = ContainerRegistry.getInstance().findDefinitionContainers(id = "lulzbot_base")
         if not general_definition_containers:
             return 0

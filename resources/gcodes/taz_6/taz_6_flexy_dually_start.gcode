@@ -30,9 +30,9 @@ M109 S{material_soften_temperature_1} T1          ; soften filament and wait
 M109 S{material_soften_temperature_0} T0          ; soften filament and wait
 G28 X Y                                           ; home X and Y
 G1 X-19 Y258                                      ; move over the Z_MIN switch
-M104 S{material_wipe_temperature_0} T0            ; set T0 to wipe temp
-M109 S{material_wipe_temperature_1} T1            ; wait for T1 to reach temp
-M109 S{material_wipe_temperature_0} T0            ; wait for T0 to reach temp
+M104 S{material_soften_temperature_0} T0            ; set T0 to wipe temp
+M109 S{material_soften_temperature_1} T1            ; wait for T1 to reach temp
+M109 S{material_soften_temperature_0} T0            ; wait for T0 to reach temp
 G28 Z                                             ; home Z
 G1 E-15 F100                                      ; suck up XXmm of filament
 T1                                                ; switch extruders
@@ -66,7 +66,7 @@ G1 X-17 Y80 F2000                                 ; fast wipe
 G1 X-19 Y90 F2000                                 ; fast wipe
 G1 X-17 Y85 F2000                                 ; fast wipe
 G1 Z10                                            ; raise extruder
-M109 S{material_probe_temperature_0}              ; heat to probe temp
+M109 S{material_standby_temperature_0}            ; heat to probe temp
 G1 X-9 Y-9                                        ; move above first probe point
 M204 S100                                         ; set accel for probing
 G29                                               ; probe sequence (for auto-leveling)

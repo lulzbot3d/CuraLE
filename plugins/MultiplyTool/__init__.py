@@ -8,7 +8,7 @@ def getMetaData():
         "tool": {
             "name": "Multiply",
             "description": "Multiply Selected Model",
-            "icon": "Multiply",
+            "icon": "Multiply.svg",
             "tool_panel": "MultiplyTool.qml",
             "weight": 20
         }

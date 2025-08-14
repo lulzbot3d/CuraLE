@@ -51,5 +51,5 @@ M83                                        ; set extruder to relative mode
 G0 E-1 F1800                               ; retract 1mm
 G92 E0                                     ; set extruder position to 0
 M82                                        ; set extruder to absolute mode
-M117 {print_job_name};                     ; progress indicator message on LCD
+M117 {jobname};                     ; progress indicator message on LCD
 ;Start G-Code End

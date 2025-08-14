@@ -46,7 +46,7 @@ Rectangle
         width: UM.Theme.getSize("message_close").width
         height: UM.Theme.getSize("message_close").height
         color: UM.Theme.getColor("primary_text")
-        hoverColor: UM.Theme.getColor("primary_text_hover")
+        hoverColor: UM.Theme.getColor("primary_hover")
         iconSource: UM.Theme.getIcon("Cancel")
 
         onClicked: onRemove()

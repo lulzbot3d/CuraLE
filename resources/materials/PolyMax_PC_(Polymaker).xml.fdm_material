@@ -22,8 +22,6 @@
     <setting key="heated bed temperature">80</setting>
     <setting key="standby temperature">200</setting>
     <setting key="soften temperature">220</setting>
-    <setting key="probe temperature">200</setting>
-    <setting key="wipe temperature">220</setting>
     <setting key="part removal temperature">60</setting>
     <setting key="adhesion tendency">0</setting>
     <setting key="surface energy">65</setting>

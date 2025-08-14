@@ -20,8 +20,6 @@
     <setting key="heated bed temperature">0</setting>
     <setting key="standby temperature">0</setting>
     <setting key="soften temperature">0</setting>
-    <setting key="probe temperature">0</setting>
-    <setting key="wipe temperature">0</setting>
     <setting key="part removal temperature">0</setting>
 
     <machine>

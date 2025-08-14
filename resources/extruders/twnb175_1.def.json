@@ -15,6 +15,7 @@
             "maximum_value": "1"
         },
         "machine_nozzle_head_distance": { "default_value": 4 },
-        "machine_nozzle_offset_x": { "default_value": 43 }
+        "machine_nozzle_offset_x": { "default_value": 43 },
+        "material_diameter": { "default_value": 1.75 }
     }
 }

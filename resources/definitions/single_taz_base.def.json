@@ -10,8 +10,7 @@
         "lulzbot_tool_head_abbreviation": "SINGLE",
         "lulzbot_tool_head_image": "single_taz_6",
         "lulzbot_tool_head_priority": "10",
-        "machine_extruder_trains": { "0": "single_taz" },
-        "quality_definition": "single_taz_base"
+        "machine_extruder_trains": { "0": "single_taz" }
     },
     "overrides":
     {

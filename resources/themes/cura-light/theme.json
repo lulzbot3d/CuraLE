@@ -1,6 +1,6 @@
 {
     "metadata": {
-        "name": "UltiMaker"
+        "name": "LulzBot"
     },
 
     "fonts": {
@@ -202,23 +202,23 @@
     },
 
     "base_colors": {
-        "background_1": [255, 255, 255, 255],
-        "background_2": [243, 243, 243, 255],
-        "background_3": [232, 240, 253, 255],
-        "background_4": [3, 12, 66, 255],
+        "background_1": [245, 245, 245, 255],
+        "background_2": [233, 233, 233, 255],
+        "background_3": [242, 252, 232, 255],
+        "background_4": [66, 80, 12, 255],
 
-        "accent_1": [25, 110, 240, 255],
-        "accent_2": [16, 70, 156, 255],
+        "accent_1": [193, 216, 47, 255],
+        "accent_2": [120, 136, 20, 255],
         "border_main": [212, 212, 212, 255],
-        "border_accent_1": [25, 110, 240, 255],
-        "border_accent_2": [16, 70, 156, 255],
+        "border_accent_1": [193, 216, 47, 255],
+        "border_accent_2": [120, 136, 20, 255],
         "border_field": [180, 180, 180, 255],
 
-        "text_default": [0, 14, 26, 255],
+        "text_default": [24, 30, 5, 255],
         "text_disabled": [180, 180, 180, 255],
-        "text_primary_button": [255, 255, 255, 255],
-        "text_secondary_button": [25, 110, 240, 255],
-        "text_link_hover": [16, 70, 156, 255],
+        "text_primary_button": [245, 245, 245, 255],
+        "text_secondary_button": [120, 136, 20, 255],
+        "text_link_hover": [120, 136, 20, 255],
         "text_lighter": [108, 108, 108, 255],
 
         "um_green_1": [233, 245, 237, 255],
@@ -239,63 +239,63 @@
 
         "main_background": "background_1",
         "detail_background": "background_2",
-        "wide_lining": [245, 245, 245, 255],
+        "wide_lining": [235, 235, 235, 255],
         "thick_lining": [180, 180, 180, 255],
-        "lining": [192, 193, 194, 255],
-        "viewport_overlay": [246, 246, 246, 255],
+        "lining": [193, 194, 192, 255],
+        "viewport_overlay": [102, 102, 102, 200],
 
         "primary": "accent_1",
-        "primary_hover": [48, 182, 231, 255],
-        "primary_text": [255, 255, 255, 255],
-        "text_selection": [156, 195, 255, 127],
+        "primary_hover": [184, 230, 35, 255],
+        "primary_text": [245, 245, 245, 255],
+        "text_selection": [204, 255, 40, 127],
         "border": [127, 127, 127, 255],
         "border_field": [180, 180, 180, 255],
         "secondary": [240, 240, 240, 255],
 
         "expandable_active": [240, 240, 240, 255],
-        "expandable_hover": [232, 242, 252, 255],
+        "expandable_hover": [242, 252, 232, 255],
 
-        "icon": [8, 7, 63, 255],
+        "icon": "accent_2",
 
         "primary_button": "accent_1",
-        "primary_button_hover": [16, 70, 156, 255],
-        "primary_button_text": [255, 255, 255, 255],
+        "primary_button_hover": [120, 136, 20, 255],
+        "primary_button_text": [245, 245, 245, 255],
 
         "secondary_button": "background_1",
         "secondary_button_shadow": [216, 216, 216, 255],
-        "secondary_button_hover": [232, 240, 253, 255],
-        "secondary_button_text": "accent_1",
+        "secondary_button_hover": [242, 252, 232, 255],
+        "secondary_button_text": "accent_2",
 
-        "main_window_header_background": [8, 7, 63, 255],
-        "main_window_header_background_gradient": [25, 23, 91, 255],
-        "main_window_header_button_text_active": [8, 7, 63, 255],
-        "main_window_header_button_text_inactive": [255, 255, 255, 255],
-        "main_window_header_button_text_hovered": [255, 255, 255, 255],
-        "main_window_header_button_background_active": [255, 255, 255, 255],
-        "main_window_header_button_background_inactive": [255, 255, 255, 0],
-        "main_window_header_button_background_hovered": [117, 114, 159, 255],
+        "main_window_header_background": "accent_2",
+        "main_window_header_background_gradient": [72, 90, 14, 255],
+        "main_window_header_button_text_active": [52, 65, 10, 255],
+        "main_window_header_button_text_inactive": [245, 245, 245, 255],
+        "main_window_header_button_text_hovered": [245, 245, 245, 255],
+        "main_window_header_button_background_active": [245, 245, 245, 255],
+        "main_window_header_button_background_inactive": [245, 245, 245, 0],
+        "main_window_header_button_background_hovered": [128, 160, 24, 255],
 
-        "account_widget_outline_active": [70, 66, 126, 255],
+        "account_widget_outline_active": [100, 125, 20, 255],
         "account_sync_state_icon": [25, 25, 25, 255],
 
-        "machine_selector_printer_icon": [8, 7, 63, 255],
+        "machine_selector_printer_icon": [52, 65, 10, 255],
 
-        "action_panel_secondary": "accent_1",
+        "action_panel_secondary": "accent_2",
 
         "first_run_shadow": [50, 50, 50, 255],
 
-        "toolbar_background": [255, 255, 255, 255],
+        "toolbar_background": [240, 240, 240, 255],
 
         "notification_icon": [255, 0, 0, 255],
 
-        "printer_type_label_background": [228, 228, 242, 255],
+        "printer_type_label_background": [228, 242, 228, 255],
 
         "window_disabled_background": [0, 0, 0, 255],
 
         "text": [25, 25, 25, 255],
         "text_disabled": [180, 180, 180, 255],
         "text_detail": [174, 174, 174, 128],
-        "text_link": "accent_1",
+        "text_link": "accent_2",
         "text_inactive": [174, 174, 174, 255],
         "text_medium": [128, 128, 128, 255],
         "text_scene": [102, 102, 102, 255],
@@ -306,32 +306,32 @@
         "success": [36, 162, 73, 255],
         "disabled": [229, 229, 229, 255],
 
-        "toolbar_button_hover": [232, 242, 252, 255],
-        "toolbar_button_active": [232, 242, 252, 255],
-        "toolbar_button_active_hover": [232, 242, 252, 255],
+        "toolbar_button_hover": [200, 250, 38, 255],
+        "toolbar_button_active": [200, 250, 38, 255],
+        "toolbar_button_active_hover": [200, 242, 38, 255],
 
-        "button_text": [255, 255, 255, 255],
+        "button_text": [245, 245, 245, 255],
 
         "small_button_text": [102, 102, 102, 255],
-        "small_button_text_hover": [8, 7, 63, 255],
+        "small_button_text_hover": [52, 65, 10, 255],
 
-        "button_tooltip": [31, 36, 39, 255],
+        "button_tooltip": [36, 39, 31, 255],
 
-        "extruder_disabled": [255, 255, 255, 102],
+        "extruder_disabled": [245, 245, 245, 102],
 
-        "action_button": [255, 255, 255, 255],
-        "action_button_hovered": [232, 242, 252, 255],
-        "action_button_disabled": [245, 245, 245, 255],
+        "action_button": [245, 245, 245, 255],
+        "action_button_hovered": [242, 252, 232, 255],
+        "action_button_disabled": [235, 235, 235, 255],
         "action_button_disabled_text": [196, 196, 196, 255],
         "action_button_shadow": [223, 223, 223, 255],
 
-        "scrollbar_background": [255, 255, 255, 255],
-        "scrollbar_handle": [10, 8, 80, 255],
-        "scrollbar_handle_hover": [50, 130, 255, 255],
-        "scrollbar_handle_down": [50, 130, 255, 255],
+        "scrollbar_background": [245, 245, 245, 255],
+        "scrollbar_handle": [64, 80, 12, 255],
+        "scrollbar_handle_hover": "accent_2",
+        "scrollbar_handle_down": "accent_2",
 
         "setting_category": "background_1",
-        "setting_category_disabled": [255, 255, 255, 255],
+        "setting_category_disabled": [245, 245, 245, 255],
         "setting_category_hover": "background_2",
         "setting_category_text": "text_default",
         "setting_category_disabled_text": [24, 41, 77, 101],
@@ -340,10 +340,10 @@
         "setting_control": "background_2",
         "setting_control_highlight": "background_3",
         "setting_control_border": [199, 199, 199, 255],
-        "setting_control_border_highlight": [50, 130, 255, 255],
+        "setting_control_border_highlight": [130, 255, 50, 255],
         "setting_control_text": [35, 35, 35, 255],
         "setting_control_button": [102, 102, 102, 255],
-        "setting_control_button_hover": [8, 7, 63, 255],
+        "setting_control_button_hover": [52, 65, 10, 255],
         "setting_control_disabled": "background_2",
         "setting_control_disabled_text": [127, 127, 127, 255],
         "setting_control_disabled_border": [127, 127, 127, 255],
@@ -358,13 +358,13 @@
         "core_compatibility_warning": [243, 166, 59, 255],
 
         "progressbar_background": [245, 245, 245, 255],
-        "progressbar_control": [50, 130, 255, 255],
+        "progressbar_control": [130, 255, 50, 255],
 
         "slider_groove": [223, 223, 223, 255],
-        "slider_groove_fill": [8, 7, 63, 255],
-        "slider_handle": [8, 7, 63, 255],
-        "slider_handle_active": [50, 130, 255, 255],
-        "slider_text_background": [255, 255, 255, 255],
+        "slider_groove_fill": [52, 65, 10, 255],
+        "slider_handle": [52, 65, 10, 255],
+        "slider_handle_active": "accent_2",
+        "slider_text_background": [245, 245, 245, 255],
 
         "quality_slider_unavailable": [179, 179, 179, 255],
         "quality_slider_available": [0, 0, 0, 255],
@@ -408,19 +408,19 @@
         "category_background": "background_2",
 
         "tooltip": [25, 25, 25, 255],
-        "tooltip_text": [255, 255, 255, 255],
+        "tooltip_text": [245, 245, 245, 255],
 
-        "message_background": [255, 255, 255, 255],
+        "message_background": [245, 245, 245, 255],
         "message_border": [192, 193, 194, 255],
         "message_close": [102, 102, 102, 255],
-        "message_close_hover": [8, 7, 63, 255],
+        "message_close_hover": [52, 65, 10, 255],
         "message_progressbar_background": [245, 245, 245, 255],
         "message_progressbar_control": [50, 130, 255, 255],
-        "message_success_icon": [255, 255, 255, 255],
+        "message_success_icon": [245, 245, 245, 255],
         "message_warning_icon": [0, 0, 0, 255],
-        "message_error_icon": [255, 255, 255, 255],
+        "message_error_icon": [245, 245, 245, 255],
 
-        "tool_panel_background": [255, 255, 255, 255],
+        "tool_panel_background": [245, 245, 245, 255],
 
         "status_offline": [0, 0, 0, 255],
         "status_ready": [0, 205, 0, 255],
@@ -432,11 +432,11 @@
         "x_axis": [218, 30, 40, 255],
         "y_axis": [25, 110, 240, 255],
         "z_axis": [36, 162, 73, 255],
-        "all_axis": [255, 255, 255, 255],
+        "all_axis": [245, 245, 245, 255],
 
-        "viewport_background": [250, 250, 250, 255],
-        "volume_outline": [50, 130, 255, 255],
-        "buildplate": [244, 244, 244, 255],
+        "viewport_background": [204, 204, 204, 255],
+        "volume_outline": [226, 232, 104, 255],
+        "buildplate": [195, 195, 195, 255],
         "buildplate_grid": [180, 180, 180, 255],
         "buildplate_grid_minor": [228, 228, 228, 255],
 
@@ -447,13 +447,13 @@
         "model_overhang": [255, 0, 0, 255],
         "model_unslicable": [122, 122, 122, 255],
         "model_unslicable_alt": [172, 172, 127, 255],
-        "model_selection_outline": [50, 130, 255, 255],
+        "model_selection_outline": [235, 250, 110, 255],
         "model_non_printing": [122, 122, 122, 255],
 
-        "xray": [26,  26,  62, 255],
+        "xray": [26,  62,  26, 255],
 
         "layerview_ghost": [31, 31, 31, 95],
-        "layerview_none": [255, 255, 255, 255],
+        "layerview_none": [245, 245, 245, 255],
         "layerview_inset_0": [230, 0, 0, 255],
         "layerview_inset_x": [0, 230, 0, 255],
         "layerview_skin": [230, 230, 0, 255],
@@ -464,27 +464,27 @@
         "layerview_move_combing": [0, 0, 255, 255],
         "layerview_move_retraction": [128, 127, 255, 255],
         "layerview_support_interface": [63, 127, 255, 127],
-        "layerview_prime_tower": [0, 255, 255, 255],
+        "layerview_prime_tower": [0, 245, 245, 245],
         "layerview_nozzle": [224, 192, 16, 64],
-        "layerview_starts": [255, 255, 255, 255],
+        "layerview_starts": [245, 245, 245, 255],
 
 
-        "monitor_printer_family_tag": [228, 228, 242, 255],
+        "monitor_printer_family_tag": [228, 242, 228, 255],
         "monitor_text_disabled": [238, 238, 238, 255],
-        "monitor_icon_primary": [10, 8, 80, 255],
-        "monitor_icon_accent": [255, 255, 255, 255],
+        "monitor_icon_primary": [64, 80, 12, 255],
+        "monitor_icon_accent": [245, 245, 245, 255],
         "monitor_icon_disabled": [238, 238, 238, 255],
 
-        "monitor_card_border": [192, 193, 194, 255],
-        "monitor_card_background": [255, 255, 255, 255],
-        "monitor_card_hover": [232, 242, 252, 255],
+        "monitor_card_border": [193, 194, 192, 255],
+        "monitor_card_background": [245, 245, 245, 255],
+        "monitor_card_hover": [242, 252, 232, 255],
 
-        "monitor_stage_background": [246, 246, 246, 255],
-        "monitor_stage_background_fade": [246, 246, 246, 102],
+        "monitor_stage_background": [204, 204, 204, 255],
+        "monitor_stage_background_fade": [204, 204, 204, 102],
 
         "monitor_tooltip": [25, 25, 25, 255],
-        "monitor_tooltip_text": [255, 255, 255, 255],
-        "monitor_context_menu": [255, 255, 255, 255],
+        "monitor_tooltip_text": [245, 245, 245, 255],
+        "monitor_context_menu": [245, 245, 245, 255],
         "monitor_context_menu_hover": [245, 245, 245, 255],
 
         "monitor_skeleton_loading": [238, 238, 238, 255],
@@ -499,7 +499,7 @@
         "cloud_inactive": [253, 209, 58, 255],
         "connection_badge_background": [255, 255, 255, 255],
         "warning_badge_background": [0, 0, 0, 255],
-        "error_badge_background": [255, 255, 255, 255],
+        "error_badge_background": [245, 245, 245, 255],
 
         "border_field_light": [180, 180, 180, 255],
         "border_main_light": [212, 212, 212, 255],
@@ -646,12 +646,12 @@
 
         "monitor_preheat_temperature_control": [4.5, 2.0],
 
-        "welcome_wizard_window": [46, 50],
-        "modal_window_minimum": [60.0, 50.0],
+        "welcome_wizard_window": [80, 50],
+        "modal_window_minimum": [60.0, 45],
         "wizard_progress": [10.0, 0.0],
 
         "message": [30.0, 5.0],
-        "message_close": [2, 2],
+        "message_close": [1, 1],
         "message_radius": [0.25, 0.25],
         "message_action_button": [0, 2.5],
         "message_image": [15.0, 10.0],

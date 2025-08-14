@@ -25,12 +25,12 @@ Item
 
         anchors
         {
-            top: parent.top
+            top: customPrintSetup.top
             topMargin: UM.Theme.getSize("default_margin").height
-            left: parent.left
-            leftMargin: parent.padding
-            right: parent.right
-            rightMargin: parent.padding
+            left: customPrintSetup.left
+            leftMargin: customPrintSetup.padding
+            right: customPrintSetup.right
+            rightMargin: customPrintSetup.padding
         }
 
         UM.Label
@@ -185,10 +185,10 @@ Item
         {
             top: intent.bottom
             topMargin: UM.Theme.getSize("default_margin").height
-            left: parent.left
-            leftMargin: parent.padding
-            right: parent.right
-            rightMargin: parent.padding
+            left: customPrintSetup.left
+            leftMargin: customPrintSetup.padding
+            right: customPrintSetup.right
+            rightMargin: customPrintSetup.padding
         }
 
         Repeater
@@ -246,11 +246,11 @@ Item
         {
             top: tabBar.visible ? tabBar.bottom : intent.bottom
             topMargin: -UM.Theme.getSize("default_lining").width
-            left: parent.left
-            leftMargin: parent.padding
-            right: parent.right
-            rightMargin: parent.padding
-            bottom: parent.bottom
+            left: customPrintSetup.left
+            leftMargin: customPrintSetup.padding
+            right: customPrintSetup.right
+            rightMargin: customPrintSetup.padding
+            bottom: customPrintSetup.bottom
         }
         z: tabBar.z - 1
         // Don't show the border when only one extruder

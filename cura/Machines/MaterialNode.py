@@ -57,6 +57,9 @@ class MaterialNode(ContainerNode):
         for quality_id, quality_node in self.qualities.items():
             if self.variant.machine.preferred_quality_type == quality_node.quality_type:
                 return quality_node
+            quality_type_without_nozzle = quality_node.quality_type.split("_")[-1]
+            if self.variant.machine.preferred_quality_type == quality_type_without_nozzle:
+                return quality_node # Some of our qualities include the nozzle size but we want them to behave the same
         fallback = next(iter(self.qualities.values()))  # Should only happen with empty quality node.
         Logger.log("w", "Could not find preferred quality type {preferred_quality_type} for material {material_id} and variant {variant_id}, falling back to {fallback}.".format(
             preferred_quality_type = self.variant.machine.preferred_quality_type,
@@ -71,8 +74,6 @@ class MaterialNode(ContainerNode):
         container_registry = ContainerRegistry.getInstance()
         # Find all quality profiles that fit on this material.
         if not self.variant.machine.has_machine_quality:  # Need to find the global qualities.
-            # qualities = container_registry.findInstanceContainersMetadata(type = "quality",
-            #                                                               definition = "fdmprinter")
             qualities = container_registry.findInstanceContainersMetadata(type = "quality",
                                                                             definition = "lulzbot_base")
         elif not self.variant.machine.has_materials:

@@ -125,6 +125,8 @@ class GcodeStartEndFormatter:
         # when these variables are encountered, we return them as-is. They are replaced later
         # when the actual values are known.
         post_slice_data_variables = ["filament_cost", "print_time", "filament_amount", "filament_weight", "jobname"]
+        extruder_variables = [f"{variable}_{extruder}" for variable in ["filament_cost", "filament_amount", "filament_weight"] for extruder in range(10)]
+        post_slice_data_variables.extend(extruder_variables)
         if expression in post_slice_data_variables:
             return f"{{{expression}}}"
 
@@ -565,31 +567,6 @@ class StartSliceJob(Job):
         result["date"] = time.strftime("%d-%m-%Y")
         result["day"] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][int(time.strftime("%w"))]
         result["initial_extruder_nr"] = CuraApplication.getInstance().getExtruderManager().getInitialExtruderNr()
-
-        # # Multiple extruder settings
-        # extruder_manager = ExtruderManager.getInstance()
-        # for extruder_stack in extruder_manager.getMachineExtruders(CuraApplication.getInstance().getGlobalContainerStack().getId()):
-        #     num = extruder_stack.getMetaDataEntry("position")
-
-        #     # For instances where you're using multiple different materials
-        #     result["material_id_%s" % num] = extruder_stack.material.getMetaDataEntry("base_file", "")
-        #     result["material_type_%s" % num] = extruder_stack.material.getMetaDataEntry("material", "")
-        #     result["material_name_%s" % num] = extruder_stack.material.getMetaDataEntry("name", "")
-        #     result["material_brand_%s" % num] = extruder_stack.material.getMetaDataEntry("brand", "")
-
-        #     for key in extruder_stack.getAllKeys():
-        #         if extruder_stack.getProperty(key, "settable_per_extruder") == False:
-        #             continue
-        #         if key in ["material_soften_temperature", "material_wipe_temperature", "material_probe_temperature",
-        #                    "material_print_temperature_layer_0", "material_print_temperature",
-        #                    "material_diameter", "machine_nozzle_size", "machine_nozzle_z_offset"]:
-        #             result["%s_%s" % (key, num)] = extruder_stack.getProperty(key, "value")
-
-        # # Get values specific to initial extruder
-        # initial_extruder = str(extruder_manager.getInitialExtruderNr())
-        # result["initial_extruder_nr"] = initial_extruder
-        # num_used_extruders = len(extruder_manager.getUsedExtruderStacks())
-        # result["material_print_temperature_layer_0_init"] = result["material_print_temperature_layer_0_%s" % initial_extruder]
 
         # If adding or changing a setting here, please update the associated wiki page
         # https://github.com/Ultimaker/Cura/wiki/Start-End-G%E2%80%90Code

@@ -21,8 +21,6 @@
     <setting key="print temperature">245.0</setting>
     <setting key="standby temperature">170</setting>
     <setting key="soften temperature">190</setting>
-    <setting key="probe temperature">170</setting>
-    <setting key="wipe temperature">190</setting>
     <setting key="print cooling">0.0</setting>
     <setting key="retraction amount">1.0</setting>
     <setting key="heated bed temperature">90.0</setting>

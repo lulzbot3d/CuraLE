@@ -20,7 +20,7 @@ M109 R{material_soften_temperature} ; soften filament before homing Z
 G28                          ; home all
 G0 X0 Y187 Z156 F200         ; move away from endstops
 M907 X675                    ; reduce extruder torque for safety
-M109 R{material_wipe_temperature}                    ; set to cleaning temp and wait
+M109 R{material_soften_temperature} ; set to cleaning temp and wait
 G1 E-30 F45                  ; suck up XXmm of filament
 G1 X45 Y173 F11520           ; move behind scraper
 G1 Z0  F1200                 ; CRITICAL: set Z to height of top of scraper
@@ -53,7 +53,7 @@ G1 X112 Y171 Z-0.5 F1000     ; wiping
 G1 Z10                       ; raise z
 G28 X0 Y0                    ; home x and y
 G0 X0 Y187 F200 ; move away from endstops
-M109 R{material_probe_temperature}                    ; set to probing temp
+M109 R{material_standby_temperature}                    ; set to probing temp
 M204 S300                    ; Set probing acceleration
 G29                          ; Probe
 M420 S1                      ; enable leveling matrix

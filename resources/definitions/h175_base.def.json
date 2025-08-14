@@ -10,8 +10,7 @@
         "lulzbot_tool_head_abbreviation": "H175",
         "lulzbot_tool_head_image": "h175",
         "lulzbot_tool_head_priority": "16",
-        "machine_extruder_trains": { "0": "h175" },
-        "quality_definition": "h175_base"
+        "machine_extruder_trains": { "0": "h175" }
     },
     "overrides":
     {}

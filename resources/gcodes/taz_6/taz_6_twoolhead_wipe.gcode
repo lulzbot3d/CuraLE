@@ -1,8 +1,8 @@
 ; Twoolhead TAZ 6 wipe sequence
 T0                                  ; switch to extruder 1
-M104 S{material_wipe_temperature}   ; set temp but don't wait
+M104 S{material_soften_temperature}   ; set temp but don't wait
 T1                                  ; switch to extruder 2
-M109 R{material_wipe_temperature}   ; wait for extruder to reach wiping temp
+M109 R{material_soften_temperature}   ; wait for extruder to reach wiping temp
 G92 E0                              ; set extruder location to 0
 G1 E-30 F100                        ; retract filament
 G1 X-15 Y100 F3000                  ; move above wiper pad

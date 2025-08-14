@@ -13,9 +13,9 @@ T1                                  ; switch to extruder 2
 M109 R{material_soften_temperature} ; soften filament before homing Z
 G28 Z                               ; home Z
 T0                                  ; switch to extruder 1
-M104 S{material_wipe_temperature}   ; set temp but don't wait
+M104 S{material_soften_temperature}   ; set temp but don't wait
 T1                                  ; switch to extruder 2
-M109 R{material_wipe_temperature}   ; wait for extruder to reach wiping temp
+M109 R{material_soften_temperature}   ; wait for extruder to reach wiping temp
 G92 E0                              ; set extruder location to 0
 G1 E-30 F100                        ; retract filament
 G1 X-15 Y100 F3000                  ; move above wiper pad
@@ -70,9 +70,9 @@ G1 X153 Y25 F1000                   ; slow wipe
 G1 X155 Y23 F1000                   ; slow wipe
 G1 Z15                              ; raise extruder
 T0                                  ; switch extruder
-M104 S{material_probe_temperature}  ; set but don't wait
+M104 S{material_standby_temperature}  ; set but don't wait
 T1                                  ; switch extruder
-M109 R{material_probe_temperature}  ; wait for extruder to reach probe temp
+M109 R{material_standby_temperature}  ; wait for extruder to reach probe temp
 G28 XY                              ; home X and Y
 M204 S100                           ; set probing acceleration
 G29                                 ; start auto-leveling sequence

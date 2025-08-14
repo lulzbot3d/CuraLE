@@ -20,7 +20,7 @@ G28                                        ; home all axes
 G0 X0 Y187 Z156 F200                       ; move away from endstops
 M109 R{material_soften_temperature}
 G1 E-30 F75                                ; retract filament
-M109 R{material_wipe_temperature}          ; wait for extruder to reach wiping temp
+M109 R{material_soften_temperature}          ; wait for extruder to reach wiping temp
 G1 X45 Y173 F11520                         ; move above wiper pad
 G1 Z0 F1200                                ; push nozzle into wiper
 G1 X42 Y173 Z-.5 F4000                     ; wiping
@@ -52,7 +52,7 @@ G1 X112 Y171 Z-0.5 F1000                   ; wiping
 G1 Z10                                     ; raise extruder
 G28 X0 Y0                                  ; home X and Y
 G0 X0 Y187 F200                            ; move away from endstops
-M109 R{material_probe_temperature}         ; wait for extruder to reach probe temp
+M109 R{material_standby_temperature}         ; wait for extruder to reach probe temp
 M204 S300                                  ; set probing acceleration
 G29                                        ; start auto-leveling sequence
 M420 S1                                    ; enable leveling matrix

@@ -24,16 +24,16 @@ M107                                               ; disable fans
 G90                                                ; absolute positioning
 M420 S0                                            ; disable previous leveling matrix
 M140 S{material_bed_temperature_layer_0}           ; begin bed temping up
-M104 S{material_wipe_temperature_0}                ; soften filament
-M104 S{material_wipe_temperature_0} T1             ; soften filament
+M104 S{material_soften_temperature_0}                ; soften filament
+M104 S{material_soften_temperature_0} T1             ; soften filament
 G28 O                                              ; home
 G0 X50 Y25 Z10 F2000
 M117 Heating...;
 M109 R{material_soften_temperature_0}              ; wait for temp
 M106 S255                                          ; turn on fans to speed cooling
-M109 R{material_wipe_temperature_0}                ; wait for T0 wipe temp
-M104 S{material_probe_temperature_0}               ; cool to probe temp on E0
-M104 S{material_probe_temperature_0} T1            ; cool to probe temp on E1
+M109 R{material_soften_temperature_0}                ; wait for T0 wipe temp
+M104 S{material_standby_temperature}               ; cool to probe temp on E0
+M104 S{material_standby_temperature} T1            ; cool to probe temp on E1
 M83                                                ; set extruder to relative mode
 G1 E-4 F500                                        ; retract 4mm to help with drool on fresh filament load
 M82                                                ; set extruder to absolute mode
@@ -86,5 +86,5 @@ M83                                                ; set extruder to relative mo
 G0 E-1 F1800                                       ; retract 1mm
 G92 E0                                             ; set extruder position to 0
 M82                                                ; set extruder to absolute mode
-M117 Printing {print_job_name}...
+M117 Printing {jobname}...
 ;Start G-Code End

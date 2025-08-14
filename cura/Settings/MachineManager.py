@@ -267,7 +267,6 @@ class MachineManager(QObject):
         return len(self.getAllSettingKeys())
 
     def getAllSettingKeys(self) -> Set[str]:
-        # general_definition_containers = CuraContainerRegistry.getInstance().findDefinitionContainers(id="fdmprinter")
         general_definition_containers = CuraContainerRegistry.getInstance().findDefinitionContainers(id="lulzbot_base")
         if not general_definition_containers:
             return set()
@@ -1630,7 +1629,6 @@ class MachineManager(QObject):
                 message.show()
 
         # See if we need to show the Discard or Keep changes screen
-        # if self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
         if self.hasUserSettings:
             self._application.discardOrKeepProfileChanges()
 
@@ -1675,7 +1673,6 @@ class MachineManager(QObject):
             self._updateQualityToPreferred()
 
         # See if we need to show the Discard or Keep changes screen
-        # if self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
         if self.hasUserSettings:
             self._application.discardOrKeepProfileChanges()
 
@@ -1701,7 +1698,6 @@ class MachineManager(QObject):
             self._updateQualityWithMaterial()
 
         # See if we need to show the Discard or Keep changes screen
-        # if self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
         if self.hasUserSettings:
             self._application.discardOrKeepProfileChanges()
 
@@ -1740,7 +1736,6 @@ class MachineManager(QObject):
             self._setQualityGroup(quality_group)
 
         # See if we need to show the Discard or Keep changes screen
-        # if not no_dialog and self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
         if not no_dialog and self.hasUserSettings:
             self._application.discardOrKeepProfileChanges()
 
@@ -1861,7 +1856,6 @@ class MachineManager(QObject):
             self._setQualityChangesGroup(quality_changes_group)
 
         # See if we need to show the Discard or Keep changes screen
-        # if not no_dialog and self.hasUserSettings and self._application.getPreferences().getValue("cura/active_mode") == 1:
         if not no_dialog and self.hasUserSettings:
             self._application.discardOrKeepProfileChanges()
 
