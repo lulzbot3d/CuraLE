@@ -14,8 +14,7 @@
         {
             "0": "dual_v3_0",
             "1": "dual_v3_1"
-        },
-        "quality_definition": "dual_v3_base"
+        }
     },
     "overrides":
     {

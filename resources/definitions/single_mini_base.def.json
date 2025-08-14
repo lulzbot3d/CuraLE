@@ -10,8 +10,7 @@
         "lulzbot_tool_head_abbreviation": "SINGLE",
         "lulzbot_tool_head_image": "single_mini_1",
         "lulzbot_tool_head_priority": "10",
-        "machine_extruder_trains": { "0": "single_mini" },
-        "quality_definition": "single_mini_base"
+        "machine_extruder_trains": { "0": "single_mini" }
     },
     "overrides":
     {

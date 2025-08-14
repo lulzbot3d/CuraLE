@@ -10,8 +10,7 @@
         "lulzbot_tool_head_abbreviation": "HSPLUS",
         "lulzbot_tool_head_image": "hsplus",
         "lulzbot_tool_head_priority": "15",
-        "machine_extruder_trains": { "0": "hsplus" },
-        "quality_definition": "hsplus_base"
+        "machine_extruder_trains": { "0": "hsplus" }
     },
     "overrides":
     {

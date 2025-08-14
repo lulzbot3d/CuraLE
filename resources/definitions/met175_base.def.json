@@ -12,8 +12,7 @@
         "lulzbot_tool_head_image": "met175",
         "lulzbot_tool_head_priority": "03",
         "machine_extruder_trains": { "0": "met175" },
-        "preferred_variant_name": "0.5mm",
-        "quality_definition": "met175_base"
+        "preferred_variant_name": "0.5mm"
     },
     "overrides":
     {

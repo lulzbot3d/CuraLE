@@ -14,8 +14,7 @@
         "lulzbot_tool_head_priority": "00",
         "machine_extruder_trains": { "0": "syringe" },
         "preferred_material": "Generic_Sodium_Alginate",
-        "preferred_variant_name": "25 Gauge",
-        "quality_definition": "syringe_base"
+        "preferred_variant_name": "25 Gauge"
     },
     "overrides":
     {
