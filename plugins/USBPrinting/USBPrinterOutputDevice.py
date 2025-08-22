@@ -1,5 +1,5 @@
 # Copyright (c) 2020 Ultimaker B.V.
-# Cura LE is released under the terms of the LGPLv3 or higher.
+# Cura is released under the terms of the LGPLv3 or higher.
 
 import os
 from enum import IntEnum
@@ -41,8 +41,6 @@ catalog = i18nCatalog("cura")
 
 
 class USBPrinterOutputDevice(PrinterOutputDevice):
-    """USB Printer Output Device adds USB options on top of a printer output device.
-    """
 
     messageFromPrinter = pyqtSignal(str)
     printersChanged = pyqtSignal()
@@ -105,11 +103,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._firmware_updater.firmwareUpdating.connect(self.setIsFlashing)
         self.printersChanged.connect(self.printersChanged)
 
-        plugin_path = PluginRegistry.getInstance().getPluginPath("LulzBotUSBPrinting")
+        plugin_path = PluginRegistry.getInstance().getPluginPath("USBPrinting")
         if plugin_path:
             self._monitor_view_qml_path = os.path.join(plugin_path, "MonitorItem.qml")
         else:
-            Logger.log("e", "Cannot create Monitor QML view: cannot find plugin path for plugin [LulzBotUSBPrinting]")
+            Logger.log("e", "Cannot create Monitor QML view: cannot find plugin path for plugin [USBPrinting]")
             self._monitor_view_qml_path = ""
 
         self._onGlobalContainerStackChanged()
