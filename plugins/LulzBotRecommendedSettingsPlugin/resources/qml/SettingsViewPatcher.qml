@@ -29,21 +29,15 @@ Item
         var printSetupContent = printSetupSelector.contentItem
         var printSetupChildren = printSetupContent.children[1]
 
+        var customPrintSetup = printSetupChildren.children[1]
         var recommendedPrintSetup = printSetupChildren.children[0]
-        var recommendedPrintSetupColumn = recommendedPrintSetup.children[0]
+        var profileSelectorRow = customPrintSetup.children[0]
 
-        // var profileSelectorRow = recommendedPrintSetupColumn.children[1]
-        // var extruderTabs = customPrintSetup.children[1]
-
-        // customPrintSetup.children = [lulzRecommendedSettingsView]
-
-        recommendedPrintSetupColumn[9] = lulzRecommendedSettingsView
-
+        // customPrintSetup.children = [tabbedSettingsView]
+        recommendedPrintSetup.children = lulzRecommendedSettingsView
         if(!withSidebarGUI)
         {
-            // lulzRecommendedSettingsView.children[0].children = [profileSelectorRow, extruderTabs, spacer]
-            lulzRecommendedSettingsView.children[0].children = [profileSelectorRow, spacer]
-            // extruderTabs.anchors.leftMargin = 3 * UM.Theme.getSize("default_margin").height
+            //lulzRecommendedSettingsView.children[0].children = [profileSelectorRow, spacer]
             spacer.visible = true
         }
         lulzRecommendedSettingsView.backgroundItem = parent.children[0]

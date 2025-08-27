@@ -11,9 +11,22 @@ Item
 {
     id: settingsView
 
-    UM.Label
+    property var tooltipItem
+    property var backgroundItem
+
+    anchors.fill: parent
+    anchors.margins: UM.Theme.getSize("default_lining").width
+
+    UM.I18nCatalog { id: catalog; name: "cura"; }
+
+    Item
     {
-        text: "Stinky"
+        id: profileSelectorRow
+        height: childrenRect.height
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.leftMargin: UM.Theme.getSize("default_margin").width
+        anchors.rightMargin: UM.Theme.getSize("default_margin").width
     }
 
 }

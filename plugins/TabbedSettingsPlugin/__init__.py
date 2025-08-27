@@ -18,12 +18,10 @@ def getMetaData():
 
 def register(app):
     if __matchVersion():
-        # return {"extension": TabbedSettingsPlugin.TabbedSettingsPlugin()}
-        return {}
+        return {"extension": TabbedSettingsPlugin.TabbedSettingsPlugin()}
     else:
         Logger.log("w", "Plugin not loaded because of a version mismatch")
-        # return {"extension": TabbedSettingsIncompatibleVersion.TabbedSettingsIncompatibleVersion()}
-        return {}
+        return {"extension": TabbedSettingsIncompatibleVersion.TabbedSettingsIncompatibleVersion()}
 
 
 def __matchVersion():

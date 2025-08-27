@@ -34,7 +34,7 @@ class SliceInfo(QObject, Extension):
     no model files are being sent (Just a SHA256 hash of the model).
     """
 
-    info_url = "https://statistics.ultimaker.com/api/v2/cura/slice"
+    info_url = ""
 
     _adjust_flattened_names = {
         "extruders_extruder": "extruders",
