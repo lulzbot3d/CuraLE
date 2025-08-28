@@ -357,7 +357,7 @@ class GlobalStack(CuraContainerStack):
 
                 hex_file = name + "_" + version + "." + firmware_extension
             else:
-                Logger.log("w", "LulzBot firmware in CuraLE is only available for Marlin printers. Current printer firmware type: ")
+                Logger.log("w", "LulzBot firmware in CuraLE is only available for Marlin printers. Current printer firmware type: %s", firmware_type)
                 return ""
 
         else:

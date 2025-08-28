@@ -52,8 +52,8 @@ class MoonrakerMachineAction(MachineAction):
         self.settingsCameraImageMirrorChanged.emit()
  
     def _onContainerAdded(self, container) -> None:
-        # Add this action as a supported action to all machine definitions
-        if isinstance(container, DefinitionContainer) and container.getMetaDataEntry("type") == "machine":
+        # Add this action as a supported action to all Klipper machine definitions
+        if isinstance(container, DefinitionContainer) and container.getMetaDataEntry("type") == "machine" and container.getMetaDataEntry("lulzbot_firmware_type") == "Klipper":
             CuraApplication.getInstance().getMachineActionManager().addSupportedAction(container.getId(), self.getKey())
 
     def _reset(self) -> None:
