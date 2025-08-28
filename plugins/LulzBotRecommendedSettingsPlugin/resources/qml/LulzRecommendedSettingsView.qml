@@ -57,20 +57,25 @@ Item
         {
 
             id: settingsColumn
-            spacing: UM.Theme.getSize("thick_margin").height
+            padding: UM.Theme.getSize("default_margin").width
+            spacing: UM.Theme.getSize("default_margin").height
 
-            width: settingsArea.width - 35
-            height: childrenRect.height + 10
+            width: recommendedPrintSetup.width - 2 * padding - UM.Theme.getSize("thin_margin").width
 
             // Makes it easier to adjust the overall size of the columns.
             // We want the labels to take up just under half of the available space.
             property real firstColumnWidth: Math.round(width * (11/24))
 
-            RecommendedStrengthSection
+            UM.Label
             {
-                width: parent.width
-                labelColumnWidth: settingsColumn.firstColumnWidth
+                text: "Bazinga"
             }
+
+            // RecommendedStrengthSection
+            // {
+            //     width: parent.width
+            //     labelColumnWidth: settingsColumn.firstColumnWidth
+            // }
 
             // RecommendedSupportSection
             // {

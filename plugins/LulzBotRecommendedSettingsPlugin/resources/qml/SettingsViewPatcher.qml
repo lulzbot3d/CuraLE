@@ -37,7 +37,7 @@ Item
         recommendedPrintSetup.children = lulzRecommendedSettingsView
         if(!withSidebarGUI)
         {
-            //lulzRecommendedSettingsView.children[0].children = [profileSelectorRow, spacer]
+            lulzRecommendedSettingsView.children[0].children = [profileSelectorRow, spacer]
             spacer.visible = true
         }
         lulzRecommendedSettingsView.backgroundItem = parent.children[0]

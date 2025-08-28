@@ -2,10 +2,9 @@
 // Cura is released under the terms of the LGPLv3 or higher.
 
 import QtQuick 2.7
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls
 
-import UM 1.2 as UM
+import UM 1.8 as UM
 import Cura 1.0 as Cura
 
 
@@ -57,11 +56,9 @@ Item {
             verticalCenter: enableVaseModeRowTitle.verticalCenter
         }
 
-        CheckBox {
+        UM.CheckBox {
             id: vaseModeCheckBox
             anchors.verticalCenter: parent.verticalCenter
-
-            style: UM.Theme.styles.checkbox
 
             checked: magicSpiralize.properties.value == "True"
 
