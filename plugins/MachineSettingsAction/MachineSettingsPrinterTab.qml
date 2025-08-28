@@ -169,7 +169,7 @@ Item
                 afterOnEditingFinishedFunction: manager.updateHasMaterialsMetadata
             }
 
-            /*Cura.SimpleCheckBox // "LCD"
+            Cura.SimpleCheckBox // "LCD"
             {
                 id: lcdCheckBox
                 containerStackId: machineStackId
@@ -193,7 +193,7 @@ Item
                 labelWidth: base.labelWidth
                 checkBoxEnabled: Cura.MachineManager.activeMachineOptionalBLTouch
                 forceUpdateOnChangeFunction: forceUpdateFunction
-            }*/
+            }
 
         }
 
