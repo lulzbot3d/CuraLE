@@ -6,19 +6,17 @@ G91                                               ; relative positioning
 G0 Z50                                            ; move up 50mm
 G90                                               ; absolute positioning
 G1 X145 Y0 F3000                                  ; move to cooling position
-G91                                               ; relative positioning
 M83                                               ; relative extrude
 G0 E-14                                           ; retract 14mm
 M82                                               ; absolute extrude
-M104 S0 T0                                        ; T0 hotend off
-M104 S0 T1                                        ; T1 hotend off
+M104 S0                                           ; disable hotend
 M117 Cooling, please wait;                          progress indicator message
 M190 R{material_part_removal_temperature}         ; wait for bed to cool off
 M107 P1                                           ; turn off bed fan
 G0 Y280 F3000                                     ; present finished print
-M140 S{material_keep_part_removal_temperature_t}  ; keep temperature or cool downs
-M77			                                      ; stop GLCD timer
-M18 E				                              ; turn off x y and e axis
+M140 S{material_keep_part_removal_temperature_t}  ; keep temperature or cool down
+M77                                               ; stop GLCD timer
+M18 E                                             ; turn off e axis
 G90                                               ; absolute positioning
 M117 Print Complete.;                               progress indicator message
 M2 R                                              ; bring up end of print screen
