@@ -63,7 +63,7 @@ Item {
             containerStackId: alive ? Cura.MachineManager.activeMachine.id : null
             settingKey: "print_sequence"
             controlWidth: parent.width
-            useInBuiltTooltip: false
+            // useInBuiltTooltip: false
         }
     }
 }

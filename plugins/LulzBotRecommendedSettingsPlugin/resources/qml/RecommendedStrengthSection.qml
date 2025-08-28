@@ -65,7 +65,7 @@ Item {
             containerStackId: Cura.ExtruderManager.activeExtruderStackId
             settingKey: "infill_pattern"
             controlWidth: infillPatternContainer.width
-            useInBuiltTooltip: false
+            // useInBuiltTooltip: false
         }
     }
 
@@ -145,9 +145,9 @@ Item {
             width: parent.width
             height: UM.Theme.getSize("print_setup_slider_handle").height // The handle is the widest element of the slider
 
-            minimumValue: 0
+            from: 0
             property int allowedMinimum: 0
-            maximumValue: 100
+            to: 100
             stepSize: 1
             property int tickmarkSpacing: 10
             wheelEnabled: false
@@ -476,7 +476,7 @@ Item {
             containerStackId: Cura.ExtruderManager.activeExtruderStackId
             settingKey: "top_bottom_pattern"
             controlWidth: parent.width
-            useInBuiltTooltip: false
+            // useInBuiltTooltip: false
         }
     }
 }

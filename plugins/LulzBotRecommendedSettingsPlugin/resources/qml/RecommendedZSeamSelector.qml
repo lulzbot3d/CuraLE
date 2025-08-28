@@ -66,7 +66,7 @@ Item {
             containerStackId: Cura.ExtruderManager.activeExtruderStackId
             settingKey: "z_seam_type"
             controlWidth: zSeamAlignmentContainer.width
-            useInBuiltTooltip: false
+            // useInBuiltTooltip: false
         }
 
         UM.SettingPropertyProvider {
@@ -104,7 +104,7 @@ Item {
             containerStackId: Cura.ExtruderManager.activeExtruderStackId
             settingKey: "z_seam_position"
             controlWidth: zSeamPositionContainer.width
-            useInBuiltTooltip: false
+            // useInBuiltTooltip: false
         }
     }
 }

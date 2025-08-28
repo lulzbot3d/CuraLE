@@ -54,7 +54,7 @@ class LulzBotRecommendedSettingsPlugin(QObject, Extension):
         )
         if not self._qml_patcher:
             Logger.log(
-                "w", "Could not create qml components for TabbedSettingsPlugin"
+                "w", "Could not create qml components for LulzBotRecommendedSettingsPlugin"
             )
             return
 
