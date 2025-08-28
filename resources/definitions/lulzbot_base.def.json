@@ -203,14 +203,6 @@
                     "label": "Machine Baud Rate",
                     "type": "int"
                 },
-                "machine_bltouch_start_gcode":
-                {
-                    "default_value": ";A cool generic default value",
-                    "description": "Used when the printer needs to use an alternative start gcode due to a non-standard BLTouch.",
-                    "enabled": false,
-                    "label": "Alternative Start Gcode File",
-                    "type": "str"
-                },
                 "machine_has_bltouch":
                 {
                     "default_value": false,
