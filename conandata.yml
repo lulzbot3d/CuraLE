@@ -1,4 +1,4 @@
-version: "5.10.3"
+version: "5.10.3-alpha.0"
 requirements:
   - "curale_resources/5.10.3"
   - "uraniumle/5.10.3"
