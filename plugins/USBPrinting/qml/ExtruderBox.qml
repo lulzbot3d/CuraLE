@@ -257,58 +257,7 @@ Item
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.rightMargin: UM.Theme.getSize("default_margin").width
-            style: ButtonStyle {
-                background: Rectangle
-                {
-                    border.width: UM.Theme.getSize("default_lining").width
-                    implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
-                    border.color:
-                    {
-                        if(!control.enabled)
-                        {
-                            return UM.Theme.getColor("action_button_disabled_border");
-                        }
-                        else if(control.pressed)
-                        {
-                            return UM.Theme.getColor("action_button_active_border");
-                        }
-                        else if(control.hovered)
-                        {
-                            return UM.Theme.getColor("action_button_hovered_border");
-                        }
-                        else
-                        {
-                            return UM.Theme.getColor("action_button_border");
-                        }
-                    }
-                    color:
-                    {
-                        if(!control.enabled)
-                        {
-                            return UM.Theme.getColor("action_button_disabled");
-                        }
-                        else if(control.pressed)
-                        {
-                            return UM.Theme.getColor("action_button_active");
-                        }
-                        else if(control.hovered)
-                        {
-                            return UM.Theme.getColor("action_button_hovered");
-                        }
-                        else
-                        {
-                            return UM.Theme.getColor("action_button");
-                        }
-                    }
-                    Behavior on color
-                    {
-                        ColorAnimation
-                        {
-                            duration: 50
-                        }
-                    }
-                }
-            }
+
             text:
             {
                 if(extruderModel == null)

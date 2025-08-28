@@ -8,8 +8,6 @@ import QtQuick.Controls 2.15
 import UM 1.5 as UM
 import Cura 1.0 as Cura
 
-import "PrinterOutput"
-
 ScrollView
 {
     id: base
@@ -193,7 +191,7 @@ ScrollView
         }
     }
 
-    PrintSetupTooltip
+    Cura.PrintSetupTooltip
     {
         id: tooltip
     }

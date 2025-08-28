@@ -149,10 +149,11 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         :param only_list_usb: If true, only usb ports are listed
         """
         base_list = []
-        required_port = self._application.getGlobalContainerStack().getProperty("machine_port", "value")
+        required_port = self._application.getGlobalContainerStack().getProperty("machine_serial_port", "value")
         try:
             port_list = serial.tools.list_ports.comports()
         except TypeError:  # Bug in PySerial causes a TypeError if port gets disconnected while processing.
+            Logger.log("w", "TypeError when attempting to retreive the port list!")
             port_list = []
         for port in port_list:
             if not isinstance(port, tuple):
@@ -160,6 +161,8 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
             if not port[2]:  # HWID may be None if the device is not USB or the system doesn't report the type.
                 continue
             if only_list_usb and not port[2].startswith("USB"):
+                continue
+            if port[1] == "n/a" and port[2] == "n/a":
                 continue
             if required_port != "AUTO":
                 if port[0] != required_port:

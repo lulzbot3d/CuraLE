@@ -1,13 +1,14 @@
 // Copyright (c) 2015 Ultimaker B.V.
 // Cura is released under the terms of the AGPLv3 or higher.
 
-import QtQuick 2.2
-import QtQuick.Controls 1.1
-import QtQuick.Window 2.1
-import QtQuick.Layouts 1.1
+import QtQuick 2.15
+import QtQuick.Controls
+import QtQuick.Window
+import QtQuick.Layouts
 
 
 import UM 1.1 as UM
+import Cura 1.0 as Cura
 
 UM.Dialog
 {
@@ -130,7 +131,7 @@ UM.Dialog
             text: catalog.i18nc("@action:button","Show Debug Messages ")
             checked: false
         },
-        Button
+        Cura.SecondaryButton
         {
             text: catalog.i18nc("@action:button","Send Command");
             anchors
@@ -142,13 +143,11 @@ UM.Dialog
                 base.sendCommand();
                 event.accepted = true;
             }
-            style: UM.Theme.styles.print_monitor_control_button
         },
-        Button
+        Cura.SecondaryButton
         {
             text: catalog.i18nc("@action:button","Close");
             onClicked: base.visible = false;
-            style: UM.Theme.styles.print_monitor_control_button
             width: 100
         }
     ]

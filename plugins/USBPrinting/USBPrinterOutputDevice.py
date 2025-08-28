@@ -46,7 +46,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     printersChanged = pyqtSignal()
 
     def __init__(self, serial_port: str, baud_rate: Optional[int] = None) -> None:
-        super().__init__(serial_port, connection_type = ConnectionType.NotConnected)
+        super().__init__(device_id = "USBPrinterOutputDevice@" + serial_port, connection_type = ConnectionType.NotConnected)
         self.setName(catalog.i18nc("@item:inmenu", "USB Printing"))
         self.setShortDescription(catalog.i18nc("@action:button Preceded by 'Ready to'.", "Print via USB"))
         self.setDescription(catalog.i18nc("@info:tooltip", "Print via USB"))
@@ -110,9 +110,9 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             Logger.log("e", "Cannot create Monitor QML view: cannot find plugin path for plugin [USBPrinting]")
             self._monitor_view_qml_path = ""
 
-        self._onGlobalContainerStackChanged()
+        # self._onGlobalContainerStackChanged()
 
-        CuraApplication.getInstance().globalContainerStackChanged.connect(self._onGlobalContainerStackChanged)
+        # CuraApplication.getInstance().globalContainerStackChanged.connect(self._onGlobalContainerStackChanged)
         CuraApplication.getInstance().getOnExitCallbackManager().addCallback(self._checkActivePrintingUponAppExit)
 
         CuraApplication.getInstance().getPreferences().addPreference("usb_printing/enabled", False)
@@ -254,12 +254,6 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     def connect(self):
 
         self.setConnectionState(ConnectionState.Connecting)
-
-        if self._serial_port == "None":
-            Logger.log("w", "There was an attempt to connect to the 'None' printer!")
-            Logger.log("w", "The 'None' printer is a placeholder for when no serial devices are detected.")
-            self.setConnectionState(ConnectionState.Closed)
-            return
 
         self._firmware_name = None  # after each connection ensure that the firmware name is removed
         self._firmware_data = None
@@ -855,15 +849,15 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
     ####################################################
 
-    def _onGlobalContainerStackChanged(self):
-        if self._serial is not None:
-            self.close()
-        container_stack = CuraApplication.getInstance().getGlobalContainerStack()
-        if container_stack is None:
-            return
-        num_extruders = container_stack.getProperty("machine_extruder_count", "value")
-        # Ensure that a printer is created.
-        controller = GenericOutputController(self)
-        controller.setCanUpdateFirmware(True)
-        self._printers = [PrinterOutputModel(output_controller = controller, number_of_extruders = num_extruders)]
-        self._printers[0].updateName(container_stack.getName())
+    # def _onGlobalContainerStackChanged(self):
+    #     if self._serial is not None:
+    #         self.close()
+    #     container_stack = CuraApplication.getInstance().getGlobalContainerStack()
+    #     if container_stack is None:
+    #         return
+    #     num_extruders = container_stack.getProperty("machine_extruder_count", "value")
+    #     # Ensure that a printer is created.
+    #     controller = GenericOutputController(self)
+    #     controller.setCanUpdateFirmware(True)
+    #     self._printers = [PrinterOutputModel(output_controller = controller, number_of_extruders = num_extruders)]
+    #     self._printers[0].updateName(container_stack.getName())
