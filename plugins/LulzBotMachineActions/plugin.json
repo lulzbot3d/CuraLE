@@ -1,8 +1,8 @@
 {
     "name": "Lulzbot Machine Actions",
-    "author": "Aleph Objects Inc.",
+    "author": "Fargo Additive Manufacturing Equipment 3D, LLC.",
     "version": "1.0.0",
-    "description": "Provides actions for lulzbot printers",
+    "description": "Provides actions for LulzBot printers.",
     "api": "8.8.0",
     "i18n-catalog": "cura"
 }

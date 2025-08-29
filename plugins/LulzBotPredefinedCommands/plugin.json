@@ -1,8 +1,8 @@
 {
     "name": "Lulzbot Predefined Commands",
-    "author": "Fargo Additive Manufacturing Equipment 3D, LLC",
+    "author": "Fargo Additive Manufacturing Equipment 3D, LLC.",
     "version": "2.0.0",
-    "description": "Provides predefined commands for lulzbot printers",
+    "description": "Provides predefined commands for LulzBot printers.",
     "api": "8.8.0",
     "i18n-catalog": "cura"
 }

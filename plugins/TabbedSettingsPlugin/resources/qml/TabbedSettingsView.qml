@@ -641,7 +641,11 @@ Item
         tooltipItem.show(position)
 
         // hide the main tooltip if the sidebar gui is enabled and the sidebar is undocked
-        var sidebargui_docked = UM.Preferences.getValue("sidebargui/docked_sidebar")
+        var sidebargui_docked = false
+        if(withSidebarGUI)
+        {
+            sidebargui_docked = UM.Preferences.getValue("sidebargui/docked_sidebar")
+        }
         if(sidebargui_docked === false)
         {
             tooltipItem.visible = false
