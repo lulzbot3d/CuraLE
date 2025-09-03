@@ -169,7 +169,7 @@ Item
                 afterOnEditingFinishedFunction: manager.updateHasMaterialsMetadata
             }
 
-            /*Cura.SimpleCheckBox // "LCD"
+            Cura.SimpleCheckBox // "LCD"
             {
                 id: lcdCheckBox
                 containerStackId: machineStackId
@@ -193,7 +193,7 @@ Item
                 labelWidth: base.labelWidth
                 checkBoxEnabled: Cura.MachineManager.activeMachineOptionalBLTouch
                 forceUpdateOnChangeFunction: forceUpdateFunction
-            }*/
+            }
 
         }
 
@@ -409,21 +409,19 @@ Item
             }
             */
 
-            /*Label
-            { // USB Title Label
+            UM.Label   // Title Label
+            {
                 text: catalog.i18nc("@title:label", "USB Settings")
                 font: UM.Theme.getFont("medium_bold")
-                color: UM.Theme.getColor("text")
-                renderType: Text.NativeRendering
                 width: parent.width
                 elide: Text.ElideRight
             }
 
-            Cura.ComboBoxWithOptions // "Port"
+            Cura.ComboBoxWithOptions // "Serial Port"
             {
-                id: portComboBox
+                id: serialPortComboBox
                 containerStackId: machineStackId
-                settingKey: "machine_port"
+                settingKey: "machine_serial_port"
                 settingStoreIndex: propertyStoreIndex
                 labelText: catalog.i18nc("@label", "USB Port")
                 labelFont: base.labelFont
@@ -431,8 +429,9 @@ Item
                 controlWidth: base.controlWidth
                 forceUpdateOnChangeFunction: forceUpdateFunction
 
-                optionModel: ListModel {
-                    id: portModel
+                optionModel: ListModel
+                {
+                    id: serialPortModel
 
                     Component.onCompleted: {
                         update()
@@ -440,22 +439,20 @@ Item
 
                     function update() {
                         clear()
-                        let ports = Cura.USBPrinterOutputDeviceManager.serialPorts
-                        for (var i = 0; i < ports.length; i++)
+                        for (var i = 0; i < devicesModel.count; i++)
                         {
-                            // Use String as value. JavaScript only has Number. PropertyProvider.setPropertyValue()
-                            // takes a QVariant as value, and Number gets translated into a float. This will cause problem
-                            // for integer settings such as "Number of Extruders".
-                            append({ text: String(ports[i]), value: String(ports[i]) })
+                            let deviceID = devicesModel.getItem(i).id
+                            if(deviceID.includes("USBPrinterOutputDevice"))
+                            {
+                                let port = deviceID.split("@")[1]
+                                append({ text: String(port), value: String(port) })
+                            }
                         }
                         append({text: "AUTO", value: "AUTO"})
                     }
                 }
 
-                Connections {
-                    target: Cura.USBPrinterOutputDeviceManager
-                    function onSerialListChanged() { portModel.update() }
-                }
+                UM.OutputDevicesModel { id: devicesModel }
             }
 
             Cura.ComboBoxWithOptions // "Baudrate"
@@ -494,7 +491,7 @@ Item
                     target: Cura.MachineManager
                     function onGlobalContainerChanged() { baudrateModel.update() }
                 }
-            }*/
+            }
         }
     }
 

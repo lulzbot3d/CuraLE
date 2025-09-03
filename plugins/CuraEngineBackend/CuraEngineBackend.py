@@ -869,9 +869,9 @@ class CuraEngineBackend(QObject, Backend):
             replaced = replaced.replace("{filament_weight}", ("~"+str(round(float(weights[0]), 2))+"g"))
             replaced = replaced.replace("{filament_cost}", ((currency + '{:.2f}'.format(round(float(costs[0]), 2))) if costs[0] > 0 else "Unknown"))
             for i in range(len(lengths)):
-                replaced = replaced.replace("{filament_amount_%s}".format(i), (str(lengths[i])+"m"))
-                replaced = replaced.replace("{filament_weight_%s}".format(i), ("~"+str(round(float(weights[1]), 2))+"g"))
-                replaced = replaced.replace("{filament_cost_%s}".format(((currency + '{:.2f}'.format(round(float(costs[i]), 2))) if costs[i] > 0 else "Unknown")))
+                replaced = replaced.replace("{filament_amount_%s}" % i, (str(lengths[i])+"m"))
+                replaced = replaced.replace("{filament_weight_%s}" % i, ("~"+str(round(float(weights[i]), 2))+"g"))
+                replaced = replaced.replace("{filament_cost_%s}" % i, (((currency + '{:.2f}'.format(round(float(costs[i]), 2))) if costs[i] > 0 else "Unknown")))
             replaced = line.replace("{print_time}", str(print_info.currentPrintTime.getDisplayString(DurationFormat.Format.ISO8601)))
             replaced = replaced.replace("{jobname}", str(print_info.jobName))
 

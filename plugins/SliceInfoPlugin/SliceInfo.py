@@ -34,7 +34,7 @@ class SliceInfo(QObject, Extension):
     no model files are being sent (Just a SHA256 hash of the model).
     """
 
-    info_url = "https://statistics.ultimaker.com/api/v2/cura/slice"
+    info_url = ""
 
     _adjust_flattened_names = {
         "extruders_extruder": "extruders",
@@ -55,8 +55,8 @@ class SliceInfo(QObject, Extension):
         self._application = CuraApplication.getInstance()
 
         self._application.getOutputDeviceManager().writeStarted.connect(self._onWriteStarted)
-        self._application.getPreferences().addPreference("info/send_slice_info", True)
-        self._application.getPreferences().addPreference("info/asked_send_slice_info", False)
+        self._application.getPreferences().addPreference("info/send_slice_info", False)
+        self._application.getPreferences().addPreference("info/asked_send_slice_info", True)
 
         self._more_info_dialog = None
         self._example_data_content = None

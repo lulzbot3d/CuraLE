@@ -44,7 +44,7 @@
         "acceleration_travel": { "value": 4750 },
         "firmware_machine_type": { "default_value": "Taz SideKick 747" },
         "machine_depth": { "default_value": 232.3 },
-        "machine_end_gcode": { "default_value_from_file": "sidekick/sidekick_747_end" },
+        "machine_end_gcode": { "default_value_from_file": "sidekick/sidekick_end" },
         "machine_height": { "default_value": 248 },
         "machine_name": { "default_value": "LulzBot SideKick 747 | SK285" },
         "machine_width": { "default_value": 232.3 }

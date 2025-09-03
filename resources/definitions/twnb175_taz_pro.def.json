@@ -30,7 +30,6 @@
         "acceleration_print": { "default_value": 1000 },
         "firmware_machine_type": { "default_value": "LulzBot TAZ Pro" },
         "machine_acceleration": { "default_value": 1000 },
-        "machine_bltouch_start_gcode": { "default_value_from_file": "taz_pro/taz_pro_bltouch_start" },
         "machine_depth": { "default_value": 285 },
         "machine_end_gcode": { "default_value_from_file": "taz_pro/taz_pro_dual_end" },
         "machine_height": { "default_value": 285 },

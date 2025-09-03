@@ -25,11 +25,17 @@ M107                                       ; disable fans
 M420 S0                                    ; disable leveling matrix
 M900 K{linear_advance}                     ; set linear advance
 G90                                        ; absolute positioning
+{if machine_has_bltouch == True}
+G0 X145 Y187 Z156 F3000                    ; move away from endstops
+M117 Leveling Print Bed...;                ; Progress indicator message on LCD
+G30 X150 Y150                              ; probe to locate bed
+G29 O                                      ; start auto-leveling sequence (if first print)
+{else}
 M82                                        ; set extruder to absolute mode
 G92 E0                                     ; set extruder position to 0
 M117 Heating Nozzle...;                    ; progress indicator message on LCD
 M109 R{material_soften_temperature}        ; wait for extruder to reach wiping temp
-M104 S{material_soften_temperature}          ; start cooling to probe temp during wipe
+M104 S{material_soften_temperature}        ; start cooling to probe temp during wipe
 M83                                        ; set extruder to relative mode
 G1 E-4 F500                                ; retract 4mm to help with drool on fresh filament load
 M82                                        ; set extruder to absolute mode
@@ -46,6 +52,7 @@ M107                                       ; turn off part cooling fan
 M104 S{material_standby_temperature}       ; set probe temp
 M117 Leveling Print Bed...;                ; Progress indicator message on LCD
 G29                                        ; start auto-leveling sequence
+{endif}
 M420 S1                                    ; enable leveling matrix
 G0 X0 Y0 Z10 F6000                         ; move to start location
 G4 S1                                      ; pause
@@ -57,9 +64,9 @@ M300 T                                     ; play sound at start of first layer
 G0 Z{layer_height_0} F1500                 ; move to initial layer height and bring extruder to 0
 M82                                        ; set extruder to absolute mode
 G92 E0                                     ; set extruder position to 0
-G1 X10 E14 F400                            ; purge 14mm in a short move to the right
-G1 Y1 E14.5 F300                           ; purge 0.5mm in a short move forward
-G1 X0 E16.5 F250                           ; purge 2mm in a short move to the left
+G1 X10 E10 F400                            ; purge 10mm in a short move to the right
+G1 Y1 E10.5 F300                           ; purge 0.5mm in a short move forward
+G1 X0 E12.5 F250                           ; purge 2mm in a short move to the left
 M8100 M{purge_pattern} N{machine_nozzle_size} F{material_diameter} ; purge material line if selected
 G90                                        ; set movement position to absolute
 M83                                        ; set extruder to relative mode

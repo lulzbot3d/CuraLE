@@ -14,7 +14,6 @@ Item
     implicitWidth: parent.width
     implicitHeight: Math.floor(childrenRect.height + UM.Theme.getSize("default_margin").height * 2)
     property var outputDevice: null
-    property var connectionState: outputDevice == null ? null : outputDevice.connectionState
 
     Connections
     {
@@ -37,70 +36,15 @@ Item
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.margins: UM.Theme.getSize("default_margin").width
-            text:
-            {
-                if(outputDevice != null && outputDevice.address != "None")
-                {
-                    switch(connectionState)
-                    {
-                        case 2:
-                            outputDevice.activePrinter.name
-                            break;
-                        default:
-                            "No USB Printer Connected"
-                            break;
-                    }
-                }
-                else { "No USB Printers Connected" }
-            }
+            text: outputDevice != null ? outputDevice.activePrinter.name : ""
         }
 
         UM.Label
         {
             id: outputDeviceAddressLabel
-            text:
-            {
-                if(outputDevice != null && outputDevice.address != null)
-                {
-                    if(outputDevice.address == "None")
-                    {
-                        "No USB Devices Available"
-                    }
-                    else
-                    {
-                        switch(connectionState)
-                        {
-                            case 0:
-                                "USB Devices Available!"
-                                break;
-                            case 1:
-                                "Connecting..."
-                                break;
-                            case 2:
-                                "Connected On Port: " + outputDevice.address
-                                break;
-                            case 3:
-                                "Device At " + outputDevice.address + " Busy"
-                                break;
-                            case 4:
-                                "Error From Device At " + outputDevice.address
-                                break;
-                            case 6:
-                                "Connection Timeout!"
-                                break;
-                            default:
-                                "Unknown Connection State"
-                                break;
-                        }
-                    }
-                }
-                else
-                {
-                    "No Output Device Address"
-                }
-            }
+            text: (outputDevice != null && outputDevice.address != null) ? outputDevice.address : ""
             font: UM.Theme.getFont("default_bold")
-            color: UM.Theme.getColor("text_medium")
+            color: UM.Theme.getColor("text_inactive")
             anchors.top: outputDeviceNameLabel.bottom
             anchors.left: parent.left
             anchors.margins: UM.Theme.getSize("default_margin").width

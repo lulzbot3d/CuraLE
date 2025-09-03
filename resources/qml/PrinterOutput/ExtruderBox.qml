@@ -16,7 +16,7 @@ Item
     property var connectedPrinter: Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null
 
     implicitWidth: parent.width
-    implicitHeight: Math.round(UM.Theme.getSize("print_setup_extruder_box").height * 0.85)
+    implicitHeight: UM.Theme.getSize("print_setup_extruder_box").height
 
     UM.SettingPropertyProvider
     {
@@ -38,7 +38,7 @@ Item
             text: Cura.MachineManager.activeMachine.extruderList[position].name !== "" ? Cura.MachineManager.activeMachine.extruderList[position].name : catalog.i18nc("@label", "Extruder")
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: UM.Theme.getSize("default_margin").width
+            anchors.margins: UM.Theme.getSize("default_margin").width
         }
 
         // Target temperature.
@@ -256,59 +256,8 @@ Item
             }
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            anchors.rightMargin: UM.Theme.getSize("default_margin").width
-            style: ButtonStyle {
-                background: Rectangle
-                {
-                    border.width: UM.Theme.getSize("default_lining").width
-                    implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
-                    border.color:
-                    {
-                        if(!control.enabled)
-                        {
-                            return UM.Theme.getColor("action_button_disabled_border");
-                        }
-                        else if(control.pressed)
-                        {
-                            return UM.Theme.getColor("action_button_active_border");
-                        }
-                        else if(control.hovered)
-                        {
-                            return UM.Theme.getColor("action_button_hovered_border");
-                        }
-                        else
-                        {
-                            return UM.Theme.getColor("action_button_border");
-                        }
-                    }
-                    color:
-                    {
-                        if(!control.enabled)
-                        {
-                            return UM.Theme.getColor("action_button_disabled");
-                        }
-                        else if(control.pressed)
-                        {
-                            return UM.Theme.getColor("action_button_active");
-                        }
-                        else if(control.hovered)
-                        {
-                            return UM.Theme.getColor("action_button_hovered");
-                        }
-                        else
-                        {
-                            return UM.Theme.getColor("action_button");
-                        }
-                    }
-                    Behavior on color
-                    {
-                        ColorAnimation
-                        {
-                            duration: 50
-                        }
-                    }
-                }
-            }
+            anchors.margins: UM.Theme.getSize("default_margin").width
+
             text:
             {
                 if(extruderModel == null)

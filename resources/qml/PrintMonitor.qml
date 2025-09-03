@@ -31,22 +31,8 @@ ScrollView
     }
     clip: true
 
-    contentHeight: printMonitor.height
-
-    ScrollBar.vertical: UM.ScrollBar
+    function showTooltip(item, position, text)
     {
-        id: scrollbar
-        parent: base.parent
-        anchors
-        {
-            right: parent.right
-            top: parent.top
-            bottom: parent.bottom
-        }
-    }
-    clip: true
-
-    function showTooltip(item, position, text) {
         tooltip.text = text;
         position = item.mapToItem(base, position.x - UM.Theme.getSize("default_arrow").width, position.y);
         tooltip.show(position);
@@ -73,75 +59,70 @@ ScrollView
         return finalTime;
     }
 
-    property var outputDeviceCount: Cura.MachineManager.printerOutputDevices.length
-    property var connectedDevice: outputDeviceCount >= 1 ? Cura.MachineManager.printerOutputDevices[outputDeviceCount - 1] : null
-    property bool klipperPrinter: connectedDevice != null ? Cura.MachineManager.activeMachineFirmwareType == "Klipper" : false
-    property var activePrinter: connectedDevice != null && connectedDevice.address != "None" ? connectedDevice.activePrinter : null
+    property var connectedDevice: Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null
+    property var activePrinter: connectedDevice != null ? connectedDevice.activePrinter : null
     property var activePrintJob: activePrinter != null ? activePrinter.activePrintJob: null
 
-    ScrollView
+    Column
     {
+        id: printMonitor
 
         UM.I18nCatalog { id: catalog; name: "cura" }
 
         width: parent.width - scrollbar.width
 
-        Column
+        property var extrudersModel: CuraApplication.getExtrudersModel()
+
+        OutputDeviceHeader
         {
-            id: printMonitor
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
+            outputDevice: connectedDevice
+        }
 
-            visible: !klipperPrinter
+        Rectangle
+        {
+            color: UM.Theme.getColor("wide_lining")
+            width: parent.width
+            height: childrenRect.height
 
-            spacing: UM.Theme.getSize("default_margin").height
-
-            OutputDeviceHeader
+            Flow
             {
-                outputDevice: connectedDevice
-                activeDevice: activePrinter
-            }
+                id: extrudersGrid
+                spacing: UM.Theme.getSize("thick_lining").width
+                width: parent.width
 
-            MonitorSection
-            {
-                label: catalog.i18nc("@label", "Temperatures")
-                width: base.width
-                visible: true
-            }
-
-            Rectangle
-            {
-                color: UM.Theme.getColor("wide_lining")
-                width: base.width
-                height: childrenRect.height
-
-                Flow
+                Repeater
                 {
-                    id: extrudersGrid
-                    spacing: UM.Theme.getSize("thick_lining").width
-                    width: parent.width
+                    id: extrudersRepeater
+                    model: activePrinter != null ? activePrinter.extruders : null
 
-                    Repeater
+                    ExtruderBox
                     {
-                        id: extrudersRepeater
-                        model: connectedDevice != null ? connectedDevice.activePrinter.extruders : null
-
-                        ExtruderBox
-                        {
-                            color: UM.Theme.getColor("main_background")
-                            width: index == machineExtruderCount.properties.value - 1 && index % 2 == 0 ? extrudersGrid.width : Math.round(extrudersGrid.width / 2 - UM.Theme.getSize("thick_lining").width / 2)
-                            extruderModel: modelData
-                        }
+                        color: UM.Theme.getColor("main_background")
+                        width: index == machineExtruderCount.properties.value - 1 && index % 2 == 0 ? extrudersGrid.width : Math.round(extrudersGrid.width / 2 - UM.Theme.getSize("thick_lining").width / 2)
+                        extruderModel: modelData
                     }
                 }
             }
+        }
 
-            Rectangle {
-                color: UM.Theme.getColor("wide_lining")
-                width: base.width
-                height: UM.Theme.getSize("thick_lining").width
+        Rectangle
+        {
+            color: UM.Theme.getColor("wide_lining")
+            width: parent.width
+            height: UM.Theme.getSize("thick_lining").width
+        }
+
+        HeatedBedBox
+        {
+            visible:
+            {
+                if(activePrinter != null && activePrinter.bedTemperature != -1)
+                {
+                    return true
+                }
+                return false
             }
+            printerModel: activePrinter
         }
 
         UM.SettingPropertyProvider
@@ -208,39 +189,7 @@ ScrollView
                         activePrintJob.state == "pausing" ||
                         activePrintJob.state == "paused")
             }
-        }
-
-        Column
-        {
-            id: klipperMonitor
-
-            anchors
-            {
-                top: parent.top
-                left: parent.left
-                right: parent.right
-                margins: UM.Theme.getSize("default_margin").width
-            }
-
-            visible: klipperPrinter
-
-            spacing: UM.Theme.getSize("default_margin").height
-
-            Label
-            {
-                // text: machineAssociatedUrls.properties.value
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: "Printers running Klipper firmware cannot be printed tethered to Cura LE.\n Please see the Mini 3 Quick Start Guide for more information."
-            }
-
-            Button
-            {
-                anchors.horizontalCenter: parent.horizontalCenter
-                height: UM.Theme.getSize("setting_control").height * 2
-                width: base.width / 2 - (UM.Theme.getSize("default_margin").width * 1.5)
-                text: "Quick Start Guide"
-                onClicked: Qt.openUrlExternally("https://lulzbot.com/mini-3-monitor-page")
-            }
+            width: base.width
         }
     }
 

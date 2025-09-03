@@ -10,9 +10,9 @@ import Cura 1.0 as Cura
 Item
 {
     implicitWidth: parent.width
-    height: visible ? Math.round(UM.Theme.getSize("print_setup_extruder_box").height * 0.7) : 0
+    height: visible ? UM.Theme.getSize("print_setup_extruder_box").height : 0
+    property var printerModel
     property var connectedPrinter: Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null
-    property var printerModel: connectedPrinter != null ? connectedPrinter.activePrinter : null
 
     Rectangle
     {
@@ -25,7 +25,7 @@ Item
             text: catalog.i18nc("@label", "Build plate")
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: UM.Theme.getSize("default_margin").width
+            anchors.margins: UM.Theme.getSize("default_margin").width
         }
 
         // Target temperature.
@@ -66,11 +66,11 @@ Item
         UM.Label
         {
             id: bedCurrentTemperature
-            text: printerModel != null ? printerModel.bedTemperature == -1 ? "0°C" : Math.round(printerModel.bedTemperature) + "°C" : ""
+            text: printerModel != null ? Math.round(printerModel.bedTemperature) + "°C" : ""
             font: UM.Theme.getFont("large_bold")
             anchors.right: bedTargetTemperature.left
             anchors.top: parent.top
-            anchors.rightMargin: UM.Theme.getSize("default_margin").width
+            anchors.margins: UM.Theme.getSize("default_margin").width
 
             //For tooltip.
             MouseArea
@@ -137,7 +137,7 @@ Item
             anchors.bottomMargin: UM.Theme.getSize("default_margin").height
             width: UM.Theme.getSize("monitor_preheat_temperature_control").width
             height: UM.Theme.getSize("monitor_preheat_temperature_control").height
-            visible: true
+            visible: printerModel != null ? enabled && printerModel.canPreHeatBed && !printerModel.isPreheating : true
             Rectangle //Highlight of input field.
             {
                 anchors.fill: parent
@@ -236,58 +236,7 @@ Item
             }
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            anchors.rightMargin: UM.Theme.getSize("default_margin").width
-            style: ButtonStyle
-            {
-                background: Rectangle
-                {
-                    border.width: UM.Theme.getSize("default_lining").width
-                    implicitWidth: actualLabel.contentWidth + (UM.Theme.getSize("default_margin").width * 2)
-                    border.color:
-                    {
-                        if(!control.enabled)
-                        {
-                            return UM.Theme.getColor("action_button_disabled_border");
-                        }
-                        else if(control.pressed)
-                        {
-                            return UM.Theme.getColor("action_button_active_border");
-                        }
-                        else if(control.hovered)
-                        {
-                            return UM.Theme.getColor("action_button_hovered_border");
-                        }
-                        else
-                        {
-                            return UM.Theme.getColor("action_button_border");
-                        }
-                    }
-                    color:
-                    {
-                        if(!control.enabled)
-                        {
-                            return UM.Theme.getColor("action_button_disabled");
-                        }
-                        else if(control.pressed)
-                        {
-                            return UM.Theme.getColor("action_button_active");
-                        }
-                        else if(control.hovered)
-                        {
-                            return UM.Theme.getColor("action_button_hovered");
-                        }
-                        else
-                        {
-                            return UM.Theme.getColor("action_button");
-                        }
-                    }
-                    Behavior on color
-                    {
-                        ColorAnimation
-                        {
-                            duration: 50
-                        }
-                    }
+            anchors.margins: UM.Theme.getSize("default_margin").width
 
             text:
             {
