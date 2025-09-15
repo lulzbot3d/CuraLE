@@ -36,10 +36,15 @@ on:
           - ubuntu-latest
           - ubuntu-22.04
           - self-hosted-Ubuntu22-X64
+      lockfile_repository_branch:
+        description: 'Branch where to get the conan lockfile from'
+        required: false
+        default: ''
+        type: string
 
 jobs:
   linux-installer:
-    uses: lulzbot3d/CuraLE_Workflows/.github/workflows/cura-installer-linux.yml@main
+    uses: lulzbot3d/CuraLE_Workflows/.github/workflows/cura-installer-linux.yml@5.10
     with:
       cura_conan_version: ${{ inputs.cura_conan_version }}
       package_overrides: ${{ inputs.package_overrides }}
@@ -47,4 +52,5 @@ jobs:
       enterprise: ${{ inputs.enterprise }}
       staging: ${{ inputs.staging }}
       operating_system: ${{ inputs.operating_system }}
+      lockfile_repository_branch: ${{ inputs.lockfile_repository_branch }}
     secrets: inherit
