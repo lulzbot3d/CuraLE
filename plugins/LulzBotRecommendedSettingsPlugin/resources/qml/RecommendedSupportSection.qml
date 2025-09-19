@@ -3,7 +3,6 @@
 
 import QtQuick 2.10
 import QtQuick.Controls
-import QtQuick.Controls.Styles
 import QtQuick.Controls 2.3 as Controls2
 import QtQuick.Controls 2.15 as Controls3
 
@@ -60,7 +59,6 @@ Item {
             id: enableSupportCheckBox
             anchors.verticalCenter: parent.verticalCenter
 
-            style: UM.Theme.styles.checkbox
             enabled: recommendedPrintSetup.settingsEnabled
 
             visible: supportEnabled.properties.enabled == "True"
@@ -174,11 +172,11 @@ Item {
         }
     }
 
-    Binding {
+    /*Binding {
         target: supportOverhangSlider
         property: "value"
         value: parseInt(supportOverhang.properties.value) - supportOverhangSlider.allowedMinimum
-    }
+    }*/
 
     Item {
         id: supportOverhangContainer
@@ -192,7 +190,7 @@ Item {
             right: parent.right
         }
 
-        Slider {
+        /* Slider {
             id: supportOverhangSlider
 
             width: parent.width
@@ -202,7 +200,6 @@ Item {
             property int allowedMinimum: 40
             maximumValue: 40 // Actually 80
             stepSize: 1
-            tickmarksEnabled: true
             property int tickmarkSpacing: 4
             wheelEnabled: false
 
@@ -212,7 +209,6 @@ Item {
             // set initial value from stack
             value: parseInt(supportOverhang.properties.value) - allowedMinimum
 
-            style: UM.Theme.styles.setup_selector_slider
 
             onValueChanged: {
                 let current = parseInt(supportOverhang.properties.value)
@@ -242,7 +238,7 @@ Item {
                     Cura.MachineManager.setSettingForAllExtruders("support_angle", "value", roundedSliderValue + supportOverhangSlider.allowedMinimum)
                 }
             }
-        }
+        }*/
 
         UM.SettingPropertyProvider {
             id: supportOverhang
@@ -282,11 +278,11 @@ Item {
         }
     }
 
-    Binding {
+    /*Binding {
         target: supportDensitySlider
         property: "value"
         value: parseInt(supportDensity.properties.value)
-    }
+    }*/
 
     Item {
         id: supportDensityContainer
@@ -300,7 +296,7 @@ Item {
             right: parent.right
         }
 
-        Slider {
+        /*Slider {
             id: supportDensitySlider
 
             width: parent.width
@@ -320,7 +316,6 @@ Item {
             // set initial value from stack
             value: parseInt(supportDensity.properties.value) - allowedMinimum
 
-            style: UM.Theme.styles.setup_selector_slider
 
             onValueChanged: {
                 // Don't round the value if it's already the same
@@ -344,7 +339,7 @@ Item {
                     Cura.MachineManager.resetSettingForAllExtruders("support_line_distance")
                 }
             }
-        }
+        }*/
 
         UM.SettingPropertyProvider {
             id: supportDensity
@@ -494,7 +489,6 @@ Item {
             id: supportRoofCheckBox
             anchors.verticalCenter: parent.verticalCenter
 
-            style: UM.Theme.styles.checkbox
             enabled: recommendedPrintSetup.settingsEnabled
 
             checked: supportRoofEnabled.properties.value == "True"

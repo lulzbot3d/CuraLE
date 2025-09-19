@@ -49,7 +49,7 @@ Cura.RoundedRectangle
         Connections
         {
             target: actionPanelWidget.children[0].children[0]
-            onLoaded:
+            function onLoaded()
             {
                 actionPanelWidget.updateHasPreviewButton();
 

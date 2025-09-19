@@ -19,7 +19,7 @@ Item {
     property real labelColumnWidth: Math.round(width / 3)
     property bool alive: Cura.MachineManager.activeMachine != null && Cura.MachineManager.activeStack != null
 
-    /*Cura.IconWithText {
+    Cura.IconWithText {
         id: strengthSectionTitle
         anchors {
             top: parent.top
@@ -67,14 +67,14 @@ Item {
             controlWidth: infillPatternContainer.width
             // useInBuiltTooltip: false
         }
-    }*/
+    }
 
     //
     // Infill Chunk
     //
 
     // Create a binding to update the icon when the infill density changes
-    /*Binding {
+    /* Binding {
         target: infillSliderTitle
         property: "source"
         value: {
@@ -100,7 +100,7 @@ Item {
         target: infillSlider
         property: "value"
         value: parseInt(infillDensity.properties.value) - infillSlider.allowedMinimum
-    }
+    }*/
 
     Cura.IconWithText {
         id: infillSliderTitle
@@ -139,7 +139,7 @@ Item {
             verticalCenter: infillSliderTitle.verticalCenter
         }
 
-        Slider {
+        /* Slider {
             id: infillSlider
 
             width: parent.width
@@ -180,7 +180,7 @@ Item {
                     Cura.MachineManager.resetSettingForAllExtruders("infill_line_distance")
                 }
             }
-        }
+        }*/
     }
 
     UM.SettingPropertyProvider {
@@ -197,14 +197,14 @@ Item {
         key: "gradual_infill_steps"
         watchedProperties: ["value", "enabled"]
         storeIndex: 0
-    }*/
+    }
 
 
     //
     // Wall Chunk
     //
 
-    /*Cura.IconWithText {
+    Cura.IconWithText {
         id: wallCountRowTitle
         anchors {
             // Changed these due to pattern moving up
@@ -362,14 +362,14 @@ Item {
             watchedProperties: [ "value" ]
             storeIndex: 0
         }
-    }*/
+    }
 
 
     //
     // Top/Bottom Chunk
     //
 
-    /*Cura.IconWithText {
+    Cura.IconWithText {
         id: topBottomRowTitle
         anchors {
             top: wallCountContainer.bottom
@@ -478,5 +478,5 @@ Item {
             controlWidth: parent.width
             // useInBuiltTooltip: false
         }
-    }*/
+    }
 }

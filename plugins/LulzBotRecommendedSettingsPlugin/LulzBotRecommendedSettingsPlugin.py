@@ -10,10 +10,6 @@ from cura.CuraApplication import CuraApplication
 from UM.Extension import Extension
 from UM.Logger import Logger
 
-from . import PerCategoryVisibilityHandler
-from . import InstanceContainerVisibilityHandler
-from . import ExtendedSettingPreferenceVisibilityHandler
-
 
 class LulzBotRecommendedSettingsPlugin(QObject, Extension):
     def __init__(self):
@@ -59,23 +55,3 @@ class LulzBotRecommendedSettingsPlugin(QObject, Extension):
             return
 
         self._qml_patcher.patch(main_window.contentItem())
-
-    @pyqtSlot(str, result=QObject)
-    def getVisibilityHandler(self, handler_type: str) -> Optional["QObject"]:
-        # NB: this is basically equivalent to registering a singleton; only a
-        # single instance of each visibilityhandler is created
-
-        if handler_type not in self._visibility_handlers:
-            handler = None
-            if handler_type == "PerCategory":
-                handler = PerCategoryVisibilityHandler.PerCategoryVisibilityHandler()
-            elif handler_type == "InstanceContainer":
-                handler = InstanceContainerVisibilityHandler.InstanceContainerVisibilityHandler()
-            elif handler_type == "ExtendedSettingPreference":
-                handler = ExtendedSettingPreferenceVisibilityHandler.ExtendedSettingPreferenceVisibilityHandler()
-            if handler:
-                self._visibility_handlers[handler_type] = handler
-            else:
-                return
-
-        return self._visibility_handlers[handler_type]
