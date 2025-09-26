@@ -11,99 +11,65 @@ import Cura 1.0 as Cura
 //
 //  Z Seam
 //
-Item {
+RecommendedSettingSection {
     id: zSeamRow
-    height: childrenRect.height
 
-    property real labelColumnWidth: Math.round(width / 3)
-
-    Cura.IconWithText {
-        id: zSeamRowTitle
-        anchors.top: parent.top
-        anchors.left: parent.left
-        source: UM.Theme.getIcon("Zipper")
-        text: catalog.i18nc("@label", "Z Seam Alignment")
-        font: UM.Theme.getFont("medium")
-        width: labelColumnWidth
-        iconSize: UM.Theme.getSize("medium_button_icon").width
-
-        MouseArea {
-            id: zSeamMouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-
-            onEntered: {
-                base.showTooltip(zSeamRowTitle, Qt.point(-zSeamRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", '<h3>Select where the Z Seam of the print will be generated. The "Z Seam" \
+    title: catalog.i18nc("@label", "Z Seam Alignment")
+    icon: UM.Theme.getIcon("Zipper")
+    enableSectionSwitchVisible: false //supportEnabled.properties.enabled == "True"
+    enableSectionSwitchChecked: true //supportEnabled.properties.value == "True"
+    enableSectionSwitchEnabled: false //recommendedPrintSetup.settingsEnabled
+    tooltipText: catalog.i18nc("@label", '<h3>Select where the Z Seam of the print will be generated. The "Z Seam" \
                     refers to the point on the outer walls of your print where the layer starts and ends. These layer \
                     transitions can often leave a small bump or dip that can affect the cosmetics of the finished part.</h3> \
                     <h3>"Shortest" will prioritize print speed; "Random" will place the seam in a random place each layer, \
                     which reduces its prominence; "Sharpest Corner" attempts to place the seam in the sharpest corner of \
                     the print, which tends to disguise it well; and "User Specified" will allow you to choose which side \
-                    of the print the seam is generated on.</h3>'))
+                    of the print the seam is generated on.</h3>')
+
+    UM.SettingPropertyProvider {
+        id: zSeamTypeProvider
+        containerStackId: Cura.ExtruderManager.activeExtruderStackId
+        key: "z_seam_type"
+        watchedProperties: [ "value", "options" ]
+        storeIndex: 0
+    }
+
+    contents: [
+
+        RecommendedSettingItem {
+            settingName: catalog.i18nc("@action:label", "Z Seam Type")
+            tooltipText: catalog.i18nc("@label", "Chooses between the techniques available to generate support. \n\n\"Normal\" support creates a support structure directly below the overhanging parts and drops those areas straight down. \n\n\"Tree\" support creates branches towards the overhanging areas that support the model on the tips of those branches, and allows the branches to crawl around the model to support it from the build plate as much as possible.")
+            isCompressed: zSeamRow.isCompressed
+
+            settingControl: Cura.ComboBoxWithOptions {
+                id: zSeamAlignmentComboBox
+                containerStackId: Cura.ExtruderManager.activeExtruderStackId
+                settingKey: "z_seam_type"
+                controlWidth: zSeamAlignmentContainer.width
             }
-            onExited: base.hideTooltip()
-        }
-    }
 
-    Item {
-        id: zSeamAlignmentContainer
-        height: zSeamAlignmentComboBox.height
-        width: {
-            if (zSeamPositionContainer.visible) {
-                return ((parent.width - labelColumnWidth) / 1.75)
-            } else { return (parent.width - labelColumnWidth) }
+
         }
 
-        anchors {
-            left: zSeamRowTitle.right
-            verticalCenter: zSeamRowTitle.verticalCenter
+        Binding {
+            target: zSeamPositionContainer
+            property: "visible"
+            value: {
+                return (zSeamType.properties.value == "back")
+            }
         }
 
-        Cura.ComboBoxWithOptions {
-            id: zSeamAlignmentComboBox
-            containerStackId: Cura.ExtruderManager.activeExtruderStackId
-            settingKey: "z_seam_type"
-            controlWidth: zSeamAlignmentContainer.width
-            // useInBuiltTooltip: false
+        RecommendedSettingItem {
+            id: zSeamPositionContainer
+
+            Cura.ComboBoxWithOptions {
+                id: zSeamPositionComboBox
+                containerStackId: Cura.ExtruderManager.activeExtruderStackId
+                settingKey: "z_seam_position"
+                controlWidth: zSeamPositionContainer.width
+                // useInBuiltTooltip: false
+            }
         }
-
-        UM.SettingPropertyProvider {
-            id: zSeamType
-            containerStackId: Cura.ExtruderManager.activeExtruderStackId
-            key: "z_seam_type"
-            watchedProperties: [ "value", "options" ]
-            storeIndex: 0
-        }
-    }
-
-    Binding {
-        target: zSeamPositionContainer
-        property: "visible"
-        value: {
-            return (zSeamType.properties.value == "back")
-        }
-    }
-
-    Item {
-        id: zSeamPositionContainer
-        height: zSeamPositionComboBox.height
-
-        visible: false
-
-        anchors {
-            left: zSeamAlignmentContainer.right
-            leftMargin: UM.Theme.getSize("thin_margin").width
-            right: parent.right
-            verticalCenter: zSeamRowTitle.verticalCenter
-        }
-
-        Cura.ComboBoxWithOptions {
-            id: zSeamPositionComboBox
-            containerStackId: Cura.ExtruderManager.activeExtruderStackId
-            settingKey: "z_seam_position"
-            controlWidth: zSeamPositionContainer.width
-            // useInBuiltTooltip: false
-        }
-    }
+    ]
 }
