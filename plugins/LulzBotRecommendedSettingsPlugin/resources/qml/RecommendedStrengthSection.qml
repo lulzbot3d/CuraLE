@@ -36,14 +36,14 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
 
-            onEntered: {
-                base.showTooltip(strengthSectionTitle, Qt.point(-strengthSectionTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", '<h3><b>Settings in this section are most important for determining overall part strength.</b></h3>\
-                    <h3>Set the pattern used for the infill of your print. "Grid" is our recommended pattern as it is relatively efficient \
-                    both in print time and plastic usage while still giving your prints good structural integrity. "Gyroid" has excellent \
-                    compressibility properties. There are additional patterns that may prove useful.</h3>'))
-            }
-            onExited: base.hideTooltip()
+            // onEntered: {
+            //     base.showTooltip(strengthSectionTitle, Qt.point(-strengthSectionTitle.x - UM.Theme.getSize("thick_margin").width, 0),
+            //         catalog.i18nc("@label", '<h3><b>Settings in this section are most important for determining overall part strength.</b></h3>\
+            //         <h3>Set the pattern used for the infill of your print. "Grid" is our recommended pattern as it is relatively efficient \
+            //         both in print time and plastic usage while still giving your prints good structural integrity. "Gyroid" has excellent \
+            //         compressibility properties. There are additional patterns that may prove useful.</h3>'))
+            // }
+            // onExited: base.hideTooltip()
         }
     }
 
@@ -121,11 +121,11 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
 
-            onEntered: {
-                base.showTooltip(infillSliderTitle, Qt.point(-infillSliderTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "<h3>Set the percentage of the interior that will be filled with infill by volume.</h3>"))
-            }
-            onExited: base.hideTooltip()
+            // onEntered: {
+            //     base.showTooltip(infillSliderTitle, Qt.point(-infillSliderTitle.x - UM.Theme.getSize("thick_margin").width, 0),
+            //         catalog.i18nc("@label", "<h3>Set the percentage of the interior that will be filled with infill by volume.</h3>"))
+            // }
+            // onExited: base.hideTooltip()
         }
     }
 
@@ -226,14 +226,14 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
 
-            onEntered: {
-                base.showTooltip(wallCountRowTitle, Qt.point(-wallCountRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "<h3>Set the number of solid walls that will be generated on the sides of your print. \
-                    This number plays a large factor in the overall strength of your part.</h3>\
-                    <h3>In the dropdown to the right, you can select textured walls. This will enable a setting called \"Fuzzy Skin\".\
-                    You can fine-tune this setting in the \"Experimental\" section of the Custom menu.</h3>"))
-            }
-            onExited: base.hideTooltip()
+            // onEntered: {
+            //     base.showTooltip(wallCountRowTitle, Qt.point(-wallCountRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
+            //         catalog.i18nc("@label", "<h3>Set the number of solid walls that will be generated on the sides of your print. \
+            //         This number plays a large factor in the overall strength of your part.</h3>\
+            //         <h3>In the dropdown to the right, you can select textured walls. This will enable a setting called \"Fuzzy Skin\".\
+            //         You can fine-tune this setting in the \"Experimental\" section of the Custom menu.</h3>"))
+            // }
+            // onExited: base.hideTooltip()
         }
     }
 
@@ -388,12 +388,12 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
 
-            onEntered: {
-                base.showTooltip(topBottomRowTitle, Qt.point(-topBottomRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "<h3>Set the number of solid layers that will be generated on the top and bottom of your print.</h3> \
-                    <h3>In the dropdown to the right, you can also set the pattern that those layers will be created with.</h3>"))
-            }
-            onExited: base.hideTooltip()
+            // onEntered: {
+            //     base.showTooltip(topBottomRowTitle, Qt.point(-topBottomRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
+            //         catalog.i18nc("@label", "<h3>Set the number of solid layers that will be generated on the top and bottom of your print.</h3> \
+            //         <h3>In the dropdown to the right, you can also set the pattern that those layers will be created with.</h3>"))
+            // }
+            // onExited: base.hideTooltip()
         }
     }
 

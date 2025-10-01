@@ -11,14 +11,14 @@ import Cura 1.0 as Cura
 //
 //  Z Seam
 //
-RecommendedSettingSection {
+Cura.RecommendedSettingSection {
     id: zSeamRow
 
     title: catalog.i18nc("@label", "Z Seam Alignment")
     icon: UM.Theme.getIcon("Zipper")
-    enableSectionSwitchVisible: false //supportEnabled.properties.enabled == "True"
-    enableSectionSwitchChecked: true //supportEnabled.properties.value == "True"
-    enableSectionSwitchEnabled: false //recommendedPrintSetup.settingsEnabled
+    enableSectionSwitchVisible: false
+    enableSectionSwitchChecked: true
+    enableSectionSwitchEnabled: false
     tooltipText: catalog.i18nc("@label", '<h3>Select where the Z Seam of the print will be generated. The "Z Seam" \
                     refers to the point on the outer walls of your print where the layer starts and ends. These layer \
                     transitions can often leave a small bump or dip that can affect the cosmetics of the finished part.</h3> \
@@ -37,38 +37,27 @@ RecommendedSettingSection {
 
     contents: [
 
-        RecommendedSettingItem {
+        Cura.RecommendedSettingItem {
             settingName: catalog.i18nc("@action:label", "Z Seam Type")
-            tooltipText: catalog.i18nc("@label", "Chooses between the techniques available to generate support. \n\n\"Normal\" support creates a support structure directly below the overhanging parts and drops those areas straight down. \n\n\"Tree\" support creates branches towards the overhanging areas that support the model on the tips of those branches, and allows the branches to crawl around the model to support it from the build plate as much as possible.")
+            tooltipText: catalog.i18nc("@label", "")
             isCompressed: zSeamRow.isCompressed
 
-            settingControl: Cura.ComboBoxWithOptions {
-                id: zSeamAlignmentComboBox
-                containerStackId: Cura.ExtruderManager.activeExtruderStackId
-                settingKey: "z_seam_type"
-                controlWidth: zSeamAlignmentContainer.width
+            settingControl: Cura.SingleSettingComboBox {
+                width: parent.width
+                settingName: "z_seam_type"
+                updateAllExtruders: true
             }
+        },
 
+        Cura.RecommendedSettingItem {
+            settingName: catalog.i18nc("@action:label", "Z Seam Position")
+            tooltipText: catalog.i18nc("@label", "")
+            isCompressed: zSeamRow.isCompressed
 
-        }
-
-        Binding {
-            target: zSeamPositionContainer
-            property: "visible"
-            value: {
-                return (zSeamType.properties.value == "back")
-            }
-        }
-
-        RecommendedSettingItem {
-            id: zSeamPositionContainer
-
-            Cura.ComboBoxWithOptions {
-                id: zSeamPositionComboBox
-                containerStackId: Cura.ExtruderManager.activeExtruderStackId
-                settingKey: "z_seam_position"
-                controlWidth: zSeamPositionContainer.width
-                // useInBuiltTooltip: false
+            settingControl: Cura.SingleSettingComboBox {
+                width: parent.width
+                settingName: "z_seam_position"
+                updateAllExtruders: true
             }
         }
     ]

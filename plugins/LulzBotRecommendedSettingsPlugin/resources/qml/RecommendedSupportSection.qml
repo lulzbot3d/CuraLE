@@ -36,12 +36,12 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
 
-            onEntered: {
-                base.showTooltip(enableSupportRowTitle, Qt.point(-enableSupportRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "<h3>Generate structures to support parts of the model which have overhangs. \
-                    Without these structures, such parts may collapse during printing.</h3>"))
-            }
-            onExited: base.hideTooltip()
+            // onEntered: {
+            //     base.showTooltip(enableSupportRowTitle, Qt.point(-enableSupportRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
+            //         catalog.i18nc("@label", "<h3>Generate structures to support parts of the model which have overhangs. \
+            //         Without these structures, such parts may collapse during printing.</h3>"))
+            // }
+            // onExited: base.hideTooltip()
         }
     }
 
@@ -163,12 +163,12 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
 
-            onEntered: {
-                base.showTooltip(supportOverhangLabel, Qt.point(-supportOverhangLabel.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "<h3>Adjusts the minimum angle relative to vertical at which supports will begin to be generated. \
-                    A higher value will lower the amount of supports generated, but could lead to unsupported overhangs collapsing during printing.</h3>"))
-            }
-            onExited: base.hideTooltip()
+            // onEntered: {
+            //     base.showTooltip(supportOverhangLabel, Qt.point(-supportOverhangLabel.x - UM.Theme.getSize("thick_margin").width, 0),
+            //         catalog.i18nc("@label", "<h3>Adjusts the minimum angle relative to vertical at which supports will begin to be generated. \
+            //         A higher value will lower the amount of supports generated, but could lead to unsupported overhangs collapsing during printing.</h3>"))
+            // }
+            // onExited: base.hideTooltip()
         }
     }
 
@@ -270,11 +270,11 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
 
-            onEntered: {
-                base.showTooltip(supportDensityLabel, Qt.point(-supportDensityLabel.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "<h3>Set the percentage of support density.</h3>"))
-            }
-            onExited: base.hideTooltip()
+            // onEntered: {
+            //     base.showTooltip(supportDensityLabel, Qt.point(-supportDensityLabel.x - UM.Theme.getSize("thick_margin").width, 0),
+            //         catalog.i18nc("@label", "<h3>Set the percentage of support density.</h3>"))
+            // }
+            // onExited: base.hideTooltip()
         }
     }
 
@@ -371,12 +371,12 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
 
-            onEntered: {
-                base.showTooltip(joinDistanceLabel, Qt.point(-joinDistanceLabel.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "<h3>Set the distance in millimeters under which separate support structures will join \
-                    together. Increasing this setting can help with issues regarding failure of many small support structures around a print.</h3>"))
-            }
-            onExited: base.hideTooltip()
+            // onEntered: {
+            //     base.showTooltip(joinDistanceLabel, Qt.point(-joinDistanceLabel.x - UM.Theme.getSize("thick_margin").width, 0),
+            //         catalog.i18nc("@label", "<h3>Set the distance in millimeters under which separate support structures will join \
+            //         together. Increasing this setting can help with issues regarding failure of many small support structures around a print.</h3>"))
+            // }
+            // onExited: base.hideTooltip()
         }
     }
 
@@ -464,12 +464,12 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
 
-            onEntered: {
-                base.showTooltip(supportRoofLabel, Qt.point(-supportRoofLabel.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", "<h3>Generate a dense slab of material between the top of support and the model. \
-                    This will create a skin between the model and support.</h3>"))
-            }
-            onExited: base.hideTooltip()
+            // onEntered: {
+            //     base.showTooltip(supportRoofLabel, Qt.point(-supportRoofLabel.x - UM.Theme.getSize("thick_margin").width, 0),
+            //         catalog.i18nc("@label", "<h3>Generate a dense slab of material between the top of support and the model. \
+            //         This will create a skin between the model and support.</h3>"))
+            // }
+            // onExited: base.hideTooltip()
         }
     }
 

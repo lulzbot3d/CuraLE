@@ -31,13 +31,13 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
 
-            onEntered: {
-                base.showTooltip(enableAdhesionRowTitle, Qt.point(-enableAdhesionRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
-                    catalog.i18nc("@label", '<h3>Select a form of bed adhesion. "Skirt" is useful for observing adequate bed leveling and z-offsets \
-                    prior to the actual print, while "Brim" or "Raft" are useful for helping ensure a part stays adhered to the bed and can also \
-                    potentially help with warping issues. Choosing "None" is a way to print to the full extent of the build volume.</h3>'))
-            }
-            onExited: base.hideTooltip()
+            // onEntered: {
+            //     base.showTooltip(enableAdhesionRowTitle, Qt.point(-enableAdhesionRowTitle.x - UM.Theme.getSize("thick_margin").width, 0),
+            //         catalog.i18nc("@label", '<h3>Select a form of bed adhesion. "Skirt" is useful for observing adequate bed leveling and z-offsets \
+            //         prior to the actual print, while "Brim" or "Raft" are useful for helping ensure a part stays adhered to the bed and can also \
+            //         potentially help with warping issues. Choosing "None" is a way to print to the full extent of the build volume.</h3>'))
+            // }
+            // onExited: base.hideTooltip()
         }
     }
 

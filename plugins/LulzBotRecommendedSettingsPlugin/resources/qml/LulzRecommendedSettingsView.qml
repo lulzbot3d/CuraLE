@@ -81,7 +81,7 @@ Flickable {
         RecommendedZSeamSelector {
 
             width: parent.width
-            labelColumnWidth: settingsColumn.firstColumnWidth
+            //labelColumnWidth: settingsColumn.firstColumnWidth
         }
 
     }
