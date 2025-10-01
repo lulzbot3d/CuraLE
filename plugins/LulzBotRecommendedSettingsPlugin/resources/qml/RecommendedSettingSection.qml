@@ -55,8 +55,8 @@ Item
             anchors.fill: sectionTitle
             propagateComposedEvents: true
             hoverEnabled: true
-            onEntered: base.showTooltip(parent, Qt.point(-UM.Theme.getSize("thick_margin").width, 0), tooltipText)
-            onExited: base.hideTooltip()
+            onEntered: recommendedPrintSetup.showTooltip(parent, Qt.point(-UM.Theme.getSize("thick_margin").width, 0), tooltipText)
+            onExited: recommendedPrintSetup.hideTooltip()
         }
 
     }

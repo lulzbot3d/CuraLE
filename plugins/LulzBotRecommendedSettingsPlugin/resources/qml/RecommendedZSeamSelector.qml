@@ -11,7 +11,7 @@ import Cura 1.0 as Cura
 //
 //  Z Seam
 //
-Cura.RecommendedSettingSection {
+RecommendedSettingSection {
     id: zSeamRow
 
     title: catalog.i18nc("@label", "Z Seam Alignment")
@@ -37,9 +37,9 @@ Cura.RecommendedSettingSection {
 
     contents: [
 
-        Cura.RecommendedSettingItem {
+        RecommendedSettingItem {
             settingName: catalog.i18nc("@action:label", "Z Seam Type")
-            tooltipText: catalog.i18nc("@label", "")
+            tooltipText: catalog.i18nc("@label", "Starting point of each path in a layer. When paths in consecutive layers start at the same point a vertical seam may show on the print. When aligning these near a user specified location, the seam is easiest to remove. When placed randomly the inaccuracies at the paths' start will be less noticeable. When taking the shortest path the print will be quicker.")
             isCompressed: zSeamRow.isCompressed
 
             settingControl: Cura.SingleSettingComboBox {
@@ -49,9 +49,9 @@ Cura.RecommendedSettingSection {
             }
         },
 
-        Cura.RecommendedSettingItem {
+        RecommendedSettingItem {
             settingName: catalog.i18nc("@action:label", "Z Seam Position")
-            tooltipText: catalog.i18nc("@label", "")
+            tooltipText: catalog.i18nc("@label", "The position near where to start printing each part in a layer.")
             isCompressed: zSeamRow.isCompressed
 
             settingControl: Cura.SingleSettingComboBox {

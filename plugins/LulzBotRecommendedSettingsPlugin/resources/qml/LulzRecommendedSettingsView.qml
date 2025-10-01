@@ -94,5 +94,37 @@ Flickable {
         watchedProperties: [ "value" ]
         storeIndex: 0
     }
+
+    function showTooltip(item, position, text) {
+        tooltipItem.text = text
+        var position = item.mapToItem(backgroundItem, position.x - UM.Theme.getSize("default_arrow").width, position.y)
+        tooltipItem.show(position)
+
+        // hide the main tooltip if the sidebar gui is enabled and the sidebar is undocked
+        var sidebargui_docked = false
+        if(withSidebarGUI) {
+            sidebargui_docked = UM.Preferences.getValue("sidebargui/docked_sidebar")
+        }
+        if(sidebargui_docked === false) {
+            tooltipItem.visible = false
+        }
+        else if(sidebargui_docked === true) {
+            tooltipItem.visible = true
+        }
+    }
+
+    function hideTooltip() {
+        tooltipItem.hide();
+    }
+
+    Connections {
+        target: tooltipItem != undefined ? tooltipItem : null
+        function onOpacityChanged() {
+            // ensure invisible tooltips don't cover the tabs
+            if(tooltipItem.opacity == 0) {
+                tooltipItem.text = ""
+            }
+        }
+    }
 }
 
