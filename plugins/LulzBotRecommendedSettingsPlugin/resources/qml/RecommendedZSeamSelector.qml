@@ -14,7 +14,7 @@ import Cura 1.0 as Cura
 RecommendedSettingSection {
     id: zSeamRow
 
-    title: catalog.i18nc("@label", "Z Seam Alignment")
+    title: catalog.i18nc("@label", "Z Seam")
     icon: UM.Theme.getIcon("Zipper")
     enableSectionSwitchVisible: false
     enableSectionSwitchChecked: true

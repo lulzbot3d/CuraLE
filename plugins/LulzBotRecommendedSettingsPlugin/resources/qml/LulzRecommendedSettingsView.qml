@@ -47,7 +47,6 @@ Flickable {
     boundsBehavior: Flickable.StopAtBounds
 
     Column {
-
         id: settingsColumn
         padding: UM.Theme.getSize("default_margin").width
         spacing: UM.Theme.getSize("default_margin").height
@@ -59,29 +58,32 @@ Flickable {
         property real firstColumnWidth: Math.round(width * (11/24))
 
         RecommendedStrengthSection {
-
             width: parent.width
             labelColumnWidth: settingsColumn.firstColumnWidth
         }
 
         RecommendedSupportSection {
-
             width: parent.width
             // TODO Create a reusable component with these properties to not define them separately for each component
             labelColumnWidth: settingsColumn.firstColumnWidth
         }
 
         RecommendedAdhesionSelector {
-
             width: parent.width
             // TODO Create a reusable component with these properties to not define them separately for each component
             labelColumnWidth: settingsColumn.firstColumnWidth
         }
 
         RecommendedZSeamSelector {
-
             width: parent.width
-            //labelColumnWidth: settingsColumn.firstColumnWidth
+        }
+
+        RecommendedVaseModeSelector {
+            width: parent.width
+        }
+
+        RecommendedPrintSequenceSelector {
+            width: parent.width
         }
 
     }
