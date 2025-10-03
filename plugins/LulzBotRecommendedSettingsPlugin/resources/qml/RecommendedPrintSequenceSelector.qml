@@ -29,7 +29,7 @@ RecommendedSettingSection {
             id: printSequenceContainer
             settingName: catalog.i18nc("@action:label", "Print Sequence")
             tooltipText: catalog.i18nc("@label", "Starting point of each path in a layer. When paths in consecutive layers start at the same point a vertical seam may show on the print. When aligning these near a user specified location, the seam is easiest to remove. When placed randomly the inaccuracies at the paths' start will be less noticeable. When taking the shortest path the print will be quicker.")
-            isCompressed: zSeamRow.isCompressed
+            isCompressed: printSequenceRow.isCompressed
 
             settingControl: Cura.SingleSettingComboBox {
                 width: parent.width
