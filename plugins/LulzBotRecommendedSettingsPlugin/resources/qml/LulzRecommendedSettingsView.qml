@@ -53,13 +53,8 @@ Flickable {
 
         width: recommendedPrintSetup.width - 2 * padding - UM.Theme.getSize("thin_margin").width
 
-        // Makes it easier to adjust the overall size of the columns.
-        // We want the labels to take up just under half of the available space.
-        property real firstColumnWidth: Math.round(width * (11/24))
-
         RecommendedStrengthSection {
             width: parent.width
-            labelColumnWidth: settingsColumn.firstColumnWidth
         }
 
         RecommendedSupportSection {
