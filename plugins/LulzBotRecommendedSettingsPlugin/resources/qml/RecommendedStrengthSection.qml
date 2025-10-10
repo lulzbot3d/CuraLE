@@ -75,47 +75,10 @@ RecommendedSettingSection {
                             //<h3>In the dropdown to the right, you can select textured walls. This will enable a setting called \"Fuzzy Skin\".\
                             //You can fine-tune this setting in the \"Experimental\" section of the Custom menu.</h3>
 
-            UM.SettingPropertyProvider {
-                id: wallCount
-                containerStackId: Cura.MachineManager.activeStack.id
-                key: "wall_line_count"
-                watchedProperties: [ "value" ]
-                storeIndex: 0
-            }
-
-            Binding {
-                target: wallCountSpinBox
-                property: "value"
-                value: parseInt(wallCount.properties.value)
-            }
-
-            settingControl: SpinBox {
-                id: wallCountSpinBox
-
-                anchors.verticalCenter: parent.verticalCenter
-
-                height: UM.Theme.getSize("combobox").height
+            settingControl: Cura.SingleSettingSpinBox {
+                settingName: "wall_line_count"
                 width: parent.width
-
-                from: 0
-                to: 999999
-                editable: true
-                stepSize: 1
-
-                value: parseInt(wallCount.properties.value)
-
-                onValueChanged: {
-                    var current = parseInt(wallCount.properties.value)
-                    if (current == wallCountSpinBox.value || current > wallCountSpinBox.to) {
-                        return
-                    }
-
-                    var active_mode = UM.Preferences.getValue("cura/active_mode")
-
-                    if (active_mode == 0 || active_mode == "simple") {
-                        Cura.MachineManager.setSettingForAllExtruders("wall_line_count", "value", wallCountSpinBox.value)
-                    }
-                }
+                updateAllExtruders: true
             }
         },
 
@@ -192,28 +155,6 @@ RecommendedSettingSection {
             settingName: catalog.i18nc("@label:action", "Top/Bottom Count")
             tooltipText: catalog.i18nc("@label", "<h3>Set the number of solid layers that will be generated on the top and bottom of your print.</h3> \
                             <h3>In the dropdown to the right, you can also set the pattern that those layers will be created with.</h3>")
-
-            UM.SettingPropertyProvider {
-                id: bottomLayers
-                containerStackId: Cura.MachineManager.activeStack.id
-                key: "bottom_layers"
-                watchedProperties: [ "value" ]
-                storeIndex: 0
-            }
-
-            UM.SettingPropertyProvider {
-                id: topLayers
-                containerStackId: Cura.MachineManager.activeStack.id
-                key: "top_layers"
-                watchedProperties: [ "value" ]
-                storeIndex: 0
-            }
-
-            Binding {
-                target: topBottomCountSpinBox
-                property: "value"
-                value: Math.max(parseInt(bottomLayers.properties.value), parseInt(topLayers.properties.value))
-            }
 
             settingControl: SpinBox {
                 id: topBottomCountSpinBox

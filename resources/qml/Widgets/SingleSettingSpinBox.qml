@@ -7,13 +7,12 @@ import QtQuick.Controls 2.15
 import UM 1.7 as UM
 import Cura 1.7 as Cura
 
-// This silder allows changing of a single setting. Only the setting name has to be passed in to "settingName".
+// This spinbox allows changing of a single setting. Only the setting name has to be passed in to "settingName".
 // All of the setting updating logic is handled by this component.
-// This component allows you to choose values between minValue -> maxValue and rounds them to the nearest 10.
+// This component allows you to choose values between minValue -> maxValue using intervals of stepSize.
 // If the setting is limited to a single extruder or is settable with different values per extruder use "updateAllExtruders: true"
-UM.Slider
-{
-    id: settingSlider
+Cura.SpinBox {
+    id: settingSpinBox
 
     property alias settingName: propertyProvider.key
 
@@ -22,13 +21,9 @@ UM.Slider
     property bool updateAllExtruders: false
     // This is only used if updateAllExtruders == true
     property int defaultExtruderIndex: Cura.ExtruderManager.activeExtruderIndex
-    property int previousValue: -1
 
-    // set range from 0 to 100
-    from: 0; to: 100
-    // set stepSize to 10 and set snapMode to snap on release snapMode is needed
-    // otherwise the used percentage and slider handle show different values
-    stepSize: 10; snapMode: Slider.SnapOnRelease
+    // set stepSize to 1
+    stepSize: 1
 
     UM.SettingPropertyProvider
     {
@@ -49,7 +44,7 @@ UM.Slider
             }
             return output;
         }
-        watchedProperties: ["value", "validationState",  "resolve"]
+        watchedProperties: ["value", "minimum_value", "maximum_value", "resolve"]
         removeUnusedValue: false
         storeIndex: 0
     }
@@ -57,14 +52,8 @@ UM.Slider
     // set initial value from stack
     value: parseInt(propertyProvider.properties.value)
 
-    // When the slider is released trigger an update immediately. This forces the slider to snap to the rounded value.
-    onPressedChanged: function(pressed)
-    {
-        if(!pressed)
-        {
-            updateSetting(settingSlider.value);
-        }
-    }
+    // set range from minimum_value to maximum_value
+    from: parseInt(propertyProvider.properties.minimum_value); to: parseInt(propertyProvider.properties.maximum_value)
 
     Connections
     {
@@ -79,7 +68,7 @@ UM.Slider
         }
     }
 
-    // Updates to the setting are delayed by interval. This reduces lag by waiting a bit after a setting change to update the slider contents.
+    // Updates to the setting are delayed by interval. This reduces lag by waiting a bit after a setting change to update the spinbox contents.
     Timer
     {
         id: updateTimer
@@ -88,9 +77,9 @@ UM.Slider
         onTriggered: parseValueUpdateSetting(false)
     }
 
-    function updateSlider(value)
+    function updateSpinBox(value)
     {
-        settingSlider.value = value
+        settingSpinBox.value = value
     }
 
     function parseValueUpdateSetting(triggerUpdate)
@@ -98,12 +87,12 @@ UM.Slider
         // Only run when the setting value is updated by something other than the slider.
         // This sets the slider value based on the setting value, it does not update the setting value.
 
-        if (parseInt(propertyProvider.properties.value) == settingSlider.value)
+        if (parseInt(propertyProvider.properties.value) == settingSpinBox.value)
         {
             return
         }
 
-        settingSlider.value = propertyProvider.properties.value
+        settingSpinBox.value = propertyProvider.properties.value
     }
 
     // Override this function to update a setting differently
