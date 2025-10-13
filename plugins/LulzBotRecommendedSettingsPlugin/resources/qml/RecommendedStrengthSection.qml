@@ -79,6 +79,11 @@ RecommendedSettingSection {
                 settingName: "wall_line_count"
                 width: parent.width
                 updateAllExtruders: true
+
+                function updateSetting(value) {
+                    Cura.MachineManager.setSettingForAllExtruders("wall_line_count", "value", value)
+                    Cura.MachineManager.resetSettingForAllExtruders("wall_thickness")
+                }
             }
         },
 

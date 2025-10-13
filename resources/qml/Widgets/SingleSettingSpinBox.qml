@@ -25,20 +25,15 @@ Cura.SpinBox {
     // set stepSize to 1
     stepSize: 1
 
-    UM.SettingPropertyProvider
-    {
+    UM.SettingPropertyProvider {
         id: propertyProvider
-        containerStackId:
-        {
+        containerStackId: {
             let output = "";
-            if (updateAllExtruders)
-            {
-                if (Cura.ExtruderManager.extruderIds[defaultExtruderIndex] != undefined)
-                {
+            if (updateAllExtruders) {
+                if (Cura.ExtruderManager.extruderIds[defaultExtruderIndex] != undefined) {
                     output = Cura.ExtruderManager.extruderIds[defaultExtruderIndex];
                 }
-                else if (Cura.MachineManager.activeMachine != null)
-                {
+                else if (Cura.MachineManager.activeMachine != null) {
                     output = Cura.MachineManager.activeMachine.id;
                 }
             }
@@ -55,40 +50,33 @@ Cura.SpinBox {
     // set range from minimum_value to maximum_value
     from: parseInt(propertyProvider.properties.minimum_value); to: parseInt(propertyProvider.properties.maximum_value)
 
-    Connections
-    {
+    Connections {
         target: propertyProvider
-        function onContainerStackChanged()
-        {
+        function onContainerStackChanged() {
             updateTimer.restart()
         }
-        function onIsValueUsedChanged()
-        {
+        function onIsValueUsedChanged() {
             updateTimer.restart()
         }
     }
 
     // Updates to the setting are delayed by interval. This reduces lag by waiting a bit after a setting change to update the spinbox contents.
-    Timer
-    {
+    Timer {
         id: updateTimer
         interval: 100
         repeat: false
         onTriggered: parseValueUpdateSetting(false)
     }
 
-    function updateSpinBox(value)
-    {
+    function updateSpinBox(value) {
         settingSpinBox.value = value
     }
 
-    function parseValueUpdateSetting(triggerUpdate)
-    {
+    function parseValueUpdateSetting(triggerUpdate) {
         // Only run when the setting value is updated by something other than the slider.
         // This sets the slider value based on the setting value, it does not update the setting value.
 
-        if (parseInt(propertyProvider.properties.value) == settingSpinBox.value)
-        {
+        if (parseInt(propertyProvider.properties.value) == settingSpinBox.value) {
             return
         }
 
@@ -96,14 +84,11 @@ Cura.SpinBox {
     }
 
     // Override this function to update a setting differently
-    function updateSetting(value)
-    {
-        if (updateAllExtruders)
-        {
+    function updateSetting(value) {
+        if (updateAllExtruders) {
             Cura.MachineManager.setSettingForAllExtruders(propertyProvider.key, "value", value)
         }
-        else
-        {
+        else {
             propertyProvider.setPropertyValue("value", value)
         }
     }
