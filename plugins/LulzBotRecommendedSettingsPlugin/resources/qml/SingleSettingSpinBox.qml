@@ -46,13 +46,31 @@ SpinBox {
         storeIndex: 0
     }
 
+    Connections {
+        target: propertyProvider
+        function onContainerStackChanged() {
+            updateTimer.restart()
+        }
+        function onIsValueUsedChanged() {
+            updateTimer.restart()
+        }
+    }
+
     // set initial value from stack
     value: parseInt(propertyProvider.properties.value)
 
     // set range from minimum_value to maximum_value
-    from: parseInt(propertyProvider.properties.minimum_value); to: parseInt(propertyProvider.properties.maximum_value)
+    from: parseInt(propertyProvider.properties.minimum_value);
+    to: parseInt(propertyProvider.properties.maximum_value) != 0 ? parseInt(propertyProvider.properties.maximum_value) : 50
 
     onValueModified: control.updateSetting(control.value)
+
+    Timer {
+        id: updateTimer
+        interval: 100
+        repeat: false
+        onTriggered: parseValueUpdateSetting(false)
+    }
 
     function parseValueUpdateSetting(triggerUpdate) {
         // Only run when the setting value is updated by something other than the slider.

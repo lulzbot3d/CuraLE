@@ -110,42 +110,13 @@ RecommendedSettingSection {
                             together. Increasing this setting can help with issues regarding failure of many small support structures around a print.</h3>")
             isCompressed: enableSupportRow.isCompressed
 
-            settingControl: SpinBox {
-                id: joinDistanceSpinBox
+            settingControl: SingleSettingSpinBox {
+                settingName: "support_join_distance"
+                width: parent.width
+                updateAllExtruders: true
 
-                from: 0
-                to: 15
-                editable: true
-                stepSize: 1
-
-                value: parseInt(supportJoinDistance.properties.value)
-
-                onValueChanged: {
-                    // Don't round the value if it's already the same
-                    let current = parseInt(supportJoinDistance.properties.value)
-                    if (current == value) {
-                        return
-                    }
-                    if (current > to && value == to) {
-                        return
-                    }
-
-                    // Update value only if the Recommended mode is Active,
-                    // Otherwise if I change the value in the Custom mode the Recommended view will try to repeat
-                    // same operation
-                    var active_mode = UM.Preferences.getValue("cura/active_mode")
-
-                    if (active_mode == 0 || active_mode == "simple") {
-                        Cura.MachineManager.setSettingForAllExtruders("support_join_distance", "value", joinDistanceSpinBox.value)
-                    }
-                }
-
-                UM.SettingPropertyProvider {
-                    id: supportJoinDistance
-                    containerStackId: Cura.MachineManager.activeStack.id
-                    key: "support_join_distance"
-                    watchedProperties: [ "value" ]
-                    storeIndex: 0
+                function updateSetting(value) {
+                        Cura.MachineManager.setSettingForAllExtruders("support_join_distance", "value", value)
                 }
             }
         },
@@ -156,26 +127,10 @@ RecommendedSettingSection {
                             This will create a skin between the model and support.</h3>")
             isCompressed: enableSupportRow.isCompressed
 
-            settingControl: CheckBox {
-                enabled: recommendedPrintSetup.settingsEnabled
-
-                checked: supportRoofEnabled.properties.value == "True"
-
-                MouseArea {
-                    id: supportRoofCheckBoxMouseArea
-                    anchors.fill: parent
-
-                    onClicked: supportRoofEnabled.setPropertyValue("value", supportRoofEnabled.properties.value != "True")
-                }
-
-                UM.SettingPropertyProvider {
-                    id: supportRoofEnabled
-                    containerStack: Cura.MachineManager.activeMachine
-                    key: "support_roof_enable"
-                    watchedProperties: [ "value" ]
-                    storeIndex: 0
-                }
-
+            settingControl: SingleSettingSwitch {
+                settingName: "support_roof_enable"
+                width: parent.width
+                updateAllExtruders: true
             }
         }
     ]

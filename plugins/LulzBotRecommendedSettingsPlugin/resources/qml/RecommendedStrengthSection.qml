@@ -161,31 +161,17 @@ RecommendedSettingSection {
             tooltipText: catalog.i18nc("@label", "<h3>Set the number of solid layers that will be generated on the top and bottom of your print.</h3> \
                             <h3>In the dropdown to the right, you can also set the pattern that those layers will be created with.</h3>")
 
-            settingControl: SpinBox {
-                id: topBottomCountSpinBox
-
-                anchors.verticalCenter: parent.verticalCenter
-
-                height: UM.Theme.getSize("combobox").height
+            settingControl: SingleSettingSpinBox {
+                settingName: "bottom_layers"
                 width: parent.width
+                updateAllExtruders: true
 
-                from: 0
-                to: 999999
-                editable: true
-                stepSize: 1
-
-                onValueChanged: {
-                    let current = Math.max(parseInt(topLayers.properties.value), parseInt(bottomLayers.properties.value))
-                    if (current == topBottomCountSpinBox.value) {
-                        return
-                    }
-
-                    var active_mode = UM.Preferences.getValue("cura/active_mode")
-
-                    if (active_mode == 0 || active_mode == "simple") {
-                        Cura.MachineManager.setSettingForAllExtruders("top_layers", "value", topBottomCountSpinBox.value)
-                        Cura.MachineManager.setSettingForAllExtruders("bottom_layers", "value", topBottomCountSpinBox.value)
-                    }
+                function updateSetting(value) {
+                    Cura.MachineManager.setSettingForAllExtruders("top_layers", "value", value)
+                    Cura.MachineManager.resetSettingForAllExtruders("top_thickness")
+                    Cura.MachineManager.setSettingForAllExtruders("bottom_layers", "value", value)
+                    Cura.MachineManager.resetSettingForAllExtruders("bottom_thickness")
+                    Cura.MachineManager.resetSettingForAllExtruders("top_bottom_thickness")
                 }
             }
         },
