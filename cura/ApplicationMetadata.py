@@ -4,12 +4,12 @@
 # ---------
 # General constants used in Cura
 # ---------
-DEFAULT_CURA_APP_NAME = "CuraLE"
+DEFAULT_CURA_APP_NAME = "curale"
 DEFAULT_CURA_DISPLAY_NAME = "Cura LulzBot Edition"
 DEFAULT_CURA_VERSION = "main"
 DEFAULT_CURA_BUILD_TYPE = ""
 DEFAULT_CURA_DEBUG_MODE = False
-DEFAULT_CURA_LATEST_URL = "https://software.lulzbot.com/latest.json"
+DEFAULT_CURA_LATEST_URL = "https://software.lulzbot.com/Cura_LulzBot_Edition/current_version.json"
 
 # Each release has a fixed SDK version coupled with it. It doesn't make sense to make it configurable because, for
 # example Cura 3.2 with SDK version 6.1 will not work. So the SDK version is hard-coded here and left out of the
