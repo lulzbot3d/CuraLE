@@ -11,8 +11,10 @@ import Cura 1.7 as Cura
 // All of the setting updating logic is handled by this component.
 // This component allows you to choose values between minValue -> maxValue using intervals of stepSize.
 // If the setting is limited to a single extruder or is settable with different values per extruder use "updateAllExtruders: true"
-Cura.SpinBox {
-    id: settingSpinBox
+SpinBox {
+    id: control
+
+    height: UM.Theme.getSize("setting_control").height
 
     property alias settingName: propertyProvider.key
 
@@ -50,37 +52,17 @@ Cura.SpinBox {
     // set range from minimum_value to maximum_value
     from: parseInt(propertyProvider.properties.minimum_value); to: parseInt(propertyProvider.properties.maximum_value)
 
-    Connections {
-        target: propertyProvider
-        function onContainerStackChanged() {
-            updateTimer.restart()
-        }
-        function onIsValueUsedChanged() {
-            updateTimer.restart()
-        }
-    }
-
-    // Updates to the setting are delayed by interval. This reduces lag by waiting a bit after a setting change to update the spinbox contents.
-    Timer {
-        id: updateTimer
-        interval: 100
-        repeat: false
-        onTriggered: parseValueUpdateSetting(false)
-    }
-
-    function updateSpinBox(value) {
-        settingSpinBox.value = value
-    }
+    onValueModified: control.updateSetting(control.value)
 
     function parseValueUpdateSetting(triggerUpdate) {
         // Only run when the setting value is updated by something other than the slider.
         // This sets the slider value based on the setting value, it does not update the setting value.
 
-        if (parseInt(propertyProvider.properties.value) == settingSpinBox.value) {
+        if (parseInt(propertyProvider.properties.value) == control.value) {
             return
         }
 
-        settingSpinBox.value = propertyProvider.properties.value
+        control.value = propertyProvider.properties.value
     }
 
     // Override this function to update a setting differently
@@ -91,5 +73,59 @@ Cura.SpinBox {
         else {
             propertyProvider.setPropertyValue("value", value)
         }
+    }
+
+    contentItem: UM.Label {
+        id: contentLabel
+        text: control.textFromValue(control.value, control.locale)
+
+        horizontalAlignment: Qt.AlignHCenter
+        verticalAlignment: Qt.AlignVCenter
+    }
+
+    up.indicator: Rectangle {
+        x: control.mirrored ? 0 : parent.width - width
+        height: parent.height
+        width: height
+        //color: control.up.pressed ? UM.Theme.getColor("setting_control_button_hover") : control.up.hovered ? UM.Theme.getColor("setting_control_button_hover") : UM.Theme.getColor("setting_control_button")
+        //border.color: enabled ? UM.Theme.getColor("setting_control_border") : UM.Theme.getColor("setting_control_disabled_border")
+
+        UM.UnderlineBackground {
+            color: control.up.pressed ? control.palette.mid : UM.Theme.getColor("detail_background")
+        }
+
+        UM.ColorImage {
+            anchors.centerIn: parent
+            height: parent.height / 2.5
+            width: height
+            color: enabled ? UM.Theme.getColor("text") : UM.Theme.getColor("text_disabled")
+            source: UM.Theme.getIcon("Plus")
+        }
+    }
+
+    down.indicator: Rectangle {
+        x: control.mirrored ? parent.width - width : 0
+        height: parent.height
+        width: height
+        // color: control.up.pressed ? UM.Theme.getColor("setting_control_button_hover") : control.up.hovered ? UM.Theme.getColor("setting_control_button_hover") : UM.Theme.getColor("setting_control_button")
+        // border.color: enabled ? UM.Theme.getColor("setting_control_border") : UM.Theme.getColor("setting_control_disabled_border")
+
+        UM.UnderlineBackground {
+            color: control.down.pressed ? control.palette.mid : UM.Theme.getColor("detail_background")
+        }
+
+        UM.ColorImage
+        {
+            anchors.centerIn: parent
+            height: parent.height / 2.5
+            width: height
+            color: enabled ? UM.Theme.getColor("text") : UM.Theme.getColor("text_disabled")
+            source: UM.Theme.getIcon("Minus")
+        }
+    }
+
+    background: Rectangle {
+        implicitWidth: 140
+        border.color: enabled ? UM.Theme.getColor("setting_control_border") : UM.Theme.getColor("setting_control_disabled_border")
     }
 }

@@ -75,7 +75,7 @@ RecommendedSettingSection {
                             //<h3>In the dropdown to the right, you can select textured walls. This will enable a setting called \"Fuzzy Skin\".\
                             //You can fine-tune this setting in the \"Experimental\" section of the Custom menu.</h3>
 
-            settingControl: Cura.SingleSettingSpinBox {
+            settingControl: SingleSettingSpinBox {
                 settingName: "wall_line_count"
                 width: parent.width
                 updateAllExtruders: true

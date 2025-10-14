@@ -92,7 +92,7 @@
         "npmpackage/1.1.0#4985a6079f60bb850e6fb3f156907892",
         "pyprojecttoolchain/0.2.0#d0d0d74876a9061a767bb2153c7952e3",
         "sentrylibrary/1.0.0#5c228ac3f060c85c8a4856a26f41a0ef",
-        "sipbuildtool/0.3.0#262477bdb72ff6a09737695673de2b62",
+        "sipbuildtool/0.3.0#649d286d2cc76dfb7030e30275c36e29",
         "translationextractor/2.3.0#a29bec58475e28b6acf77f5964640dcd"
     ],
     "overrides": {
