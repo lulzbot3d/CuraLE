@@ -34,26 +34,7 @@ Item
 
         // adjust message stack position for sidebar
         var messageStack
-        if(is40)
-        {
-            messageStack = base.contentItem.children[0].children[3].children[7]
-        }
-        else if(isLE44)
-        {
-            messageStack = base.contentItem.children[2].children[3].children[7]
-        }
-        else if(isLE413)
-        {
-            messageStack = base.contentItem.children[2].children[3].children[8]
-        }
-        else if(isLE52)
-        {
-            messageStack = base.contentItem.children[3].children[3].children[8]
-        }
-        else
-        {
-            messageStack = base.contentItem.children[4].children[3].children[8]
-        }
+        messageStack = base.contentItem.children[4].children[3].children[8]
         messageStack.anchors.horizontalCenter = undefined
         messageStack.anchors.left = messageStack.parent.left
         messageStack.anchors.leftMargin = Qt.binding(function()
@@ -83,24 +64,9 @@ Item
         anchors.right: parent.right
         anchors.rightMargin: UM.Theme.getSize("print_setup_widget").width - width
         width: UM.Theme.getSize("machine_selector_widget").width
-        height:
-        {
-            if (isLE413)
-            {
-                return UM.Theme.getSize("main_window_header_button").height
-            } else {
-                return Math.round(0.5 * UM.Theme.getSize("main_window_header").height)
-            }
-        }
+        height: Math.round(0.5 * UM.Theme.getSize("main_window_header").height)
         y: - Math.floor((UM.Theme.getSize("main_window_header").height + height) / 2)
 
-        source:
-        {
-            if(isLE52) {
-                return "MachineSelector40.qml";
-            } else {
-                return "MachineSelector53.qml";
-            }
-        }
+        source: "MachineSelector53.qml";
     }
 }

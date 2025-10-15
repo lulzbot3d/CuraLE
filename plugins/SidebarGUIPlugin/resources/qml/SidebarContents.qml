@@ -31,20 +31,7 @@ Cura.RoundedRectangle
         {
             width: parent.width
             height: UM.Theme.getSize("setting_control").height + UM.Theme.getSize("default_margin").height
-            source:
-            {
-                if(isLE43) {
-                    return "ProfileSelector40.qml";
-                } else if(isLE413) {
-                    return "ProfileSelector44.qml";
-                } else if(isLE50) {
-                    return "ProfileSelector50.qml";
-                } else if(isLE52) {
-                    return "ProfileSelector51.qml";
-                } else {
-                    return "ProfileSelector53.qml";
-                }
-            }
+            source: "ProfileSelector53.qml";
         }
 
         Item
@@ -83,16 +70,7 @@ Cura.RoundedRectangle
                     rightMargin: UM.Theme.getSize("default_margin").width + UM.Theme.getSize("default_lining").width
                 }
 
-                source:
-                {
-                    if(isLE410) {
-                        return "ExtruderTabs40.qml";
-                    } else if (isLE413) {
-                        return "ExtruderTabs411.qml";
-                    } else {
-                        return "ExtruderTabs50.qml";
-                    }
-                }
+                source: "ExtruderTabs50.qml";
             }
 
             UM.SimpleButton

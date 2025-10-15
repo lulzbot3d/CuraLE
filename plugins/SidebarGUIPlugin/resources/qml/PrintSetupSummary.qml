@@ -89,16 +89,7 @@ Cura.RoundedRectangle
             bottomMargin: UM.Theme.getSize("default_margin").width
         }
 
-        source:
-        {
-            if(isLE410) {
-                return "ExtruderTabs40.qml";
-            } else if (isLE413) {
-                return "ExtruderTabs411.qml";
-            } else {
-                return "ExtruderTabs50.qml";
-            }
-        }
+        source: "ExtruderTabs50.qml";
     }
 
     Label

@@ -237,16 +237,7 @@ Item
     {
         anchors.left: parent.left
         anchors.leftMargin: -UM.Theme.getSize("default_lining").width
-        source:
-        {
-            if(isLE410) {
-                return "OpenFileButton40.qml";
-            } else if(isLE413) {
-                return "OpenFileButton411.qml";
-            } else {
-                return "OpenFileButton50.qml";
-            }
-        }
+        source: "OpenFileButton50.qml";
     }
 
     Loader
@@ -264,14 +255,7 @@ Item
         }
         y: - Math.floor((UM.Theme.getSize("main_window_header").height + height) / 2)
 
-        source:
-        {
-            if(isLE52) {
-                return "MachineSelector40.qml";
-            } else {
-                return "MachineSelector53.qml";
-            }
-        }
+        source: "MachineSelector53.qml";
     }
 
     Loader
@@ -281,14 +265,7 @@ Item
         anchors.right: printSetupSidebar.left
         anchors.rightMargin: UM.Theme.getSize("default_margin").width
 
-        source:
-        {
-            if(isLE413) {
-                return "ViewOptionsPanel40.qml";
-            } else {
-                return "ViewOptionsPanel50.qml";
-            }
-        }
+        source: "ViewOptionsPanel50.qml";
     }
 
     PrintSetupSummary
