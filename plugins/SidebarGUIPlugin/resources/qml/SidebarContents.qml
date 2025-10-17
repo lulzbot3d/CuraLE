@@ -82,13 +82,7 @@ Cura.RoundedRectangle
                     rightMargin: UM.Theme.getSize("default_margin").width
                     verticalCenter: parent.verticalCenter
                 }
-                iconSource:
-                {
-                    if (isLE410) {
-                        return extruderConfiguration.visible ? UM.Theme.getIcon("arrow_bottom") : UM.Theme.getIcon("arrow_left")
-                    }
-                    return extruderConfiguration.visible ? UM.Theme.getIcon("ChevronSingleDown") : UM.Theme.getIcon("ChevronSingleLeft")
-                }
+                iconSource: extruderConfiguration.visible ? UM.Theme.getIcon("ChevronSingleDown") : UM.Theme.getIcon("ChevronSingleLeft")
                 width: UM.Theme.getSize("standard_arrow").width
                 height: UM.Theme.getSize("standard_arrow").height
                 color: UM.Theme.getColor("setting_category_text")
@@ -130,11 +124,6 @@ Cura.RoundedRectangle
                 Component.onCompleted:
                 {
                     configurationMenu.contentItem.children[1].visible = false // separator
-                    if(isLE413)
-                    {
-                        configurationMenu.contentItem.children[0].x = 2 * UM.Theme.getSize("default_margin").width // extruder config
-                        configurationMenu.contentItem.children[2].x = UM.Theme.getSize("default_margin").width // Custom/Configurations
-                    }
 
                     var autoConfiguration = configurationMenu.contentItem.children[0].children[0];
                     autoConfiguration.children[0].visible = false // "Configurations" label
@@ -147,15 +136,11 @@ Cura.RoundedRectangle
                     customConfiguration.children[0].height = 0
 
                     var extruderTabs = customConfiguration.children[1]
-                    if (isLE51)
-                        extruderTabs = customConfiguration.children[2]
                     extruderTabs.visible = false // extruder tabs
                     extruderTabs.height = 0
                     extruderTabs.anchors.topMargin = 0
 
                     var customSelectors = customConfiguration.children[2]
-                    if (isLE51)
-                        customSelectors = customConfiguration.children[3]
                     customSelectors.children[0].visible = false // some spacer rectangle
                     customSelectors.children[0].height = 0
 
@@ -164,11 +149,6 @@ Cura.RoundedRectangle
                     selectors.spacing = UM.Theme.getSize("default_lining").height
 
                     enabledCheckbox = selectors.children[0].children[1]
-
-                    if (isLE413)
-                    {
-                        return
-                    }
 
                     materialSelectionLoader.source = "MaterialSelection.qml"
                 }

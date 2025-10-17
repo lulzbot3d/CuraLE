@@ -14,24 +14,8 @@ Item
     signal showTooltip(Item item, point location, string text)
     signal hideTooltip()
 
-    property bool is40
-    property bool isLE44
-    property bool isLE46
-    property bool isLE410
-    property bool isLE413
-    property bool isLE51
-    property bool isLE52
-
     Component.onCompleted:
     {
-        is40 = (CuraSDKVersion == "6.0.0")
-        isLE44 = (CuraSDKVersion <= "7.0.0")
-        isLE46 = (CuraSDKVersion <= "7.2.0")
-        isLE410 = (CuraSDKVersion <= "7.6.0")
-        isLE413 = (CuraSDKVersion <= "7.9.0")
-        isLE51 = (CuraSDKVersion <= "8.1.0")
-        isLE52 = (CuraSDKVersion <= "8.2.0")
-
         // adjust message stack position for sidebar
         var messageStack
         messageStack = base.contentItem.children[4].children[3].children[8]

@@ -55,22 +55,8 @@ Cura.RoundedRectangle
         }
     }
 
-    property bool hasMaterials:
-    {
-        if (CuraSDKVersion >= "6.2.0") {
-            return (Cura.MachineManager.activeMachine != null) ? Cura.MachineManager.activeMachine.hasMaterials : false
-        } else {
-            return Cura.MachineManager.hasMaterials
-        }
-    }
-    property bool hasVariants:
-    {
-        if (CuraSDKVersion >= "6.2.0") {
-            return (Cura.MachineManager.activeMachine != null) ? Cura.MachineManager.activeMachine.hasVariants : false
-        } else {
-            return Cura.MachineManager.hasVariants
-        }
-    }
+    property bool hasMaterials: Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.hasMaterials : false
+    property bool hasVariants: Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.hasVariants : false
 
     Loader
     {
