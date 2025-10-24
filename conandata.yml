@@ -1,17 +1,17 @@
-version: "5.11.0-alpha.0"
+version: "5.12.0-alpha.0"
 commit: "unknown"
 requirements:
-  - "curale_resources/5.11.0-alpha.0@lulzbot/testing"
-  - "uraniumle/5.11.0-alpha.0@lulzbot/testing"
-  - "curaengine/5.11.0-alpha.0@lulzbot/testing"
-  - "curale_binary_data/5.11.0-alpha.0@lulzbot/testing"
-  # - "fdm_materialsle/5.11.0-alpha.0@lulzbot/testing"
+  - "curale_resources/5.12.0-alpha.0"
+  - "uraniumle/5.12.0-alpha.0"
+  - "curaengine/5.12.0-alpha.0"
+  - "curale_binary_data/5.12.0-alpha.0"
+  # - "fdm_materialsle/5.12.0-alpha.0"
   - "dulcificum/5.10.0"
   - "pysavitar/5.11.0-alpha.0"
   - "pynest2d/5.10.0"
 requirements_internal:
-  # - "fdm_materialsle/5.11.0-alpha.0@lulzbot/testing"
-  - "curale_private_data/5.11.0-alpha.0@internal/testing"
+  # - "fdm_materialsle/5.12.0-alpha.0"
+  - "curale_private_data/5.12.0-alpha.0@internal/testing"
 requirements_enterprise:
   - "native_cad_plugin/2.0.0"
 urls:
