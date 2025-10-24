@@ -50,6 +50,7 @@
         "acceleration_enabled": { "description": "Enables adjusting the print head acceleration. Increasing the accelerations can reduce printing time at the cost of print quality. Populated values are the firmware defaults." },
         "acceleration_print": { "default_value": 2000 },
         "acceleration_travel": { "value": 4000 },
+        "adhesion_type": { "default_value": "skirt" },
         "bridge_enable_more_layers": { "default_value": false },
         "bridge_settings_enabled":
         {

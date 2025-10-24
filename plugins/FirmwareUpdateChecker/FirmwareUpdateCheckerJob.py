@@ -55,26 +55,32 @@ class FirmwareUpdateCheckerJob(Job):
             Logger.log("w", "Could not reach '{0}', if this URL is old, consider removal.".format(url))
         return result
 
-    def parseVersionResponse(self, response: str) -> Version:
+    def parseVersionResponse(self, response: str) -> str:
         raw_str = response.split("\n", 1)[0].rstrip()
-        return Version(raw_str)
+        return raw_str
 
-    def getCurrentVersion(self) -> Version:
+    def getCurrentVersion(self) -> list[int, Version]:
+        max_major_version = 0
         max_version = self.ZERO_VERSION
         if self._lookups is None:
-            return max_version
+            return [max_major_version, max_version]
 
         machine_urls = self._lookups.getCheckUrls()
         if machine_urls is not None:
             for url in machine_urls:
-                version = self.parseVersionResponse(self.getUrlResponse(url))
+                raw_version = self.parseVersionResponse(self.getUrlResponse(url))
+                version_major, version_minor = raw_version.split(".", 1)
+                version_major = int(version_major)
+                if version_major > max_major_version:
+                    max_major_version = version_major
+                version = Version(version_minor)
                 if version > max_version:
                     max_version = version
 
-        if max_version < self.EPSILON_VERSION:
+        if max_version < self.EPSILON_VERSION or max_major_version < 1:
             Logger.log("w", "MachineID {0} not handled!".format(self._lookups.getMachineName()))
 
-        return max_version
+        return [max_major_version, max_version]
 
     def run(self):
         try:
@@ -92,32 +98,44 @@ class FirmwareUpdateCheckerJob(Job):
             if machine_id is not None:
                 Logger.log("i", "You have a(n) {0} in the printer list. Do firmware-check.".format(self._machine_name))
 
-                current_version = self.getCurrentVersion()
+                current_major, current_minor = self.getCurrentVersion()
+                current_version = str(current_major) + "." + str(current_minor)
 
                 # This case indicates that was an error checking the version.
                 # It happens for instance when not connected to internet.
-                if current_version == self.ZERO_VERSION:
+                if current_minor == self.ZERO_VERSION or current_major == 0:
                     return
 
                 # If it is the first time the version is checked, the checked_version is ""
                 setting_key_str = getSettingsKeyForMachine(machine_id)
-                checked_version = Version(Application.getInstance().getPreferences().getValue(setting_key_str))
+                checked_raw = Application.getInstance().getPreferences().getValue(setting_key_str)
+                checked_major, raw_checked_minor = checked_raw.split(".", 1)
+                checked_minor = Version(raw_checked_minor)
 
                 # If the checked_version is "", it's because is the first time we check firmware and in this case
                 # we will not show the notification, but we will store it for the next time
                 Application.getInstance().getPreferences().setValue(setting_key_str, current_version)
                 Logger.log("i", "Reading firmware version of %s: checked = %s - latest = %s",
-                           self._machine_name, checked_version, current_version)
+                           self._machine_name, checked_raw, current_version)
 
                 # The first time we want to store the current version, the notification will not be shown,
                 # because the new version of Cura will be release before the firmware and we don't want to
                 # notify the user when no new firmware version is available.
-                if checked_version != "" and checked_version != current_version:
-                    Logger.log("i", "Showing firmware update message for new version: {version}".format(version = current_version))
-                    message = FirmwareUpdateCheckerMessage(machine_id, self._machine_name, current_version,
-                                                           self._lookups.getRedirectUserUrl())
-                    message.actionTriggered.connect(self._callback)
-                    message.show()
+                if checked_raw != "":
+                    current_version_newer = False
+                    if current_major > int(checked_major):
+                        current_version_newer = True
+                    elif current_major == int(checked_major):
+                        if current_minor > checked_minor:
+                            current_version_newer = True
+                    if current_version_newer:
+                        Logger.log("i", "Showing firmware update message for new version: {version}".format(version = current_version))
+                        message = FirmwareUpdateCheckerMessage(machine_id, self._machine_name, current_version,
+                                                               self._lookups.getRedirectUserUrl())
+                        message.actionTriggered.connect(self._callback)
+                        message.show()
+                    else:
+                        Logger.log("i", "Firmware up-to-date, not showing message.")
             else:
                 Logger.log("i", "No machine with name {0} in list of firmware to check.".format(self._machine_name))
 

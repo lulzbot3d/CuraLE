@@ -7,7 +7,19 @@
         "visible": true,
         "file_formats": "text/x-gcode",
         "platform": "bed_plates/labeled/taz_pro_xt_labeled.stl",
-        "bltouch_is_standard": true,
+        "firmware_update_info":
+        {
+            "check_url":
+            {
+                "bltouch": "firmware.lulzbot.com/TAZ_Pro/XT/Galaxy/BLTouch/version.txt",
+                "default": "firmware.lulzbot.com/TAZ_Pro/XT/Galaxy/No_BLTouch/version.txt"
+            },
+            "update_url":
+            {
+                "bltouch": "firmware.lulzbot.com/TAZ_Pro/XT/Galaxy/BLTouch/taz_pro_xt_galaxy_blt_latest.bin",
+                "default": "firmware.lulzbot.com/TAZ_Pro/XT/Galaxy/No_BLTouch/taz_pro_xt_galaxy_latest.bin"
+            }
+        },
         "has_optional_bltouch": true,
         "has_variants": true,
         "lulzbot_firmware_extension": "bin",

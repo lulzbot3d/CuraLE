@@ -7,6 +7,11 @@
         "visible": true,
         "file_formats": "text/x-gcode",
         "platform": "bed_plates/labeled/mini_2_labeled.stl",
+        "firmware_update_info":
+        {
+            "check_url": { "default": "firmware.lulzbot.com/Mini_2/Universal/version.txt" },
+            "update_url": { "default": "firmware.lulzbot.com/Mini_2/Universal/mini_2_universal_latest.hex" }
+        },
         "lulzbot_firmware_name": { "default": "Marlin_Mini2_Universal" },
         "lulzbot_machine_category": "Mini",
         "lulzbot_machine_image": "mini_2",

@@ -6,6 +6,11 @@
     {
         "visible": true,
         "platform": "bed_plates/labeled/workhorse_2_labeled.stl",
+        "firmware_update_info":
+        {
+            "check_url": { "default": "firmware.lulzbot.com/Workhorse_2/Galaxy/version.txt" },
+            "update_url": { "default": "firmware.lulzbot.com/Workhorse_2/Galaxy/workhorse_2_galaxy_latest.hex" }
+        },
         "has_variants": true,
         "lulzbot_firmware_name": { "default": "Marlin_Workhorse2_Galaxy" },
         "lulzbot_machine_category": "TAZ",
