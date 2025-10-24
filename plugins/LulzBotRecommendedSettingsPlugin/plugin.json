@@ -1,7 +1,7 @@
 {
     "name": "Recommended Settings",
-    "author": "GrimQuagle",
-    "version": "1.0.8",
+    "author": "Fargo Additive Manufacturing Equipment LLC.",
+    "version": "1.0.0",
     "minimum_cura_version": "5.0",
     "maximum_cura_version": "5.10",
     "description": "Replaces the Recommended Settings tab with LulzBot's alternative.",

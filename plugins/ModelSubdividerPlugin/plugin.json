@@ -1,8 +1,0 @@
-{
-    "name": "Model Subdivider Plugin (Experimental)",
-    "author": "Aleph Objects Inc.",
-    "version": "1.0.0",
-    "description": "Allows subdividing meshes in cura.",
-    "api": "8.8.0",
-    "i18n-catalog": "cura"
-}

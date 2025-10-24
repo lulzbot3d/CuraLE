@@ -6,7 +6,7 @@ import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.3
 
 import UM 1.2 as UM
-import Cura 1.1 as Cura
+import Cura 1.0 as Cura
 
 
 // This element hold all the elements needed for the user to trigger the slicing process, and later
@@ -26,7 +26,7 @@ Item
         id: actionPanelWidget
 
         width: UM.Theme.getSize("action_panel_widget").width
-        height: childrenRect.height + 2 * UM.Theme.getSize("default_margin").height
+        height: childrenRect.height + 2 * UM.Theme.getSize("thick_margin").height
         anchors.right: parent.right
         color: UM.Theme.getColor("main_background")
         border.width: UM.Theme.getSize("default_lining").width
@@ -42,11 +42,11 @@ Item
             anchors
             {
                 top: parent.top
-                topMargin: UM.Theme.getSize("default_margin").height
+                topMargin: UM.Theme.getSize("thick_margin").height
                 left: parent.left
-                leftMargin: UM.Theme.getSize("default_margin").width
+                leftMargin: UM.Theme.getSize("thick_margin").width
                 right: parent.right
-                rightMargin: UM.Theme.getSize("default_margin").width
+                rightMargin: UM.Theme.getSize("thick_margin").width
             }
             sourceComponent: actionPanelWidget.outputAvailable ? outputProcessWidget : sliceProcessWidget
             onLoaded:
@@ -80,7 +80,6 @@ Item
         anchors.bottom: actionPanelWidget.bottom
         anchors.bottomMargin: UM.Theme.getSize("thick_margin").height * 2
         visible: actionPanelWidget.visible
-
         Column
         {
             id: additionalComponentsColumn

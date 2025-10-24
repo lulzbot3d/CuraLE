@@ -18,12 +18,12 @@ def getMetaData():
 
 def register(app):
     if __matchVersion():
-        # return {"extension": LulzBotRecommendedSettingsPlugin.LulzBotRecommendedSettingsPlugin()}
-        return {}
+        return {"extension": LulzBotRecommendedSettingsPlugin.LulzBotRecommendedSettingsPlugin()}
+        # return {}
     else:
         Logger.log("w", "Plugin not loaded because of a version mismatch")
-        # return {"extension": LulzBotRecommendedSettingsIncompatibleVersion.LulzBotRecommendedSettingsIncompatibleVersion()}
-        return {}
+        return {"extension": LulzBotRecommendedSettingsIncompatibleVersion.LulzBotRecommendedSettingsIncompatibleVersion()}
+        # return {}
 
 
 def __matchVersion():

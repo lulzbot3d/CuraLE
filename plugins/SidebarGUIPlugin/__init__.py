@@ -21,12 +21,10 @@ def getMetaData():
 
 def register(app):
     if __matchVersion():
-        # return {"extension": SidebarGUIPlugin.SidebarGUIPlugin()}
-        return {}
+        return {"extension": SidebarGUIPlugin.SidebarGUIPlugin()}
     else:
         Logger.log("w", "Plugin not loaded because of a version mismatch")
-        # return {"extension": SidebarIncompatibleVersion.SidebarIncompatibleVersion()}
-        return {}
+        return {"extension": SidebarIncompatibleVersion.SidebarIncompatibleVersion()}
 
 
 def __matchVersion():

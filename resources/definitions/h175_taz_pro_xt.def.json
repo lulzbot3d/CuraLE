@@ -7,6 +7,19 @@
         "visible": true,
         "file_formats": "text/x-gcode",
         "platform": "bed_plates/labeled/taz_pro_xt_labeled.stl",
+        "firmware_update_info":
+        {
+            "check_url":
+            {
+                "bltouch": "firmware.lulzbot.com/TAZ_Pro/XT/Universal/BLTouch/version.txt",
+                "default": "firmware.lulzbot.com/TAZ_Pro/XT/Universal/No_BLTouch/version.txt"
+            },
+            "update_url":
+            {
+                "bltouch": "firmware.lulzbot.com/TAZ_Pro/XT/Universal/BLTouch/taz_pro_xt_universal_blt_latest.bin",
+                "default": "firmware.lulzbot.com/TAZ_Pro/XT/Universal/No_BLTouch/taz_pro_xt_universal_latest.bin"
+            }
+        },
         "has_optional_bltouch": true,
         "lulzbot_firmware_extension": "bin",
         "lulzbot_firmware_name":

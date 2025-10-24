@@ -8,6 +8,19 @@
         "file_formats": "text/x-gcode",
         "platform": "bed_plates/labeled/sidekick_289_labeled.stl",
         "bltouch_is_standard": true,
+        "firmware_update_info":
+        {
+            "check_url":
+            {
+                "default": "firmware.lulzbot.com/SideKick/289/Universal/version.txt",
+                "no_lcd": "firmware.lulzbot.com/SideKick/289/Universal/No_LCD/SK175/version.txt"
+            },
+            "update_url":
+            {
+                "default": "firmware.lulzbot.com/SideKick/289/Universal/sidekick_289_universal_latest.hex",
+                "no_lcd": "firmware.lulzbot.com/SideKick/289/Universal/No_LCD/SK175/sidekick_289_sk175_latest.hex"
+            }
+        },
         "has_optional_lcd": true,
         "lulzbot_firmware_name":
         {

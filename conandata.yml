@@ -20,13 +20,13 @@ urls:
         cloud_account_api_root: ""
         marketplace_root: ""
         digital_factory_url: ""
-        cura_latest_url: "https://software.lulzbot.com/latest.json"
+        cura_latest_url: "https://software.lulzbot.com/Cura_LulzBot_Edition/current_version.json"
     staging:
         cloud_api_root: ""
         cloud_account_api_root: ""
         marketplace_root: ""
         digital_factory_url: ""
-        cura_latest_url: "https://software.lulzbot.com/latest.json"
+        cura_latest_url: "https://software.lulzbot.com/Cura_LulzBot_Edition/current_version.json"
 pyinstaller:
     runinfo:
         entrypoint: "cura_app.py"
