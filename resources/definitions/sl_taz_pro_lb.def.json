@@ -8,6 +8,11 @@
         "file_formats": "text/x-gcode",
         "platform": "bed_plates/labeled/taz_pro_lb_labeled.stl",
         "bltouch_is_standard": true,
+        "firmware_update_info":
+        {
+            "check_url": { "default": "firmware.lulzbot.com/TAZ_Pro/Long_Bed/Universal/version.txt" },
+            "update_url": { "default": "firmware.lulzbot.com/TAZ_Pro/Long_Bed/Universal/taz_pro_lb_universal_latest.bin" }
+        },
         "lulzbot_firmware_extension": "bin",
         "lulzbot_firmware_name": { "default": "Marlin_TAZPro_LongBed_Universal" },
         "lulzbot_machine_category": "TAZ",

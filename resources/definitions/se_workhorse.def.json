@@ -6,6 +6,11 @@
     {
         "visible": true,
         "platform": "bed_plates/labeled/workhorse_labeled.stl",
+        "firmware_update_info":
+        {
+            "check_url": { "default": "firmware.lulzbot.com/Workhorse/Universal/version.txt" },
+            "update_url": { "default": "firmware.lulzbot.com/Workhorse/Universal/workhorse_universal_latest.hex" }
+        },
         "lulzbot_example_model": [ "octo_gear.stl" ],
         "lulzbot_firmware_name": { "default": "Marlin_Workhorse_Universal" },
         "lulzbot_machine_category": "TAZ",

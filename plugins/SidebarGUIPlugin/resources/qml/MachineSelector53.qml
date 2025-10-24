@@ -57,17 +57,8 @@ Cura.MachineSelector
 
     Component.onCompleted:
     {
-        if(isLE410)
-        {
-            machineSelection.children[1].visible = false // remove shadow
-        }
+        var machineSelectionHeader = machineSelection.children[0].children[3].children[1]
 
-        if(isLE46)
-        {
-            var machineSelectionHeader = machineSelection.children[0].children[3].children[0]
-        } else {
-            var machineSelectionHeader = machineSelection.children[0].children[3].children[1]
-        }
         // adjust header margins, because the height is smaller than designed
         machineSelectionHeader.anchors.topMargin = 0
         machineSelectionHeader.anchors.bottomMargin = 0

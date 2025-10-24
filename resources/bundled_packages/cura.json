@@ -152,6 +152,23 @@
             }
         }
     },
+    "FilamentChangeTool": {
+        "package_info": {
+            "package_id": "FilamentChangeTool",
+            "package_type": "plugin",
+            "display_name": "Filament Change Tool",
+            "description": "Provides a simpler means of pausing a print at a given layer.",
+            "package_version": "1.0.0",
+            "sdk_version": "8.6.0",
+            "website": "https://github.com/lulzbot3d/CuraLE",
+            "author": {
+                "author_id": "FAME3D",
+                "display_name": "Fargo Additive Manufacturing Equipment 3D, LLC.",
+                "email": null,
+                "website": "https://lulzbot.com"
+            }
+        }
+    },
     "FirmwareUpdateChecker": {
         "package_info": {
             "package_id": "FirmwareUpdateChecker",
@@ -305,6 +322,57 @@
             }
         }
     },
+    "LulzBotMachineActions": {
+        "package_info": {
+            "package_id": "LulzBotMachineActions",
+            "package_type": "plugin",
+            "display_name": "LulzBot Machine Actions",
+            "description": "Provides actions for LulzBot printers.",
+            "package_version": "1.0.0",
+            "sdk_version": "8.6.0",
+            "website": "https://github.com/lulzbot3d/CuraLE",
+            "author": {
+                "author_id": "FAME3D",
+                "display_name": "Fargo Additive Manufacturing Equipment 3D, LLC.",
+                "email": null,
+                "website": "https://lulzbot.com"
+            }
+        }
+    },
+    "LulzBotPredefinedCommands": {
+        "package_info": {
+            "package_id": "LulzBotPredefinedCommands",
+            "package_type": "plugin",
+            "display_name": "LulzBot Predefined Commands",
+            "description": "Provides predefined commands for LulzBot printers.",
+            "package_version": "2.0.0",
+            "sdk_version": "8.6.0",
+            "website": "https://github.com/lulzbot3d/CuraLE",
+            "author": {
+                "author_id": "FAME3D",
+                "display_name": "Fargo Additive Manufacturing Equipment 3D, LLC.",
+                "email": null,
+                "website": "https://lulzbot.com"
+            }
+        }
+    },
+    "LulzBotRecommendedSettingsPlugin": {
+        "package_info": {
+            "package_id": "LulzBotRecommendedSettingsPlugin",
+            "package_type": "plugin",
+            "display_name": "LulzBot Recommended Settings",
+            "description": "Replaces the Recommended Settings tab with LulzBot's alternative.",
+            "package_version": "1.0.0",
+            "sdk_version": "8.6.0",
+            "website": "https://github.com/lulzbot3d/CuraLE",
+            "author": {
+                "author_id": "FAME3D",
+                "display_name": "Fargo Additive Manufacturing Equipment 3D, LLC.",
+                "email": null,
+                "website": "https://lulzbot.com"
+            }
+        }
+    },
     "MachineSettingsAction": {
         "package_info": {
             "package_id": "MachineSettingsAction",
@@ -370,6 +438,40 @@
                 "display_name": "UltiMaker",
                 "email": "plugins@ultimaker.com",
                 "website": "https://ultimaker.com"
+            }
+        }
+    },
+    "MoonrakerConnection": {
+        "package_info": {
+            "package_id": "MoonrakerConnection",
+            "package_type": "plugin",
+            "display_name": "Klipper/Moonraker Connection",
+            "description": "Upload and Print with Klipper via Moonraker API.",
+            "package_version": "1.9.1",
+            "sdk_version": "8.6.0",
+            "website": "https://github.com/emtrax-ltd/Cura2MoonrakerPlugin",
+            "author": {
+                "author_id": "emtrax",
+                "display_name": "emtrax",
+                "email": null,
+                "website": "https://github.com/emtrax-ltd"
+            }
+        }
+    },
+    "MultiplyTool": {
+        "package_info": {
+            "package_id": "MultiplyTool",
+            "package_type": "plugin",
+            "display_name": "Multiply Tool",
+            "description": "Provides the Multiply tool.",
+            "package_version": "1.0.0",
+            "sdk_version": "8.6.0",
+            "website": "https://github.com/lulzbot3d/CuraLE",
+            "author": {
+                "author_id": "FAME3D",
+                "display_name": "Fargo Additive Manufacturing Equipment 3D, LLC.",
+                "email": null,
+                "website": "https://lulzbot.com"
             }
         }
     },
@@ -475,6 +577,23 @@
             }
         }
     },
+    "SidebarGUIPlugin": {
+        "package_info": {
+            "package_id": "SidebarGUIPlugin",
+            "package_type": "plugin",
+            "display_name": "Sidebar GUI",
+            "description": "Provides an alternative, setting-centric interface based around a fixed sidebar",
+            "package_version": "4.6.9-DEV",
+            "sdk_version": "8.6.0",
+            "website": "https://github.com/fieldOfView/Cura-SidebarGUIPlugin",
+            "author": {
+                "author_id": "fieldOfView",
+                "display_name": "fieldOfView",
+                "email": null,
+                "website": "https://github.com/fieldOfView/Cura-SidebarGUIPlugin"
+            }
+        }
+    },
     "SimulationView": {
         "package_info": {
             "package_id": "SimulationView",
@@ -540,6 +659,23 @@
                 "display_name": "UltiMaker",
                 "email": "plugins@ultimaker.com",
                 "website": "https://ultimaker.com"
+            }
+        }
+    },
+    "TabbedSettingsPlugin": {
+        "package_info": {
+            "package_id": "TabbedSettingsPlugin",
+            "package_type": "plugin",
+            "display_name": "Tabbed Settings",
+            "description": "Replaces the long scrolling settings view with a tabbed alternative.",
+            "package_version": "1.0.8",
+            "sdk_version": "8.6.0",
+            "website": "https://github.com/fieldOfView/Cura-TabbedSettingsPlugin",
+            "author": {
+                "author_id": "fieldOfView",
+                "display_name": "fieldOfView",
+                "email": null,
+                "website": "https://github.com/fieldOfView/Cura-TabbedSettingsPlugin"
             }
         }
     },
@@ -1060,6 +1196,91 @@
             "package_type": "plugin",
             "display_name": "Version Upgrade 5.2 to 5.3",
             "description": "Upgrades configurations from Cura 5.2 to Cura 5.3",
+            "package_version": "1.0.0",
+            "sdk_version": "8.6.0",
+            "website": "https://ultimaker.com",
+            "author": {
+                "author_id": "UltimakerPackages",
+                "display_name": "UltiMaker",
+                "email": "plugins@ultimaker.com",
+                "website": "https://ultimaker.com"
+            }
+        }
+    },
+    "VersionUpgrade53to54": {
+        "package_info": {
+            "package_id": "VersionUpgrade52to53",
+            "package_type": "plugin",
+            "display_name": "Version Upgrade 5.3 to 5.4",
+            "description": "Upgrades configurations from Cura 5.3 to Cura 5.4",
+            "package_version": "1.0.0",
+            "sdk_version": "8.6.0",
+            "website": "https://ultimaker.com",
+            "author": {
+                "author_id": "UltimakerPackages",
+                "display_name": "UltiMaker",
+                "email": "plugins@ultimaker.com",
+                "website": "https://ultimaker.com"
+            }
+        }
+    },
+    "VersionUpgrade54to55": {
+        "package_info": {
+            "package_id": "VersionUpgrade52to53",
+            "package_type": "plugin",
+            "display_name": "Version Upgrade 5.4 to 5.5",
+            "description": "Upgrades configurations from Cura 5.4 to Cura 5.5",
+            "package_version": "1.0.0",
+            "sdk_version": "8.6.0",
+            "website": "https://ultimaker.com",
+            "author": {
+                "author_id": "UltimakerPackages",
+                "display_name": "UltiMaker",
+                "email": "plugins@ultimaker.com",
+                "website": "https://ultimaker.com"
+            }
+        }
+    },
+    "VersionUpgrade56to57": {
+        "package_info": {
+            "package_id": "VersionUpgrade56to57",
+            "package_type": "plugin",
+            "display_name": "Version Upgrade 5.6 to 5.7",
+            "description": "Upgrades configurations from Cura 5.6 to Cura 5.7",
+            "package_version": "1.0.0",
+            "sdk_version": "8.6.0",
+            "website": "https://ultimaker.com",
+            "author": {
+                "author_id": "UltimakerPackages",
+                "display_name": "UltiMaker",
+                "email": "plugins@ultimaker.com",
+                "website": "https://ultimaker.com"
+            }
+        }
+    },
+    "VersionUpgrade58to59": {
+        "package_info": {
+            "package_id": "VersionUpgrade58to59",
+            "package_type": "plugin",
+            "display_name": "Version Upgrade 5.8 to 5.9",
+            "description": "Upgrades configurations from Cura 5.8 to Cura 5.9",
+            "package_version": "1.0.0",
+            "sdk_version": "8.6.0",
+            "website": "https://ultimaker.com",
+            "author": {
+                "author_id": "UltimakerPackages",
+                "display_name": "UltiMaker",
+                "email": "plugins@ultimaker.com",
+                "website": "https://ultimaker.com"
+            }
+        }
+    },
+    "VersionUpgrade59to510": {
+        "package_info": {
+            "package_id": "VersionUpgrade59to510",
+            "package_type": "plugin",
+            "display_name": "Version Upgrade 5.9 to 5.10",
+            "description": "Upgrades configurations from Cura 5.3 to Cura 5.4",
             "package_version": "1.0.0",
             "sdk_version": "8.6.0",
             "website": "https://ultimaker.com",
