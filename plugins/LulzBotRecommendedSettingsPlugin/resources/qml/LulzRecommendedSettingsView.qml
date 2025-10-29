@@ -8,15 +8,11 @@ import UM 1.5 as UM
 import Cura 1.0 as Cura
 
 
-Flickable {
+Item {
     id: recommendedPrintSetup
-    clip: true
 
     anchors.fill: parent
     anchors.margins: UM.Theme.getSize("default_lining").width
-
-    contentHeight: settingsColumn.height
-    implicitHeight: settingsColumn.height
 
     property var tooltipItem
     property var backgroundItem
@@ -35,58 +31,71 @@ Flickable {
         anchors.rightMargin: UM.Theme.getSize("default_margin").width
     }
 
-    ScrollBar.vertical: UM.ScrollBar {
-        id: scroll
+    Flickable {
+
+        clip:true
         anchors {
-            top: parent.top
+            top: profileSelectorRow.bottom
+            left: parent.left
             right: parent.right
             bottom: parent.bottom
-        }
-    }
-
-    boundsBehavior: Flickable.StopAtBounds
-
-    Column {
-        id: settingsColumn
-        padding: UM.Theme.getSize("default_margin").width
-        spacing: UM.Theme.getSize("default_margin").height
-
-        width: recommendedPrintSetup.width - 2 * padding - UM.Theme.getSize("thin_margin").width
-
-        RecommendedStrengthSection {
-            width: parent.width
+            margins: UM.Theme.getSize("default_margin").width
         }
 
-        RecommendedSupportSection {
-            width: parent.width
-            // TODO Create a reusable component with these properties to not define them separately for each component
+        contentHeight: settingsColumn.height
+
+        ScrollBar.vertical: UM.ScrollBar {
+            id: scroll
+            anchors {
+                top: parent.top
+                right: parent.right
+                bottom: parent.bottom
+            }
         }
 
-        RecommendedAdhesionSelector {
-            width: parent.width
+        boundsBehavior: Flickable.StopAtBounds
+
+        Column {
+            id: settingsColumn
+            padding: UM.Theme.getSize("default_margin").width
+            spacing: UM.Theme.getSize("default_margin").height
+
+            width: recommendedPrintSetup.width - 2 * padding - UM.Theme.getSize("thin_margin").width
+
+            RecommendedStrengthSection {
+                width: parent.width
+            }
+
+            RecommendedSupportSection {
+                width: parent.width
+                // TODO Create a reusable component with these properties to not define them separately for each component
+            }
+
+            RecommendedAdhesionSelector {
+                width: parent.width
+            }
+
+            RecommendedZSeamSelector {
+                width: parent.width
+            }
+
+            RecommendedVaseModeSelector {
+                width: parent.width
+            }
+
+            RecommendedPrintSequenceSelector {
+                width: parent.width
+            }
+
         }
 
-        RecommendedZSeamSelector {
-            width: parent.width
+        UM.SettingPropertyProvider {
+            id: extrudersEnabledCount
+            containerStack: Cura.MachineManager.activeMachine
+            key: "extruders_enabled_count"
+            watchedProperties: [ "value" ]
+            storeIndex: 0
         }
-
-        RecommendedVaseModeSelector {
-            width: parent.width
-        }
-
-        RecommendedPrintSequenceSelector {
-            width: parent.width
-        }
-
-    }
-
-
-    UM.SettingPropertyProvider {
-        id: extrudersEnabledCount
-        containerStack: Cura.MachineManager.activeMachine
-        key: "extruders_enabled_count"
-        watchedProperties: [ "value" ]
-        storeIndex: 0
     }
 
     function showTooltip(item, position, text) {

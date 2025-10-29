@@ -55,6 +55,8 @@ class SidebarIncompatibleVersion(Extension):
 
         preferences = CuraApplication.getInstance().getPreferences()
         preferences.addPreference(self.HIDE_MESSAGE_PREFERENCE, [])
+        preferences.addPreference("sidebargui/incompatible_and_disabled", False)
+        preferences.setValue("sidebargui/incompatible_and_disabled", True)
         if self._version_combination in preferences.getValue(self.HIDE_MESSAGE_PREFERENCE):
             return
 

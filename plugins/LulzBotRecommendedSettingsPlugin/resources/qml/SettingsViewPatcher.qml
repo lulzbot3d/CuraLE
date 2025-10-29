@@ -28,7 +28,7 @@ Item
         var profileSelectorRow = customPrintSetup.children[0]
 
         // customPrintSetup.children = [tabbedSettingsView]
-        recommendedPrintSetup.children = lulzRecommendedSettingsView
+        recommendedPrintSetup.children = [lulzRecommendedSettingsView]
         if(!withSidebarGUI)
         {
             lulzRecommendedSettingsView.children[0].children = [profileSelectorRow, spacer]

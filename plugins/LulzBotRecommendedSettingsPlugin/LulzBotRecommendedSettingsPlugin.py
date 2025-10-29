@@ -39,7 +39,8 @@ class LulzBotRecommendedSettingsPlugin(QObject, Extension):
         preferences = CuraApplication.getInstance().getPreferences()
         has_sidebar_gui = (
             plugin_registry.getMetaData("SidebarGUIPlugin") != {} and
-            preferences._findPreference("sidebargui/expand_legend") is not None
+            preferences._findPreference("sidebargui/expand_legend") is not None and
+            not preferences._findPreference("sidebargui/incompatible_and_disabled").getValue()
         )
 
         self._qml_patcher = CuraApplication.getInstance().createQmlComponent(

@@ -4,7 +4,7 @@ requirements:
   - "curale_resources/5.11.0"
   - "uraniumle/5.11.0"
   - "curaengine/5.11.0"
-  - "cura_binary_data/5.11.0"
+  - "curale_binary_data/5.11.0"
   # - "fdm_materials/5.11.0"
   - "dulcificum/5.10.0"
   - "pysavitar/5.11.0-alpha.0"

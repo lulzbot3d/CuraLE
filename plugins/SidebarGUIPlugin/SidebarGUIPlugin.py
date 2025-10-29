@@ -23,6 +23,8 @@ class SidebarGUIPlugin(Extension):
         preferences.addPreference("sidebargui/settings_window_left", 65535)
         preferences.addPreference("sidebargui/settings_window_top", 65535)
         preferences.addPreference("sidebargui/settings_window_height", 0)
+        preferences.addPreference("sidebargui/incompatible_and_disabled", False)
+        preferences.resetPreference("sidebargui/incompatible_and_disabled")
 
         self._controller = Application.getInstance().getController()
         self._controller.activeStageChanged.connect(self._onStageChanged)
