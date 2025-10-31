@@ -115,136 +115,10 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         # CuraApplication.getInstance().globalContainerStackChanged.connect(self._onGlobalContainerStackChanged)
         CuraApplication.getInstance().getOnExitCallbackManager().addCallback(self._checkActivePrintingUponAppExit)
 
-    # This is a callback function that checks if there is any printing in progress via USB when the application tries
-    # to exit. If so, it will show a confirmation before
-    def _checkActivePrintingUponAppExit(self) -> None:
-        application = CuraApplication.getInstance()
-        if not self._is_printing:
-            # This USB printer is not printing, so we have nothing to do. Call the next callback if exists.
-            application.triggerNextExitCheck()
-            return
 
-        application.setConfirmExitDialogCallback(self._onConfirmExitDialogResult)
-        application.showConfirmExitDialog.emit(catalog.i18nc("@label", "A USB print is in progress, closing Cura LE will stop this print. Are you sure?"))
-
-
-    def _onConfirmExitDialogResult(self, result: bool) -> None:
-        if result:
-            application = CuraApplication.getInstance()
-            application.triggerNextExitCheck()
-
-    def resetDeviceSettings(self) -> None:
-        """Reset USB device settings"""
-
-        self._firmware_name = None
-
-    def ensureSafeToWrite(self) -> bool:
-
-        if CuraApplication.getInstance().getController().getActiveStage() != "MonitorStage":
-            CuraApplication.getInstance().getController().setActiveStage("MonitorStage")
-
-        if self._accepts_commands == False:
-            message = Message(text = catalog.i18nc("@message",
-                                                   "Printer does not currently accept commands. Are you connected?"),
-                              title = catalog.i18nc("@message", "Printer Not Connected!"),
-                              message_type = Message.MessageType.WARNING)
-            message.show()
-            return False # Printer not connected
-        if self._is_printing:
-            message = Message(text = catalog.i18nc("@message",
-                                                   "A print is still in progress. Cura LE cannot start another action at this time."),
-                              title = catalog.i18nc("@message", "Print in Progress"),
-                              message_type = Message.MessageType.ERROR)
-            message.show()
-            return False # Already printing
-        self.writeStarted.emit(self)
-        # cancel any ongoing preheat timer before starting a print
-        controller = cast(GenericOutputController, self._printers[0].getController())
-        controller.stopPreheatTimers()
-
-        return True
-
-    def requestWrite(self, nodes: List["SceneNode"], file_name: Optional[str] = None, limit_mimetypes: bool = False,
-                     file_handler: Optional["FileHandler"] = None, filter_by_machine: bool = False, **kwargs) -> None:
-        """Request the current scene to be sent to a USB-connected printer.
-
-        :param nodes: A collection of scene nodes to send. This is ignored.
-        :param file_name: A suggestion for a file name to write.
-        :param filter_by_machine: Whether to filter MIME types by machine. This
-               is ignored.
-        :param kwargs: Keyword arguments.
-        """
-
-        safe = self.ensureSafeToWrite()
-        if not safe:
-            # We're not clear to print
-            return
-
-        CuraApplication.getInstance().getController().setActiveStage("MonitorStage")
-
-        #Find the g-code to print.
-        gcode_textio = StringIO()
-        gcode_writer = cast(MeshWriter, PluginRegistry.getInstance().getPluginObject("GCodeWriter"))
-        success = gcode_writer.write(gcode_textio, None)
-        if not success:
-            return
-
-        self._printGCode(gcode_textio.getvalue())
-
-
-    def _printGCode(self, gcode: str):
-        """Start a print based on a g-code.
-
-        :param gcode: The g-code to print.
-        """
-        self._gcode.clear()
-        self._paused = False
-
-        self._gcode.extend(gcode.split("\n"))
-
-        # Reset line number. If this is not done, first line is sometimes ignored
-        self._gcode.insert(0, "M110")
-        self._gcode_position = 0
-        self._print_start_time = time()
-
-        self._print_estimated_time = int(CuraApplication.getInstance().getPrintInformation().currentPrintTime.getDisplayString(DurationFormat.Format.Seconds))
-
-        for i in range(0, 4):  # Push first 4 entries before accepting other inputs
-            self._sendNextGcodeLine()
-
-        self._is_printing = True
-        self.writeFinished.emit(self)
-
-    def _autoDetectFinished(self, job: AutoDetectBaudJob):
-        result = job.getResult()
-        if result is not None:
-            self.setBaudRate(result[0])
-            self._serial = result[1]
-            self.connect()  # Try to connect (actually create serial, etc)
-        else:
-            Logger.log("w", "Auto Detect Baud failed.")
-            Message(text = catalog.i18nc("@message",
-                    "The device on {port} did not respond to any of the baud rates that Cura LE tried. Please check the connection and try again.").format(port=self._serial_port),
-                    title = catalog.i18nc("@message", "No Response"),
-                    message_type = Message.MessageType.ERROR).show()
-            self.setConnectionState(ConnectionState.Timeout)
-
-    def _knownBaudFinished(self, job: KnownBaudJob):
-        result = job.getResult()
-        if result is not None:
-            self._serial = result
-            self.connect() # Finish connection process
-        else: # Known baud rate didn't work, try auto-detect
-            Logger.log("w", "Known Baud Job failed to create a connection.")
-            self._baud_rate = "AUTO"
-            self.connect()
-
-    def setBaudRate(self, baud_rate: int):
-        if baud_rate not in self._all_baud_rates:
-            Logger.log("w", "Not updating baudrate to {baud_rate} as it's an unknown baudrate".format(baud_rate=baud_rate))
-            return
-
-        self._baud_rate = baud_rate
+    ######################################
+    #### Connect/Disconnect Functions ####
+    ######################################
 
     @pyqtSlot()
     def connect(self):
@@ -331,6 +205,39 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._setAcceptsCommands(True)
         self._update_thread.start()
 
+
+    def _autoDetectFinished(self, job: AutoDetectBaudJob):
+        result = job.getResult()
+        if result is not None:
+            self.setBaudRate(result[0])
+            self._serial = result[1]
+            self.connect()  # Try to connect (actually create serial, etc)
+        else:
+            Logger.log("w", "Auto Detect Baud failed.")
+            Message(text = catalog.i18nc("@message",
+                    "The device on {port} did not respond to any of the baud rates that Cura LE tried. Please check the connection and try again.").format(port=self._serial_port),
+                    title = catalog.i18nc("@message", "No Response"),
+                    message_type = Message.MessageType.ERROR).show()
+            self.setConnectionState(ConnectionState.Timeout)
+
+    def _knownBaudFinished(self, job: KnownBaudJob):
+        result = job.getResult()
+        if result is not None:
+            self._serial = result
+            self.connect() # Finish connection process
+        else: # Known baud rate didn't work, try auto-detect
+            Logger.log("w", "Known Baud Job failed to create a connection.")
+            self._baud_rate = "AUTO"
+            self.connect()
+
+    def setBaudRate(self, baud_rate: int):
+        if baud_rate not in self._all_baud_rates:
+            Logger.log("w", "Not updating baudrate to {baud_rate} as it's an unknown baudrate".format(baud_rate=baud_rate))
+            return
+
+        self._baud_rate = baud_rate
+
+
     @pyqtSlot()
     def close(self):
         super().close()
@@ -346,6 +253,16 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         # Re-create the thread so it can be started again later.
         self._update_thread = Thread(target=self._update, daemon=True, name = "USBPrinterConnectionThread")
         self._serial = None
+
+    def resetDeviceSettings(self) -> None:
+        """Reset USB device settings"""
+
+        self._firmware_name = None
+
+
+    #########################################
+    #### Printer Communication Functions ####
+    #########################################
 
     def _update(self):
         ### This is the main connection loop
@@ -502,6 +419,34 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         # This is outside the loop. Might be good to have a catch here if the loop broke unexpectedly
         Logger.log("d", "Printer connection loop stopped.")
 
+
+    def ensureSafeToWrite(self) -> bool:
+
+        if CuraApplication.getInstance().getController().getActiveStage() != "MonitorStage":
+            CuraApplication.getInstance().getController().setActiveStage("MonitorStage")
+
+        if self._accepts_commands == False:
+            message = Message(text = catalog.i18nc("@message",
+                                                   "Printer does not currently accept commands. Are you connected?"),
+                              title = catalog.i18nc("@message", "Printer Not Connected!"),
+                              message_type = Message.MessageType.WARNING)
+            message.show()
+            return False # Printer not connected
+        if self._is_printing:
+            message = Message(text = catalog.i18nc("@message",
+                                                   "A print is still in progress. Cura LE cannot start another action at this time."),
+                              title = catalog.i18nc("@message", "Print in Progress"),
+                              message_type = Message.MessageType.ERROR)
+            message.show()
+            return False # Already printing
+        self.writeStarted.emit(self)
+        # cancel any ongoing preheat timer before starting a print
+        controller = cast(GenericOutputController, self._printers[0].getController())
+        controller.stopPreheatTimers()
+
+        return True
+
+
     def sendCommand(self, command: Union[str, bytes]):
         """Send a command to printer."""
 
@@ -527,15 +472,144 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             Logger.logException("w", "An unexpected exception occurred while writing to the serial.")
             self.setConnectionState(ConnectionState.Error)
 
-######### Firmware Checks and Handling #########
-    class CheckFirmwareStatus(IntEnum):
-        OK = 0
-        TIMEOUT = 1
-        WRONG_MACHINE = 2
-        WRONG_TOOLHEAD = 3
-        FIRMWARE_OUTDATED = 4
-        COMMUNICATION_ERROR = 5
 
+    #####################################
+    #### PRINTING SEQUENCE FUNCTIONS ####
+    #####################################
+
+    def requestWrite(self, nodes: List["SceneNode"], file_name: Optional[str] = None, limit_mimetypes: bool = False,
+                     file_handler: Optional["FileHandler"] = None, filter_by_machine: bool = False, **kwargs) -> None:
+        """Request the current scene to be sent to a USB-connected printer.
+
+        :param nodes: A collection of scene nodes to send. This is ignored.
+        :param file_name: A suggestion for a file name to write.
+        :param filter_by_machine: Whether to filter MIME types by machine. This
+               is ignored.
+        :param kwargs: Keyword arguments.
+        """
+
+        safe = self.ensureSafeToWrite()
+        if not safe:
+            # We're not clear to print
+            return
+
+        CuraApplication.getInstance().getController().setActiveStage("MonitorStage")
+
+        #Find the g-code to print.
+        gcode_textio = StringIO()
+        gcode_writer = cast(MeshWriter, PluginRegistry.getInstance().getPluginObject("GCodeWriter"))
+        success = gcode_writer.write(gcode_textio, None)
+        if not success:
+            return
+
+        self._printGCode(gcode_textio.getvalue())
+
+
+    def _printGCode(self, gcode: str):
+        """Start a print based on a g-code.
+
+        :param gcode: The g-code to print.
+        """
+        self._gcode.clear()
+        self._paused = False
+
+        self._gcode.extend(gcode.split("\n"))
+
+        # Reset line number. If this is not done, first line is sometimes ignored
+        self._gcode.insert(0, "M110")
+        self._gcode_position = 0
+        self._print_start_time = time()
+
+        self._print_estimated_time = int(CuraApplication.getInstance().getPrintInformation().currentPrintTime.getDisplayString(DurationFormat.Format.Seconds))
+
+        for i in range(0, 4):  # Push first 4 entries before accepting other inputs
+            self._sendNextGcodeLine()
+
+        self._is_printing = True
+        self.writeFinished.emit(self)
+
+
+    def _sendNextGcodeLine(self):
+        """
+        Send the next line of g-code, at the current `_gcode_position`, via a
+        serial port to the printer.
+
+        If the print is done, this sets `_is_printing` to `False` as well.
+        """
+        try:
+            line = self._gcode[self._gcode_position]
+        except IndexError:  # End of print, or print got cancelled.
+            self._printers[0].updateActivePrintJob(None)
+            self._is_printing = False
+            return
+
+        if ";" in line:
+            line = line[:line.find(";")]
+
+        line = line.strip()
+
+        # Don't send empty lines. But we do have to send something, so send M105 instead.
+        # Don't send the M0 or M1 to the machine, as M0 and M1 are handled as an LCD menu pause.
+        if line == "" or line == "M0" or line == "M1":
+            line = "M105"
+
+        checksum = functools.reduce(lambda x, y: x ^ y, map(ord, "N%d%s" % (self._gcode_position, line)))
+
+        self._sendCommand("N%d%s*%d" % (self._gcode_position, line, checksum))
+
+        print_job = self._printers[0].activePrintJob
+        try:
+            progress = self._gcode_position / len(self._gcode)
+        except ZeroDivisionError:
+            # There is nothing to send!
+            if print_job is not None:
+                print_job.updateState("error")
+            return
+
+        elapsed_time = int(time() - self._print_start_time)
+
+        if print_job is None:
+            controller = GenericOutputController(self)
+            controller.setCanUpdateFirmware(False)
+            print_job = PrintJobOutputModel(output_controller = controller, name = CuraApplication.getInstance().getPrintInformation().jobName)
+            print_job.updateState("printing")
+            self._printers[0].updateActivePrintJob(print_job)
+
+        print_job.updateTimeElapsed(elapsed_time)
+        estimated_time = self._print_estimated_time
+        if progress > .1:
+            estimated_time = int(self._print_estimated_time * (1 - progress) + elapsed_time)
+        print_job.updateTimeTotal(estimated_time)
+
+        self._gcode_position += 1
+
+    def pausePrint(self):
+        self._paused = True
+
+    def resumePrint(self):
+        self._paused = False
+        self._sendNextGcodeLine() #Send one line of g-code next so that we'll trigger an "ok" response loop even if we're not polling temperatures.
+
+    def cancelPrint(self):
+        self._gcode_position = 0
+        self._gcode.clear()
+        self._printers[0].updateActivePrintJob(None)
+        self._is_printing = False
+        self._paused = False
+
+        # Turn off temperatures, fan and steppers
+        self._sendCommand("M140 S0")
+        self._sendCommand("M104 S0")
+        self._sendCommand("M107")
+
+        # We're gonna go to the park position
+        # Seems like a safe bet to not run into whatever's on the build plate
+        self._sendCommand("G27")
+
+
+    ###########################
+    #### FIRMWARE HANDLING ####
+    ###########################
 
     def _checkFirmware(self):
         reply = b""
@@ -675,109 +749,11 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
     def getIsFlashing(self) -> bool:
         return self._is_flashing
 
-    ########### PRINTER COMMANDS ############
 
-    def pausePrint(self):
-        self._paused = True
+    ##################################################
+    #### LulzBot Predefined Commands Dependencies ####
+    ##################################################
 
-    def resumePrint(self):
-        self._paused = False
-        self._sendNextGcodeLine() #Send one line of g-code next so that we'll trigger an "ok" response loop even if we're not polling temperatures.
-
-    def cancelPrint(self):
-        self._gcode_position = 0
-        self._gcode.clear()
-        self._printers[0].updateActivePrintJob(None)
-        self._is_printing = False
-        self._paused = False
-
-        # Turn off temperatures, fan and steppers
-        self._sendCommand("M140 S0")
-        self._sendCommand("M104 S0")
-        self._sendCommand("M107")
-
-        # We're gonna go to the park position
-        # Seems like a safe bet to not run into whatever's on the build plate
-        self._sendCommand("G27")
-
-    def _printGCode(self, gcode: str):
-        """Start a print based on a g-code.
-
-        :param gcode: The g-code to print.
-        """
-        self._gcode.clear()
-        self._paused = False
-
-        self._gcode.extend(gcode.split("\n"))
-
-        # Reset line number. If this is not done, first line is sometimes ignored
-        self._gcode.insert(0, "M110")
-        self._gcode_position = 0
-        self._print_start_time = time()
-
-        self._print_estimated_time = int(CuraApplication.getInstance().getPrintInformation().currentPrintTime.getDisplayString(DurationFormat.Format.Seconds))
-
-        for i in range(0, 4):  # Push first 4 entries before accepting other inputs
-            self._sendNextGcodeLine()
-
-        self._is_printing = True
-        self.writeFinished.emit(self)
-
-    def _sendNextGcodeLine(self):
-        """
-        Send the next line of g-code, at the current `_gcode_position`, via a
-        serial port to the printer.
-
-        If the print is done, this sets `_is_printing` to `False` as well.
-        """
-        try:
-            line = self._gcode[self._gcode_position]
-        except IndexError:  # End of print, or print got cancelled.
-            self._printers[0].updateActivePrintJob(None)
-            self._is_printing = False
-            return
-
-        if ";" in line:
-            line = line[:line.find(";")]
-
-        line = line.strip()
- 
-        # Don't send empty lines. But we do have to send something, so send M105 instead.
-        # Don't send the M0 or M1 to the machine, as M0 and M1 are handled as an LCD menu pause.
-        if line == "" or line == "M0" or line == "M1":
-            line = "M105"
-
-        checksum = functools.reduce(lambda x, y: x ^ y, map(ord, "N%d%s" % (self._gcode_position, line)))
-
-        self._sendCommand("N%d%s*%d" % (self._gcode_position, line, checksum))
-
-        print_job = self._printers[0].activePrintJob
-        try:
-            progress = self._gcode_position / len(self._gcode)
-        except ZeroDivisionError:
-            # There is nothing to send!
-            if print_job is not None:
-                print_job.updateState("error")
-            return
-
-        elapsed_time = int(time() - self._print_start_time)
-
-        if print_job is None:
-            controller = GenericOutputController(self)
-            controller.setCanUpdateFirmware(False)
-            print_job = PrintJobOutputModel(output_controller = controller, name = CuraApplication.getInstance().getPrintInformation().jobName)
-            print_job.updateState("printing")
-            self._printers[0].updateActivePrintJob(print_job)
-
-        print_job.updateTimeElapsed(elapsed_time)
-        estimated_time = self._print_estimated_time
-        if progress > .1:
-            estimated_time = int(self._print_estimated_time * (1 - progress) + elapsed_time)
-        print_job.updateTimeTotal(estimated_time)
-
-        self._gcode_position += 1
-
-    # LulzBot Predefined Commands Dependencies
     @pyqtProperty(bool, notify = printersChanged)
     def supportWipeNozzle(self):
         return self._supportWipeNozzle()
@@ -787,6 +763,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         if not code or len(code) == 0:
             return False
         return True
+
 
     @pyqtSlot()
     def wipeNozzle(self):
@@ -810,6 +787,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self.writeStarted.emit(self)
         self._printGCode(code)
 
+
     @pyqtProperty(bool, notify = printersChanged)
     def supportLevelXAxis(self):
         return self._supportLevelXAxis()
@@ -819,6 +797,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         if not code or len(code) == 0:
             return False
         return True
+
 
     @pyqtSlot()
     def levelXAxis(self):
@@ -843,17 +822,33 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         self._printGCode(code)
 
 
-    ####################################################
+    #############################
+    #### SAFE EXIT FUNCTIONS ####
+    #############################
 
-    # def _onGlobalContainerStackChanged(self):
-    #     if self._serial is not None:
-    #         self.close()
-    #     container_stack = CuraApplication.getInstance().getGlobalContainerStack()
-    #     if container_stack is None:
-    #         return
-    #     num_extruders = container_stack.getProperty("machine_extruder_count", "value")
-    #     # Ensure that a printer is created.
-    #     controller = GenericOutputController(self)
-    #     controller.setCanUpdateFirmware(True)
-    #     self._printers = [PrinterOutputModel(output_controller = controller, number_of_extruders = num_extruders)]
-    #     self._printers[0].updateName(container_stack.getName())
+    # This is a callback function that checks if there is any printing in progress via USB when the application tries
+    # to exit. If so, it will show a confirmation before
+    def _checkActivePrintingUponAppExit(self) -> None:
+        application = CuraApplication.getInstance()
+        if not self._is_printing:
+            # This USB printer is not printing, so we have nothing to do. Call the next callback if exists.
+            application.triggerNextExitCheck()
+            return
+
+        application.setConfirmExitDialogCallback(self._onConfirmExitDialogResult)
+        application.showConfirmExitDialog.emit(catalog.i18nc("@label", "A USB print is in progress, closing Cura LE will stop this print. Are you sure?"))
+
+
+    def _onConfirmExitDialogResult(self, result: bool) -> None:
+        if result:
+            application = CuraApplication.getInstance()
+            application.triggerNextExitCheck()
+
+
+    class CheckFirmwareStatus(IntEnum):
+        OK = 0
+        TIMEOUT = 1
+        WRONG_MACHINE = 2
+        WRONG_TOOLHEAD = 3
+        FIRMWARE_OUTDATED = 4
+        COMMUNICATION_ERROR = 5

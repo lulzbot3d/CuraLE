@@ -178,6 +178,8 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
             # filter by regular expressions passed in as environment variables.
             # Get possible patterns with python3 -m serial.tools.list_ports -v
 
+            # NOTE: currently, none of these pattern checks actually do anything!
+
             # set CURA_DEVICENAMES=USB[1-9] -> e.g. not matching /dev/ttyUSB0
             pattern = environ.get('CURA_DEVICENAMES')
             if pattern and not search(pattern, port[0]):
