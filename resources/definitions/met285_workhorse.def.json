@@ -6,6 +6,10 @@
     {
         "visible": true,
         "platform": "bed_plates/labeled/workhorse_labeled.stl",
+        "associated_firmware_names": [
+            "LulzBot Workhorse",
+            "LulzBot Taz Workhorse"
+        ],
         "firmware_update_info":
         {
             "check_url": { "default": "firmware.lulzbot.com/Workhorse/Galaxy/version.txt" },

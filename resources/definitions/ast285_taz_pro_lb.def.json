@@ -7,6 +7,7 @@
         "visible": true,
         "file_formats": "text/x-gcode",
         "platform": "bed_plates/labeled/taz_pro_lb_labeled.stl",
+        "associated_firmware_names": [ "LulzBot TAZ Pro" ],
         "bltouch_is_standard": true,
         "firmware_update_info":
         {

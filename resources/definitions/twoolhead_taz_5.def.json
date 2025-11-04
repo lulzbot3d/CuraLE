@@ -6,6 +6,7 @@
     {
         "visible": true,
         "platform": "bed_plates/labeled/taz_5_labeled.stl",
+        "associated_firmware_names": [ "LulzBot TAZ 5" ],
         "lulzbot_firmware_version": { "default": "" },
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_image": "taz_5",

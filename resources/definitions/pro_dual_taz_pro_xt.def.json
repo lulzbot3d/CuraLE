@@ -7,6 +7,7 @@
         "visible": true,
         "file_formats": "text/x-gcode",
         "platform": "bed_plates/labeled/taz_pro_xt_labeled.stl",
+        "associated_firmware_names": [ "LulzBot TAZ ProXT" ],
         "firmware_update_info":
         {
             "check_url": { "default": "firmware.lulzbot.com/TAZ_Pro/XT/Universal/No_BLTouch/Dual/version.txt" },

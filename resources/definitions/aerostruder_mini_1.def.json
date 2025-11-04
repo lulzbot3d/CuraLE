@@ -7,6 +7,11 @@
         "visible": true,
         "file_formats": "text/x-gcode",
         "platform": "bed_plates/labeled/mini_1_labeled.stl",
+        "associated_firmware_names": [
+            "LulzBot Mini LCD",
+            "LulzBot Mini"
+        ],
+        "associated_firmware_tool_heads": [ "" ],
         "has_optional_lcd": true,
         "lcd_is_standard": false,
         "lulzbot_firmware_name":

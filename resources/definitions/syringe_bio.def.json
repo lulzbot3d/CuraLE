@@ -6,6 +6,7 @@
     {
         "visible": true,
         "platform": "bed_plates/labeled/bio_labeled.stl",
+        "associated_firmware_names": [ "LulzBot Bio" ],
         "lulzbot_example_model": [ "right_coronary_artery_tree.stl" ],
         "lulzbot_firmware_name": { "default": "Marlin_Bio_SingleExtruder" },
         "lulzbot_firmware_version": { "default": "2.0.0.176" },
