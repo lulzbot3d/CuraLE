@@ -6,6 +6,12 @@
     {
         "visible": false,
         "has_machine_quality": true,
+        "associated_firmware_tool_heads": [
+            "Legacy Universal",
+            "M175",
+            "M175v2",
+            "Universal"
+        ],
         "lulzbot_tool_head": "M175 v2",
         "lulzbot_tool_head_abbreviation": "M175",
         "lulzbot_tool_head_image": "m175_v2",

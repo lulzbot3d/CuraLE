@@ -6,6 +6,11 @@
     {
         "visible": false,
         "has_machine_quality": true,
+        "associated_firmware_tool_heads": [
+            "Legacy Universal",
+            "Titan Aero Volcano",
+            "Universal"
+        ],
         "lulzbot_tool_head": "HS",
         "lulzbot_tool_head_abbreviation": "HS",
         "lulzbot_tool_head_image": "hs",

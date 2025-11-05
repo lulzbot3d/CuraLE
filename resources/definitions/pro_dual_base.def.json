@@ -6,6 +6,7 @@
     {
         "visible": false,
         "has_machine_quality": true,
+        "associated_firmware_tool_heads": [ "DualExtruder" ],
         "lulzbot_example_model": [
             "pro_dual_cal1.stl",
             "pro_dual_cal2.stl"

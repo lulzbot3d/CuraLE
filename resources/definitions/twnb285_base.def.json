@@ -7,6 +7,7 @@
         "visible": false,
         "has_machine_quality": true,
         "has_variants": true,
+        "associated_firmware_tool_heads": [ "Galaxy Dual Extruder" ],
         "lulzbot_example_model": [
             "pro_dual_cal1.stl",
             "pro_dual_cal2.stl"

@@ -7,6 +7,10 @@
         "visible": true,
         "platform": "bed_plates/labeled/taz_6_labeled.stl",
         "associated_firmware_names": [ "LulzBot TAZ 6" ],
+        "associated_firmware_tool_heads": [
+            "Legacy Universal",
+            "Universal"
+        ],
         "lulzbot_firmware_name": { "default": "Marlin_TAZ6_Universal" },
         "lulzbot_firmware_version": { "default": "2.0.9.0.13_80a6628" },
         "lulzbot_machine_category": "TAZ",

@@ -6,6 +6,11 @@
     {
         "visible": false,
         "has_machine_quality": true,
+        "associated_firmware_tool_heads": [
+            "Legacy Universal",
+            "SK285",
+            "Universal"
+        ],
         "lulzbot_tool_head": "SK285",
         "lulzbot_tool_head_abbreviation": "SK285",
         "lulzbot_tool_head_image": "sk285",

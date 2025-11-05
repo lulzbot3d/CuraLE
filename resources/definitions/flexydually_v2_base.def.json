@@ -6,6 +6,7 @@
     {
         "visible": false,
         "has_machine_quality": true,
+        "associated_firmware_tool_heads": [ "FlexyDually v2" ],
         "lulzbot_tool_head": "FlexyDually v2",
         "lulzbot_tool_head_abbreviation": "FLXDUAL",
         "lulzbot_tool_head_image": "flexydually_v2",

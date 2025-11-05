@@ -6,6 +6,7 @@
     {
         "visible": false,
         "has_machine_quality": true,
+        "associated_firmware_tool_heads": [ "DualExtruder v3" ],
         "lulzbot_tool_head": "Dual v3",
         "lulzbot_tool_head_abbreviation": "DUALv3",
         "lulzbot_tool_head_image": "dual_v3",

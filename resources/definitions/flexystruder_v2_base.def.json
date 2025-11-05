@@ -6,6 +6,7 @@
     {
         "visible": false,
         "has_machine_quality": true,
+        "associated_firmware_tool_heads": [ "Flexystruder" ],
         "lulzbot_tool_head": "Flexystruder v2",
         "lulzbot_tool_head_abbreviation": "FLXY",
         "lulzbot_tool_head_image": "flexystruder_taz",

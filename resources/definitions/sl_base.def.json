@@ -6,6 +6,11 @@
     {
         "visible": false,
         "has_machine_quality": true,
+        "associated_firmware_tool_heads": [
+            "Legacy Universal",
+            "Titan Aero",
+            "Universal"
+        ],
         "lulzbot_tool_head": "SL",
         "lulzbot_tool_head_abbreviation": "SL",
         "lulzbot_tool_head_image": "sl",
