@@ -7,6 +7,7 @@
         "visible": true,
         "file_formats": "text/x-gcode",
         "platform": "bed_plates/labeled/taz_8_lb_labeled.stl",
+        "associated_firmware_bed": [ "LONGBED V2" ],
         "associated_firmware_names": [ "LulzBot TAZ 8" ],
         "firmware_update_info":
         {

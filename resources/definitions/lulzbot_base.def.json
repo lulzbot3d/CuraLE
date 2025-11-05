@@ -15,6 +15,7 @@
         "has_materials": true,
         "has_textured_buildplate": false,
         "has_variants": false,
+        "associated_firmware_bed": [ "STANDARD" ],
         "associated_firmware_names": [],
         "associated_firmware_tool_heads": [],
         "lulzbot_example_model": [ "rocktopus.stl" ],
