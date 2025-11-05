@@ -5,8 +5,8 @@
     "metadata":
     {
         "visible": false,
-        "has_machine_quality": true,
         "associated_firmware_tool_heads": [ "DualExtruder v2" ],
+        "has_machine_quality": true,
         "lulzbot_tool_head": "Dual v2",
         "lulzbot_tool_head_abbreviation": "DUALv2",
         "lulzbot_tool_head_image": "dual_v2",

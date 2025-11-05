@@ -5,8 +5,8 @@
     "metadata":
     {
         "visible": false,
-        "has_machine_quality": true,
         "associated_firmware_tool_heads": [ "Aerostruder" ],
+        "has_machine_quality": true,
         "lulzbot_tool_head": "Aerostruder",
         "lulzbot_tool_head_abbreviation": "AERO",
         "lulzbot_tool_head_image": "aerostruder_taz",

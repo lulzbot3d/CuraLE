@@ -5,10 +5,10 @@
     "metadata":
     {
         "visible": false,
+        "associated_firmware_tool_heads": [ "Galaxy Series" ],
         "has_machine_quality": true,
         "has_materials": true,
         "has_variants": true,
-        "associated_firmware_tool_heads": [ "Galaxy Series" ],
         "lulzbot_tool_head": "Asteroid 285",
         "lulzbot_tool_head_abbreviation": "AST285",
         "lulzbot_tool_head_image": "ast285",

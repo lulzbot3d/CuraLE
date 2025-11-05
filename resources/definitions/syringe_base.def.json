@@ -6,9 +6,9 @@
     {
         "visible": false,
         "file_formats": "text/x-gcode",
+        "associated_firmware_tool_heads": [ "SingleExtruder" ],
         "has_machine_quality": true,
         "has_variants": true,
-        "associated_firmware_tool_heads": [ "SingleExtruder" ],
         "lulzbot_tool_head": "Syringe",
         "lulzbot_tool_head_abbreviation": "SYR",
         "lulzbot_tool_head_image": "syringe",

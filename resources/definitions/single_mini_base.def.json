@@ -5,8 +5,8 @@
     "metadata":
     {
         "visible": false,
-        "has_machine_quality": true,
         "associated_firmware_tool_heads": [ "SingleExtruder" ],
+        "has_machine_quality": true,
         "lulzbot_tool_head": "Single Extruder",
         "lulzbot_tool_head_abbreviation": "SINGLE",
         "lulzbot_tool_head_image": "single_mini_1",

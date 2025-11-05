@@ -5,8 +5,8 @@
     "metadata":
     {
         "visible": false,
-        "has_machine_quality": true,
         "associated_firmware_tool_heads": [ "SingleExtruder" ],
+        "has_machine_quality": true,
         "lulzbot_tool_head": "Twoolhead",
         "lulzbot_tool_head_abbreviation": "TWOOL",
         "lulzbot_tool_head_image": "twoolhead",

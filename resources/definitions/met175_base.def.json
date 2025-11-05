@@ -5,9 +5,9 @@
     "metadata":
     {
         "visible": false,
+        "associated_firmware_tool_heads": [ "Galaxy Series" ],
         "has_machine_quality": true,
         "has_variants": true,
-        "associated_firmware_tool_heads": [ "Galaxy Series" ],
         "lulzbot_tool_head": "Meteor 175",
         "lulzbot_tool_head_abbreviation": "MET175",
         "lulzbot_tool_head_image": "met175",

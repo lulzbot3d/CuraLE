@@ -5,12 +5,12 @@
     "metadata":
     {
         "visible": false,
-        "has_machine_quality": true,
         "associated_firmware_tool_heads": [
             "Legacy Universal",
             "SK175",
             "Universal"
         ],
+        "has_machine_quality": true,
         "lulzbot_tool_head": "SK175",
         "lulzbot_tool_head_abbreviation": "SK175",
         "lulzbot_tool_head_image": "sk175",

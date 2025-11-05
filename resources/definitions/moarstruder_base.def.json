@@ -5,8 +5,8 @@
     "metadata":
     {
         "visible": false,
-        "has_machine_quality": true,
         "associated_firmware_tool_heads": [ "MOARstruder" ],
+        "has_machine_quality": true,
         "lulzbot_tool_head": "MOARstruder",
         "lulzbot_tool_head_abbreviation": "MOAR",
         "lulzbot_tool_head_image": "moarstruder",
