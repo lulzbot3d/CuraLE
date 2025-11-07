@@ -84,11 +84,15 @@ Item
         printSetupChildren.anchors.fill = printSetupContent
         printSetupChildren.anchors.bottomMargin = 2 * UM.Theme.getSize("default_lining").height
 
+        var recommendedPrintSetup = printSetupChildren.children[0]
         var customPrintSetup = printSetupChildren.children[1]
 
         customPrintSetup.padding = UM.Theme.getSize("narrow_margin").width - UM.Theme.getSize("default_lining").width
         customPrintSetup.height = undefined
         customPrintSetup.anchors.fill = customPrintSetup.parent
+
+        recommendedPrintSetup.height = undefined
+        recommendedPrintSetup.anchors.fill = recommendedPrintSetup.parent
 
         customPrintSetup.children[2].height = undefined // rectangle containing settingview
         customPrintSetup.children[2].anchors.fill = customPrintSetup

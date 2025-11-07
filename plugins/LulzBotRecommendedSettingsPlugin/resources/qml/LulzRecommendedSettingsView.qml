@@ -60,7 +60,7 @@ Item {
             padding: UM.Theme.getSize("default_margin").width
             spacing: UM.Theme.getSize("default_margin").height
 
-            width: recommendedPrintSetup.width - 2 * padding - UM.Theme.getSize("thin_margin").width
+            width: parent.width - (UM.Theme.getSize("wide_margin").width * 2)
 
             RecommendedStrengthSection {
                 width: parent.width
