@@ -85,7 +85,79 @@ class RestoreBackupJob(Job):
             cura_api = CuraApplication.getInstance().getCuraAPI()
             cura_api.backups.restoreBackup(read_backup.read(), self._backup.get("metadata", {}))
 
-        self._job_done.set()
+        # Read packages data-file, to get the 'to_install' plugin-ids.
+        version_to_restore = Version(metadata.get("cura_release", "dev"))
+        version_str = f"{version_to_restore.getMajor()}.{version_to_restore.getMinor()}"
+        packages_path = os.path.abspath(os.path.join(os.path.abspath(
+            Resources.getConfigStoragePath()), "..", version_str, "packages.json"))
+        if not os.path.exists(packages_path):
+            Logger.error(f"Can't find path '{packages_path}' to tell what packages should be redownloaded.")
+            self.restore_backup_error_message = self.DEFAULT_ERROR_MESSAGE
+            self._job_done.set()
+            return
+
+        to_install = {}
+        try:
+            with open(packages_path, "r") as packages_file:
+                packages_json = json.load(packages_file)
+                if "to_install" in packages_json:
+                    for package_data in packages_json["to_install"].values():
+                        if "package_info" not in package_data:
+                            continue
+                        package_info = package_data["package_info"]
+                        if "package_id" in package_info and "sdk_version_semver" in package_info:
+                            to_install[package_info["package_id"]] = package_info["sdk_version_semver"]
+        except IOError as ex:
+            Logger.error(f"Couldn't open '{packages_path}' because '{str(ex)}' to get packages to re-install.")
+            self.restore_backup_error_message = self.DEFAULT_ERROR_MESSAGE
+            self._job_done.set()
+            return
+
+        if len(to_install) < 1:
+            Logger.info("No packages to reinstall, early out.")
+            self._job_done.set()
+            return
+
+        # Download all re-installable plugins packages, so they can be put back on start-up.
+        redownload_errors = []
+        def packageDownloadCallback(package_id: str, msg: "QNetworkReply", err: "QNetworkReply.NetworkError" = None) -> None:
+            if err is not None or HttpRequestManager.safeHttpStatus(msg) != 200:
+                redownload_errors.append(err)
+            del to_install[package_id]
+
+            try:
+                with NamedTemporaryFile(mode="wb", suffix=".curapackage", delete=False) as temp_file:
+                    bytes_read = msg.read(self.DISK_WRITE_BUFFER_SIZE)
+                    while bytes_read:
+                        temp_file.write(bytes_read)
+                        bytes_read = msg.read(self.DISK_WRITE_BUFFER_SIZE)
+                        CuraApplication.getInstance().processEvents()
+                temp_file.close()
+                if not CuraApplication.getInstance().getPackageManager().installPackage(temp_file.name):
+                    redownload_errors.append(f"Couldn't install package '{package_id}'.")
+            except IOError as ex:
+                redownload_errors.append(f"Couldn't process package '{package_id}' because '{ex}'.")
+
+            if len(to_install) < 1:
+                if len(redownload_errors) == 0:
+                    Logger.info("All packages redownloaded!")
+                    self._job_done.set()
+                else:
+                    msgs = "\n".join([" - " + str(x) for x in redownload_errors])
+                    Logger.error(f"Couldn't re-install at least one package(s) because: {msgs}")
+                    self.restore_backup_error_message = self.DEFAULT_ERROR_MESSAGE
+                    self._job_done.set()
+
+        self._package_download_scope = UltimakerCloudScope(CuraApplication.getInstance())
+        for package_id, package_api_version in to_install.items():
+            def handlePackageId(package_id: str = package_id):
+                HttpRequestManager.getInstance().get(
+                    PACKAGES_URL_TEMPLATE.format(package_api_version, package_id),
+                    scope=self._package_download_scope,
+                    callback=lambda msg: packageDownloadCallback(package_id, msg),
+                    error_callback=lambda msg, err: packageDownloadCallback(package_id, msg, err)
+                )
+            handlePackageId(package_id)
 
     @staticmethod
     def _verifyMd5Hash(file_path: str, known_hash: str) -> bool:
