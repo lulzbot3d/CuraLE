@@ -28,7 +28,10 @@ Item
     property string lastSelectedKey: ""
     onSelectedKeyChanged:
     {
-        clearFilter()
+        if (selectedKey != "_favorites")
+        {
+            clearFilter()
+        }
         if (lastSelectedKey == "_favorites" && selectedKey != "_favorites")
         {
             filter.expandedCategories = definitionsModel.expanded.slice()
@@ -42,7 +45,7 @@ Item
             }
         }
 
-        filterRow.visible = selectedKey == "_favorites"
+        // filterRow.visible = selectedKey == "_favorites"
         instanceContainerVisibilityHandler.active = selectedKey == "_user"
 
         if(selectedKey == "_favorites")
@@ -148,6 +151,8 @@ Item
             property QtObject settingVisibilityPresetsModel: CuraApplication.getSettingVisibilityPresetsModel()
             property bool findingSettings
 
+            visible: true
+
             width: parent.width
             height: UM.Theme.getSize("print_setup_big_item").height
 
@@ -200,6 +205,14 @@ Item
                         height: UM.Theme.getSize("small_button_icon").height
                         width: height
                         color: UM.Theme.getColor("text")
+                    }
+
+                    onActiveFocusChanged:
+                    {
+                        if (activeFocus)
+                        {
+                            categoryTabs.setCurrentIndex(0)
+                        }
                     }
 
                     onTextChanged: settingsSearchTimer.restart()

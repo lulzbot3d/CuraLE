@@ -25,7 +25,7 @@ SettingItem
 
         Connections
         {
-            target: extrudersModel
+            target: extrudersModel != undefined ? extrudersModel : null
             function onModelChanged()
             {
                 control.color = extrudersModel.getItem(control.currentIndex).color
