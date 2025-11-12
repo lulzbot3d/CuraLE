@@ -8,8 +8,7 @@ import UM 1.5 as UM
 import Cura 1.0 as Cura
 
 
-Item
-{
+Item {
     property alias color: background.color
     property var extruderModel
     property var position: index
@@ -18,8 +17,7 @@ Item
     implicitWidth: parent.width
     implicitHeight: Math.round(UM.Theme.getSize("print_setup_extruder_box").height * 0.85)
 
-    UM.SettingPropertyProvider
-    {
+    UM.SettingPropertyProvider {
         id: extruderTemperature
         containerStackId: Cura.ExtruderManager.extruderIds[position]
         key: "material_print_temperature_layer_0"
@@ -128,18 +126,14 @@ Item
             }
             enabled:
             {
-                if (extruderModel == null)
-                {
+                if (extruderModel == null) {
                     return false; //Can't preheat if not connected.
                 }
-                if (!connectedPrinter.acceptsCommands)
-                {
+                if (!connectedPrinter.acceptsCommands) {
                     return false; //Not allowed to do anything.
                 }
-                if (connectedPrinter.activePrinter && connectedPrinter.activePrinter.activePrintJob)
-                {
-                    if((["printing", "pre_print", "resuming", "pausing", "paused", "error", "offline"]).indexOf(connectedPrinter.activePrinter.activePrintJob.state) != -1)
-                    {
+                if (connectedPrinter.activePrinter && connectedPrinter.activePrinter.activePrintJob) {
+                    if((["printing", "pre_print", "resuming", "pausing", "paused", "error", "offline"]).indexOf(connectedPrinter.activePrinter.activePrintJob.state) != -1) {
                         return false; //Printer is in a state where it can't react to pre-heating.
                     }
                 }

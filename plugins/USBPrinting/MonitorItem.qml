@@ -8,12 +8,11 @@ import UM 1.2 as UM
 import Cura 1.0 as Cura
 import "qml"
 
-Component
-{
-    Item
-    {
-        Rectangle
-        {
+Component {
+
+    Item {
+
+        Rectangle {
             color: UM.Theme.getColor("main_background")
 
             anchors.right: parent.right
@@ -21,24 +20,14 @@ Component
             anchors.top: parent.top
             anchors.bottom: parent.bottom
 
-            // Cura.PrintMonitor
-            // {
-            //     anchors.top: parent.top
-            //     anchors.left: parent.left
-            //     anchors.right: parent.right
-            //     anchors.bottom: footerSeparator.top
-            // }
-
-            PrintMonitor
-            {
+            PrintMonitor {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.bottom: footerSeparator.top
             }
 
-            Rectangle
-            {
+            Rectangle {
                 id: footerSeparator
                 width: parent.width
                 height: UM.Theme.getSize("wide_lining").height
@@ -48,8 +37,7 @@ Component
             }
 
             // MonitorButton is actually the bottom footer panel.
-            Cura.MonitorButton
-            {
+            Cura.MonitorButton {
                 id: monitorButton
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left
