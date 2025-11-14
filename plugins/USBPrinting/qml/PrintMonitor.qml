@@ -10,12 +10,44 @@ import Cura 1.0 as Cura
 
 Item {
 
+    id: base
+
+    property var extrudersModel: CuraApplication.getExtrudersModel()
+    property var connectedDevice: Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null
+    property var activePrinter: connectedDevice != null ? connectedDevice.activePrinter : null
+    property var activePrintJob: activePrinter != null ? activePrinter.activePrintJob: null
+
+    function showTooltip(item, position, text) {
+        tooltip.text = text;
+        position = item.mapToItem(base, position.x - UM.Theme.getSize("default_arrow").width, position.y);
+        tooltip.show(position);
+    }
+
+    function hideTooltip() {
+        tooltip.hide();
+    }
+
+    function strPadLeft(string, pad, length) {
+        return (new Array(length + 1).join(pad) + string).slice(-length);
+    }
+
+    function getPrettyTime(time) {
+        var hours = Math.floor(time / 3600)
+        time -= hours * 3600
+        var minutes = Math.floor(time / 60);
+        time -= minutes * 60
+        var seconds = Math.floor(time);
+
+        var finalTime = strPadLeft(hours, "0", 2) + ":" + strPadLeft(minutes, "0", 2) + ":" + strPadLeft(seconds, "0", 2);
+        return finalTime;
+    }
+
     Flickable {
-        id: base
         width: parent.width
         height: parent.height
 
         contentHeight: printMonitor.height
+        clip: true
 
         ScrollBar.vertical: UM.ScrollBar {
             id: scrollbar
@@ -26,32 +58,6 @@ Item {
                 bottom: parent.bottom
             }
         }
-        clip: true
-
-        function showTooltip(item, position, text) {
-            tooltip.text = text;
-            position = item.mapToItem(base, position.x - UM.Theme.getSize("default_arrow").width, position.y);
-            tooltip.show(position);
-        }
-
-        function hideTooltip() {
-            tooltip.hide();
-        }
-
-        function strPadLeft(string, pad, length) {
-            return (new Array(length + 1).join(pad) + string).slice(-length);
-        }
-
-        function getPrettyTime(time) {
-            var hours = Math.floor(time / 3600)
-            time -= hours * 3600
-            var minutes = Math.floor(time / 60);
-            time -= minutes * 60
-            var seconds = Math.floor(time);
-
-            var finalTime = strPadLeft(hours, "0", 2) + ":" + strPadLeft(minutes, "0", 2) + ":" + strPadLeft(seconds, "0", 2);
-            return finalTime;
-        }
 
         Column {
             id: printMonitor
@@ -59,11 +65,6 @@ Item {
             UM.I18nCatalog { id: catalog; name: "cura" }
 
             width: parent.width - scrollbar.width
-
-            property var extrudersModel: CuraApplication.getExtrudersModel()
-            property var connectedDevice: Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null
-            property var activePrinter: connectedDevice != null ? connectedDevice.activePrinter : null
-            property var activePrintJob: activePrinter != null ? activePrinter.activePrintJob: null
 
             OutputDeviceHeader {
                 outputDevice: connectedDevice
