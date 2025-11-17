@@ -7,21 +7,18 @@ import QtQuick.Controls 2.4
 import UM 1.5 as UM
 import Cura 1.0 as Cura
 
-Item
-{
+Item {
     implicitWidth: parent.width
     height: visible ? Math.round(UM.Theme.getSize("print_setup_extruder_box").height * 0.7) : 0
     property var connectedPrinter: Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null
     property var printerModel: connectedPrinter != null ? connectedPrinter.activePrinter : null
 
-    Rectangle
-    {
+    Rectangle {
         color: UM.Theme.getColor("main_background")
         anchors.fill: parent
 
         // Build plate label.
-        UM.Label
-        {
+        UM.Label {
             text: catalog.i18nc("@label", "Build plate")
             anchors.left: parent.left
             anchors.top: parent.top
@@ -29,8 +26,7 @@ Item
         }
 
         // Target temperature.
-        UM.Label
-        {
+        UM.Label {
             id: bedTargetTemperature
             text: printerModel != null ? Math.round(printerModel.targetBedTemperature) + "°C" : ""
             font: UM.Theme.getFont("default_bold")
@@ -40,31 +36,25 @@ Item
             anchors.bottom: bedCurrentTemperature.bottom
 
             // For tooltip.
-            MouseArea
-            {
+            MouseArea {
                 id: bedTargetTemperatureTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
-                onHoveredChanged:
-                {
-                    if (containsMouse)
-                    {
+                onHoveredChanged: {
+                    if (containsMouse) {
                         base.showTooltip(
                             base,
                             {x: 0, y: bedTargetTemperature.mapToItem(base, 0, -parent.height / 4).y},
                             catalog.i18nc("@tooltip", "The target temperature of the heated bed. The bed will heat up or cool down towards this temperature. If this is 0, the bed heating is turned off.")
                         );
-                    }
-                    else
-                    {
+                    } else {
                         base.hideTooltip();
                     }
                 }
             }
         }
         // Current temperature.
-        UM.Label
-        {
+        UM.Label {
             id: bedCurrentTemperature
             text: printerModel != null ? printerModel.bedTemperature == -1 ? "0°C" : Math.round(printerModel.bedTemperature) + "°C" : ""
             font: UM.Theme.getFont("large_bold")
@@ -73,57 +63,43 @@ Item
             anchors.rightMargin: UM.Theme.getSize("default_margin").width
 
             //For tooltip.
-            MouseArea
-            {
+            MouseArea {
                 id: bedTemperatureTooltipArea
                 hoverEnabled: true
                 anchors.fill: parent
-                onHoveredChanged:
-                {
-                    if (containsMouse)
-                    {
+                onHoveredChanged: {
+                    if (containsMouse) {
                         base.showTooltip(
                             base,
                             {x: 0, y: bedCurrentTemperature.mapToItem(base, 0, -parent.height / 4).y},
                             catalog.i18nc("@tooltip", "The current temperature of the heated bed.")
                         );
-                    }
-                    else
-                    {
+                    } else {
                         base.hideTooltip();
                     }
                 }
             }
         }
         //Input field for pre-heat temperature.
-        Rectangle
-        {
+        Rectangle {
             id: preheatTemperatureControl
             color: !enabled ? UM.Theme.getColor("setting_control_disabled") : showError ? UM.Theme.getColor("setting_validation_error_background") : UM.Theme.getColor("setting_validation_ok")
-            property var showError:
-            {
-                if(bedTemperature.properties.maximum_value != "None" && bedTemperature.properties.maximum_value <  Math.floor(preheatTemperatureInput.text))
-                {
+            property var showError: {
+                if(bedTemperature.properties.maximum_value != "None" && bedTemperature.properties.maximum_value <  Math.floor(preheatTemperatureInput.text)) {
                     return true;
-                } else
-                {
+                } else {
                     return false;
                 }
             }
-            enabled:
-            {
-                if (printerModel == null)
-                {
+            enabled: {
+                if (printerModel == null) {
                     return false; //Can't preheat if not connected.
                 }
-                if (connectedPrinter == null || !connectedPrinter.acceptsCommands)
-                {
+                if (connectedPrinter == null || !connectedPrinter.acceptsCommands) {
                     return false; //Not allowed to do anything.
                 }
-                if (connectedPrinter.activePrinter && connectedPrinter.activePrinter.activePrintJob)
-                {
-                    if((["printing", "pre_print", "resuming", "pausing", "paused", "error", "offline"]).indexOf(connectedPrinter.activePrinter.activePrintJob.state) != -1)
-                    {
+                if (connectedPrinter.activePrinter && connectedPrinter.activePrinter.activePrintJob) {
+                    if((["printing", "pre_print", "resuming", "pausing", "paused", "error", "offline"]).indexOf(connectedPrinter.activePrinter.activePrintJob.state) != -1) {
                         return false; //Printer is in a state where it can't react to pre-heating.
                     }
                 }
@@ -138,38 +114,32 @@ Item
             width: UM.Theme.getSize("monitor_preheat_temperature_control").width
             height: UM.Theme.getSize("monitor_preheat_temperature_control").height
             visible: true
-            Rectangle //Highlight of input field.
-            {
+            Rectangle { //Highlight of input field.
                 anchors.fill: parent
                 anchors.margins: UM.Theme.getSize("default_lining").width
                 color: UM.Theme.getColor("setting_control_highlight")
                 opacity: preheatTemperatureControl.hovered ? 1.0 : 0
             }
-            MouseArea //Change cursor on hovering.
-            {
+            MouseArea { //Change cursor on hovering.
                 id: preheatTemperatureInputMouseArea
                 hoverEnabled: true
                 anchors.fill: parent
                 cursorShape: Qt.IBeamCursor
 
-                onHoveredChanged:
-                {
-                    if (containsMouse)
-                    {
+                onHoveredChanged: {
+                    if (containsMouse) {
                         base.showTooltip(
                             base,
                             {x: 0, y: preheatTemperatureInputMouseArea.mapToItem(base, 0, 0).y},
                             catalog.i18nc("@tooltip of temperature input", "The temperature to pre-heat the bed to.")
                         );
-                    }
-                    else
-                    {
+                    } else {
                         base.hideTooltip();
                     }
                 }
             }
-            UM.Label
-            {
+
+            UM.Label {
                 id: unit
                 anchors.right: parent.right
                 anchors.rightMargin: UM.Theme.getSize("setting_unit_margin").width
@@ -178,8 +148,8 @@ Item
                 text: "°C";
                 color: UM.Theme.getColor("setting_unit")
             }
-            TextInput
-            {
+
+            TextInput {
                 id: preheatTemperatureInput
                 font: UM.Theme.getFont("default")
                 color: !enabled ? UM.Theme.getColor("setting_control_disabled_text") : UM.Theme.getColor("setting_control_text")
@@ -193,10 +163,8 @@ Item
                 anchors.verticalCenter: parent.verticalCenter
                 renderType: Text.NativeRendering
 
-                text:
-                {
-                    if (!bedTemperature.properties.value)
-                    {
+                text: {
+                    if (!bedTemperature.properties.value) {
                         return "";
                     }
                     return bedTemperature.properties.value;
@@ -205,31 +173,24 @@ Item
         }
 
         // The pre-heat button.
-        Cura.SecondaryButton
-        {
+        Cura.SecondaryButton {
             id: preheatButton
             height: UM.Theme.getSize("setting_control").height
             visible: printerModel != null ? printerModel.canPreHeatBed: true
-            enabled:
-            {
-                if (!preheatTemperatureControl.enabled)
-                {
+            enabled: {
+                if (!preheatTemperatureControl.enabled) {
                     return false; //Not connected, not authenticated or printer is busy.
                 }
-                if (printerModel.isPreheating)
-                {
+                if (printerModel.isPreheating) {
                     return true;
                 }
-                if (bedTemperature.properties.minimum_value != "None" && Math.floor(preheatTemperatureInput.text) < Math.floor(bedTemperature.properties.minimum_value))
-                {
+                if (bedTemperature.properties.minimum_value != "None" && Math.floor(preheatTemperatureInput.text) < Math.floor(bedTemperature.properties.minimum_value)) {
                     return false; //Target temperature too low.
                 }
-                if (bedTemperature.properties.maximum_value != "None" && Math.floor(preheatTemperatureInput.text) > Math.floor(bedTemperature.properties.maximum_value))
-                {
+                if (bedTemperature.properties.maximum_value != "None" && Math.floor(preheatTemperatureInput.text) > Math.floor(bedTemperature.properties.maximum_value)) {
                     return false; //Target temperature too high.
                 }
-                if (Math.floor(preheatTemperatureInput.text) == 0)
-                {
+                if (Math.floor(preheatTemperatureInput.text) == 0) {
                     return false; //Setting the temperature to 0 is not allowed (since that cancels the pre-heating).
                 }
                 return true; //Preconditions are met.
@@ -238,46 +199,33 @@ Item
             anchors.bottom: parent.bottom
             anchors.rightMargin: UM.Theme.getSize("default_margin").width
 
-            text:
-            {
-                if (printerModel == null)
-                {
+            text: {
+                if (printerModel == null) {
                     return ""
                 }
-                if (printerModel.isPreheating )
-                {
+                if (printerModel.isPreheating ) {
                     return catalog.i18nc("@button Cancel pre-heating", "Cancel")
-                }
-                else
-                {
+                } else {
                     return catalog.i18nc("@button", "Pre-heat")
                 }
             }
 
-            onClicked:
-            {
-                if (!printerModel.isPreheating)
-                {
+            onClicked: {
+                if (!printerModel.isPreheating) {
                     printerModel.preheatBed(preheatTemperatureInput.text, 900);
-                }
-                else
-                {
+                } else {
                     printerModel.cancelPreheatBed();
                 }
             }
 
-            onHoveredChanged:
-            {
-                if (hovered)
-                {
+            onHoveredChanged: {
+                if (hovered) {
                     base.showTooltip(
                         base,
                         { x: 0, y: preheatButton.mapToItem(base, 0, 0).y },
                         catalog.i18nc("@tooltip of pre-heat", "Heat the bed in advance before printing. You can continue adjusting your print while it is heating, and you won't have to wait for the bed to heat up when you're ready to print.")
                     );
-                }
-                else
-                {
+                } else {
                     base.hideTooltip();
                 }
             }

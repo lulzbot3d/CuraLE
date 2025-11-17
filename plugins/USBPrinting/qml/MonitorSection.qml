@@ -6,20 +6,17 @@ import QtQuick 2.10
 import UM 1.5 as UM
 import Cura 1.0 as Cura
 
-Item
-{
+Item {
     id: base
     property string label
     height: childrenRect.height
 
-    Rectangle
-    {
+    Rectangle {
         color: UM.Theme.getColor("setting_category")
         width: base.width
         height: UM.Theme.getSize("section").height
 
-        UM.Label
-        {
+        UM.Label {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: UM.Theme.getSize("default_margin").width

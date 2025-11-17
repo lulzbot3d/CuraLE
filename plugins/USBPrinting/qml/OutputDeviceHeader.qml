@@ -9,40 +9,32 @@ import UM 1.5 as UM
 import Cura 1.0 as Cura
 
 
-Item
-{
+Item {
     implicitWidth: parent.width
     implicitHeight: Math.floor(childrenRect.height + UM.Theme.getSize("default_margin").height * 2)
     property var outputDevice: null
     property var connectionState: outputDevice == null ? null : outputDevice.connectionState
 
-    Connections
-    {
+    Connections {
         target: Cura.MachineManager
-        function onGlobalContainerChanged()
-        {
+        function onGlobalContainerChanged() {
             outputDevice = Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null;
         }
     }
 
-    Rectangle
-    {
+    Rectangle {
         height: childrenRect.height
         color: UM.Theme.getColor("setting_category")
 
-        UM.Label
-        {
+        UM.Label {
             id: outputDeviceNameLabel
             font: UM.Theme.getFont("large_bold")
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.margins: UM.Theme.getSize("default_margin").width
-            text:
-            {
-                if(outputDevice != null && outputDevice.address != "None")
-                {
-                    switch(connectionState)
-                    {
+            text: {
+                if(outputDevice != null && outputDevice.address != "None") {
+                    switch(connectionState) {
                         case 2:
                             outputDevice.activePrinter.name
                             break;
@@ -50,26 +42,18 @@ Item
                             "No USB Printer Connected"
                             break;
                     }
-                }
-                else { "No USB Printers Connected" }
+                } else { "No USB Printers Connected" }
             }
         }
 
-        UM.Label
-        {
+        UM.Label {
             id: outputDeviceAddressLabel
-            text:
-            {
-                if(outputDevice != null && outputDevice.address != null)
-                {
-                    if(outputDevice.address == "None")
-                    {
+            text: {
+                if(outputDevice != null && outputDevice.address != null) {
+                    if(outputDevice.address == "None") {
                         "No USB Devices Available"
-                    }
-                    else
-                    {
-                        switch(connectionState)
-                        {
+                    } else {
+                        switch(connectionState) {
                             case 0:
                                 "USB Devices Available!"
                                 break;
@@ -93,9 +77,7 @@ Item
                                 break;
                         }
                     }
-                }
-                else
-                {
+                } else {
                     "No Output Device Address"
                 }
             }
@@ -106,8 +88,7 @@ Item
             anchors.margins: UM.Theme.getSize("default_margin").width
         }
 
-        UM.Label
-        {
+        UM.Label {
             text: outputDevice != null ? "" : catalog.i18nc("@info:status", "The printer is not connected.")
             color: outputDevice != null && outputDevice.acceptsCommands ? UM.Theme.getColor("setting_control_text") : UM.Theme.getColor("setting_control_disabled_text")
             wrapMode: Text.WordWrap
