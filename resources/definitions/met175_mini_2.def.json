@@ -14,7 +14,7 @@
             "update_url": { "default": "firmware.lulzbot.com/Mini_2/Galaxy/mini_2_galaxy_latest.hex" }
         },
         "has_variants": true,
-        "lulzbot_firmware_name": { "default": "Marlin_Mini2_Galaxy" },
+        "lulzbot_firmware_name": { "default": "Mini2/Marlin_Mini2_Galaxy" },
         "lulzbot_machine_category": "Mini",
         "lulzbot_machine_image": "mini_2",
         "lulzbot_machine_priority": "01",

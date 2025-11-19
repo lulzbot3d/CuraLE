@@ -15,7 +15,7 @@
             "update_url": { "default": "firmware.lulzbot.com/TAZ_8/TAZ_8/Galaxy/taz_8_galaxy_latest.bin" }
         },
         "lulzbot_firmware_extension": "bin",
-        "lulzbot_firmware_name": { "default": "Marlin_TAZ8_Galaxy" },
+        "lulzbot_firmware_name": { "default": "TAZ8/Marlin_TAZ8_Galaxy" },
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_has_subtypes": true,
         "lulzbot_machine_image": "taz_8",

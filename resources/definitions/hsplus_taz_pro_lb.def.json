@@ -16,7 +16,7 @@
             "update_url": { "default": "firmware.lulzbot.com/TAZ_Pro/Long_Bed/Universal/taz_pro_lb_universal_latest.bin" }
         },
         "lulzbot_firmware_extension": "bin",
-        "lulzbot_firmware_name": { "default": "Marlin_TAZPro_LongBed_Universal" },
+        "lulzbot_firmware_name": { "default": "TAZPro_LongBed/Marlin_TAZPro_LongBed_Universal" },
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_image": "taz_pro_long_bed",
         "lulzbot_machine_is_subtype": true,

@@ -15,7 +15,7 @@
         },
         "has_variants": true,
         "lulzbot_firmware_extension": "bin",
-        "lulzbot_firmware_name": { "default": "Marlin_TAZ8XT_Galaxy" },
+        "lulzbot_firmware_name": { "default": "TAZ8_XT/Marlin_TAZ8XT_Galaxy" },
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_image": "",
         "lulzbot_machine_is_subtype": true,

@@ -15,7 +15,7 @@
             "check_url": { "default": "firmware.lulzbot.com/Workhorse/Universal/version.txt" },
             "update_url": { "default": "firmware.lulzbot.com/Workhorse/Universal/workhorse_universal_latest.hex" }
         },
-        "lulzbot_firmware_name": { "default": "Marlin_Workhorse_Universal" },
+        "lulzbot_firmware_name": { "default": "Workhorse/Marlin_Workhorse_Universal" },
         "lulzbot_machine_category": "TAZ",
         "lulzbot_machine_image": "workhorse",
         "lulzbot_machine_priority": "02",

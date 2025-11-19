@@ -13,7 +13,7 @@
             "check_url": { "default": "firmware.lulzbot.com/Mini_2/Universal/version.txt" },
             "update_url": { "default": "firmware.lulzbot.com/Mini_2/Universal/mini_2_universal_latest.hex" }
         },
-        "lulzbot_firmware_name": { "default": "Marlin_Mini2_Universal" },
+        "lulzbot_firmware_name": { "default": "Mini2/Marlin_Mini2_Universal" },
         "lulzbot_machine_category": "Mini",
         "lulzbot_machine_image": "mini_2",
         "lulzbot_machine_priority": "01",
