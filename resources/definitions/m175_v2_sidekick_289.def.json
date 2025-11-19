@@ -28,8 +28,8 @@
         "has_optional_lcd": true,
         "lulzbot_firmware_name":
         {
-            "default": "Marlin_SideKick289_M175v2",
-            "has_lcd": "Marlin_SideKick289_Universal"
+            "default": "SideKick_289/Marlin_SideKick_289_M175v2",
+            "has_lcd": "SideKick_289/Marlin_SideKick_289_Universal"
         },
         "lulzbot_firmware_version":
         {

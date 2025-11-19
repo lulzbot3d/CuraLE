@@ -28,8 +28,8 @@
         "has_optional_lcd": true,
         "lulzbot_firmware_name":
         {
-            "default": "Marlin_SideKick747_H175",
-            "has_lcd": "Marlin_SideKick747_Universal"
+            "default": "SideKick_747/Marlin_SideKick_747_H175",
+            "has_lcd": "SideKick_747/Marlin_SideKick_747_Universal"
         },
         "lulzbot_firmware_version":
         {
