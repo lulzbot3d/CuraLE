@@ -13,9 +13,9 @@ import Cura 1.0 as Cura
 
 Cura.MachineAction {
     anchors.fill: parent
-    property bool printerConnected: Cura.MachineManager.printerConnected
+    property bool printerDetected: Cura.MachineManager.printerConnected
     property bool klipperPrinter: Cura.MachineManager.activeMachineFirmwareType == "Klipper"
-    property var activeOutputDevice: printerConnected ? Cura.MachineManager.printerOutputDevices[0] : null
+    property var activeOutputDevice: printerDetected ? Cura.MachineManager.printerOutputDevices[0] : null
     property bool canUpdateFirmware: activeOutputDevice ? activeOutputDevice.activePrinter.canUpdateFirmware : false
     property string firmwareName: Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.getDefaultFirmwareName() : ""
 
@@ -119,8 +119,9 @@ Cura.MachineAction {
             font.pointSize: 10
             visible: firmwareName != ""
             text: {
-                let versionSansFolder = firmwareName.split("/")
-                versionSansFolder = versionSansFolder[1]
+                let firmwareLocation = firmwareName.split("/")
+                let versionSansFolder = firmwareLocation[firmwareLocation.length - 1]
+                console.log(versionSansFolder)
                 let splitVersion = versionSansFolder.split("_").reverse()
                 splitVersion.pop();
                 splitVersion = splitVersion.reverse();
@@ -132,7 +133,7 @@ Cura.MachineAction {
 
         UM.Label {
             width: parent.width
-            visible: printerConnected && !canUpdateFirmware
+            visible: printerDetected && !canUpdateFirmware
             horizontalAlignment: Text.AlignHCenter
             font.pointSize: 8
             text: catalog.i18nc("@label", "Firmware can not be updated because the connection with the printer does not support updating firmware.");
@@ -141,7 +142,7 @@ Cura.MachineAction {
         UM.Label {
             width: parent.width
             wrapMode: Text.WordWrap
-            visible: !printerConnected
+            visible: !printerDetected
             horizontalAlignment: Text.AlignHCenter
             color: "red"
             text: catalog.i18nc("@label", "Firmware can not be updated because there is no 3D printer detected!");
@@ -156,7 +157,7 @@ Cura.MachineAction {
             textFont: UM.Theme.getFont("large_bold")
             outlineColor: "black"
             fixedWidthMode: true
-            enabled: printerConnected && firmwareName != ""
+            enabled: printerDetected && firmwareName != ""
             onClicked: {
                 updateProgressDialog.visible = true;
                 activeOutputDevice.updateFirmware(firmwareName);
@@ -177,12 +178,12 @@ Cura.MachineAction {
                 anchors.fill: parent
                 hoverEnabled: true
                 cursorShape: {
-                    if (printerConnected) {
+                    if (printerDetected) {
                         return Qt.PointingHandCursor
                     } else { return Qt.ArrowCursor }
                 }
                 onClicked: {
-                    if (printerConnected) {
+                    if (printerDetected) {
                         customFirmwareDialog.open()
                     }
                 }
@@ -255,7 +256,7 @@ Cura.MachineAction {
 
                 text: {
                     if(manager.firmwareUpdater == null) {
-                        return "";
+                        return "Placeholder";
                     }
                     switch (manager.firmwareUpdater.firmwareUpdateState) {
                         case 0:

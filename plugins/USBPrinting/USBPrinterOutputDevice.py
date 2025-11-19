@@ -110,10 +110,31 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             Logger.log("e", "Cannot create Monitor QML view: cannot find plugin path for plugin [USBPrinting]")
             self._monitor_view_qml_path = ""
 
-        # self._onGlobalContainerStackChanged()
+        self._onGlobalContainerStackChanged()
 
-        # CuraApplication.getInstance().globalContainerStackChanged.connect(self._onGlobalContainerStackChanged)
+        CuraApplication.getInstance().globalContainerStackChanged.connect(self._onGlobalContainerStackChanged)
         CuraApplication.getInstance().getOnExitCallbackManager().addCallback(self._checkActivePrintingUponAppExit)
+
+
+    #######################################
+    #### GlobalContainerStack Handling ####
+    #######################################
+
+    # I would like each USB device to effectively be entirely seperate of the active machine in Cura
+    # but for now I need this to exist for Firmware Update reasons
+    def _onGlobalContainerStackChanged(self):
+        if self._serial is not None:
+            self.close()
+        container_stack = CuraApplication.getInstance().getGlobalContainerStack()
+        if container_stack is None:
+            return
+        num_extruders = container_stack.getProperty("machine_extruder_count", "value")
+        # Ensure that a printer is created.
+        controller = GenericOutputController(self)
+        controller.setCanUpdateFirmware(True)
+        self._printers = [PrinterOutputModel(output_controller = controller, number_of_extruders = num_extruders)]
+        self._printers[0].updateName(container_stack.getName())
+
 
 
     ######################################
