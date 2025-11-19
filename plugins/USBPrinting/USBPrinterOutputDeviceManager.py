@@ -52,7 +52,7 @@ class USBPrinterOutputDeviceManager(QObject, OutputDevicePlugin):
         self._port_check_frequency = 3
 
         preferences = self._application.getPreferences()
-        preferences.addPreference(USB_PRINT_PREFERENCE_KEY, False)
+        preferences.addPreference(USB_PRINT_PREFERENCE_KEY, True)
         self._check_updates = preferences.getValue(USB_PRINT_PREFERENCE_KEY)
 
 

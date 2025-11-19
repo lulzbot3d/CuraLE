@@ -132,7 +132,9 @@ Cura.MachineAction
             font.pointSize: 10
             visible: firmwareName != ""
             text: {
-                let splitVersion = firmwareName.split("_").reverse()
+                let versionSansFolder = firmwareName.split("/")
+                versionSansFolder = versionSansFolder[1]
+                let splitVersion = versionSansFolder.split("_").reverse()
                 splitVersion.pop();
                 splitVersion = splitVersion.reverse();
                 splitVersion.pop();
