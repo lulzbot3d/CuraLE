@@ -43,6 +43,7 @@ class RemotePackageList(PackageList):
 
         When the request is done, the list will get updated with the new package models.
         """
+        return
         self.setErrorMessage("")  # Clear any previous errors.
         self.setIsLoading(True)
 
@@ -99,6 +100,7 @@ class RemotePackageList(PackageList):
         Get the URL to request the first paginated page with.
         :return: A URL to request.
         """
+        return ""
         request_url = f"{PACKAGES_URL}?limit={self.ITEMS_PER_PAGE}"
         if self._package_type_filter != "":
             request_url += f"&package_type={self._package_type_filter}"

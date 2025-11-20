@@ -24,6 +24,8 @@ class UltimakerCloudScope(DefaultUserAgentScope):
         self._account = api.account  # type: Account
 
     def requestHook(self, request: QNetworkRequest):
+        Logger.debug("Attempted a request to UltiMaker Cloud API. This is not used in CuraLE.")
+        return
         super().requestHook(request)
         token = self._account.accessToken
         if not self._account.isLoggedIn or token is None:

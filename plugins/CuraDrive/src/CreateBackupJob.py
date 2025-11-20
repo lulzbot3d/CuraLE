@@ -31,6 +31,8 @@ class CreateBackupJob(Job):
         :param api_backup_url: The url of the 'backups' endpoint of the Cura Drive Api
         """
 
+        return
+
         super().__init__()
 
         self._api_backup_url = api_backup_url
@@ -43,6 +45,7 @@ class CreateBackupJob(Job):
         """After the job completes, an empty string indicates success. Othrerwise, the value is a translated message."""
 
     def run(self) -> None:
+        return
         upload_message = Message(catalog.i18nc("@info:backup_status", "Creating your backup..."),
                                  title = self.MESSAGE_TITLE,
                                  progress = -1)
@@ -79,6 +82,8 @@ class CreateBackupJob(Job):
         :param backup_size: The size of the backup file in bytes.
         """
 
+        return
+
         payload = json.dumps({"data": {"backup_size": backup_size,
                                        "metadata": backup_metadata
                                        }
@@ -92,6 +97,7 @@ class CreateBackupJob(Job):
             scope = self._json_cloud_scope)
 
     def _onUploadSlotCompleted(self, reply: QNetworkReply, error: Optional["QNetworkReply.NetworkError"] = None) -> None:
+        return
         if HttpRequestManager.safeHttpStatus(reply) >= 300:
             replyText = HttpRequestManager.readText(reply)
             Logger.warning("Could not request backup upload: %s", replyText)
@@ -122,6 +128,7 @@ class CreateBackupJob(Job):
         )
 
     def _uploadFinishedCallback(self, reply: QNetworkReply, error: QNetworkReply.NetworkError = None):
+        return
         if not HttpRequestManager.replyIndicatesSuccess(reply, error):
             Logger.log("w", "Could not upload backup file: %s", HttpRequestManager.readText(reply))
             self.backup_upload_error_message = self.DEFAULT_UPLOAD_ERROR_MESSAGE

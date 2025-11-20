@@ -203,6 +203,7 @@ class PackageList(ListModel):
         :param url: the URL from which the package needs to be obtained
         :param update: A flag if this is download request is an update process
         """
+        return
 
         if url == "":
             url = f"{PACKAGES_URL}/{package_id}/download"

@@ -36,6 +36,7 @@ class DriveApiService:
         self._json_cloud_scope = JsonDecoratorScope(UltimakerCloudScope(CuraApplication.getInstance()))
 
     def getBackups(self, changed: Callable[[List[Dict[str, Any]]], None]) -> None:
+        return
         def callback(reply: QNetworkReply, error: Optional["QNetworkReply.NetworkError"] = None) -> None:
             if error is not None:
                 Logger.log("w", "Could not get backups: " + str(error))
@@ -63,12 +64,15 @@ class DriveApiService:
         )
 
     def createBackup(self) -> None:
+        Logger.log("d", "createBackup() called, this is not usable in CuraLE. Ignoring.")
+        return
         self.creatingStateChanged.emit(is_creating = True)
         upload_backup_job = CreateBackupJob(self.BACKUP_URL)
         upload_backup_job.finished.connect(self._onUploadFinished)
         upload_backup_job.start()
 
     def _onUploadFinished(self, job: "CreateBackupJob") -> None:
+        return
         if job.backup_upload_error_message != "":
             # If the job contains an error message we pass it along so the UI can display it.
             self.creatingStateChanged.emit(is_creating = False, error_message = job.backup_upload_error_message)
@@ -76,6 +80,8 @@ class DriveApiService:
             self.creatingStateChanged.emit(is_creating = False)
 
     def restoreBackup(self, backup: Dict[str, Any]) -> None:
+        Logger.log("d", "restoreBackup() called, backups are not used in CuraLE. Ignoring.")
+        return
         self.restoringStateChanged.emit(is_restoring = True)
         download_url = backup.get("download_url")
         if not download_url:
@@ -91,6 +97,7 @@ class DriveApiService:
         restore_backup_job.start()
 
     def _onRestoreFinished(self, job: "RestoreBackupJob") -> None:
+        return
         if job.restore_backup_error_message != "":
             # If the job contains an error message we pass it along so the UI can display it.
             self.restoringStateChanged.emit(is_restoring = False)
@@ -98,6 +105,8 @@ class DriveApiService:
             self.restoringStateChanged.emit(is_restoring = False, error_message = job.restore_backup_error_message)
 
     def deleteBackup(self, backup_id: str, finished_callable: Callable[[bool], None]):
+        Logger.log("d", "deleteBackup() called, backups are not used in CuraLE. Ignoring.")
+        return
 
         def finishedCallback(reply: QNetworkReply, ca: Callable[[bool], None] = finished_callable) -> None:
             self._onDeleteRequestCompleted(reply, ca)
@@ -114,4 +123,5 @@ class DriveApiService:
 
     @staticmethod
     def _onDeleteRequestCompleted(reply: QNetworkReply, callable: Callable[[bool], None], error: Optional["QNetworkReply.NetworkError"] = None) -> None:
+        return
         callable(HttpRequestManager.replyIndicatesSuccess(reply, error))

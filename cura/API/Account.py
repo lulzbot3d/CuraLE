@@ -71,10 +71,11 @@ class Account(QObject):
     manualSyncEnabledChanged = pyqtSignal(bool)
     updatePackagesEnabledChanged = pyqtSignal(bool)
 
-    CLIENT_SCOPES = "account.user.read drive.backup.read drive.backup.write packages.download " \
-                    "packages.rating.read packages.rating.write connect.cluster.read connect.cluster.write connect.material.write " \
-                    "library.project.read library.project.write cura.printjob.read cura.printjob.write " \
-                    "cura.mesh.read cura.mesh.write"
+    # CLIENT_SCOPES = "account.user.read drive.backup.read drive.backup.write packages.download " \
+    #                 "packages.rating.read packages.rating.write connect.cluster.read connect.cluster.write connect.material.write " \
+    #                 "library.project.read library.project.write cura.printjob.read cura.printjob.write " \
+    #                 "cura.mesh.read cura.mesh.write"
+    CLIENT_SCOPES = ""
 
     def __init__(self, application: "CuraApplication", parent = None) -> None:
         super().__init__(parent)
@@ -99,11 +100,15 @@ class Account(QObject):
             OAUTH_SERVER_URL= self._oauth_root,
             CALLBACK_PORT=self._callback_port,
             CALLBACK_URL="http://localhost:{}/callback".format(self._callback_port),
-            CLIENT_ID="um----------------------------ultimaker_cura",
+            # CLIENT_ID="um----------------------------ultimaker_cura",
+            CLIENT_ID="",
             CLIENT_SCOPES=self.CLIENT_SCOPES,
-            AUTH_DATA_PREFERENCE_KEY="general/ultimaker_auth_data",
-            AUTH_SUCCESS_REDIRECT="{}/app/auth-success".format(self._oauth_root),
-            AUTH_FAILED_REDIRECT="{}/app/auth-error".format(self._oauth_root)
+            # AUTH_DATA_PREFERENCE_KEY="general/ultimaker_auth_data",
+            # AUTH_SUCCESS_REDIRECT="{}/app/auth-success".format(self._oauth_root),
+            # AUTH_FAILED_REDIRECT="{}/app/auth-error".format(self._oauth_root)
+            AUTH_DATA_PREFERENCE_KEY="",
+            AUTH_SUCCESS_REDIRECT="",
+            AUTH_FAILURE_REDIRECT=""
         )
 
         self._authorization_service = AuthorizationService(self._oauth_settings)
@@ -119,6 +124,7 @@ class Account(QObject):
         self._sync_services: Dict[str, int] = {}
 
     def initialize(self) -> None:
+        return
         self._authorization_service.initialize(self._application.getPreferences())
         self._authorization_service.onAuthStateChanged.connect(self._onLoginStateChanged)
         self._authorization_service.onAuthenticationError.connect(self._onLoginStateChanged)
@@ -139,6 +145,7 @@ class Account(QObject):
         :param service_name: A unique name for your service, such as `plugins` or `backups`
         :param state: One of SyncState
         """
+        return
         prev_state = self._sync_state
 
         self._sync_services[service_name] = state
@@ -173,25 +180,30 @@ class Account(QObject):
 
         Action will be reset to None when the next sync starts
         """
+        return
         self._update_packages_action = action
         self._update_packages_enabled = True
         self.updatePackagesEnabledChanged.emit(self._update_packages_enabled)
 
     def _onAccessTokenChanged(self):
+        return
         self.accessTokenChanged.emit()
 
     @property
     def is_staging(self) -> bool:
         """Indication whether the given authentication is applied against staging or not."""
 
+        return
         return "staging" in self._oauth_root
 
     @pyqtProperty(bool, notify=loginStateChanged)
     def isLoggedIn(self) -> bool:
+        return False
         return self._logged_in
 
     @pyqtSlot()
     def stopSyncing(self) -> None:
+        return
         Logger.debug(f"Stopping sync of cloud printers")
         self._setManualSyncEnabled(True)
         if self._update_timer.isActive():
@@ -199,12 +211,14 @@ class Account(QObject):
 
     @pyqtSlot()
     def startSyncing(self) -> None:
+        return
         Logger.debug(f"Starting sync of cloud printers")
         self._setManualSyncEnabled(False)
         if not self._update_timer.isActive():
             self._update_timer.start()
 
     def _onLoginStateChanged(self, logged_in: bool = False, error_message: Optional[str] = None) -> None:
+        return
         if error_message:
             if self._error_message:
                 self._error_message.hide()
@@ -231,6 +245,7 @@ class Account(QObject):
                     self._update_timer.stop()
 
     def _onProfileChanged(self, profile: Optional[UserProfile]) -> None:
+        return
         self._user_profile = profile
         self._updatePermissions()
         self.userProfileChanged.emit()
@@ -242,6 +257,7 @@ class Account(QObject):
         sync is currently running, a sync will be requested.
         """
 
+        return
         self._update_packages_action = None
         self._update_packages_enabled = False
         self.updatePackagesEnabledChanged.emit(self._update_packages_enabled)
@@ -253,6 +269,7 @@ class Account(QObject):
         self.syncRequested.emit()
 
     def _setManualSyncEnabled(self, enabled: bool) -> None:
+        return
         if self._manual_sync_enabled != enabled:
             self._manual_sync_enabled = enabled
             self.manualSyncEnabledChanged.emit(enabled)
@@ -268,6 +285,7 @@ class Account(QObject):
         :param force_logout_before_login: Optional boolean parameter
         :return: None
         """
+        return
         if self._logged_in:
             if force_logout_before_login:
                 self.logout()
@@ -290,6 +308,7 @@ class Account(QObject):
 
     @pyqtProperty(str, notify=accessTokenChanged)
     def accessToken(self) -> Optional[str]:
+        return ""
         return self._authorization_service.getAccessToken()
 
     @pyqtProperty("QVariantMap", notify = userProfileChanged)
@@ -305,15 +324,18 @@ class Account(QObject):
 
     @pyqtProperty(bool, notify=manualSyncEnabledChanged)
     def manualSyncEnabled(self) -> bool:
+        return False
         return self._manual_sync_enabled
 
     @pyqtProperty(bool, notify=updatePackagesEnabledChanged)
     def updatePackagesEnabled(self) -> bool:
+        return False
         return self._update_packages_enabled
 
     @pyqtSlot()
     @pyqtSlot(bool)
     def sync(self, user_initiated: bool = False) -> None:
+        return
         if user_initiated:
             self._setManualSyncEnabled(False)
 
@@ -321,15 +343,18 @@ class Account(QObject):
 
     @pyqtSlot()
     def onUpdatePackagesClicked(self) -> None:
+        return
         if self._update_packages_action is not None:
             self._update_packages_action()
 
     @pyqtSlot()
     def popupOpened(self) -> None:
+        return
         self._setManualSyncEnabled(True)
 
     @pyqtSlot()
     def logout(self) -> None:
+        return
         if not self._logged_in:
             return  # Nothing to do, user isn't logged in.
 
@@ -339,6 +364,7 @@ class Account(QObject):
     def updateAdditionalRight(self, **kwargs) -> None:
         """Update the additional rights of the account.
         The argument(s) are the rights that need to be set"""
+        return
         self._additional_rights.update(kwargs)
         self.additionalRightsChanged.emit(self._additional_rights)
 
@@ -360,6 +386,7 @@ class Account(QObject):
         """
         Update the list of permissions that the user has.
         """
+        return
         def callback(reply: "QNetworkReply"):
             status_code = reply.attribute(QNetworkRequest.Attribute.HttpStatusCodeAttribute)
             if status_code is None:

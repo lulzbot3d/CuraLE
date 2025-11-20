@@ -132,19 +132,22 @@ Item
     Button
     {
         id: marketplaceButton
-        text: catalog.i18nc("@action:button", "Marketplace")
+        // text: catalog.i18nc("@action:button", "Marketplace")
+        text: catalog.i18nc("@action:button", "Plugins")
         height: Math.round(0.5 * UM.Theme.getSize("main_window_header").height)
+        width: height
         onClicked: Cura.Actions.browsePackages.trigger()
 
         hoverEnabled: true
 
-        background: Rectangle
+        // background: Rectangle
+        background: Item
         {
-            id: marketplaceButtonBorder
-            radius: UM.Theme.getSize("action_button_radius").width
-            color: UM.Theme.getColor("main_window_header_background")
-            border.width: UM.Theme.getSize("default_lining").width
-            border.color: UM.Theme.getColor("primary_text")
+            // id: marketplaceButtonBorder
+            // radius: UM.Theme.getSize("action_button_radius").width
+            // color: UM.Theme.getColor("main_window_header_background")
+            // border.width: UM.Theme.getSize("default_lining").width
+            // border.color: UM.Theme.getColor("primary_text")
 
             Rectangle
             {
@@ -155,15 +158,24 @@ Item
                 opacity: marketplaceButton.hovered ? 0.2 : 0
                 Behavior on opacity { NumberAnimation { duration: 100 } }
             }
+
+            UM.ColorImage
+            {
+                id: label
+                anchors.fill: parent
+                color: UM.Theme.getColor("primary_text")
+
+                source: UM.Theme.getIcon("Plugin")
+            }
         }
 
-        contentItem: UM.Label
-        {
-            id: label
-            text: marketplaceButton.text
-            color: UM.Theme.getColor("primary_text")
-            width: contentWidth
-        }
+        // contentItem: UM.Label
+        // {
+        //     id: label
+        //     text: marketplaceButton.text
+        //     color: UM.Theme.getColor("primary_text")
+        //     width: contentWidth
+        // }
 
         anchors
         {

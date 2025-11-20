@@ -28,7 +28,7 @@ class CloudMaterialSync(QObject):
         super().__init__(parent)
         self.sync_all_dialog = None  # type: Optional[QObject]
         self._export_upload_status = "idle"
-        self._checkIfNewMaterialsWereInstalled()
+        # self._checkIfNewMaterialsWereInstalled()
         self._export_progress = 0.0
         self._printer_status = {}  # type: Dict[str, str]
 
@@ -37,6 +37,7 @@ class CloudMaterialSync(QObject):
         Checks whether new material packages were installed in the latest startup. If there were, then it shows
         a message prompting the user to sync the materials with their printers.
         """
+        return
         application = cura.CuraApplication.CuraApplication.getInstance()
         for package_id, package_data in application.getPackageManager().getPackagesInstalledOnStartup().items():
             if package_data["package_info"]["package_type"] == "material":
@@ -45,6 +46,7 @@ class CloudMaterialSync(QObject):
                 break
 
     def openSyncAllWindow(self):
+        return
         self.reset()
 
         if self.sync_all_dialog is None:
@@ -61,6 +63,7 @@ class CloudMaterialSync(QObject):
         self.sync_all_dialog.show()
 
     def _showSyncNewMaterialsMessage(self) -> None:
+        return
         sync_materials_message = Message(
                 text = catalog.i18nc("@action:button",
                                      "Please sync the material profiles with your printers before starting to print."),
@@ -94,6 +97,7 @@ class CloudMaterialSync(QObject):
             sync_materials_message.show()
 
     def _onSyncMaterialsMessageActionTriggered(self, sync_message: Message, sync_message_action: str):
+        return
         if sync_message_action == "sync":
             self.openSyncAllWindow()
             sync_message.hide()
@@ -170,6 +174,7 @@ class CloudMaterialSync(QObject):
         """
         Export all materials and upload them to the user's account.
         """
+        return
         self._export_upload_status = "uploading"
         self.exportUploadStatusChanged.emit()
         job = UploadMaterialsJob(self)

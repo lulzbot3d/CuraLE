@@ -25,7 +25,8 @@ UM.Dialog
     width: minimumWidth
     height: minimumHeight
 
-    title: "Marketplace" //Seen by Ultimaker as a brand name, so this doesn't get translated.
+    // title: "Marketplace" //Seen by Ultimaker as a brand name, so this doesn't get translated.
+    title: "Plugins"
 
     // Background color
     Rectangle
@@ -94,15 +95,17 @@ UM.Dialog
                     RowLayout
                     {
                         width: parent.width
-                        height: UM.Theme.getSize("button_icon").height + UM.Theme.getSize("default_margin").height
+                        height: searchBar.visible ? UM.Theme.getSize("button_icon").height + UM.Theme.getSize("default_margin").height : 0
                         spacing: UM.Theme.getSize("thin_margin").width
 
                         Cura.SearchBar
                         {
                             id: searchBar
-                            implicitHeight: UM.Theme.getSize("button_icon").height
+                            implicitHeight: visible ? UM.Theme.getSize("button_icon").height : 0
                             Layout.fillWidth: true
                             onTextEdited: searchStringChanged(text)
+
+                            visible: false
                         }
 
                         // Page selection.
@@ -110,12 +113,14 @@ UM.Dialog
                         {
                             id: pageSelectionTabBar
                             Layout.alignment: Qt.AlignRight
-                            height: UM.Theme.getSize("button_icon").height
+                            height: visible ? UM.Theme.getSize("button_icon").height : 0
                             spacing: 0
                             background: Rectangle {
                                 color: "transparent"
                             }
                             currentIndex: manager.tabShown
+
+                            visible: false
 
                             onCurrentIndexChanged:
                             {
@@ -174,7 +179,7 @@ UM.Dialog
 
                 Cura.TertiaryButton
                 {
-                    text: catalog.i18nc("@info", "Search in the browser")
+                    text: catalog.i18nc("@info", "Find more plugins in UltiMaker's Marketplace!")
                     iconSource: UM.Theme.getIcon("LinkExternal")
                     visible: pageSelectionTabBar.currentItem.hasSearch && searchHeader.visible
                     isIconOnRightSide: true
@@ -198,7 +203,8 @@ UM.Dialog
                         id: content
                         anchors.fill: parent
                         anchors.margins: UM.Theme.getSize("default_margin").width
-                        source: "Plugins.qml"
+                        // source: "Plugins.qml"
+                        source: "ManagedPackages.qml"
 
                         Connections
                         {
