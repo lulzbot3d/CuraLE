@@ -153,7 +153,8 @@ Item
             {
                 id: marketplaceButtonFill
                 anchors.fill: parent
-                radius: parent.radius
+                // radius: parent.radius
+                radius: UM.Theme.getSize("action_button_radius").width
                 color: UM.Theme.getColor("primary_text")
                 opacity: marketplaceButton.hovered ? 0.2 : 0
                 Behavior on opacity { NumberAnimation { duration: 100 } }

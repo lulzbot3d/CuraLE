@@ -159,27 +159,6 @@
     },
     "settings":
     {
-        "lulzbot_addons":
-        {
-            "children":
-            {
-                "purge_line_enable":
-                {
-                    "default_value": true,
-                    "description": "Determines whether to print out a purge line prior to the beginning of the print. This ensures your filament is primed before printing at the cost of a very small portion of the build area.",
-                    "enabled": true,
-                    "label": "Enable Purge Line",
-                    "settable_per_extruder": true,
-                    "settable_per_mesh": false,
-                    "settable_per_meshgroup": false,
-                    "type": "bool"
-                }
-            },
-            "description": "Settings specific to LulzBot printers",
-            "icon": "Lulz_Simple",
-            "label": "LulzBot Settings",
-            "type": "category"
-        },
         "machine_settings":
         {
             "children":
@@ -351,6 +330,23 @@
                     "settable_per_extruder": true,
                     "settable_per_mesh": false,
                     "type": "float"
+                }
+            }
+        },
+        "platform_adhesion":
+        {
+            "children":
+            {
+                "purge_line_enable":
+                {
+                    "default_value": true,
+                    "description": "Determines whether to print out a purge line prior to the beginning of the print. This ensures your filament is primed before printing at the cost of a very small portion of the build area.",
+                    "enabled": true,
+                    "label": "Enable Purge Line",
+                    "settable_per_extruder": true,
+                    "settable_per_mesh": false,
+                    "settable_per_meshgroup": false,
+                    "type": "bool"
                 }
             }
         }
