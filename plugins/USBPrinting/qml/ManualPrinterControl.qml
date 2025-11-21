@@ -12,9 +12,9 @@ import "."
 
 
 Item {
-    property var printerModel: null
+    property var printerDevice: Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null
+    property var printerModel: printerDevice != null ? printerDevice.activePrinter != null ? printerDevice.activePrinter : null : null
     property var activePrintJob: printerModel != null ? printerModel.activePrintJob : null
-    property var connectedPrinter: Cura.MachineManager.printerOutputDevices.length >= 1 ? Cura.MachineManager.printerOutputDevices[0] : null
     property var _buttonSize: UM.Theme.getSize("setting_control").height + UM.Theme.getSize("thin_margin").height
     implicitWidth: parent.width
     implicitHeight: childrenRect.height
@@ -24,11 +24,11 @@ Item {
             return false; //Can't control the printer if not connected
         }
 
-        if (connectedPrinter == null) {
+        if (printerDevice == null) {
             return false; //Not allowed to do anything.
         }
 
-        if (!connectedPrinter.acceptsCommands) {
+        if (!printerDevice.acceptsCommands) {
             return false;
         }
 
@@ -45,96 +45,73 @@ Item {
     Column {
 
         spacing: UM.Theme.getSize("default_margin").height
+        anchors.horizontalCenter: parent.horizontalCenter
 
         MonitorSection {
             label: catalog.i18nc("@label", "Manual Printer Control")
             width: base.width
         }
 
-        Row {
-            id: baseControls
-
-            width: base.width - 2 * UM.Theme.getSize("default_margin").width
-            height: childrenRect.height
-            anchors.left: parent.left
-            anchors.topMargin: UM.Theme.getSize("default_margin").height * 100
-            anchors.leftMargin: UM.Theme.getSize("default_margin").width
-            spacing: UM.Theme.getSize("default_margin").width
-
-            Cura.SecondaryButton {
-                height: UM.Theme.getSize("setting_control").height
-                width: base.width / 2 - (UM.Theme.getSize("default_margin").width * 1.5)
-                text: "Connect"
-                enabled: false
-                onClicked: connectedPrinter.connect()
-            }
-
-            Cura.SecondaryButton {
-                height: UM.Theme.getSize("setting_control").height
-                width: base.width / 2 - (UM.Theme.getSize("default_margin").width * 1.5)
-                text: "Disconnect"
-                enabled: false
-                onClicked: {
-                    OutputDeviceHeader.pressedConnect = false
-                    connectedPrinter.close() // May need to be changed to a different function
+        Cura.SecondaryButton {
+            id: connectButton
+            height: UM.Theme.getSize("setting_control").height
+            width: UM.Theme.getSize("setting_control").width * 2
+            anchors.horizontalCenter: parent.horizontalCenter
+            property var state: printerDevice.connectionState
+            text: {
+                if (state == 0 || state == 4) {
+                    return "Connect"
+                } else {
+                    return "Disconnect"
                 }
+            }
+            enabled: state != 1
+            onClicked: {
+                if (state == 0 || state == 4) {
+                    printerDevice.connect()
+                } else if (state == 2) {
+                    printerDevice.close()
+                } else { return }
             }
         }
 
-        Row {
-            width: base.width - 2 * UM.Theme.getSize("default_margin").width
-            height: childrenRect.height
-            anchors.left: parent.left
-            anchors.topMargin: UM.Theme.getSize("default_margin").height * 100
-            anchors.leftMargin: UM.Theme.getSize("default_margin").width
-            spacing: UM.Theme.getSize("default_margin").width
-
-            Cura.SecondaryButton {
-                height: UM.Theme.getSize("setting_control").height
-                width: base.width - UM.Theme.getSize("default_margin").width - UM.Theme.getSize("default_margin").width
-                text: catalog.i18nc("@label", "Console")
-                enabled: connectedPrinter.acceptsCommands ? connectedPrinter.connectionState == 2 : false
-                onClicked: {
-                    connectedPrinter.messageFromPrinter.disconnect(printer_control.receive)
-                    connectedPrinter.messageFromPrinter.connect(printer_control.receive)
-                    printer_control.visible = true;
-                }
+        Cura.SecondaryButton {
+            height: UM.Theme.getSize("setting_control").height
+            width: UM.Theme.getSize("setting_control").width * 2
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: catalog.i18nc("@label", "Console")
+            enabled: true
+            onClicked: {
+                printerDevice.messageFromPrinter.disconnect(printer_control.receive)
+                printerDevice.messageFromPrinter.connect(printer_control.receive)
+                printer_control.visible = true;
             }
         }
 
-        Row {
-
-            width: base.width - 2 * UM.Theme.getSize("default_margin").width
-            height: childrenRect.height
-            anchors.left: parent.left
-            anchors.topMargin: UM.Theme.getSize("default_margin").height * 100
-            anchors.leftMargin: UM.Theme.getSize("default_margin").width
-            spacing: UM.Theme.getSize("default_margin").width
-
-            Cura.SecondaryButton {
-                property var activeMachineId: Cura.MachineManager.activeMachine ? Cura.MachineManager.activeMachine.id : null
-                property var machineActions: Cura.MachineActionManager.getSupportedActions(Cura.MachineManager.getDefinitionByMachineId(activeMachineId))
-                property var updateAction
-                property bool canUpdate: {
-                    for (var i = 0; i < machineActions.length; i++) {
-                        if (machineActions[i].label.toLowerCase() == "firmware update") {
-                            updateAction = machineActions[i]
-                            return true;
-                        }
+        Cura.SecondaryButton {
+            property var activeMachineId: Cura.MachineManager.activeMachine ? Cura.MachineManager.activeMachine.id : null
+            property var machineActions: Cura.MachineActionManager.getSupportedActions(Cura.MachineManager.getDefinitionByMachineId(activeMachineId))
+            property var updateAction
+            property bool canUpdate: {
+                for (var i = 0; i < machineActions.length; i++) {
+                    if (machineActions[i].label.toLowerCase() == "update firmware") {
+                        updateAction = machineActions[i]
+                        return true;
                     }
-                    return false;
                 }
-                height: UM.Theme.getSize("setting_control").height
-                width: base.width - UM.Theme.getSize("default_margin").width - UM.Theme.getSize("default_margin").width
-                text: catalog.i18nc("@label", "Firmware Update")
-                enabled: canUpdate
-                onClicked: {
-                        var currentItem = updateAction
-                        actionDialog.loader.manager = currentItem
-                        actionDialog.loader.source = currentItem.qmlPath
-                        actionDialog.title = currentItem.label
-                        actionDialog.show()
-                }
+                return false;
+            }
+            height: UM.Theme.getSize("setting_control").height
+            width: UM.Theme.getSize("setting_control").width * 2
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: catalog.i18nc("@label", "Firmware Update")
+            enabled: canUpdate
+            onClicked: {
+                    var currentItem = updateAction
+                    actionDialog.loader.manager = currentItem
+                    actionDialog.loader.source = currentItem.qmlPath
+                    actionDialog.title = currentItem.label
+                    actionDialog.show()
             }
         }
 
@@ -526,6 +503,19 @@ Item {
             width: base.width - 2 * UM.Theme.getSize("default_margin").width
             height: childrenRect.height + UM.Theme.getSize("default_margin").width
         }
+
+        UM.Dialog {
+            id: actionDialog
+            minimumWidth: UM.Theme.getSize("modal_window_minimum").width
+            minimumHeight: UM.Theme.getSize("modal_window_minimum").height
+            maximumWidth: minimumWidth * 3
+            maximumHeight: minimumHeight * 3
+            rightButtons: Cura.SecondaryButton {
+                text: catalog.i18nc("@action:button", "Close")
+                onClicked: actionDialog.reject()
+            }
+        }
+
 
         UM.SettingPropertyProvider {
             id: machineExtruderCount

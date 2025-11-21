@@ -37,7 +37,7 @@ Component {
             }
 
             // MonitorButton is actually the bottom footer panel.
-            Cura.MonitorButton {
+            MonitorButton {
                 id: monitorButton
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left

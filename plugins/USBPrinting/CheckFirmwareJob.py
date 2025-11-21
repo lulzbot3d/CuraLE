@@ -20,24 +20,24 @@ class CheckFirmwareJob(Job):
         self._list_to_check = [
             {
                 "reply_key": "MACHINE_TYPE",
-                "definition_key": "firmware_machine_type",
-                "exact_match": True,
-                "search_in_properties": True,
+                "definition_key": "associated_firmware_names",
                 "on_fail": CheckFirmwareStatus.WRONG_MACHINE
             },
             {
                 "reply_key": "EXTRUDER_TYPE",
-                "definition_key": "firmware_toolhead_name",
+                "definition_key": "associated_firmware_tool_heads",
                 "on_fail": CheckFirmwareStatus.WRONG_TOOLHEAD
             },
             {
                 "reply_key": "FIRMWARE_VERSION",
-                "definition_key": "firmware_latest_version",
+                "definition_key": "lulzbot_firmware_version",
                 "on_fail": CheckFirmwareStatus.FIRMWARE_OUTDATED
             }
         ]
 
     def run(self) -> None:
+
+        self.setResult(CheckFirmwareStatus.OK)
 
         if not self._global_container_stack.getProperty("machine_has_lcd", "value"):
             self._list_to_check[1]["definition_key"] = "firmware_toolhead_name_no_lcd"
@@ -53,15 +53,23 @@ class CheckFirmwareJob(Job):
                 if result == CheckValueStatus.MISSING_VALUE_IN_DEFINITION:
                     pass
                 elif result == CheckValueStatus.MISSING_VALUE_IN_REPLY:
-                    return CheckFirmwareStatus.FIRMWARE_OUTDATED
+                    # return CheckFirmwareStatus.FIRMWARE_OUTDATED
+                    # self.setResult(CheckFirmwareStatus.FIRMWARE_OUTDATED)
+                    pass
                 else:
-                    return option["on_fail"]
+                    # self.setResult(option["on_fail"])
+                    pass
 
-        self.setResult(CheckFirmwareStatus.OK)  # Unable to detect the correct baudrate.
+        return
 
     def checkValue(self, fw_key, profile_key, exact_match = False, search_in_properties = False):
-        expected_value = self.global_container_stack.getProperty(profile_key, "value") if search_in_properties else\
-            self.global_container_stack.getMetaDataEntry(profile_key, None)
+        # Get the expected value from the active printer definition
+        if search_in_properties:
+            expected_value = self._global_container_stack.getProperty(profile_key, "value")
+        else:
+            expected_value = self._global_container_stack.getMetaDataEntry(profile_key, None)
+
+        # Perform the check
         if fw_key == "FIRMWARE_VERSION":
             expected_value = expected_value.split("-")[0]
         if expected_value is None:

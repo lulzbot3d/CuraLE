@@ -51,7 +51,6 @@ Item {
 
         ScrollBar.vertical: UM.ScrollBar {
             id: scrollbar
-            parent: base.parent
             anchors {
                 right: parent.right
                 top: parent.top

@@ -167,64 +167,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             known_baud_job.finished.connect(self._knownBaudFinished)
             return
 
-        firmware_response_status = self._checkFirmware()
-        ## Check what the firmware status came back as and whether or not we should ignore it.
-        if firmware_response_status is not CheckFirmwareStatus.OK:
-            overridden = False
-            allow_wrong = CuraApplication.getInstance().getPreferences().getValue("cura/allow_connection_to_wrong_machine")
-
-            if firmware_response_status is CheckFirmwareStatus.TIMEOUT:
-                message = Message(text = catalog.i18nc("@message",
-                                "The printer did not respond to the firmware check. Is firmware loaded?"),
-                                title = catalog.i18nc("@message", "No Response"),
-                                message_type = Message.MessageType.ERROR)
-
-            elif firmware_response_status is CheckFirmwareStatus.WRONG_MACHINE:
-                message = Message(text = catalog.i18nc("@message",
-                                "Firmware reports printer type doesn't match active printer in Cura LE! Make sure your \n\
-                                    active printer in Cura LE matches the printer you're trying to connect to and that \
-                                    your firmware is up-to-date."),
-                                title = catalog.i18nc("@message", "Wrong Machine!"),
-                                message_type = Message.MessageType.ERROR)
-                if allow_wrong: overridden = True
-
-            elif firmware_response_status is CheckFirmwareStatus.WRONG_TOOLHEAD:
-                message = Message(text = catalog.i18nc("@message",
-                                "The printer reports having a different Tool Head than the active printer in Cura LE! \n If you're \
-                                    confident your selection matches, you can ignore this error by going to Preferences -> Configure Cura \
-                                    and selecting \"Allow Connection to Wrong Printers\""),
-                                title = catalog.i18nc("@message", "Wrong Tool Head!"),
-                                message_type = Message.MessageType.WARNING)
-                if allow_wrong: overridden = True
-
-            elif firmware_response_status is CheckFirmwareStatus.FIRMWARE_OUTDATED:
-                overridden = True
-                message = Message(text = catalog.i18nc("@message",
-                                "Printer appears to have outdated firmware."),
-                                title = catalog.i18nc("@message", "Old Firmware"),
-                                message_type = Message.MessageType.WARNING)
-
-            elif firmware_response_status is CheckFirmwareStatus.COMMUNICATION_ERROR:
-                message = Message(text = catalog.i18nc("@message",
-                                "There was an error when attempting to communicate with the printer. Check the cable connection"),
-                                title = catalog.i18nc("@message", "Communication Error!"),
-                                message_type = Message.MessageType.ERROR)
-
-            else:
-                message = Message(text = catalog.i18nc("@message",
-                                "Unknown CheckFirmwareStatus state!"),
-                                title = catalog.i18nc("@message", "Oh No! If you got this message, please contact support and get us \
-                                                      some logs because this isn't supposed to happen!"),
-                                message_type = Message.MessageType.ERROR)
-
-            message.show()
-            # Ignore it if it's minor or if the user has elected to
-            if not overridden:
-                self.close()
-                return
-        self.setConnectionState(ConnectionState.Connected)
-        self._setAcceptsCommands(True)
-        self._update_thread.start()
+        self._checkFirmware()
 
 
     def _autoDetectFinished(self, job: AutoDetectBaudJob):
@@ -668,7 +611,65 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         check_firmware_job.finished.connect(self._firmwareCheckJobFinished)
         return
 
-    def _firmwareCheckJobFinished():
+    def _firmwareCheckJobFinished(self, job: CheckFirmwareJob):
+        ## Check what the firmware status came back as and whether or not we should ignore it.
+        firmware_response_status = job.getResult()
+        if firmware_response_status is not CheckFirmwareStatus.OK:
+            overridden = True
+            allow_wrong = CuraApplication.getInstance().getPreferences().getValue("cura/allow_connection_to_wrong_machine")
+
+            if firmware_response_status is CheckFirmwareStatus.TIMEOUT:
+                message = Message(text = catalog.i18nc("@message",
+                                "The printer did not respond to the firmware check. Is firmware loaded?"),
+                                title = catalog.i18nc("@message", "No Response"),
+                                message_type = Message.MessageType.ERROR)
+
+            elif firmware_response_status is CheckFirmwareStatus.WRONG_MACHINE:
+                message = Message(text = catalog.i18nc("@message",
+                                "Firmware reports printer type doesn't match active printer in Cura LE! Make sure your \n\
+                                    active printer in Cura LE matches the printer you're trying to connect to and that \
+                                    your firmware is up-to-date."),
+                                title = catalog.i18nc("@message", "Wrong Machine!"),
+                                message_type = Message.MessageType.ERROR)
+                if allow_wrong: overridden = True
+
+            elif firmware_response_status is CheckFirmwareStatus.WRONG_TOOLHEAD:
+                message = Message(text = catalog.i18nc("@message",
+                                "The printer reports having a different Tool Head than the active printer in Cura LE! \n If you're \
+                                    confident your selection matches, you can ignore this error by going to Preferences -> Configure Cura \
+                                    and selecting \"Allow Connection to Wrong Printers\""),
+                                title = catalog.i18nc("@message", "Wrong Tool Head!"),
+                                message_type = Message.MessageType.WARNING)
+                if allow_wrong: overridden = True
+
+            elif firmware_response_status is CheckFirmwareStatus.FIRMWARE_OUTDATED:
+                overridden = True
+                message = Message(text = catalog.i18nc("@message",
+                                "Printer appears to have outdated firmware."),
+                                title = catalog.i18nc("@message", "Old Firmware"),
+                                message_type = Message.MessageType.WARNING)
+
+            elif firmware_response_status is CheckFirmwareStatus.COMMUNICATION_ERROR:
+                message = Message(text = catalog.i18nc("@message",
+                                "There was an error when attempting to communicate with the printer. Check the cable connection"),
+                                title = catalog.i18nc("@message", "Communication Error!"),
+                                message_type = Message.MessageType.ERROR)
+
+            else:
+                message = Message(text = catalog.i18nc("@message",
+                                "Unknown CheckFirmwareStatus state!"),
+                                title = catalog.i18nc("@message", "Oh No! If you got this message, please contact support and get us \
+                                                      some logs because this isn't supposed to happen!"),
+                                message_type = Message.MessageType.ERROR)
+
+            message.show()
+            # Ignore it if it's minor or if the user has elected to
+            if not overridden:
+                self.close()
+                return
+        self.setConnectionState(ConnectionState.Connected)
+        self._setAcceptsCommands(True)
+        self._update_thread.start()
         return
 
     def _setFirmwareName(self, name):

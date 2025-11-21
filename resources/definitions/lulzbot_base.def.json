@@ -123,6 +123,7 @@
         },
         "retraction_min_travel": { "minimum_value_warning": "line_width * 1.5 if line_width < 1.5 else line_width" },
         "skirt_brim_minimal_length": { "default_value": 200 },
+        "skirt_height": { "value": 1 },
         "skirt_line_count": { "default_value": 2 },
         "speed_travel": { "value": "speed_print if magic_spiralize else 175" },
         "speed_z_hop": { "value": "10 if machine_max_feedrate_z > 10 else machine_max_feedrate_z" },
