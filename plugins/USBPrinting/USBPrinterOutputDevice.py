@@ -2,7 +2,6 @@
 # Cura is released under the terms of the LGPLv3 or higher.
 
 import os
-from enum import IntEnum
 
 from UM.i18n import i18nCatalog
 from UM.Logger import Logger
@@ -18,6 +17,7 @@ from cura.PrinterOutput.Models.PrintJobOutputModel import PrintJobOutputModel
 from cura.PrinterOutput.GenericOutputController import GenericOutputController
 
 from .AutoDetectBaudJob import AutoDetectBaudJob
+from .CheckFirmwareJob import CheckFirmwareJob, CheckFirmwareStatus, CheckValueStatus
 from .KnownBaudJob import KnownBaudJob
 from .LulzFirmwareUpdater import LulzFirmwareUpdater
 
@@ -169,17 +169,17 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
 
         firmware_response_status = self._checkFirmware()
         ## Check what the firmware status came back as and whether or not we should ignore it.
-        if firmware_response_status is not self.CheckFirmwareStatus.OK:
+        if firmware_response_status is not CheckFirmwareStatus.OK:
             overridden = False
             allow_wrong = CuraApplication.getInstance().getPreferences().getValue("cura/allow_connection_to_wrong_machine")
 
-            if firmware_response_status is self.CheckFirmwareStatus.TIMEOUT:
+            if firmware_response_status is CheckFirmwareStatus.TIMEOUT:
                 message = Message(text = catalog.i18nc("@message",
                                 "The printer did not respond to the firmware check. Is firmware loaded?"),
                                 title = catalog.i18nc("@message", "No Response"),
                                 message_type = Message.MessageType.ERROR)
 
-            elif firmware_response_status is self.CheckFirmwareStatus.WRONG_MACHINE:
+            elif firmware_response_status is CheckFirmwareStatus.WRONG_MACHINE:
                 message = Message(text = catalog.i18nc("@message",
                                 "Firmware reports printer type doesn't match active printer in Cura LE! Make sure your \n\
                                     active printer in Cura LE matches the printer you're trying to connect to and that \
@@ -188,7 +188,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                                 message_type = Message.MessageType.ERROR)
                 if allow_wrong: overridden = True
 
-            elif firmware_response_status is self.CheckFirmwareStatus.WRONG_TOOLHEAD:
+            elif firmware_response_status is CheckFirmwareStatus.WRONG_TOOLHEAD:
                 message = Message(text = catalog.i18nc("@message",
                                 "The printer reports having a different Tool Head than the active printer in Cura LE! \n If you're \
                                     confident your selection matches, you can ignore this error by going to Preferences -> Configure Cura \
@@ -197,14 +197,14 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
                                 message_type = Message.MessageType.WARNING)
                 if allow_wrong: overridden = True
 
-            elif firmware_response_status is self.CheckFirmwareStatus.FIRMWARE_OUTDATED:
+            elif firmware_response_status is CheckFirmwareStatus.FIRMWARE_OUTDATED:
                 overridden = True
                 message = Message(text = catalog.i18nc("@message",
                                 "Printer appears to have outdated firmware."),
                                 title = catalog.i18nc("@message", "Old Firmware"),
                                 message_type = Message.MessageType.WARNING)
 
-            elif firmware_response_status is self.CheckFirmwareStatus.COMMUNICATION_ERROR:
+            elif firmware_response_status is CheckFirmwareStatus.COMMUNICATION_ERROR:
                 message = Message(text = catalog.i18nc("@message",
                                 "There was an error when attempting to communicate with the printer. Check the cable connection"),
                                 title = catalog.i18nc("@message", "Communication Error!"),
@@ -653,7 +653,7 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
         if b"FIRMWARE_NAME" not in reply:
             Logger.log("w", "Printer did not return firmware name")
             self.setConnectionState(ConnectionState.Timeout)
-            return self.CheckFirmwareStatus.TIMEOUT
+            return CheckFirmwareStatus.TIMEOUT
 
         try:
             firmware_string = reply.decode()
@@ -661,76 +661,15 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             # This can occur if the response is a jumbled mess but "FIRMWARE_NAME" manages to survive
             Logger.log("w", "Failed to decode response from serial. Response may be corrupted.")
             self.setConnectionState(ConnectionState.Error)
-            return self.CheckFirmwareStatus.COMMUNICATION_ERROR
+            return CheckFirmwareStatus.COMMUNICATION_ERROR
         self._setFirmwareData(firmware_string)
-        values = self._firmware_data
+        check_firmware_job = CheckFirmwareJob(self._firmware_data)
+        check_firmware_job.start()
+        check_firmware_job.finished.connect(self._firmwareCheckJobFinished)
+        return
 
-        global_container_stack = CuraApplication.getInstance().getGlobalContainerStack()
-
-        class CheckValueStatus(IntEnum):
-            OK = 0
-            MISSING_VALUE_IN_REPLY = 1
-            WRONG_VALUE = 2
-            MISSING_VALUE_IN_DEFINITION = 3
-
-
-        def checkValue(fw_key, profile_key, exact_match = False, search_in_properties = False):
-            expected_value = global_container_stack.getProperty(profile_key, "value") if search_in_properties else\
-                global_container_stack.getMetaDataEntry(profile_key, None)
-            if fw_key == "FIRMWARE_VERSION":
-                expected_value = expected_value.split("-")[0]
-            if expected_value is None:
-                Logger.log("d", "Missing %s in profile. Skipping check." % profile_key)
-                return CheckValueStatus.MISSING_VALUE_IN_DEFINITION
-            elif not fw_key in values:
-                Logger.log("d", "Missing %s in firmware string: %s" % (fw_key, firmware_string))
-                return CheckValueStatus.MISSING_VALUE_IN_REPLY
-            elif exact_match and values[fw_key] != expected_value:
-                Logger.log("e", "Expected that %s was %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
-                return CheckValueStatus.WRONG_VALUE
-            elif not exact_match and values[fw_key].find(expected_value) < 0:
-                Logger.log("e", "Expected that %s contained %s, but got %s instead" % (fw_key, expected_value, values[fw_key]))
-                return CheckValueStatus.WRONG_VALUE
-            return CheckValueStatus.OK
-
-        list_to_check = [
-            {
-                "reply_key": "MACHINE_TYPE",
-                "definition_key": "firmware_machine_type",
-                "exact_match": True,
-                "search_in_properties": True,
-                "on_fail": self.CheckFirmwareStatus.WRONG_MACHINE
-            },
-            {
-                "reply_key": "EXTRUDER_TYPE",
-                "definition_key": "firmware_toolhead_name",
-                "on_fail": self.CheckFirmwareStatus.WRONG_TOOLHEAD
-            },
-            {
-                "reply_key": "FIRMWARE_VERSION",
-                "definition_key": "firmware_latest_version",
-                "on_fail": self.CheckFirmwareStatus.FIRMWARE_OUTDATED
-            }
-        ]
-        if not global_container_stack.getProperty("machine_has_lcd", "value"):
-            list_to_check[1]["definition_key"] = "firmware_toolhead_name_no_lcd"
-            list_to_check[2]["definition_key"] = "firmware_no_lcd_latest_version"
-        if global_container_stack.getProperty("machine_has_bltouch", "value"):
-            if not global_container_stack.getMetaDataEntry("bltouch_is_standard"):
-                list_to_check[2]["definition_key"] = "firmware_bltouch_latest_version"
-
-
-        for option in list_to_check:
-            result = checkValue(option["reply_key"], option["definition_key"], option.get("exact_match", False), option.get("search_in_properties", False))
-            if result != CheckValueStatus.OK:
-                if result == CheckValueStatus.MISSING_VALUE_IN_DEFINITION:
-                    pass
-                elif result == CheckValueStatus.MISSING_VALUE_IN_REPLY:
-                    return self.CheckFirmwareStatus.FIRMWARE_OUTDATED
-                else:
-                    return option["on_fail"]
-
-        return self.CheckFirmwareStatus.OK
+    def _firmwareCheckJobFinished():
+        return
 
     def _setFirmwareName(self, name):
         new_name = re.findall(r"FIRMWARE_NAME:([^\s]+)", str(name))
@@ -865,11 +804,3 @@ class USBPrinterOutputDevice(PrinterOutputDevice):
             application = CuraApplication.getInstance()
             application.triggerNextExitCheck()
 
-
-    class CheckFirmwareStatus(IntEnum):
-        OK = 0
-        TIMEOUT = 1
-        WRONG_MACHINE = 2
-        WRONG_TOOLHEAD = 3
-        FIRMWARE_OUTDATED = 4
-        COMMUNICATION_ERROR = 5
