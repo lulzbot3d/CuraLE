@@ -93,34 +93,34 @@ Item
                 spacing: UM.Theme.getSize("default_margin").width
             }
 
-            Rectangle
-            {
-                id: clearPlateButtonBox
-                height: clearPlateButton.height + (UM.Theme.getSize("default_margin").height * 2)
-                width: clearPlateButton.width + (UM.Theme.getSize("default_margin").width * 2)
-                color: UM.Theme.getColor("main_background")
-                border.width: UM.Theme.getSize("default_lining").width
-                border.color: UM.Theme.getColor("lining")
-                radius: UM.Theme.getSize("default_radius").width
-                visible: actionPanelWidget.outputAvailable
+            // Rectangle
+            // {
+            //     id: clearPlateButtonBox
+            //     height: clearPlateButton.height + (UM.Theme.getSize("default_margin").height * 2)
+            //     width: clearPlateButton.width + (UM.Theme.getSize("default_margin").width * 2)
+            //     color: UM.Theme.getColor("main_background")
+            //     border.width: UM.Theme.getSize("default_lining").width
+            //     border.color: UM.Theme.getColor("lining")
+            //     radius: UM.Theme.getSize("default_radius").width
+            //     visible: actionPanelWidget.outputAvailable
 
-                Cura.PrimaryButton
-                {
-                    id: clearPlateButton
-                    anchors.centerIn: parent
+            //     Cura.PrimaryButton
+            //     {
+            //         id: clearPlateButton
+            //         anchors.centerIn: parent
 
-                    height: UM.Theme.getSize("action_button").height
-                    text: catalog.i18nc("@button", "  Next Part  ")
-                    tooltip: "Clears build plate and opens folder to slice next part(s) with current settings."
-                    toolTipContentAlignment: Cura.ToolTip.ContentAlignment.AlignLeft
+            //         height: UM.Theme.getSize("action_button").height
+            //         text: catalog.i18nc("@button", "  Next Part  ")
+            //         tooltip: "Clears build plate and opens folder to slice next part(s) with current settings."
+            //         toolTipContentAlignment: Cura.ToolTip.ContentAlignment.AlignLeft
 
-                    onClicked:
-                    {
-                        CuraApplication.deleteAll()
-                        Cura.Actions.open.trigger()
-                    }
-                }
-            }
+            //         onClicked:
+            //         {
+            //             CuraApplication.deleteAll()
+            //             Cura.Actions.open.trigger()
+            //         }
+            //     }
+            // }
         }
     }
 

@@ -78,7 +78,8 @@ class SidebarGUIPlugin(Extension):
         monitor_stage.addDisplayComponent("menu", monitor_menu_component_path)
 
     def _onStageChanged(self):
-        active_stage_id = self._controller.getActiveStage().getPluginId()
+        active_stage = self._controller.getActiveStage()
+        active_stage_id = active_stage.getPluginId()
         view_id = ""
 
         if active_stage_id == "PrepareStage":
@@ -87,10 +88,10 @@ class SidebarGUIPlugin(Extension):
             view_id = "SimulationView"
 
         if view_id and (
-            self._controller.getActiveView() is None
-            or view_id != self._controller.getActiveView().getPluginId()
+            active_stage.getActiveView() is None
+            or view_id != active_stage.getActiveView()
         ):
-            self._controller.setActiveView(view_id)
+            active_stage.setActiveView(view_id)
 
     def _onViewChanged(self):
         active_stage_id = self._controller.getActiveStage().getPluginId()
