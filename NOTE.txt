@@ -1,0 +1,124 @@
+25 Nov 2025
+
+Hello. To anyone crawling this repo, this should give a quick explanation 
+for what you'll find. A "TL;DR" can be found at the bottom of this document
+if you wouldn't like to read the rest.
+
+My name is Spencer, on GitHub/GitLab you'll find me as "GrimQuagle". For
+the past several years, I have been working for a company called "Fargo 
+Additive Manufacturing Equipment 3D, LLC." as part of their IT department
+and the only developer of the LulzBot-branded fork of UltiMaker's Cura 
+slicing software. I had other duties as part of the job as well so this 
+project could never be my sole focus but it was definitely one of the more 
+prominent aspects of the job. I was the one who took the software from major
+version 3 to 4 and as anyone who would care to attempt to compile the code 
+you'll find here would find it is weeks if not days away from being a functional
+version of 5.
+
+Now, I'll openly admit that particularly over the past several months I have
+been slacking. Very noticably, in fact. I had occasionally gone over a week 
+without any notable progress on this project at all. I'd mainly place the 
+blame for that on the fact that for the entire time I've been working with 
+Cura LulzBot Edition, I have been the only person doing any work on it whatsoever.
+I've been setting up everything for the build processes, I've been working on 
+the installers, all the workflows, the servers needed for storing the artifacts
+used in the builds, adapting the material and quality profiles for our printers,
+adding and removing features as I'm asked by various higher-ups, bug testing, 
+patching, releases, everything. Full stack, baby. As it would turn out, that 
+apparently gets really, *REALLY* old. I have been so burnt out for well over a 
+year now that even touching a computer outside of my work hours feels like a chore.
+
+So, when you get insane levels of burn out, what do you do? Well, normally 
+I'd expect that the best thing would be to either take some time off to 
+refresh or maybe look for other opportunities. The former never seemed to 
+work; I could take week long vacations and still dread coming back in to 
+work the next day. As for the latter... I always felt like I would be abandoning 
+my coworkers. I was the only one at this small company who was knowledgable 
+about how this program worked and was built. The company is small and would 
+seldom ever hire anyone (not to mention that given the position, I was arguably 
+paid fairly poorly) so I knew if I left, CuraLE would stay exactly how it was 
+for who knows how long and in time that would really hurt the people still at 
+the company.
+
+Of course, I did eventually realize the fallacy of this thinking. I need to 
+prioritize myself, who I want to be and what I need to do to get myself there. 
+It was too little, too late. As people in this line of work would probably know, 
+shortly after 2020 there was something of a "bubble" that formed in the tech job 
+market. IT professionals were in high demand as the amount of people working from 
+home grew. Companies were hiring on people like never before to build up their 
+tech ecosystems to support the shift away from the office. Unfortunately, it was 
+never going to last. A little over a year ago, the bubble finally burst and the job 
+market for people working in IT, software, and all sorts of CompSci related fields 
+turned into a situation where you had tens of thousands of very qualified people 
+who were just laid off from their FAANG level jobs looking for new work while 
+nobody was wanting to hire, leaving people with less experience almost entirely 
+screwed for new work opportunities. Even if I wanted to leave and start again 
+somewhere new and never think about LulzBot again, I really had nowhere to go.
+
+So I stayed. I kept trudging along, getting just enough done to keep folks happy 
+with my performance and to stay left alone. I've felt like I've been stuck. 
+Nowhere to go. Just going through the motions so I can sleep in a bed and eat. 
+Some will say that's really just what work is and while to a point it's definitely
+true, I also feel as though going home day after day feeling like I had contributed 
+nearly nothing of value to anything and spent an entire day rotting in an office 
+chair pretending to work was not doing great things to my mental health during 
+this time. What else was I going to do, though? I couldn't really afford to quit 
+without a plan and any other plans I could come up with were too risky to bother 
+with when, while I hated it, I did already have a job that paid *well enough* 
+and where expectations of me were low. 
+
+Keep going for around a year of that and we arrive at current day. Things around 
+FAME3D had been changing as of late. Lots more focus on using our 3D printer farm
+for external projects than for making and selling printers. R&D has been putting 
+out new developments to the LulzBot printers at a snail's pace. Recently, the owner
+of the company had even decided to branch into creating a children's board game 
+using 3D-printed parts. Even from back in my little programming nook away from 
+most of my coworkers, the mood in the air radiating from all corners of the building
+reeked of low morale and uncertainty. Then, yesterday, on Monday November 24th, 
+the decision appeared to have finally come down from the owner that there needed 
+to be a change and several people within the company, myself included, were blindsided 
+by a quick and decisive round of layoffs.
+
+I have no idea what the full extent of this was, as I have honestly not really wanted to 
+know. From where I sit and from the changes I have personally seen, however, I get the 
+feeling that LulzBot may well and truly be dead and the company is shifting fully to 
+custom order bulk 3D printed parts for large clients. I do not know for certain and take 
+this with a grain of salt but I believe that as part of the layoff, neither full-time 
+salesperson for the LulzBot printers survived the cull.
+
+So. I suppose that's probably it then.
+
+Back to the topic of this project. Since I have been shown the door, I will not be 
+working on this software moving forward in any professional capacity. There is a *REMOTE* 
+chance I may clone the repos to my account and at the very least release a working 
+version of 5, but we will see if some time off provided by my unemployment is able to 
+revive any passion I may have initially had for the project. I must say, it really does 
+feel wrong putting all this time into the project and then just leaving it to rot so 
+close to a working release.
+
+If there is anyone who would like to work on the project and continue moving it forward, 
+you can feel free. If you build from branch 5.11 in this repo, you should get something 
+resembling a working version of the software. It's not polished but it's something. I won't 
+promise to help with any attempts at this, but I'll definitely leave the door open for 
+anyone who would like to reach out for either more information or just potentially some 
+help to get everything working again.
+
+Alright. With that, this is my little bit of closure that I wanted to write just to get it 
+off of my chest. This happened so suddenly and I have been really struggling to sleep. I'd 
+like to thank anyone who has used and enjoyed LulzBot printers and anyone who may have seen 
+me at the few RepRap shows I've attended over the years. I really do appreciate knowing that 
+there are people out there who have been impacted by my work at this company for the past 
+several years, regardless of how small or negligible of an impact that may be. As a tinkerer 
+and creator, I really do have a passion for this sort of project and for the Open Source 
+community as a whole and have always tried to make the experience of creating a slightly less 
+painful or awkward one and I hope that I have succeeded at least in part.
+
+Thank you again. Maybe I'll see some of you again in the next chapter, wherever that might take me.
+
+Spencer "GrimQuagle"
+Now-Ex-CuraLE Dev
+
+
+TL;DR: The only person working on Cura LulzBot Edition (myself) just got canned as part of a 
+larger layoff. This project is probably dead now. The most up-to-date and functional code 
+is in the 5.11 branch if you'd like to try your had at working on it yourself.
