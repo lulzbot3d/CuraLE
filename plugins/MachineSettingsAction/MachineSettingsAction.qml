@@ -63,26 +63,38 @@ Cura.MachineAction
         border.width: UM.Theme.getSize("default_lining").width
         radius: UM.Theme.getSize("default_radius").width
         color: UM.Theme.getColor("main_background")
-        StackLayout
+
+        ScrollView
         {
-            id: tabStack
             anchors.fill: parent
-
-            currentIndex: tabBar.currentIndex
-
-            MachineSettingsPrinterTab
+            ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+            StackLayout
             {
-                id: printerTab
-            }
-
-            Repeater
-            {
-                model: extrudersModel
-                delegate: MachineSettingsExtruderTab
+                id: tabStack
+                anchors
                 {
-                    id: discoverTab
-                    extruderPosition: model.index
-                    extruderStackId: model.id
+                    left: parent.left
+                    leftMargin: UM.Theme.getSize("default_margin").width
+                    right: parent.right
+                    rightMargin: UM.Theme.getSize("default_margin").width
+                }
+
+                currentIndex: tabBar.currentIndex
+
+                MachineSettingsPrinterTab
+                {
+                    id: printerTab
+                }
+
+                Repeater
+                {
+                    model: extrudersModel
+                    delegate: MachineSettingsExtruderTab
+                    {
+                        id: discoverTab
+                        extruderPosition: model.index
+                        extruderStackId: model.id
+                    }
                 }
             }
         }

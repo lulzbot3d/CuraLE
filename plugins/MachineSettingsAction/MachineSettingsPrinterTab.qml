@@ -29,7 +29,10 @@ Item
 
     property var forceUpdateFunction: manager.forceUpdate
 
-    RowLayout
+    height: childrenRect.height + (UM.Theme.getSize("default_margin").height * 10)
+    anchors.margins: UM.Theme.getSize("default_margin").width
+
+    Row
     {
         id: upperBlock
         anchors
@@ -46,8 +49,10 @@ Item
         // =======================================
         Column
         {
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
+            // Layout.fillWidth: true
+            // Layout.alignment: Qt.AlignTop
+
+            width: base.columnWidth
 
             spacing: base.columnSpacing
 
@@ -62,6 +67,7 @@ Item
             Cura.NumericTextFieldWithUnit  // "X (Width)"
             {
                 id: machineXWidthField
+                width: parent.width
                 containerStackId: machineStackId
                 settingKey: "machine_width"
                 settingStoreIndex: propertyStoreIndex
@@ -77,6 +83,7 @@ Item
             Cura.NumericTextFieldWithUnit  // "Y (Depth)"
             {
                 id: machineYDepthField
+                width: parent.width
                 containerStackId: machineStackId
                 settingKey: "machine_depth"
                 settingStoreIndex: propertyStoreIndex
@@ -92,6 +99,7 @@ Item
             Cura.NumericTextFieldWithUnit  // "Z (Height)"
             {
                 id: machineZHeightField
+                width: parent.width
                 containerStackId: machineStackId
                 settingKey: "machine_height"
                 settingStoreIndex: propertyStoreIndex
@@ -106,6 +114,8 @@ Item
             Cura.ComboBoxWithOptions  // "Build plate shape"
             {
                 id: buildPlateShapeComboBox
+                width: parent.width
+                height: UM.Theme.getSize("combobox").height
                 containerStackId: machineStackId
                 settingKey: "machine_shape"
                 settingStoreIndex: propertyStoreIndex
@@ -119,6 +129,7 @@ Item
             Cura.SimpleCheckBox  // "Origin at center"
             {
                 id: originAtCenterCheckBox
+                width: parent.width
                 containerStackId: machineStackId
                 settingKey: "machine_center_is_zero"
                 settingStoreIndex: propertyStoreIndex
@@ -131,6 +142,7 @@ Item
             Cura.SimpleCheckBox  // "Heated bed"
             {
                 id: heatedBedCheckBox
+                width: parent.width
                 containerStackId: machineStackId
                 settingKey: "machine_heated_bed"
                 settingStoreIndex: propertyStoreIndex
@@ -143,6 +155,7 @@ Item
             Cura.SimpleCheckBox  // "Heated build volume"
             {
                 id: heatedVolumeCheckBox
+                width: parent.width
                 containerStackId: machineStackId
                 settingKey: "machine_heated_build_volume"
                 settingStoreIndex: propertyStoreIndex
@@ -155,6 +168,8 @@ Item
             Cura.ComboBoxWithOptions  // "G-code flavor"
             {
                 id: gcodeFlavorComboBox
+                width: parent.width
+                height: UM.Theme.getSize("combobox").height
                 containerStackId: machineStackId
                 settingKey: "machine_gcode_flavor"
                 settingStoreIndex: propertyStoreIndex
@@ -172,6 +187,7 @@ Item
             Cura.SimpleCheckBox // "LCD"
             {
                 id: lcdCheckBox
+                width: parent.width
                 containerStackId: machineStackId
                 settingKey: "machine_has_lcd"
                 settingStoreIndex: propertyStoreIndex
@@ -185,6 +201,7 @@ Item
             Cura.SimpleCheckBox // "BLTouch"
             {
                 id: bltouchCheckBox
+                width: parent.width
                 containerStackId: machineStackId
                 settingKey: "machine_has_bltouch"
                 settingStoreIndex: propertyStoreIndex
@@ -202,10 +219,12 @@ Item
         // =======================================
         Column
         {
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
+            // Layout.fillWidth: true
+            // Layout.alignment: Qt.AlignTop
 
             spacing: base.columnSpacing
+
+            width: base.columnWidth
 
             UM.Label   // Title Label
             {
@@ -218,6 +237,8 @@ Item
             Cura.PrintHeadMinMaxTextField  // "X min"
             {
                 id: machineXMinField
+
+                width: parent.width
 
                 settingStoreIndex: propertyStoreIndex
 
@@ -239,6 +260,8 @@ Item
             {
                 id: machineYMinField
 
+                width: parent.width
+
                 settingStoreIndex: propertyStoreIndex
 
                 labelText: catalog.i18nc("@label", "Y min ( '-' towards back)")
@@ -259,6 +282,8 @@ Item
             {
                 id: machineXMaxField
 
+                width: parent.width
+
                 settingStoreIndex: propertyStoreIndex
 
                 labelText: catalog.i18nc("@label", "X max")
@@ -276,6 +301,8 @@ Item
             Cura.PrintHeadMinMaxTextField  // "Y max"
             {
                 id: machineYMaxField
+
+                width: parent.width
 
                 containerStackId: machineStackId
                 settingKey: "machine_head_with_fans_polygon"
@@ -296,6 +323,7 @@ Item
             Cura.NumericTextFieldWithUnit  // "Gantry Height"
             {
                 id: machineGantryHeightField
+                width: parent.width
                 containerStackId: machineStackId
                 settingKey: "gantry_height"
                 settingStoreIndex: propertyStoreIndex
@@ -310,6 +338,7 @@ Item
             Cura.ComboBoxWithOptions  // "Number of Extruders"
             {
                 id: numberOfExtrudersComboBox
+                width: parent.width
                 containerStackId: machineStackId
                 settingKey: "machine_extruder_count"
                 settingStoreIndex: propertyStoreIndex
@@ -363,6 +392,7 @@ Item
             Cura.SimpleCheckBox  // "GCode Affected By Extruder Offsets"
             {
                 id: applyExtruderOffsetsCheckbox
+                width: parent.width
                 containerStackId: machineStackId
                 settingKey: "machine_use_extruder_offset_to_offset_coords"
                 settingStoreIndex: propertyStoreIndex
@@ -378,6 +408,7 @@ Item
             Cura.SimpleCheckBox  // "Make sure Start Code is before all gcodes"
             {
                 id: applyStartGcodeFirstCheckbox
+                width: parent.width
                 containerStackId: machineStackId
                 settingKey: "machine_start_gcode_first"
                 settingStoreIndex: propertyStoreIndex
@@ -420,6 +451,7 @@ Item
             Cura.ComboBoxWithOptions // "Serial Port"
             {
                 id: serialPortComboBox
+                width: parent.width
                 containerStackId: machineStackId
                 settingKey: "machine_serial_port"
                 settingStoreIndex: propertyStoreIndex
@@ -458,6 +490,7 @@ Item
             Cura.ComboBoxWithOptions // "Baudrate"
             {
                 id: baudComboBox
+                width: parent.width
                 containerStackId: machineStackId
                 settingKey: "machine_baudrate"
                 settingStoreIndex: propertyStoreIndex
@@ -495,24 +528,22 @@ Item
         }
     }
 
-    RowLayout  // Start and End G-code
+    Column  // Start and End G-code
     {
         id: lowerBlock
-        spacing: UM.Theme.getSize("default_margin").width
         anchors
         {
             top: upperBlock.bottom
-            bottom: buttonLearnMore.top
             left: parent.left
             right: parent.right
             margins: UM.Theme.getSize("default_margin").width
         }
+        spacing: UM.Theme.getSize("default_margin").width
 
         Cura.GcodeTextArea   // "Start G-code"
         {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-
+            width: lowerBlock.width
+            height: 250
             labelText: catalog.i18nc("@title:label", "Start G-code")
             containerStackId: machineStackId
             settingKey: "machine_start_gcode"
@@ -521,27 +552,12 @@ Item
 
         Cura.GcodeTextArea   // "End G-code"
         {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-
+            width: lowerBlock.width
+            height: 250
             labelText: catalog.i18nc("@title:label", "End G-code")
             containerStackId: machineStackId
             settingKey: "machine_end_gcode"
             settingStoreIndex: propertyStoreIndex
         }
-
-    }
-
-    Cura.TertiaryButton
-    {
-        id: buttonLearnMore
-
-        text: catalog.i18nc("@button", "Learn more")
-        iconSource: UM.Theme.getIcon("LinkExternal")
-        isIconOnRightSide: true
-        onClicked: Qt.openUrlExternally("https://github.com/Ultimaker/Cura/wiki/Start-End-G%E2%80%90Code")
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
-        anchors.margins: UM.Theme.getSize("default_margin").width
     }
 }
