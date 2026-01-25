@@ -14,7 +14,6 @@ SettingItem
     property string textBeforeEdit
     property bool textHasChanged
     property bool focusGainedByClick: false
-    property bool defIsNull: definition == null
 
     readonly property UM.IntValidator intValidator: UM.IntValidator {}
     readonly property UM.FloatValidator floatValidator: UM.FloatValidator {}
@@ -104,7 +103,7 @@ SettingItem
                 verticalCenter: parent.verticalCenter
             }
 
-            text: defIsNull ? "" : definition.unit
+            text: definition ? definition.unit : ""
             //However the setting value is aligned, align the unit opposite. That way it stays readable with right-to-left languages.
             horizontalAlignment: (input.effectiveHorizontalAlignment == Text.AlignLeft) ? Text.AlignRight : Text.AlignLeft
             textFormat: Text.PlainText
@@ -176,16 +175,18 @@ SettingItem
             selectionColor: UM.Theme.getColor("text_selection")
             selectByMouse: true
 
-            maximumLength: defIsNull ? -1 : (definition.type == "str" || definition.type == "[int]") ? -1 : 12
+            maximumLength: (definition && (definition.type == "str" || definition.type == "[int]")) ? -1 : 12
 
             // Since [int] & str don't have a max length, they need to be clipped (since clipping is expensive, this
             // should be done as little as possible)
-            clip: defIsNull ? false : definition.type == "str" || definition.type == "[int]"
+            clip: definition && (definition.type == "str" || definition.type == "[int]")
 
             validator: RegularExpressionValidator
             {
                 regularExpression:
                 {
+                    if (!definition) return /.*/  // Allow anything if definition is null
+                    
                     switch (definition.type)
                     {
                         case "[int]":
