@@ -13,9 +13,9 @@ Cura.CategoryButton
     anchors.left: parent.left
     anchors.right: parent.right
 
-    categoryIcon: UM.Theme.getIcon(definition.icon)
-    expanded: definition.expanded
-    labelText: definition.label
+    categoryIcon: definition ? UM.Theme.getIcon(definition.icon) : ""
+    expanded: definition ? definition.expanded : false
+    labelText: definition ? definition.label : ""
 
     signal showTooltip(string text)
     signal hideTooltip()
@@ -29,6 +29,8 @@ Cura.CategoryButton
 
     onClicked:
     {
+        if (!definition) return
+        
         if (definition.expanded)
         {
             settingDefinitionsModel.collapseRecursive(definition.key)
@@ -85,6 +87,8 @@ Cura.CategoryButton
 
         visible:
         {
+            if (!definition) return false
+            
             if (Cura.SettingInheritanceManager.settingsWithInheritanceWarning.indexOf(definition.key) >= 0)
             {
                 var children_with_override = Cura.SettingInheritanceManager.getChildrenKeysWithOverride(definition.key)
@@ -105,6 +109,8 @@ Cura.CategoryButton
 
         onClicked:
         {
+            if (!definition) return
+            
             settingDefinitionsModel.expandRecursive(definition.key)
             base.showAllHiddenInheritedSettings(definition.key)
         }

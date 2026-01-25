@@ -19,6 +19,7 @@ Column
 
     spacing: UM.Theme.getSize("thin_margin").height / 2
     property bool preSlicedData: PrintInformation.preSliced
+    property bool userTimeAdjusted: PrintInformation.userTimeAdjusted
     property alias hasPreviewButton: previewStageShortcut.visible
 
     UM.I18nCatalog
@@ -57,11 +58,23 @@ Column
 
             Cura.IconWithText
             {
-                id: printerName
+                id: estimatedTime
+                width: parent.width - printInformationPanel.width
+                
+                text:
+                {
+                    if (preSlicedData)
+                    {
+                        return catalog.i18nc("@label", "No time estimation available")
+                    }
 
-                Layout.fillWidth: true
+                    if (userTimeAdjusted)
+                    {
+                        return PrintInformation.currentPrintTime.getDisplayString(UM.DurationFormat.Long) + " " + catalog.i18nc("@label", "*User Adjusted")
+                    }
 
-                text: Cura.MachineManager.activeMachine != null ? Cura.MachineManager.activeMachine.id : ""
+                    return PrintInformation.currentPrintTime.getDisplayString(UM.DurationFormat.Long)
+                }
                 source: UM.Theme.getIcon("TAZPrinter")
                 font: UM.Theme.getFont("small")
             }
