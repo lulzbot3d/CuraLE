@@ -1,0 +1,32 @@
+[workspace]
+authors = ["Nate Olson <nolson@nist.gov>"]
+# prefix.dev mirror of conda-forge (conda.anaconda.org is unreachable on some networks)
+channels = ["https://prefix.dev/conda-forge"]
+name = "CuraLE"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[activation.env]
+# Keep the LulzBot conan config/cache separate from ~/.conan2 (Ultimaker config)
+CONAN_HOME = "$HOME/.conan2-curale"
+
+[tasks]
+build-macos = "bash scripts/build_macos_native.sh"
+
+[dependencies]
+python = "3.12.*"
+ninja = "*"
+cmake = ">=3.23,<4"
+pip = "*"
+autoconf = "*"
+automake = "*"
+libtool = "*"
+
+[pypi-dependencies]
+# uvula's recipe imports conan.tools.files.AutoPackager, removed in conan 2.21
+conan = "==2.20.1"
+sip = ">=6.8.1"
+pyyaml = "*"
+semver = "*"
+gitpython = "*"
+jinja2 = "*"
